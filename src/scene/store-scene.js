@@ -1,6 +1,8 @@
-import {observable, action, runInAction, toJS} from 'mobx'
+import {
+  observable, action, runInAction, toJS,
+} from 'mobx'
 import {message} from 'antd'
-import io from '../io'
+import io from './io'
 
 
 export default class SceneStore {

@@ -1,6 +1,8 @@
-import {observable, action, runInAction, toJS} from 'mobx'
+import {
+  observable, action, runInAction, toJS,
+} from 'mobx'
 import {successTip, errorTip} from '../common/util'
-import io from '../io'
+import io from './io'
 
 
 export default class SceneDetailStore {
