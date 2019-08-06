@@ -1,11 +1,13 @@
 import ioContext from '../common/io-context'
 
-
+const isMock = true
 ioContext.create('sceneDetail', {
-  getContent: {
-    mock: true,
-    mockUrl: 'page-scene/getContent',
-    url: '',
+  
+  // 场景详情
+  getDetail: {
+    mock: isMock,
+    mockUrl: 'page-scene/getDetail',
+    url: 'be_tag/asset/occasion/detail',
   },
 })
 

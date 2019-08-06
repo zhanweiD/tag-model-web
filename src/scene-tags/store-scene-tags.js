@@ -5,26 +5,42 @@ import {successTip, errorTip} from '../common/util'
 import io from './io'
 
 
-export default class SceneTagsStore {
-  // 被观察的属性
-  @observable content = ''
+class SceneTagsStore {
+  @observable tagList = {
+    data: [],
+    pagination: false,
+    loading: false,
+  }
 
-  // 异步 action 示例
-  @action getContent = async () => {
+  @observable param = {
+    pageSize: 10,
+    currentPage: 1,
+  }
+
+  // 标签列表
+  @action async getList() {
+    this.tagInfo.loading = true
     try {
-      const content = await io.getContent({
-        param: 'xxx',
+      const res = await io.getList({
+        ...this.param,
       })
       runInAction(() => {
-        this.content = content.story
+        this.tagInfo.data.replace(res.data)
+
+        this.tagInfo.pagination = {
+          pageSize: res.pageSize,
+          total: res.count,
+          current: res.currentPage,
+        }
+        this.taskInfo.loading = false
       })
     } catch (e) {
-      message.error(e.message)
+      errorTip(e.message)
+      runInAction(() => {
+        this.loading = false
+      })
     }
   }
-
-  // 同步 action 示例
-  @action clearContent = () => {
-    this.content = ''
-  }
 }
+
+export default new SceneTagsStore()

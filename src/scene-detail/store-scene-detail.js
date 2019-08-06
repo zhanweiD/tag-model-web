@@ -5,26 +5,23 @@ import {successTip, errorTip} from '../common/util'
 import io from './io'
 
 
-export default class SceneDetailStore {
-  // 被观察的属性
-  @observable content = ''
+class SceneDetailStore {
+  // 场景基本信息
+  @observable info = {}
 
-  // 异步 action 示例
-  @action getContent = async () => {
+
+  // 场景详情
+  @action async getDetail() {
     try {
-      const content = await io.getContent({
-        param: 'xxx',
-      })
+      const res = await io.getDetail()
+
       runInAction(() => {
-        this.content = content.story
+        this.info = res
       })
     } catch (e) {
-      message.error(e.message)
+      errorTip(e.message)
     }
   }
-
-  // 同步 action 示例
-  @action clearContent = () => {
-    this.content = ''
-  }
 }
+
+export default new SceneDetailStore()

@@ -1,2 +1,108 @@
 .scene-wrap
   height 100%
+  background #F4F6F9
+
+  .header
+    background #fff
+    font-size 14px
+    color rgba(0, 0, 0, .85)
+    padding 20px 16px
+    margin 0 -16px 16px
+    
+  .add-scene 
+    cursor pointer
+    height 160px
+    background #E7EBF0
+    border 2px dashed #D3DBE4
+    transition all .3s linear
+
+    p
+      color rgba(0,0,0,.45)
+
+  .add-icon
+    width 40px
+    height 40px
+    color #ffffff
+    font-size 24px
+    text-align center
+    cursor pointer
+    border-radius 50%
+    // background #CFD3D9 
+    background rgba(207, 211, 217, .65)
+    margin 0 auto
+
+
+  .card
+    background #ffffff
+    height 160px
+    margin-bottom 16px
+    border-radius 6px
+    border .5px solid #E3E9F0
+    transition all .3s linear
+
+  .card:hover, .add-scene:hover
+    // box-shadow 0px 5px 15px rgba(0,0,0,0.1)
+    box-shadow 0px 3px 10px #DDE0E4
+    transform translate3d(0, -2px, 0)
+  
+  .item-info
+    padding 16px 24px 0px
+
+  .c-name 
+    font-size 16px
+    margin-bottom 8px
+    display flex
+    align-items center
+    position relative
+    // cursor pointer
+
+    i
+      font-size 12px
+      position absolute
+      right 0
+      color rgba(0, 0, 0, .25)
+
+  .c-info
+    color rgba(0, 0, 0, .25)
+    margin-bottom 12px
+    
+  .count-info
+    display flex
+
+    span 
+      color rgba(0, 0, 0, .45)
+    
+    .count 
+      font-size 20px
+      color #0078FF 
+
+    .line 
+      width 1px
+      height 30px
+      background #EFEFF0
+      margin 9px 28px 0
+
+  .item-tool
+    height 32px
+    background rgba(194, 223, 255,0.08) 
+    display flex
+    justify-content flex-end
+    align-items center
+
+    .tool
+      padding 0
+
+      i
+        height 12px
+        padding 0 10px
+        color #0078FF
+        border-left 1px solid rgba(181, 194, 206, .3)
+    
+      .i-used
+        color #B5C2CE 
+
+  .used
+    border-top 2px solid #B7EB8F 
+    
+  .noused    
+    border-top 2px solid #91D5FF 

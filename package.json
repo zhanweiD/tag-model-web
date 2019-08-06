@@ -19,6 +19,7 @@
   "author": "js",
   "license": "MIT",
   "dependencies": {
+    "@dtwave/nemo-base-info": "^1.0.3",
     "@dtwave/oner-server": "3.2.17-alpha2",
     "lodash": "4.17.4",
     "nunjucks": "^3.0.0",
