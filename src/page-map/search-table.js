@@ -32,21 +32,21 @@ const columns = [
     dataIndex: 'worthScore',
     key: 'worthScore',
     sorter: true,
-    width: '12%',
+    width: '11%',
   },
   {
     title: '质量分',
     dataIndex: 'qualityScore',
     key: 'qualityScore',
     sorter: true,
-    width: '12%',
+    width: '11%',
   },
   {
     title: '热度',
     dataIndex: 'hotScore',
     key: 'hotScore',
     sorter: true,
-    width: '12%',
+    width: '11%',
   },
   {
     title: '创建人',
@@ -111,6 +111,9 @@ export default class SearchTable extends React.Component {
               pageSize: 10,
               total: 10,
               showTotal: () => '合计10条记录',
+            }}
+            rowSelection={{
+
             }}
           />
         </div>
