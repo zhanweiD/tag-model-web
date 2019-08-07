@@ -1,7 +1,12 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
+
+import OverviewCards from './overview-cards'
+import OverviewScore from './overview-score'
+import OverviewCall from './overview-call'
 
 /**
- * @description 标签概览
+ * @description 标签地图 - 标签概览
  * @author 三千
  * @date 2019-08-06
  * @export
@@ -22,7 +27,9 @@ export default class Overview extends Component {
   render() {
     return (
       <div className="map-overview">
-        overview hi
+        <OverviewCards />
+        <OverviewScore />
+        <OverviewCall />
       </div>
     )
   }
