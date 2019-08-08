@@ -96,11 +96,11 @@ export function listToTree(data) {
   const newData = _.cloneDeep(data)
 
   newData.forEach(item => {
-    const children = newData.filter(sitem => sitem.cateParentId === item.cateId)
+    const children = newData.filter(sitem => sitem.parentId === item.id)
     if (children.length && !item.children) item.children = children
   })
 
-  return newData.filter(item => item.cateParentId === 0)
+  return newData.filter(item => item.parentId === 0)
 }
 
 export const dateFormat = 'YYYY-MM-DD'

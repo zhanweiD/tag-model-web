@@ -1,11 +1,16 @@
-import {observable, action, runInAction, toJS} from 'mobx'
-import {message} from 'antd'
+import {
+  observable, action, runInAction, toJS,
+} from 'mobx'
+import {successTip, errorTip} from '../common/util'
 import io from './io'
 
 export default class TagStore {
-  // 被观察的属性
-  @observable content = ''
+  // 类目id
+  @observable id = undefined
+  // 标签树类型 1:人 2:物 3:关系
+  @observable typeCode = undefined
 
+  @observable content = ''
   // 异步action示例
   @action async getContent() {
     try {
@@ -16,7 +21,7 @@ export default class TagStore {
         this.content = res.story
       })
     } catch (e) {
-      message.error(e.message)
+      errorTip(e.message)
     }
   }
 

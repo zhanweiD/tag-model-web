@@ -52,15 +52,15 @@ module.exports = [
 
       // 获取全站的数据字典接口
       if (!isAjaxRequest(ctx)) {
-        // const options = {
-        //   uri: `${config('server.apiPrefix')}/api/v1/data-asset-service/asset/dict/list`,
-        //   qs: {
-        //     tenantId,
-        //     userId,
-        //   },
-        //   method: 'GET',
-        //   json: true,
-        // }
+        const options = {
+          uri: `${config('server.apiPrefix')}/api/v1/data-asset-service/asset/dict/list`,
+          qs: {
+            tenantId,
+            userId,
+          },
+          method: 'GET',
+          json: true,
+        }
 
         // const functionCodesOpt = {
         //   uri: `${config('server.apiPrefix')}/api/v1/data-asset-tag/common/list_function`,
@@ -72,14 +72,14 @@ module.exports = [
         //   json: true,
         // }
 
-        // try {
-        //   const rs = await rp(options)
+        try {
+          const rs = await rp(options)
+          ctx.njkData.dict = rs.content
         //   const rs2 = await rp(functionCodesOpt)
-        //   ctx.njkData.dict = rs.content
         //   ctx.njkData.functionCodes = rs2.content
-        // } catch (e) {
-        //   console.log(e)
-        // }
+        } catch (e) {
+          console.log(e)
+        }
       }
       await next()
     })

@@ -1,0 +1,78 @@
+
+.noborder-input
+  display: inline-block
+  position:relative
+
+  input
+    font-size:12px
+    //padding:10px 10px 10px 5px
+    //padding: 6px 0 8px 5px
+    display:block
+    line-height: 32px
+    //width:200px
+    border:none
+    //border-bottom:1px solid #757575
+    background: #f0f2f4
+  input:focus
+    outline:none
+  // 处理firfox下required导致的红色边框
+  input:required
+    box-shadow: none
+
+
+  label
+    color:#999
+    font-size:12px
+    font-weight:normal
+    position:absolute
+    pointer-events:none
+    left:5px
+    top:10px
+    transition:0.2s ease all
+
+
+  /* active state */
+  input:focus ~ label, input:valid ~ label
+    display: none
+
+  .bar
+    position:relative
+    display:block
+    //width:200px
+  .bar:before, .bar:after
+    content:''
+    height:1px
+    width:0
+    bottom:1px
+    position:absolute
+    background:#5264AE
+    transition:0.2s ease all
+  .bar:before
+    left:50%
+  .bar:after
+    right:50%
+
+
+  input:focus ~ .bar:before, input:focus ~ .bar:after
+    width:50%
+
+
+  .highlight
+    position:absolute
+    height:60%
+    width:100px
+    top:25%
+    left:0
+    pointer-events:none
+    opacity:0.5
+
+  input:focus ~ .highlight
+    animation:inputHighlighter 0.3s ease
+
+
+  @keyframes inputHighlighter
+    from
+      background:#5264AE
+    to
+      width:0
+      background:transparent
