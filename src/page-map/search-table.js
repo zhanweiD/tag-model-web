@@ -1,6 +1,5 @@
 import React from 'react'
 import {observer} from 'mobx-react'
-import PropTypes from 'prop-types'
 import {
   Table, Button, Tooltip, Badge,
 } from 'antd'
@@ -85,17 +84,6 @@ const columns = [
  */
 @observer
 export default class SearchTable extends React.Component {
-  // 默认props
-  // static defaultProps = {
-  //   data: [], // 表格数据
-  // }
-
-  // props类型检测
-  // static propTypes = {
-  //   // eslint-disable-next-line react/forbid-prop-types
-  //   data: PropTypes.array,
-  // }
-
   render() {
     const {store} = this.props
 
@@ -118,12 +106,13 @@ export default class SearchTable extends React.Component {
         {/* 表格 */}
         <div className="mt8">
           <Table
+            dataSource={store.tagList}
             columns={columns}
             pagination={{
-              current: 1,
-              pageSize: 10,
-              total: 10,
-              showTotal: () => '合计10条记录',
+              current: store.currentPage,
+              pageSize: store.pageSize,
+              total: store.totalCount,
+              showTotal: () => `合计${store.totalCount}条记录`,
             }}
             rowSelection={{
 
@@ -138,7 +127,5 @@ export default class SearchTable extends React.Component {
   onButtonClick = () => {
     const {store} = this.props
     store.toggleModal(true)
-
-    console.log(store.modalVisible)
   }
 }

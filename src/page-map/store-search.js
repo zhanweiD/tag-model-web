@@ -23,25 +23,25 @@ class SearchStore {
   @observable objList = []
 
   // 标签关键词
-  @observable keyword = ''
+  @observable filterKeyword = undefined
 
   // 选中的所属类目
-  @observable objId = ''
+  @observable filterObjId = undefined
 
   // 价值分
-  @observable worth = {
+  @observable filterWorth = {
     min: undefined,
     max: undefined,
   }
 
   // 质量分
-  @observable quality = {
+  @observable filterQuality = {
     min: undefined,
     max: undefined,
   }
 
   // 热度
-  @observable hot = {
+  @observable filterHot = {
     min: undefined,
     max: undefined,
   }
@@ -93,6 +93,7 @@ class SearchStore {
   @action async getObjList() {
     try {
       const res = await io.getObjList()
+      console.log('getObjList', res)
       this.objList = res
     } catch (err) {
       errorTip(err.message)
@@ -102,9 +103,9 @@ class SearchStore {
   // 请求标签列表
   @action async getTagList() {
     const {
-      objId,
-      keyword, 
-      worth, quality, hot, 
+      filterObjId,
+      filterKeyword, 
+      filterWorth, filterQuality, filterHot, 
       sortKey, sortOrder,
       currentPage, pageSize,
     } = this
@@ -112,14 +113,14 @@ class SearchStore {
     try {
       this.loading = true
       const res = await io.getTagList({
-        objId,
-        keyword,
-        worthStart: worth.min,
-        worthEnd: worth.max,
-        qualityStart: quality.min,
-        qualityEnd: quality.max,
-        hotStart: hot.min,
-        hotEnd: hot.max,
+        objId: filterObjId,
+        keyword: (filterKeyword || '').trim(),
+        worthStart: filterWorth.min,
+        worthEnd: filterWorth.max,
+        qualityStart: filterQuality.min,
+        qualityEnd: filterQuality.max,
+        hotStart: filterHot.min,
+        hotEnd: filterHot.max,
         sort: sortKey,
         order: sortOrder,
         currentPage,
@@ -130,6 +131,8 @@ class SearchStore {
       this.currentPage = res.currentPage
       this.totalCount = res.totalCount
       this.pageSize = res.pageSize
+
+      console.log('getTagList', res)
     } catch (err) {
       errorTip(err.message)
     } finally {

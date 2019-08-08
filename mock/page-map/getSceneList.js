@@ -12,7 +12,7 @@ module.exports = {
         "cDate":"123456789",
         "used":1, // 1 使用中 0 未使用
          "descr":"范德萨范德萨发", //描述
-        "tagCount":2",
+        "tagCount":2,
         "apiCount":3
     },
     {
@@ -22,7 +22,7 @@ module.exports = {
         "cDate":"123456789",
         "used":1,
           "descr":"范德萨范德萨发", //描述
-        "tagCount":2",
+        "tagCount":2,
         "apiCount":3
     },
    {
@@ -32,7 +32,7 @@ module.exports = {
         "cDate":"123456789",
         "used":1,
          "descr":"范德萨范德萨发", //描述
-        "tagCount":2",
+        "tagCount":2,
         "apiCount":3
     }
 ]

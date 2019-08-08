@@ -15,16 +15,17 @@ import store from './store-search'
  */
 @observer
 export default class MapSearch extends Component {
-  // state={
-  //   modalVisible: true, // 批量添加弹框是否显示
-  // }
+  componentDidMount() {
+    // 请求所属类目的对象列表
+    // TODO:（要不要加Loading?）
+    store.getObjList()
 
-  // // 控制弹框显隐
-  // toggleModal(visible = false) {
-  //   this.setState({
-  //     modalVisible: visible,
-  //   })
-  // }
+    // 请求标签列表（表格数据）
+    store.getTagList()
+
+    // 弹框 - 场景列表（提前加载）
+    store.getSceneList()
+  }
 
   render() {
     return (
