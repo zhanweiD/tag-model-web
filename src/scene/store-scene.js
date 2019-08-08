@@ -105,7 +105,9 @@ class SceneStore {
       })
 
       runInAction(() => {
-        cb && cb()
+        if (cb) {
+          cb()
+        }
       })
     } catch (e) {
       errorTip(e.message)

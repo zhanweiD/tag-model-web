@@ -72,6 +72,11 @@ module.exports = {
           '//cdn.dtwave.com/public/d3/4.13.0/d3.min.js',
         ],
       },
+      scene: {
+        js: [
+          '//cdn.dtwave.com/public/echarts/4.2.0/echarts.min.js',
+        ],
+      },
       njkPath: path.join(__dirname, 'template.njk'),
       commonPage: {
         js: [

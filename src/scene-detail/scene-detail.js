@@ -1,11 +1,15 @@
 import {Component} from 'react'
 import {observable, action, toJS} from 'mobx'
 import {observer} from 'mobx-react'
-import {Tabs} from 'antd'
+import {Tabs, Button, Icon} from 'antd'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
+// import {Link} from 'react-router-dom'
+
 import {Time} from '../common/util'
 import SelectTag from './select-tag'
 import DataSource from './data-source'
+import ModalDataSource from './modal-data-source'
+import ModalEditScene from '../scene/modal-add'
 
 import store from './store-scene-detail'
 
@@ -17,7 +21,18 @@ export default class SceneDetail extends Component {
     store.getDetail()
   }
 
+
+  @action dSourceVisible() {
+    store.dSourceVisible = true
+  }
+
+  @action sceneDetailVisible() {
+    store.isEdit = true
+    store.modalVisible = true
+  }
+
   render() {
+    console.log(toJS(store))
     const info = toJS(store.info)
     const {
       tagCount,
@@ -48,10 +63,17 @@ export default class SceneDetail extends Component {
     return (
       <div className="scene-detail">
         <div className="info">
-          <p className="name">
-            {info.name}
-          </p>
-          <NemoBaseInfo dataSource={baseInfo} key={Math.random()} />
+          <div className="FBH FBJ">
+            <p className="name">
+              <span className="mr8">{info.name}</span> 
+              <Icon type="edit" onClick={this.sceneDetailVisible} />
+            </p>
+            <div>
+              <Button className="mr8" href={`${window.__onerConfig.pathPrefix}/scene#/tags`}>标签列表</Button>
+              <Button type="primary" onClick={this.dSourceVisible}>添加目的数据源</Button>
+            </div>
+          </div>
+          <NemoBaseInfo dataSource={baseInfo} key={Math.random()} className="ml4" />
         </div>
 
         <Tabs defaultActiveKey="1">
@@ -62,6 +84,8 @@ export default class SceneDetail extends Component {
             <DataSource />
           </TabPane>
         </Tabs>
+        <ModalEditScene store={store} />
+        <ModalDataSource store={store} />
       </div>
     )
   }

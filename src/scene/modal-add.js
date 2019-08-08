@@ -32,7 +32,7 @@ class ModalAdd extends Component {
       if (err) {
         return
       }
-
+    
       if (store.isEdit) {
         store.editScene(params, () => {
           this.handleReset()
