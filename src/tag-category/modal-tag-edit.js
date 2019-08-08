@@ -5,6 +5,7 @@ import {
 import {observable, action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {isExitMsg} from '../common/constants'
+import {isJsonFormat} from '../common/util'
 
 const FormItem = Form.Item
 const {Option} = Select
@@ -72,6 +73,17 @@ class ModalTagEdit extends Component {
         if (content.isExist) return callback(isExitMsg)
         callback()
       })
+    } else {
+      callback()
+    }
+  }
+
+  @action.bound handleEnumValueValidator(rule, value, callback) {
+    if (value) {
+      if (!isJsonFormat(value)) {
+        callback('请输入正确的JSON格式')
+      }
+      callback()
     } else {
       callback()
     }
@@ -166,7 +178,11 @@ class ModalTagEdit extends Component {
             {this.isEnum && (
               <FormItem {...formItemLayout} label="枚举显示值">
                 {getFieldDecorator('enumValue', {
-                  rules: [{max: 100, message: '业务逻辑不能超过100个字符'}],
+                  rules: [
+                    {required: true, message: '枚举显示值不可为空'},
+                    {max: 100, message: '业务逻辑不能超过100个字符'},
+                    {validator: this.handleEnumValueValidator},
+                  ],
                   initialValue: editTag ? tagDetail.enumValue : undefined,
                 })(
                   <Input.TextArea

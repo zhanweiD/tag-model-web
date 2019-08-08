@@ -188,3 +188,15 @@ export function formatTimeInterval(type, str) {
 
   return result
 }
+
+
+
+// 2019年08月08日15
+export function isJsonFormat(str) {
+  try {
+    JSON.parse(str)
+  } catch (e) {
+    return false
+  }
+  return true
+}

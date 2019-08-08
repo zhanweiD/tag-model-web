@@ -46,7 +46,10 @@ class Action extends Component {
     const menu = (
       <Menu>
         <Menu.Item>
-          <span onClick={this.handleEditCategory}>添加对象</span>
+          <div style={{
+            margin: '-5px -12px',
+            padding: '5px 12px',
+          }} onClick={this.handleEditCategory}>添加对象</div>
         </Menu.Item>
         {/* <Menu.Item>
           <Link to="">导入类目及标签</Link>
