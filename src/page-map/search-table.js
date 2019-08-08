@@ -1,4 +1,5 @@
 import React from 'react'
+import {observer} from 'mobx-react'
 import PropTypes from 'prop-types'
 import {
   Table, Button, Tooltip, Badge,
@@ -82,24 +83,36 @@ const columns = [
  * @class SearchTable
  * @extends {React.Component}
  */
+@observer
 export default class SearchTable extends React.Component {
   // 默认props
-  static defaultProps = {
-    data: [], // 表格数据
-  }
+  // static defaultProps = {
+  //   data: [], // 表格数据
+  // }
 
   // props类型检测
-  static propTypes = {
-    // eslint-disable-next-line react/forbid-prop-types
-    data: PropTypes.array,
-  }
+  // static propTypes = {
+  //   // eslint-disable-next-line react/forbid-prop-types
+  //   data: PropTypes.array,
+  // }
 
   render() {
+    const {store} = this.props
+
+    // 没有选中标签时，批量添加按钮置灰
+    const btnDisabled = store.selectedTags || !store.selectedTags.length
+
     return (
       <div className="search-table white-block p24 mt16">
         {/* 批量添加按钮 */}
         <div>
-          <Button type="primary">批量添加至场景</Button>
+          <Button 
+            type="primary" 
+            disabled={!btnDisabled}
+            onClick={this.onButtonClick}
+          >
+            批量添加至场景
+          </Button>
         </div>
         
         {/* 表格 */}
@@ -119,5 +132,13 @@ export default class SearchTable extends React.Component {
         </div>
       </div>
     )
+  }
+
+  // 点击批量添加按钮，显示弹框
+  onButtonClick = () => {
+    const {store} = this.props
+    store.toggleModal(true)
+
+    console.log(store.modalVisible)
   }
 }

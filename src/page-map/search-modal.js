@@ -1,4 +1,5 @@
 import React from 'react'
+import {observer} from 'mobx-react'
 import PropTypes from 'prop-types'
 import {
   Modal, Form, Select, Row, Col, Icon, Tooltip,
@@ -14,21 +15,23 @@ const {Option} = Select
  * @class SearchModal
  * @extends {React.Component}
  */
+@observer
 class SearchModal extends React.Component {
   // props类型校验
-  static propTypes = {
-    visible: PropTypes.bool.isRequired,
-    onCancel: PropTypes.func.isRequired,
-    onOk: PropTypes.func.isRequired,
-  }
+  // static propTypes = {
+  //   visible: PropTypes.bool.isRequired,
+  //   onCancel: PropTypes.func.isRequired,
+  //   onOk: PropTypes.func.isRequired,
+  // }
 
   // 点击确定
   onOk = () => {
-    const {form, onOk} = this.props
+    const {form, store} = this.props
     form.validateFields((errs, values) => {
       if (!errs) {
-        // TODO
-        onOk(values)
+        store.saveTags(() => {
+          store.toggleModal(false)
+        })
       } else {
         console.log('error in [SearchModal]: ', errs)
       }
@@ -36,15 +39,15 @@ class SearchModal extends React.Component {
   }
 
   render() {
-    const {visible, onCancel, form} = this.props
+    const {store, form} = this.props
     const {getFieldDecorator} = form
 
     return (
       <Modal
-        visible={visible}
+        visible={store.modalVisible}
         title="批量添加至场景"
         onOk={this.onOk}
-        onCancel={() => onCancel()}
+        onCancel={() => store.toggleModal(false)}
       >
         <div className="search-modal-content">
           <Row>
