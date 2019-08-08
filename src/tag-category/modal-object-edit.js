@@ -75,6 +75,17 @@ class ModalObjectEdit extends Component {
     }
   }
 
+  @action.bound handleObjIdsValidator(rule, value, callback) {
+    if (value) {
+      if (value.length <= 1) {
+        callback('至少选择两个关联的人/物')
+      }
+      callback()
+    } else {
+      callback()
+    }
+  }
+
   render() {
     const {typeCode} = this.bigStore
     const {form: {getFieldDecorator}} = this.props
@@ -135,6 +146,7 @@ class ModalObjectEdit extends Component {
                     initialValue: editObject ? toJS(objectDetail.objIds) : undefined,
                     rules: [
                       {required: true, message: '请选择关联的人/物'},
+                      {validator: this.handleObjIdsValidator},
                     ],
                   })(
                     <Select

@@ -85,7 +85,6 @@ class TagCategoryStore {
         this.searchExpandedKeys.clear()
 
         const data = res.map(item => {
-          // item.cateId = item.id
           // 关键字搜索定位
           if (this.searchKey && item.name.includes(this.searchKey)) {
             this.findParentId(item.id, res, this.searchExpandedKeys)
@@ -286,7 +285,7 @@ class TagCategoryStore {
         this.confirmLoading = false
         this.modalVisible.editObject = false
         this.objectDetail = false
-        // return this.getCategoryList()
+        return this.getCategoryList()
       })
     } catch (e) {
       runInAction(() => {
@@ -343,7 +342,7 @@ class TagCategoryStore {
         this.confirmLoading = false
         this.modalVisible.editCategory = false
         this.objectDetail = false
-        // return this.getCategoryList()
+        return this.getCategoryList()
       })
     } catch (e) {
       runInAction(() => {
@@ -404,7 +403,7 @@ class TagCategoryStore {
         this.confirmLoading = false
         this.modalVisible.editTag = false
         this.tagDetail = false
-        // return this.getCategoryList()
+        return this.getCategoryList()
       })
     } catch (e) {
       runInAction(() => {
@@ -424,7 +423,7 @@ class TagCategoryStore {
         this.confirmLoading = false
         this.modalVisible.moveTag = false
         this.tagDetail = false
-        // return this.getCategoryList()
+        return this.getCategoryList()
       })
     } catch (e) {
       runInAction(() => {
