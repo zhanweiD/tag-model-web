@@ -1,10 +1,11 @@
 import {Component} from 'react'
-import {observable, action} from 'mobx'
+import {observable, action, toJS} from 'mobx'
 import {observer, inject, Provider} from 'mobx-react'
 import {Tabs} from 'antd'
 import {navListMap} from '../common/constants'
 import TagStore from './store-tag'
 import TagCategory, {TagCategoryStore} from '../tag-category'
+import TagDetail from '../tag-detail'
 
 const {TabPane} = Tabs
 
@@ -41,6 +42,7 @@ export default class Tag extends Component {
   }
 
   render() {
+    const currentNode = toJS(this.store.categoryStore.cateList).find(item => item.id === this.store.id)
     return (
       <div className="FBV" style={{minHeight: '100%'}}>
         <div className="fs16 mt16 ml16" style={{color: 'rgba(0, 0, 0, 0.85)'}}>
@@ -60,8 +62,8 @@ export default class Tag extends Component {
         <Provider bigStore={this.store}>
           <div className="FBH tag-container">
             <TagCategory updateKey={this.store.typeCode} />
-            <div className="FB1 p16 mt16 ml16 mr16" style={{backgroundColor: '#fff'}}>
-              ssss
+            <div className="FB1 mt16 ml16 mr16" style={{backgroundColor: '#fff'}}>
+              {currentNode && currentNode.aId && <TagDetail aId={currentNode.aId} type={currentNode.type} />}
             </div>
           </div>
         </Provider>

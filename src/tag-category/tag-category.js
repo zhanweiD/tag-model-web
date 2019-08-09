@@ -33,6 +33,7 @@ class TagCategory extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.updateKey !== nextProps.updateKey) {
+      this.updateKey = nextProps.updateKey
       document.getElementById('searchKey').value = ''
       this.store.typeCode = this.bigStore.typeCode
       this.store.id = this.bigStore.id || 999999999
