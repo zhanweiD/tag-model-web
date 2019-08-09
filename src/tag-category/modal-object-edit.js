@@ -41,6 +41,8 @@ class ModalObjectEdit extends Component {
 
         if (typeCode === 3) {
           param.objIds = values.objIds
+        } else {
+          param.objIds = []
         }
 
         if (editObject) {

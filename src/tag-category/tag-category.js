@@ -23,7 +23,7 @@ const {confirm} = Modal
 @inject('bigStore')
 @observer
 class TagCategory extends Component {
-  @observable updateKey = undefined
+  @observable typeCode = undefined
 
   constructor(props) {
     super(props)
@@ -32,8 +32,8 @@ class TagCategory extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.updateKey !== nextProps.updateKey) {
-      this.updateKey = nextProps.updateKey
+    if (this.typeCode !== nextProps.typeCode) {
+      this.typeCode = nextProps.typeCode
       document.getElementById('searchKey').value = ''
       this.store.typeCode = this.bigStore.typeCode
       this.store.id = this.bigStore.id || 999999999

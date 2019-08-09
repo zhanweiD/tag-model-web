@@ -19,7 +19,7 @@ export default class Tag extends Component {
 
     this.store = new TagStore(props)
     this.store.categoryStore = new TagCategoryStore(props)
-    this.store.categoryStore.getCategoryList()
+    // this.store.categoryStore.getCategoryList()
 
     this.store.typeCode = +params.type || 1
     this.store.id = +params.id || 999999999
@@ -61,15 +61,15 @@ export default class Tag extends Component {
 
         <Provider bigStore={this.store}>
           <div className="FBH tag-container">
-            <TagCategory updateKey={this.store.typeCode} />
-            <div className="FB1 mt16 ml16 mr16" style={{backgroundColor: '#fff'}}>
+            <TagCategory typeCode={this.store.typeCode} />
+            {/* <div className="FB1 mt16 ml16 mr16" style={{backgroundColor: '#fff'}}>
               {(() => {
                 if (currentNode && currentNode.aId) {
                   if (currentNode.type === 2) return <ObjDetail aId={currentNode.aId} />
                   if (currentNode.type === 0) return <TagDetail aId={currentNode.aId} />
                 }
               })()}
-            </div>
+            </div> */}
           </div>
         </Provider>
       </div>

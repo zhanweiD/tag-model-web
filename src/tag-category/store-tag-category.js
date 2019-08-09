@@ -75,12 +75,15 @@ class TagCategoryStore {
   @action.bound async getCategoryList(cb) {
     try {
       this.isLoading = true
-      const res = await io.getCategoryList({
+      let res = await io.getCategoryList({
         type: this.typeCode,
         searchKey: this.searchKey,
       })
 
       runInAction(() => {
+        if (!Object.keys(res).length) res = []
+        console.log(Object.keys(res).length)
+
         this.isLoading = false
         this.searchExpandedKeys.clear()
 
@@ -251,21 +254,7 @@ class TagCategoryStore {
         id: toJS(this.cateList).find(item => item.id === this.currentTreeItemKey).aId,
       })
       runInAction(() => {
-        const res2 = {
-          createTime: '2019.07.13',
-          name: '客户',
-          enName: 'sdfsdfsdf',
-          id: 99999,
-          creator: '望舒',
-          descr: '测试对象',
-          objType: '人',
-          objTypeCode: 1,
-          tagCount: 100,
-          tenantId: 4,
-          userId: 1,
-          objIds: [2],
-        }
-        this.objectDetail = res2
+        this.objectDetail = res
       })
     } catch (e) {
       errorTip(e.message)
@@ -275,7 +264,7 @@ class TagCategoryStore {
   @action async updateObject(params) {
     this.confirmLoading = true
     try {
-      if (params.id) {
+      if (!params.id) {
         await io.addObject(params)
       } else {
         await io.editObject(params)
@@ -304,21 +293,21 @@ class TagCategoryStore {
         id: this.currentTreeItemKey,
       })
       runInAction(() => {
-        const res2 = {
-          id: 9999,
-          catePath: '客户',
-          createTime: '2019.07.13',
-          creator: '望舒',
-          descr: '测试类目',
-          name: '望舒测试一级类目',
-          objType: '人',
-          objTypeCode: 1,
-          tenantId: 4,
-          userId: 1,
-          level: 1,
-          parentId: 0,
-        }
-        this.cateDetail = res2
+        // const res2 = {
+        //   id: 9999,
+        //   catePath: '客户',
+        //   createTime: '2019.07.13',
+        //   creator: '望舒',
+        //   descr: '测试类目',
+        //   name: '望舒测试一级类目',
+        //   objType: '人',
+        //   objTypeCode: 1,
+        //   tenantId: 4,
+        //   userId: 1,
+        //   level: 1,
+        //   parentId: 0,
+        // }
+        this.cateDetail = res
         this.detailLoading = false
       })
     } catch (e) {
@@ -332,7 +321,8 @@ class TagCategoryStore {
   @action async updateCategory(params) {
     this.confirmLoading = true
     try {
-      if (params.id) {
+      debugger
+      if (!params.id) {
         await io.addCategory(params)
       } else {
         await io.editCategory(params)

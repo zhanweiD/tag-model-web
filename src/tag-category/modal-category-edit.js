@@ -1,6 +1,8 @@
 import {Component} from 'react'
-import {Modal, Form, Input, Spin} from 'antd'
-import {observable, action,} from 'mobx'
+import {
+Modal, Form, Input, Spin
+} from 'antd'
+import {observable, action } from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {isExitMsg} from '../common/constants'
 
@@ -74,7 +76,7 @@ class ModalEditCategory extends Component {
   render() {
     const {form: {getFieldDecorator}} = this.props
     const {
-      cateDetail, eStatus: {editCategory}, modalVisible, confirmLoading,
+      cateDetail, eStatus: {editCategory}, modalVisible, confirmLoading, currentTreeItemKey,
     } = this.store
 
     const modalProps = {
@@ -112,7 +114,22 @@ class ModalEditCategory extends Component {
             </FormItem>
 
             <FormItem {...formItemLayout} label="所属类目">
-              {cateDetail.catePath || '--'}
+              {(() => {
+                if (currentTreeItemKey === 0) {
+                  return '--'
+                }
+
+                if (editCategory) {
+                  if (cateDetail.catePath) {
+                    return cateDetail.catePath
+                  }
+                  return '--'
+                } 
+                if (cateDetail.catePath) { // 添加子级
+                  return `${cateDetail.catePath}/${cateDetail.name}`
+                }
+                return cateDetail.name
+              })()}
             </FormItem>
 
             <FormItem {...formItemLayout} label="描述">
