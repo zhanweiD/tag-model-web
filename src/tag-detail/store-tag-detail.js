@@ -9,16 +9,11 @@ class TagDetailStore {
   @observable baseInfo = false
   @observable baseInfoLoading = false
 
-  @action async getBaseInfo(id, type) {
+  @action async getBaseInfo(id) {
     this.baseInfoLoading = true
     // 节点类型 0 标签 1 类目 2 对象
     try {
-      let res
-      if (type === 2) {
-        res = await io.getObjectDetail({id})
-      } else if (type === 0) {
-        res = await io.getTagDetail({id})
-      }
+      const res = await io.getTagDetail({id})
       runInAction(() => {
         const res2 =  {
           "createTime": "2019.07.13",
@@ -26,11 +21,11 @@ class TagDetailStore {
           "creator": "望舒",
           "descr": "测试对象",
           "objType": "人",
-          "objTypeCode": 1,
+          "objTypeCode": 3,
           "tagCount": 100,
           "tenantId": 4,
           "userId": 1,
-              "objRspList": [{
+            "objRspList": [{
             "createTime": 0,
             "descr": "望舒测试对象",
             "enName": "cunstomer",

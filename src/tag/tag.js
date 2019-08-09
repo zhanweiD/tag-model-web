@@ -6,6 +6,7 @@ import {navListMap} from '../common/constants'
 import TagStore from './store-tag'
 import TagCategory, {TagCategoryStore} from '../tag-category'
 import TagDetail from '../tag-detail'
+import ObjDetail from '../obj-detail'
 
 const {TabPane} = Tabs
 
@@ -31,7 +32,6 @@ export default class Tag extends Component {
       navListMap.assetMgt,
       {text: '标签池'},
     ])
-    // store.getContent()
   }
 
   @action onChangeTab(e) {
@@ -63,7 +63,12 @@ export default class Tag extends Component {
           <div className="FBH tag-container">
             <TagCategory updateKey={this.store.typeCode} />
             <div className="FB1 mt16 ml16 mr16" style={{backgroundColor: '#fff'}}>
-              {currentNode && currentNode.aId && <TagDetail aId={currentNode.aId} type={currentNode.type} />}
+              {(() => {
+                if (currentNode && currentNode.aId) {
+                  if (currentNode.type === 2) return <ObjDetail aId={currentNode.aId} />
+                  if (currentNode.type === 0) return <TagDetail aId={currentNode.aId} />
+                }
+              })()}
             </div>
           </div>
         </Provider>

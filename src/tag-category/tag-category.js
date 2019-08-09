@@ -201,7 +201,7 @@ class TagCategory extends Component {
               itemKey={item.id}
               title={item.name}
               actionList={this.getMenuList(item)}
-              selectable={false}
+              selectable={item.type ===2}
               iconNodeSrc={tagClass}
             >
               {loop(item.children)}

@@ -9,7 +9,7 @@ module.exports = {
       aId: 1,
       type: 2,
       position: 0,
-      objTypeCode: 1,
+      objTypeCode: 3,
       name: '客户',
       enName: 'customer',
       parentId: 0,

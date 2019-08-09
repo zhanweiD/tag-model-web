@@ -21,13 +21,17 @@ export default class TagDetail extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.aId !== nextProps.aId) {
+      debugger
+
       this.aId = nextProps.aId
-      store.getBaseInfo(nextProps.aId, nextProps.type)
+      store.getBaseInfo(nextProps.aId)
     }
   }
 
   render() {
     const {
+      // objTypeCode: typeCode,
+      // 标签
       name,
       enName,
       valueName,
@@ -37,6 +41,7 @@ export default class TagDetail extends Component {
       dataSource,
       fieldName,
       descr,
+      isUsed,
     } = store.baseInfo
 
     const baseInfo = [
@@ -73,13 +78,14 @@ export default class TagDetail extends Component {
           <div className="d-head FBH FBJ">
             <div>
               <span className="mr10">{name}</span>
-              <Tag color="green">使用中</Tag>
+              {
+                isUsed ? <Tag color="green">使用中</Tag> : <Tag color="blue">未使用</Tag>
+              }
             </div>
             <Button type="primary">绑定字段</Button>
           </div>
           <NemoBaseInfo dataSource={baseInfo} className="d-info" />
         </div>
-
         <Tabs
           defaultActiveKey="1"
           animated={false}
