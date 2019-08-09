@@ -146,7 +146,7 @@ module.exports = {
     // Node层代理API的域名，网关的，一般不用改
     apiPrefix: nattyStorage.env(SERVER_ENV, {
       // 成飞开发
-      development: 'http://192.168.90.111:9018',
+      development: 'http://192.168.90.87:9018',
       // 成飞测试  
       // development: 'http://192.168.90.111:9018',
       test: 'http://10.51.44.149:9018',
@@ -184,7 +184,7 @@ module.exports = {
       apiPrefix: nattyStorage.env(SERVER_ENV, {
         default: `${config.gatewayDomain}/api/v4/uic`,
         // development: 'http://120.26.105.132:9018',
-        development: 'http://192.168.90.111:9018/api/v4/uic',
+        development: 'http://192.168.90.87:9018/api/v4/uic',
         test: 'http://10.27.232.131:9018/api/v4/uic',
         production: 'http://api-in.dtwave-inc.com/api/v4/uic',
       }),
@@ -194,7 +194,7 @@ module.exports = {
         // default: config.accountDomain,
         default: `http://127.0.0.1:${config.apps.account4.port}`, // config.accountDomain,
         // development: 'http://dataworks.cac.com/account',
-        development: 'http://192.168.90.111:9985/account',
+        development: 'http://192.168.90.87:9985/account',
         test: 'http://account4.test.dtwave-inc.com',
         production: 'http://account4.dtwave-inc.com',
         saas: 'http://account4.dtwave.com',

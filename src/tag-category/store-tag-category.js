@@ -151,51 +151,20 @@ class TagCategoryStore {
     }
   }
 
-  @action async getCanMoveTree() {
+  @action async getCanMoveTree(id) {
     try {
       this.detailLoading = true
-      const res2 = await io.getRelObj({
-        id: 2,
+      const res = await io.getCanMoveTree({
+        id,
       })
-      const res = [
-        {
-          id: 1,
-          aId: 1,				
-          type: 2,			
-          position: 0,		    
-          objTypeCode: 1,				
-          name: '客户',	
-          enName: 'customer',
-          parentId: 0,
-          isLeaf: 0,
-          canEdit: 1,  
-          canDelete: 1,  
-          canAddTag: 0,  
-          canAddCate: 1,  
-          tagCount: 100,
-        },
-        {
-          id: 2,
-          aId: -1,				
-          type: 1,			
-          position: 0,		    
-          objTypeCode: 1,				
-          name: '默认类目',	
-          enName: 'default_cate',
-          parentId: 1,
-          isLeaf: 2,
-          canEdit: 0,  
-          canDelete: 0,  
-          canAddTag: 1,  
-          canAddCate: 0,  
-          tagCount: 0,
-        },
-      ]
       runInAction(() => {
         this.detailLoading = false
         this.moveTreeData.replace(listToTree(res))
       })
     } catch (e) {
+      runInAction(() => {
+        this.detailLoading = false
+      })
       errorTip(e.message)
     }
   }
@@ -345,32 +314,14 @@ class TagCategoryStore {
 
 
   // 标签
-  @action async getTagDetail() {
+  @action async getTagDetail(id) {
     try {
       this.detailLoading = true
       const res = await io.getTagDetail({
-        id: this.currentTreeItemKey,
+        id,
       })
       runInAction(() => {
-        const res2 = {
-          id: 99999,
-          createTime: '2019.07.13',
-          creator: '望舒',
-          dataSource: 'ws_hive',
-          descr: '测试类目',
-          enName: 'demo_type',
-          fieldName: 'type',
-          isEnum: 1,
-          name: '望舒测试一级类目',
-          objType: '人',
-          objTypeCode: 1,
-          tableName: 'demo',
-          tenantId: 4,
-          userId: 1,
-          valueName: '文本型',
-          valueType: 1,
-        }
-        this.tagDetail = res2
+        this.tagDetail = res
         this.detailLoading = false
       })
     } catch (e) {

@@ -1,12 +1,11 @@
 import {Component} from 'react'
 import {
-  Modal, Form, Input, Spin, Select, Cascader,
+  Modal, Form, Spin, Cascader,
 } from 'antd'
 import {observable, action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
 
 const FormItem = Form.Item
-const {Option} = Select
 
 @inject('bigStore')
 @observer
@@ -20,7 +19,6 @@ class ModalTagMove extends Component {
 
   @action.bound handleOnCancel() {
     const {form} = this.props
-    this.store.tagDetail = false
     this.store.modalVisible.moveTag = false
     form.resetFields()
   }

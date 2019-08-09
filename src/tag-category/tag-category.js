@@ -107,7 +107,7 @@ class TagCategory extends Component {
           } else if (nodeData.type === 0) {
             // 标签
             this.store.eStatus.editTag = true
-            this.store.getTagDetail()
+            this.store.getTagDetail(nodeData.aId)
             this.store.modalVisible.editTag = true
           }
         })
@@ -148,7 +148,7 @@ class TagCategory extends Component {
       onClick: (key, nodeData) => {
         runInAction(() => {
           this.store.currentTreeItemKey = nodeData.id
-          this.store.getCanMoveTree()
+          this.store.getCanMoveTree(nodeData.aId)
           this.store.modalVisible.moveTag = true
         })
       },

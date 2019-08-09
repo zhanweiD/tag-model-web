@@ -16,8 +16,6 @@ ioContext.create('tagCategory', {
   // 获取标签可移动的标签类目树
   getCanMoveTree: {
     url: `${tagApi}/be_tag/tag/pool/can_move_tree`,
-    mock: true,
-    mockUrl: 'page-hello/getContent',
   },
 
   // 重名校验
@@ -63,8 +61,6 @@ ioContext.create('tagCategory', {
   // 标签相关接口
   getTagDetail: {
     url: `${tagApi}/be_tag/tag/pool/tag_detail`,
-    mock: true,
-    mockUrl: 'page-hello/getContent',
   },
   addTag: {
     method: 'POST',

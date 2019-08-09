@@ -74,6 +74,9 @@ module.exports = [
 
         try {
           const rs = await rp(options)
+          console.log('xxxxxxxxxxxxxxxxxxxxxxxxx')
+          console.log(rs.content)
+          console.log(JSON.stringify(rs.content))
           ctx.njkData.dict = rs.content
         //   const rs2 = await rp(functionCodesOpt)
         //   ctx.njkData.functionCodes = rs2.content
