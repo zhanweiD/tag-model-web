@@ -53,7 +53,7 @@ module.exports = [
       // 获取全站的数据字典接口
       if (!isAjaxRequest(ctx)) {
         const options = {
-          uri: `${config('server.apiPrefix')}/api/v1/data-asset-service/asset/dict/list`,
+          uri: `${config('server.apiPrefix')}/api/v1/be_tag/common/enum`,
           qs: {
             tenantId,
             userId,

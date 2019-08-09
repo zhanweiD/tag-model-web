@@ -62,14 +62,14 @@ export default class Tag extends Component {
         <Provider bigStore={this.store}>
           <div className="FBH tag-container">
             <TagCategory typeCode={this.store.typeCode} />
-            {/* <div className="FB1 mt16 ml16 mr16" style={{backgroundColor: '#fff'}}>
+            <div className="FB1 mt16 ml16 mr16" style={{backgroundColor: '#fff'}}>
               {(() => {
                 if (currentNode && currentNode.aId) {
                   if (currentNode.type === 2) return <ObjDetail aId={currentNode.aId} />
                   if (currentNode.type === 0) return <TagDetail aId={currentNode.aId} />
                 }
               })()}
-            </div> */}
+            </div>
           </div>
         </Provider>
       </div>

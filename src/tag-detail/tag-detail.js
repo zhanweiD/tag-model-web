@@ -21,8 +21,6 @@ export default class TagDetail extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.aId !== nextProps.aId) {
-      debugger
-
       this.aId = nextProps.aId
       store.getBaseInfo(nextProps.aId)
     }

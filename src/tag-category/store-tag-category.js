@@ -107,37 +107,37 @@ class TagCategoryStore {
   // 获取关联的对象
   @action async getRelObj(id) {
     try {
-      const res2 = await io.getRelObj({
+      const res = await io.getRelObj({
         id,
       })
-      const res = [
-        {
-          id: 1,
-          createTime: '2019.07.13',
-          name: '保险产品',
-          creator: '望舒',
-          descr: '测试对象',
-          objType: '人',
-          objTypeCode: 1,
-          tagCount: 100,
-          tenantId: 4,
-          userId: 1,
-          isUserd: 0,
-        },
-        {
-          id: 2,
-          createTime: '2019.07.13',
-          name: '保险人',
-          creator: '望舒',
-          descr: '测试对象1',
-          objType: '物',
-          objTypeCode: 2,
-          tagCount: 1000,
-          tenantId: 4,
-          userId: 1,
-          isUserd: 1,
-        },
-      ]
+      // const res = [
+      //   {
+      //     id: 1,
+      //     createTime: '2019.07.13',
+      //     name: '保险产品',
+      //     creator: '望舒',
+      //     descr: '测试对象',
+      //     objType: '人',
+      //     objTypeCode: 1,
+      //     tagCount: 100,
+      //     tenantId: 4,
+      //     userId: 1,
+      //     isUserd: 0,
+      //   },
+      //   {
+      //     id: 2,
+      //     createTime: '2019.07.13',
+      //     name: '保险人',
+      //     creator: '望舒',
+      //     descr: '测试对象1',
+      //     objType: '物',
+      //     objTypeCode: 2,
+      //     tagCount: 1000,
+      //     tenantId: 4,
+      //     userId: 1,
+      //     isUserd: 1,
+      //   },
+      // ]
       runInAction(() => {
         const arr = res.map(item => ({
           id: item.id,
@@ -227,6 +227,8 @@ class TagCategoryStore {
       }
       runInAction(() => {
         successTip('删除成功')
+        this.getCategoryList()
+
 
         // // 如果要删除的节点和当前选中的是同一个, 则要跳转路由，且清空选中节点
         // if (this.cateId !== this.currentTreeItemKey) {
@@ -321,7 +323,6 @@ class TagCategoryStore {
   @action async updateCategory(params) {
     this.confirmLoading = true
     try {
-      debugger
       if (!params.id) {
         await io.addCategory(params)
       } else {
@@ -383,7 +384,7 @@ class TagCategoryStore {
   @action async updateTag(params) {
     this.confirmLoading = true
     try {
-      if (params.id) {
+      if (!params.id) {
         await io.addTag(params)
       } else {
         await io.editTag(params)

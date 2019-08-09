@@ -20,6 +20,11 @@ class Action extends Component {
   }
 
   @action.bound handleEditCategory() {
+    // 获取关联的人/物
+    if (this.bigStore.typeCode === 3) {
+      this.store.getRelObj()
+    }
+
     this.store.currentTreeItemKey = 0
     this.store.eStatus.editObject = false
     this.store.modalVisible.editObject = true

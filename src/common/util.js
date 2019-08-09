@@ -200,3 +200,8 @@ export function isJsonFormat(str) {
   }
   return true
 }
+
+
+export const pathPrefix = window.__onerConfig.pathPrefix || ''
+// const {apiV} = window.__keeper
+export const tagApi = `${pathPrefix}/api/v1`

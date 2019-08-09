@@ -33,16 +33,17 @@ class ModalTagEdit extends Component {
       form: {validateFields},
     } = this.props
     const {
-      eStatus: {editTag}, tagDetail, cateList, currentTreeItemKey,
+      eStatus: {editTag}, cateDetail, tagDetail, currentTreeItemKey,
     } = this.store
     const {typeCode} = this.bigStore
 
     validateFields((err, values) => {
       if (!err) {
         const param = Object.assign(values, {
+          isEnum: +values.isEnum,
           objTypeCode: typeCode,
-          level: toJS(cateList).find(item => item.id === currentTreeItemKey).level,
           parentId: currentTreeItemKey,
+          level: cateDetail.level,
         })
 
         if (editTag) {
@@ -56,10 +57,11 @@ class ModalTagEdit extends Component {
   }
 
   @action.bound handleNameValidator(rule, value, callback) {
-    const {currentTreeItemKey} = this.store
+    const {eStatus: {editTag}, currentTreeItemKey} = this.store
     if (value) {
       // 后端校验
       const param = {}
+      param.isEdit = +editTag
       param.name = value
       param.objTypeCode = this.bigStore.typeCode
       // type(标签:0 类目:1 对象:2)
@@ -158,12 +160,11 @@ class ModalTagEdit extends Component {
                 rules: [{required: true, message: '请选择数据类型'}],
               })(
                 <Select placeholder="请下拉选择">
-                  <Option value="jack">Jack</Option>
-                  {/* {
+                  {
                     window.njkData.dict.dataType.map(item => (
                       <Option key={item.key} value={item.key}>{item.value}</Option>
                     ))
-                  } */}
+                  }
                 </Select>
               )}
             </FormItem>
@@ -188,7 +189,7 @@ class ModalTagEdit extends Component {
                   <Input.TextArea
                     autoComplete="off"
                     rows="3"
-                    placeholder="若标签值为枚举型，可将枚举代码值显示为易理解的值，例如：{0:女;1:男}"
+                    placeholder={`若标签值为枚举型，可将枚举代码值显示为易理解的值，例如：{"0":"女","1":"男"}`}
                   />
                 )}
               </FormItem>

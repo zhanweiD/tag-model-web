@@ -1,4 +1,5 @@
 import ioContext from '../common/io-context'
+import {tagApi} from '../common/util'
 
 ioContext.create('tag', {
   getContent: {

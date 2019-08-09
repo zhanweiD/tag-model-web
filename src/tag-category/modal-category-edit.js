@@ -51,10 +51,11 @@ class ModalEditCategory extends Component {
   }
 
   @action.bound handleNameValidator(rule, value, callback) {
-    const {currentTreeItemKey} = this.store
+    const {eStatus: {editCategory}, currentTreeItemKey} = this.store
     if (value) {
       // 后端校验
       const param = {}
+      param.isEdit = +editCategory
       param.name = value
       param.objTypeCode = this.bigStore.typeCode
       // type(标签:0 类目:1 对象:2)
