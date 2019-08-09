@@ -22,7 +22,7 @@
 // 标签搜索
 .map-search
   .filter-collapse
-    .ant-form-item
+    .search-range-input
       margin-right 48px
       margin-bottom 0
       &:last-child
@@ -30,12 +30,21 @@
   // 重置表头字重
   .ant-table-column-title
     font-weight normal
-  // 搜索部分-所属类目
+  // 搜索部分-对象名称
   .search-category
     margin-left 32px
     padding 4px 8px
     color rgba(0, 0, 0, 0.65)
+  // 对象名称 - 选中状态
   .search-category--active
     background #1890FF
     border-radius 4px
     color #fff
+
+// 弹框的footer样式重置
+.map-search-modal
+  .ant-modal-footer
+    text-align center
+    padding 16px 0
+    button:last-child
+      margin-left 24px

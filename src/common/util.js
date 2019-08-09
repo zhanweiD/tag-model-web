@@ -201,7 +201,22 @@ export function isJsonFormat(str) {
   return true
 }
 
-
 export const pathPrefix = window.__onerConfig.pathPrefix || ''
 // const {apiV} = window.__keeper
 export const tagApi = `${pathPrefix}/api/v1`
+
+// 判断某个值是不是空
+export function isEmptyValue(value) {
+  return value === undefined || value === null || value === ''
+}
+
+// 将值转成数字，不能转则返回 undefined
+export function toNumberOrUndefined(value) {
+  if (!isEmptyValue(value)) {
+    value = parseFloat(value)
+    value = Number.isNaN(value) ? undefined : value
+  } else {
+    value = undefined
+  }
+  return value
+}

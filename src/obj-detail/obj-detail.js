@@ -36,7 +36,7 @@ export default class ObjDetail extends Component {
       creator,
       createTime,
       descr,
-      objRspList,
+      objRspList = [],
     } = store.baseInfo
 
     const baseInfo = [
@@ -60,10 +60,11 @@ export default class ObjDetail extends Component {
         value: descr,
       },
     ]
+
     if (typeCode === 3) {
       baseInfo.splice(4, 0, {
         title: '关联的人/物',
-        value: objRspList.map(item => item.name).join('、'),
+        value: objRspList && objRspList.map(item => item.name).join('、'),
       })
     }
 

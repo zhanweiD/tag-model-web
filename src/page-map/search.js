@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
+import {observer} from 'mobx-react'
 import SearchFilter from './search-filter'
 import SearchTable from './search-table'
 import SearchModal from './search-modal'
+import store from './store-search'
 
 /**
  * @description 标签搜索
@@ -11,31 +13,26 @@ import SearchModal from './search-modal'
  * @class MapSearch
  * @extends {Component}
  */
+@observer
 export default class MapSearch extends Component {
+  componentDidMount() {
+    // 请求所属类目的对象列表
+    // TODO:（要不要加Loading?）
+    store.getObjList()
 
-  state={
-    modalVisible: true, // 批量添加弹框是否显示
-  }
+    // 请求标签列表（表格数据）
+    store.getTagList()
 
-  // 控制弹框显隐
-  toggleModal(visible = false) {
-    this.setState({
-      modalVisible: visible,
-    })
+    // 弹框 - 场景列表（提前加载）
+    store.getSceneList()
   }
 
   render() {
-    const {modalVisible} = this.state
-
     return (
       <div className="map-search">
-        <SearchFilter />
-        <SearchTable />
-        <SearchModal
-          visible={modalVisible}
-          onCancel={() => this.toggleModal(false)}
-          onOk={() => this.toggleModal(false)}
-        />
+        <SearchFilter store={store} />
+        <SearchTable store={store} />
+        <SearchModal store={store} />
       </div>
     )
   }
