@@ -1,6 +1,7 @@
-import {observable, action} from 'mobx'
+import {observable, action, toJS} from 'mobx'
 import {errorTip, successTip} from '../common/util'
 import io from './io'
+import {getOrderAlias} from './util'
 
 /**
  * @description 标签搜索的数据管理
@@ -72,7 +73,9 @@ class SearchStore {
   /* -------------  批量添加至场景相关 --------- */
 
   // 选中的标签
-  @observable selectedTags = []
+  @observable selectedTags = {
+    1: [], // 因为要做跨页选择，所以需要把每一页选中的存起来
+  }
 
   // 场景列表
   @observable sceneList = []
@@ -122,7 +125,7 @@ class SearchStore {
         hotStart: filterHot.min,
         hotEnd: filterHot.max,
         sort: sortKey,
-        order: sortOrder,
+        order: getOrderAlias(sortOrder),
         currentPage,
         pageSize,
       })
@@ -132,7 +135,7 @@ class SearchStore {
       this.totalCount = res.totalCount
       this.pageSize = res.pageSize
 
-      console.log('getTagList', res)
+      console.log('getTagList', toJS(this), res)
     } catch (err) {
       errorTip(err.message)
     } finally {
@@ -151,7 +154,7 @@ class SearchStore {
   }
 
   // 请求某个场景的类目
-  @action async getCateList() {
+  @action async getCateList(cb) {
     try {
       const res = await io.getCateList({
         occasionId: this.selectedSceneId,
@@ -159,22 +162,33 @@ class SearchStore {
       this.cateList = res
     } catch (err) {
       errorTip(err.message)
+    } finally {
+      cb && cb()
     }
   }
 
   // 批量添加至场景
   @action async saveTags(cb) {
+    const {selectedTags, selectedCateId, selectedSceneId} = this
+
+    const occTags = []
+
+    Object.values(selectedTags).forEach(selectedTagsOfPage => {
+      selectedTagsOfPage.forEach(tag => {
+        occTags.push({
+          occasionId: selectedSceneId,
+          catId: selectedCateId,
+          objId: tag.objId,
+          tagId: tag.id,
+        })
+      })
+    })
+
+    console.log('saveTags', occTags)
+
     try {
       const res = await io.saveTags({
-        // TODO:
-        occTags: [],
-        // Long occasionId;//场景id
-
-        // Long objId;//对象id
-
-        // Long catId;//类目id
-
-        // Long tagId;//标签id
+        occTags,
       })
       successTip('批量添加成功')
       cb && cb()

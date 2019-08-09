@@ -79,7 +79,7 @@ class SearchFilter extends React.Component {
           <div className="FBH FBJB" style={{marginTop: '40px'}}>
             {/* 类目选择 */}
             <div className="fal">
-              <span>所属类目：</span>
+              <span>对象名称：</span>
               {objSpans}
             </div>
 
@@ -104,24 +104,24 @@ class SearchFilter extends React.Component {
               className="search-range-input"
               label="价值分"
               fieldNamePrefix="score-worth"
-              onChange={(value, type) => {
-                this.handleScoreChange('filterWorth', value, type)
+              onChange={(values, rawValues) => {
+                this.handleScoreChange('filterWorth', values, rawValues)
               }}
             />
             <RangeInput
               className="search-range-input"
               label="质量分"
               fieldNamePrefix="score-quality"
-              onChange={(value, type) => {
-                this.handleScoreChange('filterQuality', value, type)
+              onChange={(values, rawValues) => {
+                this.handleScoreChange('filterQuality', values, rawValues)
               }}
             />
             <RangeInput
               className="search-range-input"
               label="热度"
               fieldNamePrefix="score-hot"
-              onChange={(value, type) => {
-                this.handleScoreChange('filterHot', value, type)
+              onChange={(values, rawValues) => {
+                this.handleScoreChange('filterHot', values, rawValues)
               }}
             />
           </div>
@@ -152,17 +152,23 @@ class SearchFilter extends React.Component {
     this.doSearch()
   }
 
-  // 价值分、质量分、热度输入发生变化, key是store里对应属性的键, value是值，type是min/max
-  @action.bound handleScoreChange(key, value, type) {
+  // 价值分、质量分、热度输入发生变化, key是store里对应属性的键, values是处理过的值数组，rawValues是未处理的输入数据
+  @action.bound handleScoreChange(key, values, rawValues) {
     const {store} = this.props
 
+    console.log(values, rawValues)
+
+    // 原始值既不是没填，也不是整数
+    const isInvalid = rawValues.some(v => (v !== undefined && !(/^\d*$/).test(v)))
+
     // 如果不是整数，那么不修改store，而且UI上会报错
-    if (!(/^\d*$/).test(value)) {
+    if (isInvalid) {
       return
     }
 
-    // 如果是整数，那就
-    store[key][type] = Math.floor(value) || 0 // 额外转一下
+    // 如果是合格的输入，那就存入store，之后请求接口
+    store[key].min = values[0]
+    store[key].max = values[1]
 
     this.doSearch()
   }

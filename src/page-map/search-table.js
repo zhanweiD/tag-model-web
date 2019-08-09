@@ -1,5 +1,6 @@
 import React from 'react'
 import {observer} from 'mobx-react'
+import {action, extendObservable} from 'mobx'
 import {
   Table, Button, Tooltip, Badge,
 } from 'antd'
@@ -32,6 +33,7 @@ const columns = [
     dataIndex: 'worthScore',
     key: 'worthScore',
     sorter: true,
+    sortDirections: ['ascend', 'descend'],
     width: '11%',
   },
   {
@@ -84,19 +86,32 @@ const columns = [
  */
 @observer
 export default class SearchTable extends React.Component {
+  state = {
+    randomKey: Math.random(), // 触发强制更新
+  }
+
   render() {
     const {store} = this.props
+    const {randomKey} = this.state
+    
+    console.log('---- SearchTable ---  render ---')
 
-    // 没有选中标签时，批量添加按钮置灰
-    const btnDisabled = store.selectedTags || !store.selectedTags.length
+    // 没有选择某个对象名称（不含全部），或，所有页面都没有选中标签时，批量添加按钮置灰
+    const btnDisabled = !store.filterObjId
+      || !Object.keys(store.selectedTags).length 
+      || Object.values(store.selectedTags).every(d => !d.length)
+
+    // 当前页的选中项id数组
+    const selectedRowKeys = (store.selectedTags[store.currentPage] || []).map(tag => tag.id)
+    console.log('selectedRowKeys', selectedRowKeys)
 
     return (
-      <div className="search-table white-block p24 mt16">
+      <div className="search-table white-block p24 mt16" key={randomKey}>
         {/* 批量添加按钮 */}
         <div>
           <Button 
             type="primary" 
-            disabled={!btnDisabled}
+            disabled={btnDisabled}
             onClick={this.onButtonClick}
           >
             批量添加至场景
@@ -109,14 +124,17 @@ export default class SearchTable extends React.Component {
             dataSource={store.tagList}
             columns={columns}
             pagination={{
-              current: store.currentPage,
-              pageSize: store.pageSize,
-              total: store.totalCount,
+              current: +store.currentPage,
+              pageSize: +store.pageSize,
+              total: +store.totalCount,
               showTotal: () => `合计${store.totalCount}条记录`,
             }}
+            rowKey="id"
             rowSelection={{
-
+              selectedRowKeys,
+              onChange: this.onSelectChange,
             }}
+            onChange={this.onTableChange}
           />
         </div>
       </div>
@@ -128,4 +146,48 @@ export default class SearchTable extends React.Component {
     const {store} = this.props
     store.toggleModal(true)
   }
+
+  // 强制更新
+  forceUpdate() {
+    this.setState({
+      randomKey: Math.random(),
+    })
+  }
+
+  // 选中表格项
+  @action.bound onSelectChange(selectedRowKeys, selectedRows) {
+    console.log(selectedRowKeys, selectedRows)
+    const {store} = this.props
+
+    // 更新当前页选中的标签项
+    if (!store.selectedTags[store.currentPage]) {
+      // 这里添加新属性时，不会触发更新，强制更新一下
+      extendObservable(store.selectedTags, {
+        [store.currentPage]: selectedRows,
+      })
+      this.forceUpdate()
+    } else {
+      store.selectedTags[store.currentPage] = selectedRows
+    }
+
+    console.log(store.selectedTags)
+  }
+
+  // 表格变化（切页、排序）
+  @action.bound onTableChange(pagination, filters, sorter) {
+    console.log(pagination, filters, sorter)
+
+    const {store} = this.props
+
+    const {current, pageSize} = pagination
+    const {field, order} = sorter
+
+    store.currentPage = current
+    store.pageSize = pageSize
+    store.sortKey = field
+    store.sortOrder = order
+
+    store.getTagList()
+  }
+
 }
