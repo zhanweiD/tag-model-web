@@ -36,6 +36,7 @@ class TagCategoryStore {
     editObject: false,
     editCategory: false,
     editTag: false,
+    moveTag: false,
     readCategory: false,
   }
 

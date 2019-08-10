@@ -23,6 +23,7 @@ export default class TagDetail extends Component {
   componentWillMount() {
     const {aId} = this.props
     store.getBaseInfo(aId)
+    this.aId = aId
   }
 
   componentWillReceiveProps(nextProps) {
@@ -77,7 +78,6 @@ export default class TagDetail extends Component {
       },
     ]
 
-    console.log(this.aId)
     return (
       <div className="tag-detail">
         <div className="detail-info">
@@ -97,7 +97,7 @@ export default class TagDetail extends Component {
           animated={false}
         >
           <TabPane tab="标签指数" key="1">
-            <TagDetailExponent aid={this.aId} />
+            <TagDetailExponent aId={this.aId} />
           </TabPane>
           <TabPane tab="标签调用" key="2">标签调用</TabPane>
           <TabPane tab="标签血缘" key="3">标签血缘</TabPane>

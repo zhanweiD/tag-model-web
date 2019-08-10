@@ -5,8 +5,8 @@ import {successTip, errorTip} from '../common/util'
 function getColors(len) {
   if (len > 10) {
     function randomColor() {
-      var r = function () { return Math.floor(Math.random()*256) }
-      return "rgb(" + r() +"," + r() +"," + r() +")"
+      const r = function () { return Math.floor(Math.random() * 256) }
+      return `rgb(${  r()  },${  r()  },${  r()  })`
     }
     return [...Array(100)].map(() => randomColor())
   }
@@ -23,9 +23,14 @@ class ExponentStore {
 
   @action async getDailyCard() {
     try {
-      const res = await io.getDailyCard({
+      const res2 = await io.getDailyCard({
         id: this.id,
       })
+      const res = {
+        worthScore: 14,
+        hotScore: 55,
+        qualityScore: 12,
+      }
       runInAction(() => {
         this.dailyCard = res
       })
@@ -43,7 +48,9 @@ class ExponentStore {
         startDate,
         endDate,
       })
-      const res = {"title":"热度概况","xAxisUnit":null,"yAxisUnit":"B","tenantId":null,"userId":null,"success":null,"data":[{"key":1557072000000,"value":{"score":60}},{"key":1557158400000,"value":{"score":50}},{"key":1557244800000,"value":{"score":40}}],"radixVal":null,"radixPoint":null}
+      const res = {
+        title: '热度概况', xAxisUnit: null, yAxisUnit: 'B', tenantId: null, userId: null, success: null, data: [{key: 1557072000000, value: {score: 60}}, {key: 1557158400000, value: {score: 50}}, {key: 1557244800000, value: {score: 40}}], radixVal: null, radixPoint: null,
+      }
       runInAction(() => {
         // type: (1.标签价值；2.标签热度；3.标签质量)`
         const o = {

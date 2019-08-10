@@ -65,14 +65,10 @@ ioContext.create('tagCategory', {
   addTag: {
     method: 'POST',
     url: `${tagApi}/be_tag/tag/pool/create_tag`,
-    // mock: true,
-    // mockUrl: 'page-hello/getContent',
   },
   editTag: {
     method: 'POST',
     url: `${tagApi}/be_tag/tag/pool/update_tag`,
-    // mock: true,
-    // mockUrl: 'page-hello/getContent',
   },
   deleteTag: {
     method: 'POST',
@@ -81,8 +77,6 @@ ioContext.create('tagCategory', {
   moveTag: {
     method: 'POST',
     url: `${tagApi}/be_tag/tag/pool/move_tag`,
-    // mock: true,
-    // mockUrl: 'page-hello/getContent',
   },
 })
 
