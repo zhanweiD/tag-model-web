@@ -49,7 +49,9 @@ class ModalObjectEdit extends Component {
           param.id = objectDetail.id
         }
 
-        this.store.updateObject(param)
+        this.store.updateObject(param, () => {
+          this.bigStore.updateKey = Math.random()
+        })
       }
     })
   }

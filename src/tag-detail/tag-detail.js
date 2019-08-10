@@ -13,7 +13,6 @@ const {TabPane} = Tabs
 @observer
 export default class TagDetail extends Component {
   @observable updateKey = undefined
-  @observable aId = undefined
 
   constructor(props) {
     super(props)
@@ -22,15 +21,15 @@ export default class TagDetail extends Component {
 
   componentWillMount() {
     const {aId} = this.props
-    store.getBaseInfo(aId)
-    this.aId = aId
+    store.id = aId
+    store.getBaseInfo()
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.updateKey !== nextProps.updateKey) {
       this.updateKey = nextProps.updateKey
-      this.aId = nextProps.aId
-      store.getBaseInfo(nextProps.aId)
+      store.id = nextProps.aId
+      store.getBaseInfo()
     }
   }
 
@@ -97,7 +96,7 @@ export default class TagDetail extends Component {
           animated={false}
         >
           <TabPane tab="标签指数" key="1">
-            <TagDetailExponent aId={this.aId} />
+            <TagDetailExponent aId={store.id} />
           </TabPane>
           <TabPane tab="标签调用" key="2">标签调用</TabPane>
           <TabPane tab="标签血缘" key="3">标签血缘</TabPane>

@@ -12,7 +12,9 @@ class TagDetailStore {
   @action async getBaseInfo(id) {
     this.baseInfoLoading = true
     try {
-      const res = await io.getTagDetail({id})
+      const res = await io.getTagDetail({
+        id: this.id,
+      })
       runInAction(() => {
         this.baseInfoLoading = false
         this.baseInfo = res

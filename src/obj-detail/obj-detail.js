@@ -9,7 +9,6 @@ import store from './store-obj-detail'
 @observer
 export default class ObjDetail extends Component {
   @observable updateKey = undefined
-  @observable aId = undefined
 
   constructor(props) {
     super(props)
@@ -18,14 +17,17 @@ export default class ObjDetail extends Component {
 
   componentWillMount() {
     const {aId} = this.props
-    store.getBaseInfo(aId)
+    store.id = aId
+    store.getBaseInfo()
+    store.getDailyCard()
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.updateKey !== nextProps.updateKey) {
       this.updateKey = nextProps.updateKey
-      this.aId = nextProps.aId
+      store.id = nextProps.aId
       store.getBaseInfo(nextProps.aId)
+      store.getDailyCard()
     }
   }
 
@@ -41,7 +43,9 @@ export default class ObjDetail extends Component {
       descr,
       objRspList = [],
     } = store.baseInfo
-
+    const {dataSourceCount, tableCount, configuredField, associatedField} = store.dailyCard
+    
+    
     const baseInfo = [
       {
         title: '创建者',
@@ -85,8 +89,12 @@ export default class ObjDetail extends Component {
           </div>
           <NemoBaseInfo dataSource={baseInfo} className="d-info" />
         </div>
-        {/* <TagDetailExponent aid={this.aId} /> */}
-        <div>sdf</div>
+        <div>{dataSourceCount}</div>
+        {/* // "dataSourceCount": 3,		--数据源数
+    // "tableCount": 20,			--数据表数
+		// "configuredField": 100,		--已配置字段数
+    // "associatedField": 200		--已关联字段数 */}
+    
       </div>
     )
   }
