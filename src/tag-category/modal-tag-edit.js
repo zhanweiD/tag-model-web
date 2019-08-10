@@ -53,7 +53,6 @@ class ModalTagEdit extends Component {
         if (editTag) {
           param.id = tagDetail.id
         }
-        console.log(param)
 
         this.store.updateTag(param, () => {
           this.bigStore.updateKey = Math.random()

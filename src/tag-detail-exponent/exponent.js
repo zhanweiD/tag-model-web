@@ -18,8 +18,13 @@ export default class Exponent extends Component {
 
   constructor(props) {
     super(props)
-    store.aId = this.props.aId
-    store.getDailyCard()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.aId && this.aId !== nextProps.aId) {
+      store.id = nextProps.aId
+      store.getDailyCard()
+    }
   }
 
   componentDidMount() {

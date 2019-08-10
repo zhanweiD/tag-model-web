@@ -148,6 +148,7 @@ class TagCategory extends Component {
       onClick: (key, nodeData) => {
         runInAction(() => {
           this.store.currentTreeItemKey = nodeData.id
+          this.store.getTagDetail(nodeData.aId)
           this.store.getCanMoveTree(nodeData.id)
           this.store.modalVisible.moveTag = true
         })
@@ -201,7 +202,7 @@ class TagCategory extends Component {
               itemKey={item.id}
               title={item.name}
               actionList={this.getMenuList(item)}
-              selectable={item.type ===2}
+              selectable={item.type !== 1}
               iconNodeSrc={tagClass}
             >
               {loop(item.children)}
@@ -214,6 +215,7 @@ class TagCategory extends Component {
               nodeData={item}
               itemKey={item.id}
               title={item.name}
+              selectable={item.type !== 1}
               actionList={this.getMenuList(item)}
               iconNodeSrc={tag}
             />

@@ -33,9 +33,8 @@ class ModalTagMove extends Component {
       if (!err) {
         const param = {
           treeId: currentTreeItemKey,
-          moveCateId: values.objIds.pop(),
+          moveCateId: values.pathIds.pop(),
         }
-        console.log(param)
 
         this.store.moveTag(param)
       }
@@ -79,8 +78,8 @@ class ModalTagMove extends Component {
         <Form>
           <Spin spinning={this.store.detailLoading}>
             <FormItem {...formItemLayout} label="类目名称">
-              {getFieldDecorator('objIds', {
-                initialValue: tagDetail.objIds,
+              {getFieldDecorator('pathIds', {
+                initialValue: tagDetail.pathIds,
                 rules: [
                   {required: true, message: '类目名称不可为空'},
                 ],

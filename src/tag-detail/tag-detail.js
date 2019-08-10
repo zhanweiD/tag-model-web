@@ -77,6 +77,7 @@ export default class TagDetail extends Component {
       },
     ]
 
+    console.log(this.aId)
     return (
       <div className="tag-detail">
         <div className="detail-info">

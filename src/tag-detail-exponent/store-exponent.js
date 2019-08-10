@@ -14,7 +14,7 @@ function getColors(len) {
 }
 
 class ExponentStore {
-  aId = ''
+  id = ''
 
   @observable dailyCard = false
   @observable vsTrend = []
@@ -24,7 +24,7 @@ class ExponentStore {
   @action async getDailyCard() {
     try {
       const res = await io.getDailyCard({
-        id: this.aId,
+        id: this.id,
       })
       runInAction(() => {
         this.dailyCard = res
@@ -38,14 +38,14 @@ class ExponentStore {
   @action async getDailyVs(type, startDate, endDate, cb) {
     try {
       const res2 = await io.getDailyVs({
-        id: this.aId,
+        id: this.id,
         type,
         startDate,
         endDate,
       })
       const res = {"title":"热度概况","xAxisUnit":null,"yAxisUnit":"B","tenantId":null,"userId":null,"success":null,"data":[{"key":1557072000000,"value":{"score":60}},{"key":1557158400000,"value":{"score":50}},{"key":1557244800000,"value":{"score":40}}],"radixVal":null,"radixPoint":null}
       runInAction(() => {
-        // type: (1.标签价值；2.标签热度；3.标签质量)
+        // type: (1.标签价值；2.标签热度；3.标签质量)`
         const o = {
           1: 'vsTrend',
           2: 'hotTrend',
