@@ -65,8 +65,8 @@ export default class Tag extends Component {
             <div className="FB1 mt16 ml16 mr16" style={{backgroundColor: '#fff'}}>
               {(() => {
                 if (currentNode && currentNode.aId) {
-                  if (currentNode.type === 2) return <ObjDetail aId={currentNode.aId} />
-                  if (currentNode.type === 0) return <TagDetail aId={currentNode.aId} />
+                  if (currentNode.type === 2) return <ObjDetail aId={currentNode.aId} updateKey={this.store.updateKey} />
+                  if (currentNode.type === 0) return <TagDetail aId={currentNode.aId} updateKey={this.store.updateKey} />
                 }
               })()}
             </div>

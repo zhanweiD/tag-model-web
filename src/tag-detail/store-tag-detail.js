@@ -11,7 +11,6 @@ class TagDetailStore {
 
   @action async getBaseInfo(id) {
     this.baseInfoLoading = true
-    // 节点类型 0 标签 1 类目 2 对象
     try {
       const res = await io.getTagDetail({id})
       runInAction(() => {

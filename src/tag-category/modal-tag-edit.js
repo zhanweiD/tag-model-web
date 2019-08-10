@@ -46,12 +46,18 @@ class ModalTagEdit extends Component {
           level: cateDetail.level,
         })
 
+        if (!values.isEnum) {
+          param.enumValue = ''
+        }
+
         if (editTag) {
           param.id = tagDetail.id
         }
         console.log(param)
 
-        this.store.updateTag(param)
+        this.store.updateTag(param, () => {
+          this.bigStore.updateKey = Math.random()
+        })
       }
     })
   }
@@ -176,7 +182,7 @@ class ModalTagEdit extends Component {
               })(<Switch checkedChildren="是" unCheckedChildren="否" onChange={e => this.changeIsEnum(e)} />)}
             </FormItem>
 
-            {this.isEnum && (
+            {(tagDetail.isEnum || this.isEnum) && (
               <FormItem {...formItemLayout} label="枚举显示值">
                 {getFieldDecorator('enumValue', {
                   rules: [

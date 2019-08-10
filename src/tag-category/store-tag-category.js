@@ -151,11 +151,11 @@ class TagCategoryStore {
     }
   }
 
-  @action async getCanMoveTree(id) {
+  @action async getCanMoveTree(treeId) {
     try {
       this.detailLoading = true
       const res = await io.getCanMoveTree({
-        id,
+        treeId,
       })
       runInAction(() => {
         this.detailLoading = false
@@ -232,7 +232,7 @@ class TagCategoryStore {
     }
   }
 
-  @action async updateObject(params) {
+  @action async updateObject(params, cb) {
     this.confirmLoading = true
     try {
       if (!params.id) {
@@ -245,7 +245,8 @@ class TagCategoryStore {
         this.confirmLoading = false
         this.modalVisible.editObject = false
         this.objectDetail = false
-        return this.getCategoryList()
+        this.getCategoryList()
+        cb && cb()
       })
     } catch (e) {
       runInAction(() => {
@@ -332,7 +333,7 @@ class TagCategoryStore {
     }
   }
 
-  @action async updateTag(params) {
+  @action async updateTag(params, cb) {
     this.confirmLoading = true
     try {
       if (!params.id) {
@@ -345,7 +346,8 @@ class TagCategoryStore {
         this.confirmLoading = false
         this.modalVisible.editTag = false
         this.tagDetail = false
-        return this.getCategoryList()
+        this.getCategoryList()
+        cb && cb()
       })
     } catch (e) {
       runInAction(() => {

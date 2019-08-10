@@ -8,6 +8,7 @@ import store from './store-obj-detail'
 
 @observer
 export default class ObjDetail extends Component {
+  @observable updateKey = undefined
   @observable aId = undefined
 
   constructor(props) {
@@ -16,11 +17,13 @@ export default class ObjDetail extends Component {
   }
 
   componentWillMount() {
-    store.getBaseInfo(this.props.aId)
+    const {aId} = this.props
+    store.getBaseInfo(aId)
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.aId !== nextProps.aId) {
+    if (this.updateKey !== nextProps.updateKey) {
+      this.updateKey = nextProps.updateKey
       this.aId = nextProps.aId
       store.getBaseInfo(nextProps.aId)
     }

@@ -148,7 +148,7 @@ class TagCategory extends Component {
       onClick: (key, nodeData) => {
         runInAction(() => {
           this.store.currentTreeItemKey = nodeData.id
-          this.store.getCanMoveTree(nodeData.aId)
+          this.store.getCanMoveTree(nodeData.id)
           this.store.modalVisible.moveTag = true
         })
       },

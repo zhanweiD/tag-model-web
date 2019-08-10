@@ -12,6 +12,7 @@ const {TabPane} = Tabs
 @inject('bigStore')
 @observer
 export default class TagDetail extends Component {
+  @observable updateKey = undefined
   @observable aId = undefined
 
   constructor(props) {
@@ -19,8 +20,14 @@ export default class TagDetail extends Component {
     this.bigStore = props.bigStore
   }
 
+  componentWillMount() {
+    const {aId} = this.props
+    store.getBaseInfo(aId)
+  }
+
   componentWillReceiveProps(nextProps) {
-    if (this.aId !== nextProps.aId) {
+    if (this.updateKey !== nextProps.updateKey) {
+      this.updateKey = nextProps.updateKey
       this.aId = nextProps.aId
       store.getBaseInfo(nextProps.aId)
     }
