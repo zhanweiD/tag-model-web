@@ -15,6 +15,16 @@ export default class TrendApi extends Component {
     window.addEventListener('resize', () => this.resize())
   }
 
+  componentWillReceiveProps(nextProps) {
+    const {
+      tagId,
+    } = this.props
+    
+    if (tagId && tagId !== nextProps.tagId) {
+      this.getData()
+    }
+  }
+
   drawChart = data => {
     this.chartLine = echarts.init(this.lineRef)
     this.chartLine.setOption(getApiTrendOpt(

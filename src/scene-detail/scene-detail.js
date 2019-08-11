@@ -1,11 +1,12 @@
 import {Component} from 'react'
 import {observable, action, toJS} from 'mobx'
-import {observer} from 'mobx-react'
+import {observer, inject} from 'mobx-react'
 import {Tabs, Button, Icon} from 'antd'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
 // import {Link} from 'react-router-dom'
 
 import {Time} from '../common/util'
+import {navListMap} from '../common/constants'
 import SelectTag from './select-tag'
 import DataSource from './data-source'
 import ModalDataSource from './modal-data-source'
@@ -15,12 +16,30 @@ import store from './store-scene-detail'
 
 const {TabPane} = Tabs
 
+@inject('frameChange')
 @observer
 export default class SceneDetail extends Component {
+  constructor(props) {
+    super(props)
+    
+    const {
+      match: {
+        params,
+      },
+    } = props
+
+    this.sceneId = params.id
+  }
+  
   componentWillMount() {
+    const {frameChange} = this.props
+
+    frameChange('nav', [
+      navListMap.assetMgt,
+      {text: '名称待定'},
+    ])
     store.getDetail()
   }
-
 
   @action dSourceVisible() {
     store.dSourceVisible = true
@@ -32,7 +51,6 @@ export default class SceneDetail extends Component {
   }
 
   render() {
-    console.log(toJS(store))
     const info = toJS(store.info)
     const {
       tagCount,
@@ -69,7 +87,7 @@ export default class SceneDetail extends Component {
               <Icon type="edit" onClick={this.sceneDetailVisible} />
             </p>
             <div>
-              <Button className="mr8" href={`${window.__onerConfig.pathPrefix}/scene#/tags`}>标签列表</Button>
+              <Button className="mr8" href={`${window.__onerConfig.pathPrefix}/scene#/tags/${this.sceneId}`}>标签列表</Button>
               <Button type="primary" onClick={this.dSourceVisible}>添加目的数据源</Button>
             </div>
           </div>
@@ -78,10 +96,10 @@ export default class SceneDetail extends Component {
 
         <Tabs defaultActiveKey="1">
           <TabPane tab="标签选择" key="1">    
-            <SelectTag />
+            <SelectTag sceneId={this.sceneId} />
           </TabPane>
           <TabPane tab="目的数据源列表" key="2">
-            <DataSource />
+            <DataSource sceneId={this.sceneId} />
           </TabPane>
         </Tabs>
         <ModalEditScene store={store} />

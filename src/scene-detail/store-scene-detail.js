@@ -51,9 +51,7 @@ class SceneDetailStore {
       })
 
       runInAction(() => {
-        if (cb) {
-          cb()
-        }
+        if (cb) cb()
       })
     } catch (e) {
       errorTip(e.message)

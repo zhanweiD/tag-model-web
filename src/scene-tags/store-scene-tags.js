@@ -6,13 +6,16 @@ import io from './io'
 
 
 class SceneTagsStore {
-  @observable tagList = {
+  // 场景id
+  @observable sceneId = undefined
+
+  @observable tagInfo = {
     data: [],
     pagination: false,
     loading: false,
   }
 
-  @observable param = {
+  @observable params = {
     pageSize: 10,
     currentPage: 1,
   }
@@ -22,22 +25,23 @@ class SceneTagsStore {
     this.tagInfo.loading = true
     try {
       const res = await io.getList({
-        ...this.param,
+        occasionId: this.sceneId,
+        ...this.params,
       })
       runInAction(() => {
         this.tagInfo.data.replace(res.data)
 
         this.tagInfo.pagination = {
           pageSize: res.pageSize,
-          total: res.count,
+          total: res.totalCount,
           current: res.currentPage,
         }
-        this.taskInfo.loading = false
+        this.tagInfo.loading = false
       })
     } catch (e) {
       errorTip(e.message)
       runInAction(() => {
-        this.loading = false
+        this.tagInfo.loading = false
       })
     }
   }

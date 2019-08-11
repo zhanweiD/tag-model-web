@@ -15,6 +15,16 @@ export default class TrendTag extends Component {
     window.addEventListener('resize', () => this.resize())
   }
 
+  componentWillReceiveProps(nextProps) {
+    const {
+      tagId,
+    } = this.props
+
+    if (tagId && tagId !== nextProps.tagId) {
+      this.getData()
+    }
+  }
+
   drawChart = data => {
     this.chartLine = echarts.init(this.lineRef)
 
@@ -32,8 +42,7 @@ export default class TrendTag extends Component {
       startDate: gte,
       endDate: lte,
     }
-    
-    // change
+
     store.getTagTrend(params, res => {
       this.drawChart(res) 
     })

@@ -17,8 +17,8 @@ export default class SceneRouter extends Component {
         <Frame>
           <Switch>
             <Route exact strict path="/" component={Scene} />
-            <Route exact strict path="/detail" component={SceneDetail} />
-            <Route exact strict path="/tags" component={SceneTags} />
+            <Route exact strict path="/detail/:id" component={SceneDetail} />
+            <Route exact strict path="/tags/:id" component={SceneTags} />
           </Switch>
         </Frame>
       </Router>

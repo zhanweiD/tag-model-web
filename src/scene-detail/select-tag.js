@@ -1,30 +1,64 @@
 import {Component} from 'react'
 import {observable, action, toJS} from 'mobx'
-import {observer} from 'mobx-react'
+import {observer, inject, Provider} from 'mobx-react'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
 import {Tag, Button} from 'antd'
 
 import {Time} from '../common/util'
-import ModalSelectTag from './modal-select-tag'
+import {navListMap} from '../common/constants'
 import TrendTag from './trend-tag'
 import TrendApi from './trend-api'
 
-import store from './store-select-tag'
 
+import Store from './store-select-tag'
+import TagCategory, {TagCategoryStore} from '../category-scene'
+
+@inject('frameChange')
 @observer
 export default class SelectTag extends Component {
+  constructor(props) {
+    super(props)
+
+    this.store = new Store(props)
+    this.store.categoryStore = new TagCategoryStore(props)
+    this.store.categoryStore.getCategoryList()
+
+    // this.store.typeCode = +params.type || 1
+    // this.store.id = +params.id || 999999999
+    this.store.typeCode = 1
+    this.store.id = props.id || -1
+
+    // 场景id
+    this.store.sceneId = props.sceneId
+
+    // 选择标签暂存id 
+    this.tagId = -1
+  }
+  
+
+  // @observable updateKey = 0
+  
   componentWillMount() {
-    store.getTagDetail()
+    const {frameChange} = this.props
+    frameChange('nav', [
+      navListMap.assetMgt,
+      {text: '名称待定'},
+    ])
+    this.store.getTagDetail()
   }
 
-  // 临时
-  @action handleModalVisible() {
-    store.selectTagVisible = true
+  @action tagChange = tagId => {
+    if (tagId !== this.tagId) {
+      this.store.getTagDetail()
+      this.tagId = tagId
+    }
   }
 
   render() {
-    const {tagInfo} = store
+    const {tagInfo} = this.store
     const {
+      name,
+      used,
       enName,
       valueTypeName,
       cUser,
@@ -49,27 +83,26 @@ export default class SelectTag extends Component {
       value: descr,
     }]
     return (
-      <div className="select-tag FBH">
-        <div style={{width: '200px'}}>
-          <Button>选择标签</Button>
-        </div>
-        <div className="select-tag-box">
-          <div className="detail-info">
-            <div className="d-head FBH FBJ">
-              <div>
-                <span className="mr10">交易金额</span>
-                <Tag color="green">使用中</Tag>
+      <Provider bigStore={this.store}>
+        <div className="select-tag FBH">
+          <TagCategory tagChange={this.tagChange} />
+          <div className="select-tag-box">
+            <div className="detail-info">
+              <div className="d-head FBH FBJ">
+                <div>
+                  <span className="mr10">{name}</span>
+                  <Tag color={used ? 'green' : 'blue'}>{used ? '使用中' : '未使用'}</Tag>
+                </div>
+                {/* 点击“标签详情”按钮，进入标签池中的标签详情 */}
+                <Button type="primary">标签详情</Button>
               </div>
-              {/* 点击“标签详情”按钮，进入标签池中的标签详情 */}
-              <Button type="primary">标签详情</Button>
+              <NemoBaseInfo dataSource={baseInfo} key={Math.random()} className="d-info" />
             </div>
-            <NemoBaseInfo dataSource={baseInfo} key={Math.random()} className="d-info" />
+            <TrendTag store={this.store} tagId={this.store.tagId} />
+            <TrendApi store={this.store} tagId={this.store.tagId} />
           </div>
-          <TrendTag store={store} />
-          <TrendApi store={store} />
         </div>
-        <ModalSelectTag store={store} />
-      </div>
+      </Provider>   
     )
   }
 }

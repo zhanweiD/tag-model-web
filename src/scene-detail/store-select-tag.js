@@ -6,6 +6,18 @@ import io from './io'
 
 
 class SelectTagStore {
+  constructor(props) {
+    this.props = props
+    // this.cateId = +props.match.params.id ? +props.match.params.id : -1
+    // this.getChargeList()
+  }
+
+  // 场景id
+  @observable sceneId = undefined
+  
+  // 选择标签id
+  @observable tagId = undefined
+
   // 标签详情
   @observable tagInfo = {}
   
@@ -56,4 +68,5 @@ class SelectTagStore {
   }
 }
 
-export default new SelectTagStore()
+// export default new SelectTagStore()
+export default SelectTagStore
