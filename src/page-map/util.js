@@ -90,16 +90,18 @@ export function getLineChartOption(data, type = 'worth') {
   }
 }
 
+// 饼图颜色
+export const pieColorList = ['#39A0FF', '#36CBCB', '#4DCB73', '#FAD338', '#F2637B', '#9760E4']
+
 // 获取标签调用的饼图配置项
 export function getPieChartOption(data) {
-  const colorList = ['#39A0FF', '#36CBCB', '#4DCB73', '#FAD338', '#F2637B', '#9760E4']
   const radius = 120
 
   return {
     series: [{
       type: 'pie',
       radius: [radius - 25, radius],
-      center: [radius + 10, radius + 30],
+      center: [radius + 10, radius + 20],
       label: {
         show: false,
       },
@@ -118,7 +120,7 @@ export function getPieChartOption(data) {
       itemStyle: {// 元素样式
         normal: {
           // 对每个颜色赋值 
-          color: item => colorList[item.dataIndex],
+          color: item => pieColorList[item.dataIndex],
         },
       },
     }],

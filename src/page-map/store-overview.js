@@ -59,24 +59,6 @@ class OverviewStore {
   // 标签价值等3个panel的时间范围
   @observable scoreTimeRange = []
 
-  // // 标签平均价值分趋势（折线图数据）
-  // @observable worthLineData = []
-
-  // // 标签价值分Top20排名（表格数据）
-  // @observable worthTableData = []
-
-  // // 标签平均热度趋势（折线图数据）
-  // @observable hotLineData = []
-
-  // // 标签热度Top20排名（表格数据）
-  // @observable hotTableData = []
-
-  // // 标签平均质量分趋势（折线图数据）
-  // @observable qualityLineData = []
-
-  // // 标签质量分Top20排名（表格数据）
-  // @observable qualityLineData = []
-
   // 标签调用的API数占比
   @observable apiCountData = []
 
@@ -136,12 +118,6 @@ class OverviewStore {
     const numberOfType = typeToNumber(type)
     const [startDate, endDate] = this.scoreTimeRange
 
-    console.log('getScoreTrend',{
-      type: numberOfType, // 统计分数类型(1.标签价值；2.标签热度；3.标签质量)
-      startDate,
-      endDate,
-    } )
-
     try {
       const res = await io.getScoreTrend({
         type: numberOfType, // 统计分数类型(1.标签价值；2.标签热度；3.标签质量)
@@ -158,22 +134,33 @@ class OverviewStore {
   }
 
   // 请求 标签调用占比饼图
-  @action async getCallData(type) {
+  @action async getCallData(type = 1, cb) {
+    const [startDate, endDate] = this.callTimeRange
+
     try {
       const res = await io.getCallData({
-        type: 1,  // 标签饼图类型(1.标签调用api；2.标签被api调用)
-        startDate: 1,
-        endDate: 1,
+        type, // 标签饼图类型(1.标签调用api；2.标签被api调用)
+        startDate,
+        endDate,
       })
 
       console.log('getCallData', res)
 
-      // if (type) {
-        this.apiCountData = res.pieTemplateDtoList
-      // }
-
+      if (type === 2) {
+        this.tagCallTimesData = {
+          list: res.pieTemplateDtoList,
+          total: +res.total,
+        }
+      } else {
+        this.apiCountData = {
+          list: res.pieTemplateDtoList,
+          total: +res.total,
+        }
+      }
     } catch (error) {
       errorTip(error.message)
+    } finally {
+      cb && cb()
     }
   }
 }

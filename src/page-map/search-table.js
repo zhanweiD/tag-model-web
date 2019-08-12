@@ -7,7 +7,6 @@ import {
 
 
 // 表格columns对象
-// 网关接口：http://192.168.90.87:9985/gateway/api/detail/be_tag/8d439f1001f344edbddf37fb62862a74
 const columns = [
   // 名称、数据类型、价值分、质量分、热度、创建人、使用状态、被API调用次数
   {
@@ -103,7 +102,6 @@ export default class SearchTable extends React.Component {
 
     // 当前页的选中项id数组
     const selectedRowKeys = (store.selectedTags[store.currentPage] || []).map(tag => tag.id)
-    console.log('selectedRowKeys', selectedRowKeys)
 
     return (
       <div className="search-table white-block p24 mt16" key={randomKey}>
@@ -121,6 +119,7 @@ export default class SearchTable extends React.Component {
         {/* 表格 */}
         <div className="mt8">
           <Table
+            loading={store.loading}
             dataSource={store.tagList}
             columns={columns}
             pagination={{
@@ -189,5 +188,4 @@ export default class SearchTable extends React.Component {
 
     store.getTagList()
   }
-
 }

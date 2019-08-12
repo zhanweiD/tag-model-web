@@ -17,7 +17,6 @@ import store from './store-search'
 export default class MapSearch extends Component {
   componentDidMount() {
     // 请求所属类目的对象列表
-    // TODO:（要不要加Loading?）
     store.getObjList()
 
     // 请求标签列表（表格数据）
