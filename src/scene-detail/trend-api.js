@@ -1,7 +1,5 @@
 import {Component} from 'react'
-import {
-  action,
-} from 'mobx'
+import {action} from 'mobx'
 import TimeRange from '../time-range'
 import {getApiTrendOpt} from './charts-options'
 
@@ -52,9 +50,7 @@ export default class TrendApi extends Component {
   }
 
   componentWillUnmount() {
-    if (this.chartLine) {
-      this.chartLine.dispose()
-    }
+    if (this.chartLine) this.chartLine.dispose()
     this.chartLine = null
   }
 

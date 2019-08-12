@@ -15,6 +15,7 @@ ioContext.create('sceneTagCategory', {
     mock: isMock,
     mockUrl: 'page-scene/tree-getCategoryList',
   },
+
   /**
    * 对象-相关接口 
    */
@@ -99,6 +100,9 @@ ioContext.create('sceneTagCategory', {
   },  
 
 
+  /**
+   * 以下接口暂未应用
+   */
   // 获取标签可移动的标签类目树
   getCanMoveTree: {
     url: 'be_tag/tag/pool/can_move_tree',

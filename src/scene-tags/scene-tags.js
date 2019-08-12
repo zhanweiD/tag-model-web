@@ -123,7 +123,7 @@ export default class Scene extends Component {
           onReset={() => this.handleReset()}
         />
         <Table 
-          className="bgf"
+          className="bgf p16"
           loading={loading}
           columns={this.columns} 
           dataSource={data.slice()} 

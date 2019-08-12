@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import {observable, action, toJS} from 'mobx'
+import {action, toJS} from 'mobx'
 import {observer} from 'mobx-react'
 import {
   Row, Col, Spin, Modal, Icon, Tag, Button,

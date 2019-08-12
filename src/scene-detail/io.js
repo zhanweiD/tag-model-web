@@ -45,6 +45,39 @@ ioContext.create('sceneDetail', {
     mockUrl: 'page-scene/getTagTrend',
     url: 'be_tag/occasion/tree/obj/cat/tag/invoke',
   },
+
+  /**
+   * 目的数据源 - 相关接口
+   */
+
+  // 数据源数据
+  getDBSource: {
+    mock: isMock,
+    mockUrl: 'page-scene/getDBSource',
+    url: 'be_tag/occasion/dbSourceList',
+  },
+
+  // 添加目的数据源 - 列表
+  getDBSourceList: {
+    mock: isMock,
+    mockUrl: 'page-scene/getDBSourceList',
+    url: 'be_tag/occasion/beingDBSourceList',
+  },
+
+  // 添加数据源 - 保存
+  saveStorage: {
+    mock: isMock,
+    method: 'POST',
+    mockUrl: 'page-scene/getContent',
+    url: 'be_tag/occasion/saveStorage',
+  },
+
+  // 目的数据源 - 列表
+  getSourceList: {
+    mock: isMock,
+    mockUrl: 'page-scene/alreadyDBSourceList',
+    url: 'be_tag/occasion/beingDBSourceList',
+  },
 })
 
 export default ioContext.api.sceneDetail

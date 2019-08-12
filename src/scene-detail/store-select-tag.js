@@ -20,7 +20,7 @@ class SelectTagStore {
 
   // 标签详情
   @observable tagInfo = {}
-  
+
   // 添加目的数据源弹窗标识
   @observable selectTagVisible = false
 
@@ -43,9 +43,7 @@ class SelectTagStore {
       const res = await io.getApiTrend(params)
 
       runInAction(() => {
-        if (cb) {
-          cb(toJS(res))
-        }
+        if (cb) cb(toJS(res))
       })
     } catch (e) {
       errorTip(e.message)
@@ -58,9 +56,7 @@ class SelectTagStore {
       const res = await io.getTagTrend(params)
 
       runInAction(() => {
-        if (cb) {
-          cb(toJS(res))
-        }
+        if (cb) cb(toJS(res))
       })
     } catch (e) {
       errorTip(e.message)

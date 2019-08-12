@@ -1,59 +1,70 @@
 import {Component} from 'react'
 import {observable, action, toJS} from 'mobx'
 import {observer} from 'mobx-react'
-import {Table} from 'antd'
+import {Table, Button} from 'antd'
 
+@observer
 export default class DataSource extends Component {
   componentWillMount() {
+    const {store} = this.props
+    store.getSourceList()
   }
+  
 
   columns = [{
     title: '所属分类',
-    key: 'key1',
-    dataIndex: 'key1',
+    dataIndex: 'objTypeName',
   }, {
     title: '对象名称',
-    key: 'key2',
-    dataIndex: 'key2',
+    dataIndex: 'objName',
   }, {
     title: '所属类目',
-    key: 'key3',
-    dataIndex: 'key3',
-    sorter: true,
+    dataIndex: 'catName',
   }, {
     title: '标签中文名',
-    key: 'key4',
-    dataIndex: 'key4',
-    sorter: true,
+    dataIndex: 'tagName',
   }, {
     title: '标签英文名',
-    key: 'key5',
-    dataIndex: 'key5',
-    sorter: true,
+    dataIndex: 'tagEnName',
   }, {
     title: '目的字段',
-    key: 'key6',
-    dataIndex: 'key6',
+    dataIndex: 'filedName',
   }]
 
-  @action handleTableChange = pagination => {
-    // this.store.param.currentPage = pagination.current
-  }
-
   render() {
+    const {store: {sourceData}} = this.props
+
     return (
-      <div className="data-source m16">
-        <Table 
-          columns={this.columns} 
-          dataSource={[]} 
-          onChange={this.handleTableChange}
-          pagination={{
-            // pageSize: store.pagination.pageSize,
-            // current: store.pagination.currentPage,
-            // total: store.pagination.count,
-            // showTotal: () => `合计${store.pagination.count}条记录`,
-          }}
-        />
+      <div className="data-source m16 p16 bgf">
+        {
+          sourceData.data.map((item, index) => (
+            <div className="mb48">
+              <div className="mb24 FBH FBJ FBAC">
+                <div className="fs14">
+                  <span className="mr48">
+                目的数据源：
+                    {item.sourceName}
+                  </span>
+                  <span>
+                目的数据表：
+                    {item.tableName}
+                  </span>
+                </div>
+                {/* 点击“配置数据服务”按钮，跳转至服务管理页面 */}
+                {
+                  (index === 0) && <Button type="primary">配置数据服务</Button>
+                }
+              </div>
+              <Table 
+                columns={this.columns} 
+                loading={sourceData.loading}
+                dataSource={item.details.slice()} 
+                pagination={false}
+              />
+            </div>
+          ))
+        }
+       
       </div>
     )
   }

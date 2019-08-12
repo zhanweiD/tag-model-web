@@ -1,7 +1,9 @@
 import {Component} from 'react'
 import {observable, action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
-import {Tabs, Button, Icon} from 'antd'
+import {
+  Tabs, Button, Icon, Spin,
+} from 'antd'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
 // import {Link} from 'react-router-dom'
 
@@ -28,7 +30,7 @@ export default class SceneDetail extends Component {
       },
     } = props
 
-    this.sceneId = params.id
+    store.sceneId = params.id
   }
   
   componentWillMount() {
@@ -41,11 +43,11 @@ export default class SceneDetail extends Component {
     store.getDetail()
   }
 
-  @action dSourceVisible() {
-    store.dSourceVisible = true
+  @action.bound dbSourceVisible() {
+    store.getDBSource()
   }
 
-  @action sceneDetailVisible() {
+  @action.bound sceneDetailVisible() {
     store.isEdit = true
     store.modalVisible = true
   }
@@ -80,26 +82,29 @@ export default class SceneDetail extends Component {
 
     return (
       <div className="scene-detail">
-        <div className="info">
-          <div className="FBH FBJ">
-            <p className="name">
-              <span className="mr8">{info.name}</span> 
-              <Icon type="edit" onClick={this.sceneDetailVisible} />
-            </p>
-            <div>
-              <Button className="mr8" href={`${window.__onerConfig.pathPrefix}/scene#/tags/${this.sceneId}`}>标签列表</Button>
-              <Button type="primary" onClick={this.dSourceVisible}>添加目的数据源</Button>
+        <Spin spinning={store.loading}>
+          <div className="info">
+            <div className="FBH FBJ">
+              <p className="name">
+                <span className="mr8">{info.name}</span> 
+                <Icon type="edit" onClick={this.sceneDetailVisible} />
+              </p>
+              <div>
+                <Button className="mr8" href={`${window.__onerConfig.pathPrefix}/scene#/tags/${store.sceneId}`}>标签列表</Button>
+                <Button type="primary" onClick={this.dbSourceVisible}>添加目的数据源</Button>
+              </div>
             </div>
+            <NemoBaseInfo dataSource={baseInfo} key={Math.random()} className="ml4" />
           </div>
-          <NemoBaseInfo dataSource={baseInfo} key={Math.random()} className="ml4" />
-        </div>
+        </Spin>
+       
 
-        <Tabs defaultActiveKey="1">
+        <Tabs defaultActiveKey="1" animated={false}>
           <TabPane tab="标签选择" key="1">    
-            <SelectTag sceneId={this.sceneId} />
+            <SelectTag sceneId={store.sceneId} />
           </TabPane>
           <TabPane tab="目的数据源列表" key="2">
-            <DataSource sceneId={this.sceneId} />
+            <DataSource store={store} />
           </TabPane>
         </Tabs>
         <ModalEditScene store={store} />
