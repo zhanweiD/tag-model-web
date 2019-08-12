@@ -1,40 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import {
-  Tabs, Row, Col, Table,
-} from 'antd'
-import DateSelect from '../component-date-select'
-import LineChart from '../component-line-chart'
+import {observer} from 'mobx-react'
+import {action} from 'mobx'
+import {Tabs} from 'antd'
+import TimeRange from '../time-range'
+import OverviewScorePanel from './overview-score-panel'
 
 const {TabPane} = Tabs
-
-const tableColumns = [
-  {
-    title: '排名',
-    dataIndex: 'index',
-    key: 'index',
-    render: (v, record, index) => index + 1,
-  },
-  {
-    title: '标签名',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  {
-    title: '标签价值分',
-    dataIndex: 'score',
-    key: 'score',
-    width: 80,
-    sorter: true,
-  },
-]
-
-const tableData = [
-  {
-    name: 'hhh',
-    score: 10,
-  },
-]
 
 /**
  * @description 标签概览 - 标签价值、热度、质量的折线图和排名
@@ -44,42 +15,106 @@ const tableData = [
  * @class OverviewScore
  * @extends {React.Component}
  */
+@observer
 export default class OverviewScore extends React.Component {
+  state = {
+    currentTab: 'worth',
+  }
+
+  componentDidMount() {
+    this.getPabelData('worth')
+  }
+
   render() {
+    const {store} = this.props
+    const {currentTab} = this.state
+
+    const {panelsData} = store
+
     return (
       <div className="white-block mt16 pt16">
         <Tabs
-          tabBarExtraContent={<DateSelect />}
+          activeKey={currentTab}
+          tabBarExtraContent={(
+            <TimeRange 
+              custom
+              exportTimeRange={(lte, gte) => {
+                console.log('exportTimeRange', lte, gte)
+                this.onTimeChange(lte, gte)
+              }}
+            />
+          )}
           tabBarStyle={{padding: '0 24px', marginBottom: '0'}}
+          animated={false}
+          onChange={activeKey => {
+            console.log('onChange', activeKey)
+            this.setState({
+              currentTab: activeKey,
+            })
+            this.getPabelData(activeKey)
+          }}
         >
           <TabPane tab="标签价值" key="worth">
-            <Row gutter={48} style={{height: '400px', padding: '16px 24px 24px 24px'}}>
-              <Col span={15}>
-                {/* 标签价值 */}
-                <LineChart height={360} />
-              </Col>
-              <Col span={9}>
-                <div className="fs14 mb12">标签价值分Top20排名</div>
-                <Table
-                  dataSource={tableData}
-                  columns={tableColumns}
-                  pagination={{
-                    current: 1,
-                    pageSize: 5,
-                    total: Math.min(10, 20),
-                  }}
-                />
-              </Col>
-            </Row>
+            <OverviewScorePanel
+              type="worth"
+              {...panelsData.worth}
+              onTableChange={(...args) => {
+                this.onTableChange('worth', ...args)
+              }}
+            />
           </TabPane>
           <TabPane tab="标签热度" key="hot">
-            标签价值
+            <OverviewScorePanel
+              type="hot"
+              {...panelsData.hot}
+              onTableChange={(...args) => {
+                this.onTableChange('hot', ...args)
+              }}
+            />
           </TabPane>
           <TabPane tab="标签质量" key="quality">
-            标签价值
+            <OverviewScorePanel
+              type="quality"
+              {...panelsData.quality}
+              onTableChange={(...args) => {
+                this.onTableChange('quality', ...args)
+              }}
+            />
           </TabPane>
         </Tabs>
       </div>
     )
+  }
+
+  // 获取某个panel的数据
+  @action.bound getPabelData(type) {
+    const {store} = this.props
+    store.getScoreRank(type)
+    store.getScoreTrend(type)
+  }
+
+  // 表格交互
+  @action.bound onTableChange(type, pagination, filters, sorter) {
+    const {store} = this.props
+    const {panelsData} = store
+
+    const {current, pageSize} = pagination
+    const {field, order} = sorter
+
+    panelsData[type].currentPage = current
+    panelsData[type].pageSize = pageSize
+    panelsData[type].sortKey = field
+    panelsData[type].sortOrder = order
+
+    store.getScoreRank(type)
+  }
+
+  // 更换时间
+  @action.bound onTimeChange(lte, gte) {
+    const {store} = this.props
+    const {currentTab} = this.state
+
+    store.scoreTimeRange = [lte, gte]
+    this.getPabelData(currentTab)
   }
 }

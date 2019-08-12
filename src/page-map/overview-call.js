@@ -1,8 +1,9 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import {Row, Col} from 'antd'
-import DateSelect from '../component-date-select'
-import PieChart from '../component-pie-chart'
+import {observer} from 'mobx-react'
+import {action, toJS} from 'mobx'
+import TimeRange from '../time-range'
+import EchartsChart from '../component-echarts-chart'
+import {getPieChartOption} from './util'
 
 /**
  * @description 标签概览 - 标签调用，两个饼图
@@ -12,8 +13,19 @@ import PieChart from '../component-pie-chart'
  * @class OverviewCall
  * @extends {React.Component}
  */
+@observer
 export default class OverviewCall extends React.Component {
+  componentDidMount() {
+    const {store} = this.props
+    store.getCallData()
+  }
+
   render() {
+    const {store} = this.props
+    const pieOption = getPieChartOption(store.apiCountData)
+
+    console.log(pieOption)
+
     return (
       <div className="white-block mt16">
         {/* 标签调用标题部分 */}
@@ -22,7 +34,12 @@ export default class OverviewCall extends React.Component {
           style={{padding: '16px 24px 8px', borderBottom: '1px solid #e8e8e8'}}
         >
           <span className="fs14 mt4">标签调用</span>
-          <DateSelect />
+          <TimeRange 
+            custom
+            exportTimeRange={(lte, gte) => {
+              console.log('exportTimeRange', lte, gte)
+            }}
+          />
         </div>
 
         {/* 饼图部分 */}
@@ -41,7 +58,10 @@ export default class OverviewCall extends React.Component {
               <div className="pb16 fs14">标签调用的API数占比</div>
               <div className="FBH FBJB mr24">
                 <div style={{width: '60%'}}>
-                  <PieChart height={300} />
+                  <EchartsChart
+                    option={pieOption}
+                    height={280}
+                  />
                 </div>
                 <div>
                   legends
@@ -54,7 +74,10 @@ export default class OverviewCall extends React.Component {
               <div className="pb16 fs14">标签被API调用的次数占比</div>
               <div className="FBH FBJB mr24">
                 <div style={{width: '60%'}}>
-                  <PieChart height={300} />
+                  <EchartsChart
+                    option={pieOption}
+                    height={280}
+                  />
                 </div>
                 <div>
                   legends
