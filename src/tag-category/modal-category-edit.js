@@ -1,8 +1,8 @@
 import {Component} from 'react'
 import {
-Modal, Form, Input, Spin
+  Modal, Form, Input, Spin,
 } from 'antd'
-import {observable, action } from 'mobx'
+import {observable, action} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {isExitMsg} from '../common/constants'
 
@@ -111,6 +111,7 @@ class ModalEditCategory extends Component {
                   {pattern: /^[\u4e00-\u9fa5]{1,30}$/, message: '输入限制为中文字符'},
                   {validator: this.handleNameValidator},
                 ],
+                validateFirst: true,
               })(<Input autoComplete="off" placeholder="不超过20个字，输入为中文字符" />)}
             </FormItem>
 
