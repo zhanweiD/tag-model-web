@@ -1,17 +1,19 @@
 import ioContext from '../common/io-context'
+import {tagApi} from '../common/util'
 
-const isMock = true
+
+const isMock = false
 
 ioContext.create('sceneTagCategory', {
   // 获取类目列表
   getCategoryList: {
-    url: 'be_tag/occasion/tree/list',
+    url: `${tagApi}/be_tag/occasion/tree/list`,
     mock: isMock,
     mockUrl: 'page-scene/tree-getCategoryList',
   },
 
   searchCategory: {
-    url: 'be_tag/occasion/tree/search',
+    url: `${tagApi}/be_tag/occasion/tree/search`,
     mock: isMock,
     mockUrl: 'page-scene/tree-getCategoryList',
   },
@@ -22,21 +24,21 @@ ioContext.create('sceneTagCategory', {
 
   // 选择对象-下拉框内容 
   getSelectObj: {
-    url: 'be_tag/occasion/selectObj',
+    url: `${tagApi}/be_tag/occasion/selectObj`,
     mock: isMock,
     mockUrl: 'page-scene/tree-getSelectObj',
   },
 
   // 选择对象-保存
   saveObj: {
-    url: 'be_tag/occasion/saveObj',
+    url: `${tagApi}/be_tag/occasion/saveObj`,
     mock: isMock,
     mockUrl: 'page-scene/getContent',
   },
   
   // 对象-移除对象
   deleteObject: {
-    url: 'be_tag/occasion/tree/obj/delObj',
+    url: `${tagApi}/be_tag/occasion/tree/obj/delObj`,
     mock: isMock,
     mockUrl: 'page-scene/getContent',
   },
@@ -47,35 +49,35 @@ ioContext.create('sceneTagCategory', {
 
   // 类目详情
   getCategoryDetail: {
-    url: 'be_tag/occasion/tree/obj/cat/detail',
+    url: `${tagApi}/be_tag/occasion/tree/obj/cat/detail`,
     mock: isMock,
     mockUrl: 'page-scene/category-detail',
   },
   
   // 对象-添加类目
   addObjCategory: {
-    url: 'be_tag/occasion/tree/obj/addCat',
+    url: `${tagApi}/be_tag/occasion/tree/obj/addCat`,
     mock: isMock,
     mockUrl: 'page-scene/getContent',
   },
 
   // 类目-添加类目
   addCategory: {
-    url: 'be_tag/occasion/tree/obj/cat/addCat',
+    url: `${tagApi}/be_tag/occasion/tree/obj/cat/addCat`,
     mock: isMock,
     mockUrl: 'page-scene/getContent',
   },
   
   // 类目-编辑类目
   editCategory: {
-    url: 'be_tag/occasion/tree/obj/cat/edit',
+    url: `${tagApi}/be_tag/occasion/tree/obj/cat/edit`,
     mock: isMock,
     mockUrl: 'page-scene/getContent',
   },
 
   // 类目-删除类目
   deleteCategory: {
-    url: 'be_tag/occasion/tree/obj/cat/del',
+    url: `${tagApi}/be_tag/occasion/tree/obj/cat/del`,
     mock: isMock,
     mockUrl: 'page-scene/getContent',
   },
@@ -86,7 +88,7 @@ ioContext.create('sceneTagCategory', {
 
   // 选择标签-树
   selectTag: {
-    url: 'be_tag/occasion/tree/obj/cat/selectTag',
+    url: `${tagApi}/be_tag/occasion/tree/obj/cat/selectTag`,
     mock: isMock,
     mockUrl: 'page-scene/tree-selectTag',
   },
@@ -94,7 +96,7 @@ ioContext.create('sceneTagCategory', {
   // 选择标签-保存
   saveTag: {
     method: 'POST',
-    url: 'be_tag/occasion/tree/obj/cat/saveTag',
+    url: `${tagApi}/be_tag/occasion/tree/obj/cat/saveTag`,
     mock: isMock,
     mockUrl: 'page-scene/getContent',
   },  
@@ -105,38 +107,38 @@ ioContext.create('sceneTagCategory', {
    */
   // 获取标签可移动的标签类目树
   getCanMoveTree: {
-    url: 'be_tag/tag/pool/can_move_tree',
+    url: `${tagApi}/be_tag/tag/pool/can_move_tree`,
     mock: isMock,
     mockUrl: 'page-hello/getContent',
   },
 
   // 标签相关接口
   getTagDetail: {
-    url: 'be_tag/tag/pool/tag_detail',
+    url: `${tagApi}/be_tag/tag/pool/tag_detail`,
     mock: isMock,
     mockUrl: 'page-hello/getContent',
   },
   addTag: {
     method: 'POST',
-    url: 'be_tag/tag/pool/create_tag',
+    url: `${tagApi}/be_tag/tag/pool/create_tag`,
     mock: isMock,
     mockUrl: 'page-hello/getContent',
   },
   editTag: {
     method: 'POST',
-    url: 'be_tag/tag/pool/update_tag',
+    url: `${tagApi}/be_tag/tag/pool/update_tag`,
     mock: isMock,
     mockUrl: 'page-hello/getContent',
   },
   deleteTag: {
     method: 'POST',
-    url: 'be_tag/tag/pool/delete_tag',
+    url: `${tagApi}/be_tag/tag/pool/delete_tag`,
     mock: isMock,
     mockUrl: 'page-hello/getContent',
   },
   moveTag: {
     method: 'POST',
-    url: 'be_tag/tag/pool/move_tag',
+    url: `${tagApi}/be_tag/tag/pool/move_tag`,
     mock: isMock,
     mockUrl: 'page-hello/getContent',
   },
@@ -144,8 +146,7 @@ ioContext.create('sceneTagCategory', {
 
   // 重名校验
   checkIsExist: {
-    // method: 'POST',
-    url: 'be_tag/occasion/check_cat_name',
+    url: `${tagApi}/be_tag/occasion/check_cat_name`,
     mock: isMock,
     mockUrl: 'page-scene/getContent',
   },

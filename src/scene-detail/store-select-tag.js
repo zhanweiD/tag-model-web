@@ -27,7 +27,10 @@ class SelectTagStore {
   // 标签详情
   @action async getTagDetail() {
     try {
-      const res = await io.getTagDetail()
+      const res = await io.getTagDetail({
+        occasionId: this.sceneId,
+        tagId: this.tagId,
+      })
 
       runInAction(() => {
         this.tagInfo = res

@@ -13,7 +13,6 @@ const FormItem = Form.Item
 @Form.create()
 @observer
 class ModalDataSource extends Component {
-  @observable dbTable = []
   @observable dbTableValue = undefined
   @observable dbSourceValue = undefined
   isFieldRepeat = false
@@ -81,7 +80,9 @@ class ModalDataSource extends Component {
         save: value,
       }
 
-      store.saveStorage(params)
+      store.saveStorage(params, () => {
+        this.reset()
+      })
     })
   }
 
@@ -104,13 +105,15 @@ class ModalDataSource extends Component {
   @action.bound handleCancel() {
     const {store} = this.props
     store.dbSourceVisible = false
+    this.reset()
   }
 
   // 数据源下拉框
-  @action.bound onSourceChange(value, target) {
+  @action.bound onSourceChange(value) {
+    const {store} = this.props
     this.dbSourceValue = value
     this.dbTableValue = undefined
-    this.dbTable = target.props.dbtable || []
+    store.getDbTableList(value)
   }
 
   // 数据表下拉框
@@ -128,9 +131,15 @@ class ModalDataSource extends Component {
 
   // 重置
   @action.bound reset() {
+    const {store: {dbSourceData, dbTable}} = this.props
     this.dbTableValue = ''
     this.dbSourceValue = ''
-    this.dbTable = []
+    this.isFieldRepeat = false
+    
+    // 清空表格数据
+    dbSourceData.data.clear()
+    // 清空数据表下拉框数据
+    dbTable.clear()
   }
 
   render() {
@@ -138,6 +147,7 @@ class ModalDataSource extends Component {
       store: {
         dbSourceVisible, 
         dbSource,
+        dbTable,
         dbSourceData,
       },
     } = this.props
@@ -180,7 +190,7 @@ class ModalDataSource extends Component {
               </span>
               <Select value={this.dbTableValue} style={{width: 150}} placeholder="请选择" onChange={this.onTableChange}>
                 {
-                  toJS(this.dbTable).map(({value, label}) => <Option value={label} key={value}>{label}</Option>)
+                  toJS(dbTable).map(({value, label, used}) => <Option value={label} key={value} disabled={used}>{label}</Option>)
                 }
               </Select>
               <Tooltip title="可以去“离线开发中心”，添加一个项目，加工出想要的同步表">

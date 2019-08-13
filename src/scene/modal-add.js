@@ -34,7 +34,10 @@ class ModalAdd extends Component {
       }
     
       if (store.isEdit) {
-        store.editScene(params, () => {
+        store.editScene({
+          occasionId: store.info.id,
+          ...params,
+        }, () => {
           this.handleReset()
         })
       } else {

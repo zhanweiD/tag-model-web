@@ -1,47 +1,49 @@
 import ioContext from '../common/io-context'
+import {tagApi} from '../common/util'
 
-const isMock = true
+const isMock = false
+
 ioContext.create('scene', {
   // 场景列表
   getList: {
     mock: isMock,
     mockUrl: 'page-scene/getList',
-    url: 'be_tag/asset/occasion/list',
+    url: `${tagApi}/be_tag/occasion/listOcc`,
   },
 
   // 场景详情
   getDetail: {
     mock: isMock,
     mockUrl: 'page-scene/getDetail',
-    url: 'be_tag/asset/occasion/detail',
+    url: `${tagApi}/be_tag/occasion/detail`,
   },
 
   // 场景新增
   addScene: {
     mock: isMock,
     mockUrl: 'page-scene/getContent',
-    url: 'be_tag/asset/occasion/add',
+    url: `${tagApi}/be_tag/occasion/add`,
   },
 
   // 场景删除
   delScene: {
     mock: isMock,
     mockUrl: 'page-scene/getContent',
-    url: 'be_tag/asset/occasion/del',
+    url: `${tagApi}/be_tag/occasion/del`,
   },
 
   // 场景编辑
   editScene: {
     mock: isMock,
     mockUrl: 'page-scene/getContent',
-    url: 'be_tag/asset/occasion/edit',
+    url: `${tagApi}/be_tag/occasion/edit`,
   },
 
   // 中文名校验
   checkName: {
     mock: isMock,
     mockUrl: 'page-scene/getContent',
-    url: 'be_tag/asset/occasion/check_name',
+    url: `${tagApi}/be_tag/occasion/check_name`,
   },
 })
 

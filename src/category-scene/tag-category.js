@@ -59,6 +59,8 @@ class TagCategory extends Component {
     // fix: 新建的层级跳转
     // this.bigStore.id = selectedKeys[0]
     
+    console.log(selectedKeys, info)
+
     // 选择标签id
     this.bigStore.tagId = selectedKeys[0]
     tagChange(selectedKeys[0])
@@ -260,6 +262,7 @@ render() {
             nodeData={item}
             itemKey={item.id}
             title={item.name}
+            selectable={item.type !== 1}
             actionList={this.getMenuList(item)}
             iconNodeSrc={tag}
           />

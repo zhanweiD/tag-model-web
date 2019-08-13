@@ -81,14 +81,13 @@ class ModalSelectTag extends Component {
   }
 
   @action.bound handleCancel() {
+    const {modalVisible} = this.store
+    modalVisible.selectTag = false
     this.reset()
   }
 
   // 重置
   @action.bound reset() {
-    const {modalVisible} = this.store
-    modalVisible.selectTag = false
-    
     this.allChecked = false
     this.indeterminate = false
     this.list.clear()

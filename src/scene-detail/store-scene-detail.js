@@ -23,6 +23,9 @@ class SceneDetailStore {
   // 数据源(下拉框)
   @observable dbSource = []
 
+  // 数据表(下拉框)
+  @observable dbTable = []
+
   // 添加目的数据源 - 列表
   @observable dbSourceData = {
     data: [],
@@ -39,7 +42,9 @@ class SceneDetailStore {
   @action async getDetail() {
     this.loading = true
     try {
-      const res = await io.getDetail()
+      const res = await io.getDetail({
+        occasionId: this.sceneId,
+      })
 
       runInAction(() => {
         this.info = res
@@ -51,9 +56,9 @@ class SceneDetailStore {
   }
 
   // 场景编辑
-  @action async editScene() {
+  @action async editScene(params) {
     try {
-      await io.editScene()
+      await io.editScene(params)
 
       runInAction(() => {
         this.modalVisible = false
@@ -100,32 +105,48 @@ class SceneDetailStore {
     }
   }
 
-  // 添加目的数据源 - 列表
-  @action async getDBSourceList(params) {
-    this.dbSourceData.loading = true
+    // 数据表数据
+    @action async getDbTableList(storageId) {
     try {
-      const res = await io.getDBSourceList({
+      const res = await io.getDbTableList({
         occasionId: this.sceneId,
-        ...params,
+        storageId,
       })
-
+  
       runInAction(() => {
-        this.dbSourceData.data = res.details.map(item => ({
-          fileds: res.fileds,
-          ...item,
-        }))
-        this.dbSourceData.loading = false
+        this.dbTable.replace(res)
       })
     } catch (e) {
       errorTip(e.message)
-      runInAction(() => {
-        this.dbSourceData.loading = false
-      })
     }
   }
 
+  // 添加目的数据源 - 列表
+  @action async getDBSourceList(params) {
+      this.dbSourceData.loading = true
+      try {
+        const res = await io.getDBSourceList({
+          occasionId: this.sceneId,
+          ...params,
+        })
+
+        runInAction(() => {
+          this.dbSourceData.data = res.details.map(item => ({
+            fileds: res.fileds,
+            ...item,
+          }))
+          this.dbSourceData.loading = false
+        })
+      } catch (e) {
+        errorTip(e.message)
+        runInAction(() => {
+          this.dbSourceData.loading = false
+        })
+      }
+    }
+
   // 目的数据源 - 保存
-  @action async saveStorage(params) {
+  @action async saveStorage(params, cb) {
     try {
       await io.saveStorage({
         occasionId: this.sceneId,
@@ -135,6 +156,7 @@ class SceneDetailStore {
       runInAction(() => {
         this.dbSourceVisible = false
         successTip('操作成功')
+        if (cb)cb()
       })
     } catch (e) {
       errorTip(e.message)

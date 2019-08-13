@@ -1,8 +1,8 @@
-import {Component} from 'react'
+import {Component, Fragment} from 'react'
 import {observable, action, toJS} from 'mobx'
 import {observer, inject, Provider} from 'mobx-react'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
-import {Tag, Button} from 'antd'
+import {Tag, Button, Empty} from 'antd'
 
 import {Time} from '../common/util'
 import {navListMap} from '../common/constants'
@@ -32,7 +32,7 @@ export default class SelectTag extends Component {
     this.store.sceneId = props.sceneId
 
     // 选择标签暂存id 
-    this.tagId = -1
+    this.tagId = undefined
   }
   
 
@@ -44,7 +44,10 @@ export default class SelectTag extends Component {
       navListMap.assetMgt,
       {text: '名称待定'},
     ])
-    this.store.getTagDetail()
+    
+    if (this.tagId) {
+      this.store.getTagDetail()
+    }
   }
 
   @action tagChange = tagId => {
@@ -55,7 +58,7 @@ export default class SelectTag extends Component {
   }
 
   render() {
-    const {tagInfo} = this.store
+    const {tagInfo, tagId} = this.store
     const {
       name,
       used,
@@ -87,19 +90,25 @@ export default class SelectTag extends Component {
         <div className="select-tag FBH">
           <TagCategory tagChange={this.tagChange} />
           <div className="select-tag-box">
-            <div className="detail-info">
-              <div className="d-head FBH FBJ">
-                <div>
-                  <span className="mr10">{name}</span>
-                  <Tag color={used ? 'green' : 'blue'}>{used ? '使用中' : '未使用'}</Tag>
-                </div>
-                {/* 点击“标签详情”按钮，进入标签池中的标签详情 */}
-                <Button type="primary">标签详情</Button>
-              </div>
-              <NemoBaseInfo dataSource={baseInfo} key={Math.random()} className="d-info" />
-            </div>
-            <TrendTag store={this.store} tagId={this.store.tagId} />
-            <TrendApi store={this.store} tagId={this.store.tagId} />
+            {
+              tagId ? (
+                <Fragment>
+                  <div className="detail-info">
+                    <div className="d-head FBH FBJ">
+                      <div>
+                        <span className="mr10">{name}</span>
+                        <Tag color={used ? 'green' : 'blue'}>{used ? '使用中' : '未使用'}</Tag>
+                      </div>
+                      {/* 点击“标签详情”按钮，进入标签池中的标签详情 */}
+                      <Button type="primary">标签详情</Button>
+                    </div>
+                    <NemoBaseInfo dataSource={baseInfo} key={Math.random()} className="d-info" />
+                  </div>
+                  <TrendTag store={this.store} tagId={this.store.tagId} />
+                  <TrendApi store={this.store} tagId={this.store.tagId} />
+                </Fragment>
+              ) : <div className="empty-box"><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /></div> 
+            }
           </div>
         </div>
       </Provider>   

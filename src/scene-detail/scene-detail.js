@@ -56,7 +56,7 @@ export default class SceneDetail extends Component {
     const info = toJS(store.info)
     const {
       tagCount,
-      cCuser,
+      cUser,
       cDate,
       invokeList = [],
       descr,
@@ -65,7 +65,7 @@ export default class SceneDetail extends Component {
     // 详情信息
     const baseInfo = [{
       title: '创建者',
-      value: cCuser,
+      value: cUser,
     }, {
       title: '创建时间',
       value: <Time timestamp={cDate} />,
@@ -99,7 +99,7 @@ export default class SceneDetail extends Component {
         </Spin>
        
 
-        <Tabs defaultActiveKey="1" animated={false}>
+        <Tabs defaultActiveKey="1" animated={false} style={{height: 'calc(100vh - 181px)'}}>
           <TabPane tab="标签选择" key="1">    
             <SelectTag sceneId={store.sceneId} />
           </TabPane>

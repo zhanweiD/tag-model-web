@@ -5,6 +5,8 @@ import {
   Row, Col, Spin, Modal, Icon, Tag, Button,
 } from 'antd'
 import {Link} from 'react-router-dom'
+
+import {Time} from '../common/util'
 import ModalAdd from './modal-add'
 
 import store from './store-scene'
@@ -55,7 +57,7 @@ export default class Scene extends Component {
               toJS(list).map(({
                 id,
                 name,
-                cCuser,
+                cUser,
                 cDate,
                 used,
                 tagCount,
@@ -72,11 +74,11 @@ export default class Scene extends Component {
                       <div className="c-info">
                         <span className="mr20">
                           创建者：
-                          {cCuser}
+                          {cUser}
                         </span> 
                         <span>
                           创建时间：
-                          {cDate}
+                          <Time timestamp={cDate} />
                         </span>
                       </div>
                       <div className="count-info">

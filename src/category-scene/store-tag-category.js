@@ -189,10 +189,10 @@ class TagCategoryStore {
       ...param,
     }
     this.confirmLoading = true
-
+    console.log(parentIsObj, params)
     try {
       // 编辑类目
-      if (this.modalVisible.editCategory) {
+      if (this.eStatus.editCategory) {
         await io.editCategory(params)
       } else if (parentIsObj) {
         // 对象-添加类目
@@ -235,6 +235,7 @@ class TagCategoryStore {
       }
       runInAction(() => {
         successTip('删除成功')
+        this.getCategoryList()
 
         // // 如果要删除的节点和当前选中的是同一个, 则要跳转路由，且清空选中节点
         // if (this.cateId !== this.currentTreeItemKey) {

@@ -83,9 +83,9 @@ class SceneStore {
   }
 
   // 场景编辑
-  @action async editScene() {
+  @action async editScene(params) {
      try {
-       await io.editScene()
+       await io.editScene(params)
 
        runInAction(() => {
          this.modalVisible = false

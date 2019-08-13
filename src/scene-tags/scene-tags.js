@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import {observable, action} from 'mobx'
+import {action} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {Table} from 'antd'
 
@@ -24,6 +24,7 @@ export default class Scene extends Component {
   }
 
   searchForm = null
+  searchStr = '{}' 
 
   columns = [{
     title: '名称',
@@ -74,6 +75,8 @@ export default class Scene extends Component {
   @action handleTableChange = (pagination, filters, sorter) => {
     store.params.currentPage = pagination.current
     store.params.pageSize = pagination.pageSize
+    store.params.order = sorter.order === 'descend' ? 'DESC' : 'ASC'
+    store.params.sort = sorter.columnKey
     store.getList()
   }
 

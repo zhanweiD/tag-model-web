@@ -34,9 +34,9 @@ class ModalCategoryDetail extends Component {
       <Modal {...modalProps}>
         <Spin spinning={detailLoading}>
           <LabelItem labelWidth={90} label="类目名称" value={cateDetail.name} />
-          <LabelItem labelWidth={90} label="所属类目" value={cateDetail.catePath || '--'} />
-          <LabelItem labelWidth={90} label="创建者" value={cateDetail.creator} />
-          <LabelItem labelWidth={90} label="创建时间" value={<Time timestamp={cateDetail.createTime} />} />
+          <LabelItem labelWidth={90} label="所属类目" value={cateDetail.fullName || '--'} />
+          <LabelItem labelWidth={90} label="创建者" value={cateDetail.cUser} />
+          <LabelItem labelWidth={90} label="创建时间" value={<Time timestamp={cateDetail.cDate} />} />
           <LabelItem labelWidth={90} label="描述" value={cateDetail.descr} />
         </Spin>
       </Modal>
