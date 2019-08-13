@@ -2,6 +2,7 @@ import ioContext from '../common/io-context'
 import {tagApi} from '../common/util'
 
 ioContext.create('objDetail', {
+  // 对象详情
   getObjectDetail: {
     url: `${tagApi}/be_tag/tag/pool/obj_detail`,
   },
@@ -13,14 +14,12 @@ ioContext.create('objDetail', {
     mockUrl: 'page-hello/getContent',
   },
 
-  // 获取关联对象字段列表
+  // 获取对象存储信息分页
   getObjStorageList: {
-    url: `${tagApi}/be_tag/pool/obj_storage_page`,
-    mock: true,
-    mockUrl: 'page-hello/getContent',
+    url: `${tagApi}/be_tag/tag/pool/obj_storage_page`,
   },
 
-  // 级联选择
+  // 三次级联选择接口
   getDacList: {
     url: `${tagApi}/be_tag/tag/datasource/list`,
   },
@@ -34,10 +33,11 @@ ioContext.create('objDetail', {
   // 添加关联字段(人/物)
   addRelField: {
     method: 'POST',
-    url: `${tagApi}/be_tag/pool/add_rel_field`,
+    url: `${tagApi}/be_tag/tag/pool/add_rel_field`,
     mock: true,
     mockUrl: 'page-hello/getContent',
   },
+  // 编辑关联字段(人/物)
   updateRelField: {
     method: 'POST',
     url: `${tagApi}/be_tag/pool/update_rel_field`,
@@ -45,21 +45,21 @@ ioContext.create('objDetail', {
     mockUrl: 'page-hello/getContent',
   },
   
-  // 添加对象字段关联关系(关系)
+  // 添加关联关系(关系)
   addRelFieldAss: {
     method: 'POST',
-    url: `${tagApi}/be_tag/pool/add_rel_field_ass`,
-    mock: true,
-    mockUrl: 'page-hello/getContent',
+    url: `${tagApi}/be_tag/tag/pool/add_rel_field_ass`,
   },
+  // 编辑关联关系(关系)
   updateRelFieldAss: {
     method: 'POST',
-    url: `${tagApi}/be_tag/pool/update_rel_field_ass`,
-    mock: true,
-    mockUrl: 'page-hello/getContent',
+    url: `${tagApi}/be_tag/tag/pool/update_rel_field_ass`,
   },
 
-  
+  // 获取已关联字段列表(编辑时)
+  getRelDbField: {
+    url: `${tagApi}/be_tag/tag/pool/rel_db_field`,
+  },
 })
 
 export default ioContext.api.objDetail

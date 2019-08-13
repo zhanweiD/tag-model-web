@@ -1,15 +1,17 @@
 import {Component, Fragment} from 'react'
-import {observable, action} from 'mobx'
+import {observable, action, toJS} from 'mobx'
 import {observer} from 'mobx-react'
 import {Button, Popconfirm, Tooltip, Table} from 'antd'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
 import {Time} from '../common/util'
 import store from './store-obj-detail'
+import DrawerRelfieldAdd from './drawer-relfield-add'
 import DrawerRelfieldEdit from './drawer-relfield-edit'
 
 @observer
 export default class ObjDetail extends Component {
   @observable updateKey = undefined
+  @observable curentItem = undefined
 
   constructor(props) {
     super(props)
@@ -18,12 +20,12 @@ export default class ObjDetail extends Component {
     this.tableCol = [
       {
         title: '数据表名称',
-        key: 'tableName',
-        dataIndex: 'tableName',
+        key: 'dataTableName',
+        dataIndex: 'dataTableName',
       }, {
         title: '数据源',
-        key: 'storageName',
-        dataIndex: 'storageName',
+        key: 'dataDbName',
+        dataIndex: 'dataDbName',
       }, {
         title: '数据源类型',
         key: 'storageTypeName',
@@ -56,7 +58,7 @@ export default class ObjDetail extends Component {
               } else {
                 arr.push(<Tooltip title="数据表中有标签使用中，不可移除"><span className="mr8 disabled">移除</span></Tooltip>)
               }
-              arr.push(<a className="mr8" onClick={() => {}}>编辑字段</a>)
+              arr.push(<a className="mr8" onClick={() => this.toEditRelField(record)}>编辑字段</a>)
               arr.push(<a onClick={() => {}}>标签配置</a>)
               return arr
             })()}
@@ -85,8 +87,15 @@ export default class ObjDetail extends Component {
   }
 
   @action toAddRelField() {
-    store.modalVisible.editRelField = true
+    store.modalVisible.addRelField = true
     store.getDacList()
+  }
+
+  @action toEditRelField(item) {
+    store.getFieldList(item.dataStorageId, item.dataTableName)
+    store.getRelDbField(item.dataStorageId, item.dataTableName)
+    store.modalVisible.editRelField = true
+    this.curentItem = item
   }
 
   render() {
@@ -169,7 +178,12 @@ export default class ObjDetail extends Component {
           }}
         />
 
-        <DrawerRelfieldEdit />
+        <DrawerRelfieldAdd />
+        <DrawerRelfieldEdit
+          updateKey={store.relDbField.length}
+          curentItem={this.curentItem}
+          defStdlist={toJS(store.relDbField)}
+        />
       </div>
     )
   }

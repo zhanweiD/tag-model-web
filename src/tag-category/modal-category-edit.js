@@ -97,8 +97,6 @@ class ModalEditCategory extends Component {
       colon: false,
     }
 
-    console.log('xxxx')
-    console.log(currentTreeItemKey)
     return (
       <Modal {...modalProps}>
         <Form>

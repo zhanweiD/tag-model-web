@@ -8,6 +8,7 @@ class ObjDetailStore {
   id = undefined
   // 弹窗显示控制
   @observable modalVisible = {
+    addRelField: false,
     editRelField: false,
   }
 
@@ -17,7 +18,7 @@ class ObjDetailStore {
   // 指标卡
   @observable dailyCard = false 
   
-  // 获取关联对象字段列表
+  // 对象存储信息
   @observable tableLoading = false
   @observable list = []
   @observable pagination = {
@@ -25,6 +26,10 @@ class ObjDetailStore {
     currentPage: 1,
     count: 0,
   }
+
+  // 获取关联对象字段列表
+  @observable relDbField = []
+
   // // 查询条件
   // @observable order = ''
   // @observable sort = ''
@@ -66,85 +71,16 @@ class ObjDetailStore {
     }
   }
 
-
   @action async getList() {
     try {
       this.tableLoading = true
-      const res2 = await io.getObjStorageList({
+      const res = await io.getObjStorageList({
         objId: this.id,
         // order: this.order,
         // sort: this.sort,
         currentPage: this.pagination.currentPage,
         pageSize: this.pagination.pageSize,
       })
-      const res = {
-        currentPage: 1,
-        data: [{
-          id: 1,
-          storageId: 'jdsjsjksjk212dsd',
-          storageName: 'wangshu_test',
-          storageType: 4,
-          storageTypeName: 'HIVE',
-          tableName: 'demo',
-          configuredField: 100,
-          associatedField: 100,
-          isUsed: 0,
-        }, {
-          id: 1,
-          storageId: 'jdsjsjksjk212dsd',
-          storageName: 'wangshu_test',
-          storageType: 4,
-          storageTypeName: 'HIVE',
-          tableName: 'demo1',
-          configuredField: 100,
-          associatedField: 100,
-          isUsed: 1,
-        }, {
-          id: 1,
-          storageId: 'jdsjsjksjk212dsd',
-          storageName: 'wangshu_test',
-          storageType: 4,
-          storageTypeName: 'HIVE',
-          tableName: 'demo2',
-          configuredField: 100,
-          associatedField: 100,
-          isUsed: 0,
-        }, {
-          id: 1,
-          storageId: 'jdsjsjksjk212dsd',
-          storageName: 'wangshu_test',
-          storageType: 4,
-          storageTypeName: 'HIVE',
-          tableName: 'demo3',
-          configuredField: 100,
-          associatedField: 100,
-          isUsed: 0,
-        }, {
-          id: 1,
-          storageId: 'jdsjsjksjk212dsd',
-          storageName: 'wangshu_test',
-          storageType: 4,
-          storageTypeName: 'HIVE',
-          tableName: 'demo4',
-          configuredField: 100,
-          associatedField: 100,
-          isUsed: 0,
-        }, {
-          id: 1,
-          storageId: 'jdsjsjksjk212dsd',
-          storageName: 'wangshu_test',
-          storageType: 4,
-          storageTypeName: 'HIVE',
-          tableName: 'demo5',
-          configuredField: 100,
-          associatedField: 100,
-          isUsed: 0,
-        }],
-        pageSize: 5,
-        pages: 1,
-        totalCount: 1,
-      }
-
       runInAction(() => {
         this.tableLoading = false
         this.list.replace(res.data)
@@ -235,6 +171,44 @@ class ObjDetailStore {
       runInAction(() => {
         successTip('添加成功')
         cb && cb()
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  @action async updateRelField(param, cb) {
+    try {
+      if (this.baseInfo.objTypeCode === 3) {
+        await io.updateRelFieldAss(param)
+      } else {
+        await io.updateRelField(param)
+      }
+      runInAction(() => {
+        successTip('添加成功')
+        cb && cb()
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+  
+  @action async getRelDbField(storageId, tableName) {
+    try {
+      const res = await io.getRelDbField({
+        objId: this.id,
+        storageId,
+        tableName,
+      })
+      runInAction(() => {
+        res.map(item => {
+          this.relDbField.push({
+            dataFieldName: item.dataFieldName,
+            dataFieldType: item.dataFieldType,
+            isUsed: item.isUsed,
+          })
+        })
+        // this.relDbField.replace(res)
       })
     } catch (e) {
       errorTip(e.message)

@@ -58,6 +58,7 @@ class TagCategory extends Component {
 
     // // fix: 新建的层级跳转
     this.bigStore.id = selectedKeys[0]
+    this.bigStore.updateKey = Math.random()
     this.bigStore.currentNode = toJS(this.store.cateList).find(item => item.id === selectedKeys[0])
   }
 
