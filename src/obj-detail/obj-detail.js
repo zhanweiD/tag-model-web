@@ -5,6 +5,7 @@ import {Button, Popconfirm, Tooltip, Table} from 'antd'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
 import {Time} from '../common/util'
 import store from './store-obj-detail'
+import DrawerRelfieldEdit from './drawer-relfield-edit'
 
 @observer
 export default class ObjDetail extends Component {
@@ -13,18 +14,6 @@ export default class ObjDetail extends Component {
   constructor(props) {
     super(props)
     this.bigStore = props.bigStore
-
-
-    // id": 1,							--对象ID
-		// 	"storageId": "jdsjsjksjk212dsd",	--存储ID
-		// 	"storageName": "wangshu_test",		--存储名
-		// 	"storageType": 4,					--数据源类型
-    //       	"storageTypeName": "HIVE",			--数据源类型中文名
-    //       	"tableName": "demo",				--表名
-    //       	"configuredField": 100,				--已配置
-    //       	"associatedField": 100,				--已关联
-    //         "": 0	
-            
 
     this.tableCol = [
       {
@@ -95,6 +84,11 @@ export default class ObjDetail extends Component {
     }
   }
 
+  @action toAddRelField() {
+    store.modalVisible.editRelField = true
+    store.getDacList()
+  }
+
   render() {
     const {
       objTypeCode: typeCode,
@@ -140,14 +134,14 @@ export default class ObjDetail extends Component {
     }
 
     return (
-      <div className="tag-detail">
+      <div className="obj-detail">
         <div className="detail-info">
           <div className="d-head FBH FBJ">
             <div>
               <span className="mr10">{name}</span>
             </div>
             <div>
-              <Button type="primary" className="mr8">添加关联字段</Button>
+              <Button type="primary" className="mr8" onClick={() => this.toAddRelField()}>添加关联字段</Button>
               <Button>已关联字段列表</Button>
             </div>
           </div>
@@ -174,6 +168,8 @@ export default class ObjDetail extends Component {
             showTotal: () => `合计${store.pagination.count}条记录`,
           }}
         />
+
+        <DrawerRelfieldEdit />
       </div>
     )
   }

@@ -42,7 +42,8 @@ export default class Tag extends Component {
   }
 
   render() {
-    const currentNode = toJS(this.store.categoryStore.cateList).find(item => item.id === this.store.id)
+    const currentNode = toJS(this.store.currentNode)
+    // const currentNode = toJS(this.store.categoryStore.cateList).find(item => item.id === this.store.id)
     return (
       <div className="FBV" style={{minHeight: '100%'}}>
         <div className="fs16 mt16 ml16" style={{color: 'rgba(0, 0, 0, 0.85)'}}>

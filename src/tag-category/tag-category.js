@@ -38,7 +38,9 @@ class TagCategory extends Component {
       this.store.typeCode = this.bigStore.typeCode
       this.store.id = this.bigStore.id || 999999999
       this.store.destory()
-      this.store.getCategoryList()
+      this.store.getCategoryList(() => {
+        this.bigStore.currentNode = toJS(this.store.cateList).find(item => item.id === this.bigStore.id)
+      })
     }
   }
 
@@ -56,6 +58,7 @@ class TagCategory extends Component {
 
     // // fix: 新建的层级跳转
     this.bigStore.id = selectedKeys[0]
+    this.bigStore.currentNode = toJS(this.store.cateList).find(item => item.id === selectedKeys[0])
   }
 
 

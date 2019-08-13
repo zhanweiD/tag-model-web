@@ -10,6 +10,7 @@ export default class TagStore {
 
   // 类目id
   @observable id = undefined
+  @observable currentNode = undefined
 
   // 标签树类型 1:人 2:物 3:关系
   @observable typeCode = undefined

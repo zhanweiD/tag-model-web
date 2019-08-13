@@ -9,7 +9,7 @@ class TagDetailStore {
   @observable baseInfo = false
   @observable baseInfoLoading = false
 
-  @action async getBaseInfo(id) {
+  @action async getBaseInfo() {
     this.baseInfoLoading = true
     try {
       const res = await io.getTagDetail({

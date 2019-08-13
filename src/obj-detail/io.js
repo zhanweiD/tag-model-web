@@ -19,6 +19,47 @@ ioContext.create('objDetail', {
     mock: true,
     mockUrl: 'page-hello/getContent',
   },
+
+  // 级联选择
+  getDacList: {
+    url: `${tagApi}/be_tag/tag/datasource/list`,
+  },
+  getTableList: {
+    url: `${tagApi}/be_tag/tag/table/list_uncorrelated`,
+  },
+  getFieldList: {
+    url: `${tagApi}/be_tag/tag/column_info`,
+  },
+
+  // 添加关联字段(人/物)
+  addRelField: {
+    method: 'POST',
+    url: `${tagApi}/be_tag/pool/add_rel_field`,
+    mock: true,
+    mockUrl: 'page-hello/getContent',
+  },
+  updateRelField: {
+    method: 'POST',
+    url: `${tagApi}/be_tag/pool/update_rel_field`,
+    mock: true,
+    mockUrl: 'page-hello/getContent',
+  },
+  
+  // 添加对象字段关联关系(关系)
+  addRelFieldAss: {
+    method: 'POST',
+    url: `${tagApi}/be_tag/pool/add_rel_field_ass`,
+    mock: true,
+    mockUrl: 'page-hello/getContent',
+  },
+  updateRelFieldAss: {
+    method: 'POST',
+    url: `${tagApi}/be_tag/pool/update_rel_field_ass`,
+    mock: true,
+    mockUrl: 'page-hello/getContent',
+  },
+
+  
 })
 
 export default ioContext.api.objDetail

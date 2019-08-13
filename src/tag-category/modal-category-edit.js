@@ -97,6 +97,8 @@ class ModalEditCategory extends Component {
       colon: false,
     }
 
+    console.log('xxxx')
+    console.log(currentTreeItemKey)
     return (
       <Modal {...modalProps}>
         <Form>
@@ -116,7 +118,7 @@ class ModalEditCategory extends Component {
 
             <FormItem {...formItemLayout} label="所属类目">
               {(() => {
-                if (currentTreeItemKey === 0) {
+                if (currentTreeItemKey === 0 || !cateDetail.catePath) {
                   return '--'
                 }
 
