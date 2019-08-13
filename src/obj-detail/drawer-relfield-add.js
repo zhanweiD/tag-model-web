@@ -89,7 +89,7 @@ class DrawerRelfieldAdd extends Component {
             dataTimeType: timeObj.type,
             dataAddrName: addrObj.field,
             dataAddrType: addrObj.type,
-            mappingKeys,
+            mappingKeys: JSON.stringify(mappingKeys),
             ...storageObj,
           }))
 

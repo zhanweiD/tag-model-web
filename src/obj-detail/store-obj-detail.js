@@ -160,7 +160,7 @@ class ObjDetailStore {
       if (this.baseInfo.objTypeCode === 3) {
         await io.addRelFieldAss({
           objId: this.id,
-          filedObjReqList,
+          filedObjAssReqList: filedObjReqList,
         })
       } else {
         await io.addRelField({
@@ -170,7 +170,9 @@ class ObjDetailStore {
       }
       runInAction(() => {
         successTip('添加成功')
-        cb && cb()
+        // 更新
+        this.getList()
+        cb && cb()  
       })
     } catch (e) {
       errorTip(e.message)
@@ -180,12 +182,15 @@ class ObjDetailStore {
   @action async updateRelField(param, cb) {
     try {
       if (this.baseInfo.objTypeCode === 3) {
+        // param.filedObjAssReqList = param.filedObjReqList
+        // delete param.filedObjReqList
         await io.updateRelFieldAss(param)
       } else {
         await io.updateRelField(param)
       }
       runInAction(() => {
         successTip('添加成功')
+        this.getList()
         cb && cb()
       })
     } catch (e) {
@@ -193,6 +198,7 @@ class ObjDetailStore {
     }
   }
   
+  // 获取已关联字段列表(编辑时)
   @action async getRelDbField(storageId, tableName) {
     try {
       const res = await io.getRelDbField({
@@ -201,14 +207,14 @@ class ObjDetailStore {
         tableName,
       })
       runInAction(() => {
-        res.map(item => {
+        this.relDbField.clear()
+        res.forEach(item => {
           this.relDbField.push({
             dataFieldName: item.dataFieldName,
             dataFieldType: item.dataFieldType,
             isUsed: item.isUsed,
           })
         })
-        // this.relDbField.replace(res)
       })
     } catch (e) {
       errorTip(e.message)

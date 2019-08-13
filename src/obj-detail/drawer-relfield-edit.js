@@ -10,7 +10,6 @@ const {Option} = Select
 @observer
 class DrawerRelfieldEdit extends Component {
   @observable updateKey = undefined
-  @observable baseParam = undefined
   @observable stdlist = []
 
   constructor(props) {
@@ -57,7 +56,7 @@ class DrawerRelfieldEdit extends Component {
     const {form} = this.props
     store.modalVisible.editRelField = false
 
-    this.baseParam = undefined
+    this.updateKey = undefined
     this.stdlist.clear()
     form.resetFields()
   }
@@ -68,20 +67,7 @@ class DrawerRelfieldEdit extends Component {
 
     validateFields((err, values) => {
       if (!err) {
-        const {
-          curentItem: {
-            dataStorageId, dataDbName, dataDbType, dataTableName,
-          },
-        } = this.props
-        const param = {
-          objId: store.id,
-          dataStorageId,
-          dataDbName,
-          dataDbType,
-          dataTableName,
-        }
         const tempStdlist = toJS(this.stdlist)
-
         const arr = values.dataFieldName.map(item => store.fieldList.find(o => o.field === item))
         arr.forEach(item => {
           // 去重处理
@@ -96,12 +82,6 @@ class DrawerRelfieldEdit extends Component {
 
         this.stdlist.replace(tempStdlist)
 
-        param.filedObjReqList = this.stdlist.map(item => ({
-          dataFieldName: item.dataFieldName,
-          dataFieldType: item.dataFieldType,
-        }))
-        this.baseParam = param
-
         form.resetFields()
       }
     })
@@ -115,7 +95,35 @@ class DrawerRelfieldEdit extends Component {
     })
   }
 
+  @action getBaseParam() {
+    const {
+      curentItem: {
+        dataStorageId, dataDbName, dataDbType, dataTableName,
+      },
+    } = this.props
+    const param = {
+      objId: store.id,
+      dataStorageId,
+      dataDbName,
+      dataDbType,
+      dataTableName,
+    }
+    const o = this.stdlist.map(item => ({
+      dataFieldName: item.dataFieldName,
+      dataFieldType: item.dataFieldType,
+    }))
+
+    if (store.baseInfo.objTypeCode === 3) {
+      param.filedObjAssReqList = o
+    } else {
+      param.filedObjReqList = o
+    }
+
+    return param
+  }
+
   render() {
+    console.log(this.stdlist.length)
     const {form: {getFieldDecorator}} = this.props
     const {modalVisible, fieldList} = store
 
@@ -206,7 +214,7 @@ class DrawerRelfieldEdit extends Component {
             type="primary"
             disabled={!this.stdlist.length}
             onClick={() => {
-              store.updateRelField(toJS(this.baseParam), () => {
+              store.updateRelField(this.getBaseParam(), () => {
                 this.handleOnCancel()
               })
             }}

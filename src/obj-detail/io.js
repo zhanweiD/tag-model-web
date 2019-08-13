@@ -34,15 +34,11 @@ ioContext.create('objDetail', {
   addRelField: {
     method: 'POST',
     url: `${tagApi}/be_tag/tag/pool/add_rel_field`,
-    mock: true,
-    mockUrl: 'page-hello/getContent',
   },
   // 编辑关联字段(人/物)
   updateRelField: {
     method: 'POST',
-    url: `${tagApi}/be_tag/pool/update_rel_field`,
-    mock: true,
-    mockUrl: 'page-hello/getContent',
+    url: `${tagApi}/be_tag/tag/pool/update_rel_field`,
   },
   
   // 添加关联关系(关系)
