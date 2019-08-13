@@ -68,7 +68,7 @@ class SearchFilter extends React.Component {
                     size="large"
                     style={{width: 552}}
                     onChange={e => this.handleKeywordChange(e.target.value)}
-                    onSearch={value => console.log(value)}
+                    onSearch={value => this.handleKeywordChange(value)}
                   />
                 )
               }

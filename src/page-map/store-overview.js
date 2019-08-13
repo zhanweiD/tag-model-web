@@ -1,6 +1,6 @@
 import {observable, action} from 'mobx'
 import io from './io'
-import {errorTip} from '../common/util'
+import {errorTip, getTimeRangeToToday} from '../common/util'
 import {getOrderAlias} from './util'
 
 // 将标签价值、热度、质量转成对应的数字（码值：1.标签价值；2.标签热度；3.标签质量)
@@ -57,7 +57,7 @@ class OverviewStore {
   }
 
   // 标签价值等3个panel的时间范围
-  @observable scoreTimeRange = []
+  @observable scoreTimeRange = getTimeRangeToToday({long: 7})
 
   // 标签调用的API数占比
   @observable apiCountData = []
@@ -66,7 +66,7 @@ class OverviewStore {
   @observable tagCallTimesData = []
 
   // 调用的时间范围
-  @observable callTimeRange = []
+  @observable callTimeRange = getTimeRangeToToday({long: 7})
 
 
   // 请求卡片数据
@@ -83,9 +83,9 @@ class OverviewStore {
   // 请求 标签价值、热度、质量分排名
   @action async getScoreRank(type = 'worth') {
     const numberOfType = typeToNumber(type)
-    const [startDate, endDate] = this.scoreTimeRange
+    const [startDate = '', endDate = ''] = this.scoreTimeRange
     const {
-      sortKey, sortOrder, pageSize, currentPage,
+      sortKey, sortOrder, pageSize = 5, currentPage,
     } = this.panelsData[type]
 
     try {
@@ -97,7 +97,7 @@ class OverviewStore {
         sort: sortKey,
         order: getOrderAlias(sortOrder),
         currentPage,
-        pageSize,
+        pageSize: 5, // 写死
       })
 
       console.log('getScoreRank', res)
@@ -116,7 +116,7 @@ class OverviewStore {
   // 请求 标签价值、热度、质量分趋势图(折线图数据)
   @action async getScoreTrend(type = 'worth') {
     const numberOfType = typeToNumber(type)
-    const [startDate, endDate] = this.scoreTimeRange
+    const [startDate = '', endDate = ''] = this.scoreTimeRange
 
     try {
       const res = await io.getScoreTrend({
@@ -135,7 +135,7 @@ class OverviewStore {
 
   // 请求 标签调用占比饼图
   @action async getCallData(type = 1, cb) {
-    const [startDate, endDate] = this.callTimeRange
+    const [startDate = '', endDate = ''] = this.callTimeRange
 
     try {
       const res = await io.getCallData({

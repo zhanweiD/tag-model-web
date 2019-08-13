@@ -1,3 +1,5 @@
+$black45 = rgba(0, 0, 0, 0.45)
+
 // 白色背景的矩形div，稍微带点圆角
 .white-block
   background-color #fff
@@ -50,7 +52,6 @@
       margin-left 24px
 
 .map-overview
-  // color rgba(0, 0, 0, 0.65)
   .ant-tabs .ant-tabs-top-content > .ant-tabs-tabpane
     // transition none // 默认动画有明显的闪烁，覆盖掉
 
@@ -64,7 +65,9 @@
     left 50%
     transform translate(-60%, -40%)
     text-align center
+    color $black45
   .pie-info
     font-size 14px
+    color $black45
     .ant-badge-status-text
       font-size 14px
