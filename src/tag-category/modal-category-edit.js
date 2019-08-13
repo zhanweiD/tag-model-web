@@ -59,7 +59,7 @@ class ModalEditCategory extends Component {
       param.name = value
       param.objTypeCode = this.bigStore.typeCode
       // type(标签:0 类目:1 对象:2)
-      param.type = 2
+      param.type = 1
       // nameType(中文名:1 英文名:2)
       param.nameType = rule.field === 'name' ? 1 : 2
       param.treeId = currentTreeItemKey

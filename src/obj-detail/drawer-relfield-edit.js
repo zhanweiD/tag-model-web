@@ -1,4 +1,4 @@
-import {Component} from 'react'
+import {Component, Fragment} from 'react'
 import {observer} from 'mobx-react'
 import {action, observable, toJS} from 'mobx'
 import {Form, Button, Drawer, Spin, Select, Table, Tooltip, Icon} from 'antd'
@@ -46,12 +46,6 @@ class DrawerRelfieldEdit extends Component {
     ]
   }
 
-  componentWillReceiveProps(nextProps) {
-  }
-
-  componentDidMount() {
-  }
-
   @action.bound handleOnCancel() {
     const {form} = this.props
     store.modalVisible.editRelField = false
@@ -66,25 +60,52 @@ class DrawerRelfieldEdit extends Component {
   @action.bound handleOnOk() {
     const {form} = this.props
     const {validateFields} = form
-    // const {eStatus: {editCategory}, cateDetail, currentTreeItemKey} = this.store
-    // const {typeCode} = this.bigStore
-
-    const getFieldObj = item =>  store.fieldList.find(o => o.field === item)
+    const getFieldObj = item => store.fieldList.find(o => o.field === item)
 
     validateFields((err, values) => {
       if (!err) {
-        const obj = store.dacList.find(item => item.dataStorageId === values.dataStorageId)
-        const mapKeyObj = getFieldObj(values.mappingKey)
         let arr = values.dataFieldName.map(item => store.fieldList.find(o => o.field === item))
-        arr = arr.map(item => ({
-          dataStorageId: values.dataStorageId,
-          dataTableName: values.dataTableName,
-          dataFieldName: item.field,
-          dataFieldType: item.type,
-          mappingKey: mapKeyObj.field,
-          mappingKeyType: mapKeyObj.type,
-          ...obj,
-        }))
+        // 数据源相关参数
+        const storageObj = store.dacList.find(item => item.dataStorageId === values.dataStorageId)
+
+        if (store.baseInfo.objTypeCode === 3) {
+          const timeObj = getFieldObj(values.timeKey)
+          const addrObj = getFieldObj(values.addrKey)
+
+          const mappingKeys = toJS(store.baseInfo).objRspList.map(item => {
+            const o = getFieldObj(values[item.id])
+            return ({
+              obj_id: item.id,
+              filed_name: o.field,
+              file_type: o.type,
+            })
+          })
+          arr = arr.map(item => ({
+            dataStorageId: values.dataStorageId,
+            dataTableName: values.dataTableName,
+            dataFieldName: item.field,
+            dataFieldType: item.type,
+            dataTimeName: timeObj.field,
+            dataTimeType: timeObj.type,
+            dataAddrName: addrObj.field,
+            dataAddrType: addrObj.type,
+            mappingKeys,
+            ...storageObj,
+          }))
+        } else {
+          const mapKeyObj = getFieldObj(values.mappingKey)
+
+          arr = arr.map(item => ({
+            dataStorageId: values.dataStorageId,
+            dataTableName: values.dataTableName,
+            dataFieldName: item.field,
+            dataFieldType: item.type,
+            mappingKey: mapKeyObj.field,
+            mappingKeyType: mapKeyObj.type,
+            ...storageObj,
+          }))
+        }
+
         this.stdlist.map(item => {
           if (item.dataStorageId === values.dataStorageId && item.dataTableName === values.dataTableName) {
             item.mappingKey = mapKeyObj.field
@@ -133,12 +154,127 @@ class DrawerRelfieldEdit extends Component {
     })
   }
 
+  renderItemDom(getFieldDecorator, formItemLayout, fieldList) {
+    if (store.baseInfo.objTypeCode === 3) {
+      const objSelect = toJS(store.baseInfo).objRspList.map(item => (
+        <FormItem {...formItemLayout} label={`${item.name}主键`}>
+          {getFieldDecorator(`${item.id}`, {
+            initialValue: undefined,
+            rules: [
+              {required: true, message: `${item.name}主键不可为空`},
+            ],
+          })(
+            <Select
+              showSearch
+              placeholder="请下拉选择"
+              filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+            >
+              {
+                fieldList.map(item => (
+                  <Option key={item.field} value={item.field}>{item.field}</Option>
+                ))
+              }
+            </Select>
+          )}
+        </FormItem>
+      ))
+
+      return (
+        <Fragment>
+          {objSelect}
+          <FormItem
+            {...formItemLayout}
+            label={(
+              <span>
+                关系时间主键 &nbsp;
+                <Tooltip title="发生这个关系的时间字段">
+                  <Icon type="question-circle-o" />
+                </Tooltip>
+              </span>
+            )}
+          >
+            {getFieldDecorator('timeKey', {
+              initialValue: undefined,
+              rules: [],
+            })(
+              <Select
+                showSearch
+                placeholder="请下拉选择"
+                filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+              >
+                {
+                  fieldList.map(item => (
+                    <Option key={item.field} value={item.field}>{item.field}</Option>
+                  ))
+                }
+              </Select>
+            )}
+          </FormItem>
+
+          <FormItem
+            {...formItemLayout}
+            label={(
+              <span>
+                关系地点主键 &nbsp;
+                <Tooltip title="发生这个关系的地点字段">
+                  <Icon type="question-circle-o" />
+                </Tooltip>
+              </span>
+            )}
+          >
+            {getFieldDecorator('addrKey', {
+              initialValue: undefined,
+              rules: [],
+            })(
+              <Select
+                showSearch
+                placeholder="请下拉选择"
+                filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+              >
+                {
+                  fieldList.map(item => (
+                    <Option key={item.field} value={item.field}>{item.field}</Option>
+                  ))
+                }
+              </Select>
+            )}
+          </FormItem>
+        </Fragment>
+      )
+    }
+
+    return (
+      <Fragment>
+        <FormItem {...formItemLayout} label="关联的主键">
+          {getFieldDecorator('mappingKey', {
+            initialValue: undefined,
+            rules: [
+              {required: true, message: '关联的主键不可为空'},
+            ],
+          })(
+            <Select
+              showSearch
+              placeholder="请下拉选择"
+              filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+            >
+              {
+                fieldList.map(item => (
+                  <Option key={item.field} value={item.field}>{item.field}</Option>
+                ))
+              }
+            </Select>
+          )}
+        </FormItem>
+      </Fragment>
+    )
+  }
+
   render() {
     const {form: {getFieldDecorator}} = this.props
     const {modalVisible, dacList, tableList, fieldList} = store
 
     const modalProps = {
-      title: '编辑关联字段',
+      title: '添加关联字段',
       visible: modalVisible.editRelField,
       maskClosable: false,
       width: 520,
@@ -146,8 +282,8 @@ class DrawerRelfieldEdit extends Component {
     }
 
     const formItemLayout = {
-      labelCol: {span: 4},
-      wrapperCol: {span: 20},
+      labelCol: {span: 6},
+      wrapperCol: {span: 18},
       colon: false,
     }
 
@@ -239,26 +375,7 @@ class DrawerRelfieldEdit extends Component {
               )}
             </FormItem>
 
-            <FormItem {...formItemLayout} label="关联的主键">
-              {getFieldDecorator('mappingKey', {
-                initialValue: undefined,
-                rules: [
-                  {required: true, message: '关联的主键不可为空'},
-                ],
-              })(
-                <Select
-                  showSearch
-                  placeholder="请下拉选择"
-                  filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                >
-                  {
-                    fieldList.map(item => (
-                      <Option key={item.field} value={item.field}>{item.field}</Option>
-                    ))
-                  }
-                </Select>
-              )}
-            </FormItem>
+            {this.renderItemDom(getFieldDecorator, formItemLayout, fieldList)}
           </Spin>
         </Form>
 
@@ -274,7 +391,7 @@ class DrawerRelfieldEdit extends Component {
             loading={false}
             dataSource={this.stdlist.slice()}
             pagination={false}
-            scroll={{y: '90%' }}
+            // scroll={{y: '90%'}}
           />
         </div>
 
