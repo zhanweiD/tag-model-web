@@ -1,9 +1,9 @@
-import {Component, Fragment} from 'react'
-import {observable, action, toJS} from 'mobx'
+import {Component} from 'react'
+import {action, toJS} from 'mobx'
 import {observer} from 'mobx-react'
-import {Button, Modal} from 'antd'
 import TimeRange from '../time-range'
 import {getLineChartOpt} from '../common/config-charts'
+import OverviewCard from '../component-overview-card'
 
 import store from './store-exponent'
 
@@ -15,10 +15,6 @@ let hotChart
 export default class Exponent extends Component {
   defStartTime = moment().subtract(7, 'day').format('YYYY-MM-DD')
   defEndTime = moment().subtract(1, 'day').format('YYYY-MM-DD')
-
-  constructor(props) {
-    super(props)
-  }
 
   componentWillMount() {
     const {aId} = this.props
@@ -39,16 +35,16 @@ export default class Exponent extends Component {
     vsChart = echarts.init(this.vs)
     qsChart = echarts.init(this.qs)
     hotChart = echarts.init(this.hot)
-    this.redrawVs()
+    this.redrawVs() 
     this.redrawQs()
     this.redrawHot()
     window.addEventListener('resize', () => this.resize())
   }
 
   @action resize() {
-    vsChart.resize()
-    qsChart.resize()
-    hotChart.resize()
+    if (vsChart)vsChart.resize()
+    if (qsChart)qsChart.resize()
+    if (hotChart)hotChart.resize()
   }
 
   @action redrawVs(gte = this.defStartTime, lte = this.defEndTime) {
@@ -72,26 +68,36 @@ export default class Exponent extends Component {
   render() {
     const {worthScore, qualityScore, hotScore} = store.dailyCard
 
+    const cards = [
+      {
+        title: '最新价值分',
+        tooltipText: '通过标签的覆盖度、活跃度、鲜活度反映标签的价值',
+        values: [worthScore],
+      },
+      {
+        title: '最新质量分',
+        tooltipText: '通过字段的完整性、规范性反映标签的质量',
+        values: [qualityScore],
+      },
+      {
+        title: '最新热度',
+        tooltipText: '通过标签的调用度反映标签热度',
+        values: [hotScore],
+      },
+    ]
     return (
-      <div className="p16">
-        <div>
-          最新价值分: 
-          {' '}
-          {worthScore}
-          {' '}
-          通过标签的覆盖度、活跃度、鲜活度反映标签的价值
-                    最新质量分:
-          {' '}
-          {qualityScore}
-          {' '}
-          通过字段的完整性、规范性反映标签的质量
-                    最新热度:
-          {' '}
-          {hotScore}
-          {' '}
-          通过标签的调用度反映标签热度
+      <div className="exponent">
+        <div className="FBH bgf pt24 pb24 mb16">
+          {
+            cards.map((item, index) => (
+              <div className="FB1" style={{borderLeft: index !== 0 ? '1px solid #E8E8E8' : ''}}>
+                <OverviewCard {...item} />
+              </div>
+            ))
+          }
+
         </div>
-        <div className="mb32">
+        <div className="mb16 pb16 bgf">
           <h3 className="ct-title">标签价值分趋势</h3>
           <div className="time-range-wrap">
             <TimeRange
@@ -113,7 +119,7 @@ export default class Exponent extends Component {
           />
         </div>
 
-        <div className="mb32">
+        <div className="mb16 pb16 bgf">
           <h3 className="ct-title">标签质量分趋势</h3>
           <div className="time-range-wrap">
             <TimeRange
@@ -135,7 +141,7 @@ export default class Exponent extends Component {
           />
         </div>
 
-        <div className="mb32">
+        <div className="mb16 pb16 bgf">
           <h3 className="ct-title">标签热度趋势</h3>
           <div className="time-range-wrap">
             <TimeRange

@@ -66,6 +66,7 @@ class ModalEditCategory extends Component {
 
   @action.bound handleNameValidator(rule, value, callback) {
     const {currentTreeItemKey} = this.store
+    console.log(rule, value, callback)
     if (value) {
       // // 后端校验
       // const param = {}
@@ -127,6 +128,7 @@ class ModalEditCategory extends Component {
                   {pattern: /^[\u4e00-\u9fa5]{1,30}$/, message: '输入限制为中文字符'},
                   {validator: this.handleNameValidator},
                 ],
+                validateFirst: true,
               })(<Input autoComplete="off" placeholder="不超过20个字，输入为中文字符" />)}
             </FormItem>
 

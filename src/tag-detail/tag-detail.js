@@ -5,6 +5,9 @@ import {Button, Tabs, Tag} from 'antd'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
 import {Time} from '../common/util'
 import TagDetailExponent from '../tag-detail-exponent'
+import TagDetailInvoke from '../tag-detail-invoke'
+import TagDetailRelate from '../tag-detail-relate'
+
 import store from './store-tag-detail'
 
 const {TabPane} = Tabs
@@ -98,8 +101,12 @@ export default class TagDetail extends Component {
           <TabPane tab="标签指数" key="1">
             <TagDetailExponent aId={store.id} />
           </TabPane>
-          <TabPane tab="标签调用" key="2">标签调用</TabPane>
-          <TabPane tab="标签血缘" key="3">标签血缘</TabPane>
+          <TabPane tab="标签调用" key="2">
+            <TagDetailInvoke aId={store.id} />
+          </TabPane>
+          <TabPane tab="标签血缘" key="3">
+            <TagDetailRelate aId={store.id} />
+          </TabPane>
         </Tabs>
       </div>
     )

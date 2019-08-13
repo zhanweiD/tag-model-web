@@ -43,7 +43,11 @@ class SelectTagStore {
   // API调用数趋势
   @action async getApiTrend(params, cb) {
     try {
-      const res = await io.getApiTrend(params)
+      const res = await io.getApiTrend({
+        occasionId: this.sceneId,
+        tagId: this.tagId,
+        ...params,
+      })
 
       runInAction(() => {
         if (cb) cb(toJS(res))
@@ -56,7 +60,11 @@ class SelectTagStore {
   // 标签调用次数趋势
   @action async getTagTrend(params, cb) {
     try {
-      const res = await io.getTagTrend(params)
+      const res = await io.getTagTrend({
+        occasionId: this.sceneId,
+        tagId: this.tagId,
+        ...params,
+      })
 
       runInAction(() => {
         if (cb) cb(toJS(res))
