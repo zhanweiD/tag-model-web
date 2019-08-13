@@ -1,7 +1,7 @@
 import React from 'react'
 import {observer} from 'mobx-react'
 import {
-  Modal, Form, Select, Row, Col, Icon, Tooltip,
+  Modal, Form, Select, Row, Col, Icon, Tooltip, Cascader,
 } from 'antd'
 import {action} from 'mobx'
 
@@ -17,24 +17,14 @@ const {Option} = Select
  */
 @observer
 class SearchModal extends React.Component {
-  state = {
-    cateLoading: false, // 场景类目的加载动画
-  }
-
   render() {
     const {store, form} = this.props
+    
     const {getFieldDecorator} = form
-
-    const {cateLoading} = this.state
 
     // 场景Options
     const sceneOptions = store.sceneList.map(scene => (
       <Option key={scene.id} value={Number(scene.id)}>{scene.name}</Option>
-    ))
-
-    // 场景类目Options
-    const cateOptions = (store.cateList || []).map(cate => (
-      <Option key={cate.id} value={Number(cate.id)}>{cate.name}</Option>
     ))
 
     return (
@@ -95,19 +85,20 @@ class SearchModal extends React.Component {
                       rules: [
                         {
                           required: true,
-                          type: 'number', // 同上
                           message: '必选',
                         },
                       ],
                     })(
-                      <Select
+                      <Cascader
                         placeholder="请选择场景类目"
-                        style={{width: '100%'}}
-                        loading={cateLoading}
-                        onChange={this.onCateSelect}
-                      >
-                        {cateOptions}
-                      </Select>
+                        options={store.cateList}
+                        onChange={values => {
+                          console.log('onCascaderChange', values)
+                          // 取最后一个值
+                          this.onCateSelect(values[values.length - 1])
+                        }}
+                        showSearch
+                      />
                     )
                   }
                 </FormItem>
@@ -123,15 +114,9 @@ class SearchModal extends React.Component {
   @action.bound onSceneSelect(value) {
     const {store} = this.props
     store.selectedSceneId = value
+    store.selectedCateId = undefined
 
-    this.setState({
-      cateLoading: true,
-    })
-    store.getCateList(() => {
-      this.setState({
-        cateLoading: false,
-      })
-    })
+    store.getCateList()
   }
 
   // 选择场景类目

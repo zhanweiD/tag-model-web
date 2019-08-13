@@ -157,7 +157,7 @@ class SearchFilter extends React.Component {
 
     store.filterObjId = id
     // 切换对象后，同时重置选中的标签
-    store.resetSelectedTags()
+    // store.resetSelectedTags()
 
     // 更新列表
     this.doSearch()
@@ -194,6 +194,10 @@ class SearchFilter extends React.Component {
   // 触发筛选
   doSearch = () => {
     const {store} = this.props
+
+    // 筛选时要重置选中的标签，不然遍历多麻烦
+    store.resetSelectedTags()
+
     store.getTagList()
   }
 }

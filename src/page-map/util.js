@@ -16,7 +16,7 @@ const TYPE_TEXT_MAP = {
 
 // 利用排序字段映射获取对应的接口字段
 export function getOrderAlias(name) {
-  return ORDER_MAP[name]
+  return ORDER_MAP[name] || ''
 }
 
 // 获取价值分等折线图的echarts配置项对象
@@ -125,4 +125,51 @@ export function getPieChartOption(data) {
       },
     }],
   }
+}
+
+/**
+ * @description 将打平的数组转换成层级结构，并返回第一层节点
+ * @author 三千
+ * @date 2019-08-13
+ * @param {*} nodes 打平（都在同一级）的节点数组，一维数组，每个节点至少包含id、parentId两个属性
+ * @returns 返回第一层节点数组
+ */
+export function listToTree(nodes = []) {
+  if (!nodes.length) {
+    return []
+  }
+
+  // 根节点（第一层节点）数组，要返回的结果
+  const roots = []
+
+  // 子节点数组集合
+  const childrenMap = {}
+
+  // 节点映射，用id 映射到 节点，避免重复遍历
+  const nodeMap = {}
+  
+  // 根据parentId划分成不同数组，每个数组就对应不同parent节点的children
+  nodes.forEach(node => {
+    const {parentId, id} = node
+    if (!childrenMap[parentId]) {
+      childrenMap[parentId] = []
+    }
+    // 存入父节点的children数组中
+    childrenMap[parentId].push(node)
+    // 和id绑定
+    nodeMap[id] = node
+  })
+
+  // 把childrenMap里的数组添加到对应的节点
+  Object.keys(childrenMap).forEach(parentId => {
+    // 有节点的id和这个parentId相等，说明不是根节点，那就赋值给对应节点的children属性
+    if (nodes.some(node => +node.id === +parentId)) {
+      nodeMap[parentId].children = childrenMap[parentId]
+    } else { // 如果是第一层节点，存入根节点roots数组
+      roots.push(...childrenMap[parentId])
+    }
+  })
+
+  // 返回第一层节点
+  return roots
 }

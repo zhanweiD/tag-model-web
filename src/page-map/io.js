@@ -1,8 +1,8 @@
 import ioContext from '../common/io-context'
 import {tagApi} from '../common/util'
 
-// const isMock = false
-const isMock = true
+const isMock = false
+// const isMock = true
 
 // 拼接接口url的辅助函数，shortPath是短路径
 const getUrl = shortPath => `${tagApi}/be_tag/${shortPath}`

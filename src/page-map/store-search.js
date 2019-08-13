@@ -1,7 +1,7 @@
 import {observable, action, toJS} from 'mobx'
 import {errorTip, successTip} from '../common/util'
 import io from './io'
-import {getOrderAlias} from './util'
+import {getOrderAlias, listToTree} from './util'
 
 /**
  * @description 标签搜索的数据管理
@@ -159,7 +159,14 @@ class SearchStore {
       const res = await io.getCateList({
         occasionId: this.selectedSceneId,
       })
-      this.cateList = res
+
+      // 加上value\label属性，用于antd的级联组件
+      res.forEach(node => {
+        node.value = node.id
+        node.label = node.name
+      })
+
+      this.cateList = listToTree(res)
     } catch (err) {
       errorTip(err.message)
     } finally {
@@ -169,7 +176,9 @@ class SearchStore {
 
   // 批量添加至场景
   @action async saveTags(cb) {
-    const {selectedTags, selectedCateId, selectedSceneId} = this
+    const {
+      selectedTags, selectedCateId, selectedSceneId, filterObjId,
+    } = this
 
     const occTags = []
 
@@ -178,7 +187,7 @@ class SearchStore {
         occTags.push({
           occasionId: selectedSceneId,
           catId: selectedCateId,
-          objId: tag.objId,
+          objId: tag.objId || filterObjId,
           tagId: tag.id,
         })
       })
