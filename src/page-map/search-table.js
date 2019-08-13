@@ -93,8 +93,6 @@ export default class SearchTable extends React.Component {
     const {store} = this.props
     const {randomKey} = this.state
     
-    console.log('---- SearchTable ---  render ---')
-
     // 没有选择某个对象名称（不含全部），或，所有页面都没有选中标签时，批量添加按钮置灰
     const btnDisabled = !store.filterObjId
       || !Object.keys(store.selectedTags).length 
@@ -132,6 +130,12 @@ export default class SearchTable extends React.Component {
             rowSelection={{
               selectedRowKeys,
               onChange: this.onSelectChange,
+              getCheckboxProps() {
+                return {
+                  defaultChecked: false,
+                  disabled: !store.filterObjId, // 对象名称选择“全部”时，不可选择
+                }
+              },
             }}
             onChange={this.onTableChange}
           />
@@ -155,7 +159,6 @@ export default class SearchTable extends React.Component {
 
   // 选中表格项
   @action.bound onSelectChange(selectedRowKeys, selectedRows) {
-    console.log(selectedRowKeys, selectedRows)
     const {store} = this.props
 
     // 更新当前页选中的标签项
@@ -168,14 +171,10 @@ export default class SearchTable extends React.Component {
     } else {
       store.selectedTags[store.currentPage] = selectedRows
     }
-
-    console.log(store.selectedTags)
   }
 
   // 表格变化（切页、排序）
   @action.bound onTableChange(pagination, filters, sorter) {
-    console.log(pagination, filters, sorter)
-
     const {store} = this.props
 
     const {current, pageSize} = pagination

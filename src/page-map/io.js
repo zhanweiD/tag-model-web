@@ -1,13 +1,13 @@
 import ioContext from '../common/io-context'
 import {tagApi} from '../common/util'
 
+// const isMock = false
 const isMock = true
 
 // 拼接接口url的辅助函数，shortPath是短路径
 const getUrl = shortPath => `${tagApi}/be_tag/${shortPath}`
 
 // 网关地址87：http://192.168.90.87:9985/gateway/api/detail/be_tag/a926b7a923e2444fb3d8be8e623f7397
-
 ioContext.create('map', {
   /*  标签搜索 */
 

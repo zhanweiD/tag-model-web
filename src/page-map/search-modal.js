@@ -3,7 +3,7 @@ import {observer} from 'mobx-react'
 import {
   Modal, Form, Select, Row, Col, Icon, Tooltip,
 } from 'antd'
-import { action } from 'mobx';
+import {action} from 'mobx'
 
 const FormItem = Form.Item
 const {Option} = Select
@@ -152,9 +152,10 @@ class SearchModal extends React.Component {
           store.selectedSceneId = undefined
           store.selectedCateId = undefined
           store.cateList = []
-          store.selectedTags = {
-            [store.currentPage]: [],
-          }
+          // store.selectedTags = {
+          //   [store.currentPage]: [],
+          // }
+          store.resetSelectedTags()
         })
       } else {
         console.log('error in [SearchModal]: ', errs)

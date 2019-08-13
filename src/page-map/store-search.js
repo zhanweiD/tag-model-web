@@ -197,17 +197,18 @@ class SearchStore {
     }
   }
 
-  /* -----------  交互操作 --------- */
+  /* -----------  其他 --------- */
 
   // 弹框切换
   @action.bound toggleModal(visible = false) {
     this.modalVisible = visible
-    console.log('toggleModal', visible)
   }
 
-  // 表格切页、排序
-  @action.bound onTableChange() {
-
+  // 重置选中的标签
+  @action.bound resetSelectedTags() {
+    this.selectedTags = {
+      [this.currentPage]: [], // 因为要做跨页选择，所以需要把每一页选中的存起来
+    }
   }
 }
 

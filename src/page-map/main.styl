@@ -32,11 +32,19 @@ $black45 = rgba(0, 0, 0, 0.45)
   // 重置表头字重
   .ant-table-column-title
     font-weight normal
+  // 搜索部分-对象名称的容器
+  .search-category-container
+    // display inline-block
+    max-width 800px
+    margin-bottom -8px // 抵消最后一行search-category的margin-bottom
   // 搜索部分-对象名称
   .search-category
-    margin-left 32px
+    display inline-block
+    margin-right 32px
+    margin-bottom 8px
     padding 4px 8px
     color rgba(0, 0, 0, 0.65)
+    word-break keep-all
   // 对象名称 - 选中状态
   .search-category--active
     background #1890FF
