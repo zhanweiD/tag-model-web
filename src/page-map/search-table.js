@@ -7,7 +7,6 @@ import {
 
 
 // 表格columns对象
-// 网关接口：http://192.168.90.87:9985/gateway/api/detail/be_tag/8d439f1001f344edbddf37fb62862a74
 const columns = [
   // 名称、数据类型、价值分、质量分、热度、创建人、使用状态、被API调用次数
   {
@@ -94,8 +93,6 @@ export default class SearchTable extends React.Component {
     const {store} = this.props
     const {randomKey} = this.state
     
-    console.log('---- SearchTable ---  render ---')
-
     // 没有选择某个对象名称（不含全部），或，所有页面都没有选中标签时，批量添加按钮置灰
     const btnDisabled = !store.filterObjId
       || !Object.keys(store.selectedTags).length 
@@ -103,7 +100,6 @@ export default class SearchTable extends React.Component {
 
     // 当前页的选中项id数组
     const selectedRowKeys = (store.selectedTags[store.currentPage] || []).map(tag => tag.id)
-    console.log('selectedRowKeys', selectedRowKeys)
 
     return (
       <div className="search-table white-block p24 mt16" key={randomKey}>
@@ -121,6 +117,7 @@ export default class SearchTable extends React.Component {
         {/* 表格 */}
         <div className="mt8">
           <Table
+            loading={store.loading}
             dataSource={store.tagList}
             columns={columns}
             pagination={{
@@ -133,6 +130,12 @@ export default class SearchTable extends React.Component {
             rowSelection={{
               selectedRowKeys,
               onChange: this.onSelectChange,
+              getCheckboxProps() {
+                return {
+                  defaultChecked: false,
+                  disabled: !store.filterObjId, // 对象名称选择“全部”时，不可选择
+                }
+              },
             }}
             onChange={this.onTableChange}
           />
@@ -156,7 +159,6 @@ export default class SearchTable extends React.Component {
 
   // 选中表格项
   @action.bound onSelectChange(selectedRowKeys, selectedRows) {
-    console.log(selectedRowKeys, selectedRows)
     const {store} = this.props
 
     // 更新当前页选中的标签项
@@ -169,14 +171,10 @@ export default class SearchTable extends React.Component {
     } else {
       store.selectedTags[store.currentPage] = selectedRows
     }
-
-    console.log(store.selectedTags)
   }
 
   // 表格变化（切页、排序）
   @action.bound onTableChange(pagination, filters, sorter) {
-    console.log(pagination, filters, sorter)
-
     const {store} = this.props
 
     const {current, pageSize} = pagination
@@ -189,5 +187,4 @@ export default class SearchTable extends React.Component {
 
     store.getTagList()
   }
-
 }

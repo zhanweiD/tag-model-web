@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
-import PropTypes from 'prop-types'
+import {observer} from 'mobx-react'
 
 import OverviewCards from './overview-cards'
 import OverviewScore from './overview-score'
 import OverviewCall from './overview-call'
+import store from './store-overview'
 
 /**
  * @description 标签地图 - 标签概览
@@ -13,23 +14,14 @@ import OverviewCall from './overview-call'
  * @class Overview
  * @extends {Component}
  */
+@observer
 export default class Overview extends Component {
-
-  componentDidMount() {
-    console.log('componentDidMount')
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    console.log('componentDidUpdate')
-  }
-  
-
   render() {
     return (
       <div className="map-overview">
-        <OverviewCards />
-        <OverviewScore />
-        <OverviewCall />
+        <OverviewCards store={store} />
+        <OverviewScore store={store} />
+        <OverviewCall store={store} />
       </div>
     )
   }

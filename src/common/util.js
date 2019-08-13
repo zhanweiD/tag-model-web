@@ -220,3 +220,29 @@ export function toNumberOrUndefined(value) {
   }
   return value
 }
+
+/**
+ * @description 获取到今天之前的一个时间范围（参考time-range组件）
+ * @author 三千
+ * @date 2019-08-13
+ * @param {*} {long = 7, unit = 'day', includeToday = false, format = 'YYYY-MM-DD'}
+ * @param_explain unit - moment的时间单位，long - 多少个unit时间
+ */
+export function getTimeRangeToToday({
+  long = 7, unit = 'day', includeToday = false, format = 'YYYY-MM-DD',
+}) {
+  let start
+  let end
+
+  const getDate = v => moment().subtract(v, unit).format(format)
+
+  if (includeToday) { // 包括今天
+    start = getDate(long - 1)
+    end = getDate(0)
+  } else { // 不包括今天
+    start = getDate(long)
+    end = getDate(1)
+  }
+
+  return [start, end]
+}

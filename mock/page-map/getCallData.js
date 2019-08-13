@@ -1,3 +1,6 @@
+const {ceil, random} = Math
+const randomInt = (v = 200) => ceil(random() * v)
+
 module.exports = {
 	"code": "0",
 	"content": {
@@ -32,7 +35,7 @@ module.exports = {
 			"ratio": 20,
 			"startNum": 400
 		}],
-		"total": 100
+		"total": randomInt()
 	},
 	"success": true
 }

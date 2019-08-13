@@ -4,7 +4,7 @@ import cls from 'classnames'
 import {action} from 'mobx'
 import {observer} from 'mobx-react'
 import {
-  Form, Input, InputNumber, Icon,
+  Form, Input, Icon,
 } from 'antd'
 import RangeInput from '../component-range-input'
 
@@ -45,7 +45,13 @@ class SearchFilter extends React.Component {
           className={className}
           onClick={() => this.handleObjSelect(obj.id)}
         >
-          {obj.name}
+          {/* 刻意加的空格：
+            * 由于obj可能数量很多，默认的自动换行可能截断某个 obj.name 文本，
+            * 此时要给每个span加word-break: keep-all保持不被截断，
+            * 但是这会导致所有span被当做一个词（即使有margin隔开），无法自动换行，
+            * 因此需要刻意添加空格作为换行识别
+            */}
+          {obj.name + ' '}
         </span>
       )
     })
@@ -68,7 +74,7 @@ class SearchFilter extends React.Component {
                     size="large"
                     style={{width: 552}}
                     onChange={e => this.handleKeywordChange(e.target.value)}
-                    onSearch={value => console.log(value)}
+                    onSearch={value => this.handleKeywordChange(value)}
                   />
                 )
               }
@@ -78,9 +84,11 @@ class SearchFilter extends React.Component {
           {/* 所属类目 + 展开/收起按钮 */}
           <div className="FBH FBJB" style={{marginTop: '40px'}}>
             {/* 类目选择 */}
-            <div className="fal">
-              <span>对象名称：</span>
-              {objSpans}
+            <div className="FBH FBJS">
+              <span className="mr32 pt4">对象名称：</span>
+              <div className="search-category-container">
+                {objSpans}
+              </div>
             </div>
 
             {/* 展开/收起按钮 */}
@@ -141,7 +149,17 @@ class SearchFilter extends React.Component {
   // 切换所属类目
   @action.bound handleObjSelect(id) {
     const {store} = this.props
+
+    // 点击已选中的，不请求接口
+    if (store.filterObjId === id) {
+      return
+    }
+
     store.filterObjId = id
+    // 切换对象后，同时重置选中的标签
+    store.resetSelectedTags()
+
+    // 更新列表
     this.doSearch()
   }
 

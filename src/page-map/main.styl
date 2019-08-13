@@ -1,3 +1,5 @@
+$black45 = rgba(0, 0, 0, 0.45)
+
 // 白色背景的矩形div，稍微带点圆角
 .white-block
   background-color #fff
@@ -30,11 +32,19 @@
   // 重置表头字重
   .ant-table-column-title
     font-weight normal
+  // 搜索部分-对象名称的容器
+  .search-category-container
+    // display inline-block
+    max-width 800px
+    margin-bottom -8px // 抵消最后一行search-category的margin-bottom
   // 搜索部分-对象名称
   .search-category
-    margin-left 32px
+    display inline-block
+    margin-right 32px
+    margin-bottom 8px
     padding 4px 8px
     color rgba(0, 0, 0, 0.65)
+    word-break keep-all
   // 对象名称 - 选中状态
   .search-category--active
     background #1890FF
@@ -48,3 +58,24 @@
     padding 16px 0
     button:last-child
       margin-left 24px
+
+.map-overview
+  .ant-tabs .ant-tabs-top-content > .ant-tabs-tabpane
+    // transition none // 默认动画有明显的闪烁，覆盖掉
+
+  .pie-container
+    width 270px
+    height 280px
+    position relative
+  .pie-total
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-60%, -40%)
+    text-align center
+    color $black45
+  .pie-info
+    font-size 14px
+    color $black45
+    .ant-badge-status-text
+      font-size 14px

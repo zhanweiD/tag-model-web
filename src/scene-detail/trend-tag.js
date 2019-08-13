@@ -1,7 +1,5 @@
 import {Component} from 'react'
-import {
-  action,
-} from 'mobx'
+import {action} from 'mobx'
 import TimeRange from '../time-range'
 import {getTagTrendOpt} from './charts-options'
 
@@ -13,6 +11,16 @@ export default class TrendTag extends Component {
   componentDidMount() {
     this.getData()
     window.addEventListener('resize', () => this.resize())
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const {
+      tagId,
+    } = this.props
+
+    if (tagId && tagId !== nextProps.tagId) {
+      this.getData()
+    }
   }
 
   drawChart = data => {
@@ -32,8 +40,7 @@ export default class TrendTag extends Component {
       startDate: gte,
       endDate: lte,
     }
-    
-    // change
+
     store.getTagTrend(params, res => {
       this.drawChart(res) 
     })
@@ -46,9 +53,7 @@ export default class TrendTag extends Component {
   }
 
   componentWillUnmount() {
-    if (this.chartLine) {
-      this.chartLine.dispose()
-    }
+    if (this.chartLine) this.chartLine.dispose()
     this.chartLine = null
   }
 
@@ -70,7 +75,7 @@ export default class TrendTag extends Component {
             exportTimeRange={(gte, lte) => this.getData(gte, lte)}
           />
         </div>
-        <div style={{height: '300px'}} ref={ref => this.lineRef = ref} />
+        <div style={{height: '300px'}} ref={ref => this.lineRef = ref} />          
       </div>
     )
   }

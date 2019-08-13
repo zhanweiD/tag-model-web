@@ -16,6 +16,73 @@ module.exports = {
           "name": "电脑",				//	--对象名称
           "objType": "物",		//			--分类
           "objTypeCode": 2,		//		 --分类code
-      }
+      },{
+        "id":1,                     //                 --对象id
+        "name": "客户",				//	--对象名称
+        "objType": "人",		//			--分类
+        "objTypeCode": 1,		//		 --分类code
+    },
+    {
+         "id":2,             //                         --对象id
+        "name": "电脑",				//	--对象名称
+        "objType": "物",		//			--分类
+        "objTypeCode": 2,		//		 --分类code
+    },{
+        "id":1,                     //                 --对象id
+        "name": "客户",				//	--对象名称
+        "objType": "人",		//			--分类
+        "objTypeCode": 1,		//		 --分类code
+    },
+    {
+         "id":2,             //                         --对象id
+        "name": "电脑",				//	--对象名称
+        "objType": "物",		//			--分类
+        "objTypeCode": 2,		//		 --分类code
+    },{
+        "id":1,                     //                 --对象id
+        "name": "客户",				//	--对象名称
+        "objType": "人",		//			--分类
+        "objTypeCode": 1,		//		 --分类code
+    },
+    {
+         "id":2,             //                         --对象id
+        "name": "电脑",				//	--对象名称
+        "objType": "物",		//			--分类
+        "objTypeCode": 2,		//		 --分类code
+    },{
+        "id":1,                     //                 --对象id
+        "name": "客户",				//	--对象名称
+        "objType": "人",		//			--分类
+        "objTypeCode": 1,		//		 --分类code
+    },
+    {
+         "id":2,             //                         --对象id
+        "name": "电脑",				//	--对象名称
+        "objType": "物",		//			--分类
+        "objTypeCode": 2,		//		 --分类code
+    },{
+        "id":1,                     //                 --对象id
+        "name": "客户",				//	--对象名称
+        "objType": "人",		//			--分类
+        "objTypeCode": 1,		//		 --分类code
+    },
+    {
+         "id":2,             //                         --对象id
+        "name": "电脑2",				//	--对象名称
+        "objType": "物",		//			--分类
+        "objTypeCode": 2,		//		 --分类code
+    },
+    {
+        "id":1,                     //                 --对象id
+        "name": "客户4",				//	--对象名称
+        "objType": "人",		//			--分类
+        "objTypeCode": 1,		//		 --分类code
+    },
+    {
+         "id":2,             //                         --对象id
+        "name": "电脑6",				//	--对象名称
+        "objType": "物",		//			--分类
+        "objTypeCode": 2,		//		 --分类code
+    },
   ]
 }

@@ -20,13 +20,21 @@ const formItemLayout = {
   },
 }
 
+const status = [{
+  key: 1,
+  label: '使用中',
+}, {
+  key: 2,
+  label: '未使用',
+}]
+
 exports.SearchForm = Form.create({
   onFieldsChange: props => {
     props.onChange()
   },
 })(
   props => {
-    const {form: {getFieldDecorator}} = props
+    const {form: {getFieldDecorator}, onSearch, onReset} = props
 
     return (
       <Form className="dt-form-column bgf mb16 p16">
@@ -36,7 +44,7 @@ exports.SearchForm = Form.create({
               {...formItemLayout}
               label="标签名称"
             >
-              {getFieldDecorator('name1')(
+              {getFieldDecorator('tagName')(
                 <Input placeholder="请输入" />
               )}
             </FormItem>
@@ -46,18 +54,18 @@ exports.SearchForm = Form.create({
               {...formItemLayout}
               label="使用状态"
             >
-              {getFieldDecorator('name2', {
-                initialValue: '',
+              {getFieldDecorator('stat', {
+                initialValue: 0,
               })(
                 <Select
                   showSearch
                   optionFilterProp="children"
                   placeholder="请下拉选择"
                 >
-                  <Option value="">全部</Option>
+                  <Option value={0}>全部</Option>
                   {
-                    [].map(({value, key}) => (
-                      <Option key={key} value={key}>{value}</Option>
+                    status.map(({label, key}) => (
+                      <Option key={key} value={key}>{label}</Option>
                     ))
                   }
                 </Select>
@@ -72,20 +80,20 @@ exports.SearchForm = Form.create({
             >
               <div>
                 <FormItem style={{display: 'inline-block', width: 'calc(50% - 12px)', marginBottom: 0}}>
-                  {getFieldDecorator('name3', {
+                  {getFieldDecorator('minWorth', {
                     initialValue: '',
                   })(
-                    <InputNumber min={0} max={100} style={{width: '100%'}} />
+                    <InputNumber min={0} max={100} style={{width: '100%'}} placeholder="请输入" />
                   )}
                 </FormItem>
                 <span style={{display: 'inline-block', width: '24px', textAlign: 'center'}}>
                   -
                 </span>
                 <FormItem style={{display: 'inline-block', width: 'calc(50% - 12px)'}}>
-                  {getFieldDecorator('name4', {
+                  {getFieldDecorator('maxWorth', {
                     initialValue: '',
                   })(
-                    <InputNumber min={1} max={100} style={{width: '100%'}} />
+                    <InputNumber min={1} max={100} style={{width: '100%'}} placeholder="请输入" />
                   )}
                 </FormItem>
               </div>
@@ -99,20 +107,20 @@ exports.SearchForm = Form.create({
             >
               <div>
                 <FormItem style={{display: 'inline-block', width: 'calc(50% - 12px)', marginBottom: 0}}>
-                  {getFieldDecorator('name5', {
+                  {getFieldDecorator('minQuality', {
                     initialValue: '',
                   })(
-                    <InputNumber min={0} max={100} style={{width: '100%'}} />
+                    <InputNumber min={0} max={100} style={{width: '100%'}} placeholder="请输入" />
                   )}
                 </FormItem>
                 <span style={{display: 'inline-block', width: '24px', textAlign: 'center'}}>
                   -
                 </span>
                 <FormItem style={{display: 'inline-block', width: 'calc(50% - 12px)'}}>
-                  {getFieldDecorator('name6', {
+                  {getFieldDecorator('maxQuality', {
                     initialValue: '',
                   })(
-                    <InputNumber min={1} max={100} style={{width: '100%'}} />
+                    <InputNumber min={1} max={100} style={{width: '100%'}} placeholder="请输入" />
                   )}
                 </FormItem>
               </div>
@@ -126,20 +134,20 @@ exports.SearchForm = Form.create({
             >
               <div>
                 <FormItem style={{display: 'inline-block', width: 'calc(50% - 12px)', marginBottom: 0}}>
-                  {getFieldDecorator('name7', {
+                  {getFieldDecorator('minHot', {
                     initialValue: '',
                   })(
-                    <InputNumber min={0} max={100} style={{width: '100%'}} />
+                    <InputNumber min={0} max={100} style={{width: '100%'}} placeholder="请输入" />
                   )}
                 </FormItem>
                 <span style={{display: 'inline-block', width: '24px', textAlign: 'center'}}>
                   -
                 </span>
                 <FormItem style={{display: 'inline-block', width: 'calc(50% - 12px)'}}>
-                  {getFieldDecorator('name8', {
+                  {getFieldDecorator('maxHot', {
                     initialValue: '',
                   })(
-                    <InputNumber min={1} max={100} style={{width: '100%'}} />
+                    <InputNumber min={1} max={100} style={{width: '100%'}} placeholder="请输入" />
                   )}
                 </FormItem>
               </div>
@@ -149,8 +157,8 @@ exports.SearchForm = Form.create({
 
         <Row>
           <Col span={24} style={{textAlign: 'right'}}>
-            <Button type="primary" onClick={() => {}}>查询</Button>
-            <Button style={{marginLeft: 8}} onClick={() => {}}>重置</Button>
+            <Button type="primary" onClick={() => onSearch()}>查询</Button>
+            <Button style={{marginLeft: 8}} onClick={() => onReset()}>重置</Button>
           </Col>
         </Row>
       </Form>

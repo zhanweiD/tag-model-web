@@ -54,7 +54,7 @@ class SceneStore {
   // 场景新增
   @action async addScene(params) {
     try {
-      const res = await io.addScene(params)
+      await io.addScene(params)
 
       runInAction(() => {
         this.modalVisible = false
@@ -69,7 +69,7 @@ class SceneStore {
    // 场景删除
    @action async delScene(id) {
     try {
-      const res = await io.delScene({
+      await io.delScene({
         occasionId: id,
       })
 
@@ -83,9 +83,9 @@ class SceneStore {
   }
 
   // 场景编辑
-  @action async editScene() {
+  @action async editScene(params) {
      try {
-       const res = await io.editScene()
+       await io.editScene(params)
 
        runInAction(() => {
          this.modalVisible = false
@@ -100,14 +100,12 @@ class SceneStore {
   // 中文名校验
   @action async checkName(name, cb) {
     try {
-      const res = await io.checkName({
+      await io.checkName({
         name,
       })
 
       runInAction(() => {
-        if (cb) {
-          cb()
-        }
+        if (cb) cb()
       })
     } catch (e) {
       errorTip(e.message)

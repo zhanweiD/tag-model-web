@@ -1,10 +1,12 @@
 import {Component} from 'react'
-import {observable, action, toJS} from 'mobx'
+import {action, toJS} from 'mobx'
 import {observer} from 'mobx-react'
 import {
   Row, Col, Spin, Modal, Icon, Tag, Button,
 } from 'antd'
 import {Link} from 'react-router-dom'
+
+import {Time} from '../common/util'
 import ModalAdd from './modal-add'
 
 import store from './store-scene'
@@ -55,7 +57,7 @@ export default class Scene extends Component {
               toJS(list).map(({
                 id,
                 name,
-                cCuser,
+                cUser,
                 cDate,
                 used,
                 tagCount,
@@ -65,18 +67,18 @@ export default class Scene extends Component {
                   <div className={`card ${used ? 'used' : 'noused'}`}>
                     <div className="item-info">
                       <div className="c-name">
-                        <Link to="/detail" className="mr8">{name}</Link>
+                        <Link to={`/detail/${id}`} className="mr8">{name}</Link>
                         <Tag color={used ? 'green' : 'blue'}>{used ? '使用中' : '未使用'}</Tag>
                         <Icon type="right" />
                       </div>
                       <div className="c-info">
                         <span className="mr20">
                           创建者：
-                          {cCuser}
+                          {cUser}
                         </span> 
                         <span>
                           创建时间：
-                          {cDate}
+                          <Time timestamp={cDate} />
                         </span>
                       </div>
                       <div className="count-info">
