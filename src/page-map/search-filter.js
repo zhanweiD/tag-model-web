@@ -84,8 +84,8 @@ class SearchFilter extends React.Component {
           {/* 所属类目 + 展开/收起按钮 */}
           <div className="FBH FBJB" style={{marginTop: '40px'}}>
             {/* 类目选择 */}
-            <div className="FBH FBJS">
-              <span className="mr32 pt4">对象名称：</span>
+            <div className="FBH FBJS FB1">
+              <span className="mr32 pt4" style={{width: 60}}>对象名称：</span>
               <div className="search-category-container">
                 {objSpans}
               </div>
@@ -93,7 +93,7 @@ class SearchFilter extends React.Component {
 
             {/* 展开/收起按钮 */}
             <div>
-              <span className="button-style" onClick={this.handleToggle}>
+              <span className="button-style far ml16" style={{width: 50}} onClick={this.handleToggle}>
                 {expand ? '收起' : '展开'}
                 <Icon type={expand ? 'up' : 'down'} style={{marginLeft: '4px'}} />
               </span>

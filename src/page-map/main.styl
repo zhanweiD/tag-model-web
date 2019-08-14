@@ -35,7 +35,7 @@ $black45 = rgba(0, 0, 0, 0.45)
   // 搜索部分-对象名称的容器
   .search-category-container
     // display inline-block
-    max-width 800px
+    max-width 80%
     margin-bottom -8px // 抵消最后一行search-category的margin-bottom
   // 搜索部分-对象名称
   .search-category
@@ -45,6 +45,8 @@ $black45 = rgba(0, 0, 0, 0.45)
     padding 4px 8px
     color rgba(0, 0, 0, 0.65)
     word-break keep-all
+    &:last-child
+      margin-right 0
   // 对象名称 - 选中状态
   .search-category--active
     background #1890FF
@@ -71,7 +73,7 @@ $black45 = rgba(0, 0, 0, 0.45)
     position absolute
     top 50%
     left 50%
-    transform translate(-60%, -40%)
+    transform translate(-50%, -40%)
     text-align center
     color $black45
   .pie-info

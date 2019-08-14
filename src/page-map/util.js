@@ -95,13 +95,16 @@ export const pieColorList = ['#39A0FF', '#36CBCB', '#4DCB73', '#FAD338', '#F2637
 
 // 获取标签调用的饼图配置项
 export function getPieChartOption(data) {
-  const radius = 120
+  // const radius = 120
 
   return {
     series: [{
       type: 'pie',
-      radius: [radius - 25, radius],
-      center: [radius + 10, radius + 20],
+      // radius: [radius - 25, radius],
+      // center: [radius + 10, radius + 20],
+      radius: ['70%', '90%'],
+      center: ['50%', '50%'],
+      // center: [100, 100],
       label: {
         show: false,
       },
