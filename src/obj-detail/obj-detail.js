@@ -4,6 +4,7 @@ import {observer} from 'mobx-react'
 import {Button, Popconfirm, Tooltip, Table} from 'antd'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
 import {Time} from '../common/util'
+import OverviewCard from '../component-overview-card'
 import store from './store-obj-detail'
 import DrawerRelfieldAdd from './drawer-relfield-add'
 import DrawerRelfieldEdit from './drawer-relfield-edit'
@@ -110,9 +111,7 @@ export default class ObjDetail extends Component {
       descr,
       objRspList = [],
     } = store.baseInfo
-    const {dataSourceCount, tableCount, configuredField, associatedField} = store.dailyCard
-    
-    
+
     const baseInfo = [
       {
         title: '创建者',
@@ -134,21 +133,39 @@ export default class ObjDetail extends Component {
         value: descr,
       },
     ]
-
     if (typeCode === 3) {
-      baseInfo.splice(4, 0, {
+      baseInfo.splice(5, 0, {
         title: '关联的人/物',
         value: objRspList && objRspList.map(item => item.name).join('、'),
       })
     }
 
+    const {
+      dataSourceCount, tableCount, configuredField, associatedField,
+    } = store.dailyCard
+    const cards = [
+      {
+        title: '数据源数',
+        tooltipText: '添加关联字段中，选择的数据源数',
+        values: [dataSourceCount],
+      },
+      {
+        title: '数据表数',
+        tooltipText: '添加关联字段中，选择的数据表数',
+        values: [tableCount],
+      },
+      {
+        title: '已配置/已关联',
+        tooltipText: '添加的关联字段中，已配置成标签的字段数/添加的关联字段总数',
+        values: [configuredField, associatedField],
+      },
+    ]
+
     return (
       <div className="obj-detail">
         <div className="detail-info">
           <div className="d-head FBH FBJ">
-            <div>
-              <span className="mr10">{name}</span>
-            </div>
+            <span className="mr10">{name}</span>
             <div>
               <Button type="primary" className="mr8" onClick={() => this.toAddRelField()}>添加关联字段</Button>
               <Button>已关联字段列表</Button>
@@ -156,15 +173,20 @@ export default class ObjDetail extends Component {
           </div>
           <NemoBaseInfo dataSource={baseInfo} className="d-info" />
         </div>
-        <div>{dataSourceCount}</div>
-        {/* // "dataSourceCount": 3,		--数据源数
-    // "tableCount": 20,			--数据表数
-		// "configuredField": 100,		--已配置字段数
-    // "associatedField": 200		--已关联字段数 */}
 
+        <div className="FBH bgf pt24 pb24">
+          {
+            cards.map((item, index) => (
+              <div className="FB1" style={{borderLeft: index !== 0 ? '1px solid #E8E8E8' : ''}}>
+                <OverviewCard {...item} />
+              </div>
+            ))
+          }
+        </div>
 
         <Table
           className="p24"
+          style={{paddingTop: 0}}
           rowKey="id"
           onChange={store.handleChange}
           columns={this.tableCol}
