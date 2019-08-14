@@ -4,7 +4,7 @@ import {observer, inject, Provider} from 'mobx-react'
 import {Tabs} from 'antd'
 import {navListMap} from '../common/constants'
 import TagStore from './store-tag'
-import TagCategory, {TagCategoryStore} from '../tag-category'
+import TagCategory, {TagCategoryStore} from '../category-tag'
 import TagDetail from '../tag-detail'
 import ObjDetail from '../obj-detail'
 
