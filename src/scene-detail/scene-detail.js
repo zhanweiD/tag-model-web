@@ -99,7 +99,7 @@ export default class SceneDetail extends Component {
         </Spin>
        
 
-        <Tabs defaultActiveKey="1" animated={false} style={{height: 'calc(100vh - 181px)'}}>
+        <Tabs defaultActiveKey="1" animated={false}>
           <TabPane tab="标签选择" key="1">    
             <SelectTag sceneId={store.sceneId} />
           </TabPane>

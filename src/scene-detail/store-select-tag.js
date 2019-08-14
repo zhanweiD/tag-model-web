@@ -8,13 +8,11 @@ import io from './io'
 class SelectTagStore {
   constructor(props) {
     this.props = props
-    // this.cateId = +props.match.params.id ? +props.match.params.id : -1
-    // this.getChargeList()
   }
 
   // 场景id
   @observable sceneId = undefined
-  
+
   // 选择标签id
   @observable tagId = undefined
 
@@ -23,6 +21,12 @@ class SelectTagStore {
 
   // 添加目的数据源弹窗标识
   @observable selectTagVisible = false
+
+  // API调用数趋势数据
+  @observable apiTrendData = []
+
+  // 标签调用次数趋势
+  @observable tagTrendData = []
 
   // 标签详情
   @action async getTagDetail() {
@@ -39,7 +43,7 @@ class SelectTagStore {
       errorTip(e.message)
     }
   }
-    
+
   // API调用数趋势
   @action async getApiTrend(params, cb) {
     try {
@@ -50,6 +54,8 @@ class SelectTagStore {
       })
 
       runInAction(() => {
+        this.apiTrendData.clear()
+        this.apiTrendData = res
         if (cb) cb(toJS(res))
       })
     } catch (e) {
@@ -67,6 +73,8 @@ class SelectTagStore {
       })
 
       runInAction(() => {
+        this.tagTrendData.clear()
+        this.tagTrendData = res
         if (cb) cb(toJS(res))
       })
     } catch (e) {
@@ -75,5 +83,4 @@ class SelectTagStore {
   }
 }
 
-// export default new SelectTagStore()
 export default SelectTagStore

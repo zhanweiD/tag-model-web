@@ -23,8 +23,6 @@ export default class SelectTag extends Component {
     this.store.categoryStore = new TagCategoryStore(props)
     this.store.categoryStore.getCategoryList()
 
-    // this.store.typeCode = +params.type || 1
-    // this.store.id = +params.id || 999999999
     this.store.typeCode = 1
     this.store.id = props.id || -1
 
@@ -34,9 +32,6 @@ export default class SelectTag extends Component {
     // 选择标签暂存id 
     this.tagId = undefined
   }
-  
-
-  // @observable updateKey = 0
   
   componentWillMount() {
     const {frameChange} = this.props
@@ -89,11 +84,11 @@ export default class SelectTag extends Component {
       <Provider bigStore={this.store}>
         <div className="select-tag FBH">
           <TagCategory tagChange={this.tagChange} />
-          <div className="select-tag-box">
+          <div className="FB1 m16">
             {
               tagId ? (
                 <Fragment>
-                  <div className="detail-info">
+                  <div className="detail-info mb16">
                     <div className="d-head FBH FBJ">
                       <div>
                         <span className="mr10">{name}</span>
@@ -107,9 +102,9 @@ export default class SelectTag extends Component {
                   <TrendTag store={this.store} tagId={this.store.tagId} />
                   <TrendApi store={this.store} tagId={this.store.tagId} />
                 </Fragment>
-              ) : <div className="empty-box"><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /></div> 
-            }
-          </div>
+              ) : <div className="empty-box bgf"><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /></div>
+            }  
+          </div> 
         </div>
       </Provider>   
     )

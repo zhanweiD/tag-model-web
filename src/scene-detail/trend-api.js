@@ -1,5 +1,6 @@
 import {Component} from 'react'
 import {action} from 'mobx'
+import {Empty} from 'antd'
 import TimeRange from '../time-range'
 import {getApiTrendOpt} from './charts-options'
 
@@ -10,7 +11,7 @@ export default class TrendApi extends Component {
 
   componentDidMount() {
     this.getData()
-    window.addEventListener('resize', () => this.resize())
+    window.addEventListener('resize', this.resize)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -24,7 +25,11 @@ export default class TrendApi extends Component {
   }
 
   drawChart = data => {
+    if (!this.lineRef) return 
+    if (this.chartLine) this.chartLine.clear()
+
     this.chartLine = echarts.init(this.lineRef)
+    
     this.chartLine.setOption(getApiTrendOpt(
       data
     ))
@@ -39,24 +44,24 @@ export default class TrendApi extends Component {
     }
     
     store.getApiTrend(params, res => {
-      this.drawChart(res) 
+      if (res.length) this.drawChart(res)
     })
   }
 
-  @action resize() {
-    if (this.chartLine) {
-      this.chartLine.resize()
-    }
+  @action resize = () => {
+    if (this.chartLine) this.chartLine.resize()
   }
 
   componentWillUnmount() {
     if (this.chartLine) this.chartLine.dispose()
     this.chartLine = null
+    window.removeEventListener('resize', this.resize)
   }
 
   render() {
+    const {store: {apiTrendData}} = this.props
     return (
-      <div className="chart">
+      <div className="bgf">
         <h3 className="ct-title">API调用数趋势</h3>
         <div className="time-range-wrap">
           <TimeRange
@@ -72,7 +77,12 @@ export default class TrendApi extends Component {
             exportTimeRange={(gte, lte) => this.getData(gte, lte)}
           />
         </div>
-        <div style={{height: '300px'}} ref={ref => this.lineRef = ref} />
+        {
+          apiTrendData.length 
+            ? <div style={{height: '300px'}} ref={ref => this.lineRef = ref} />
+            : <div style={{height: '200px'}}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /></div> 
+        }
+
       </div>
     )
   }
