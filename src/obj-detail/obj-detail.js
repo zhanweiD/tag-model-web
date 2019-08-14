@@ -52,7 +52,7 @@ export default class ObjDetail extends Component {
                 arr.push(
                   <Popconfirm
                     title="你确定要移除该数据表吗？"
-                    onConfirm={() => {}}
+                    onConfirm={() => store.delObjFieldRel(record.dataStorageId, record.dataTableName)}
                   ><a className="mr8">移除</a></Popconfirm>
                 )
               } else {

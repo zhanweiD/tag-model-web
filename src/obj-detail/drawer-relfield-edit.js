@@ -175,16 +175,17 @@ class DrawerRelfieldEdit extends Component {
           </Spin>
         </Form>
 
-        <div className="far mb8">
+        <div className="far mb16">
           <Button onClick={this.handleOnOk} type="primary">
             添加
           </Button>
         </div>
         
         <div className="scroll-table">
+          <h3>已关联字段列表</h3>
           <Table
             columns={this.tableCol}
-            loading={false}
+            loading={store.relDbFieldLoading}
             dataSource={toJS(this.stdlist)}
             pagination={false}
             // scroll={{y: '90%'}}

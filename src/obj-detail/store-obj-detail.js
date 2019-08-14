@@ -29,10 +29,19 @@ class ObjDetailStore {
 
   // 获取关联对象字段列表
   @observable relDbField = []
-
   // // 查询条件
   // @observable order = ''
   // @observable sort = ''
+
+
+  // 添加关联字段
+  @observable drawerLoading = false
+  @observable dacList = []
+  @observable tableList = []
+  @observable fieldList = []
+
+  // 编辑关联字段
+  @observable relDbFieldLoading = false
 
   @action async getBaseInfo() {
     this.baseInfoLoading = true
@@ -100,11 +109,6 @@ class ObjDetailStore {
     this.getList()
   }
 
-
-  @observable drawerLoading = false
-  @observable dacList = []
-  @observable tableList = []
-  @observable fieldList = []
   @action async getDacList() {
     this.drawerLoading = true
     try {
@@ -144,10 +148,6 @@ class ObjDetailStore {
         tableName,
       })
       runInAction(() => {
-        // const arr = res.map(item => ({
-        //   dataFieldName: item.field,
-        //   dataFieldType: item.type,
-        // }))
         this.fieldList.replace(res)
       })
     } catch (e) {
@@ -182,8 +182,6 @@ class ObjDetailStore {
   @action async updateRelField(param, cb) {
     try {
       if (this.baseInfo.objTypeCode === 3) {
-        // param.filedObjAssReqList = param.filedObjReqList
-        // delete param.filedObjReqList
         await io.updateRelFieldAss(param)
       } else {
         await io.updateRelField(param)
@@ -200,6 +198,7 @@ class ObjDetailStore {
   
   // 获取已关联字段列表(编辑时)
   @action async getRelDbField(storageId, tableName) {
+    this.relDbFieldLoading = true
     try {
       const res = await io.getRelDbField({
         objId: this.id,
@@ -207,6 +206,7 @@ class ObjDetailStore {
         tableName,
       })
       runInAction(() => {
+        this.relDbFieldLoading = false
         this.relDbField.clear()
         res.forEach(item => {
           this.relDbField.push({
@@ -215,6 +215,26 @@ class ObjDetailStore {
             isUsed: item.isUsed,
           })
         })
+      })
+    } catch (e) {
+      runInAction(() => {
+        this.relDbFieldLoading = false
+      })
+      errorTip(e.message)
+    }
+  }
+
+  
+  @action async delObjFieldRel(storageId, tableName) {
+    try {
+      await io.delObjFieldRel({
+        objId: this.id,
+        storageId,
+        tableName,
+      })
+      runInAction(() => {
+        successTip('移除成功')
+        this.getList()
       })
     } catch (e) {
       errorTip(e.message)

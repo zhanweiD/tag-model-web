@@ -19,6 +19,12 @@ ioContext.create('objDetail', {
     url: `${tagApi}/be_tag/tag/pool/obj_storage_page`,
   },
 
+  delObjFieldRel: {
+    method: 'POST',
+    url: `${tagApi}/be_tag/tag/pool/del_obj_field_rel`,
+  },
+
+
   // 三次级联选择接口
   getDacList: {
     url: `${tagApi}/be_tag/tag/datasource/list`,
