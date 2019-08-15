@@ -21,7 +21,7 @@ export default class TagConfiguration extends React.Component {
   }
 
   componentDidMount() {
-    store.getTableList()
+    store.getInitialList()
   }
 
   render() {
@@ -63,6 +63,7 @@ export default class TagConfiguration extends React.Component {
           </div>
 
           {/* 底部步骤控制按钮 */}
+          {/* TODO: 每页下的按钮都不一样，干脆分别做 */}
           <div
             style={{
               position: 'absolute',
@@ -86,7 +87,11 @@ export default class TagConfiguration extends React.Component {
               </Button>
             )}
             {currentStep < steps.length - 1 && (
-              <Button type="primary" onClick={() => this.nextStep()}>
+              <Button 
+                type="primary" 
+                // disabled={!store.secondTableList.length}
+                onClick={() => this.nextStep()}
+              >
                 下一步
               </Button>
             )}

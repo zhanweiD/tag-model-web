@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Tooltip, Icon} from 'antd'
 import cls from 'classnames'
+import QuestionTooltip from '../component-question-tooltip'
 
 /**
  * @description 标签概览的信息卡片组件，包含标题、问号icon的tooltip、数值、底部附加描述
@@ -54,9 +54,7 @@ export default class OverviewCard extends React.Component {
             {title}
             {
               tooltipText ? (
-                <Tooltip title={tooltipText}>
-                  <Icon type="question-circle" className="ml4" />
-                </Tooltip>
+                <QuestionTooltip tip={tooltipText} />
               ) : null
             }
           </span>

@@ -31,7 +31,7 @@ module.exports = function () {
         5593182904451456,
         5593186126266752,
       ],	 
-      isTure: 1,
+      isTrue: 1,
       result: '可创建',
         
     }, {
@@ -61,7 +61,7 @@ module.exports = function () {
         5593182904451456,
         5593186126266752,
       ],	 
-      isTure: 0,
+      isTrue: 0,
       result: '标签中文名未命名',
     }],
     success: true,

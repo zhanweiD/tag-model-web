@@ -2,8 +2,9 @@ import React from 'react'
 import {observer} from 'mobx-react'
 import {action} from 'mobx'
 import {
-  Table, Badge, Tooltip, Icon,
+  Table, Badge,
 } from 'antd'
+import QuestionTooltip from '../component-question-tooltip'
 
 const columns = [
   {
@@ -30,9 +31,7 @@ const columns = [
     title: (
       <span>
         使用状态
-        <Tooltip placement="top" title="字段绑定的标签是否被使用">
-          <Icon type="question-circle" className="ml4" />
-        </Tooltip>
+        <QuestionTooltip tip="字段绑定的标签是否被使用" />
       </span>
     ),
     key: 'isUsed',
@@ -46,47 +45,67 @@ const columns = [
   },
 ]
 
-// 配置标签 - 选择字段
+// 标签配置 - 选择字段
 @observer
 export default class StepOne extends React.Component {
+  componentDidMount() {
+    console.log('--- componentDidMount --- ', 'StepOne')
+  }
+
   render() {
     const {store} = this.props
 
-    function repeatArray(arr, n) {
-      const result = []
-      for (let i = 0; i < n; i++) {
-        const values = arr.map(d => ({...d, id: Math.random()}))
-        result.push(...values)
-      }
-      return result
-    }
+    // function repeatArray(arr, n) {
+    //   const result = []
+    //   for (let i = 0; i < n; i++) {
+    //     const values = arr.map(d => ({...d, id: Math.random()}))
+    //     result.push(...values)
+    //   }
+    //   return result
+    // }
 
-    const arr = repeatArray(store.tableList, 10)
+    // const arr = repeatArray(store.initialList, 10)
 
     return (
       <div>
-        <div className="fs16 mb8 ml2" style={{color: 'rgba(0,0,0,0.85)'}}>字段列表</div>
+        <div className="fs16 mb8 ml2" style={{color: 'rgba(0,0,0,0.85)'}}>
+          字段列表
+        </div>
         <Table
+          // loading={{false}}
           columns={columns}
-          // dataSource={store.tableList}
-          // rowKey="dataFieldName"
-          dataSource={arr}
-          rowKey="id"
+          dataSource={store.initialList}
+          rowKey="dataFieldName"
+          // dataSource={arr}
+          // rowKey="id"
           rowSelection={{
-            onChange(selectedRowKeys) {
-              console.log(selectedRowKeys)
-            },
+            onChange: this.onRowSelect,
             getCheckboxProps(value) {
               return {
+                // TODO: 如果是从第二步返回，那么这里要考虑第二步选中过的就默认选中，并且不可配置
                 defaultChecked: false,
                 disabled: +value.isUsed === 1,
               }
             },
           }}
           pagination={false}
+          // TODO:表格滚动
           // scroll={{x: false, y: 500}}
+          // style={{
+          //   height: 500,
+          // }}
         />
       </div>
     )
+  }
+
+  // 选择行，更新store中选择的字段
+  @action.bound onRowSelect(selectedRowKeys, selectedRows) {
+    const {store} = this.props
+
+    console.log(selectedRowKeys)
+
+    // TODO: 如果是从第二步返回，那么这里要考虑第二步选中过的就默认选中，并且不可配置
+    store.secondTableList = selectedRows
   }
 }
