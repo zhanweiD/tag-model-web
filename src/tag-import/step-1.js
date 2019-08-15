@@ -42,7 +42,7 @@ class StepOne extends Component {
           >
             {
               store.objs.map(item => (
-                <Option key={item.objTypeCode} value={item.objTypeCode}>{item.objTypeName}</Option>
+                <Option key={item.objId} value={item.objId}>{item.objName}</Option>
               ))
             }
           </Select>

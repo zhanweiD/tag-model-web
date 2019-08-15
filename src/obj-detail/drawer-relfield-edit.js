@@ -1,7 +1,7 @@
 import {Component, Fragment} from 'react'
 import {observer} from 'mobx-react'
 import {action, observable, toJS} from 'mobx'
-import {Form, Button, Drawer, Spin, Select, Table, Tooltip, Icon} from 'antd'
+import {Form, Button, Drawer, Spin, Select, Table, Tooltip, Icon, Popconfirm} from 'antd'
 import store from './store-obj-detail'
 
 const FormItem = Form.Item
@@ -39,7 +39,12 @@ class DrawerRelfieldEdit extends Component {
             if (isUsed) str = '使用中，不可以移除'
             return <Tooltip title={str}><span className="mr8 disabled">移除</span></Tooltip>
           }
-          return <a onClick={() => this.removeItem(record)}>移除</a>
+          return (
+            <Popconfirm
+              title="你确定要移吗？"
+              onConfirm={() => this.removeItem(record)}
+            ><a className="mr8">移除</a></Popconfirm>
+          )
         },
       },
     ]

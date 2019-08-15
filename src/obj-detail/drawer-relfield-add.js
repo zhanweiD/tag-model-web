@@ -1,7 +1,7 @@
 import {Component, Fragment} from 'react'
 import {observer} from 'mobx-react'
 import {action, observable, toJS} from 'mobx'
-import {Form, Button, Drawer, Spin, Select, Table, Tooltip, Icon} from 'antd'
+import {Form, Button, Drawer, Spin, Select, Table, Tooltip, Icon, Popconfirm} from 'antd'
 import store from './store-obj-detail'
 
 const FormItem = Form.Item
@@ -40,7 +40,12 @@ class DrawerRelfieldAdd extends Component {
           if (record.mappingKey === record.dataFieldName) {
             return <Tooltip title="关联的主键，不可以移除"><span className="mr8 disabled">移除</span></Tooltip>
           }
-          return <a onClick={() => this.removeItem(record)}>移除</a>
+          return (
+            <Popconfirm
+              title="你确定要移除该数据表吗？"
+              onConfirm={() => this.removeItem(record)}
+            ><a>移除</a></Popconfirm>
+          )
         },
       },
     ]
@@ -182,8 +187,8 @@ class DrawerRelfieldAdd extends Component {
               filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
             >
               {
-                fieldList.map(item => (
-                  <Option key={item.field} value={item.field}>{item.field}</Option>
+                fieldList.map(o => (
+                  <Option key={o.field} value={o.field}>{offscreenBuffering.field}</Option>
                 ))
               }
             </Select>
@@ -215,8 +220,8 @@ class DrawerRelfieldAdd extends Component {
                 filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
               >
                 {
-                  fieldList.map(item => (
-                    <Option key={item.field} value={item.field}>{item.field}</Option>
+                  fieldList.map(o => (
+                    <Option key={o.field} value={o.field}>{o.field}</Option>
                   ))
                 }
               </Select>
@@ -244,8 +249,8 @@ class DrawerRelfieldAdd extends Component {
                 filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
               >
                 {
-                  fieldList.map(item => (
-                    <Option key={item.field} value={item.field}>{item.field}</Option>
+                  fieldList.map(o => (
+                    <Option key={o.field} value={o.field}>{o.field}</Option>
                   ))
                 }
               </Select>
@@ -270,8 +275,8 @@ class DrawerRelfieldAdd extends Component {
               filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
             >
               {
-                fieldList.map(item => (
-                  <Option key={item.field} value={item.field}>{item.field}</Option>
+                fieldList.map(o => (
+                  <Option key={o.field} value={o.field}>{o.field}</Option>
                 ))
               }
             </Select>
@@ -380,8 +385,8 @@ class DrawerRelfieldAdd extends Component {
                   tokenSeparators={[',']}
                 >
                   {
-                    fieldList.map(item => (
-                      <Option key={item.field} value={item.field}>{item.field}</Option>
+                    fieldList.map(o => (
+                      <Option key={o.field} value={o.field}>{o.field}</Option>
                     ))
                   }
                 </Select>
