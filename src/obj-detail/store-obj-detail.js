@@ -10,6 +10,7 @@ class ObjDetailStore {
   @observable modalVisible = {
     addRelField: false,
     editRelField: false,
+    viewRelField: false,
   }
 
   @observable baseInfo = false

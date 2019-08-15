@@ -6,6 +6,7 @@ import NemoBaseInfo from '@dtwave/nemo-base-info'
 import {Time} from '../common/util'
 import OverviewCard from '../component-overview-card'
 import store from './store-obj-detail'
+import DrawerRelfieldList from '../obj-detail-relfield'
 import DrawerRelfieldAdd from './drawer-relfield-add'
 import DrawerRelfieldEdit from './drawer-relfield-edit'
 
@@ -85,6 +86,10 @@ export default class ObjDetail extends Component {
       store.getDailyCard()
       store.getList()
     }
+  }
+
+  @action toViewRelField() {
+    store.modalVisible.viewRelField = true
   }
 
   @action toAddRelField() {
@@ -167,8 +172,8 @@ export default class ObjDetail extends Component {
           <div className="d-head FBH FBJ">
             <span className="mr10">{name}</span>
             <div>
-              <Button type="primary" className="mr8" onClick={() => this.toAddRelField()}>添加关联字段</Button>
-              <Button>已关联字段列表</Button>
+              <Button className="mr8" onClick={() => this.toViewRelField()}>已关联字段列表</Button>
+              <Button type="primary" onClick={() => this.toAddRelField()}>添加关联字段</Button>
             </div>
           </div>
           <NemoBaseInfo dataSource={baseInfo} className="d-info" />
@@ -205,6 +210,10 @@ export default class ObjDetail extends Component {
           updateKey={store.relDbField.length}
           curentItem={this.curentItem}
           defStdlist={toJS(store.relDbField)}
+        />
+        <DrawerRelfieldList
+          store={store}
+          updateKey={store.modalVisible.viewRelField}
         />
       </div>
     )

@@ -6,6 +6,7 @@ import {
 
 import Frame from '../frame'
 import TaglPool from '../tag'
+import TagImport from '../tag-import'
 
 @observer
 export default class TagRouter extends Component {
@@ -14,9 +15,10 @@ export default class TagRouter extends Component {
       <Router>
         <Frame>
           <Switch>
+            <Route exact strict path="/import" component={TagImport} />
             <Route exact strict path="/:type/:id" component={TaglPool} />
             <Route exact strict path="/:type" component={TaglPool} />
-            <Redirect exact from="/" to="/1/-1" />
+            <Redirect exact from="/" to="/1" />
 
             <Route
               render={() => {

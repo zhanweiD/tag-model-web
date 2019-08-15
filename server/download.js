@@ -2,8 +2,7 @@ const forward = require('koa-forward-request2')
 
 // 临时目录
 function download(app) {
-  const router = app.router
-  const config = app.config
+  const {router, config} = app
 
   forward(app, {
     debug: true,

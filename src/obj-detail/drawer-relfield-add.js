@@ -291,6 +291,7 @@ class DrawerRelfieldAdd extends Component {
       maskClosable: false,
       width: 520,
       destroyOnClose: true,
+      onClose: this.handleOnCancel,
     }
 
     const formItemLayout = {

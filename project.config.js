@@ -206,7 +206,7 @@ module.exports = {
       apiPrefix: nattyStorage.env(SERVER_ENV, {
         default: config.gatewayDomain,
         // development: 'http://120.26.105.132:9018',
-        development: 'http://192.168.1.9:9018',
+        development: 'http://192.168.90.87:9018',
         test: 'http://10.51.44.149:9018',
         production: 'http://api-in.dtwave-inc.com',
       }),
