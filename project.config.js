@@ -7,15 +7,14 @@ const nattyStorage = env.nattyStorage
 const SERVER_ENV = env.SERVER_ENV
 
 let config = {
-  apps: {
-    account4: {},
-  },
+  apps: {},
 }
 try {
-  config = require('/opt/conf/front/config.json')
+  config = require(process.env.CONFIG_PATH || '/opt/conf/front/config.json')
 } catch (e) {
   // console.error('/opt/conf/front/config.json  配置文件不存在')
 }
+const appConfig = config.apps[pkg.name] || {}
 
 module.exports = {
   client: {
@@ -96,25 +95,28 @@ module.exports = {
       '//cdn.dtwave.com/oner-common-page/1.1.3/low-version.chunk.js',
       '//cdn.dtwave.com/oner-common-page/1.1.3/no-permission.chunk.js',
       '//cdn.dtwave.com/oner-common-page/1.1.3/tenant-choose.chunk.js',
-      '//cdn.dtwave.com/oner-common-page/1.1.3/citic_select_tenant_gb.38665899.jpeg',
+      // '//cdn.dtwave.com/oner-common-page/1.1.3/citic_select_tenant_gb.38665899.jpeg',
       '//cdn.dtwave.com/oner-common-page/1.1.3/status-fail.6b33b609.svg',
     ],
   },
 
   server: {
     // 这个port仅用在前端开发环境
-    port: (config.apps[pkg.name] && config.apps[pkg.name].port) || 9995,
+    port: appConfig.port || 9995,
 
     // 向每一个请求注入自定义 header 键值对
     apiHeader: {
       // k: 'v',
     },
 
-    pathPrefix: (config.apps[pkg.name] && config.apps[pkg.name].pathPrefix) || '',
+    pathPrefix: appConfig.pathPrefix || '',
+
+    // 自定义日志路径
+    logRoot: config.logRoot || '',
 
     // 白名单，不在白名单里的请求均为无效请求
     refererWhiteList: nattyStorage.env(SERVER_ENV, {
-      default: (config.apps[pkg.name] && config.apps[pkg.name].domain) || config.domain || config.accountDomain || '',
+      default: appConfig.domain || config.domain || config.accountDomain || '',
       development: [
         '0.0.0.0:9995',
         'localhost:9995',
@@ -151,7 +153,7 @@ module.exports = {
       test: 'http://10.51.44.149:9018',
       production: 'http://api-in.dtwave-inc.com',
       // default: config.gatewayDomain,
-      default: (config.apps[pkg.name] && config.apps[pkg.name].apiDomain) || '',
+      default: appConfig.apiDomain || config.gatewayDomain,
     }),
 
     // 自定义插件
@@ -166,7 +168,7 @@ module.exports = {
       sessionIdName: config.sessionIdName || 'sessionIdSaaS',
       // productId 找晓涛要，每个项目都会有的
       productId: nattyStorage.env(SERVER_ENV, {
-        default: (config.apps[pkg.name] && config.apps[pkg.name].productId) || '',
+        default: appConfig.productId || '',
         development: 1111,
         test: 1111,
         production: 1111,
