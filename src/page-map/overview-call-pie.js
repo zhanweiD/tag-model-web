@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Badge, Spin} from 'antd'
+import {Badge, Spin, Divider} from 'antd'
 import EchartsChart from '../component-echarts-chart'
 import {getPieChartOption, pieColorList} from './util'
 
@@ -65,10 +65,11 @@ export default class OverviewCallPie extends React.Component {
                       className="FBH FBJB fs14 pt8 pb8" 
                       style={{width: '200px'}}
                     >
-                      <span style={{width: '55%'}}>
+                      <span style={{width: '58%'}}>
                         <Badge color={color} text={range} />
+                        <Divider type="vertical" />
                       </span>
-                      <span style={{width: '35%'}}>{count}</span>
+                      <span style={{width: '28%'}}>{count}</span>
                       <span>{`${ratio}%`}</span>
                     </div>
                   )

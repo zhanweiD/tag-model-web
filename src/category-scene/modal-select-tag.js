@@ -4,10 +4,10 @@
 import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
 import {
-  observable, action, toJS, computed,
+  observable, action, toJS, computed, Tooltip,
 } from 'mobx'
 import {
-  Modal, Tree, Table, Checkbox, Spin, message,
+  Modal, Tree, Table, Checkbox, Spin, message, Button,
 } from 'antd'
 
 const {TreeNode} = Tree
@@ -75,7 +75,8 @@ class ModalSelectTag extends Component {
       return
     } 
 
-    this.store.saveTag(toJS(this.list), () => {
+    const tagIdList = toJS(this.list).map(item => item.id)
+    this.store.saveTag(tagIdList, () => {
       this.reset()
     })
   }
@@ -95,26 +96,14 @@ class ModalSelectTag extends Component {
     this.rowKeys.clear()
   }
 
-
-  renderTreeNodes = data => data.map(item => {
-    if (item.children) {
-      return (
-        <TreeNode title={item.name} key={item.id} dataRef={item}>
-          {this.renderTreeNodes(item.children)}
-        </TreeNode>
-      )
-    }
-    return <TreeNode title={item.name} key={item.id} disableCheckbox={item.used} {...item} />
-  });
-
   @action.bound onTreeCheck(keys, {checkedNodes}) {
     const list = []
     const checkedKeys = []
     let rowKeys = []
-
+    
     _.forEach(checkedNodes, ({props}) => {
       if (!props.children) {
-        list.push(props.tag)
+        if (props.tag) list.push(props.tag)
         checkedKeys.push(props.id)
       }
     })
@@ -177,6 +166,26 @@ class ModalSelectTag extends Component {
     }
   }
 
+  renderTreeNodes = data => data.map(item => {
+    if (item.children) {
+      return (
+        <TreeNode title={item.name} key={item.id} dataRef={item}>
+          {this.renderTreeNodes(item.children)}
+        </TreeNode>
+      )
+    }
+        
+    // 空类目处理
+    if (item.type === 1) {
+      return (
+        <TreeNode title={item.name} key={item.id} {...item} />
+      )
+    }
+
+    // 标签节点
+    return <TreeNode title={item.name} key={item.id} disableCheckbox={item.used} {...item} />
+  })
+
   render() {
     const {
       modalVisible: {
@@ -208,9 +217,12 @@ class ModalSelectTag extends Component {
         visible={selectTag}
         maskClosable={false}
         confirmLoading={confirmLoading}
-        onOk={e => this.handleSubmit(e)}
+        // onOk={e => this.handleSubmit(e)}    
         onCancel={this.handleCancel}
-        
+        footer={[
+          <Button onClick={this.handleCancel}>取消</Button>,
+          <Button type="primary" onClick={e => this.handleSubmit(e)} disabled={!this.list.slice().length}>确定</Button>,
+        ]}
       >
         <Spin spinning={detailLoading}>
           <div className="FBH">

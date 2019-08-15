@@ -1,9 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {Tabs} from 'antd'
-// import {
-//   HashRouter, Route, Switch,
-// } from 'react-router-dom'
 
 import Frame from '../frame'
 import Overview from './overview'
