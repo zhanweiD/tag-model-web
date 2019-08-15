@@ -134,7 +134,7 @@ export default class TagDetailDrawer extends Component {
                   target={target}
                   sourceRowKey={record => record.tagId || record.id}
                   targetRowKey={record => `${record.dataStorageId}${record.dataTableName}${record.dataFieldName}`}
-                  sourceSearchKey={record => record.name}
+                  sourceSearchKey={record => record.name || record.tagName}
                   targetSearchKey={record => record.dataFieldName}
                   targetColumns={[
                     {

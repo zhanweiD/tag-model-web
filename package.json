@@ -1,7 +1,7 @@
 {
   "name": "asset_tag",
   "version": "1.0.0",
-  "description": "Here is the description for for project",
+  "description": "数据资产管理中心",
   "main": "app.js",
   "scripts": {
     "k9": "kill `lsof -t -i:9999`",

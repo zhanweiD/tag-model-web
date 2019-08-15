@@ -74,7 +74,7 @@ module.exports = {
             drop_console: true,
             drop_debugger: true,
           },
-          ecma: 6,
+          ecma: 5,
           mangle: true,
         },
       }),
