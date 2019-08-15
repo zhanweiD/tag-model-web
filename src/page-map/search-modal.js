@@ -32,7 +32,7 @@ class SearchModal extends React.Component {
         visible={store.modalVisible}
         title="批量添加至场景"
         onOk={this.onOk}
-        onCancel={() => store.toggleModal(false)}
+        onCancel={this.onCancel}
         destroyOnClose
         wrapClassName="map-search-modal"
       >
@@ -133,19 +133,19 @@ class SearchModal extends React.Component {
         store.saveTags(() => {
           store.toggleModal(false)
 
-          // 数据重置
-          store.selectedSceneId = undefined
-          store.selectedCateId = undefined
-          store.cateList = []
-          // store.selectedTags = {
-          //   [store.currentPage]: [],
-          // }
           store.resetSelectedTags()
         })
       } else {
         console.log('error in [SearchModal]: ', errs)
       }
     })
+  }
+
+  // 取消
+  @action.bound onCancel() {
+    const {store} = this.props
+
+    store.toggleModal(false)
   }
 }
 

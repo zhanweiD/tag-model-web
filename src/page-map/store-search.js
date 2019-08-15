@@ -96,7 +96,7 @@ class SearchStore {
   @action async getObjList() {
     try {
       const res = await io.getObjList()
-      console.log('getObjList', res)
+      // console.log('getObjList', res)
       this.objList = res
     } catch (err) {
       errorTip(err.message)
@@ -135,7 +135,7 @@ class SearchStore {
       this.totalCount = res.totalCount
       this.pageSize = res.pageSize
 
-      console.log('getTagList', toJS(this), res)
+      // console.log('getTagList', toJS(this), res)
     } catch (err) {
       errorTip(err.message)
     } finally {
@@ -146,7 +146,9 @@ class SearchStore {
   // 请求场景列表
   @action async getSceneList() {
     try {
-      const res = await io.getSceneList()
+      const res = await io.getSceneList({
+        objId: this.filterObjId,
+      })
       this.sceneList = res
     } catch (err) {
       errorTip(err.message)
@@ -158,6 +160,7 @@ class SearchStore {
     try {
       const res = await io.getCateList({
         occasionId: this.selectedSceneId,
+        objId: this.filterObjId,
       })
 
       // 加上value\label属性，用于antd的级联组件
@@ -193,7 +196,7 @@ class SearchStore {
       })
     })
 
-    console.log('saveTags', occTags)
+    // console.log('saveTags', occTags)
 
     try {
       const res = await io.saveTags({
@@ -210,6 +213,9 @@ class SearchStore {
 
   // 弹框切换
   @action.bound toggleModal(visible = false) {
+    if (!visible) {
+      this.resetModal()
+    }
     this.modalVisible = visible
   }
 
@@ -218,6 +224,13 @@ class SearchStore {
     this.selectedTags = {
       [this.currentPage]: [], // 因为要做跨页选择，所以需要把每一页选中的存起来
     }
+  }
+
+  // 重置弹框相关数据
+  @action.bound resetModal() {
+    this.selectedSceneId = undefined
+    this.selectedCateId = undefined
+    this.cateList = []
   }
 }
 

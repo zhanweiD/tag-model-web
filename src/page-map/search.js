@@ -21,9 +21,6 @@ export default class MapSearch extends Component {
 
     // 请求标签列表（表格数据）
     store.getTagList()
-
-    // 弹框 - 场景列表（提前加载）
-    store.getSceneList()
   }
 
   render() {

@@ -148,6 +148,8 @@ export default class SearchTable extends React.Component {
   onButtonClick = () => {
     const {store} = this.props
     store.toggleModal(true)
+    // 请求场景列表
+    store.getSceneList()
   }
 
   // 强制更新

@@ -33,7 +33,7 @@ ioContext.create('map', {
   getSceneList: {
     mock: isMock,
     mockUrl: 'page-map/getSceneList',
-    url: getUrl('occasion/listOcc'),
+    url: getUrl('map/listOcc'),
     method: 'GET',
   },
 
