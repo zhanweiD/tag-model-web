@@ -43,8 +43,8 @@ module.exports = {
       js: [
         'common.js',
         '//cdn.dtwave.com/public/babel-polyfill/6.23.0/polyfill.min.js',
-        '//cdn.dtwave.com/public/react/16.2.0/react.min.js',
-        '//cdn.dtwave.com/public/react-dom/16.2.0/react-dom.min.js',
+        '//cdn.dtwave.com/public/react/16.7.0/react.min.js',
+        '//cdn.dtwave.com/public/react-dom/16.7.0/react-dom.min.js',
         '//cdn.dtwave.com/public/mobx/3.1.9/mobx.umd.min.js',
         '//cdn.dtwave.com/public/mobx-react/4.1.8/mobx-react.min.js',
         '//cdn.dtwave.com/public/react-router-dom/4.3.1/react-router-dom.js',

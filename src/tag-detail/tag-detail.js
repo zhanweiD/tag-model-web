@@ -7,6 +7,7 @@ import {Time} from '../common/util'
 import TagDetailExponent from '../tag-detail-exponent'
 import TagDetailInvoke from '../tag-detail-invoke'
 import TagDetailRelate from '../tag-detail-relate'
+import TagDetailDrawer from '../tag-detail-drawer'
 
 import store from './store-tag-detail'
 
@@ -15,6 +16,7 @@ const {TabPane} = Tabs
 @inject('bigStore')
 @observer
 export default class TagDetail extends Component {
+
   @observable updateKey = undefined
 
   constructor(props) {
@@ -50,6 +52,7 @@ export default class TagDetail extends Component {
       fieldName,
       descr,
       isUsed,
+      objId,
     } = store.baseInfo
 
     const baseInfo = [
@@ -90,7 +93,7 @@ export default class TagDetail extends Component {
                 isUsed ? <Tag color="green">使用中</Tag> : <Tag color="blue">未使用</Tag>
               }
             </div>
-            <Button type="primary">绑定字段</Button>
+            <TagDetailDrawer id={objId}><Button type="primary">绑定字段</Button></TagDetailDrawer>
           </div>
           <NemoBaseInfo dataSource={baseInfo} className="d-info" />
         </div>
