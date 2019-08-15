@@ -53,12 +53,14 @@ class RelfieldStore {
     this.getList()
   }
 
-  @action async delObjFieldRel(storageId, tableName) {
+  @action async delObjFieldRel(o) {
     try {
       await io.delObjFieldRel({
-        // objId: this.id,
-        // storageId,
-        // tableName,
+        objId: o.objId,
+        storageId: o.dataStorageId,
+        tableName: o.dataTableName,
+        fieldName: o.dataFieldName,
+        tagId: o.tagId,
       })
       runInAction(() => {
         successTip('移除成功')

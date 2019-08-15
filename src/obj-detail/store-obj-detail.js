@@ -64,15 +64,9 @@ class ObjDetailStore {
 
   @action async getDailyCard() {
     try {
-      const res2 = await io.getDailyCard({
+      const res = await io.getDailyCard({
         id: this.id,
       })
-      const res = {
-        dataSourceCount: 3,
-        tableCount: 20,
-        configuredField: 100,
-        associatedField: 200,
-      }
       runInAction(() => {
         this.dailyCard = res
       })

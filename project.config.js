@@ -25,7 +25,7 @@ module.exports = {
     version: pkg.version,
 
     // 前端监听静态资源服务的端口号
-    port: 3002,
+    port: 3003,
 
     // 是否的单页面项目
     spa: false,

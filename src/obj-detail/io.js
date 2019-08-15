@@ -9,9 +9,7 @@ ioContext.create('objDetail', {
 
   // 指标卡
   getDailyCard: {
-    url: `${tagApi}/be_tag/pool/obj_target_card`,
-    mock: true,
-    mockUrl: 'page-hello/getContent',
+    url: `${tagApi}/be_tag/tag/pool/obj_target_card`,
   },
 
   // 获取对象存储信息分页
