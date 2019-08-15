@@ -14,6 +14,8 @@ export default class TagDetailDrawer extends Component {
     submitting: false,
   }
 
+  block = false
+
   showDrawer = () => {
     this.setState({
       visiable: true,
@@ -56,13 +58,11 @@ export default class TagDetailDrawer extends Component {
       id,
     } = this.props
 
-    const {
-      submitting,
-    } = this.state
-
-    if (submitting) {
+    if (this.block) {
       return
     }
+
+    this.block = true
 
     this.setState({
       submitting: true,
@@ -70,7 +70,11 @@ export default class TagDetailDrawer extends Component {
       this.store.saveResult(this.value, id).then(res => {
         this.setState({
           submitting: false,
+          visiable: false,
         })
+        setTimeout(() => {
+          this.block = false
+        }, 200)
       })
     })
   }
@@ -116,13 +120,16 @@ export default class TagDetailDrawer extends Component {
           closable={false}
           onClose={this.onClose}
           visible={visiable}
-          width={1200}
+          width={1048}
         >
           <Spin spinning={loading}>
             {
               !loading
               && (
                 <Mapping
+                  style={{
+                    display: 'inline-block',
+                  }}
                   source={source}
                   target={target}
                   sourceRowKey={record => record.tagId || record.id}
@@ -147,17 +154,17 @@ export default class TagDetailDrawer extends Component {
                     {
                       title: '英文名',
                       dataIndex: 'enName',
-                      width: 100,
+                      width: 80,
                     },
                     {
                       title: '中文名',
                       dataIndex: 'name',
-                      width: 100,
+                      width: 80,
                     },
                     {
                       title: '数据类型',
                       dataIndex: 'valueTypeName',
-                      width: 100,
+                      width: 80,
                     },
                   ]}
                   result={result}
@@ -165,14 +172,14 @@ export default class TagDetailDrawer extends Component {
                     {
                       title: '标签中文名',
                       dataIndex: 'tagName',
-                      width: 35,
+                      width: 80,
                     },
                   ]}
                   resultTargetColumns={[
                     {
                       title: '字段英文名',
                       dataIndex: 'dataFieldName',
-                      width: 35,
+                      width: 80,
                     },
                   ]}
                   resultSourceFullColumns={[
@@ -219,7 +226,6 @@ export default class TagDetailDrawer extends Component {
                       valueTypeName: tagValueTypeName,
                     },
                     {
-                      id,
                       dataStorageId,
                       dataDbName,
                       dataDbType,
@@ -230,7 +236,6 @@ export default class TagDetailDrawer extends Component {
                   ) => {
                     return {
                       tagId,
-                      id,
                       tagName,
                       tagEnName,
                       tagValueType,
@@ -253,7 +258,14 @@ export default class TagDetailDrawer extends Component {
                 />
               )
             }
-            <Button type="primary" onClick={this.submit} loading={submitting} style={{float: 'right', marginTop: '32px'}}>确认</Button>
+            <Button
+              type="primary"
+              onClick={this.submit}
+              loading={submitting}
+              style={{float: 'right', marginTop: '32px'}}
+            >
+              确认
+            </Button>
           </Spin>
         </Drawer>
       </div>
