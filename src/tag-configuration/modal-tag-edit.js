@@ -10,15 +10,15 @@ import {isJsonFormat} from '../common/util'
 const FormItem = Form.Item
 const {Option} = Select
 
-@inject('bigStore')
+// @inject('bigStore')
 @observer
 class ModalTagEdit extends Component {
   @observable isEnum = false
 
   constructor(props) {
     super(props)
-    this.bigStore = this.props.bigStore
-    this.store = this.bigStore.categoryStore
+    // this.bigStore = this.props.bigStore
+    // this.store = this.bigStore.categoryStore
   }
 
   @action.bound handleOnCancel() {
@@ -109,19 +109,20 @@ class ModalTagEdit extends Component {
 
   render() {
     const {form: {getFieldDecorator}} = this.props
-    const {
-      tagDetail, eStatus: {editTag}, modalVisible, confirmLoading,
-    } = this.store
+    // const {
+    //   tagDetail, eStatus: {editTag}, modalVisible, confirmLoading,
+    // } = this.store
 
     const modalProps = {
-      title: editTag ? '编辑标签' : '添加标签',
-      visible: modalVisible.editTag,
-      onCancel: this.handleOnCancel,
-      onOk: this.handleOnOk,
+      // title: editTag ? '编辑标签' : '添加标签',
+      title: '编辑标签',
+      visible: true,
+      // onCancel: this.handleOnCancel,
+      // onOk: this.handleOnOk,
       maskClosable: false,
       width: 520,
       destroyOnClose: true,
-      confirmLoading,
+      // confirmLoading,
     }
 
     const formItemLayout = {
@@ -133,35 +134,35 @@ class ModalTagEdit extends Component {
     return (
       <Modal {...modalProps}>
         <Form>
-          <Spin spinning={this.store.detailLoading}>
+          <Spin spinning={false}>
             <FormItem {...formItemLayout} label="中文名">
               {getFieldDecorator('name', {
-                initialValue: editTag ? tagDetail.name : undefined,
+                // initialValue: editTag ? tagDetail.name : undefined,
                 rules: [
                   {required: true, message: '名称不可为空'},
                   {max: 20, message: '名称不能超过20个字符'},
                   {pattern: /^[\u4e00-\u9fa5]{1,30}$/, message: '输入限制为中文字符'},
-                  {validator: this.handleNameValidator},
+                  // {validator: this.handleNameValidator},
                 ],
               })(<Input autoComplete="off" placeholder="不超过20个字，输入为中文字符" />)}
             </FormItem>
 
             <FormItem {...formItemLayout} label="英文名">
               {getFieldDecorator('enName', {
-                initialValue: editTag ? tagDetail.enName : undefined,
+                // initialValue: editTag ? tagDetail.enName : undefined,
                 rules: [
                   {required: true, message: '英文名不可为空'},
                   {max: 30, message: '请输入少于30个字'},
-                  {pattern: /^(?!\d+$)[a-zA-Z0-9_]{1,30}$/, message: '仅支持小写字母、数字和下划线的组合'},
+                  {pattern: /^(?!\d+$)[a-zA-Z0-9_]{1,30}$/, message: '仅支持字母、数字和下划线的组合'},
                   // {pattern: /^(?!\d+$)[a-zA-Z0-9_]{1,30}$/, message: '仅支持小写字母、数字和下划线的组合'},
-                  {validator: this.handleNameValidator},
+                  // {validator: this.handleNameValidator},
                 ],
               })(<Input autoComplete="off" placeholder="不超过30个字，输入为英文字符或数字" />)}
             </FormItem>
 
             <FormItem {...formItemLayout} label="数据类型">
               {getFieldDecorator('valueType', {
-                initialValue: tagDetail.valueType || undefined,
+                // initialValue: tagDetail.valueType || undefined,
                 rules: [{required: true, message: '请选择数据类型'}],
               })(
                 <Select placeholder="请下拉选择">
@@ -176,20 +177,20 @@ class ModalTagEdit extends Component {
 
             <FormItem {...formItemLayout} label="是否枚举">
               {getFieldDecorator('isEnum', {
-                initialValue: tagDetail.isEnum || 0,
+                // initialValue: tagDetail.isEnum || 0,
                 valuePropName: 'checked',
               })(<Switch checkedChildren="是" unCheckedChildren="否" onChange={e => this.changeIsEnum(e)} />)}
             </FormItem>
 
-            {(tagDetail.isEnum || this.isEnum) && (
+            {/* {(tagDetail.isEnum || this.isEnum) && ( */}
               <FormItem {...formItemLayout} label="枚举显示值">
                 {getFieldDecorator('enumValue', {
                   rules: [
-                    {required: true, message: '枚举显示值不可为空'},
+                    // {required: true, message: '枚举显示值不可为空'},
                     {max: 100, message: '业务逻辑不能超过100个字符'},
                     {validator: this.handleEnumValueValidator},
                   ],
-                  initialValue: editTag ? tagDetail.enumValue : undefined,
+                  // initialValue: editTag ? tagDetail.enumValue : undefined,
                 })(
                   <Input.TextArea
                     autoComplete="off"
@@ -198,12 +199,12 @@ class ModalTagEdit extends Component {
                   />
                 )}
               </FormItem>
-            )}
+            {/* )} */}
 
             <FormItem {...formItemLayout} label="业务逻辑">
               {getFieldDecorator('descr', {
                 rules: [{max: 100, message: '业务逻辑不能超过100个字符'}],
-                initialValue: editTag ? tagDetail.descr : undefined,
+                // initialValue: editTag ? tagDetail.descr : undefined,
               })(
                 <Input.TextArea
                   autoComplete="off"

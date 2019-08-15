@@ -1,5 +1,6 @@
 const rp = require('request-promise')
 const download = require('./download')
+const upload = require('./upload')
 
 let configJson = {}
 try {
@@ -11,8 +12,7 @@ try {
 module.exports = [
   // eslint-disable-next-line func-names
   function (app) {
-    const config = app.config
-    const router = app.router
+    const {config, router} = app
     const isAjaxRequest = ctx => ctx.header['x-requested-with'] === 'XMLHttpRequest'
 
     router.get('/*', async (ctx, next) => {
@@ -74,9 +74,6 @@ module.exports = [
 
         try {
           const rs = await rp(options)
-          console.log('xxxxxxxxxxxxxxxxxxxxxxxxx')
-          console.log(rs.content)
-          console.log(JSON.stringify(rs.content))
           ctx.njkData.dict = rs.content
         //   const rs2 = await rp(functionCodesOpt)
         //   ctx.njkData.functionCodes = rs2.content
@@ -88,4 +85,5 @@ module.exports = [
     })
   },
   download,
+  upload,
 ]

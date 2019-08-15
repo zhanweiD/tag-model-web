@@ -48,17 +48,23 @@ class Action extends Component {
   }
 
   render() {
+    const {typeCode, id} = this.bigStore
     const menu = (
       <Menu>
         <Menu.Item>
-          <div style={{
-            margin: '-5px -12px',
-            padding: '5px 12px',
-          }} onClick={this.handleEditCategory}>添加对象</div>
+          <div
+            onClick={this.handleEditCategory}
+            style={{
+              margin: '-5px -12px',
+              padding: '5px 12px',
+            }}
+          >
+            添加对象
+          </div>
         </Menu.Item>
-        {/* <Menu.Item>
-          <Link to="">导入类目及标签</Link>
-        </Menu.Item>
+        <Menu.Item>
+          <Link to='/import'>导入类目及标签</Link>
+        </Menu.Item>{/* 
         <Menu.Item>
           <Link to="">导出类目及标签</Link>
         </Menu.Item> */}

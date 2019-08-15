@@ -128,11 +128,11 @@ class SceneDetailStore {
         const res = await io.getDBSourceList({
           occasionId: this.sceneId,
           ...params,
-        })
+        }) || []
 
         runInAction(() => {
           this.dbSourceData.data = res.details.map(item => ({
-            fileds: res.fileds,
+            fileds: res.fileds || [],
             ...item,
           }))
           this.dbSourceData.loading = false

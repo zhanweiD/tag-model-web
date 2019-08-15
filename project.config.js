@@ -114,8 +114,7 @@ module.exports = {
 
     // 白名单，不在白名单里的请求均为无效请求
     refererWhiteList: nattyStorage.env(SERVER_ENV, {
-      default: (config.apps[pkg.name] && config.apps[pkg.name].domain) || config.accountDomain || '',
-      // default: (config.apps[pkg.name] && config.apps[pkg.name].domain) || '',
+      default: (config.apps[pkg.name] && config.apps[pkg.name].domain) || config.domain || config.accountDomain || '',
       development: [
         '0.0.0.0:9995',
         'localhost:9995',
@@ -140,18 +139,19 @@ module.exports = {
 
     // 多页应用用的到 自定义路由，默认文件夹 page- 后面的名字
     router: {
-      'overview' : '/',
+      // 'overview' : '/',
     },
 
     // Node层代理API的域名，网关的，一般不用改
     apiPrefix: nattyStorage.env(SERVER_ENV, {
       // 成飞开发
-      development: 'http://192.168.90.87:9018',
+      development: 'http://192.168.90.74:9018',
       // 成飞测试  
       // development: 'http://192.168.90.111:9018',
       test: 'http://10.51.44.149:9018',
       production: 'http://api-in.dtwave-inc.com',
-      default: config.gatewayDomain,
+      // default: config.gatewayDomain,
+      default: (config.apps[pkg.name] && config.apps[pkg.name].apiDomain) || '',
     }),
 
     // 自定义插件
@@ -162,20 +162,21 @@ module.exports = {
 
     // 鉴权模块配置
     authorize: {
-      sessionIdName: 'sessionId4',
+      // sessionIdName: 'sessionId4',
+      sessionIdName: config.sessionIdName || 'sessionIdSaaS',
       // productId 找晓涛要，每个项目都会有的
       productId: nattyStorage.env(SERVER_ENV, {
         default: (config.apps[pkg.name] && config.apps[pkg.name].productId) || '',
-        development: 100,
-        test: 100,
-        production: 100,
+        development: 1111,
+        test: 1111,
+        production: 1111,
       }),
 
       // 每个项目都有自己的 code ，用户中心配权限用得到
       pageFunctionCode: 'asset_tag',
 
       // 用户中心的使用方式， private : 私有化部署    public : 跳转到用户中心
-      useUserCenter: 'private',
+      useUserCenter: 'public',
 
       // 是否禁用登录
       disabled: false,
@@ -183,18 +184,16 @@ module.exports = {
       // 和用户中心有关接口前缀
       apiPrefix: nattyStorage.env(SERVER_ENV, {
         default: `${config.gatewayDomain}/api/v4/uic`,
-        // development: 'http://120.26.105.132:9018',
-        development: 'http://192.168.90.87:9018/api/v4/uic',
+        development: 'http://192.168.90.74:9018/api/v4/uic',
         test: 'http://10.27.232.131:9018/api/v4/uic',
         production: 'http://api-in.dtwave-inc.com/api/v4/uic',
       }),
 
       // 使用用户中心的时候开启，用户中心的域名，主要要用这个拼登录/注册页地址
       loginUrlPrefix: nattyStorage.env(SERVER_ENV, {
-        // default: config.accountDomain,
-        default: `http://127.0.0.1:${config.apps.account4.port}`, // config.accountDomain,
-        // development: 'http://dataworks.cac.com/account',
-        development: 'http://192.168.90.87:9985/account',
+        default: config.accountDomain,
+        // default: `http://127.0.0.1:${config.apps.account4.port}`, // config.accountDomain,
+        development: 'http://192.168.90.75:8899',
         test: 'http://account4.test.dtwave-inc.com',
         production: 'http://account4.dtwave-inc.com',
         saas: 'http://account4.dtwave.com',
@@ -205,8 +204,7 @@ module.exports = {
     fs: {
       apiPrefix: nattyStorage.env(SERVER_ENV, {
         default: config.gatewayDomain,
-        // development: 'http://120.26.105.132:9018',
-        development: 'http://192.168.1.9:9018',
+        development: 'http://192.168.90.75:9018',
         test: 'http://10.51.44.149:9018',
         production: 'http://api-in.dtwave-inc.com',
       }),

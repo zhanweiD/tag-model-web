@@ -1,5 +1,6 @@
 import {Component} from 'react'
 import {action} from 'mobx'
+import {Empty} from 'antd'
 import TimeRange from '../time-range'
 import {getTagTrendOpt} from './charts-options'
 
@@ -10,7 +11,7 @@ export default class TrendTag extends Component {
 
   componentDidMount() {
     this.getData()
-    window.addEventListener('resize', () => this.resize())
+    window.addEventListener('resize', this.resize)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -24,6 +25,9 @@ export default class TrendTag extends Component {
   }
 
   drawChart = data => {
+    if (!this.lineRef) return 
+    if (this.chartLine) this.chartLine.clear()
+    
     this.chartLine = echarts.init(this.lineRef)
 
     const legend = data[0] && data[0].data.map(d => d.name)
@@ -42,24 +46,24 @@ export default class TrendTag extends Component {
     }
 
     store.getTagTrend(params, res => {
-      this.drawChart(res) 
+      if (res.length) this.drawChart(res)
     })
   }
 
-  @action resize() {
-    if (this.chartLine) {
-      this.chartLine.resize()
-    }
+  @action resize = () => {
+    if (this.chartLine) this.chartLine.resize()
   }
 
   componentWillUnmount() {
     if (this.chartLine) this.chartLine.dispose()
     this.chartLine = null
+    window.removeEventListener('resize', this.resize)
   }
 
   render() {
+    const {store: {tagTrendData}} = this.props
     return (
-      <div className="chart mb16">
+      <div className="bgf p16 mb16">
         <h3 className="ct-title">标签调用次数趋势</h3>
         <div className="time-range-wrap">
           <TimeRange
@@ -75,7 +79,11 @@ export default class TrendTag extends Component {
             exportTimeRange={(gte, lte) => this.getData(gte, lte)}
           />
         </div>
-        <div style={{height: '300px'}} ref={ref => this.lineRef = ref} />          
+        {
+          tagTrendData.length 
+            ? <div style={{height: '300px'}} ref={ref => this.lineRef = ref} />
+            : <div style={{height: '200px'}}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /></div> 
+        }
       </div>
     )
   }

@@ -1,6 +1,15 @@
 import {Component} from 'react'
 import {Icon, message, Modal} from 'antd'
 
+export const pathPrefix = window.__onerConfig.pathPrefix || ''
+// const {apiV} = window.__keeper
+
+// 标签管理的API路径前缀
+export const tagApi = `${pathPrefix}/api/v1`
+
+// 标签、对象英文名校验正则
+export const enNameReg = /^[a-zA-Z][a-zA-Z0-9_]{0,29}$/
+
 export function asyncComponent(getComponent) {
   return class AsyncComponent extends Component {
     static Component = null
@@ -201,10 +210,6 @@ export function isJsonFormat(str) {
   return true
 }
 
-export const pathPrefix = window.__onerConfig.pathPrefix || ''
-// const {apiV} = window.__keeper
-export const tagApi = `${pathPrefix}/api/v1`
-
 // 判断某个值是不是空
 export function isEmptyValue(value) {
   return value === undefined || value === null || value === ''
@@ -245,4 +250,22 @@ export function getTimeRangeToToday({
   }
 
   return [start, end]
+}
+
+// 根据数据类型的数字code 获取对应的文本
+export function getDataTypeByCode(code) {
+  switch (+code) {
+    case 1:
+      return '离散型'
+    case 2:
+      return '整数型'
+    case 3:
+      return '小数型'
+    case 4:
+      return '文本型'
+    case 5:
+      return '日期型'
+    default:
+      return `未知类型, code: ${code}`
+  }
 }

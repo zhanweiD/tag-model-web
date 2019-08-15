@@ -44,11 +44,9 @@ class ModalDataSource extends Component {
             initialValue: record.fileds.filter(d => d.name === record.tagEnName).length ? record.tagEnName : undefined,
             rules: [{
               required: true, message: '目的字段不能为空',
-            },
-            {
+            }, {
               validator: this.handleValidator,
-            },
-            ],
+            }],
           })(
             <Select style={{width: 120}} onChange={e => this.onFieldChange(e, `fileds_${index}`)}>
               {record.fileds.map(({name}) => <Option value={name} key={name}>{name}</Option>)}
@@ -118,14 +116,14 @@ class ModalDataSource extends Component {
 
   // 数据表下拉框
   @action.bound onTableChange(value) {
-    const {store} = this.props
+    const {store, form: {resetFields}} = this.props
     this.dbTableValue = value
 
     const params = {
       storageId: this.dbSourceValue,
       tableName: value,
     }
-
+    resetFields()
     store.getDBSourceList(params)
   }
 
@@ -162,7 +160,7 @@ class ModalDataSource extends Component {
         onCancel={this.handleCancel}
         footer={[
           <Button onClick={this.handleCancel}>取消</Button>,
-          <Button type="primary" onClick={e => this.handleSubmit(e)} disabled={!this.dbTableValue || !this.dbSourceValue}>确定</Button>,
+          <Button type="primary" onClick={e => this.handleSubmit(e)} disabled={!this.dbTableValue || !this.dbSourceValue || !dbSourceData.data.length}>确定</Button>,
         ]}
       >
         <div>

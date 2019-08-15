@@ -227,6 +227,7 @@ class TagCategoryStore {
       })
       runInAction(() => {
         this.objectDetail = res
+        this.objectDetail.objIds = _.map(res.objRspList, 'id')
       })
     } catch (e) {
       errorTip(e.message)

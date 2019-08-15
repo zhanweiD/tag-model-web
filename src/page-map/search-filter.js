@@ -73,8 +73,10 @@ class SearchFilter extends React.Component {
                     enterButton="搜索"
                     size="large"
                     style={{width: 552}}
-                    onChange={e => this.handleKeywordChange(e.target.value)}
+                    // onChange={e => this.handleKeywordChange(e.target.value)}
                     onSearch={value => this.handleKeywordChange(value)}
+                    onPressEnter={e => this.handleKeywordChange(e.target.value)}
+                    onBlur={e => this.handleKeywordChange(e.target.value)}
                   />
                 )
               }
@@ -156,8 +158,6 @@ class SearchFilter extends React.Component {
     }
 
     store.filterObjId = id
-    // 切换对象后，同时重置选中的标签
-    // store.resetSelectedTags()
 
     // 更新列表
     this.doSearch()

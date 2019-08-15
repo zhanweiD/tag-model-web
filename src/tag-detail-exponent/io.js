@@ -17,11 +17,18 @@ ioContext.create('exponent', {
     mockUrl: 'page-tag/getDailyVs',
   },
 
-  // 标签指数-标签枚举值分布数据更新
+  // 标签指数-标签枚举值分布
   getEnumeData: {
-    url: `${tagApi}/be_tag/score/value_update`,
+    url: `${tagApi}/be_tag/score/value_trend`,
     mock: isMock,
     mockUrl: 'page-tag/getEnumeData',
+  },
+
+  // 标签指数-标签枚举值分布数据更新
+  updateEnumeData: {
+    url: `${tagApi}/be_tag/score/value_update`,
+    mock: isMock,
+    mockUrl: 'page-tag/getContent',
   },
 })
 

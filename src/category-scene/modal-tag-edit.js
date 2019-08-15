@@ -179,7 +179,7 @@ class ModalTagEdit extends Component {
               <FormItem {...formItemLayout} label="枚举显示值">
                 {getFieldDecorator('enumValue', {
                   rules: [
-                    {required: true, message: '枚举显示值不可为空'},
+                    // {required: true, message: '枚举显示值不可为空'},
                     {max: 100, message: '业务逻辑不能超过100个字符'},
                     {validator: this.handleEnumValueValidator},
                   ],
@@ -188,7 +188,7 @@ class ModalTagEdit extends Component {
                   <Input.TextArea
                     autoComplete="off"
                     rows="3"
-                    placeholder="若标签值为枚举型，可将枚举代码值显示为易理解的值，例如：{0:女;1:男}"
+                    placeholder={`若标签值为枚举型，可将枚举代码值显示为易理解的值，例如：{"0":"女","1":"男"}`}
                   />
                 )}
               </FormItem>

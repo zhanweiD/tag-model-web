@@ -262,7 +262,7 @@ render() {
             nodeData={item}
             itemKey={item.id}
             title={item.name}
-            selectable={item.type !== 1}
+            selectable={item.type === 0}
             actionList={this.getMenuList(item)}
             iconNodeSrc={tag}
           />

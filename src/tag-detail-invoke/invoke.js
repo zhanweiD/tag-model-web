@@ -1,13 +1,54 @@
 import {Component} from 'react'
-import {action, toJS} from 'mobx'
+import {action} from 'mobx'
 import {observer} from 'mobx-react'
 import OverviewCard from '../component-overview-card'
 import TimeRange from '../time-range'
+import getInvokeOpt from './charts-options'
 
 import store from './store-invoke'
 
 @observer
 export default class Invoke extends Component {
+  defStartTime = moment().subtract(7, 'day').format('YYYY-MM-DD')
+  defEndTime = moment().subtract(1, 'day').format('YYYY-MM-DD')
+  invokeChart = null
+
+  componentDidMount() {
+    this.getData()
+    window.addEventListener('resize', this.resize)
+  }
+
+  drawChart = data => {
+    if (this.invokeChart) this.invokeChart.clear()
+
+    this.invokeChart = echarts.init(this.lineRef)
+    
+    this.invokeChart.setOption(getInvokeOpt(
+      data
+    ))
+  }
+
+  @action getData(gte = this.defStartTime, lte = this.defEndTime) {
+    const params = {
+      startDate: gte,
+      endDate: lte,
+    }
+    
+    store.getInvokeData(params, data => {
+      this.drawChart(data)
+    })
+  }
+
+  @action resize = () => {
+    if (this.chartLine) this.chartLine.resize()
+  }
+
+  componentWillUnmount() {
+    if (this.chartLine) this.chartLine.dispose()
+    this.chartLine = null
+    window.removeEventListener('resize', this.resize)
+  }
+
   render() {
     const {key1, key2, key3} = {
       key1: 1,
@@ -15,6 +56,7 @@ export default class Invoke extends Component {
       key3: 3,
     }
 
+    // 注： 标签调用指标卡 接口格式 暂未给出 @望舒
     const cards = [
       {
         title: '被API调用的次数',
@@ -43,8 +85,8 @@ export default class Invoke extends Component {
             ))
           }
         </div>
-        <div className="mb32 bgf">
-          <h3 className="ct-title">存储概况</h3>
+        <div className="mb32 p16 bgf">
+          <h3 className="ct-title">调用趋势</h3>
           <div className="time-range-wrap">
             <TimeRange
               custom
@@ -62,7 +104,7 @@ export default class Invoke extends Component {
           <div>
             <span className="d-block fs12 pl8 pb8">{`存储量趋势(${store.stoSubDesc})`}</span>
             <div
-              ref={el => this.storage = el}
+              ref={el => this.lineRef = el}
               style={{width: '100%', height: '350px'}}
             />
           </div>

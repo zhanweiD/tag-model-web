@@ -82,8 +82,8 @@ class ModalObjectEdit extends Component {
 
   @action.bound handleObjIdsValidator(rule, value, callback) {
     if (value) {
-      if (value.length <= 1) {
-        callback('至少选择两个关联的人/物')
+      if (value.length !== 2) {
+        callback('请选择两个关联的人/物')
       }
       callback()
     } else {
