@@ -185,7 +185,7 @@ class ModalTagEdit extends Component {
               <FormItem {...formItemLayout} label="枚举显示值">
                 {getFieldDecorator('enumValue', {
                   rules: [
-                    {required: true, message: '枚举显示值不可为空'},
+                    // {required: true, message: '枚举显示值不可为空'},
                     {max: 100, message: '业务逻辑不能超过100个字符'},
                     {validator: this.handleEnumValueValidator},
                   ],
