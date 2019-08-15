@@ -20,6 +20,11 @@ class ExponentStore {
   @observable vsTrend = []
   @observable hotTrend = []
   @observable qsTrend = []
+  // 标签枚举值分布数据
+  @observable enumeData = {
+    total: 0,
+    pieTemplateDtoList: [],
+  }
 
   @action async getDailyCard() {
     try {
@@ -34,7 +39,6 @@ class ExponentStore {
       errorTip(e.message)
     }
   }
-
 
   @action async getDailyVs(type, startDate, endDate, cb) {
     try {
@@ -62,6 +66,39 @@ class ExponentStore {
         // }))
 
         if (cb)cb()
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  // 标签指数-标签枚举值分布
+  @action async getEnumeData(cb) {
+    try {
+      const res = await io.getEnumeData({
+        id: this.id,
+      })
+
+      runInAction(() => {
+        const {pieTemplateDtoList = [], total} = res
+        this.enumeData.pieTemplateDtoList.replace(pieTemplateDtoList)
+        this.enumeData.total = total
+        if (cb) cb(pieTemplateDtoList)
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+   // 标签指数-标签枚举值分布数据更新
+   @action async updateEnumeData() {
+    try {
+      const res = await io.updateEnumeData({
+        id: this.id,
+      })
+
+      runInAction(() => {
+        console.log(res)
       })
     } catch (e) {
       errorTip(e.message)

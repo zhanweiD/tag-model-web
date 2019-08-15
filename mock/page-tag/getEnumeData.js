@@ -3,18 +3,19 @@ module.exports = {
   success: true,
   message: null,
   code: '0',
-  content: [
-    {
-      key: 1557072000000,
-      value: 12,
-    },
-    {
-      key: 1557158400000,
-      value: 15,
-    },
-    {
-      key: 1557244800000,
-      value: 16,
-    },
-  ],
+  content: {
+    pieTemplateDtoList: [
+      {
+        key: '食药安全',
+        ratio: 0.3633,
+        count: 4544,
+      },
+      {
+        key: '环境保护',
+        ratio: 0.242,
+        count: 544,
+      },
+    ],
+    total: 1000, 
+  },
 }
