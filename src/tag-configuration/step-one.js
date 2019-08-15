@@ -55,6 +55,8 @@ export default class StepOne extends React.Component {
   render() {
     const {store} = this.props
 
+    const selectedRowKeys = store.secondTableList.map(item => item.dataFieldName)
+
     // function repeatArray(arr, n) {
     //   const result = []
     //   for (let i = 0; i < n; i++) {
@@ -79,6 +81,7 @@ export default class StepOne extends React.Component {
           // dataSource={arr}
           // rowKey="id"
           rowSelection={{
+            selectedRowKeys,
             onChange: this.onRowSelect,
             getCheckboxProps(value) {
               return {

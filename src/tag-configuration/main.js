@@ -58,7 +58,7 @@ export default class TagConfiguration extends React.Component {
           </Steps>
 
           {/* 内容区域 */}
-          <div style={{marginBottom: 60}}>
+          <div style={{height: 'calc(100vh - 55px - 48px - 64px - 53px)'}}>
             <Content store={store} />
           </div>
 

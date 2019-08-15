@@ -1,4 +1,4 @@
-import {observable, action} from 'mobx'
+import {observable, action, toJS} from 'mobx'
 import io from './io'
 import {errorTip} from '../common/util'
 
@@ -19,14 +19,14 @@ class Store {
   }
 
 
-  // 请求初始时的
+  // 请求初始时的字段列表
   @action async getInitialList() {
     try {
       this.loadings.firstTable = true
-      const res = await io.getList({
-        objId: '',
-        storageId: '',
-        tableName: '',
+      const res = await io.getFieldList({
+        objId: '1',
+        storageId: 'jdsjsjksjk212dsd',
+        tableName: 'wangshu_test',
       })
 
       this.initialList = res
@@ -34,6 +34,40 @@ class Store {
       errorTip(e.message)
     } finally {
       this.loadings.firstTable = false
+    }
+  }
+
+  // 请求类目列表
+  @action async getCateList() {
+    try {
+      const res = io.getCateList({
+        treeId: '',
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  // 批量创建标签
+  @action async saveTags() {
+    try {
+      const res = io.saveTags({
+        checkList: toJS(this.secondTableList),
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  // 校验标签是否可创建
+  @action async checkTagList() {
+    try {
+      const res = io.checkTagList({
+        checkList: toJS(this.secondTableList),
+      })
+      this.secondTableList = res
+    } catch (e) {
+      errorTip(e.message)
     }
   }
 }

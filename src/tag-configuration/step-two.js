@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
 import {observer} from 'mobx-react'
 import {action} from 'mobx'
@@ -7,83 +9,96 @@ import {
 import QuestionTooltip from '../component-question-tooltip'
 import {getDataTypeByCode} from '../common/util'
 import ModalTagEdit from './modal-tag-edit'
-
-const columns = [
-  {
-    title: '中文名',
-    key: 'name',
-    dataIndex: 'name',
-  },
-  {
-    title: '英文名',
-    key: 'enName',
-    dataIndex: 'enName',
-  },
-  {
-    title: '数据类型',
-    key: 'valueType',
-    dataIndex: 'valueType',
-    render: v => getDataTypeByCode(v), // 1: 离散型 2：整数型 3: 小数型 4: 文本型 5: 日期型
-  },
-  {
-    title: '是否枚举',
-    key: 'isEnum',
-    dataIndex: 'isEnum',
-    render: v => (+v === 1 ? '是' : '否'),
-  },
-  {
-    title: '枚举显示值',
-    key: 'enumValue',
-    dataIndex: 'enumValue',
-  },
-  {
-    title: '所属类目',
-    key: 'pathIds',
-    dataIndex: 'pathIds',
-    // render: v => v TODO:
-  },
-  {
-    title: '业务逻辑',
-    key: 'descr',
-    dataIndex: 'descr',
-  },
-  {
-    title: '关联的字段',
-    key: 'dataFieldName',
-    dataIndex: 'dataFieldName',
-  },
-  {
-    title: '确认结果',
-    key: 'result',
-    dataIndex: 'result',
-    render: (v, record) => (
-      +record.isTrue === 1 
-        ? <Badge color="#52C41A" text={v} /> 
-        : <Badge color="#F5222D" text={v} />
-    ),
-  },
-  {
-    title: '操作',
-    key: 'operation',
-    // dataIndex: 'isUsed',
-    render: (v, record) => {
-      return (
-        <span>
-          <a>移除</a>
-          <Divider type="vertical" />
-          <a>编辑</a>
-        </span>
-      )
-    },
-  },
-]
+import ModalCateSelect from './modal-cate-select'
 
 // 标签配置 - 填写配置信息
 @observer
 export default class StepTwo extends React.Component {
+  state = {
+    tagModalVisible: false, // 标签编辑弹框
+    cateModalVisible: false, // 类目选择弹框
+  }
+
+  constructor(props) {
+    super(props)
+
+    this.columns = [
+      {
+        title: '中文名',
+        key: 'name',
+        dataIndex: 'name',
+      },
+      {
+        title: '英文名',
+        key: 'enName',
+        dataIndex: 'enName',
+      },
+      {
+        title: '数据类型',
+        key: 'valueType',
+        dataIndex: 'valueType',
+        render: v => getDataTypeByCode(v), // 1: 离散型 2：整数型 3: 小数型 4: 文本型 5: 日期型
+      },
+      {
+        title: '是否枚举',
+        key: 'isEnum',
+        dataIndex: 'isEnum',
+        render: v => (+v === 1 ? '是' : '否'),
+      },
+      {
+        title: '枚举显示值',
+        key: 'enumValue',
+        dataIndex: 'enumValue',
+      },
+      {
+        title: '所属类目',
+        key: 'pathIds',
+        dataIndex: 'pathIds',
+        // render: v => v TODO:
+      },
+      {
+        title: '业务逻辑',
+        key: 'descr',
+        dataIndex: 'descr',
+      },
+      {
+        title: '关联的字段',
+        key: 'dataFieldName',
+        dataIndex: 'dataFieldName',
+      },
+      {
+        title: '确认结果',
+        key: 'result',
+        dataIndex: 'result',
+        render: (v, record) => (
+          +record.isTrue === 1 
+            ? <Badge color="#52C41A" text={v} /> 
+            : <Badge color="#F5222D" text={v} />
+        ),
+      },
+      {
+        title: '操作',
+        key: 'operation',
+        // dataIndex: 'isUsed',
+        render: (v, record, index) => {
+          return (
+            <span>
+              <a onClick={() => this.removeItem(index)}>移除</a>
+              <Divider type="vertical" />
+              <a onClick={() => this.showEditModal(index)}>编辑</a>
+            </span>
+          )
+        },
+      },
+    ]
+  }
+
   render() {
     const {store} = this.props
     const {secondTableList, secondSelectedRows} = store
+
+    const {tagModalVisible, cateModalVisible} = this.state
+    const {columns} = this
 
     // “选择所属类目”按钮
     const btnDisabled = !secondSelectedRows.length
@@ -118,6 +133,7 @@ export default class StepTwo extends React.Component {
               type="primary" 
               className="mr4"
               disabled={btnDisabled}
+              onClick={() => this.showCateModal()}
             >
               选择所属类目
             </Button>
@@ -126,7 +142,7 @@ export default class StepTwo extends React.Component {
 
           {/* 表格 */}
           <Table
-            rowKey="tagId"
+            // rowKey="dataFieldName"
             columns={columns}
             dataSource={store.secondTableList}
             rowSelection={{
@@ -136,7 +152,15 @@ export default class StepTwo extends React.Component {
 
           {/* 编辑标签弹框 */}
           <ModalTagEdit
-            data={{}}
+            tagDetail={{}}
+            visible={tagModalVisible}
+            onCancel={this.closeEditModal}
+          />
+
+          {/* 类目选择弹框 */}
+          <ModalCateSelect
+            visible={cateModalVisible}
+            onCancel={this.closeCateModal}
           />
         </Spin>
       </div>
@@ -154,13 +178,36 @@ export default class StepTwo extends React.Component {
   @action removeItem(index) {
     const {store} = this.props
 
+    store.secondTableList.splice(index, 1)
   }
 
-  // 编辑，弹框
+  // 展开编辑弹框
   @action showEditModal(index) {
     const {store} = this.props
     
+    this.setState({
+      tagModalVisible: true,
+    })
   }
 
+  // 关闭编辑弹框
+  @action.bound closeEditModal() {
+    this.setState({
+      tagModalVisible: false,
+    })
+  }
 
+  // 展开类目选择弹框
+  showCateModal = () => {
+    this.setState({
+      cateModalVisible: true,
+    })
+  }
+
+  // 关闭类目选择弹框
+  closeCateModal = () => {
+    this.setState({
+      cateModalVisible: false,
+    })
+  }
 }
