@@ -26,6 +26,8 @@ class ImportStore {
 
   // 导出失败文件的参数
   @observable failKey = undefined
+  // 导出按钮loading状态
+  @observable importDataLoading = false
 
   @action async getTypeCodes() {
     try {
@@ -104,6 +106,7 @@ class ImportStore {
             tabList[idx] = o
           })
         })
+        console.log(tabList)
 
         this.previewDataList.replace(tabList)
         this.canImportData.replace(data.canImportData)
@@ -117,6 +120,7 @@ class ImportStore {
 
   // 导入数据
   @action async postImportData(cb) {
+    this.importDataLoading = true
     try {
       await io.importTag({
         objTypeCode: this.typeCode,
@@ -125,11 +129,15 @@ class ImportStore {
       })
 
       runInAction(() => {
+        this.importDataLoading = false
         this.currStep = 0
         successTip('导入操作成功')
         cb && cb()
       })
     } catch (e) {
+      runInAction(() => {
+        this.importDataLoading = false
+      })
       errorTip(e.message)
     }
   }

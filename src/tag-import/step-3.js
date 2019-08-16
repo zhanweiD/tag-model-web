@@ -92,8 +92,9 @@ class StepThree extends Component {
           <Button
             type="primary"
             size="large"
+            loading={store.importDataLoading}
             disabled={!store.canImportData.length}
-            onClick={() => store.postImportData(() => history.push(`/${store.objTypeCode}`))}
+            onClick={() => store.postImportData(() => history.push(`/${store.typeCode}`))}
           >
             导入
           </Button>
