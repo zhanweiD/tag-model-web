@@ -3,19 +3,37 @@ import io from './io'
 import {successTip, errorTip} from '../common/util'
 
 class InvokeStore {
+  id = ''
+
+  @observable invokeInfo = {}
+
   @observable invokeTrend = []
+
+  @action async getInvokeCard() {
+    try {
+      const res = await io.getInvokeCard({
+        id: this.id,
+      })
+
+      runInAction(() => {
+        this.invokeInfo = res
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
 
   @action async getInvokeData(params, cb) {
     try {
-      // const res = await io.getInvokeData({
-      //   tagCode: this.tagCode,
-      //   ...params,
-      // })
+      const res = await io.getInvokeData({
+        id: this.id,
+        ...params,
+      })
 
       // 注： 标签 - 调用趋势接口 暂未给出 @望舒
-      const res = {
-        title: '热度概况', xAxisUnit: null, yAxisUnit: 'B', tenantId: null, userId: null, success: null, data: [{key: 1557072000000, value: {invokes: 60, apps: 3}}, {key: 1557158400000, value: {invokes: 60, apps: 3}}, {key: 1557244800000, value: {invokes: 60, apps: 3}}], radixVal: null, radixPoint: null,
-      }
+      // const res = {
+      //   title: '热度概况', xAxisUnit: null, yAxisUnit: 'B', tenantId: null, userId: null, success: null, data: [{key: 1557072000000, value: {invokes: 60, apps: 3}}, {key: 1557158400000, value: {invokes: 60, apps: 3}}, {key: 1557244800000, value: {invokes: 60, apps: 3}}], radixVal: null, radixPoint: null,
+      // }
 
       runInAction(() => {
         const data = []

@@ -101,6 +101,13 @@ ioContext.create('sceneTagCategory', {
     mockUrl: 'page-scene/getContent',
   },  
 
+  // 标签 - 移除
+  deleteTag: {
+    url: `${tagApi}/be_tag/occasion/tree/cat/tag/del`,
+    mock: isMock,
+    mockUrl: 'page-hello/getContent',
+  },
+
 
   /**
    * 以下接口暂未应用
@@ -130,12 +137,7 @@ ioContext.create('sceneTagCategory', {
     mock: isMock,
     mockUrl: 'page-hello/getContent',
   },
-  deleteTag: {
-    method: 'POST',
-    url: `${tagApi}/be_tag/tag/pool/delete_tag`,
-    mock: isMock,
-    mockUrl: 'page-hello/getContent',
-  },
+
   moveTag: {
     method: 'POST',
     url: `${tagApi}/be_tag/tag/pool/move_tag`,

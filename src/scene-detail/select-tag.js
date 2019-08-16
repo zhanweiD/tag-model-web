@@ -56,7 +56,7 @@ export default class SelectTag extends Component {
     const {tagInfo, tagId} = this.store
     const {
       name,
-      used,
+      // used,
       enName,
       valueTypeName,
       cUser,
@@ -90,10 +90,7 @@ export default class SelectTag extends Component {
                 <Fragment>
                   <div className="detail-info mb16">
                     <div className="d-head FBH FBJ">
-                      <div>
-                        <span className="mr10">{name}</span>
-                        <Tag color={used ? 'green' : 'blue'}>{used ? '使用中' : '未使用'}</Tag>
-                      </div>
+                      <span className="mr10">{name}</span>
                       {/* 点击“标签详情”按钮，进入标签池中的标签详情 */}
                       <Button type="primary">标签详情</Button>
                     </div>

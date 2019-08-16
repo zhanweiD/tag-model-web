@@ -4,7 +4,7 @@
 import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
 import {
-  observable, action, toJS, computed, Tooltip,
+  observable, action, toJS, computed,
 } from 'mobx'
 import {
   Modal, Tree, Table, Checkbox, Spin, message, Button,
@@ -34,6 +34,8 @@ class ModalSelectTag extends Component {
   @observable allChecked = false
   @observable indeterminate = false
 
+  // 表格 - 已选项
+  selectedRows = []
 
   columns = [{
     title: '中文名',
@@ -56,36 +58,117 @@ class ModalSelectTag extends Component {
     dataIndex: 'descr',
   }]
 
-  // 筛选可选标签
-  @computed get canSelectTag() {
-    const {selectTagTreeData} = this.store
+  // 获取类目数组 用于全选功能
+  @computed get getClassId() {
+    const {selectTagData} = this.store
+    const classArr = selectTagData.filter(item => item.type === 1) || []
+    return classArr.map(item => item.id)
+  }
 
-    const canSelectTagArr = []
-    _.forEach(toJS(selectTagTreeData), ({type, used, tag}) => {
-      if (type === 0 && !used) {
-        canSelectTagArr.push(tag)
-      }
-    })
-    return canSelectTagArr
+   // 获取所有标签列表数据和rowKeys
+   @computed get getTagList() {
+    const {selectTagData} = this.store
+    // 所有标签列表数据
+    const tagArr = selectTagData.filter(item => !item.type) || []
+    // 所有标签列表rowKeys
+    const rowKeys = tagArr.map(item => item.id)
+
+    return {
+      list: tagArr,
+      rowKeys,
+    }
   }
 
   @action.bound handleSubmit() {
-    if (!this.list.length) {
-      message.warning('请选择标签')
-      return
-    } 
+     if (!this.list.length) {
+       message.warning('请选择标签')
+       return
+     } 
 
-    const tagIdList = toJS(this.list).map(item => item.id)
-    this.store.saveTag(tagIdList, () => {
-      this.reset()
-    })
-  }
+     const tagIdList = toJS(this.list).map(item => item.id)
+     this.store.saveTag(tagIdList, () => {
+       this.reset()
+     })
+   }
 
   @action.bound handleCancel() {
     const {modalVisible} = this.store
     modalVisible.selectTag = false
     this.reset()
   }
+
+  @action.bound onTreeCheck(keys, {checkedNodes}) {
+    let list = []
+    let rowKeys = []
+
+    _.forEach(checkedNodes, ({props}) => {
+      if (!props.children && props.tags) {
+        const tagInfo = props.tags.map(item => item.tag)
+        list = list.concat(tagInfo)
+      }
+    })
+
+    // 生成 0-n 数组
+    // if (list.length) rowKeys = Array.from({length: list.length}).map((v, k) => k)
+
+    rowKeys = list.map(item => item.id)
+
+    // 更改全选状态
+
+    if (keys.length === this.getClassId.length) {
+      this.allChecked = true
+      this.indeterminate = false
+    } else if (keys.length) {
+      this.indeterminate = true
+    } else {
+      this.allChecked = false
+      this.indeterminate = false
+    }
+
+    // 表格 - 列表数据
+    this.list = list
+
+    // 表格 - 已选项
+    this.selectedRows = list
+
+    // 表格 - 已选项key数组
+    this.rowKeys = rowKeys
+
+    // 树 - 已选项
+    this.checkedKeys = keys
+  }
+
+  @action.bound onTableCheck(selectedRowKeys, selectedRows) {
+    // 表格 - 已选项
+    this.selectedRows = selectedRows
+
+    // 表格 - 已选项key数组
+    this.rowKeys = selectedRowKeys
+  }
+
+  // 全选操作
+  @action.bound handleAllSelect(e) {
+    this.allChecked = e.target.checked
+    if (e.target.checked) {
+      this.indeterminate = false
+      this.allChecked = true
+
+      // 赋值所有标签的列表数据
+      this.list.replace(this.getTagList.list)
+
+      // 赋值所有标签的rowKeys
+      this.rowKeys.replace(this.getTagList.rowKeys)
+
+      // 列表 - 已选项
+      this.selectedRowKeys = toJS(this.getTagList.list)
+
+      // 赋值所有类目id 
+      this.checkedKeys.replace(this.getClassId)
+    } else {
+      this.reset()
+    }
+  }
+
 
   // 重置
   @action.bound reset() {
@@ -94,96 +177,28 @@ class ModalSelectTag extends Component {
     this.list.clear()
     this.checkedKeys.clear()
     this.rowKeys.clear()
+    this.selectedRows = []
   }
 
-  @action.bound onTreeCheck(keys, {checkedNodes}) {
-    const list = []
-    const checkedKeys = []
-    let rowKeys = []
-    
-    _.forEach(checkedNodes, ({props}) => {
-      if (!props.children) {
-        if (props.tag) list.push(props.tag)
-        checkedKeys.push(props.id)
-      }
-    })
-
-    if (checkedKeys.length) {
-      // 生成 0-n 数组
-      rowKeys = Array.from({length: checkedKeys.length}).map((v, k) => k) 
-    }
-
-    // 更改全选状态
-    if (checkedKeys.length === this.canSelectTag.length) {
-      this.allChecked = true
-      this.indeterminate = false
-    } else if (checkedKeys.length) {
-      this.indeterminate = true
-    } else {
-      this.allChecked = false
-      this.indeterminate = false
-    }
-
-    this.list.replace(list)
-    this.checkedKeys.replace(checkedKeys)
-    this.rowKeys.replace(rowKeys)
-  }
-
-  @action.bound onTableCheck(selectedRowKeys, selectedRows) {
-    // 全选操作
-    if (!selectedRowKeys.length) {
-      this.allChecked = false
-      this.indeterminate = false
-    }
-
-    // 更改全选状态
-    if (selectedRowKeys.length === this.canSelectTag.length) {
-      this.allChecked = true
-      this.indeterminate = false
-    } else if (selectedRowKeys.length) {
-      this.indeterminate = true
-    } else {
-      this.allChecked = false
-      this.indeterminate = false
-    }
-
-
-    this.list.replace(selectedRows)
-    this.checkedKeys = _.map(selectedRows, item => item.id)
-    this.rowKeys = Array.from({length: selectedRowKeys.length}).map((v, k) => k)
-  }
-
-  // 全选操作
-  @action.bound handleAllSelect(e) {
-    this.allChecked = e.target.checked
-    if (e.target.checked) {
-      this.indeterminate = false
-      this.list.replace(this.canSelectTag)
-      this.checkedKeys = _.map(this.canSelectTag, item => item.id)
-      this.rowKeys = Array.from({length: this.canSelectTag.length}).map((v, k) => k) 
-    } else {
-      this.reset()
-    }
-  }
 
   renderTreeNodes = data => data.map(item => {
+    // 类目 且 类目的子集不是标签
     if (item.children) {
-      return (
-        <TreeNode title={item.name} key={item.id} dataRef={item}>
-          {this.renderTreeNodes(item.children)}
-        </TreeNode>
-      )
-    }
-        
-    // 空类目处理
-    if (item.type === 1) {
-      return (
-        <TreeNode title={item.name} key={item.id} {...item} />
-      )
+      if (item.children[0].type) {
+        return (
+          <TreeNode title={item.name} key={item.id} dataRef={item}>
+            {this.renderTreeNodes(item.children)}
+          </TreeNode>
+        )
+      } 
+      return <TreeNode title={item.name} key={item.id} tags={item.children} />
     }
 
-    // 标签节点
-    return <TreeNode title={item.name} key={item.id} disableCheckbox={item.used} {...item} />
+    if (item.type === 1) {
+      return <TreeNode title={item.name} key={item.id} disableCheckbox={item.used} {...item} />
+    }
+
+    return null
   })
 
   render() {
@@ -193,10 +208,10 @@ class ModalSelectTag extends Component {
       }, 
       detailLoading,
       confirmLoading, 
-      selectTagList,
+      selectTagTreeData,
     } = this.store
 
-    const treeData = toJS(selectTagList)
+    const treeData = toJS(selectTagTreeData)
 
     const rowSelection = {
       selectedRowKeys: this.rowKeys.slice(),
@@ -243,7 +258,7 @@ class ModalSelectTag extends Component {
               </Tree>
             </div>
           
-            <Table columns={this.columns} dataSource={this.list.slice()} rowSelection={rowSelection} pagination={false} className="FB1 ml24" />
+            <Table columns={this.columns} rowKey="id" dataSource={this.list.slice()} rowSelection={rowSelection} pagination={false} className="FB1 ml24" />
           
           </div>
         </Spin>
