@@ -49,7 +49,8 @@ const columns = [
 @observer
 export default class StepOne extends React.Component {
   componentDidMount() {
-    console.log('--- componentDidMount --- ', 'StepOne')
+    const {store} = this.props
+    store.getInitialList()
   }
 
   render() {
@@ -74,7 +75,7 @@ export default class StepOne extends React.Component {
           字段列表
         </div>
         <Table
-          // loading={{false}}
+          loading={store.loadings.firstTable}
           columns={columns}
           dataSource={store.initialList}
           rowKey="dataFieldName"
@@ -85,7 +86,6 @@ export default class StepOne extends React.Component {
             onChange: this.onRowSelect,
             getCheckboxProps(value) {
               return {
-                // TODO: 如果是从第二步返回，那么这里要考虑第二步选中过的就默认选中，并且不可配置
                 defaultChecked: false,
                 disabled: +value.isUsed === 1,
               }
@@ -108,7 +108,6 @@ export default class StepOne extends React.Component {
 
     console.log(selectedRowKeys)
 
-    // TODO: 如果是从第二步返回，那么这里要考虑第二步选中过的就默认选中，并且不可配置
     store.secondTableList = selectedRows
   }
 }

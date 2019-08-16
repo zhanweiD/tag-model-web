@@ -157,8 +157,10 @@ export function listToTree(nodes = []) {
     if (!childrenMap[parentId]) {
       childrenMap[parentId] = []
     }
+
     // 存入父节点的children数组中
     childrenMap[parentId].push(node)
+
     // 和id绑定
     nodeMap[id] = node
   })

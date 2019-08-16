@@ -1,9 +1,9 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import {Component, Fragment} from 'react'
 import {
-  Drawer, Table, Steps, Tooltip, Button,
+  Drawer, Steps, Button,
 } from 'antd'
 import {observer} from 'mobx-react'
+import {action} from 'mobx'
 import Frame from '../frame'
 import StepOne from './step-one'
 import StepTwo from './step-two'
@@ -15,13 +15,9 @@ const {Step} = Steps
 
 // 标签配置（字段->标签）
 @observer
-export default class TagConfiguration extends React.Component {
+export default class TagConfiguration extends Component {
   state = {
     currentStep: 0,
-  }
-
-  componentDidMount() {
-    store.getInitialList()
   }
 
   render() {
@@ -47,6 +43,7 @@ export default class TagConfiguration extends React.Component {
           title="配置标签"
           visible
           width="80%"
+          onClose={this.close}
         >
           {/* 步骤条 */}
           <Steps current={currentStep} style={{padding: '0 100px', marginBottom: '32px'}}>
@@ -63,7 +60,6 @@ export default class TagConfiguration extends React.Component {
           </div>
 
           {/* 底部步骤控制按钮 */}
-          {/* TODO: 每页下的按钮都不一样，干脆分别做 */}
           <div
             style={{
               position: 'absolute',
@@ -76,27 +72,57 @@ export default class TagConfiguration extends React.Component {
               textAlign: 'right',
             }}
           >
+            {/* 第一步 */}
             {currentStep === 0 && (
-              <Button className="mr8">
-                取消
-              </Button>
+              <Fragment>
+                <Button 
+                  className="mr8"
+                  onClick={this.close}
+                >
+                  取消
+                </Button>
+                <Button 
+                  type="primary" 
+                  disabled={!store.secondTableList.length}
+                  onClick={this.toStepTwo}
+                >
+                  下一步
+                </Button>
+              </Fragment>
             )}
-            {currentStep > 0 && (
-              <Button className="mr8" onClick={() => this.prevStep()}>
-                上一步
-              </Button>
+            {/* 第二步 */}
+            {currentStep === 1 && (
+              <Fragment>
+                <Button 
+                  className="mr8"
+                  onClick={this.backToStepOne}
+                >
+                  上一步
+                </Button>
+                <Button 
+                  type="primary" 
+                  disabled={
+                    // 错误条数为0
+                    store.secondTableList.filter(item => !item.isTrue).length 
+                    // 或者标签个数也为0（可能全被删了）
+                    || !store.secondTableList.length
+                  }
+                  onClick={this.confirmStepTwo}
+                >
+                  确定
+                </Button>
+              </Fragment>
             )}
-            {currentStep < steps.length - 1 && (
+            {/* 第三步 */}
+            {currentStep === 2 && (
               <Button 
-                type="primary" 
-                // disabled={!store.secondTableList.length}
-                onClick={() => this.nextStep()}
+                type="primary"
+                // TODO: 逻辑待修改
+                onClick={() => {
+                  this.setState({currentStep: 0})
+                  this.close()
+                }}
               >
-                下一步
-              </Button>
-            )}
-            {currentStep === steps.length - 1 && (
-              <Button type="primary">
                 确定
               </Button>
             )}
@@ -106,19 +132,41 @@ export default class TagConfiguration extends React.Component {
     )
   }
 
-  // 下一步
-  nextStep() {
-    const {currentStep} = this.state
-    this.setState({
-      currentStep: currentStep + 1,
+  // 第一步点击取消或者右上角关闭
+  close = () => {
+    console.log('关闭抽屉')
+  }
+  
+  // 从第一步到第二步
+  @action.bound toStepTwo() {
+    store.checkTagList(() => {
+      this.setState({
+        currentStep: 1,
+      })
     })
   }
 
-  // 上一步
-  prevStep() {
-    const {currentStep} = this.state
+  // 从第二步回到第一步
+  @action.bound backToStepOne() {
     this.setState({
-      currentStep: currentStep - 1,
+      currentStep: 0,
+    })
+    store.getInitialList()
+  }
+
+  // 从第二步“确定”，决定是不是要进入第三步
+  @action.bound confirmStepTwo() {
+    store.saveTags(() => {
+      // 加载结果数据
+      store.getStorageDetail()
+
+      this.setState({
+        currentStep: 2,
+      })
+    }, () => {
+      console.log('保存失败')
+      // 保存失败的话，可能是这期间某些接口不能创建了，重新调用校验接口来更新数据
+      store.checkTagList()
     })
   }
 }
