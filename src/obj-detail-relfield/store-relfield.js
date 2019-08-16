@@ -6,7 +6,7 @@ import io from './io'
 
 class RelfieldStore {
   // 查询条件
-  @observable status = ''
+  @observable isConfigured = ''
   @observable keyword = ''
   // @observable order = ''
   // @observable sort = ''
@@ -26,7 +26,7 @@ class RelfieldStore {
       this.tableLoading = true
       const res2 = await io.getList({
         // objId: this.id,
-        status: this.status,
+        isConfigured: this.isConfigured,
         keyword: this.keyword,
         // order: this.order,
         // sort: this.sort,

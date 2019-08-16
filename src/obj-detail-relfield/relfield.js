@@ -79,6 +79,8 @@ class DrawerRelfield extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.updateKey !== nextProps.updateKey) {
       this.updateKey = nextProps.updateKey
+      store.isConfigured = ''
+      store.keyword = ''
       store.getList()
     }
   }
@@ -122,10 +124,10 @@ class DrawerRelfield extends Component {
           <div className="mb16">
             <span className="pl">配置状态: </span>
             <Select
-              value={this.defStatus}
+              defaultValue=""
               style={{width: 120}}
               className="mr8"
-              onChange={e => this.handleSearch(e, 'status')}
+              onChange={e => this.handleSearch(e, 'isConfigured')}
             >
               <Option value="">全部</Option>
               {

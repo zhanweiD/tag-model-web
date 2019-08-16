@@ -11,5 +11,9 @@ module.exports = {
       url: '/',
       text: '数据资产管理中心',
     },
+    tagPool: {
+      text: '标签池',
+      url: '/pool#/',
+    },
   },
 }
