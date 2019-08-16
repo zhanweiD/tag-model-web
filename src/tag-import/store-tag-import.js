@@ -63,15 +63,6 @@ class ImportStore {
       if (!canImportData) canImportData = []
       if (!preViewFailData) preViewFailData = []
       const allPreviewData = canImportData.concat(preViewFailData)
-      const res = {
-        dataList: allPreviewData.map(item => {
-          const arr = _.values(item)
-          arr.push(!!item.errorMsg)
-          return arr
-        }),
-        fields: _.values(data.columns),
-        success: data.success,
-      }
 
       runInAction(() => {
         this.previewDataLoading = false
@@ -83,30 +74,19 @@ class ImportStore {
         this.previewDataHead.clear()
         this.previewDataList.clear()
 
-        res.fields.forEach(item => {
+        const tableKeys = _.keys(data.columns)
+        _.values(data.columns).forEach((item, idx) => {
           this.previewDataHead.push({
             title: item,
-            key: item,
-            dataIndex: item,
+            key: tableKeys[idx],
+            dataIndex: tableKeys[idx],
           })
         })
 
-        const tabList = []
-        res.dataList.forEach((item, idx) => {
-          const o = {}
-          item.forEach((item2, idx2) => {
-            const key = res.fields[idx2]
-            if (key) {
-              o[key] = item2
-            }
-           
-            if (idx2 === item.length - 1) {
-              o.isError = item2
-            }
-            tabList[idx] = o
-          })
-        })
-        console.log(tabList)
+        const tabList = allPreviewData.map(item => ({
+          isError: !!item.errorMsg,
+          ...item,
+        }))
 
         this.previewDataList.replace(tabList)
         this.canImportData.replace(data.canImportData)
