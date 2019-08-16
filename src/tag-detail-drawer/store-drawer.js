@@ -14,7 +14,7 @@ class DrawerStore {
         id,
       })
 
-      this.result = res
+      this.result = res || []
     } catch (e) {
       errorTip(e.message)
     }
@@ -26,7 +26,7 @@ class DrawerStore {
         id,
       })
 
-      this.target = res
+      this.target = res || []
     } catch (e) {
       errorTip(e.message)
     }
@@ -38,7 +38,7 @@ class DrawerStore {
         id,
       })
 
-      this.source = res
+      this.source = res || []
     } catch (e) {
       errorTip(e.message)
     }
