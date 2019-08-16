@@ -13,6 +13,7 @@ class DrawerRelfield extends Component {
 
   constructor(props) {
     super(props)
+    store.id = this.props.store.id
 
     this.tableCol = [
       {

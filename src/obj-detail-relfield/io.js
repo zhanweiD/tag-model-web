@@ -4,8 +4,8 @@ import {tagApi} from '../common/util'
 ioContext.create('relfield', {
   getList: {
     url: `${tagApi}/be_tag/tag/pool/rel_field_list`,
-    mock: true,
-    mockUrl: 'page-hello/getContent',
+    // mock: true,
+    // mockUrl: 'page-hello/getContent',
   },
   delObjFieldRel: {
     method: 'POST',

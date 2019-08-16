@@ -5,6 +5,8 @@ import {successTip, errorTip} from '../common/util'
 import io from './io'
 
 class RelfieldStore {
+  id = undefined
+
   // 查询条件
   @observable isConfigured = ''
   @observable keyword = ''
@@ -24,8 +26,8 @@ class RelfieldStore {
   @action async getList() {
     try {
       this.tableLoading = true
-      const res2 = await io.getList({
-        // objId: this.id,
+      const res = await io.getList({
+        objId: this.id,
         isConfigured: this.isConfigured,
         keyword: this.keyword,
         // order: this.order,
@@ -33,7 +35,6 @@ class RelfieldStore {
         currentPage: this.pagination.currentPage,
         pageSize: this.pagination.pageSize,
       })
-      const res = {"data":[{"isUsed":0,"associatedField":1,"configuredField":0,"dataTableName":"demo","storageTypeName":"Hive数据源","dataDbType":4,"dataDbName":"hive_default_hy项目_dev","dataStorageId":"1559877138336fz68","id":5608992670692608}],"hasNextPage":false,"hasPreviousPage":false,"isLastPage":false,"isFirstPage":true,"pages":1,"pageSize":10,"currentPage":1,"totalCount":1}
       runInAction(() => {
         this.tableLoading = false
         this.list.replace(res.data)
@@ -56,7 +57,7 @@ class RelfieldStore {
   @action async delObjFieldRel(o) {
     try {
       await io.delObjFieldRel({
-        objId: o.objId,
+        objId: this.id,
         storageId: o.dataStorageId,
         tableName: o.dataTableName,
         fieldName: o.dataFieldName,
