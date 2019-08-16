@@ -27,7 +27,7 @@ export default class Store {
 
   @observable loadings = {
     firstTable: false, // 第一步表格的Loading
-    secondTable: false, // 第二步表格的Loading, TODO: 还没用到，貌似改成确定按钮时的加载loading就行
+    tagSaving: false, // 第二步，保存标签时的加载状态
   }
 
   // 创建实例时需要传入一些数据

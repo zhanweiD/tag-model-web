@@ -57,7 +57,8 @@ export default class StepTwo extends React.Component {
         title: '所属类目',
         key: 'pathIds',
         dataIndex: 'pathIds',
-        render: (pathIds = []) => {
+        render: pathIds => {
+          pathIds = pathIds || []
           const lastId = pathIds[pathIds.length - 1]
           return store.cateMap[lastId] || ''
         },

@@ -224,7 +224,7 @@ export default class ObjDetail extends Component {
           updateKey={store.modalVisible.viewRelField}
         />
         {
-          this.curentItem && (
+          (store.modalVisible.tagConfiguration && this.curentItem) && (
             <TagConfiguration
               visible={store.modalVisible.tagConfiguration}
               onClose={() => this.toggleTagConfiguration()}
