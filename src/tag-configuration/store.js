@@ -51,7 +51,7 @@ export default class Store {
         tableName: this.tableName,
       })
 
-      this.initialList = res
+      this.initialList = res || []
     } catch (e) {
       errorTip(e.message)
     } finally {
@@ -64,7 +64,7 @@ export default class Store {
     try {
       const res = await io.getCateList({
         treeId: this.treeId,
-      })
+      }) || []
 
       // id -> name的映射
       const cateMap = {}
@@ -121,7 +121,7 @@ export default class Store {
 
       cb && cb()
       
-      this.secondTableList = res
+      this.secondTableList = res || []
     } catch (e) {
       errorTip(e.message)
     }
@@ -137,7 +137,7 @@ export default class Store {
       })
       console.log('getStorageDetail', res)
 
-      this.successResult = res
+      this.successResult = res || {}
     } catch (e) {
       errorTip(e.message)
     }
