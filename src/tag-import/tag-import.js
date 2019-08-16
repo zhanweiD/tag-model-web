@@ -17,10 +17,8 @@ export default class TagImport extends Component {
   componentWillMount() {
     const {frameChange, match} = this.props
     frameChange('nav', [
-      navListMap.assetMgt, {
-        text: '标签池',
-        url: '/tag#/',
-      },
+      navListMap.assetMgt,
+      navListMap.tagPool,
       {text: '导入类目及标签'},
     ])
 

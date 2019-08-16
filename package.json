@@ -13,7 +13,8 @@
     "server-dev": "cross-env CLIENT_ENV=development NODE_ENV=development node app.js",
     "down": "cross-env NODE_ENV=development node ./node_modules/@dtwave/oner-server/shell/down.js",
     "replace": "node ./node_modules/@dtwave/oner-server/shell/replace.js",
-    "tar": "node ./node_modules/@dtwave/oner-server/shell/tar/index.js"
+    "tar": "node ./node_modules/@dtwave/oner-server/shell/tar/index.js",
+    "deploy": "node ./node_modules/@dtwave/oner-server/shell/deploy"
   },
   "repository": {},
   "author": "js",

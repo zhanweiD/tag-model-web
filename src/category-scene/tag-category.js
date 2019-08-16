@@ -13,7 +13,6 @@ import Action from './action'
 import ModalCategoryEdit from './modal-category-edit'
 import ModalCategoryDetail from './modal-category-detail'
 import ModalObjectEdit from './modal-object-edit'
-// import ModalTagEdit from './modal-tag-edit'
 import ModalSelectTag from './modal-select-tag'
 import ModalTagMove from './modal-tag-move'
 
@@ -313,7 +312,6 @@ render() {
       </DtTreeBox>
       <ModalCategoryEdit />
       <ModalObjectEdit />
-      {/* <ModalTagEdit /> */}
       <ModalSelectTag />
       <ModalTagMove />
       <ModalCategoryDetail />

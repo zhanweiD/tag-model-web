@@ -65,40 +65,40 @@ export function warningTip(content) {
 }
 
 
-export function getNickName(userId, userList = window.userList || []) {
-  if (!userId || userList.length === 0) {
-    return '未知'
-  }
-  let userIdArr = []
-  const userNameArr = []
-  if (typeof (userId) === 'object') {
-    userIdArr = userId
-  } else if (typeof (userId) === 'number') {
-    userIdArr = [userId]
-  } else if (typeof (userId) === 'string' && userId.indexOf(',') > -1) {
-    userIdArr = userId.split(',')
-  } else {
-    userIdArr = [userId]
-  }
-  userIdArr.map(id => {
-    const user = userList.filter(item => {
-      if (typeof (id) === 'string') {
-        id = parseInt(id, 10)
-      }
-      return item.userId === id
-    })
-    if (user.length > 0) {
-      userNameArr.push(user[0].nickName)
-    } else {
-      // 用户列表中找不到此userId
-      // userNameArr.push(id)
-      userNameArr.push('未知')
-    }
-    return id
-  })
+// export function getNickName(userId, userList = window.userList || []) {
+//   if (!userId || userList.length === 0) {
+//     return '未知'
+//   }
+//   let userIdArr = []
+//   const userNameArr = []
+//   if (typeof (userId) === 'object') {
+//     userIdArr = userId
+//   } else if (typeof (userId) === 'number') {
+//     userIdArr = [userId]
+//   } else if (typeof (userId) === 'string' && userId.indexOf(',') > -1) {
+//     userIdArr = userId.split(',')
+//   } else {
+//     userIdArr = [userId]
+//   }
+//   userIdArr.map(id => {
+//     const user = userList.filter(item => {
+//       if (typeof (id) === 'string') {
+//         id = parseInt(id, 10)
+//       }
+//       return item.userId === id
+//     })
+//     if (user.length > 0) {
+//       userNameArr.push(user[0].nickName)
+//     } else {
+//       // 用户列表中找不到此userId
+//       // userNameArr.push(id)
+//       userNameArr.push('未知')
+//     }
+//     return id
+//   })
 
-  return userNameArr.join(',')
-}
+//   return userNameArr.join(',')
+// }
 
 // 将后端打平的数据结构处理成树组件需要的数据结构
 export function listToTree(data) {

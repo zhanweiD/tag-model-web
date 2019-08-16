@@ -1,10 +1,11 @@
 import {Component} from 'react'
 import {
-  Modal, Form, Input, Spin, Select, TreeSelect, Tooltip, Icon,
+  Modal, Form, Input, Spin, Select,
 } from 'antd'
 import {observable, action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {isExitMsg} from '../common/constants'
+import {enNameReg} from '../common/util'
 
 const FormItem = Form.Item
 const {Option} = Select
@@ -136,9 +137,7 @@ class ModalObjectEdit extends Component {
                 initialValue: editObject ? objectDetail.enName : undefined,
                 rules: [
                   {required: true, message: '英文名不可为空'},
-                  {max: 30, message: '请输入少于30个字'},
-                  {pattern: /^(?!\d+$)[a-zA-Z0-9_]{1,30}$/, message: '仅支持小写字母、数字和下划线的组合'},
-                  // {pattern: /^(?!\d+$)[a-zA-Z0-9_]{1,30}$/, message: '仅支持小写字母、数字和下划线的组合'},
+                  {pattern: enNameReg, message: '不超过30个字，只能包含英文、数字或下划线，必须以英文开头'},
                   {validator: this.handleNameValidator},
                 ],
               })(<Input autoComplete="off" placeholder="不超过30个字，输入为英文字符或数字" />)}

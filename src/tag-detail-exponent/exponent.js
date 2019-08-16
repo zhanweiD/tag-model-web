@@ -34,6 +34,9 @@ export default class Exponent extends Component {
     if (store.id !== nextProps.aId) {
       store.id = nextProps.aId
       store.getDailyCard()
+      this.defStartTime = moment().subtract(7, 'day').format('YYYY-MM-DD')
+      this.defEndTime = moment().subtract(1, 'day').format('YYYY-MM-DD')
+      this.getData()
     }
   }
 
@@ -43,13 +46,15 @@ export default class Exponent extends Component {
     hotChart = echarts.init(this.hot)
     enumeChart = echarts.init(this.enume)
 
+    this.getData()
+    window.addEventListener('resize', this.resize)
+  }
+
+  @action getData = () => {
     this.redrawVs() 
     this.redrawQs()
     this.redrawHot()
-    store.getEnumeData(data => {
-      this.redrawEnume(data)
-    })
-    window.addEventListener('resize', this.resize)
+    this.redrawEnume()
   }
 
   @action resize = () => {
@@ -77,14 +82,16 @@ export default class Exponent extends Component {
     })
   }
 
-  @action redrawEnume = data => {
-    const renderData = data.map(({
-      count, key,
-    }) => ({
-      name: key,
-      value: count,
-    }))
-    enumeChart.setOption(getPieOpt(renderData))
+  @action redrawEnume() {
+    store.getEnumeData(data => {
+      const renderData = data.map(({
+        count, key,
+      }) => ({
+        name: key,
+        value: count,
+      }))
+      enumeChart.setOption(getPieOpt(renderData))
+    })
   }
 
   componentWillUnmount() {

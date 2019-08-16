@@ -1,11 +1,12 @@
 import {Component} from 'react'
+import PropTypes from 'prop-types'
 import {
   Modal, Form, Input, Spin, Select, Switch, Tooltip, Icon,
 } from 'antd'
 import {observable, action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {isExitMsg} from '../common/constants'
-import {isJsonFormat} from '../common/util'
+import {isJsonFormat, enNameReg} from '../common/util'
 
 const FormItem = Form.Item
 const {Option} = Select
@@ -13,13 +14,18 @@ const {Option} = Select
 // @inject('bigStore')
 @observer
 class ModalTagEdit extends Component {
-  @observable isEnum = false
-
-  constructor(props) {
-    super(props)
-    // this.bigStore = this.props.bigStore
-    // this.store = this.bigStore.categoryStore
+  static propTypes = {
+    visible: PropTypes.bool.isRequired, // 是否可见
+    tagDetail: PropTypes.object, // 标签对象
+    onCancel: PropTypes.func, // 关闭弹框回调
   }
+
+  static defaultProps = {
+    tagDetail: {},
+  }
+
+  // 是否枚举
+  @observable isEnum = false
 
   @action.bound handleOnCancel() {
     const {form} = this.props
@@ -96,28 +102,35 @@ class ModalTagEdit extends Component {
     }
   }
 
-  @action changeIsEnum(e) {
+  @action changeIsEnum(v) {
     const {
       form: {setFieldsValue},
     } = this.props
     setFieldsValue({
-      isEnum: +e,
+      isEnum: +v,
     })
 
-    this.isEnum = e
+    this.isEnum = v
   }
 
   render() {
-    const {form: {getFieldDecorator}} = this.props
+    const {
+      form: {getFieldDecorator}, 
+      tagDetail,
+      visible,
+      onCancel,
+    } = this.props
     // const {
     //   tagDetail, eStatus: {editTag}, modalVisible, confirmLoading,
     // } = this.store
 
+    console.log('visible', visible)
+
     const modalProps = {
       // title: editTag ? '编辑标签' : '添加标签',
       title: '编辑标签',
-      visible: true,
-      // onCancel: this.handleOnCancel,
+      visible,
+      onCancel,
       // onOk: this.handleOnOk,
       maskClosable: false,
       width: 520,
@@ -137,10 +150,10 @@ class ModalTagEdit extends Component {
           <Spin spinning={false}>
             <FormItem {...formItemLayout} label="中文名">
               {getFieldDecorator('name', {
-                // initialValue: editTag ? tagDetail.name : undefined,
+                initialValue: tagDetail.name || undefined,
                 rules: [
-                  {required: true, message: '名称不可为空'},
-                  {max: 20, message: '名称不能超过20个字符'},
+                  {required: true, message: '中文名不可为空'},
+                  {max: 20, message: '中文名不能超过20个字符'},
                   {pattern: /^[\u4e00-\u9fa5]{1,30}$/, message: '输入限制为中文字符'},
                   // {validator: this.handleNameValidator},
                 ],
@@ -149,20 +162,20 @@ class ModalTagEdit extends Component {
 
             <FormItem {...formItemLayout} label="英文名">
               {getFieldDecorator('enName', {
-                // initialValue: editTag ? tagDetail.enName : undefined,
+                initialValue: tagDetail.enName || undefined,
                 rules: [
                   {required: true, message: '英文名不可为空'},
-                  {max: 30, message: '请输入少于30个字'},
-                  {pattern: /^(?!\d+$)[a-zA-Z0-9_]{1,30}$/, message: '仅支持字母、数字和下划线的组合'},
+                  // {max: 30, message: '请输入少于30个字'},
+                  {pattern: enNameReg, message: '不超过30个字，只能包含英文、数字或下划线，必须以英文开头'},
                   // {pattern: /^(?!\d+$)[a-zA-Z0-9_]{1,30}$/, message: '仅支持小写字母、数字和下划线的组合'},
                   // {validator: this.handleNameValidator},
                 ],
-              })(<Input autoComplete="off" placeholder="不超过30个字，输入为英文字符或数字" />)}
+              })(<Input autoComplete="off" placeholder="不超过30个字，允许英文、数字或下划线，必须以英文开头" />)}
             </FormItem>
 
             <FormItem {...formItemLayout} label="数据类型">
               {getFieldDecorator('valueType', {
-                // initialValue: tagDetail.valueType || undefined,
+                initialValue: tagDetail.valueType || undefined,
                 rules: [{required: true, message: '请选择数据类型'}],
               })(
                 <Select placeholder="请下拉选择">
@@ -177,12 +190,12 @@ class ModalTagEdit extends Component {
 
             <FormItem {...formItemLayout} label="是否枚举">
               {getFieldDecorator('isEnum', {
-                // initialValue: tagDetail.isEnum || 0,
+                initialValue: tagDetail.isEnum || 0,
                 valuePropName: 'checked',
               })(<Switch checkedChildren="是" unCheckedChildren="否" onChange={e => this.changeIsEnum(e)} />)}
             </FormItem>
 
-            {/* {(tagDetail.isEnum || this.isEnum) && ( */}
+            {(tagDetail.isEnum || this.isEnum) && (
               <FormItem {...formItemLayout} label="枚举显示值">
                 {getFieldDecorator('enumValue', {
                   rules: [
@@ -190,21 +203,36 @@ class ModalTagEdit extends Component {
                     {max: 100, message: '业务逻辑不能超过100个字符'},
                     {validator: this.handleEnumValueValidator},
                   ],
-                  // initialValue: editTag ? tagDetail.enumValue : undefined,
+                  initialValue: tagDetail.enumValue || undefined,
                 })(
                   <Input.TextArea
                     autoComplete="off"
                     rows="3"
-                    placeholder={`若标签值为枚举型，可将枚举代码值显示为易理解的值，例如：{"0":"女","1":"男"}`}
+                    placeholder={'若标签值为枚举型，可将枚举代码值显示为易理解的值，例如：{"0":"女","1":"男"}'}
                   />
                 )}
               </FormItem>
-            {/* )} */}
+            )}
+
+            {/* TODO: 所属类目的下拉 */}
+            <FormItem {...formItemLayout} label="所属类目">
+              {getFieldDecorator('cateId', {
+                // initialValue: tagDetail.valueType || undefined,
+              })(
+                <Select placeholder="请下拉选择">
+                  {/* {
+                    window.njkData.dict.dataType.map(item => (
+                      <Option key={item.key} value={item.key}>{item.value}</Option>
+                    ))
+                  } */}
+                </Select>
+              )}
+            </FormItem>
 
             <FormItem {...formItemLayout} label="业务逻辑">
               {getFieldDecorator('descr', {
                 rules: [{max: 100, message: '业务逻辑不能超过100个字符'}],
-                // initialValue: editTag ? tagDetail.descr : undefined,
+                initialValue: tagDetail.descr || undefined,
               })(
                 <Input.TextArea
                   autoComplete="off"

@@ -13,36 +13,39 @@ class DrawerRelfield extends Component {
 
   constructor(props) {
     super(props)
+    store.id = this.props.store.id
 
     this.tableCol = [
       {
         title: '字段名称',
-        key: 'dataTableName',
-        dataIndex: 'dataTableName',
+        key: 'dataFieldName',
+        dataIndex: 'dataFieldName',
       }, {
         title: '数据源',
-        key: 'dataTableName',
-        dataIndex: 'dataTableName',
+        key: 'dataDbName',
+        dataIndex: 'dataDbName',
       }, {
         title: '数据源类型',
-        key: 'dataTableName',
-        dataIndex: 'dataTableName',
+        key: 'storageTypeName',
+        dataIndex: 'storageTypeName',
       }, {
         title: '数据表名称',
         key: 'dataTableName',
         dataIndex: 'dataTableName',
       }, {
         title: '配置状态',
-        key: 'dataTableName',
-        dataIndex: 'dataTableName',
+        key: 'isConfigured',
+        dataIndex: 'isConfigured',
+        render: text => <span>{text ? '已配置' : '待配置'}</span>,
       }, {
         title: '使用状态',
-        key: 'dataTableName',
-        dataIndex: 'dataTableName',
+        key: 'isUsed',
+        dataIndex: 'isUsed',
+        render: text => <span>{text ? '使用中' : '未使用'}</span>,
       }, {
         title: '标签中文',
-        key: 'dataTableName',
-        dataIndex: 'dataTableName',
+        key: 'name',
+        dataIndex: 'name',
       }, {
         title: '操作',
         render: (text, record) => (
@@ -53,7 +56,7 @@ class DrawerRelfield extends Component {
                 arr.push(
                   <Popconfirm
                     title="你确定要移除该字段吗？"
-                    onConfirm={() => store.delObjFieldRel(record.dataStorageId, record.dataTableName)}
+                    onConfirm={() => store.delObjFieldRel(record)}
                   ><a className="mr8">移除</a></Popconfirm>
                 )
               } else {
@@ -77,6 +80,8 @@ class DrawerRelfield extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.updateKey !== nextProps.updateKey) {
       this.updateKey = nextProps.updateKey
+      store.isConfigured = ''
+      store.keyword = ''
       store.getList()
     }
   }
@@ -120,14 +125,14 @@ class DrawerRelfield extends Component {
           <div className="mb16">
             <span className="pl">配置状态: </span>
             <Select
-              value={this.defStatus}
+              defaultValue=""
               style={{width: 120}}
               className="mr8"
-              onChange={e => this.handleSearch(e, 'status')}
+              onChange={e => this.handleSearch(e, 'isConfigured')}
             >
               <Option value="">全部</Option>
               {
-                window.njkData.dict.auditStatus.map(item => (
+                window.njkData.dict.configureStatus.map(item => (
                   <Option key={item.key} value={item.key}>{item.value}</Option>
                 ))
               }

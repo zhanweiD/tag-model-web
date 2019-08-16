@@ -51,8 +51,12 @@ class TagCategoryStore {
   @observable selectObj = []
 
   // 选择标签 - 树结构 
+
+  // 所有标签
+  @observable selectTagData = []
+
+  // 树结构数据
   @observable selectTagTreeData = []
-  @observable selectTagList = []
 
   // 对象详情
   // @observable objectDetail = false
@@ -189,7 +193,7 @@ class TagCategoryStore {
       ...param,
     }
     this.confirmLoading = true
-    console.log(parentIsObj, params)
+
     try {
       // 编辑类目
       if (this.eStatus.editCategory) {
@@ -220,18 +224,21 @@ class TagCategoryStore {
   // 对象/类目/标签 - 删除节点
   @action async deleteNode(type) {
     try {
-      const params = {
-        occasionId: this.sceneId,
-        catId: this.currentTreeItemKey,
-      }
-
       // type: 0 标签 1 类目 2 对象
       if (type === 2) {
-        await io.deleteObject(params)
+        await io.deleteObject({
+          occasionId: this.sceneId,
+        })
       } else if (type === 1) {
-        await io.deleteCategory(params)
+        await io.deleteCategory({
+          occasionId: this.sceneId,
+          catId: this.currentTreeItemKey,
+        })
       } else {
-        await io.deleteTag(params)
+        await io.deleteTag({
+          occasionId: this.sceneId,
+          tagId: this.currentTreeItemKey,
+        })
       }
       runInAction(() => {
         successTip('删除成功')
@@ -271,6 +278,9 @@ class TagCategoryStore {
 
   // 标签 - 选择标签树结构
   @action async getSelectTag() {
+    this.selectTagData.clear()
+    this.selectTagTreeData.clear()
+
     try {
       this.detailLoading = true
       const res = await io.selectTag({
@@ -278,8 +288,8 @@ class TagCategoryStore {
         catId: this.currentTreeItemKey,
       })
       runInAction(() => {
-        this.selectTagTreeData.replace(res)
-        this.selectTagList.replace(listToTree(res))
+        this.selectTagData.replace(res)
+        this.selectTagTreeData.replace(listToTree(res))
         this.detailLoading = false
       })
     } catch (e) {
