@@ -12,7 +12,7 @@ async function sleep(delay = 2000) {
   })
 }
 
-class Store {
+export default class Store {
   @observable initialList = [] // 第一步拿到的初始数据
 
   @observable secondTableList = [] // 第二步的表格数据，同时是第一步表格的选中数据
@@ -143,5 +143,3 @@ class Store {
     }
   }
 }
-
-export default new Store()

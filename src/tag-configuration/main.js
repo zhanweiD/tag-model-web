@@ -1,4 +1,5 @@
 import {Component, Fragment} from 'react'
+import PropTypes from 'prop-types'
 import {
   Drawer, Steps, Button,
 } from 'antd'
@@ -9,19 +10,47 @@ import StepOne from './step-one'
 import StepTwo from './step-two'
 import StepThree from './step-three'
 
-import store from './store'
+import Store from './store'
 
 const {Step} = Steps
+
+// Store的实例
+let store = {}
 
 // 标签配置（字段->标签）
 @observer
 export default class TagConfiguration extends Component {
+  static propTypes = {
+    visible: PropTypes.bool.isRequired, // 是否显示
+    onClose: PropTypes.func.isRequired, // 取消，关闭抽屉
+    treeId: PropTypes.number.isRequired, // 树节点id
+    objId: PropTypes.number.isRequired, // 对象id
+    storageId: PropTypes.number.isRequired, // 数据源id
+    tableName: PropTypes.string.isRequired, // 数据表名
+  }
+
   state = {
     currentStep: 0,
   }
 
+  constructor(props) {
+    super(props)
+
+    const {
+      treeId, objId, storageId, tableName,
+    } = props
+
+    store = new Store({
+      treeId, 
+      objId, 
+      storageId, 
+      tableName,
+    })
+  }
+
   render() {
     const {currentStep} = this.state
+    const {visible, onClose} = this.props
 
     const steps = [
       {
@@ -41,9 +70,9 @@ export default class TagConfiguration extends Component {
       <Frame>
         <Drawer
           title="配置标签"
-          visible
+          visible={visible}
           width="80%"
-          onClose={this.close}
+          onClose={() => { onClose() }}
         >
           {/* 步骤条 */}
           <Steps current={currentStep} style={{padding: '0 100px', marginBottom: '32px'}}>
@@ -132,11 +161,6 @@ export default class TagConfiguration extends Component {
     )
   }
 
-  // 第一步点击取消或者右上角关闭
-  close = () => {
-    console.log('关闭抽屉')
-  }
-  
   // 从第一步到第二步
   @action.bound toStepTwo() {
     store.checkTagList(() => {
