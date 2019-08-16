@@ -1,10 +1,11 @@
-const pkg = require('./package.json')
 const path = require('path')
+const pkg = require('./package.json')
+
 const env = require(process.env.ONER_SERVER_ENV === 'development' ? '../@dtwave/oner-server/common/env' : '@dtwave/oner-server/common/env')
 const plugins = require('./server')
 
-const nattyStorage = env.nattyStorage
-const SERVER_ENV = env.SERVER_ENV
+const {nattyStorage} = env
+const {SERVER_ENV} = env
 
 let config = {
   apps: {},
@@ -51,29 +52,18 @@ module.exports = {
         '//cdn.dtwave.com/public/antd/3.18.2/antd.min.js',
         '//cdn.dtwave.com/public/lodash/4.17.4/lodash.min.js',
       ],
-      tag: {
-        js: [
-          '//cdn.dtwave.com/public/echarts/4.2.0/echarts.min.js',
-          '//cdn.dtwave.com/public/ide/d3.v3.js',
-          '//cdn.dtwave.com/public/ide/data-manage-dagre.js',
-        ],
-      },
-      physical: {
-        js: [
-          '//cdn.dtwave.com/public/echarts/4.2.0/echarts.min.js',
-          '//cdn.dtwave.com/public/ide/d3.v3.js',
-          '//cdn.dtwave.com/public/ide/data-manage-dagre.js',
-        ],
-      },
-      overview: {
-        js: [
-          '//cdn.dtwave.com/public/echarts/4.2.0/echarts.min.js',
-          '//cdn.dtwave.com/public/d3/4.13.0/d3.min.js',
-        ],
-      },
+      // 场景
       scene: {
         js: [
           '//cdn.dtwave.com/public/echarts/4.2.0/echarts.min.js',
+        ],
+      },
+      // 标签池
+      pool: {
+        js: [
+          '//cdn.dtwave.com/public/echarts/4.2.0/echarts.min.js',
+          '//cdn.dtwave.com/public/ide/d3.v3.js',
+          '//cdn.dtwave.com/public/ide/data-manage-dagre.js',
         ],
       },
       njkPath: path.join(__dirname, 'template.njk'),
