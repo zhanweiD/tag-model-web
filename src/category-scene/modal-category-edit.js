@@ -5,7 +5,7 @@ import {Component} from 'react'
 import {
   Modal, Form, Input, Spin,
 } from 'antd'
-import {observable, action} from 'mobx'
+import {action} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {isExitMsg} from '../common/constants'
 
@@ -31,7 +31,6 @@ class ModalEditCategory extends Component {
     const {form: {validateFields}} = this.props
     const {eStatus: {editCategory}, cateDetail, currentTreeItemKey} = this.store
     // const {typeCode} = this.bigStore
-    console.log(cateDetail)
 
     validateFields((err, values) => {
       if (!err) {
@@ -51,7 +50,6 @@ class ModalEditCategory extends Component {
           params.catId = currentTreeItemKey
         }
 
-        console.log(params)
         // if (editCategory) {
         //   param.id = cateDetail.id
         //   param.parentId = cateDetail && cateDetail.parentId
@@ -66,7 +64,6 @@ class ModalEditCategory extends Component {
 
   @action.bound handleNameValidator(rule, value, callback) {
     const {currentTreeItemKey} = this.store
-    console.log(rule, value, callback)
     if (value) {
       // // 后端校验
       // const param = {}
@@ -123,8 +120,8 @@ class ModalEditCategory extends Component {
               {getFieldDecorator('name', {
                 initialValue: editCategory ? cateDetail.name : undefined,
                 rules: [
-                  {required: true, message: '名称不可为空'},
-                  {max: 20, message: '名称不能超过20个字符'},
+                  {required: true, message: '中文名不可为空'},
+                  {max: 20, message: '中文名不能超过20个字符'},
                   {pattern: /^[\u4e00-\u9fa5]{1,30}$/, message: '输入限制为中文字符'},
                   {validator: this.handleNameValidator},
                 ],

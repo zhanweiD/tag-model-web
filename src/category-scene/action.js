@@ -1,7 +1,7 @@
 import {Component} from 'react'
 import {observable, action} from 'mobx'
 import {observer, inject} from 'mobx-react'
-import {Menu, Dropdown} from 'antd'
+import {Menu, Dropdown, Tooltip} from 'antd'
 import _ from 'lodash'
 import {Link} from 'react-router-dom'
 import NoBorderInput from '../component-noborder-input'
@@ -46,9 +46,11 @@ class Action extends Component {
   }
 
   render() {
+    const {treeData} = this.store 
+
     const menu = (
       <Menu>
-        <Menu.Item>
+        <Menu.Item disabled={treeData.length}>
           <div
             style={{
               margin: '-5px -12px',
@@ -57,7 +59,14 @@ class Action extends Component {
             onClick={this.handleEditCategory}
           >
             {/* 场景为选择对象，标签池为添加对象，注意区分 */}
-          选择对象
+            {
+              treeData.length ? (
+                <Tooltip title="场景已添加对象">
+              选择对象
+                </Tooltip>
+              ) : '选择对象'
+            }
+            
           </div>
         </Menu.Item>
       </Menu>

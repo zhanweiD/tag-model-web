@@ -49,7 +49,7 @@ class ModalAdd extends Component {
   }
 
   // 中文名称查重校验
-  @action.bound handleNameValidator = (rule, value = '', callback) => {
+  @action handleNameValidator = (rule, value = '', callback) => {
     const {store} = this.props
 
     if (value) {
@@ -108,11 +108,14 @@ class ModalAdd extends Component {
                 required: true,
                 message: '中文名不能为空',
               }, {
-                max: 32, 
-                message: '中文名不能超过32个字符',
+                max: 20, 
+                message: '中文名不能超过20个字符',
+              }, {
+                pattern: /^[\u4e00-\u9fa5]{1,30}$/, message: '输入限制为中文字符',
               }, {
                 validator: this.handleNameValidator,
               }],
+              validateFirst: true,
             })(
               <Input autoComplete="off" placeholder="请输入" />
             )}
@@ -123,7 +126,7 @@ class ModalAdd extends Component {
               rules: [{
                 required: true, message: '描述不能为空',
               }, {
-                max: 500, message: '描述不能超过500个字符',
+                max: 100, message: '描述不能超过100个字符',
               }],
             })(
               <TextArea autoComplete="off" placeholder="请输入" />

@@ -13,6 +13,22 @@ export default class Invoke extends Component {
   defEndTime = moment().subtract(1, 'day').format('YYYY-MM-DD')
   invokeChart = null
 
+  componentWillMount() {
+    const {aId} = this.props
+    if (aId) {
+      store.id = aId
+      store.getInvokeCard()
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (store.id !== nextProps.aId) {
+      store.id = nextProps.aId
+      store.getInvokeCard()
+      store.getInvokeData()
+    }
+  }
+
   componentDidMount() {
     this.getData()
     window.addEventListener('resize', this.resize)
@@ -33,7 +49,7 @@ export default class Invoke extends Component {
       startDate: gte,
       endDate: lte,
     }
-    
+
     store.getInvokeData(params, data => {
       this.drawChart(data)
     })
@@ -50,28 +66,24 @@ export default class Invoke extends Component {
   }
 
   render() {
-    const {key1, key2, key3} = {
-      key1: 1,
-      key2: 2,
-      key3: 3,
-    }
+    const {apiInvokeCount, apiCount, occasionCount} = store.invokeInfo
 
     // 注： 标签调用指标卡 接口格式 暂未给出 @望舒
     const cards = [
       {
         title: '被API调用的次数',
         tooltipText: '标签被API调用的历史总次数',
-        values: [key1],
+        values: [apiInvokeCount],
       },
       {
         title: '调用的API数',
         tooltipText: '标签被调用的历史API数',
-        values: [key2],
+        values: [apiCount],
       },
       {
         title: '使用的场景数',
         tooltipText: '当前标签被使用的场景数',
-        values: [key3],
+        values: [occasionCount],
       },
     ]
     return (
