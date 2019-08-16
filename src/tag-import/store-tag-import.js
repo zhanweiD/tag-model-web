@@ -24,6 +24,9 @@ class ImportStore {
   @observable failPreView = 0
   @observable correctPreView = 0
 
+  // 导出失败文件的参数
+  @observable failKey = undefined
+
   @action async getTypeCodes() {
     try {
       const res = await io.getTypeCodes()
@@ -105,6 +108,7 @@ class ImportStore {
         this.previewDataList.replace(tabList)
         this.canImportData.replace(data.canImportData)
         this.currStep = 2
+        this.failKey = data.failKey
       })
     } catch (e) {
       errorTip(e.message)
