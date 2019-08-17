@@ -75,11 +75,15 @@ export default class StepTwo extends React.Component {
       },
       {
         title: '所属类目',
-        key: 'pathIds',
-        dataIndex: 'pathIds',
-        render: pathIds => {
-          pathIds = pathIds || []
-          const cateId = pathIds[pathIds.length - 2] // 所属类目的id是倒数第2个
+        key: 'parentId',
+        dataIndex: 'parentId',
+        render: (parentId, record) => {
+          if (parentId) {
+            return store.cateMap[parentId]
+          }
+
+          const pathIds = record.pathIds || []
+          const cateId = pathIds[pathIds.length - 2] // 所属类目的id是倒数第2个，最后一个代表自身
           return store.cateMap[cateId] || ''
         },
       },
