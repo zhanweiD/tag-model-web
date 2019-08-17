@@ -116,7 +116,7 @@ class ObjDetailStore {
           dataDbName: item.storageName,
           dataDbType: item.storageType,
         }))
-        this.dacList.replace(arr)
+        res && this.dacList.replace(arr)
       })
     } catch (e) {
       errorTip(e.message)
@@ -130,7 +130,7 @@ class ObjDetailStore {
         storageId,
       })
       runInAction(() => {
-        this.tableList.replace(res)
+        res && this.tableList.replace(res)
       })
     } catch (e) {
       errorTip(e.message)
@@ -144,7 +144,7 @@ class ObjDetailStore {
         tableName,
       })
       runInAction(() => {
-        this.fieldList.replace(res)
+        res && this.fieldList.replace(res)
       })
     } catch (e) {
       errorTip(e.message)

@@ -80,6 +80,7 @@ class DrawerRelfield extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.updateKey !== nextProps.updateKey) {
       this.updateKey = nextProps.updateKey
+      store.id = nextProps.store.id
       store.isConfigured = ''
       store.keyword = ''
       store.getList()

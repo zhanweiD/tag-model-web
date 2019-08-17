@@ -82,7 +82,7 @@ class TagCategoryStore {
       })
 
       runInAction(() => {
-        if (!Object.keys(res).length) res = []
+        if (!res || !Object.keys(res).length) res = []
         console.log(Object.keys(res).length)
 
         this.isLoading = false
