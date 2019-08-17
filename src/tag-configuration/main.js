@@ -21,11 +21,12 @@ let store = {}
 export default class TagConfiguration extends Component {
   static propTypes = {
     visible: PropTypes.bool.isRequired, // 是否显示
-    onClose: PropTypes.func.isRequired, // 取消，关闭抽屉
     treeId: PropTypes.number.isRequired, // 树节点id
     objId: PropTypes.number.isRequired, // 对象id
     storageId: PropTypes.string.isRequired, // 数据源id
     tableName: PropTypes.string.isRequired, // 数据表名
+    onClose: PropTypes.func.isRequired, // 取消，关闭抽屉
+    onSuccess: PropTypes.func, // （第三步）成功时点击确定的回调
   }
 
   state = {
@@ -58,7 +59,7 @@ export default class TagConfiguration extends Component {
 
   render() {
     const {currentStep} = this.state
-    const {visible} = this.props
+    const {visible, onSuccess = () => {}} = this.props
 
     const steps = [
       {
@@ -78,7 +79,7 @@ export default class TagConfiguration extends Component {
       <Drawer
         title="配置标签"
         visible={visible}
-        width="80%"
+        width="73%"
         onClose={this.onClose}
         maskClosable={false}
       >
@@ -145,6 +146,7 @@ export default class TagConfiguration extends Component {
                   || !store.secondTableList.length
                 }
                 onClick={this.confirmStepTwo}
+                loading={store.loadings.tagSaving}
               >
                 确定
               </Button>
@@ -155,7 +157,10 @@ export default class TagConfiguration extends Component {
             <Button 
               type="primary"
               // TODO: 逻辑待修改
-              onClick={this.onClose}
+              onClick={() => {
+                this.onClose()
+                onSuccess()
+              }}
             >
               确定
             </Button>

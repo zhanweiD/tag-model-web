@@ -229,7 +229,7 @@ export default class ObjDetail extends Component {
               visible={store.modalVisible.tagConfiguration}
               onClose={() => this.toggleTagConfiguration()}
               treeId={this.bigStore.id}
-              objId={this.curentItem.id}
+              objId={store.id}
               storageId={this.curentItem.dataStorageId}
               tableName={this.curentItem.dataTableName}
             />

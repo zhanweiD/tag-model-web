@@ -108,6 +108,7 @@ export default class StepOne extends React.Component {
 
     console.log(selectedRowKeys)
 
-    store.secondTableList = selectedRows
+    // store.secondTableList = selectedRows
+    store.updateSecondTableList(selectedRows)
   }
 }

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import {
   Modal, Form, Input, Spin, Select, Switch, Cascader,
 } from 'antd'
-import {isExitMsg} from '../common/constants'
 import {isJsonFormat, enNameReg, DATA_TYPES} from '../common/util'
 
 const FormItem = Form.Item

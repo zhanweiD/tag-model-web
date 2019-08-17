@@ -20,12 +20,32 @@ export default class StepTwo extends React.Component {
 
   @observable editingTagIndex = -1 // 被选中编辑的标签的索引
 
-  constructor(props) {
-    super(props)
+  componentDidMount() {
+    const {store} = this.props
+    // 加载所属类目列表 TODO: 类目需要随时更新吗
+    store.getCateList()
+  }
 
-    const {store} = props
+  render() {
+    const {store} = this.props
+    const {secondTableList, secondSelectedRows} = store
 
-    this.columns = [
+    const {
+      tagModalVisible, cateModalVisible, editingTagIndex,
+    } = this
+
+    // 被选中编辑的标签对象
+    const editingTag = secondTableList[editingTagIndex] || {}
+
+    // “选择所属类目”按钮
+    const btnDisabled = !secondSelectedRows.length
+
+    // 提示信息内容的数值
+    const blueCount = secondTableList.filter(item => +item.isTrue === 1).length
+    const redCount = secondTableList.filter(item => +item.isTrue !== 1).length
+
+    // 表格列
+    const columns = [
       {
         title: '中文名',
         key: 'name',
@@ -59,8 +79,8 @@ export default class StepTwo extends React.Component {
         dataIndex: 'pathIds',
         render: pathIds => {
           pathIds = pathIds || []
-          const lastId = pathIds[pathIds.length - 1]
-          return store.cateMap[lastId] || ''
+          const cateId = pathIds[pathIds.length - 2] // 所属类目的id是倒数第2个
+          return store.cateMap[cateId] || ''
         },
       },
       {
@@ -98,32 +118,6 @@ export default class StepTwo extends React.Component {
         },
       },
     ]
-  }
-
-  componentDidMount() {
-    const {store} = this.props
-    // 加载所属类目列表 TODO: 类目需要随时更新吗
-    store.getCateList()
-  }
-
-  render() {
-    const {store} = this.props
-    const {secondTableList, secondSelectedRows} = store
-
-    const {
-      tagModalVisible, cateModalVisible, editingTagIndex,
-      columns,
-    } = this
-
-    // 被选中编辑的标签对象
-    const editingTag = secondTableList[editingTagIndex] || {}
-
-    // “选择所属类目”按钮
-    const btnDisabled = !secondSelectedRows.length
-
-    // 提示信息内容的数值
-    const blueCount = secondTableList.filter(item => +item.isTrue === 1).length
-    const redCount = secondTableList.filter(item => +item.isTrue !== 1).length
 
     return (
       <div>
@@ -160,6 +154,7 @@ export default class StepTwo extends React.Component {
 
           {/* 表格 */}
           <Table
+            key={store.forceUpdateKey}
             rowKey="dataFieldName"
             columns={columns}
             dataSource={store.secondTableList}
@@ -218,8 +213,6 @@ export default class StepTwo extends React.Component {
 
   // 展开编辑弹框
   @action.bound showEditModal(index, record) {
-    const {store} = this.props
-    
     this.tagModalVisible = true
     this.editingTagIndex = index
   }
@@ -244,6 +237,11 @@ export default class StepTwo extends React.Component {
     Object.keys(values).forEach(key => {
       valuesCopy[key] = values[key] === undefined ? '' : values[key]
     })
+
+    // 要更新parentId字段（对应当前所属类目的id）
+    const {pathIds} = valuesCopy
+    valuesCopy.pathIds = pathIds || [] // 貌似不能传空字符串
+    valuesCopy.parentId = pathIds[pathIds.length - 1] || store.defaultCateId // 没有就取默认类目id
 
     // 替换掉编辑后的标签
     // （这里已知标签编辑弹框的表单fieldName和标签对象的字段一一对应，所以可以直接覆盖）
@@ -272,7 +270,10 @@ export default class StepTwo extends React.Component {
     const {store} = this.props
 
     store.secondSelectedRows.forEach(item => {
-      item.pathIds = values.pathIds
+      const {pathIds} = values
+      item.pathIds = pathIds
+      // 还要更新parentId
+      item.parentId = pathIds[pathIds.length - 1] || store.defaultCateId
     })
 
     // 更新类目后校验一遍

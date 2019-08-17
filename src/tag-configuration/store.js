@@ -15,11 +15,13 @@ async function sleep(delay = 2000) {
 export default class Store {
   @observable initialList = [] // 第一步拿到的初始数据
 
-  @observable secondTableList = [] // 第二步的表格数据，同时是第一步表格的选中数据
+  @observable secondTableList = [] // 第二步的表格数据，来源于第一步表格的选中数据
 
   @observable cateList = [] // 第二步，格式转换后所属类目列表（可直接作为级联选择的options）
 
   @observable cateMap = {} // 第二步，类目列表id到name的映射对象
+
+  @observable defaultCateId = undefined // 默认类目的id，如果标签没有选择类目，那么就放在默认类目下
 
   @observable secondSelectedRows = [] // 第二步选中的行数据，用于批量“选择所属类目”
 
@@ -29,6 +31,8 @@ export default class Store {
     firstTable: false, // 第一步表格的Loading
     tagSaving: false, // 第二步，保存标签时的加载状态
   }
+
+  @observable forceUpdateKey = Math.random() // 有时候需要强制刷新表格，比如要更新所属类目
 
   // 创建实例时需要传入一些数据
   constructor({
@@ -68,6 +72,8 @@ export default class Store {
 
       // id -> name的映射
       const cateMap = {}
+      // 默认类目
+      let defaultCate = {}
 
       // 加上value\label属性，用于antd的级联组件
       res.forEach(node => {
@@ -76,10 +82,20 @@ export default class Store {
         node.label = name
 
         cateMap[id] = name
+
+        if (node.aId === -1) {
+          defaultCate = node
+        }
       })
 
+      console.log('cateMap', cateMap)
+
+      this.defaultCateId = defaultCate.id
       this.cateMap = cateMap
       this.cateList = listToTree(res)
+
+      // 强制更新key
+      this.forceUpdateKey = Math.random()
     } catch (e) {
       errorTip(e.message)
     }
@@ -88,16 +104,34 @@ export default class Store {
   // 批量创建标签
   @action async saveTags(successCallback, errorCallack) {
     try {
-      await io.saveTags({
-        checkList: toJS(this.secondTableList),
-      })
-      successTip('创建成功')
+      this.loadings.tagSaving = true
 
-      successCallback && successCallback()
+      // 给没有类目的标签加上默认类目id
+      const checkList = toJS(this.secondTableList)
+      checkList.forEach(item => {
+        // 没有parentId，且没有pathIds
+        if (!item.parentId && (!item.pathIds || !item.pathIds.length)) {
+          item.parentId = this.defaultCateId
+        }
+      })
+
+      const res = await io.saveTags({
+        checkList,
+      })
+
+      // 如果content是false，也是保存失败
+      if (res === false) {
+        throw new Error('创建失败')
+      } else {
+        successTip('创建成功')
+        successCallback && successCallback()
+      }
     } catch (e) {
       errorTip(e.message)
 
       errorCallack && errorCallack(e)
+    } finally {
+      this.loadings.tagSaving = false
     }
   }
 
@@ -141,5 +175,38 @@ export default class Store {
     } catch (e) {
       errorTip(e.message)
     }
+  }
+
+  // 更新第二步表格的数据；注意：不直接将第一步选中项赋值给secondTableList，因为后者可能修改，仅仅做增加或减少
+  @action.bound updateSecondTableList(selectedRows = []) {
+    // 映射对象，方便快速判断某个标签是不是已被添加，避免反复遍历；唯一识别字段是 字段名dataFieldName
+    const secondTableListMap = {}
+    const selectedRowsMap = {}
+
+    selectedRows.forEach(field => {
+      selectedRowsMap[field.dataFieldName] = field
+    })
+
+    // 移除被取消选中的标签
+    this.secondTableList = this.secondTableList.filter(tag => {
+      const {dataFieldName} = tag
+      return !!selectedRowsMap[dataFieldName]
+    })
+
+    this.secondTableList.forEach(tag => {
+      secondTableListMap[tag.dataFieldName] = tag
+    })
+
+    // 加入新增的标签
+    selectedRows.forEach((field, index) => {
+      const {dataFieldName} = field
+      // 没有就添加
+      if (!secondTableListMap[dataFieldName]) {
+        this.secondTableList.splice(index, 0, field)
+      } 
+    })
+
+    // 把第二步选中数组也清空掉
+    this.secondSelectedRows = []
   }
 }
