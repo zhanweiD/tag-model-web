@@ -98,11 +98,9 @@ class SceneStore {
    }
 
   // 中文名校验
-  @action async checkName(name, cb) {
+  @action async checkName(params, cb) {
     try {
-      const res = await io.checkName({
-        name,
-      })
+      const res = await io.checkName(params)
 
       runInAction(() => {
         if (cb) cb(res)

@@ -54,7 +54,13 @@ class ModalAdd extends Component {
 
     if (value) {
       // 后端校验
-      store.checkName(value, res => {
+      const params = {
+        name: value,
+      }
+
+      if (store.info.id) params.occasionId = store.info.id
+
+      store.checkName(params, res => {
         if (!res) {
           return callback(isExitMsg)
         }
