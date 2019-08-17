@@ -262,7 +262,8 @@ render() {
               )
             })()}
             actionList={this.getMenuList(item)}
-            selectable={item.type !== 1}
+            // selectable={item.type !== 1}
+            selectable={false}
             iconNodeSrc={physicalAll}
           >
             {loop(item.children)}
