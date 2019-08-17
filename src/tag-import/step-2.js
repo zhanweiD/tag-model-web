@@ -13,16 +13,6 @@ class StepTwo extends Component {
   @observable fileName = ''
   @observable uploadContent = false
 
-  @action goBack = () => {
-    store.currStep = 0
-    this.fileName = ''
-    this.uploadContent = false
-  }
-
-  componentWillUnmount() {
-    this.goBack()
-  }
-
   @action beforeUpload = file => {
     const isLt10M = file.size / 1024 / 1024 < 100
     if (!isLt10M) {
@@ -49,6 +39,16 @@ class StepTwo extends Component {
   @action handleRemove = () => {
     store.previewDataHead.clear()
     store.previewDataList.clear()
+  }
+
+  @action goBack = () => {
+    store.currStep = 0
+    this.fileName = ''
+    this.uploadContent = false
+  }
+
+  componentWillUnmount() {
+    this.goBack()
   }
 
   render() {

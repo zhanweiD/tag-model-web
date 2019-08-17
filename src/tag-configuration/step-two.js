@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
 import {observer} from 'mobx-react'
-import {action} from 'mobx'
+import {action, observable, toJS} from 'mobx'
 import {
   Table, Badge, Divider, Alert, Spin, Button,
 } from 'antd'
@@ -14,13 +14,16 @@ import ModalCateSelect from './modal-cate-select'
 // 标签配置 - 填写配置信息
 @observer
 export default class StepTwo extends React.Component {
-  state = {
-    tagModalVisible: false, // 标签编辑弹框
-    cateModalVisible: false, // 类目选择弹框
-  }
+  @observable tagModalVisible = false // 标签编辑弹框
+
+  @observable cateModalVisible = false // 类目选择弹框
+
+  @observable editingTagIndex = -1 // 被选中编辑的标签的索引
 
   constructor(props) {
     super(props)
+
+    const {store} = props
 
     this.columns = [
       {
@@ -54,7 +57,11 @@ export default class StepTwo extends React.Component {
         title: '所属类目',
         key: 'pathIds',
         dataIndex: 'pathIds',
-        // render: v => v TODO:
+        render: pathIds => {
+          pathIds = pathIds || []
+          const lastId = pathIds[pathIds.length - 1]
+          return store.cateMap[lastId] || ''
+        },
       },
       {
         title: '业务逻辑',
@@ -83,9 +90,9 @@ export default class StepTwo extends React.Component {
         render: (v, record, index) => {
           return (
             <span>
-              <a onClick={() => this.removeItem(index)}>移除</a>
+              <a onClick={() => this.removeItem(index, record)}>移除</a>
               <Divider type="vertical" />
-              <a onClick={() => this.showEditModal(index)}>编辑</a>
+              <a onClick={() => this.showEditModal(index, record)}>编辑</a>
             </span>
           )
         },
@@ -93,12 +100,23 @@ export default class StepTwo extends React.Component {
     ]
   }
 
+  componentDidMount() {
+    const {store} = this.props
+    // 加载所属类目列表 TODO: 类目需要随时更新吗
+    store.getCateList()
+  }
+
   render() {
     const {store} = this.props
     const {secondTableList, secondSelectedRows} = store
 
-    const {tagModalVisible, cateModalVisible} = this.state
-    const {columns} = this
+    const {
+      tagModalVisible, cateModalVisible, editingTagIndex,
+      columns,
+    } = this
+
+    // 被选中编辑的标签对象
+    const editingTag = secondTableList[editingTagIndex] || {}
 
     // “选择所属类目”按钮
     const btnDisabled = !secondSelectedRows.length
@@ -142,26 +160,39 @@ export default class StepTwo extends React.Component {
 
           {/* 表格 */}
           <Table
-            // rowKey="dataFieldName"
+            rowKey="dataFieldName"
             columns={columns}
             dataSource={store.secondTableList}
             rowSelection={{
+              selectedRowKeys: store.secondSelectedRows.map(item => item.dataFieldName),
               onChange: this.onRowSelect,
             }}
           />
 
           {/* 编辑标签弹框 */}
-          <ModalTagEdit
-            tagDetail={{}}
-            visible={tagModalVisible}
-            onCancel={this.closeEditModal}
-          />
+          {
+            tagModalVisible && (
+              <ModalTagEdit
+                tagDetail={toJS(editingTag)} // 传进去时toJS一下
+                visible={tagModalVisible}
+                onCancel={this.closeEditModal}
+                onOk={this.handleTagEditConfirm}
+                cateList={store.cateList}
+              />
+            )
+          }
 
           {/* 类目选择弹框 */}
-          <ModalCateSelect
-            visible={cateModalVisible}
-            onCancel={this.closeCateModal}
-          />
+          {
+            cateModalVisible && (
+              <ModalCateSelect
+                visible={cateModalVisible}
+                options={store.cateList}
+                onCancel={this.closeCateModal}
+                onOk={this.handleCateConfirm}
+              />
+            )
+          }
         </Spin>
       </div>
     )
@@ -174,40 +205,81 @@ export default class StepTwo extends React.Component {
     store.secondSelectedRows = selectedRows
   }
 
-  // 移除
-  @action removeItem(index) {
+  // 移除某个标签（某行）
+  @action.bound removeItem(index, record) {
     const {store} = this.props
 
+    // 删除元素
     store.secondTableList.splice(index, 1)
+
+    // 如果是被选中的，还需要更新选中数组
+    store.secondSelectedRows = store.secondSelectedRows.filter(item => item.dataFieldName !== record.dataFieldName)
   }
 
   // 展开编辑弹框
-  @action showEditModal(index) {
+  @action.bound showEditModal(index, record) {
     const {store} = this.props
     
-    this.setState({
-      tagModalVisible: true,
-    })
+    this.tagModalVisible = true
+    this.editingTagIndex = index
   }
 
   // 关闭编辑弹框
   @action.bound closeEditModal() {
-    this.setState({
-      tagModalVisible: false,
+    this.tagModalVisible = false
+  }
+
+  // 编辑标签确定事件
+  @action.bound handleTagEditConfirm(values, cb) {
+    const {store} = this.props
+    const index = this.editingTagIndex
+    
+    // 先不直接修改原列表数据，创建个副本拿去请求校验接口
+    const tagListCopy = [...toJS(store.secondTableList)]
+
+    // values的副本
+    const valuesCopy = {}
+
+    // 将undefined的值改成空字符串
+    Object.keys(values).forEach(key => {
+      valuesCopy[key] = values[key] === undefined ? '' : values[key]
+    })
+
+    // 替换掉编辑后的标签
+    // （这里已知标签编辑弹框的表单fieldName和标签对象的字段一一对应，所以可以直接覆盖）
+    tagListCopy[index] = {...tagListCopy[index], ...valuesCopy}
+
+    console.log('secondTableList.length', store.secondTableList.length, 'tagListCopy', tagListCopy)
+
+    store.checkTagList(tagListCopy, () => {
+      cb && cb()
+      this.closeEditModal()
     })
   }
 
   // 展开类目选择弹框
-  showCateModal = () => {
-    this.setState({
-      cateModalVisible: true,
-    })
+  @action.bound showCateModal = () => {
+    this.cateModalVisible = true
   }
 
   // 关闭类目选择弹框
-  closeCateModal = () => {
-    this.setState({
-      cateModalVisible: false,
+  @action.bound closeCateModal = () => {
+    this.cateModalVisible = false
+  }
+
+  // 类目选择弹框确定事件
+  @action.bound handleCateConfirm(values, cb) {
+    const {store} = this.props
+
+    store.secondSelectedRows.forEach(item => {
+      item.pathIds = values.pathIds
+    })
+
+    // 更新类目后校验一遍
+    store.checkTagList(() => {
+      cb && cb()
+      store.secondSelectedRows = []
+      this.closeCateModal()
     })
   }
 }

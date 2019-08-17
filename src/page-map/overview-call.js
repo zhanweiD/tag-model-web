@@ -47,7 +47,7 @@ export default class OverviewCall extends React.Component {
 
         {/* 饼图部分 */}
         <div className="p24 pt16">
-          <div className="FBH FBJB">
+          <div className="FBH FBJB" style={{minHeight: 280}}>
             {/* 左侧部分 */}
             <div style={{width: '50%'}}>
               <div className="pb16 fs14">标签调用的API数占比</div>

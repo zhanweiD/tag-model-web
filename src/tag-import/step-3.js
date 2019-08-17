@@ -3,15 +3,18 @@ import {
   observable, action, toJS, computed,
 } from 'mobx'
 import {observer} from 'mobx-react'
-import {Table, Button, Alert} from 'antd'
+import {Table, Button, Alert, Tooltip} from 'antd'
 import {withRouter} from 'react-router-dom'
+import SvgDownload from '../svg-component/Download'
 
 import store from './store-tag-import'
 
 @observer
 class StepThree extends Component {
   @computed get alertInfo() {
-    const {total, failTotal, failPreView, correctPreView} = store
+    const {
+      total, failTotal, failPreView, correctPreView,
+    } = store
 
     return (
       <p className="mb0">
@@ -47,10 +50,30 @@ class StepThree extends Component {
   }
 
   render() {
-    const {match, history} = this.props
+    const {history} = this.props
+    const {pathPrefix} = window.__onerConfig
+
     return (
       <div>
-        <Alert className="mb30" message={toJS(this.alertInfo)} type="info" showIcon />
+        <div className="FBH FBJB mb24">
+          <Alert message={toJS(this.alertInfo)} type="info" showIcon className="fl" />
+          {
+            store.failKey && (
+              <Tooltip title="解析失败记录文件只保留10分钟" placement="top">
+                <div
+                  className="FBH FBJE FBAC hand"
+                  style={{width: '150px', color: '#0078ff'}}
+                  onClick={() => {
+                    window.open(`${pathPrefix}/file/download/api/v1/be_tag/import/preview_fail?keyRedis=${store.failKey}`)
+                  }}
+                >
+                  <SvgDownload size="14" />
+                  <span className="pl8">导出解析失败的记录</span>
+                </div>
+              </Tooltip>
+            )
+          }
+        </div>
         <Table
           pagination={false}
           loading={store.previewDataLoading}
@@ -69,8 +92,9 @@ class StepThree extends Component {
           <Button
             type="primary"
             size="large"
+            loading={store.importDataLoading}
             disabled={!store.canImportData.length}
-            onClick={() => store.postImportData(() => history.push(`/${match.params.type}`))}
+            onClick={() => store.postImportData(() => history.push(`/${store.typeCode}`))}
           >
             导入
           </Button>

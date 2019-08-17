@@ -74,7 +74,7 @@ class OverviewStore {
     try {
       const res = await io.getBasicData()
 
-      this.cardsData = res
+      this.cardsData = res || []
     } catch (error) {
       errorTip(error.message)
     }
@@ -85,7 +85,7 @@ class OverviewStore {
     const numberOfType = typeToNumber(type)
     const [startDate = '', endDate = ''] = this.scoreTimeRange
     const {
-      sortKey, sortOrder, pageSize = 5, currentPage,
+      sortKey, sortOrder, pageSize = 5, currentPage = 1,
     } = this.panelsData[type]
 
     try {
@@ -96,16 +96,16 @@ class OverviewStore {
         endDate,
         sort: sortKey,
         order: getOrderAlias(sortOrder),
-        currentPage,
+        currentPage: currentPage || 1,
         pageSize: 5, // 写死
-      })
+      }) || {}
 
       console.log('getScoreRank', res)
 
-      this.panelsData[type].tableData = res.data
-      this.panelsData[type].currentPage = res.currentPage
-      this.panelsData[type].pageSize = res.pageSize
-      this.panelsData[type].totalCount = res.totalCount
+      this.panelsData[type].tableData = res.data || []
+      this.panelsData[type].currentPage = res.currentPage || 1
+      // this.panelsData[type].pageSize = res.pageSize || 5
+      this.panelsData[type].totalCount = res.totalCount || 0
     } catch (error) {
       errorTip(error.message)
     } finally {
@@ -127,7 +127,7 @@ class OverviewStore {
 
       console.log('getScoreTrend', res)
 
-      this.panelsData[type].lineData = res
+      this.panelsData[type].lineData = res || []
     } catch (error) {
       errorTip(error.message)
     }
@@ -142,19 +142,19 @@ class OverviewStore {
         type, // 标签饼图类型(1.标签调用api；2.标签被api调用)
         startDate,
         endDate,
-      })
+      }) || {}
 
       console.log('getCallData', res)
 
       if (type === 2) {
         this.tagCallTimesData = {
-          list: res.pieTemplateDtoList,
-          total: +res.total,
+          list: res.pieTemplateDtoList || [],
+          total: +res.total || 0,
         }
       } else {
         this.apiCountData = {
-          list: res.pieTemplateDtoList,
-          total: +res.total,
+          list: res.pieTemplateDtoList || [],
+          total: +res.total || 0,
         }
       }
     } catch (error) {

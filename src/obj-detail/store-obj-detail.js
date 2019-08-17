@@ -11,6 +11,7 @@ class ObjDetailStore {
     addRelField: false,
     editRelField: false,
     viewRelField: false,
+    tagConfiguration: false,
   }
 
   @observable baseInfo = false

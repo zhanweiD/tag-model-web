@@ -2,6 +2,8 @@
 // http://192.168.90.87:9985/gateway/api/detail/be_tag/9a0f92c83d8f47aa9ff27e336ab6addd
 
 module.exports = function () {
+  // POST请求用函数貌似没法获得参数
+
   return {
     code: '0',
     content: [{
@@ -17,10 +19,10 @@ module.exports = function () {
       isMajorKey: 1,
       isUsed: 0,
       tagId: '2',
-      isEnum: 0,		
+      isEnum: 1,		
       enumValue: '',					
-      valueType: 1,			
-      name: 'demo',			
+      valueType: 3,			
+      name: '标签一',			
       enName: 'type1',			
       descr: 'string',		
       pathIds: [						
@@ -49,8 +51,8 @@ module.exports = function () {
       tagId: '3',
       isEnum: 0,		
       enumValue: '',					
-      valueType: 1,			
-      name: 'demo',			
+      valueType: 2,			
+      name: '标签二',			
       enName: 'type1',			
       descr: 'string',		
       pathIds: [						

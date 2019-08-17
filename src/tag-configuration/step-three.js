@@ -1,12 +1,20 @@
 import React from 'react'
 import {observer} from 'mobx-react'
-import {action} from 'mobx'
 import {Icon} from 'antd'
 
 // 标签配置 - 创建成功
 @observer
 export default class StepThree extends React.Component {
+
+  // componentDidMount() {
+  //   const {store} = this.props
+  //   store.getStorageDetail()
+  // }
+
   render() {
+    const {store} = this.props
+    const {successResult} = store
+
     return (
       <div className="FBV FBJC FBAC" style={{height: '100%'}}>
         <div className="mb24">
@@ -23,10 +31,18 @@ export default class StepThree extends React.Component {
             lineHeight: '27px',
           }}
         >
-          <div>数据表名称：</div>
-          <div>数据源：</div>
-          <div>数据源类型：</div>
-          <div>已配置/关联：</div>
+          <div>
+            {`数据表名称： ${successResult.dataTableName}`}
+          </div>
+          <div>
+            {`数据源： ${successResult.dataDbName}`}
+          </div>
+          <div>
+            {`数据源类型： ${successResult.storageTypeName}`}
+          </div>
+          <div>
+            {`已配置/关联： ${successResult.configuredField} / ${successResult.associatedField}`}
+          </div>
         </div>
       </div>
     )

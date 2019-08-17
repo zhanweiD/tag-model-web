@@ -6,7 +6,7 @@ import {
 } from 'mobx'
 import {Modal, Spin} from 'antd'
 import {DtTree} from '@dtwave/uikit'
-import tagClass from '../icon/tag-class.svg'
+import physicalAll from '../icon/physical-all.svg'
 import tag from '../icon/tag.svg'
 import Action from './action'
 
@@ -204,10 +204,18 @@ class TagCategory extends Component {
               showIcon
               nodeData={item}
               itemKey={item.id}
-              title={item.name}
+              title={(() => {
+                if (item.parentId !== 0) return <span>{item.name}</span>
+                return (
+                  <div className="FBH" style={{color: '#0078ff'}}>
+                    <div className="text-hidden">{item.name}</div>
+                    <div className="pl4">{`(${item.tagCount || 0})`}</div>
+                  </div>
+                )
+              })()}
               actionList={this.getMenuList(item)}
               selectable={item.type !== 1}
-              iconNodeSrc={tagClass}
+              iconNodeSrc={physicalAll}
             >
               {loop(item.children)}
             </DtTreeNode>
@@ -222,6 +230,7 @@ class TagCategory extends Component {
               selectable={item.type !== 1}
               actionList={this.getMenuList(item)}
               iconNodeSrc={tag}
+              className="node-tag"
             />
           )
         }

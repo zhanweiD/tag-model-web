@@ -1,15 +1,17 @@
 import {Component, Fragment} from 'react'
 import {observable, action, toJS} from 'mobx'
-import {observer} from 'mobx-react'
+import {observer, inject} from 'mobx-react'
 import {Button, Popconfirm, Tooltip, Table} from 'antd'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
 import {Time} from '../common/util'
 import OverviewCard from '../component-overview-card'
+import TagConfiguration from '../tag-configuration'
 import store from './store-obj-detail'
 import DrawerRelfieldList from '../obj-detail-relfield'
 import DrawerRelfieldAdd from './drawer-relfield-add'
 import DrawerRelfieldEdit from './drawer-relfield-edit'
 
+@inject('bigStore')
 @observer
 export default class ObjDetail extends Component {
   @observable updateKey = undefined
@@ -61,7 +63,7 @@ export default class ObjDetail extends Component {
                 arr.push(<Tooltip title="数据表中有标签使用中，不可移除"><span className="mr8 disabled">移除</span></Tooltip>)
               }
               arr.push(<a className="mr8" onClick={() => this.toEditRelField(record)}>编辑字段</a>)
-              arr.push(<a onClick={() => {}}>标签配置</a>)
+              arr.push(<a onClick={() => this.toggleTagConfiguration(record)}>标签配置</a>)
               return arr
             })()}
           </Fragment>
@@ -104,7 +106,13 @@ export default class ObjDetail extends Component {
     this.curentItem = item
   }
 
+  @action toggleTagConfiguration(item) {
+    store.modalVisible.tagConfiguration = !store.modalVisible.tagConfiguration
+    if (item) this.curentItem = item
+  }
+
   render() {
+    console.log(this.bigStore.id)
     const {
       objTypeCode: typeCode,
       objType,
@@ -215,6 +223,18 @@ export default class ObjDetail extends Component {
           store={store}
           updateKey={store.modalVisible.viewRelField}
         />
+        {
+          (store.modalVisible.tagConfiguration && this.curentItem) && (
+            <TagConfiguration
+              visible={store.modalVisible.tagConfiguration}
+              onClose={() => this.toggleTagConfiguration()}
+              treeId={this.bigStore.id}
+              objId={this.curentItem.id}
+              storageId={this.curentItem.dataStorageId}
+              tableName={this.curentItem.dataTableName}
+            />
+          )
+        }
       </div>
     )
   }

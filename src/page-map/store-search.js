@@ -1,4 +1,4 @@
-import {observable, action, toJS} from 'mobx'
+import {observable, action} from 'mobx'
 import {errorTip, successTip} from '../common/util'
 import io from './io'
 import {getOrderAlias, listToTree} from './util'
@@ -97,7 +97,7 @@ class SearchStore {
     try {
       const res = await io.getObjList()
       // console.log('getObjList', res)
-      this.objList = res
+      this.objList = res || []
     } catch (err) {
       errorTip(err.message)
     }
@@ -126,14 +126,14 @@ class SearchStore {
         hotEnd: filterHot.max,
         sort: sortKey,
         order: getOrderAlias(sortOrder),
-        currentPage,
-        pageSize,
-      })
+        currentPage: currentPage || 1,
+        pageSize: pageSize || 10,
+      }) || {}
 
-      this.tagList = res.data
-      this.currentPage = res.currentPage
-      this.totalCount = res.totalCount
-      this.pageSize = res.pageSize
+      this.tagList = res.data || []
+      this.currentPage = res.currentPage || 1
+      this.totalCount = res.totalCount || 0
+      this.pageSize = res.pageSize || 10
 
       // console.log('getTagList', toJS(this), res)
     } catch (err) {
@@ -149,7 +149,7 @@ class SearchStore {
       const res = await io.getSceneList({
         objId: this.filterObjId,
       })
-      this.sceneList = res
+      this.sceneList = res || []
     } catch (err) {
       errorTip(err.message)
     }
@@ -161,7 +161,7 @@ class SearchStore {
       const res = await io.getCateList({
         occasionId: this.selectedSceneId,
         objId: this.filterObjId,
-      })
+      }) || []
 
       // 加上value\label属性，用于antd的级联组件
       res.forEach(node => {
@@ -199,7 +199,7 @@ class SearchStore {
     // console.log('saveTags', occTags)
 
     try {
-      const res = await io.saveTags({
+      await io.saveTags({
         occTags,
       })
       successTip('批量添加成功')

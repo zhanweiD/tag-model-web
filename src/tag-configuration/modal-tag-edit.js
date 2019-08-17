@@ -1,116 +1,30 @@
 import {Component} from 'react'
 import PropTypes from 'prop-types'
 import {
-  Modal, Form, Input, Spin, Select, Switch, Tooltip, Icon,
+  Modal, Form, Input, Spin, Select, Switch, Cascader,
 } from 'antd'
-import {observable, action, toJS} from 'mobx'
-import {observer, inject} from 'mobx-react'
 import {isExitMsg} from '../common/constants'
-import {isJsonFormat, enNameReg} from '../common/util'
+import {isJsonFormat, enNameReg, DATA_TYPES} from '../common/util'
 
 const FormItem = Form.Item
 const {Option} = Select
 
-// @inject('bigStore')
-@observer
 class ModalTagEdit extends Component {
   static propTypes = {
     visible: PropTypes.bool.isRequired, // 是否可见
     tagDetail: PropTypes.object, // 标签对象
-    onCancel: PropTypes.func, // 关闭弹框回调
+    onCancel: PropTypes.func.isRequired, // 关闭弹框回调
+    onOk: PropTypes.func.isRequired, // 点击确定的回调
+    cateList: PropTypes.array, // 所属类目的options数组
   }
 
   static defaultProps = {
     tagDetail: {},
   }
 
-  // 是否枚举
-  @observable isEnum = false
-
-  @action.bound handleOnCancel() {
-    const {form} = this.props
-    this.store.tagDetail = false
-    this.store.modalVisible.editTag = false
-    form.resetFields()
-  }
-
-  @action.bound handleOnOk() {
-    const {
-      form: {validateFields},
-    } = this.props
-    const {
-      eStatus: {editTag}, cateDetail, tagDetail, currentTreeItemKey,
-    } = this.store
-    const {typeCode} = this.bigStore
-
-    validateFields((err, values) => {
-      if (!err) {
-        const param = Object.assign(values, {
-          isEnum: +values.isEnum,
-          objTypeCode: typeCode,
-          parentId: currentTreeItemKey,
-          level: cateDetail.level,
-        })
-
-        if (!values.isEnum) {
-          param.enumValue = ''
-        }
-
-        if (editTag) {
-          param.id = tagDetail.id
-        }
-
-        this.store.updateTag(param, () => {
-          this.bigStore.updateKey = Math.random()
-        })
-      }
-    })
-  }
-
-  @action.bound handleNameValidator(rule, value, callback) {
-    const {eStatus: {editTag}, currentTreeItemKey} = this.store
-    if (value) {
-      // 后端校验
-      const param = {}
-      param.isEdit = +editTag
-      param.name = value
-      param.objTypeCode = this.bigStore.typeCode
-      // type(标签:0 类目:1 对象:2)
-      param.type = 0
-      // nameType(中文名:1 英文名:2)
-      param.nameType = rule.field === 'name' ? 1 : 2
-      param.treeId = currentTreeItemKey
-
-      const backPromise = this.store.checkIsExist(param)
-      backPromise.then(content => {
-        if (content.isExist) return callback(isExitMsg)
-        callback()
-      })
-    } else {
-      callback()
-    }
-  }
-
-  @action.bound handleEnumValueValidator(rule, value, callback) {
-    if (value) {
-      if (!isJsonFormat(value)) {
-        callback('请输入正确的JSON格式')
-      }
-      callback()
-    } else {
-      callback()
-    }
-  }
-
-  @action changeIsEnum(v) {
-    const {
-      form: {setFieldsValue},
-    } = this.props
-    setFieldsValue({
-      isEnum: +v,
-    })
-
-    this.isEnum = v
+  state = {
+    isEnum: false, // 是否枚举
+    confirmLoading: false, // 确认按钮加载状态
   }
 
   render() {
@@ -119,23 +33,20 @@ class ModalTagEdit extends Component {
       tagDetail,
       visible,
       onCancel,
+      cateList = [],
     } = this.props
-    // const {
-    //   tagDetail, eStatus: {editTag}, modalVisible, confirmLoading,
-    // } = this.store
 
-    console.log('visible', visible)
+    const {isEnum, confirmLoading} = this.state
 
     const modalProps = {
-      // title: editTag ? '编辑标签' : '添加标签',
       title: '编辑标签',
       visible,
       onCancel,
-      // onOk: this.handleOnOk,
+      onOk: this.handleOk,
       maskClosable: false,
       width: 520,
       destroyOnClose: true,
-      // confirmLoading,
+      confirmLoading,
     }
 
     const formItemLayout = {
@@ -175,12 +86,12 @@ class ModalTagEdit extends Component {
 
             <FormItem {...formItemLayout} label="数据类型">
               {getFieldDecorator('valueType', {
-                initialValue: tagDetail.valueType || undefined,
+                initialValue: +tagDetail.valueType || undefined,
                 rules: [{required: true, message: '请选择数据类型'}],
               })(
                 <Select placeholder="请下拉选择">
                   {
-                    window.njkData.dict.dataType.map(item => (
+                    DATA_TYPES.map(item => (
                       <Option key={item.key} value={item.key}>{item.value}</Option>
                     ))
                   }
@@ -192,10 +103,10 @@ class ModalTagEdit extends Component {
               {getFieldDecorator('isEnum', {
                 initialValue: tagDetail.isEnum || 0,
                 valuePropName: 'checked',
-              })(<Switch checkedChildren="是" unCheckedChildren="否" onChange={e => this.changeIsEnum(e)} />)}
+              })(<Switch checkedChildren="是" unCheckedChildren="否" onChange={v => this.changeIsEnum(v)} />)}
             </FormItem>
 
-            {(tagDetail.isEnum || this.isEnum) && (
+            {(tagDetail.isEnum || isEnum) && (
               <FormItem {...formItemLayout} label="枚举显示值">
                 {getFieldDecorator('enumValue', {
                   rules: [
@@ -214,18 +125,14 @@ class ModalTagEdit extends Component {
               </FormItem>
             )}
 
-            {/* TODO: 所属类目的下拉 */}
             <FormItem {...formItemLayout} label="所属类目">
-              {getFieldDecorator('cateId', {
-                // initialValue: tagDetail.valueType || undefined,
+              {getFieldDecorator('pathIds', {
+                initialValue: tagDetail.pathIds || undefined,
               })(
-                <Select placeholder="请下拉选择">
-                  {/* {
-                    window.njkData.dict.dataType.map(item => (
-                      <Option key={item.key} value={item.key}>{item.value}</Option>
-                    ))
-                  } */}
-                </Select>
+                <Cascader
+                  options={cateList}
+                  placeholder="请选择标签类目"
+                />
               )}
             </FormItem>
 
@@ -245,6 +152,59 @@ class ModalTagEdit extends Component {
         </Form>
       </Modal>
     )
+  }
+
+  // 确定
+  handleOk = () => {
+    const {form, onOk} = this.props
+
+    form.validateFields((errs, values) => {
+      if (!errs) {
+        console.log(values)
+
+        this.setState({
+          confirmLoading: true,
+        })
+
+        const valuesCopy = {...values}
+
+        // 如果不是枚举值，清空这个字段
+        if (!valuesCopy.isEnum) {
+          valuesCopy.enumValue = ''
+        }
+
+        // 将枚举值字段改成数字
+        valuesCopy.isEnum = +valuesCopy.isEnum
+
+        // 调用传入的“确定”回调
+        onOk(valuesCopy, () => {
+          this.setState({
+            confirmLoading: false,
+          })
+        })
+      } else {
+        console.log('handleOk Errors: ', errs)
+      }
+    })
+  }
+
+  // 校验枚举值输入
+  handleEnumValueValidator(rule, value, callback) {
+    if (value) {
+      if (!isJsonFormat(value)) {
+        callback('请输入正确的JSON格式')
+      }
+      callback()
+    } else {
+      callback()
+    }
+  }
+
+  // 改变是否枚举值
+  changeIsEnum(v) {
+    this.setState({
+      isEnum: v,
+    })
   }
 }
 
