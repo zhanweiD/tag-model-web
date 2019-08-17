@@ -26,6 +26,9 @@ class ExponentStore {
     pieTemplateDtoList: [],
   }
 
+  @observable updateTime = ''
+  @observable status = ''
+
   @action async getDailyCard() {
     try {
       const res = await io.getDailyCard({
@@ -80,9 +83,10 @@ class ExponentStore {
       })
 
       runInAction(() => {
-        const {pieTemplateDtoList = [], total} = res
+        const {pieTemplateDtoList = [], total, name} = res
         this.enumeData.pieTemplateDtoList.replace(pieTemplateDtoList)
         this.enumeData.total = total
+        this.enumeData.name = name
         if (cb) cb(pieTemplateDtoList)
       })
     } catch (e) {
@@ -90,15 +94,30 @@ class ExponentStore {
     }
   }
 
-   // 标签指数-标签枚举值分布数据更新
-   @action async updateEnumeData() {
+  // 标签指数-标签枚举值分布数据更新
+  @action async updateValue() {
     try {
-      const res = await io.updateEnumeData({
+      await io.updateValue({
         id: this.id,
       })
-
       runInAction(() => {
-        console.log(res)
+        this.status = 1
+        successTip('数据更新中')
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  
+  @action async getValueStatus() {
+    try {
+      const res = await io.getValueStatus({
+        id: this.id,
+      })
+      runInAction(() => {
+        this.updateTime = res.updateTime
+        this.status = res.status
       })
     } catch (e) {
       errorTip(e.message)

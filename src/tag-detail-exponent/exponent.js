@@ -27,6 +27,7 @@ export default class Exponent extends Component {
     if (aId) {
       store.id = aId
       store.getDailyCard()
+      store.getValueStatus()
     }
   }
 
@@ -37,6 +38,7 @@ export default class Exponent extends Component {
       this.defStartTime = moment().subtract(7, 'day').format('YYYY-MM-DD')
       this.defEndTime = moment().subtract(1, 'day').format('YYYY-MM-DD')
       this.getData()
+      store.getValueStatus()
     }
   }
 
@@ -47,6 +49,7 @@ export default class Exponent extends Component {
     enumeChart = echarts.init(this.enume)
 
     this.getData()
+    store.getValueStatus()
     window.addEventListener('resize', this.resize)
   }
 
@@ -104,7 +107,7 @@ export default class Exponent extends Component {
 
   render() {
     const {worthScore, qualityScore, hotScore} = store.dailyCard
-    const {total, pieTemplateDtoList} = store.enumeData
+    const {total, pieTemplateDtoList, name} = store.enumeData
     const cards = [
       {
         title: '最新价值分',
@@ -201,7 +204,7 @@ export default class Exponent extends Component {
 
         <div className="p16 bgf">
           <h3 className="ct-title">标签枚举值分布</h3>
-          <div className="far" style={{zIndex: 2, position: 'absolute', right: 0}}>
+          <div className="far" style={{zIndex: 2, position: 'absolute', right: 20}}>
             {/* <div className={cls('far', {hide: !store.valueEnumList.length})}> */}
             <span className="mr12">
             数据更新时间：
@@ -217,7 +220,7 @@ export default class Exponent extends Component {
                     </Tooltip>
                   </Fragment>
                 )
-                : <Button type="primary" size="small" className="mr12" onClick={() => store.updateEnumeData()}>数据更新</Button>
+                : <Button type="primary" size="small" className="mr12" onClick={() => store.updateValue()}>数据更新</Button>
             }
           </div>
           <div className="pie">
@@ -227,7 +230,7 @@ export default class Exponent extends Component {
             /> 
             <div className="pie-total">
               <div className="total">
-                <p className="mb0 fs16">标签名称</p>
+                <p className="mb0 fs16">{name}</p>
                 <p className="fs30">{total}</p>
               </div>
             </div>

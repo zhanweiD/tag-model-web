@@ -1,7 +1,7 @@
 import ioContext from '../common/io-context'
 import {tagApi} from '../common/util'
 
-const isMock = true
+const isMock = false
 ioContext.create('invoke', {
   // 标签调用 - 指标卡
   getInvokeCard: {
