@@ -108,44 +108,6 @@ ioContext.create('sceneTagCategory', {
     mockUrl: 'page-hello/getContent',
   },
 
-
-  /**
-   * 以下接口暂未应用
-   */
-  // 获取标签可移动的标签类目树
-  getCanMoveTree: {
-    url: `${tagApi}/be_tag/tag/pool/can_move_tree`,
-    mock: isMock,
-    mockUrl: 'page-hello/getContent',
-  },
-
-  // 标签相关接口
-  getTagDetail: {
-    url: `${tagApi}/be_tag/tag/pool/tag_detail`,
-    mock: isMock,
-    mockUrl: 'page-hello/getContent',
-  },
-  addTag: {
-    method: 'POST',
-    url: `${tagApi}/be_tag/tag/pool/create_tag`,
-    mock: isMock,
-    mockUrl: 'page-hello/getContent',
-  },
-  editTag: {
-    method: 'POST',
-    url: `${tagApi}/be_tag/tag/pool/update_tag`,
-    mock: isMock,
-    mockUrl: 'page-hello/getContent',
-  },
-
-  moveTag: {
-    method: 'POST',
-    url: `${tagApi}/be_tag/tag/pool/move_tag`,
-    mock: isMock,
-    mockUrl: 'page-hello/getContent',
-  },
-
-
   // 重名校验
   checkIsExist: {
     url: `${tagApi}/be_tag/occasion/check_cat_name`,

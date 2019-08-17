@@ -16,6 +16,7 @@ class InvokeStore {
       })
 
       runInAction(() => {
+        console.log(res)
         this.invokeInfo = res
       })
     } catch (e) {
@@ -30,19 +31,13 @@ class InvokeStore {
         ...params,
       })
 
-      // 注： 标签 - 调用趋势接口 暂未给出 @望舒
-      // const res = {
-      //   title: '热度概况', xAxisUnit: null, yAxisUnit: 'B', tenantId: null, userId: null, success: null, data: [{key: 1557072000000, value: {invokes: 60, apps: 3}}, {key: 1557158400000, value: {invokes: 60, apps: 3}}, {key: 1557244800000, value: {invokes: 60, apps: 3}}], radixVal: null, radixPoint: null,
-      // }
-
       runInAction(() => {
         const data = []
         res.data.map(item => data.push({
           key: item.key,
-          value: item.value.invokes,
-          value2: item.value.apps,
+          apiInvokeCount: item.value.apiInvokeCount,
+          apiCount: item.value.apiCount,
         }))
-
         if (cb) cb(data)
       })
     } catch (e) {

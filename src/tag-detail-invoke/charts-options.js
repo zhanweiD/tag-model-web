@@ -19,11 +19,11 @@ export default function getInvokeOpt(data) {
       formatter: params => (`
           日期: ${moment(+params[0].axisValue).format(dateFormat)}<br/>
           被调用次数: ${params[0].data}<br/>
-          调用应用数: ${params[1].data}
+          调用API数: ${params[1].data}
       `),
     },
     legend: {
-      data: ['被调用次数', '调用应用数'],
+      data: ['被调用次数', '调用API数'],
       textStyle: {
         color: nameTextStyleColor,
       },
@@ -73,7 +73,7 @@ export default function getInvokeOpt(data) {
       {
         type: 'value',
         min: 0,
-        name: '调用应用数',
+        name: '调用API数',
         nameTextStyle: {
           padding: [0, 55, 0, 0],
           color: nameTextStyleColor,
@@ -99,7 +99,7 @@ export default function getInvokeOpt(data) {
       {
         name: '被调用次数',
         type: 'line',
-        data: _.map(data, 'value'),
+        data: _.map(data, 'apiInvokeCount'),
         itemStyle: {
           normal: {
             color: areaColor,
@@ -108,10 +108,10 @@ export default function getInvokeOpt(data) {
         },
       },
       {
-        name: '调用应用数',
+        name: '调用API数',
         type: 'bar',
         yAxisIndex: 1,
-        data: _.map(data, 'value2'),
+        data: _.map(data, 'apiCount'),
         barWidth: 30,
         itemStyle: {
           normal: {

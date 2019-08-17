@@ -55,7 +55,8 @@ class ModalAdd extends Component {
     if (value) {
       // 后端校验
       store.checkName(value, res => {
-        if (res && res.isExist) {
+        console.log(res)
+        if (res) {
           return callback(isExitMsg)
         }
         callback()

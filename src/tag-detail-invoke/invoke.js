@@ -22,15 +22,15 @@ export default class Invoke extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (store.id !== nextProps.aId) {
+    if (store.id !== nextProps.aId && nextProps.isActive) {
       store.id = nextProps.aId
       store.getInvokeCard()
-      store.getInvokeData()
+      this.updateDate()
     }
   }
 
   componentDidMount() {
-    this.getData()
+    this.updateDate()
     window.addEventListener('resize', this.resize)
   }
 
@@ -44,7 +44,7 @@ export default class Invoke extends Component {
     ))
   }
 
-  @action getData(gte = this.defStartTime, lte = this.defEndTime) {
+  @action updateDate(gte = this.defStartTime, lte = this.defEndTime) {
     const params = {
       startDate: gte,
       endDate: lte,
@@ -114,7 +114,6 @@ export default class Invoke extends Component {
             />
           </div>
           <div>
-            <span className="d-block fs12 pl8 pb8">{`存储量趋势(${store.stoSubDesc})`}</span>
             <div
               ref={el => this.lineRef = el}
               style={{width: '100%', height: '350px'}}

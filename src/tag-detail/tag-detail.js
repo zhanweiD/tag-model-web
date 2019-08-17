@@ -16,8 +16,9 @@ const {TabPane} = Tabs
 @inject('bigStore')
 @observer
 export default class TagDetail extends Component {
-
   @observable updateKey = undefined
+
+  tabActiveKey = '1'
 
   constructor(props) {
     super(props)
@@ -36,6 +37,10 @@ export default class TagDetail extends Component {
       store.id = nextProps.aId
       store.getBaseInfo()
     }
+  }
+
+  onTabChange = d => {
+    this.tabActiveKey = d
   }
 
   render() {
@@ -100,15 +105,16 @@ export default class TagDetail extends Component {
         <Tabs
           defaultActiveKey="1"
           animated={false}
+          onChange={this.onTabChange}
         >
           <TabPane tab="标签指数" key="1">
-            <TagDetailExponent aId={store.id} />
+            <TagDetailExponent aId={store.id} isActive={this.tabActiveKey === '1'} />
           </TabPane>
           <TabPane tab="标签调用" key="2">
-            <TagDetailInvoke aId={store.id} />
+            <TagDetailInvoke aId={store.id} isActive={this.tabActiveKey === '2'} />
           </TabPane>
           <TabPane tab="标签血缘" key="3">
-            <TagDetailRelate aId={store.id} />
+            <TagDetailRelate aId={store.id} isActive={this.tabActiveKey === '3'} />
           </TabPane>
         </Tabs>
       </div>

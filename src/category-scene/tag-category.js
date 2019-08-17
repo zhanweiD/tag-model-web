@@ -21,6 +21,7 @@ const {DtTreeBox} = DtTree
 const {confirm} = Modal
 
 @inject('bigStore')
+@inject('sceneDetail')
 @observer
 class TagCategory extends Component {
   // @observable updateKey = undefined
@@ -29,6 +30,7 @@ class TagCategory extends Component {
     super(props)
     this.bigStore = props.bigStore
     this.store = this.bigStore.categoryStore
+    this.sceneDetailStore = props.sceneDetail
   }
 
   // componentWillReceiveProps(nextProps) {
@@ -166,7 +168,11 @@ class TagCategory extends Component {
         confirm({
           title: '确认删除？',
           content: tipStr,
-          onOk: () => this.store.deleteNode(nodeData.type),
+          onOk: () => this.store.deleteNode(nodeData.type, () => {
+            // 为了场景的标签数 大费周折
+            this.sceneDetailStore.getDetail()
+            this.props.tagDel(nodeData.id)
+          }),
         })
       })
     },

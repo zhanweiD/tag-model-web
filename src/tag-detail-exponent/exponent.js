@@ -31,7 +31,7 @@ export default class Exponent extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (store.id !== nextProps.aId) {
+    if (store.id !== nextProps.aId && nextProps.isActive) {
       store.id = nextProps.aId
       store.getDailyCard()
       this.defStartTime = moment().subtract(7, 'day').format('YYYY-MM-DD')

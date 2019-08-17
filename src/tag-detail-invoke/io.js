@@ -5,7 +5,7 @@ const isMock = true
 ioContext.create('invoke', {
   // 标签调用 - 指标卡
   getInvokeCard: {
-    url: `${tagApi}/be_tag/score/daily_card`,
+    url: `${tagApi}/be_tag/tag/pool/tag_invoke_card`,
     mock: isMock,
     mockUrl: 'page-tag/getInvokeCard',
   },

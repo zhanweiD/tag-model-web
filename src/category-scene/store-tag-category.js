@@ -1,7 +1,6 @@
 import {
   observable, action, runInAction, toJS,
 } from 'mobx'
-import {destroyFns} from 'antd/lib/modal/Modal'
 import {successTip, errorTip, listToTree} from '../common/util'
 import io from './io'
 
@@ -222,7 +221,7 @@ class TagCategoryStore {
   }
 
   // 对象/类目/标签 - 删除节点
-  @action async deleteNode(type) {
+  @action async deleteNode(type, cb) {
     try {
       // type: 0 标签 1 类目 2 对象
       if (type === 2) {
@@ -242,8 +241,10 @@ class TagCategoryStore {
       }
       runInAction(() => {
         successTip('删除成功')
-        this.getCategoryList()
-
+        this.getCategoryList(() => {
+          // 删除标签重新请求 场景详情 因为场景详情里面有 标签数这个扑街
+          if (cb) cb()
+        })
         // // 如果要删除的节点和当前选中的是同一个, 则要跳转路由，且清空选中节点
         // if (this.cateId !== this.currentTreeItemKey) {
         //   this.getCategoryList(() => {

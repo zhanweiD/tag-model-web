@@ -9,8 +9,9 @@ import {navListMap} from '../common/constants'
 import TrendTag from './trend-tag'
 import TrendApi from './trend-api'
 
-
+import sceneDetail from './store-scene-detail'
 import Store from './store-select-tag'
+
 import TagCategory, {TagCategoryStore} from '../category-scene'
 
 @inject('frameChange')
@@ -32,6 +33,9 @@ export default class SelectTag extends Component {
     // 选择标签暂存id 
     this.tagId = undefined
   }
+
+  // 判断标签是否被删除
+  @observable isTagDel = false
   
   componentWillMount() {
     const {frameChange} = this.props
@@ -46,14 +50,22 @@ export default class SelectTag extends Component {
   }
 
   @action tagChange = tagId => {
-    if (tagId !== this.tagId) {
+    if (tagId && tagId !== this.tagId) {
       this.store.getTagDetail()
       this.tagId = tagId
+      this.isTagDel = false
     }
+  }
+
+  @action tagDel = tagId => {
+    const {categoryStore} = this.store
+    const target = categoryStore.cateList.filter(item => item.id === this.tagId) || []
+    this.isTagDel = !target.length
   }
 
   render() {
     const {tagInfo, tagId} = this.store
+    // this.store.categoryStore.filter(item => item.id === this.store.id)
     const {
       name,
       // used,
@@ -80,13 +92,21 @@ export default class SelectTag extends Component {
       title: '业务逻辑',
       value: descr,
     }]
+
+    const tagCategoryOpt = {
+      tagChange: this.tagChange,
+      tagDel: this.tagDel,
+    }
+    console.log(this.isTagDel)
+    console.log(tagId, !this.isTagDel)
+    console.log(tagId && !this.isTagDel)
     return (
-      <Provider bigStore={this.store}>
+      <Provider bigStore={this.store} sceneDetail={sceneDetail}>
         <div className="select-tag FBH">
-          <TagCategory tagChange={this.tagChange} />
+          <TagCategory {...tagCategoryOpt} />
           <div className="FB1 m16">
             {
-              tagId ? (
+              tagId && !this.isTagDel ? (
                 <Fragment>
                   <div className="detail-info mb16">
                     <div className="d-head FBH FBJ">

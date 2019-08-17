@@ -13,12 +13,14 @@ import {
 const {TreeNode} = Tree
 
 @inject('bigStore')
+@inject('sceneDetail')
 @observer
 class ModalSelectTag extends Component {
   constructor(props) {
     super(props)
     this.bigStore = props.bigStore
     this.store = this.bigStore.categoryStore
+    this.sceneDetailStore = props.sceneDetail
   }
 
   // 标签列表
@@ -85,9 +87,11 @@ class ModalSelectTag extends Component {
        return
      } 
 
-     const tagIdList = toJS(this.list).map(item => item.id)
-     this.store.saveTag(tagIdList, () => {
+     //  const tagIdList = toJS(this.list).map(item => item.id)
+     this.store.saveTag(this.rowKeys, () => {
        this.reset()
+       // 为了场景的标签数 大费周折
+       this.sceneDetailStore.getDetail()
      })
    }
 
@@ -216,6 +220,9 @@ class ModalSelectTag extends Component {
     const rowSelection = {
       selectedRowKeys: this.rowKeys.slice(),
       onChange: this.onTableCheck,
+      getCheckboxProps: record => ({
+        disabled: record.used, // 已选择标签 禁止再次被选
+      }),
     }
 
     const treeOpt = {

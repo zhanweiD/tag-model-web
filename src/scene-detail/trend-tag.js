@@ -79,11 +79,12 @@ export default class TrendTag extends Component {
             exportTimeRange={(gte, lte) => this.getData(gte, lte)}
           />
         </div>
-        {
+        {/* {
           tagTrendData.length 
             ? <div style={{height: '300px'}} ref={ref => this.lineRef = ref} />
             : <div style={{height: '200px'}}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /></div> 
-        }
+        } */}
+        <div style={{height: '300px'}} ref={ref => this.lineRef = ref} />
       </div>
     )
   }
