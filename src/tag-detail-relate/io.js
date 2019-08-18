@@ -1,14 +1,15 @@
 import ioContext from '../common/io-context'
 import {tagApi} from '../common/util'
 
-const isMock = true
+const isMock = false
 ioContext.create('relate', {
-  // 标签指数-分数卡片
-  // getDailyCard: {
-  //   url: `${tagApi}/be_tag/score/daily_card`,
-  //   mock: isMock,
-  //   mockUrl: 'page-tag/getDailyCard',
-  // },
+  // 标签血缘
+  tagLineage: {
+    url: `${tagApi}/be_tag/tag/pool/tag_lineage`,
+    mock: isMock,
+    mockUrl: 'page-tag/tagLineage',
+  },
+  
 })
 
 export default ioContext.api.relate
