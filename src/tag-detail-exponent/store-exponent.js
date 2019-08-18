@@ -2,17 +2,6 @@ import {observable, action, runInAction} from 'mobx'
 import io from './io'
 import {successTip, errorTip} from '../common/util'
 
-// function getColors(len) {
-//   if (len > 10) {
-//     function randomColor() {
-//       const r = function () { return Math.floor(Math.random() * 256) }
-//       return `rgb(${r()},${r()},${r()})`
-//     }
-//     return [...Array(100)].map(() => randomColor())
-//   }
-//   return ['#ff88c8', '#d588ff', '#9788ff', '#7ea4ff', '#69d2fc', '#70effd', '#97e6b9', '#ffdb69', '#ff9e82', '#ff7394']
-// }
-
 class ExponentStore {
   id = ''
 

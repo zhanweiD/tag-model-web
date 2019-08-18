@@ -8,13 +8,26 @@ const colors = [
   'rgba(149,51,255, 0.6)',
 ]
 const nameTextStyleColor = 'rgba(0, 0, 0, .45)'
-const barColor = '#9FE6B8'
-const areaColor = '#31C5E9'
 
+
+function randomColor() {
+  const r = () => Math.floor(Math.random() * 256)
+  return `rgb(${r()},${r()},${r()})`
+}
+
+function getColors(len) {
+  if (len > 5) {
+    randomColor()
+    return [...Array(100)].map(() => randomColor())
+  }
+  return colors
+}
 
 // 标签调用次数趋势图配置
 export function getTagTrendOpt(data, legend = []) {
-  const series = legend.map(name => ({
+  const colorList = getColors(legend.length)
+  
+  const series = legend.length ? legend.map(name => ({
     name,
     type: 'line',
     symbol: 'none',
@@ -23,7 +36,13 @@ export function getTagTrendOpt(data, legend = []) {
       const obj = d.data.filter(i => i.name === name)[0]
       return obj.count
     }),
-  }))
+  })) : [{
+    name: 'noData',
+    type: 'line',
+    symbol: 'none',
+    smooth: 0.3,
+    data: _.map(data, () => 0),
+  }]
 
   return {
     grid: {
@@ -37,11 +56,13 @@ export function getTagTrendOpt(data, legend = []) {
       trigger: 'axis',
       formatter: params => {
         const domArr = [`日期: ${moment(+params[0].axisValue).format(dateFormat)} <br/>总调用次数: ${data[+params[0].dataIndex].totalCount}<br/>`]
-        params.map((
-          item, idx
-        ) => domArr.push(
-          `${params[idx].marker} ${params[idx].seriesName}: ${params[idx].data} <br/>`
-        ))
+        if (legend.length) {
+          params.map((
+            item, idx
+          ) => domArr.push(
+            `${params[idx].marker} ${params[idx].seriesName}: ${params[idx].data} <br/>`
+          ))
+        }
         return domArr.join(' ')
       },
     },
@@ -93,7 +114,7 @@ export function getTagTrendOpt(data, legend = []) {
         },
       },
     ],
-    color: colors,
+    color: colorList,
     series,
   }
 }

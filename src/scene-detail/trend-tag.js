@@ -1,6 +1,6 @@
 import {Component} from 'react'
 import {action} from 'mobx'
-import {Empty} from 'antd'
+// import {Empty} from 'antd'
 import TimeRange from '../time-range'
 import {getTagTrendOpt} from './charts-options'
 
@@ -31,7 +31,7 @@ export default class TrendTag extends Component {
     this.chartLine = echarts.init(this.lineRef)
 
     const legend = data[0] && data[0].data.map(d => d.name)
-
+    console.log(data, legend)
     this.chartLine.setOption(getTagTrendOpt(
       data, legend
     ))
@@ -61,7 +61,7 @@ export default class TrendTag extends Component {
   }
 
   render() {
-    const {store: {tagTrendData}} = this.props
+    // const {store: {tagTrendData}} = this.props
     return (
       <div className="bgf p16 mb16">
         <h3 className="ct-title">标签调用次数趋势</h3>
@@ -79,11 +79,6 @@ export default class TrendTag extends Component {
             exportTimeRange={(gte, lte) => this.getData(gte, lte)}
           />
         </div>
-        {/* {
-          tagTrendData.length 
-            ? <div style={{height: '300px'}} ref={ref => this.lineRef = ref} />
-            : <div style={{height: '200px'}}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /></div> 
-        } */}
         <div style={{height: '300px'}} ref={ref => this.lineRef = ref} />
       </div>
     )

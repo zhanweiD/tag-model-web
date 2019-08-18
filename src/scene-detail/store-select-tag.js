@@ -28,8 +28,12 @@ class SelectTagStore {
   // 标签调用次数趋势
   @observable tagTrendData = []
 
+  // 标签详情loading
+  @observable tagInfoLoading = false
+
   // 标签详情
   @action async getTagDetail() {
+    this.tagInfoLoading = true
     try {
       const res = await io.getTagDetail({
         occasionId: this.sceneId,
@@ -38,9 +42,13 @@ class SelectTagStore {
 
       runInAction(() => {
         this.tagInfo = res
+        this.tagInfoLoading = false
       })
     } catch (e) {
       errorTip(e.message)
+      runInAction(() => {
+        this.tagInfoLoading = false
+      })
     }
   }
 

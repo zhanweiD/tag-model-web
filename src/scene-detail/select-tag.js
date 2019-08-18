@@ -2,7 +2,7 @@ import {Component, Fragment} from 'react'
 import {observable, action, toJS} from 'mobx'
 import {observer, inject, Provider} from 'mobx-react'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
-import {Tag, Button, Empty} from 'antd'
+import {Button, Empty, Spin} from 'antd'
 
 import {Time} from '../common/util'
 import {navListMap} from '../common/constants'
@@ -32,6 +32,8 @@ export default class SelectTag extends Component {
 
     // 选择标签暂存id 
     this.tagId = undefined
+
+    this.isTagDel = false
   }
 
   // 判断标签是否被删除
@@ -64,8 +66,7 @@ export default class SelectTag extends Component {
   }
 
   render() {
-    const {tagInfo, tagId} = this.store
-    // this.store.categoryStore.filter(item => item.id === this.store.id)
+    const {tagInfo, tagId, tagInfoLoading} = this.store
     const {
       name,
       // used,
@@ -97,30 +98,33 @@ export default class SelectTag extends Component {
       tagChange: this.tagChange,
       tagDel: this.tagDel,
     }
-    console.log(this.isTagDel)
-    console.log(tagId, !this.isTagDel)
-    console.log(tagId && !this.isTagDel)
+
     return (
       <Provider bigStore={this.store} sceneDetail={sceneDetail}>
         <div className="select-tag FBH">
           <TagCategory {...tagCategoryOpt} />
           <div className="FB1 m16">
+           
             {
               tagId && !this.isTagDel ? (
                 <Fragment>
                   <div className="detail-info mb16">
-                    <div className="d-head FBH FBJ">
-                      <span className="mr10">{name}</span>
-                      {/* 点击“标签详情”按钮，进入标签池中的标签详情 */}
-                      <Button type="primary">标签详情</Button>
-                    </div>
-                    <NemoBaseInfo dataSource={baseInfo} key={Math.random()} className="d-info" />
+                    <Spin spinning={tagInfoLoading}> 
+                      <div className="d-head FBH FBJ">
+                        <span className="mr10">{name}</span>
+                        {/* 点击“标签详情”按钮，进入标签池中的标签详情 */}
+                        <Button type="primary">标签详情</Button>
+                      </div>
+                      <NemoBaseInfo dataSource={baseInfo} key={Math.random()} className="d-info" />
+                    </Spin>
                   </div>
                   <TrendTag store={this.store} tagId={this.store.tagId} />
                   <TrendApi store={this.store} tagId={this.store.tagId} />
                 </Fragment>
               ) : <div className="empty-box bgf"><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /></div>
             }  
+           
+           
           </div> 
         </div>
       </Provider>   
