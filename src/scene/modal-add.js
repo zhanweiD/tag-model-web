@@ -48,7 +48,7 @@ class ModalAdd extends Component {
     })
   }
 
-  // 中文名称查重校验
+  // 名称查重校验
   @action handleNameValidator = (rule, value = '', callback) => {
     const {store} = this.props
 
@@ -107,17 +107,21 @@ class ModalAdd extends Component {
         onCancel={() => this.handleCancel()}
       >
         <Form>
-          <FormItem {...formItemLayout} label="中文名">
+          <FormItem {...formItemLayout} label="名称">
             {getFieldDecorator('name', {
               initialValue: data.name,
               rules: [{
                 required: true,
-                message: '中文名不能为空',
+                message: '名称不能为空',
               }, {
                 max: 20, 
-                message: '中文名不能超过20个字符',
+                message: '名称不能超过20个字符',
               }, {
-                pattern: /^[\u4e00-\u9fa5]{1,30}$/, message: '输入限制为中文字符',
+                pattern: /^[a-zA-Z0-9_\u4e00-\u9fa5]{1,20}$/, message: '名称格式不正确，允许输入中文/英文/数字/下划线',
+              }, {
+                pattern: /^(?!_)/, message: '名称不允许下划线开头',
+              }, {
+                pattern: /^(?!数栖)/, message: '名称不允许数栖开头',
               }, {
                 validator: this.handleNameValidator,
               }],

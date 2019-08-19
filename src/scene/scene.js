@@ -82,7 +82,7 @@ export default class Scene extends Component {
                           <Time timestamp={cDate} />
                         </span>
                       </div>
-                      <div className="c-descr">
+                      <div className="c-descr omit">
                         描述：
                         {descr}
                       </div>
