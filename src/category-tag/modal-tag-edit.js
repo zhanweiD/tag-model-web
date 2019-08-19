@@ -5,7 +5,7 @@ import {
 import {observable, action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {isExitMsg} from '../common/constants'
-import {isJsonFormat, enNameReg} from '../common/util'
+import {isJsonFormat, enNameReg, getNamePattern} from '../common/util'
 
 const FormItem = Form.Item
 const {Option} = Select
@@ -139,8 +139,9 @@ class ModalTagEdit extends Component {
                 initialValue: editTag ? tagDetail.name : undefined,
                 rules: [
                   {required: true, message: '名称不可为空'},
-                  {max: 20, message: '名称不能超过20个字符'},
-                  {pattern: /^[\u4e00-\u9fa5]{1,30}$/, message: '输入限制为中文字符'},
+                  ...getNamePattern(),
+                  // {max: 20, message: '名称不能超过20个字符'},
+                  // {pattern: /^[\u4e00-\u9fa5]{1,30}$/, message: '输入限制为中文字符'},
                   {validator: this.handleNameValidator},
                 ],
               })(<Input autoComplete="off" placeholder="不超过20个字，输入为中文字符" />)}

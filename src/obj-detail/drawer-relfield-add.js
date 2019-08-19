@@ -59,6 +59,8 @@ class DrawerRelfieldAdd extends Component {
     store.fieldList.clear()
 
     this.stdlist.clear()
+    this.dataStorageId = undefined
+    this.dataTableName = undefined
     form.resetFields()
   }
 
@@ -171,7 +173,7 @@ class DrawerRelfieldAdd extends Component {
     })
   }
 
-  renderItemDom(getFieldDecorator, formItemLayout, fieldList) {
+  renderItemDom(getFieldDecorator, formItemLayout, fieldList, fieldListLoading) {
     if (store.baseInfo.objTypeCode === 3) {
       const objSelect = toJS(store.baseInfo).objRspList.map(item => (
         <FormItem {...formItemLayout} label={`${item.name}主键`}>
@@ -184,6 +186,8 @@ class DrawerRelfieldAdd extends Component {
             <Select
               showSearch
               placeholder="请下拉选择"
+              loading={fieldListLoading}
+              notFoundContent={null}
               filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
             >
               {
@@ -217,6 +221,8 @@ class DrawerRelfieldAdd extends Component {
               <Select
                 showSearch
                 placeholder="请下拉选择"
+                loading={fieldListLoading}
+                notFoundContent={null}
                 filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
               >
                 {
@@ -246,6 +252,8 @@ class DrawerRelfieldAdd extends Component {
               <Select
                 showSearch
                 placeholder="请下拉选择"
+                loading={fieldListLoading}
+                notFoundContent={null}
                 filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
               >
                 {
@@ -272,6 +280,8 @@ class DrawerRelfieldAdd extends Component {
             <Select
               showSearch
               placeholder="请下拉选择"
+              loading={fieldListLoading}
+              notFoundContent={null}
               filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
             >
               {
@@ -288,13 +298,15 @@ class DrawerRelfieldAdd extends Component {
 
   render() {
     const {form: {getFieldDecorator}} = this.props
-    const {modalVisible, dacList, tableList, fieldList} = store
+    const {
+      modalVisible, dacList, tableList, fieldList, tableListLoading, fieldListLoading,
+    } = store
 
     const modalProps = {
       title: '添加关联字段',
       visible: modalVisible.addRelField,
       maskClosable: false,
-      width: 520,
+      width: 560,
       destroyOnClose: true,
       onClose: this.handleOnCancel,
     }
@@ -304,6 +316,8 @@ class DrawerRelfieldAdd extends Component {
       wrapperCol: {span: 18},
       colon: false,
     }
+    console.log('xxxx')
+    console.log(!tableList.length)
 
     return (
       <Drawer {...modalProps}>
@@ -360,6 +374,8 @@ class DrawerRelfieldAdd extends Component {
                 <Select
                   showSearch
                   placeholder="请下拉选择"
+                  loading={tableListLoading}
+                  notFoundContent={null}
                   onChange={e => this.changeTableName(e)}
                   filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                 >
@@ -382,6 +398,8 @@ class DrawerRelfieldAdd extends Component {
                 <Select
                   mode="tags"
                   placeholder="请下拉选择"
+                  loading={fieldListLoading}
+                  notFoundContent={null}
                   tokenSeparators={[',']}
                 >
                   {
@@ -393,7 +411,7 @@ class DrawerRelfieldAdd extends Component {
               )}
             </FormItem>
 
-            {this.renderItemDom(getFieldDecorator, formItemLayout, fieldList)}
+            {this.renderItemDom(getFieldDecorator, formItemLayout, fieldList, fieldListLoading)}
           </Spin>
         </Form>
 

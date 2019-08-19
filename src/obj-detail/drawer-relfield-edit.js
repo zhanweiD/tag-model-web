@@ -136,7 +136,7 @@ class DrawerRelfieldEdit extends Component {
       title: '编辑关联字段',
       visible: modalVisible.editRelField,
       maskClosable: false,
-      width: 520,
+      width: 560,
       destroyOnClose: true,
       onClose: this.handleOnCancel,
     }
