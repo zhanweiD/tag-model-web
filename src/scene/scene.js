@@ -1,21 +1,30 @@
 import {Component} from 'react'
 import {action, toJS} from 'mobx'
-import {observer} from 'mobx-react'
+import {observer, inject} from 'mobx-react'
 import {
   Row, Col, Spin, Modal, Icon, Tag, Button,
 } from 'antd'
 import {Link} from 'react-router-dom'
 
 import {Time} from '../common/util'
+import {navListMap} from '../common/constants'
 import ModalAdd from './modal-add'
 
 import store from './store-scene'
 
 const {confirm} = Modal
 
+@inject('frameChange')
 @observer
 export default class Scene extends Component {
   componentWillMount() {
+    const {frameChange} = this.props
+
+    frameChange('nav', [
+      navListMap.assetMgt,
+      {text: '名称待定'},
+    ])
+    
     store.getList()
   }
 
