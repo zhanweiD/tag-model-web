@@ -68,6 +68,8 @@ export default class Invoke extends Component {
   render() {
     const {apiInvokeCount, apiCount, occasionCount} = store.invokeInfo
 
+    const {aId} = this.props
+
     // 注： 标签调用指标卡 接口格式 暂未给出 @望舒
     const cards = [
       {
@@ -101,6 +103,7 @@ export default class Invoke extends Component {
           <h3 className="ct-title">调用趋势</h3>
           <div className="time-range-wrap">
             <TimeRange
+              key={aId}
               custom
               defaultRangeInx={0}
               rangeMap={[{

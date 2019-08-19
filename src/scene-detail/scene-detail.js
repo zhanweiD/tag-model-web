@@ -1,8 +1,8 @@
 import {Component} from 'react'
-import {observable, action, toJS} from 'mobx'
+import {action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {
-  Tabs, Button, Icon, Spin,
+  Tabs, Button, Icon, Spin, Tooltip,
 } from 'antd'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
 // import {Link} from 'react-router-dom'
@@ -52,6 +52,10 @@ export default class SceneDetail extends Component {
     store.modalVisible = true
   }
 
+  @action.bound onTabChange(e) {
+    store.currentKey = e
+  }
+
   render() {
     const info = toJS(store.info)
     const {
@@ -91,15 +95,36 @@ export default class SceneDetail extends Component {
               </p>
               <div>
                 <Button className="mr8" href={`${window.__onerConfig.pathPrefix}/scene#/tags/${store.sceneId}`}>标签列表</Button>
-                <Button type="primary" onClick={this.dbSourceVisible}>添加目的数据源</Button>
+                {
+                  store.isDbSourcEnough 
+                    ? (
+                      <Tooltip title="添加的目的数据源数量超过上限">
+                        <Button 
+                          type="primary" 
+                          onClick={this.dbSourceVisible} 
+                          disabled={store.isDbSourcEnough}
+                        >
+                        添加目的数据源
+                        </Button>                   
+                      </Tooltip>
+                    ) : (
+                      <Button 
+                        type="primary" 
+                        onClick={this.dbSourceVisible} 
+                        disabled={store.isDbSourcEnough}
+                      >
+                        添加目的数据源
+                      </Button>
+                    )
+                }
+               
               </div>
             </div>
             <NemoBaseInfo dataSource={baseInfo} key={Math.random()} className="ml4" />
           </div>
         </Spin>
        
-
-        <Tabs defaultActiveKey="1" animated={false}>
+        <Tabs defaultActiveKey="1" animated={false} onChange={this.onTabChange}>
           <TabPane tab="标签选择" key="1">    
             <SelectTag sceneId={store.sceneId} />
           </TabPane>

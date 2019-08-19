@@ -36,10 +36,8 @@ export default class Exponent extends Component {
   componentWillReceiveProps(nextProps) {
     if (store.id !== nextProps.aId && nextProps.isActive) {
       store.id = nextProps.aId
-      store.getDailyCard()
-      this.defStartTime = moment().subtract(7, 'day').format('YYYY-MM-DD')
-      this.defEndTime = moment().subtract(1, 'day').format('YYYY-MM-DD')
       this.getData()
+      store.getDailyCard()
       store.getValueStatus()
     }
   }
@@ -110,6 +108,9 @@ export default class Exponent extends Component {
   render() {
     const {worthScore, qualityScore, hotScore} = store.dailyCard
     const {total, pieTemplateDtoList, name} = store.enumeData
+
+    const {aId} = this.props
+
     const cards = [
       {
         title: '最新价值分',
@@ -143,6 +144,7 @@ export default class Exponent extends Component {
           <h3 className="ct-title">标签价值分趋势</h3>
           <div className="time-range-wrap">
             <TimeRange
+              key={aId}
               custom
               defaultRangeInx={0}
               rangeMap={[{
@@ -165,6 +167,7 @@ export default class Exponent extends Component {
           <h3 className="ct-title">标签质量分趋势</h3>
           <div className="time-range-wrap">
             <TimeRange
+              key={aId}
               custom
               defaultRangeInx={0}
               rangeMap={[{
@@ -186,6 +189,7 @@ export default class Exponent extends Component {
           <h3 className="ct-title">标签热度趋势</h3>
           <div className="time-range-wrap">
             <TimeRange
+              key={aId}
               custom
               defaultRangeInx={0}
               rangeMap={[{

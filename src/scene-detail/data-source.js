@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import {observable, action, toJS} from 'mobx'
+// import {observable, action, toJS} from 'mobx'
 import {observer} from 'mobx-react'
 import {
   Table, Button, Empty, Spin,
@@ -11,7 +11,7 @@ export default class DataSource extends Component {
     const {store} = this.props
     store.getSourceList()
   }
-  
+
 
   columns = [{
     title: '所属分类',
