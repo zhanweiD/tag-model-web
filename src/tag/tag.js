@@ -22,7 +22,7 @@ export default class Tag extends Component {
     // this.store.categoryStore.getCategoryList()
 
     this.store.typeCode = +params.type || 1
-    this.store.id = +params.id || 999999999
+    this.store.id = +params.id
   }
 
   componentWillMount() {
@@ -37,7 +37,6 @@ export default class Tag extends Component {
   @action onChangeTab(e) {
     const {history} = this.props
     this.store.typeCode = +e
-    this.store.id = 999999999
     history.push(`/${e}`)
   }
 

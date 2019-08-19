@@ -122,7 +122,7 @@ class DrawerRelfield extends Component {
 
     return (
       <Drawer {...modalProps}>
-        <div className="scroll-table">
+        <div>
           <div className="mb16">
             <span className="pl">配置状态: </span>
             <Select
@@ -147,10 +147,16 @@ class DrawerRelfield extends Component {
             />
           </div>
           <Table
+            onChange={store.handleChange}
             columns={this.tableCol}
             loading={store.tableLoading}
             dataSource={store.list.slice()}
-            pagination={false}
+            pagination={{
+              pageSize: store.pagination.pageSize,
+              current: store.pagination.currentPage,
+              total: store.pagination.count,
+              showTotal: () => `合计${store.pagination.count}条记录`,
+            }}
           />
         </div>
       </Drawer>

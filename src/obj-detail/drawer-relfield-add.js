@@ -402,14 +402,13 @@ class DrawerRelfieldAdd extends Component {
             添加
           </Button>
         </div>
-        
-        <div className="scroll-table">
+
+        <div style={{marginBottom: '28px'}}>
           <Table
             columns={this.tableCol}
             loading={false}
             dataSource={this.stdlist.slice()}
             pagination={false}
-            // scroll={{y: '90%'}}
           />
         </div>
 

@@ -36,7 +36,7 @@ class TagCategory extends Component {
       this.typeCode = nextProps.typeCode
       document.getElementById('searchKey').value = ''
       this.store.typeCode = this.bigStore.typeCode
-      this.store.id = this.bigStore.id || 999999999
+      this.store.id = this.bigStore.id
       this.store.destory()
       this.store.getCategoryList(() => {
         this.bigStore.currentNode = toJS(this.store.cateList).find(item => item.id === this.bigStore.id)

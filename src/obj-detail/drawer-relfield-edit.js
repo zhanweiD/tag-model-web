@@ -187,14 +187,13 @@ class DrawerRelfieldEdit extends Component {
           </Button>
         </div>
         
-        <div className="scroll-table">
+        <div style={{marginBottom: '28px'}}>
           <h3>已关联字段列表</h3>
           <Table
             columns={this.tableCol}
             loading={store.relDbFieldLoading}
             dataSource={toJS(this.stdlist)}
             pagination={false}
-            // scroll={{y: '90%'}}
           />
         </div>
 
