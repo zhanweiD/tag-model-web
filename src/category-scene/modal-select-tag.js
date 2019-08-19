@@ -40,7 +40,7 @@ class ModalSelectTag extends Component {
   selectedRows = []
 
   columns = [{
-    title: '中文名',
+    title: '名称',
     dataIndex: 'name',
   }, {
     title: '英文名',

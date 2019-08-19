@@ -70,7 +70,7 @@ class SceneDetailStore {
     }
   }
 
-  // 中文名校验
+  // 名称校验
   @action async checkName(name, cb) {
     try {
       await io.checkName({
