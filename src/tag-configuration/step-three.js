@@ -1,6 +1,6 @@
 import React from 'react'
 import {observer} from 'mobx-react'
-import {Icon} from 'antd'
+import {Icon, Spin} from 'antd'
 
 // 标签配置 - 创建成功
 @observer
@@ -31,18 +31,20 @@ export default class StepThree extends React.Component {
             lineHeight: '27px',
           }}
         >
-          <div>
-            {`数据表名称： ${successResult.dataTableName}`}
-          </div>
-          <div>
-            {`数据源： ${successResult.dataDbName}`}
-          </div>
-          <div>
-            {`数据源类型： ${successResult.storageTypeName}`}
-          </div>
-          <div>
-            {`已配置/关联： ${successResult.configuredField} / ${successResult.associatedField}`}
-          </div>
+          <Spin spinning={store.loadings.result}>
+            <div>
+              {`数据表名称： ${successResult.dataTableName || '-'}`}
+            </div>
+            <div>
+              {`数据源： ${successResult.dataDbName || '-'}`}
+            </div>
+            <div>
+              {`数据源类型： ${successResult.storageTypeName || '-'}`}
+            </div>
+            <div>
+              {`已配置/关联： ${successResult.configuredField || '-'} / ${successResult.associatedField || '-'}`}
+            </div>
+          </Spin>
         </div>
       </div>
     )

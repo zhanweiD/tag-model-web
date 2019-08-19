@@ -30,6 +30,7 @@ export default class Store {
   @observable loadings = {
     firstTable: false, // 第一步表格的Loading
     tagSaving: false, // 第二步，保存标签时的加载状态
+    result: false, // 第三步，结果展示
   }
 
   @observable forceUpdateKey = Math.random() // 有时候需要强制刷新表格，比如要更新所属类目
@@ -164,6 +165,7 @@ export default class Store {
   // 获取成功结果
   @action async getStorageDetail() {
     try {
+      this.loadings.result = true
       const res = await io.getStorageDetail({
         objId: this.objId,
         storageId: this.storageId,
@@ -174,6 +176,8 @@ export default class Store {
       this.successResult = res || {}
     } catch (e) {
       errorTip(e.message)
+    } finally {
+      this.loadings.result = false
     }
   }
 

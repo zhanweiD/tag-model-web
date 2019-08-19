@@ -148,7 +148,7 @@ class SearchFilter extends React.Component {
     })
   }
 
-  // 切换所属类目
+  // 切换对象名称
   @action.bound handleObjSelect(id) {
     const {store} = this.props
 
@@ -158,6 +158,8 @@ class SearchFilter extends React.Component {
     }
 
     store.filterObjId = id
+    // 选择新的对象时，要回到第一页
+    store.currentPage = 1
 
     // 更新列表
     this.doSearch()

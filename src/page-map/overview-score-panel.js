@@ -7,6 +7,7 @@ import {
 } from 'antd'
 import EchartsChart from '../component-echarts-chart'
 import {getLineChartOption} from './util'
+import OmitTooltip from '../component-omit-tooltip'
 
 function typeToText(type = 'worth') {
   switch (type) {
@@ -63,6 +64,7 @@ export default class OverviewScorePanel extends React.Component {
       title: '标签名',
       dataIndex: 'name',
       key: 'name',
+      render: name => <OmitTooltip text={name} maxWidth={200} />,
     },
     {
       title: `标签${typeToText(this.props.type)}`,
