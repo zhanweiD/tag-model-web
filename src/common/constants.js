@@ -9,7 +9,11 @@ module.exports = {
   navListMap: {
     assetMgt: {
       url: '/',
-      text: '数据资产管理中心',
+      text: '数据资产管理',
+    },
+    tagMgt: {
+      text: '标签管理',
+      url: '/map',
     },
     tagPool: {
       text: '标签池',
