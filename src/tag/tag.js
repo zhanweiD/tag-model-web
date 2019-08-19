@@ -32,6 +32,7 @@ export default class Tag extends Component {
 
     frameChange('nav', [
       navListMap.assetMgt,
+      navListMap.tagMgt,
       {text: '标签池'},
     ])
   }
