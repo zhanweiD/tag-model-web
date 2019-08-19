@@ -7,6 +7,7 @@ import {
   Table, Badge, Divider, Alert, Spin, Button,
 } from 'antd'
 import QuestionTooltip from '../component-question-tooltip'
+import OmitTooltip from '../component-omit-tooltip'
 import {getDataTypeByCode} from '../common/util'
 import ModalTagEdit from './modal-tag-edit'
 import ModalCateSelect from './modal-cate-select'
@@ -47,14 +48,16 @@ export default class StepTwo extends React.Component {
     // 表格列
     const columns = [
       {
-        title: '中文名',
+        title: '名称',
         key: 'name',
         dataIndex: 'name',
+        render: name => <OmitTooltip text={name} maxWidth={150} />,
       },
       {
         title: '英文名',
         key: 'enName',
         dataIndex: 'enName',
+        render: name => <OmitTooltip text={name} maxWidth={150} />,
       },
       {
         title: '数据类型',
@@ -72,25 +75,30 @@ export default class StepTwo extends React.Component {
         title: '枚举显示值',
         key: 'enumValue',
         dataIndex: 'enumValue',
+        render: name => <OmitTooltip text={name} maxWidth={200} />,
       },
       {
         title: '所属类目',
         key: 'parentId',
         dataIndex: 'parentId',
         render: (parentId, record) => {
+          let cateName = ''
           if (parentId) {
-            return store.cateMap[parentId]
+            cateName = store.cateMap[parentId]
+          } else {
+            const pathIds = record.pathIds || []
+            const cateId = pathIds[pathIds.length - 1] // 所属类目的id是倒数第1个
+            cateName = store.cateMap[cateId]
           }
-
-          const pathIds = record.pathIds || []
-          const cateId = pathIds[pathIds.length - 1] // 所属类目的id是倒数第1个
-          return store.cateMap[cateId] || ''
+          
+          return <OmitTooltip text={cateName} maxWidth={200} />
         },
       },
       {
         title: '业务逻辑',
         key: 'descr',
         dataIndex: 'descr',
+        render: descr => <OmitTooltip text={descr} maxWidth={200} />,
       },
       {
         title: '关联的字段',
@@ -111,6 +119,7 @@ export default class StepTwo extends React.Component {
         title: '操作',
         key: 'operation',
         // dataIndex: 'isUsed',
+        width: 100,
         render: (v, record, index) => {
           return (
             <span>
@@ -162,9 +171,11 @@ export default class StepTwo extends React.Component {
             columns={columns}
             dataSource={store.secondTableList}
             rowSelection={{
+              // fixed: true,
               selectedRowKeys: store.secondSelectedRows.map(item => item.dataFieldName),
               onChange: this.onRowSelect,
             }}
+            // scroll={{x: 1400}}
           />
 
           {/* 编辑标签弹框 */}

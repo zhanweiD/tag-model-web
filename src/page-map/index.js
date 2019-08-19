@@ -20,6 +20,7 @@ export default class PageMap extends React.Component {
       <Frame
         navList={[{
           text: '标签管理',
+          url: '/map',
         }, {
           text: '标签地图',
         }]}

@@ -3,7 +3,9 @@ import PropTypes from 'prop-types'
 import {
   Modal, Form, Input, Spin, Select, Switch, Cascader,
 } from 'antd'
-import {isJsonFormat, enNameReg, DATA_TYPES} from '../common/util'
+import {
+  isJsonFormat, enNameReg, getNamePattern, DATA_TYPES,
+} from '../common/util'
 
 const FormItem = Form.Item
 const {Option} = Select
@@ -58,16 +60,17 @@ class ModalTagEdit extends Component {
       <Modal {...modalProps}>
         <Form>
           <Spin spinning={false}>
-            <FormItem {...formItemLayout} label="中文名">
+            <FormItem {...formItemLayout} label="名称">
               {getFieldDecorator('name', {
                 initialValue: tagDetail.name || undefined,
                 rules: [
-                  {required: true, message: '中文名不可为空'},
-                  {max: 20, message: '中文名不能超过20个字符'},
-                  {pattern: /^[\u4e00-\u9fa5]{1,30}$/, message: '输入限制为中文字符'},
-                  // {validator: this.handleNameValidator},
+                  {required: true, message: '名称不可为空'},
+                  // {max: 20, message: '名称不能超过20个字符'},
+                  // {pattern: /^[\u4e00-\u9fa5]{1,30}$/, message: '输入限制为中文字符'},
+                  // {pattern: nameReg, message: '1~20字，允许中文/英文/数字/下划线，不允许“数栖”或“下划线”开头'},
+                  ...getNamePattern(),
                 ],
-              })(<Input autoComplete="off" placeholder="不超过20个字，输入为中文字符" />)}
+              })(<Input autoComplete="off" placeholder="1~20字，允许中文/英文/数字/下划线，不允许“数栖”或“下划线”开头" />)}
             </FormItem>
 
             <FormItem {...formItemLayout} label="英文名">
@@ -111,7 +114,6 @@ class ModalTagEdit extends Component {
                 {getFieldDecorator('enumValue', {
                   rules: [
                     // {required: true, message: '枚举显示值不可为空'},
-                    {max: 100, message: '业务逻辑不能超过100个字符'},
                     {validator: this.handleEnumValueValidator},
                   ],
                   initialValue: tagDetail.enumValue || undefined,

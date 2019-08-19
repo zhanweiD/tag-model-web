@@ -251,7 +251,7 @@ export function getTimeRangeToToday({
   return [start, end]
 }
 
-// 数据类型映射 (window.njkData下没有了，不可靠啊...)
+// 数据类型映射 (window.njkData下一旦服务失败就报错了，不可靠啊...)
 export const DATA_TYPES = [
   {
     key: 2,

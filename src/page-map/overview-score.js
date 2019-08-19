@@ -46,13 +46,7 @@ export default class OverviewScore extends React.Component {
           )}
           tabBarStyle={{padding: '0 24px', marginBottom: '0'}}
           animated={false}
-          onChange={activeKey => {
-            console.log('onChange', activeKey)
-            this.setState({
-              currentTab: activeKey,
-            })
-            this.getPabelData(activeKey)
-          }}
+          onChange={this.changeTab}
         >
           <TabPane tab="标签价值" key="worth">
             <OverviewScorePanel
@@ -86,6 +80,15 @@ export default class OverviewScore extends React.Component {
     )
   }
 
+  // 切换tab
+  @action.bound changeTab(activeKey) {
+    console.log('onChange', activeKey)
+    this.setState({
+      currentTab: activeKey,
+    })
+    this.getPabelData(activeKey)
+  }
+
   // 获取某个panel的数据
   @action.bound getPabelData(type) {
     const {store} = this.props
@@ -115,6 +118,12 @@ export default class OverviewScore extends React.Component {
     const {currentTab} = this.state
 
     store.scoreTimeRange = [lte, gte]
+    
+    // 更换时间后，排名表格都要回到第1页
+    Object.keys(store.panelsData).forEach(key => {
+      store.panelsData[key].currentPage = 1
+    })
+
     this.getPabelData(currentTab)
   }
 }

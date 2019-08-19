@@ -2,8 +2,9 @@ import React from 'react'
 import {observer} from 'mobx-react'
 import {action, extendObservable} from 'mobx'
 import {
-  Table, Button, Tooltip, Badge,
+  Table, Button, Badge,
 } from 'antd'
+import OmitTooltip from '../component-omit-tooltip'
 
 
 // 表格columns对象
@@ -13,13 +14,7 @@ const columns = [
     title: '名称',
     dataIndex: 'name',
     key: 'name',
-    render: name => (
-      <Tooltip placement="top" title={name}>
-        <span title={name} className="omit" style={{maxWidth: '150px'}}>
-          {name}
-        </span>
-      </Tooltip>
-    ),
+    render: name => <OmitTooltip text={name} maxWidth={150} />,
   },
   {
     title: '数据类型',
