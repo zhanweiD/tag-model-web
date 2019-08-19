@@ -133,7 +133,7 @@ export default class Scene extends Component {
           onChange={this.handleTableChange}
           pagination={{
             pageSize: pagination.pageSize,
-            current: pagination.currentPage,
+            current: pagination.current,
             total: pagination.total,
             showTotal: () => `合计${pagination.total}条记录`,
           }}
