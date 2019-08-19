@@ -14,4 +14,18 @@ export default class TagStore {
 
   // 标签树类型 1:人 2:物 3:关系
   @observable typeCode = undefined
+
+
+  @observable typeCodes = []
+  @action async getTypeCodes(cb) {
+    try {
+      const res = await io.getTypeCodes()
+      runInAction(() => {
+        this.typeCodes.replace(res)
+        cb && cb()
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
 }

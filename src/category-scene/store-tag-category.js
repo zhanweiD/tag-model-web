@@ -303,6 +303,7 @@ class TagCategoryStore {
 
   // 标签 - 选择标签保存
   @action async saveTag(param, cb) {
+    this.confirmLoading = true
     try {
       this.confirmLoading = true
       await io.saveTag({

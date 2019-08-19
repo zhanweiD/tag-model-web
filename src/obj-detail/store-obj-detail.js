@@ -41,6 +41,8 @@ class ObjDetailStore {
   @observable dacList = []
   @observable tableList = []
   @observable fieldList = []
+  @observable tableListLoading = false
+  @observable fieldListLoading = false
 
   // 编辑关联字段
   @observable relDbFieldLoading = false
@@ -124,12 +126,14 @@ class ObjDetailStore {
   }
 
   @action async getTableList(storageId) {
+    this.tableListLoading = true
     try {
       const res = await io.getTableList({
         objId: this.id,
         storageId,
       })
       runInAction(() => {
+        this.tableListLoading = false
         res && this.tableList.replace(res)
       })
     } catch (e) {
@@ -138,12 +142,14 @@ class ObjDetailStore {
   }
 
   @action async getFieldList(storageId, tableName) {
+    this.fieldListLoading = true
     try {
       const res = await io.getFieldList({
         storageId,
         tableName,
       })
       runInAction(() => {
+        this.fieldListLoading = false
         res && this.fieldList.replace(res)
       })
     } catch (e) {

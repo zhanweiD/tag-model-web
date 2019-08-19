@@ -21,8 +21,10 @@ export default class Tag extends Component {
     this.store.categoryStore = new TagCategoryStore(props)
     // this.store.categoryStore.getCategoryList()
 
-    this.store.typeCode = +params.type || 1
-    this.store.id = +params.id || 999999999
+    this.store.getTypeCodes(() => {
+      this.store.typeCode = +params.type || toJS(this.store.typeCodes)[0].objTypeCode
+      this.store.id = +params.id
+    })
   }
 
   componentWillMount() {
@@ -37,11 +39,11 @@ export default class Tag extends Component {
   @action onChangeTab(e) {
     const {history} = this.props
     this.store.typeCode = +e
-    this.store.id = 999999999
     history.push(`/${e}`)
   }
 
   render() {
+    const {typeCodes} = this.store
     const currentNode = toJS(this.store.currentNode)
     return (
       <div className="FBV" style={{minHeight: '100%'}}>
@@ -54,9 +56,7 @@ export default class Tag extends Component {
           onChange={e => this.onChangeTab(e)}
           className="pl4"
         >
-          <TabPane tab="人" key="1" />
-          <TabPane tab="物" key="2" />
-          <TabPane tab="关系" key="3" />
+          {typeCodes.map(item => <TabPane tab={item.objTypeName} key={item.objTypeCode} />)}
         </Tabs>
 
         <Provider bigStore={this.store}>

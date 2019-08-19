@@ -5,6 +5,7 @@ import {
 import {observable, action} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {isExitMsg} from '../common/constants'
+import {getNamePattern} from '../common/util'
 
 const FormItem = Form.Item
 
@@ -107,8 +108,9 @@ class ModalEditCategory extends Component {
                 initialValue: editCategory ? cateDetail.name : undefined,
                 rules: [
                   {required: true, message: '名称不可为空'},
-                  {max: 20, message: '名称不能超过20个字符'},
-                  {pattern: /^[\u4e00-\u9fa5]{1,30}$/, message: '输入限制为中文字符'},
+                  ...getNamePattern(),
+                  // {max: 20, message: '名称不能超过20个字符'},
+                  // {pattern: /^[\u4e00-\u9fa5]{1,30}$/, message: '输入限制为中文字符'},
                   {validator: this.handleNameValidator},
                 ],
                 validateFirst: true,

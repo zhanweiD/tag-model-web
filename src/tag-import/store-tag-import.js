@@ -46,7 +46,7 @@ class ImportStore {
         objTypeCode: this.typeCode,
       })
       runInAction(() => {
-        this.objs.replace(res)
+        res && this.objs.replace(res)
       })
     } catch (e) {
       errorTip(e.message)

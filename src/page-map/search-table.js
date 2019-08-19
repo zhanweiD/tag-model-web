@@ -15,7 +15,7 @@ const columns = [
     key: 'name',
     render: name => (
       <Tooltip placement="top" title={name}>
-        <span className="omit" style={{maxWidth: '150px'}}>
+        <span title={name} className="omit" style={{maxWidth: '150px'}}>
           {name}
         </span>
       </Tooltip>

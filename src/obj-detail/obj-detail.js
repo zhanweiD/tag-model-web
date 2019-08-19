@@ -133,7 +133,7 @@ export default class ObjDetail extends Component {
         title: '创建时间',
         value: <Time timestamp={createTime} />,
       }, {
-        title: '所属分类',
+        title: '所属对象',
         value: objType,
       }, {
         title: '英文名',
@@ -232,6 +232,10 @@ export default class ObjDetail extends Component {
               objId={store.id}
               storageId={this.curentItem.dataStorageId}
               tableName={this.curentItem.dataTableName}
+              onSuccess={() => {
+                store.getList()
+                this.bigStore.categoryStore.getCategoryList()
+              }}
             />
           )
         }
