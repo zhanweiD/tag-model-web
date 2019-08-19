@@ -19,7 +19,7 @@ ioContext.create('sceneDetail', {
     url: `${tagApi}/be_tag/occasion/edit`,
   },
 
-  // 中文名校验
+  // 名称校验
   checkName: {
     mock: isMock,
     mockUrl: 'page-scene/getContent',

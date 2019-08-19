@@ -253,9 +253,6 @@ export default class TagDetailDrawer extends Component {
                   onChange={value => this.value = value}
                   sourceTitle="标签列表"
                   targetTitle="字段列表"
-                  beforeMapping={() => new Promise(((resolve, reject) => {
-                    resolve()
-                  }))}
                 />
               )
             }
