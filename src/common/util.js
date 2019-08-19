@@ -293,10 +293,10 @@ export function getDataTypeByCode(code) {
  * @description 名称正则校验
  * @description 允许中文、英文、数字、下划线，不允许“数栖”或“下划线”开头，结尾不做限制
  * @author 麻花
- * @param max 名称长度最大值
+ * @param max 名称长度最大值; 默认20
  */
 
-export function getNamePattern(max) {
+export function getNamePattern(max = 20) {
   return [{
     max, 
     message: `名称不能超过${max}个字符`,
