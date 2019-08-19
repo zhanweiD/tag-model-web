@@ -1,7 +1,9 @@
 import {Component, Fragment} from 'react'
 import {action, toJS} from 'mobx'
 import {observer} from 'mobx-react'
-import {Button, Tooltip, Icon} from 'antd'
+import {
+  Button, Tooltip, Icon, Empty,
+} from 'antd'
 import TimeRange from '../time-range'
 import {getLineChartOpt} from '../common/config-charts'
 import OverviewCard from '../component-overview-card'
@@ -64,7 +66,7 @@ export default class Exponent extends Component {
     if (vsChart)vsChart.resize()
     if (qsChart)qsChart.resize()
     if (hotChart)hotChart.resize()
-    if (enumeChart)enumeChart.resize()
+    if (enumeChart && this.enume)enumeChart.resize()
   }
 
   @action redrawVs(gte = this.defStartTime, lte = this.defEndTime) {
@@ -93,7 +95,7 @@ export default class Exponent extends Component {
         name: key,
         value: count,
       }))
-      enumeChart.setOption(getPieOpt(renderData))
+      if (renderData.length)enumeChart.setOption(getPieOpt(renderData))
     })
   }
 
@@ -228,37 +230,44 @@ export default class Exponent extends Component {
               ref={el => this.enume = el}
               style={{width: '100%', height: '300px'}}
             /> 
-            <div className="pie-total">
-              <div className="total">
-                <p className="mb0 fs16">{name}</p>
-                <p className="fs30">{total}</p>
-              </div>
-            </div>
-            <div className="pie-tips">
-              <ul className="mr32">
-                <li className="FBH mb4" style={{width: '300px'}}>
-                  <div style={{width: '50%'}}>
-                    <span className="ml24">取值</span>
-                  </div>
-                  <span style={{width: '30%'}}>记录数占比</span>
-                  <span className="ml16" style={{width: '20%'}}>记录数</span>
-                </li>
-                {
-                  pieTemplateDtoList.map(({
-                    count, key, ratio,
-                  }, index) => (
-                    <li className="FBH mb4" style={{width: '300px'}}>
-                      <div style={{width: '50%'}}>
-                        <span className="circle mb2" style={{background: colorList[index]}} />
-                        <span className="interval">{key}</span>
+            {
+              pieTemplateDtoList.length 
+                ? (
+                  <Fragment>
+                    <div className="pie-total">
+                      <div className="total">
+                        <p className="mb0 fs16">{name}</p>
+                        <p className="fs30">{total}</p>
                       </div>
-                      <span style={{width: '30%'}}>{`${ratio * 100}%`}</span>
-                      <span className="ml16" style={{width: '20%'}}>{count}</span>
-                    </li>
-                  ))
-                }
-              </ul>
-            </div>
+                    </div>
+                    <div className="pie-tips">
+                      <ul className="mr32">
+                        <li className="FBH mb4" style={{width: '300px'}}>
+                          <div style={{width: '50%'}}>
+                            <span className="ml24">取值</span>
+                          </div>
+                          <span style={{width: '30%'}}>记录数占比</span>
+                          <span className="ml16" style={{width: '20%'}}>记录数</span>
+                        </li>
+                        {
+                          pieTemplateDtoList.map(({
+                            count, key, ratio,
+                          }, index) => (
+                            <li className="FBH mb4" style={{width: '300px'}}>
+                              <div style={{width: '50%'}}>
+                                <span className="circle mb2" style={{background: colorList[index]}} />
+                                <span className="interval">{key}</span>
+                              </div>
+                              <span style={{width: '30%'}}>{`${ratio * 100}%`}</span>
+                              <span className="ml16" style={{width: '20%'}}>{count}</span>
+                            </li>
+                          ))
+                        }
+                      </ul>
+                    </div>
+                  </Fragment>
+                ) : <div className="empty-box"><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /></div>
+            }
           </div>
         </div>
       </div>

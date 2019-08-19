@@ -26,7 +26,7 @@ export default class TagConfiguration extends Component {
     storageId: PropTypes.string.isRequired, // 数据源id
     tableName: PropTypes.string.isRequired, // 数据表名
     onClose: PropTypes.func.isRequired, // 取消，关闭抽屉
-    onSuccess: PropTypes.func, // （第三步）成功时点击确定的回调
+    onSuccess: PropTypes.func, // 当保存标签成功时，要刷新页面相关数据，用个回调传进来
   }
 
   state = {
@@ -35,8 +35,6 @@ export default class TagConfiguration extends Component {
 
   constructor(props) {
     super(props)
-
-    console.log('TagConfiguration props', props)
 
     const {
       treeId, objId, storageId, tableName,
@@ -79,7 +77,8 @@ export default class TagConfiguration extends Component {
       <Drawer
         title="配置标签"
         visible={visible}
-        width="73%"
+        // width="73%"
+        width={1020} // 大抽屉统一1020px
         onClose={this.onClose}
         maskClosable={false}
       >
@@ -156,10 +155,8 @@ export default class TagConfiguration extends Component {
           {currentStep === 2 && (
             <Button 
               type="primary"
-              // TODO: 逻辑待修改
               onClick={() => {
                 this.onClose()
-                onSuccess()
               }}
             >
               确定
@@ -195,9 +192,14 @@ export default class TagConfiguration extends Component {
 
   // 从第二步“确定”，决定是不是要进入第三步
   @action.bound confirmStepTwo() {
+    const {onSuccess = () => {}} = this.props
+
     store.saveTags(() => {
       // 加载结果数据
       store.getStorageDetail()
+      
+      // 保存成功的额外回调
+      onSuccess()
 
       this.setState({
         currentStep: 2,

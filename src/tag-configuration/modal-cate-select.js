@@ -37,7 +37,6 @@ class ModalCateSelect extends React.Component {
       <Modal
         title="选择所属类目"
         visible={visible}
-        // TODO: 允不允许批量清空所属类目？
         onOk={this.handleOk}
         onCancel={onCancel}
         width={520}
