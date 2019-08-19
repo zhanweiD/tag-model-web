@@ -155,17 +155,17 @@ export default class TagDetailDrawer extends Component {
                     {
                       title: '英文名',
                       dataIndex: 'enName',
-                      width: 80,
+                      width: 90,
                     },
                     {
                       title: '中文名',
                       dataIndex: 'name',
-                      width: 80,
+                      width: 90,
                     },
                     {
                       title: '数据类型',
                       dataIndex: 'valueTypeName',
-                      width: 80,
+                      width: 90,
                     },
                   ]}
                   result={result}
