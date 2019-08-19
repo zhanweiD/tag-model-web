@@ -20,6 +20,9 @@ class SceneStore {
   // 弹窗编辑／新增 判断标识
   @observable isEdit = false
 
+  // 确认loading
+  @observable confirmLoading = false
+
   // 场景列表
   @action async getList() {
     this.loading = true
@@ -53,10 +56,12 @@ class SceneStore {
 
   // 场景新增
   @action async addScene(params) {
+    this.confirmLoading = true
     try {
       await io.addScene(params)
 
       runInAction(() => {
+        this.confirmLoading = false
         this.modalVisible = false
         successTip('添加成功')
         this.getList()
@@ -66,8 +71,8 @@ class SceneStore {
     }
   }
 
-   // 场景删除
-   @action async delScene(id) {
+  // 场景删除
+  @action async delScene(id) {
     try {
       await io.delScene({
         occasionId: id,
@@ -84,18 +89,20 @@ class SceneStore {
 
   // 场景编辑
   @action async editScene(params) {
-     try {
-       await io.editScene(params)
+    this.confirmLoading = true
+    try {
+      await io.editScene(params)
 
-       runInAction(() => {
-         this.modalVisible = false
-         successTip('编辑成功')
-         this.getList()
-       })
-     } catch (e) {
-       errorTip(e.message)
-     }
-   }
+      runInAction(() => {
+        this.confirmLoading = false
+        this.modalVisible = false
+        successTip('编辑成功')
+        this.getList()
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
 
   // 名称校验
   @action async checkName(params, cb) {

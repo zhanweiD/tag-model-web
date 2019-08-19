@@ -260,12 +260,11 @@ class ModalSelectTag extends Component {
         ]}
       >
         <Spin spinning={detailLoading}>
-          <div className="FBH" style={{maxHeight: '500px', overflowY: 'auto'}}>
-            <div>
+          <div className="select-tag-modal FBH">
+            <div className="select-tree">
               <Checkbox 
                 checked={this.allChecked}
                 indeterminate={this.indeterminate}
-                style={{marginLeft: '26px'}}
                 onChange={this.handleAllSelect} 
               >
                 全选

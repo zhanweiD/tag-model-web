@@ -113,7 +113,11 @@ export default class SelectTag extends Component {
                       <div className="d-head FBH FBJ">
                         <span className="mr10">{name}</span>
                         {/* 点击“标签详情”按钮，进入标签池中的标签详情 */}
-                        <Button type="primary">标签详情</Button>
+                        <Button type="primary">
+                          <a href={`${window.__onerConfig.pathPrefix}/pool#/1/${this.store.tagId}`}>
+                          标签详情
+                          </a>
+                        </Button>
                       </div>
                       <NemoBaseInfo dataSource={baseInfo} key={Math.random()} className="d-info" />
                     </Spin>

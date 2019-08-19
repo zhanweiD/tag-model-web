@@ -41,6 +41,7 @@ export default class SceneDetail extends Component {
       {text: '名称待定'},
     ])
     store.getDetail()
+    store.getSourceList()
   }
 
   @action.bound dbSourceVisible() {
@@ -54,6 +55,10 @@ export default class SceneDetail extends Component {
 
   @action.bound onTabChange(e) {
     store.currentKey = e
+  }
+
+  componentWillUnmount() {
+    store.isDbSourcEnough = false
   }
 
   render() {
