@@ -62,7 +62,7 @@ export default class DataSource extends Component {
                             <a 
                               target="_blank" 
                               rel="noopener noreferrer" 
-                              href={`${window.__onerConfig.pathPrefix}/service/api`} 
+                              href="/service/api"
                             >
                                配置数据服务
                             </a>      

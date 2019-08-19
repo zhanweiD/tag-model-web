@@ -24,8 +24,8 @@ export default class Scene extends Component {
     const {frameChange} = this.props
 
     frameChange('nav', [
-      navListMap.assetMgt,
-      {text: '名称待定'},
+      navListMap.tagMgt,
+      {text: '标签场景'},
     ])
     
     store.getList()
