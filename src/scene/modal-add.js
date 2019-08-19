@@ -115,7 +115,7 @@ class ModalAdd extends Component {
                 required: true,
                 message: '名称不能为空',
               },  
-              ...getNamePattern(20),
+              ...getNamePattern(),
               {
                 validator: this.handleNameValidator,
               }],
