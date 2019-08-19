@@ -61,9 +61,9 @@ class ModalCateSelect extends React.Component {
                   options={options}
                   style={{width: 360}}
                   placeholder="请选择"
-                  onChange={(values, selectedOptions) => {
-                    console.log(values, selectedOptions)
-                  }}
+                  // onChange={(values, selectedOptions) => {
+                  //   console.log(values, selectedOptions)
+                  // }}
                 />
               )
             }
@@ -79,7 +79,7 @@ class ModalCateSelect extends React.Component {
 
     form.validateFields((errs, values) => {
       if (!errs) {
-        console.log(values)
+        // console.log(values)
 
         this.setState({
           confirmLoading: true,

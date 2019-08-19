@@ -1,8 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {Tabs} from 'antd'
-
 import Frame from '../frame'
+import {navListMap} from '../common/constants'
+
 import Overview from './overview'
 import Search from './search'
 
@@ -18,12 +19,12 @@ export default class PageMap extends React.Component {
   render() {
     return (
       <Frame
-        navList={[{
-          text: '标签管理',
-          url: '/map',
-        }, {
-          text: '标签地图',
-        }]}
+        navList={[
+          navListMap.tagMgt, 
+          {
+            text: '标签地图',
+          },
+        ]}
       >
         {/* TODO: 如果标签数为0，那么显示无标签引导 */}
         <div className="page-map">

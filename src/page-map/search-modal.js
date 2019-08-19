@@ -93,7 +93,6 @@ class SearchModal extends React.Component {
                         placeholder="请选择场景类目"
                         options={store.cateList}
                         onChange={values => {
-                          console.log('onCascaderChange', values)
                           // 取最后一个值
                           this.onCateSelect(values[values.length - 1])
                         }}

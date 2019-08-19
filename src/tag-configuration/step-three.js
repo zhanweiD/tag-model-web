@@ -5,12 +5,6 @@ import {Icon, Spin} from 'antd'
 // 标签配置 - 创建成功
 @observer
 export default class StepThree extends React.Component {
-
-  // componentDidMount() {
-  //   const {store} = this.props
-  //   store.getStorageDetail()
-  // }
-
   render() {
     const {store} = this.props
     const {successResult} = store

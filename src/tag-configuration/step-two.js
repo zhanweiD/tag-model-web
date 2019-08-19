@@ -261,12 +261,22 @@ export default class StepTwo extends React.Component {
     // （这里已知标签编辑弹框的表单fieldName和标签对象的字段一一对应，所以可以直接覆盖）
     tagListCopy[index] = {...tagListCopy[index], ...valuesCopy}
 
-    console.log('secondTableList.length', store.secondTableList.length, 'tagListCopy', tagListCopy)
+    // console.log('secondTableList.length', store.secondTableList.length, 'tagListCopy', tagListCopy)
 
-    store.checkTagList(tagListCopy, () => {
-      cb && cb()
-      this.closeEditModal()
-    })
+    // 确认时校验数据
+    store.checkTagList(
+      // 参数数据
+      tagListCopy, 
+      // 成功回调
+      () => {
+        cb && cb()
+        this.closeEditModal()
+      }, 
+      // 失败回调，主要是有可能会出现接口本身有问题，这时需要错误回调以停止loading效果
+      () => {
+        cb && cb()
+      },
+    )
   }
 
   // 展开类目选择弹框

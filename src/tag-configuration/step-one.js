@@ -58,17 +58,6 @@ export default class StepOne extends React.Component {
 
     const selectedRowKeys = store.secondTableList.map(item => item.dataFieldName)
 
-    // function repeatArray(arr, n) {
-    //   const result = []
-    //   for (let i = 0; i < n; i++) {
-    //     const values = arr.map(d => ({...d, id: Math.random()}))
-    //     result.push(...values)
-    //   }
-    //   return result
-    // }
-
-    // const arr = repeatArray(store.initialList, 10)
-
     return (
       <div>
         <div className="fs16 mb8 ml2" style={{color: 'rgba(0,0,0,0.85)'}}>
@@ -79,8 +68,6 @@ export default class StepOne extends React.Component {
           columns={columns}
           dataSource={store.initialList}
           rowKey="dataFieldName"
-          // dataSource={arr}
-          // rowKey="id"
           rowSelection={{
             selectedRowKeys,
             onChange: this.onRowSelect,
@@ -106,9 +93,6 @@ export default class StepOne extends React.Component {
   @action.bound onRowSelect(selectedRowKeys, selectedRows) {
     const {store} = this.props
 
-    console.log(selectedRowKeys)
-
-    // store.secondTableList = selectedRows
     store.updateSecondTableList(selectedRows)
   }
 }

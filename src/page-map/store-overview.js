@@ -100,7 +100,7 @@ class OverviewStore {
         pageSize: 5, // 写死
       }) || {}
 
-      console.log('getScoreRank', res)
+      // console.log('getScoreRank', res)
 
       this.panelsData[type].tableData = res.data || []
       this.panelsData[type].currentPage = res.currentPage || 1
@@ -125,7 +125,7 @@ class OverviewStore {
         endDate,
       })
 
-      console.log('getScoreTrend', res)
+      // console.log('getScoreTrend', res)
 
       this.panelsData[type].lineData = res || []
     } catch (error) {
@@ -144,7 +144,7 @@ class OverviewStore {
         endDate,
       }) || {}
 
-      console.log('getCallData', res)
+      // console.log('getCallData', res)
 
       if (type === 2) {
         this.tagCallTimesData = {

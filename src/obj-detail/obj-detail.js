@@ -112,7 +112,6 @@ export default class ObjDetail extends Component {
   }
 
   render() {
-    console.log(this.bigStore.id)
     const {
       objTypeCode: typeCode,
       objType,

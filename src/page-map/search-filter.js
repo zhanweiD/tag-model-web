@@ -176,8 +176,6 @@ class SearchFilter extends React.Component {
   @action.bound handleScoreChange(key, values, rawValues) {
     const {store} = this.props
 
-    console.log(values, rawValues)
-
     // 原始值既不是没填，也不是整数
     const isInvalid = rawValues.some(v => (v !== undefined && !(/^\d*$/).test(v)))
 
