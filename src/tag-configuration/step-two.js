@@ -83,7 +83,7 @@ export default class StepTwo extends React.Component {
           }
 
           const pathIds = record.pathIds || []
-          const cateId = pathIds[pathIds.length - 2] // 所属类目的id是倒数第2个，最后一个代表自身
+          const cateId = pathIds[pathIds.length - 1] // 所属类目的id是倒数第1个
           return store.cateMap[cateId] || ''
         },
       },
@@ -126,7 +126,6 @@ export default class StepTwo extends React.Component {
     return (
       <div>
         <Spin spinning={false}>
-          {/* TODO: 提示信息框，如果被关掉，那么下次校验后还显示吗？ */}
           <Alert 
             type="info"
             showIcon

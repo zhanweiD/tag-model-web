@@ -22,7 +22,7 @@ class ModalTagEdit extends Component {
   }
 
   state = {
-    isEnum: false, // 是否枚举
+    isEnum: this.props.tagDetail.isEnum || false, // 是否枚举
     confirmLoading: false, // 确认按钮加载状态
   }
 
@@ -105,7 +105,8 @@ class ModalTagEdit extends Component {
               })(<Switch checkedChildren="是" unCheckedChildren="否" onChange={v => this.changeIsEnum(v)} />)}
             </FormItem>
 
-            {(tagDetail.isEnum || isEnum) && (
+            {/* {(tagDetail.isEnum || isEnum) && ( */}
+            {isEnum && (
               <FormItem {...formItemLayout} label="枚举显示值">
                 {getFieldDecorator('enumValue', {
                   rules: [

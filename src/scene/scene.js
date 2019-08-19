@@ -68,7 +68,7 @@ export default class Scene extends Component {
                   <div className={`card ${used ? 'used' : 'noused'}`}>
                     <div className="item-info">
                       <div className="c-name">
-                        <Link to={`/detail/${id}`} className="mr8">{name}</Link>
+                        <Link to={`/detail/${id}`} className="mr8 omit">{name}</Link>
                         <Tag color={used ? 'green' : 'blue'}>{used ? '使用中' : '未使用'}</Tag>
                         <Icon type="right" />
                       </div>
@@ -82,7 +82,7 @@ export default class Scene extends Component {
                           <Time timestamp={cDate} />
                         </span>
                       </div>
-                      <div className="c-descr">
+                      <div className="c-descr omit">
                         描述：
                         {descr}
                       </div>

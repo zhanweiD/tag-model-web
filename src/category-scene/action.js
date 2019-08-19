@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import {observable, action} from 'mobx'
+import {action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {Menu, Dropdown, Tooltip} from 'antd'
 import _ from 'lodash'
@@ -20,6 +20,9 @@ class Action extends Component {
   }
 
   @action.bound handleEditCategory() {
+    const {treeData} = this.store 
+    if (toJS(treeData).length) return 
+    
     this.store.currentTreeItemKey = 0
     this.store.eStatus.editObject = false
     this.store.modalVisible.editObject = true

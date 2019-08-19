@@ -23,7 +23,7 @@ export default class DataSource extends Component {
     title: '所属类目',
     dataIndex: 'catName',
   }, {
-    title: '标签中文名',
+    title: '标签名称',
     dataIndex: 'tagName',
   }, {
     title: '标签英文名',
