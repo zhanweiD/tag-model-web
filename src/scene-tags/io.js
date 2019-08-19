@@ -2,7 +2,7 @@ import ioContext from '../common/io-context'
 import {tagApi} from '../common/util'
 
 const isMock = false
-ioContext.create('scene', {
+ioContext.create('sceneTags', {
   getContent: {
     mock: isMock,
     mockUrl: 'page-scene/getContent',
@@ -16,4 +16,4 @@ ioContext.create('scene', {
   },
 })
 
-export default ioContext.api.scene
+export default ioContext.api.sceneTags
