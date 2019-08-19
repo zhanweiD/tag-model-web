@@ -147,6 +147,7 @@ class ModalDataSource extends Component {
         dbSource,
         dbTable,
         dbSourceData,
+        confirmLoading,
       },
     } = this.props
 
@@ -160,7 +161,14 @@ class ModalDataSource extends Component {
         onCancel={this.handleCancel}
         footer={[
           <Button onClick={this.handleCancel}>取消</Button>,
-          <Button type="primary" onClick={e => this.handleSubmit(e)} disabled={!this.dbTableValue || !this.dbSourceValue || !dbSourceData.data.length}>确定</Button>,
+          <Button 
+            type="primary" 
+            loading={confirmLoading}
+            onClick={e => this.handleSubmit(e)} 
+            isabled={!this.dbTableValue || !this.dbSourceValue || !dbSourceData.data.length}
+          >
+            确定
+          </Button>,
         ]}
       >
         <div>
@@ -168,7 +176,11 @@ class ModalDataSource extends Component {
           <div className="FBH mb32">
             <div className="FB1">
               <span className="mr8">目的数据源</span>
-              <Select style={{width: 150}} placeholder="请选择" onChange={this.onSourceChange}>
+              <Select 
+                style={{width: 150}} 
+                placeholder="请选择" 
+                onChange={this.onSourceChange}
+              >
                 {
                   toJS(dbSource).map(({value, label, children}) => <Option value={value} key={value} dbtable={children}>{label}</Option>)
                 }
@@ -186,7 +198,14 @@ class ModalDataSource extends Component {
                 </Tooltip>
 
               </span>
-              <Select value={this.dbTableValue} style={{width: 150}} placeholder="请选择" onChange={this.onTableChange}>
+              <Select 
+                value={this.dbTableValue} 
+                style={{width: 150}} 
+                placeholder="请选择" 
+                onChange={this.onTableChange}
+                notFoundContent={null}
+                // loading 
+              >
                 {
                   toJS(dbTable).map(({value, label, used}) => <Option value={label} key={value} disabled={used}>{label}</Option>)
                 }
@@ -202,6 +221,7 @@ class ModalDataSource extends Component {
             pagination={false}
             columns={this.columns} 
             dataSource={dbSourceData.data.slice()} 
+            scroll={{y: 300}}
           />
         </div>
       </Modal>

@@ -55,9 +55,14 @@ class ModalSelectTag extends Component {
   }, {
     title: '枚举显示值',
     dataIndex: 'enumValue',
+    width: 150,
+    render: text => <div style={{width: '150px'}} className="omit">{text}</div>,
+
   }, {
     title: '业务逻辑',
     dataIndex: 'descr',
+    width: 200,
+    render: text => <div style={{width: '200px'}} className="omit">{text}</div>,
   }]
 
   // 获取类目数组 用于全选功能
@@ -234,21 +239,26 @@ class ModalSelectTag extends Component {
     return (
       <Modal
         title="选择标签"
-        width={800}
+        width={1000}
         destroyOnClose
         visible={selectTag}
         maskClosable={false}
-        confirmLoading={confirmLoading}
         // onOk={e => this.handleSubmit(e)}    
         onCancel={this.handleCancel}
         footer={[
           <Button onClick={this.handleCancel}>取消</Button>,
-          <Button type="primary" onClick={e => this.handleSubmit(e)} disabled={!this.list.slice().length}>确定</Button>,
+          <Button 
+            type="primary" 
+            onClick={e => this.handleSubmit(e)} 
+            disabled={!this.list.slice().length}
+            loading={confirmLoading}
+          >
+            确定
+          </Button>,
         ]}
       >
         <Spin spinning={detailLoading}>
-          <div className="FBH">
-          
+          <div className="FBH" style={{maxHeight: '500px', overflowY: 'auto'}}>
             <div>
               <Checkbox 
                 checked={this.allChecked}
@@ -264,9 +274,7 @@ class ModalSelectTag extends Component {
                 {this.renderTreeNodes(treeData)}
               </Tree>
             </div>
-          
             <Table columns={this.columns} rowKey="id" dataSource={this.list.slice()} rowSelection={rowSelection} pagination={false} className="FB1 ml24" />
-          
           </div>
         </Spin>
       </Modal>

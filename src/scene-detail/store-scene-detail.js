@@ -26,6 +26,9 @@ class SceneDetailStore {
   // 数据表(下拉框)
   @observable dbTable = []
 
+  // 确认按钮loading
+  @observable confirmLoading = false
+
   // 添加目的数据源 - 列表
   @observable dbSourceData = {
     data: [],
@@ -147,6 +150,7 @@ class SceneDetailStore {
 
   // 目的数据源 - 保存
   @action async saveStorage(params, cb) {
+    this.confirmLoading = true
     try {
       await io.saveStorage({
         occasionId: this.sceneId,
@@ -154,12 +158,16 @@ class SceneDetailStore {
       })
 
       runInAction(() => {
+        this.confirmLoading = false
         this.dbSourceVisible = false
         successTip('操作成功')
         if (cb)cb()
       })
     } catch (e) {
       errorTip(e.message)
+      runInAction(() => {
+        this.confirmLoading = false
+      })
     }
   }
 
