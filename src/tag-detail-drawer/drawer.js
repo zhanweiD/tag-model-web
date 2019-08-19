@@ -120,7 +120,7 @@ export default class TagDetailDrawer extends Component {
           closable={false}
           onClose={this.onClose}
           visible={visiable}
-          width={1048}
+          width={1020}
         >
           <Spin spinning={loading}>
             {
@@ -129,6 +129,7 @@ export default class TagDetailDrawer extends Component {
                 <Mapping
                   style={{
                     display: 'inline-block',
+                    width: '100%',
                   }}
                   source={source}
                   target={target}
