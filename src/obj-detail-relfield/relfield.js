@@ -161,7 +161,7 @@ class DrawerRelfield extends Component {
 
     console.log('secondTableList.length', store.list.length, 'tagListCopy', tagListCopy)
 
-    store.saveTags(tagListCopy, () => {
+    store.saveTags(tagListCopy[index], () => {
       cb && cb()
       this.props.bigStore.categoryStore.getCategoryList()
       this.closeEditModal()

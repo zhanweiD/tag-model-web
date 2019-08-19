@@ -137,7 +137,7 @@ class ModalTagEdit extends Component {
       <Modal {...modalProps}>
         <Form>
           <Spin spinning={this.store.detailLoading}>
-            <FormItem {...formItemLayout} label="中文名">
+            <FormItem {...formItemLayout} label="名称">
               {getFieldDecorator('name', {
                 initialValue: editTag ? tagDetail.name : undefined,
                 rules: [
