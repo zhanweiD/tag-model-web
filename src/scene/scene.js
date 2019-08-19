@@ -62,6 +62,7 @@ export default class Scene extends Component {
                 used,
                 tagCount,
                 apiCount,
+                descr,
               }, d) => (
                 <Col span={8}>
                   <div className={`card ${used ? 'used' : 'noused'}`}>
@@ -80,6 +81,10 @@ export default class Scene extends Component {
                           创建时间：
                           <Time timestamp={cDate} />
                         </span>
+                      </div>
+                      <div className="c-descr">
+                        描述：
+                        {descr}
                       </div>
                       <div className="count-info">
                         <div>
