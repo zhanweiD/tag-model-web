@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Badge, Spin, Divider} from 'antd'
+import {
+  Badge, Spin, Divider, Empty,
+} from 'antd'
 import EchartsChart from '../component-echarts-chart'
 import {getPieChartOption, pieColorList} from './util'
 
@@ -28,12 +30,16 @@ export default class OverviewCallPie extends React.Component {
   render() {
     const {list, total, loading} = this.props
 
-    if (!list.length) {
-      return null
-    }
-
     // 只保留count有值的数据
-    const validData = list.filter(item => item.count > 0)
+    const validData = (list || []).filter(item => item.count > 0)
+
+    if (!validData.length) {
+      return (
+        <div style={{marginTop: 80}}>
+          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+        </div>
+      )
+    }
 
     // echarts饼图配置对象
     const pieOption = getPieChartOption(validData)

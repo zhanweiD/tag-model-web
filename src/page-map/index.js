@@ -22,10 +22,9 @@ export default class PageMap extends React.Component {
           text: '标签管理',
         }, {
           text: '标签地图',
-        }, {
-          text: '标签预览',
         }]}
       >
+        {/* TODO: 如果标签数为0，那么显示无标签引导 */}
         <div className="page-map">
           <h2 className="fs16 fc0 mb16 ml16" style={{fontWeight: 'normal'}}>标签地图</h2>
           <Tabs animated={false} tabBarStyle={{paddingLeft: '16px'}}>
