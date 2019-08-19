@@ -5,6 +5,7 @@ import {
   Modal, Input, Form,
 } from 'antd'
 import {isExitMsg} from '../common/constants'
+import {getNamePattern} from '../common/util'
 
 const FormItem = Form.Item
 const {TextArea} = Input
@@ -113,16 +114,9 @@ class ModalAdd extends Component {
               rules: [{
                 required: true,
                 message: '名称不能为空',
-              }, {
-                max: 20, 
-                message: '名称不能超过20个字符',
-              }, {
-                pattern: /^[a-zA-Z0-9_\u4e00-\u9fa5]{1,20}$/, message: '名称格式不正确，允许输入中文/英文/数字/下划线',
-              }, {
-                pattern: /^(?!_)/, message: '名称不允许下划线开头',
-              }, {
-                pattern: /^(?!数栖)/, message: '名称不允许数栖开头',
-              }, {
+              },  
+              ...getNamePattern(20),
+              {
                 validator: this.handleNameValidator,
               }],
               validateFirst: true,

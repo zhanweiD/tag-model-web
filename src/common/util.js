@@ -199,7 +199,6 @@ export function formatTimeInterval(type, str) {
 }
 
 
-
 // 2019年08月08日15
 export function isJsonFormat(str) {
   try {
@@ -288,4 +287,24 @@ export function getDataTypeByCode(code) {
     default:
       return `未知类型, code: ${code}`
   }
+}
+
+/**
+ * @description 名称正则校验
+ * @description 允许中文、英文、数字、下划线，不允许“数栖”或“下划线”开头，结尾不做限制
+ * @author 麻花
+ * @param max 名称长度最大值
+ */
+
+export function getNamePattern(max) {
+  return [{
+    max, 
+    message: `名称不能超过${max}个字符`,
+  }, {
+    pattern: /^[a-zA-Z0-9_\u4e00-\u9fa5]+$/, message: '名称格式不正确，允许输入中文/英文/数字/下划线',
+  }, {
+    pattern: /^(?!_)/, message: '名称不允许下划线开头',
+  }, {
+    pattern: /^(?!数栖)/, message: '名称不允许数栖开头',
+  }]
 }
