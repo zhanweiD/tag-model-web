@@ -56,32 +56,34 @@ class ModalSelectTag extends Component {
     title: '枚举显示值',
     dataIndex: 'enumValue',
     width: 150,
-    render: text => <div style={{width: '150px'}} className="omit">{text}</div>,
+    render: text => <div title={text} style={{width: '150px'}} className="omit">{text}</div>,
 
   }, {
     title: '业务逻辑',
     dataIndex: 'descr',
     width: 200,
-    render: text => <div style={{width: '200px'}} className="omit">{text}</div>,
+    render: text => <div title={text} style={{width: '200px'}} className="omit">{text}</div>,
   }]
 
   // 获取类目数组 用于全选功能
   @computed get getClassId() {
     const {selectTagData} = this.store
-    const classArr = selectTagData.filter(item => item.type === 1) || []
+    const classArr = toJS(selectTagData).filter(item => item.type !== 0) || []
     return classArr.map(item => item.id)
   }
 
    // 获取所有标签列表数据和rowKeys
    @computed get getTagList() {
     const {selectTagData} = this.store
-    // 所有标签列表数据
+    // 所有标签数据
     const tagArr = selectTagData.filter(item => !item.type) || []
+    // 所有标签列表数据
+    const list = tagArr.map(item => item.tag)
     // 所有标签列表rowKeys
-    const rowKeys = tagArr.map(item => item.id)
+    const rowKeys = list.map(item => item.id)
 
     return {
-      list: tagArr,
+      list,
       rowKeys,
     }
   }
