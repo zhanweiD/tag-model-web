@@ -192,7 +192,7 @@ class DrawerRelfieldAdd extends Component {
             >
               {
                 fieldList.map(o => (
-                  <Option key={o.field} value={o.field}>{offscreenBuffering.field}</Option>
+                  <Option key={o.field} value={o.field}>{o.field}</Option>
                 ))
               }
             </Select>
