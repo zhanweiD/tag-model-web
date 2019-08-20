@@ -39,7 +39,6 @@ export default class OverviewScore extends React.Component {
             <TimeRange 
               custom
               exportTimeRange={(lte, gte) => {
-                console.log('exportTimeRange', lte, gte)
                 this.onTimeChange(lte, gte)
               }}
             />
@@ -82,7 +81,6 @@ export default class OverviewScore extends React.Component {
 
   // 切换tab
   @action.bound changeTab(activeKey) {
-    console.log('onChange', activeKey)
     this.setState({
       currentTab: activeKey,
     })

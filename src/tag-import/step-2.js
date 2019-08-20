@@ -54,6 +54,14 @@ class StepTwo extends Component {
   render() {
     const {pathPrefix} = window.__onerConfig
     const uploadProps = {
+      headers: {
+        code: store.typeCode,
+        id: store.objId,
+      },
+      data: {
+        objTypeCode: store.typeCode, 
+        objId: store.objId,
+      },
       name: 'file',
       // multiple: true,
       action: `${pathPrefix}/upload/tag`,

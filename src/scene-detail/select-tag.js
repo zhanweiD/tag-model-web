@@ -5,7 +5,6 @@ import NemoBaseInfo from '@dtwave/nemo-base-info'
 import {Button, Empty, Spin} from 'antd'
 
 import {Time} from '../common/util'
-import {navListMap} from '../common/constants'
 import TrendTag from './trend-tag'
 import TrendApi from './trend-api'
 
@@ -14,7 +13,6 @@ import Store from './store-select-tag'
 
 import TagCategory, {TagCategoryStore} from '../category-scene'
 
-@inject('frameChange')
 @observer
 export default class SelectTag extends Component {
   constructor(props) {
@@ -40,12 +38,6 @@ export default class SelectTag extends Component {
   @observable isTagDel = false
   
   componentWillMount() {
-    const {frameChange} = this.props
-    frameChange('nav', [
-      navListMap.assetMgt,
-      {text: '名称待定'},
-    ])
-    
     if (this.tagId) {
       this.store.getTagDetail()
     }
@@ -113,7 +105,11 @@ export default class SelectTag extends Component {
                       <div className="d-head FBH FBJ">
                         <span className="mr10">{name}</span>
                         {/* 点击“标签详情”按钮，进入标签池中的标签详情 */}
-                        <Button type="primary">标签详情</Button>
+                        <Button type="primary">
+                          <a href={`${window.__onerConfig.pathPrefix}/pool#/1/${this.store.tagId}`}>
+                          标签详情
+                          </a>
+                        </Button>
                       </div>
                       <NemoBaseInfo dataSource={baseInfo} key={Math.random()} className="d-info" />
                     </Spin>

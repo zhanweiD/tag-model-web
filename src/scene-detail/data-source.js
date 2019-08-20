@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import {observable, action, toJS} from 'mobx'
+// import {observable, action, toJS} from 'mobx'
 import {observer} from 'mobx-react'
 import {
   Table, Button, Empty, Spin,
@@ -7,11 +7,11 @@ import {
 
 @observer
 export default class DataSource extends Component {
-  componentWillMount() {
-    const {store} = this.props
-    store.getSourceList()
-  }
-  
+  // componentWillMount() {
+  //   const {store} = this.props
+  //   store.getSourceList()
+  // }
+
 
   columns = [{
     title: '所属分类',
@@ -57,7 +57,17 @@ export default class DataSource extends Component {
                       </div>
                       {/* 点击“配置数据服务”按钮，跳转至服务管理页面 */}
                       {
-                        (index === 0) && <Button type="primary">配置数据服务</Button>
+                        (index === 0) && (
+                          <Button type="primary">
+                            <a 
+                              target="_blank" 
+                              rel="noopener noreferrer" 
+                              href="/service/api"
+                            >
+                               配置数据服务
+                            </a>      
+                          </Button>
+                        )
                       }
                     </div>
                     <Table 

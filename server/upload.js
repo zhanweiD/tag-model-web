@@ -28,6 +28,8 @@ function upload(app) {
         if (error) {
           reject(error)
         }
+
+        const {code, id} = ctx.req.headers
         const readStream = fs.createReadStream(files.file.path)
         const options = {
           url: `${config('server.apiPrefix')}/api/v1/be_tag/tag/preview_import`,
@@ -36,6 +38,8 @@ function upload(app) {
             dest: 'upload',
             tenantId,
             src: readStream,
+            objId: code, 
+            aId: id,
           }, fields),
           json: true,
         }

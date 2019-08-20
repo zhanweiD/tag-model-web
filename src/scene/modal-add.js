@@ -93,6 +93,7 @@ class ModalAdd extends Component {
         info,
         modalVisible,
         isEdit,
+        confirmLoading,
       }, 
     } = this.props
 
@@ -106,6 +107,7 @@ class ModalAdd extends Component {
         title={isEdit ? '编辑场景' : '添加场景'}
         onOk={e => this.handleSubmit(e)}
         onCancel={() => this.handleCancel()}
+        confirmLoading={confirmLoading}
       >
         <Form>
           <FormItem {...formItemLayout} label="名称">

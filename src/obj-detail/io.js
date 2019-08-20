@@ -19,7 +19,7 @@ ioContext.create('objDetail', {
 
   delObjFieldRel: {
     method: 'POST',
-    url: `${tagApi}/be_tag/tag/pool/del_obj_field_rel`,
+    url: `${tagApi}/be_tag/tag/pool/remove_tag_field_rel`,
   },
 
 

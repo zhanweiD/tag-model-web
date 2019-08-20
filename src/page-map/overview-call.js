@@ -39,7 +39,6 @@ export default class OverviewCall extends React.Component {
           <TimeRange 
             custom
             exportTimeRange={(lte, gte) => {
-              console.log('exportTimeRange', lte, gte)
               this.onTimeChange(lte, gte)
             }}
           />

@@ -162,7 +162,7 @@ class ModalTagEdit extends Component {
 
     form.validateFields((errs, values) => {
       if (!errs) {
-        console.log(values)
+        // console.log(values)
 
         this.setState({
           confirmLoading: true,

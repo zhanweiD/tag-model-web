@@ -6,6 +6,7 @@ import io from './io'
 
 
 class SceneDetailStore {
+  currentKey = '1'
   // 场景id
   @observable sceneId = undefined
 
@@ -41,6 +42,9 @@ class SceneDetailStore {
     loading: false,
   }
 
+  @observable isDbSourcEnough = false
+  
+
   // 场景详情
   @action async getDetail() {
     this.loading = true
@@ -74,14 +78,12 @@ class SceneDetailStore {
   }
 
   // 名称校验
-  @action async checkName(name, cb) {
+  @action async checkName(params, cb) {
     try {
-      await io.checkName({
-        name,
-      })
+      const res = await io.checkName(params)
 
       runInAction(() => {
-        if (cb) cb()
+        if (cb) cb(res)
       })
     } catch (e) {
       errorTip(e.message)
@@ -141,10 +143,10 @@ class SceneDetailStore {
           this.dbSourceData.loading = false
         })
       } catch (e) {
-        errorTip(e.message)
         runInAction(() => {
-          this.dbSourceData.loading = false
+          this.dbSourceVisible = false
         })
+        errorTip(e.message)
       }
     }
 
@@ -162,11 +164,13 @@ class SceneDetailStore {
         this.dbSourceVisible = false
         successTip('操作成功')
         if (cb)cb()
+        if (this.currentKey === '2') this.getSourceList()
       })
     } catch (e) {
       errorTip(e.message)
       runInAction(() => {
         this.confirmLoading = false
+        if (cb)cb()
       })
     }
   }
@@ -182,12 +186,13 @@ class SceneDetailStore {
       runInAction(() => {
         this.sourceData.data.replace(res)
         this.sourceData.loading = false
+        if (res.length === 10) this.isDbSourcEnough = true
       })
     } catch (e) {
-      errorTip(e.message)
       runInAction(() => {
         this.sourceData.loading = false
       })
+      errorTip(e.message)
     }
   }
 }

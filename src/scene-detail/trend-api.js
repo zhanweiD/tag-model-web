@@ -42,7 +42,7 @@ export default class TrendApi extends Component {
       startDate: gte,
       endDate: lte,
     }
-    
+
     store.getApiTrend(params, res => {
       if (res.length) this.drawChart(res)
     })
@@ -59,13 +59,15 @@ export default class TrendApi extends Component {
   }
 
   render() {
-    const {store: {apiTrendData}} = this.props
+    const {tagId} = this.props
+
     return (
       <div className="bgf p16">
         <h3 className="ct-title">API调用数趋势</h3>
         <div className="time-range-wrap">
           <TimeRange
             custom
+            key={tagId}
             defaultRangeInx={0}
             rangeMap={[{
               value: 7,

@@ -33,36 +33,15 @@ class TagCategory extends Component {
     this.sceneDetailStore = props.sceneDetail
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   if (this.updateKey !== nextProps.updateKey) {
-  //     document.getElementById('searchKey').value = ''
-  //     this.store.typeCode = this.bigStore.typeCode
-  //     this.store.id = this.bigStore.id || 999999999
-  //     this.store.destory()
-  //     this.store.getCategoryList()
-  //   }
-  // }
-
   @action.bound onselect(selectedKeys, info) {
     const {tagChange} = this.props
     const {typeCode, id} = this.bigStore
     // 1. 展开节点
     info.node.onExpand()
 
-    // 2. 相同的路由不跳转，不相同的跳到相应的路由
     if (id === selectedKeys[0]) return
-
-    // 3. 跳转到指定路由
-    // const {history} = this.props
-    // history.push(`/${typeCode}/${selectedKeys[0]}`)
-
-    console.log(selectedKeys[0])
-    // fix: 新建的层级跳转
-    // this.bigStore.id = selectedKeys[0]
-    
-    console.log(selectedKeys, info)
-
     // 选择标签id
+
     this.bigStore.tagId = selectedKeys[0]
     tagChange(selectedKeys[0])
   }
@@ -97,20 +76,6 @@ class TagCategory extends Component {
     },
   }
 
-  // const addTagKey = {
-  //   key: 'tag',
-  //   value: '添加标签',
-  //   onClick: (key, nodeData) => {
-  //     runInAction(() => {
-  //       this.store.currentTreeItemKey = nodeData.id
-  //       this.store.eStatus.editTag = false
-  //       this.store.getCategoryDetail()
-  //       this.store.modalVisible.editTag = true
-  //     })
-  //   },
-  // }
-
-
   const selectTag = {
     key: 'select',
     value: '选择标签',
@@ -130,27 +95,12 @@ class TagCategory extends Component {
       runInAction(() => {
         this.store.currentTreeItemKey = nodeData.id
 
-        // 对象无编辑操作
-        // if (nodeData.type === 2) {
-        //   // 对象
-        //   this.store.eStatus.editObject = true
-        //   // this.store.getRelObj(nodeData.aId)
-        //   this.store.getObjectDetail()
-        //   this.store.modalVisible.editObject = true
-        // } else 
         if (nodeData.type === 1) {
           // 类目
           this.store.eStatus.editCategory = true
           this.store.getCategoryDetail()
           this.store.modalVisible.editCategory = true
-        } 
-        // 标签无编辑操作
-        // else if (nodeData.type === 0) {
-        //   // 标签
-        //   this.store.eStatus.editTag = true
-        //   this.store.getTagDetail()
-        //   this.store.modalVisible.editTag = true
-        // }
+        }
       })
     },
   }
@@ -189,28 +139,10 @@ class TagCategory extends Component {
     },
   }
 
-  // 标签暂无移动至功能；后续会加？
-  // const moveKey = {
-  //   key: 'move',
-  //   value: '移动至',
-  //   onClick: (key, nodeData) => {
-  //     runInAction(() => {
-  //       this.store.currentTreeItemKey = nodeData.id
-  //       this.store.getCanMoveTree()
-  //       this.store.modalVisible.moveTag = true
-  //     })
-  //   },
-  // }
-
   const actionList = []
 
   // 添加类目
   if (item.canAddCate) actionList.push(addCateKey)
-
-  // 添加标签
-  // if (item.canAddTag) {
-  //   actionList.push(addTagKey)
-  // }
 
   // 选择标签
   if (item.canAddTag) {
@@ -232,12 +164,7 @@ class TagCategory extends Component {
   if (item.canDelete) {
     actionList.push(deleteKey)
   }
-
-  // ”标签“节点有【移动至】
-  // if (item.type === 0) {
-  //   actionList.splice(0, 0, moveKey)
-  // }
-
+  
   return actionList
 }
 

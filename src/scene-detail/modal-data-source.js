@@ -20,26 +20,36 @@ class ModalDataSource extends Component {
   columns = [{
     title: '所属对象',
     dataIndex: 'objTypeName',
+    width: 100,
   }, {
     title: '对象名称',
     dataIndex: 'objName',
+    width: 150,
+    render: text => <div title={text} style={{maxWidth: '150px'}} className="omit">{text}</div>,
   }, {
     title: '所属类目',
     dataIndex: 'catName',
+    width: 150,
+    render: text => <div title={text} style={{maxWidth: '150px'}} className="omit">{text}</div>,
   }, {
     title: '标签名称',
     dataIndex: 'tagName',
+    width: 150,
+    render: text => <div title={text} style={{maxWidth: '150px'}} className="omit">{text}</div>,
   }, {
     title: '标签英文名',
     dataIndex: 'tagEnName',
-  }, {
+    width: 150,
+    render: text => <div title={text} style={{maxWidth: '150px'}} className="omit">{text}</div>,
+  }, 
+  {
     title: '目的字段',
     dataIndex: 'fileds',
+    width: 150,
     render: (text, record, index) => {
       const {form: {getFieldDecorator}} = this.props
-
       return (
-        <FormItem className="mb0">
+        <FormItem className="mb0" style={{textAlign: 'center'}}>
           {getFieldDecorator(record.tagId, {
             initialValue: record.fileds.filter(d => d.name === record.tagEnName).length ? record.tagEnName : undefined,
             rules: [{
@@ -48,14 +58,15 @@ class ModalDataSource extends Component {
               validator: this.handleValidator,
             }],
           })(
-            <Select style={{width: 120}} onChange={e => this.onFieldChange(e, `fileds_${index}`)}>
+            <Select style={{width: '100%'}} onChange={e => this.onFieldChange(e, `fileds_${index}`)}>
               {record.fileds.map(({name}) => <Option value={name} key={name}>{name}</Option>)}
             </Select>
           )}
         </FormItem>
       )
     },
-  }]
+  },
+  ]
 
   @action handleSubmit(e) {
     const {form: {validateFields, getFieldsError}, store} = this.props
@@ -153,7 +164,7 @@ class ModalDataSource extends Component {
 
     return (
       <Modal
-        width={800}
+        width={1000}
         title="添加目的数据源"
         destroyOnClose
         maskClosable={false}
@@ -165,13 +176,13 @@ class ModalDataSource extends Component {
             type="primary" 
             loading={confirmLoading}
             onClick={e => this.handleSubmit(e)} 
-            isabled={!this.dbTableValue || !this.dbSourceValue || !dbSourceData.data.length}
+            disabled={!this.dbTableValue || !this.dbSourceValue || !dbSourceData.data.length}
           >
             确定
           </Button>,
         ]}
       >
-        <div>
+        <div className="data-source-modal">
           <Alert message="为了让标签通过API的方式输出，需要将标签映射至API所对应的目的数据源、目的数据表、目的字段" type="info" showIcon className="mb24" />
           <div className="FBH mb32">
             <div className="FB1">
@@ -187,7 +198,7 @@ class ModalDataSource extends Component {
               </Select>
               <Tooltip title="可以去“数据源管理”模块，添加并授权想要的数据源">
                 {/* 点击“没有要选择的数据源”，页面跳转至“数据源管理” */}
-                <a href="" className="ml16">没有要选择的数据源？</a>
+                <a target="_blank" rel="noopener noreferrer" href="/ent/datasource#/" className="ml16">没有要选择的数据源？</a>
               </Tooltip>
             </div>
             <div className="FB1">
@@ -204,7 +215,6 @@ class ModalDataSource extends Component {
                 placeholder="请选择" 
                 onChange={this.onTableChange}
                 notFoundContent={null}
-                // loading 
               >
                 {
                   toJS(dbTable).map(({value, label, used}) => <Option value={label} key={value} disabled={used}>{label}</Option>)
@@ -212,7 +222,14 @@ class ModalDataSource extends Component {
               </Select>
               <Tooltip title="可以去“离线开发中心”，添加一个项目，加工出想要的同步表">
                 {/* 点击“没有要选择的数据表”，页面跳转至离线开发中心的项目列表 */}
-                <a href="" className="ml16">没有要选择的数据表？</a>                
+                <a 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  href="/ide/#/list" 
+                  className="ml16"
+                >
+                  没有要选择的数据表？
+                </a>                
               </Tooltip>
             </div>
           </div>

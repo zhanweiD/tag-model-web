@@ -84,12 +84,11 @@ export default class Store {
 
         cateMap[id] = name
 
+        // aId为-1的类目是默认类目
         if (node.aId === -1) {
           defaultCate = node
         }
       })
-
-      console.log('cateMap', cateMap)
 
       this.defaultCateId = defaultCate.id
       this.cateMap = cateMap
@@ -136,15 +135,16 @@ export default class Store {
     }
   }
 
-  // 校验标签是否可创建， params是有需要时自定义的参数，cb是请求成功的回调函数
-  @action async checkTagList(params, cb) {
-    // 如果只传了一个函数作为参数，说明只给了回调函数（只简单检验一下）
+  // 校验标签是否可创建， params是有需要时自定义的参数，successCallback是请求成功的回调函数，errorCallback是失败回调
+  @action async checkTagList(params, successCallback, errorCallack) {
+    // 如果第一个参数是函数，说明只给了回调函数（只简单检验一下）
     if (typeof params === 'function') {
-      cb = params
+      errorCallack = successCallback
+      successCallback = params
       params = undefined
     }
 
-    console.log('checkTagList params', params)
+    // console.log('checkTagList params', params)
 
     try {
       const res = await io.checkTagList({
@@ -152,13 +152,14 @@ export default class Store {
         checkList: params || toJS(this.secondTableList),
       })
 
-      console.log('checkTagList', res)
+      // console.log('checkTagList', res)
 
-      cb && cb()
+      typeof successCallback === 'function' && successCallback()
       
       this.secondTableList = res || []
     } catch (e) {
       errorTip(e.message)
+      typeof errorCallack === 'function' && errorCallack()
     }
   }
 
@@ -171,7 +172,7 @@ export default class Store {
         storageId: this.storageId,
         tableName: this.tableName,
       })
-      console.log('getStorageDetail', res)
+      // console.log('getStorageDetail', res)
 
       this.successResult = res || {}
     } catch (e) {

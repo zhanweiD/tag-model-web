@@ -42,7 +42,7 @@ class ModalTagEdit extends Component {
         const param = Object.assign(values, {
           isEnum: +values.isEnum,
           objTypeCode: typeCode,
-          parentId: currentTreeItemKey,
+          // parentId: currentTreeItemKey,
           level: cateDetail.level,
         })
 
@@ -52,6 +52,9 @@ class ModalTagEdit extends Component {
 
         if (editTag) {
           param.id = tagDetail.id
+          param.parentId = tagDetail.parentId
+        } else {
+          param.parentId = currentTreeItemKey
         }
 
         this.store.updateTag(param, () => {
@@ -134,7 +137,7 @@ class ModalTagEdit extends Component {
       <Modal {...modalProps}>
         <Form>
           <Spin spinning={this.store.detailLoading}>
-            <FormItem {...formItemLayout} label="中文名">
+            <FormItem {...formItemLayout} label="名称">
               {getFieldDecorator('name', {
                 initialValue: editTag ? tagDetail.name : undefined,
                 rules: [

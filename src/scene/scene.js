@@ -10,6 +10,9 @@ import {Time} from '../common/util'
 import {navListMap} from '../common/constants'
 import ModalAdd from './modal-add'
 
+import Del from '../svg-component/Del'
+import Edit from '../svg-component/Edit'
+
 import store from './store-scene'
 
 const {confirm} = Modal
@@ -21,8 +24,8 @@ export default class Scene extends Component {
     const {frameChange} = this.props
 
     frameChange('nav', [
-      navListMap.assetMgt,
-      {text: '名称待定'},
+      navListMap.tagMgt,
+      {text: '标签场景'},
     ])
     
     store.getList()
@@ -109,10 +112,11 @@ export default class Scene extends Component {
                     </div>
                     <div className="item-tool">
                       <Button type="link" disabled={used} className="tool" onClick={() => this.handleModalVisible('edit', list[d])}>
-                        <Icon type="form" className={used ? 'i-used' : ''} />
+                        <Edit size="14" className={used ? 'i-used' : 'i-btn'} />
                       </Button>
+                      <div className="line" />
                       <Button type="link" disabled={used} className="tool" onClick={() => this.handleDel(id)}>
-                        <Icon type="delete" className={used ? 'i-used' : ''} />
+                        <Del size="14" className={used ? 'i-used' : 'i-btn'} />
                       </Button>
                     </div>
                   </div>

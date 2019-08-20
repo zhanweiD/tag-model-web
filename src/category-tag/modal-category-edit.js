@@ -103,7 +103,7 @@ class ModalEditCategory extends Component {
         <Form>
           <Spin spinning={this.store.detailLoading}>
 
-            <FormItem {...formItemLayout} label="中文名">
+            <FormItem {...formItemLayout} label="名称">
               {getFieldDecorator('name', {
                 initialValue: editCategory ? cateDetail.name : undefined,
                 rules: [

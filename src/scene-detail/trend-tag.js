@@ -31,7 +31,7 @@ export default class TrendTag extends Component {
     this.chartLine = echarts.init(this.lineRef)
 
     const legend = data[0] && data[0].data.map(d => d.name)
-    console.log(data, legend)
+
     this.chartLine.setOption(getTagTrendOpt(
       data, legend
     ))
@@ -44,7 +44,7 @@ export default class TrendTag extends Component {
       startDate: gte,
       endDate: lte,
     }
-
+    
     store.getTagTrend(params, res => {
       if (res.length) this.drawChart(res)
     })
@@ -61,13 +61,15 @@ export default class TrendTag extends Component {
   }
 
   render() {
-    // const {store: {tagTrendData}} = this.props
+    const {tagId} = this.props
+
     return (
       <div className="bgf p16 mb16">
         <h3 className="ct-title">标签调用次数趋势</h3>
         <div className="time-range-wrap">
           <TimeRange
             custom
+            key={tagId}
             defaultRangeInx={0}
             rangeMap={[{
               value: 7,
