@@ -168,10 +168,6 @@ class SceneDetailStore {
       })
     } catch (e) {
       errorTip(e.message)
-      runInAction(() => {
-        this.confirmLoading = false
-        if (cb)cb()
-      })
     }
   }
 

@@ -264,17 +264,19 @@ class TagCategoryStore {
   }
 
   // 类目重命名校验
-  @action async checkIsExist(param) {
-    let content = ''
+  @action async checkIsExist(params, cb) {
     try {
-      content = await io.checkIsExist({
+      const res = await io.checkIsExist({
         occasionId: this.sceneId,
-        ...param,
+        ...params,
+      })
+
+      runInAction(() => {
+        if (cb) cb(res)
       })
     } catch (e) {
       errorTip(e.message)
     }
-    return content
   }
 
   // 标签 - 选择标签树结构

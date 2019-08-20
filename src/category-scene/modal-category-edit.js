@@ -64,26 +64,20 @@ class ModalEditCategory extends Component {
   }
 
   @action.bound handleNameValidator(rule, value, callback) {
-    const {currentTreeItemKey} = this.store
+    const {currentTreeItemKey, eStatus: {editCategory}} = this.store
     if (value) {
-      // // 后端校验
-      // const param = {}
-      // param.name = value
-      // param.objTypeCode = this.bigStore.typeCode
-      // // type(标签:0 类目:1 对象:2)
-      // param.type = 2
-      // // nameType(名称:1 英文名:2)
-      // param.nameType = rule.field === 'name' ? 1 : 2
-      // param.treeId = currentTreeItemKey
       const params = {
         catId: currentTreeItemKey,
         name: value,
+        isCatAdd: editCategory ? 0 : 1,
       }
-      const backPromise = this.store.checkIsExist(params)
-      backPromise.then(content => {
-        if (content.isExist) return callback(isExitMsg)
+
+      this.store.checkIsExist(params, res => {
+        if (!res) {
+          return callback(isExitMsg)
+        }
         callback()
-      })
+      }) 
     } else {
       callback()
     }
@@ -126,7 +120,7 @@ class ModalEditCategory extends Component {
                   {validator: this.handleNameValidator},
                 ],
                 validateFirst: true,
-              })(<Input autoComplete="off" placeholder="不超过20个字，输入为中文字符" />)}
+              })(<Input autoComplete="off" placeholder="不超过20个字，允许中文、英文、数字或下划线" />)}
             </FormItem>
 
             <FormItem {...formItemLayout} label="所属类目">

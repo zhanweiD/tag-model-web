@@ -5,6 +5,8 @@ import {successTip, errorTip, listToTree} from '../common/util'
 import io from './io'
 
 class RelfieldStore {
+  @observable defaultCateId = undefined // 默认类目的id，如果标签没有选择类目，那么就放在默认类目下
+
   id = undefined
 
   // 查询条件
@@ -98,8 +100,23 @@ class RelfieldStore {
         treeId,
       })
       runInAction(() => {
-        this.detailLoading = false
+        // 默认类目
+        let defaultCate = {}
+
+        // 加上value\label属性，用于antd的级联组件
+        res.forEach(node => {
+          const {id, name} = node
+          node.value = id
+          node.label = name
+
+          if (node.aId === -1) {
+            defaultCate = node
+          }
+        })
+
+        this.defaultCateId = defaultCate.id
         this.moveTreeData.replace(listToTree(res))
+        this.detailLoading = false
       })
     } catch (e) {
       runInAction(() => {

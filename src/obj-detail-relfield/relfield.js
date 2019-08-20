@@ -161,19 +161,10 @@ class DrawerRelfield extends Component {
 
     console.log('secondTableList.length', store.list.length, 'tagListCopy', tagListCopy)
 
-    store.saveTags(tagListCopy[index], () => {
+    store.saveTags([tagListCopy[index]], () => {
       cb && cb()
       this.props.bigStore.categoryStore.getCategoryList()
       this.closeEditModal()
-    })
-  }
-
-  @action loop(data) {
-    return data.map(item => {
-      item.label = item.name
-      item.value = item.id
-      if (item.children && item.children.length) this.loop(item.children)
-      return item
     })
   }
 
@@ -236,7 +227,7 @@ class DrawerRelfield extends Component {
                 visible={tagModalVisible}
                 onCancel={this.closeEditModal}
                 onOk={this.handleTagEditConfirm}
-                cateList={this.loop(toJS(store.moveTreeData))}
+                cateList={toJS(store.moveTreeData)}
               />
             )
           }

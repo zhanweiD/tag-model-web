@@ -37,8 +37,8 @@ export default class DataSource extends Component {
     const {store: {sourceData}} = this.props
 
     return (
-      <div className="data-source">
-        <div className="m16 p16 bgf">
+      <div className="data-source p16">
+        <div className="bgf p16">
           <Spin spinning={sourceData.loading}>
             {
               sourceData.data.length 
@@ -76,6 +76,11 @@ export default class DataSource extends Component {
                       dataSource={item.details.slice()} 
                       pagination={false}
                     />
+                    <div className="total-box">
+                      合计
+                      {item.total}
+                      条记录
+                    </div>
                   </div>
 
                 )) : <div className="empty-box bgf"><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /></div> 

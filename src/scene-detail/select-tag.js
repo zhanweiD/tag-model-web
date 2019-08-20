@@ -60,6 +60,7 @@ export default class SelectTag extends Component {
   render() {
     const {tagInfo, tagId, tagInfoLoading} = this.store
     const {
+      id,
       name,
       // used,
       enName,
@@ -67,6 +68,8 @@ export default class SelectTag extends Component {
       cUser,
       cDate,
       descr,
+      objTypeCode,
+      treeId,
     } = toJS(tagInfo)
     // 详情信息
     const baseInfo = [{
@@ -106,7 +109,11 @@ export default class SelectTag extends Component {
                         <span className="mr10">{name}</span>
                         {/* 点击“标签详情”按钮，进入标签池中的标签详情 */}
                         <Button type="primary">
-                          <a href={`${window.__onerConfig.pathPrefix}/pool#/1/${this.store.tagId}`}>
+                          <a 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            href={`${window.__onerConfig.pathPrefix}/pool#/${objTypeCode}/${treeId}`}
+                          >
                           标签详情
                           </a>
                         </Button>
@@ -119,8 +126,8 @@ export default class SelectTag extends Component {
                 </Fragment>
               ) : <div className="empty-box bgf"><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /></div>
             }  
-           
-           
+
+            
           </div> 
         </div>
       </Provider>   

@@ -119,7 +119,7 @@ class ModalEditCategory extends Component {
 
             <FormItem {...formItemLayout} label="所属类目">
               {(() => {
-                if (currentTreeItemKey === 0 || !cateDetail.catePath) {
+                if (cateDetail.parentId === 0) {
                   return '--'
                 }
 
@@ -128,7 +128,8 @@ class ModalEditCategory extends Component {
                     return cateDetail.catePath
                   }
                   return '--'
-                } 
+                }
+
                 if (cateDetail.catePath) { // 添加子级
                   return `${cateDetail.catePath}/${cateDetail.name}`
                 }
