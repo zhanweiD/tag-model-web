@@ -114,7 +114,7 @@ class ModalEditCategory extends Component {
                   {validator: this.handleNameValidator},
                 ],
                 validateFirst: true,
-              })(<Input autoComplete="off" placeholder="不超过20个字，输入为中文字符" />)}
+              })(<Input autoComplete="off" placeholder="不超过20个字，允许中文、英文、数字或下划线" />)}
             </FormItem>
 
             <FormItem {...formItemLayout} label="所属类目">
