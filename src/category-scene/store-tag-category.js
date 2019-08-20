@@ -17,7 +17,7 @@ class TagCategoryStore {
   @observable cateList = [] // 类目列表(平铺)
   @observable treeData = [] // 类目列表(树结构)
 
-  @observable isLoading = false // 获取类目树
+  @observable treeLoading = false // 获取类目树
   @observable expandAll = false // 是否展开全部树节点
   @observable searchExpandedKeys = [] // 关键字搜索展开的树节点
 
@@ -94,7 +94,7 @@ class TagCategoryStore {
   // 获取类目数据
   @action.bound async getCategoryList(cb) {
     try {
-      this.isLoading = true
+      this.treeLoading = true
       let res = []
 
       if (this.searchKey) {

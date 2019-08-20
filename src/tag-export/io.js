@@ -15,6 +15,9 @@ ioContext.create('tagExport', {
     url: `${tagApi}/be_tag/tag/preview_export`,
   },
 
+  getTypeCodes: {
+    url: `${tagApi}/be_tag/tag/import/obj_type/drop_down_box`,
+  },
   // exportTag: {
   //   url: `${tagApi}/be_tag/tag/export`,
   // },

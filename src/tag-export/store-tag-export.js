@@ -3,13 +3,19 @@ import {successTip, errorTip, listToTree} from '../common/util'
 import io from './io'
 
 class BackendExportStore {
-  @observable typeCode = 1
-
   @observable currStep = 0
+
+  @observable typeCode = undefined
+  @observable typeCodes = []
+  @observable searchKey = ''
 
   @observable treeLoading = false
   @observable treeData = []
   @observable cateList = []
+  // 是否展开全部树节点
+  @observable expandAll = false
+  // 搜索自动展开
+  @observable searchExpandedKeys = []
 
   // 选中类目下的标签列表
   @observable tableLoading = false
@@ -21,21 +27,55 @@ class BackendExportStore {
   @observable previewDataList = []
   @observable keyRedis = ''
 
-  @action async getTreeData() {
+  // 获取人、物、对象
+  @action async getTypeCodes() {
     try {
-      this.treeLoading = true
-      const res = await io.getTreeData({
-        searchKey: '',
-        objTypeCode: this.typeCode,
-      })
+      const res = await io.getTypeCodes()
       runInAction(() => {
-        this.treeLoading = false
-        this.cateList = res
-        this.treeData = listToTree(res)
+        this.typeCode = res[0].objTypeCode
+        this.typeCodes.replace(res)
       })
     } catch (e) {
       errorTip(e.message)
     }
+  }
+
+  @action async getTreeData() {
+    try {
+      this.treeLoading = true
+      let res = await io.getTreeData({
+        searchKey: this.searchKey,
+        objTypeCode: this.typeCode,
+      })
+      runInAction(() => {
+        if (!res || !Object.keys(res).length) res = []
+
+        this.treeLoading = false
+        this.searchExpandedKeys.clear()
+
+        const data = res.map(item => {
+          // 关键字搜索定位
+          if (this.searchKey && item.name.includes(this.searchKey)) {
+            this.findParentId(item.id, res, this.searchExpandedKeys)
+          }
+          return item
+        })
+
+        this.cateList.replace(data)
+        this.treeData.replace(listToTree(data))
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  @action findParentId(id, data, expandedKeys) {
+    data.forEach(item => {
+      if (item.parentId !== 0 && item.id === id) {
+        expandedKeys.push(item.parentId)
+        this.findParentId(item.parentId, data, this.searchExpandedKeys)
+      }
+    })
   }
 
   @action async getList(treeId) {

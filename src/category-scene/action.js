@@ -41,10 +41,10 @@ class Action extends Component {
   }
 
   @action.bound handleExpandAll() {
-    this.store.isLoading = true
+    this.store.treeLoading = true
     _.delay(() => {
       this.store.expandAll = !this.store.expandAll
-      this.store.isLoading = false
+      this.store.treeLoading = false
     }, 100)
   }
 

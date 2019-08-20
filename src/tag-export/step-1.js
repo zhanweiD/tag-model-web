@@ -2,12 +2,17 @@ import {Component, Fragment} from 'react'
 import {observable, action, computed, toJS} from 'mobx'
 import {observer} from 'mobx-react'
 import {withRouter, Link} from 'react-router-dom'
-import {Tree, Table, Alert, Button, Spin} from 'antd'
+import {Tree, Table, Alert, Button, Spin, Tabs, Tooltip} from 'antd'
 import {Time} from '../common/util'
+import SvgExtend from '../svg-component/Extend'
+import SvgUnExtend from '../svg-component/UnExtend'
+import SvgRefresh from '../svg-component/Refresh'
+import NoBorderInput from '../component-noborder-input'
 
 import store from './store-tag-export'
 
-const TreeNode = Tree.TreeNode
+const {TreeNode} = Tree
+const {TabPane} = Tabs
 
 @observer
 class Step1 extends Component {
@@ -76,7 +81,6 @@ class Step1 extends Component {
   }
 
   @action onCheck = checkedKeys => {
-    console.log(checkedKeys)
     this.checkedKeys.replace(checkedKeys)
 
     toJS(store.cateList).map(item => {
@@ -111,12 +115,52 @@ class Step1 extends Component {
   @action renderTreeNodes = data => data.map(item => {
     if (item.children) {
       return (
-        <TreeNode title={item.name} key={item.id} nodeData={item}>
+        <TreeNode
+          title={(
+            <Tooltip
+              key={item.name}
+              title={item.name}
+              placement="right"
+              overlayClassName="tooltip-light"
+            >
+              <div
+                className="omit"
+                style={{width: '100px'}}
+              >
+                {item.name}
+              </div>
+            </Tooltip>
+          )}
+          key={item.id}
+          nodeData={item}
+        >
+        {/* <TreeNode title={item.name} key={item.id} nodeData={item}> */}
           {this.renderTreeNodes(item.children)}
         </TreeNode>
       )
     }
-    return <TreeNode title={item.name} key={item.id} nodeData={item} />
+    return (
+      <TreeNode
+        title={(
+          <Tooltip
+            key={item.name}
+            title={item.name}
+            placement="right"
+            overlayClassName="tooltip-light"
+          >
+            <div
+              className="omit"
+              style={{width: '100px'}}
+            >
+              {item.name}
+            </div>
+          </Tooltip>
+        )}
+        key={item.id}
+        nodeData={item}
+        disableCheckbox={!item.treeIds || (item.treeIds && !item.treeIds.length)}
+      />
+    )
   })
 
   loop = (arr, id) => {
@@ -130,13 +174,38 @@ class Step1 extends Component {
     return arr
   }
 
+
   @action goBack() {
     const {history} = this.props
     store.currStep = 0
     history.push('/')
   }
 
+  @action onChangeTab(e) {
+    const {history} = this.props
+    store.typeCode = +e
+    store.getTreeData()
+  }
+
+  @action.bound handleRefresh() {
+    return store.getTreeData()
+  }
+
+  @action.bound handleSearch(e) {
+    store.searchKey = e
+    store.getTreeData()
+  }
+
+  @action.bound handleExpandAll() {
+    store.treeLoading = true
+    _.delay(() => {
+      store.expandAll = !store.expandAll
+      store.treeLoading = false
+    }, 100)
+  }
+
   render() {
+    const {typeCodes} = store
     const currCate = this.selectedKeys.slice()[0]
     const rowSelection = {
       selectedRowKeys: toJS(this.exCate.get(this.selectedKeys.slice()[0])),
@@ -157,19 +226,46 @@ class Step1 extends Component {
         }
       },
     }
+
     return (
       <div className="export-select">
         <Alert message={`当前已选择 ${this.exCate.size} 个类目，共 ${this.stdIds.slice().length} 个标签`} type="info" showIcon />
 
+        <Tabs
+          defaultActiveKey={toJS(typeCodes)[0].objTypeCode}
+          animated={false}
+          onChange={e => this.onChangeTab(e)}
+          className="pl4"
+        >
+          {typeCodes.map(item => <TabPane tab={item.objTypeName} key={item.objTypeCode} />)}
+        </Tabs>
+
         <div className="FBH mt12 export-select-step1">
           <div className="export-select-tree">
+            <div className="category-manager-action pl8 FBH FBAC">
+              <div className="FB1">
+                <NoBorderInput onChange={this.handleSearch} />
+              </div>
+
+              <div className="FBH pr6 pl6" style={{maxWidth: 70}}>
+                <SvgRefresh size="14" onClick={this.handleRefresh} className="mr8 hand" />
+                { store.expandAll ? (
+                  <SvgUnExtend size="14" className="hand" onClick={this.handleExpandAll} /> 
+                ) : (
+                  <SvgExtend size="14" className="hand" onClick={this.handleExpandAll} />
+                )}
+              </div>
+            </div>
             {
               store.treeLoading ? <div className="FBH FBJC pt32"><Spin /></div> : (
                 <Tree
                   checkable
-                  onExpand={this.onExpand}
-                  expandedKeys={this.expandedKeys.slice()}
-                  autoExpandParent={this.autoExpandParent}
+                  defaultExpandAll={store.expandAll}
+                  defaultExpandedKeys={store.searchExpandedKeys.slice()}
+
+                  // onExpand={this.onExpand}
+                  // expandedKeys={this.expandedKeys.slice()}
+                  // autoExpandParent={this.autoExpandParent}
                   onCheck={this.onCheck}
                   checkedKeys={this.checkedKeys.slice()}
                   onSelect={this.onSelect}

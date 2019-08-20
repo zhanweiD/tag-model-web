@@ -40,10 +40,10 @@ class Action extends Component {
   }
 
   @action.bound handleExpandAll() {
-    this.store.isLoading = true
+    this.store.treeLoading = true
     _.delay(() => {
       this.store.expandAll = !this.store.expandAll
-      this.store.isLoading = false
+      this.store.treeLoading = false
     }, 100)
   }
 
@@ -65,9 +65,9 @@ class Action extends Component {
         <Menu.Item>
           <Link to="/import">导入类目及标签</Link>
         </Menu.Item>
-        <Menu.Item>
+        {/* <Menu.Item>
           <Link to="/export">导出类目及标签</Link>
-        </Menu.Item>
+        </Menu.Item> */}
       </Menu>
     )
     
