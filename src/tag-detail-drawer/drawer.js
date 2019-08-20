@@ -117,10 +117,11 @@ export default class TagDetailDrawer extends Component {
         <Drawer
           title="绑定字段"
           placement="right"
-          closable={false}
+          closable
           onClose={this.onClose}
           visible={visiable}
           width={1020}
+          maskClosable={false}
         >
           <Spin spinning={loading}>
             {
