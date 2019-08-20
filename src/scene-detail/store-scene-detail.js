@@ -78,14 +78,12 @@ class SceneDetailStore {
   }
 
   // 名称校验
-  @action async checkName(name, cb) {
+  @action async checkName(params, cb) {
     try {
-      await io.checkName({
-        name,
-      })
+      const res = await io.checkName(params)
 
       runInAction(() => {
-        if (cb) cb()
+        if (cb) cb(res)
       })
     } catch (e) {
       errorTip(e.message)
