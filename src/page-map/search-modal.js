@@ -103,6 +103,19 @@ class SearchModal extends React.Component {
                 </FormItem>
               </Col>
             </Row>
+
+            {
+              store.selectedSceneId && !store.cateList.length && (
+                <Row>
+                  <Col span={14} offset={4}>
+                    <div>
+                      <span className="fca">没有类目？</span>
+                      <a href={`/scene#/detail/${store.selectedSceneId}`}>去创建类目</a>
+                    </div>
+                  </Col>
+                </Row>
+              )
+            }
           </Form>
         </div>
       </Modal>
