@@ -83,7 +83,7 @@ exports.SearchForm = Form.create({
                   {getFieldDecorator('minWorth', {
                     initialValue: '',
                   })(
-                    <InputNumber min={0} max={100} style={{width: '100%'}} placeholder="请输入" />
+                    <InputNumber min={0} max={100} precision={0} style={{width: '100%'}} placeholder="请输入" />
                   )}
                 </FormItem>
                 <span style={{display: 'inline-block', width: '24px', textAlign: 'center'}}>
@@ -93,7 +93,7 @@ exports.SearchForm = Form.create({
                   {getFieldDecorator('maxWorth', {
                     initialValue: '',
                   })(
-                    <InputNumber min={1} max={100} style={{width: '100%'}} placeholder="请输入" />
+                    <InputNumber min={1} max={100} precision={0} style={{width: '100%'}} placeholder="请输入" />
                   )}
                 </FormItem>
               </div>
@@ -110,7 +110,7 @@ exports.SearchForm = Form.create({
                   {getFieldDecorator('minQuality', {
                     initialValue: '',
                   })(
-                    <InputNumber min={0} max={100} style={{width: '100%'}} placeholder="请输入" />
+                    <InputNumber min={0} max={100} precision={0} style={{width: '100%'}} placeholder="请输入" />
                   )}
                 </FormItem>
                 <span style={{display: 'inline-block', width: '24px', textAlign: 'center'}}>
@@ -120,7 +120,7 @@ exports.SearchForm = Form.create({
                   {getFieldDecorator('maxQuality', {
                     initialValue: '',
                   })(
-                    <InputNumber min={1} max={100} style={{width: '100%'}} placeholder="请输入" />
+                    <InputNumber min={1} max={100} precision={0} style={{width: '100%'}} placeholder="请输入" />
                   )}
                 </FormItem>
               </div>
@@ -137,7 +137,7 @@ exports.SearchForm = Form.create({
                   {getFieldDecorator('minHot', {
                     initialValue: '',
                   })(
-                    <InputNumber min={0} max={100} style={{width: '100%'}} placeholder="请输入" />
+                    <InputNumber min={0} max={100} precision={0} style={{width: '100%'}} placeholder="请输入" />
                   )}
                 </FormItem>
                 <span style={{display: 'inline-block', width: '24px', textAlign: 'center'}}>
@@ -147,7 +147,7 @@ exports.SearchForm = Form.create({
                   {getFieldDecorator('maxHot', {
                     initialValue: '',
                   })(
-                    <InputNumber min={1} max={100} style={{width: '100%'}} placeholder="请输入" />
+                    <InputNumber min={1} max={100} precision={0} style={{width: '100%'}} placeholder="请输入" />
                   )}
                 </FormItem>
               </div>
