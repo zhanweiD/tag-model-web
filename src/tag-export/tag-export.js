@@ -14,9 +14,10 @@ const Step = Steps.Step
 @observer
 export default class TagExport extends Component {
   componentWillMount() {
-    this.props.frameChange('nav', [
+    const {frameChange} = this.props
+    frameChange('nav', [
       navListMap.assetMgt,
-      {text: '后台类目', url: '/tag#/backend'},
+      navListMap.tagPool,
       {text: '导出类目及标签'},
     ])
   }

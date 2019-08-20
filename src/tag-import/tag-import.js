@@ -15,7 +15,7 @@ const {Step} = Steps
 @observer
 export default class TagImport extends Component {
   componentWillMount() {
-    const {frameChange, match} = this.props
+    const {frameChange} = this.props
     frameChange('nav', [
       navListMap.assetMgt,
       navListMap.tagPool,

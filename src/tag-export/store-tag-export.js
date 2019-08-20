@@ -98,11 +98,13 @@ class BackendExportStore {
       // })
       runInAction(() => {
         const {pathPrefix} = window.__onerConfig
-        window.open(`${pathPrefix}/file/download/api/v1/be_tag/tag/export?keyRedis=${this.keyRedis}`)
+        const {tenantId, userId} = window.__userConfig
+        console.log(this.keyRedis)
+        window.open(`${pathPrefix}/file/download/api/v1/be_tag/tag/export?keyRedis=${this.keyRedis}&tenantId=${tenantId}&userId=${userId}`)
 
         this.currStep = 0
         this.keyRedis = ''
-        successTip('操作成功')
+        successTip('导出操作成功')
         cb && cb()
       })
     } catch (e) {
