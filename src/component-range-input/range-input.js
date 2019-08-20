@@ -130,14 +130,14 @@ class RangeInput extends React.Component {
   handleChange(value, type = MIN) {
     const {orderOutput, onChange} = this.props
 
-    console.log('onchange----')
+    // console.log('onchange----')
 
     // 没传onChange，直接不触发事件好了
     if (typeof onChange !== 'function') {
       return
     }
 
-    console.log('onchange---- 3 --- ')
+    // console.log('onchange---- 3 --- ')
 
     // 处理一下数据
     let {before, after} = this.getTranformValues(value, type)
@@ -163,7 +163,7 @@ class RangeInput extends React.Component {
       return
     }
 
-    console.log('onBlur --- 1 --- ')
+    // console.log('onBlur --- 1 --- ')
 
     const {prevState} = this
 
@@ -177,7 +177,7 @@ class RangeInput extends React.Component {
       return
     }
 
-    console.log('onBlur --- 2 --- ')
+    // console.log('onBlur --- 2 --- ')
 
     // 要做排序，且第一个值比第二个值大，那就调换输入框的值（ps: undefined和数字比较大小总是false）
     if (orderInput && after[0] > after[1]) {
