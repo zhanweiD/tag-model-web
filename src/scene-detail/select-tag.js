@@ -68,7 +68,7 @@ export default class SelectTag extends Component {
       cUser,
       cDate,
       descr,
-      // objTypeCode,
+      objTypeCode,
       treeId,
     } = toJS(tagInfo)
     // 详情信息
@@ -112,7 +112,7 @@ export default class SelectTag extends Component {
                           <a 
                             target="_blank" 
                             rel="noopener noreferrer" 
-                            href={`${window.__onerConfig.pathPrefix}/pool#/${treeId}/${id}`}
+                            href={`${window.__onerConfig.pathPrefix}/pool#/${objTypeCode}/${treeId}`}
                           >
                           标签详情
                           </a>
