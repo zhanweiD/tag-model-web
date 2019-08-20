@@ -64,7 +64,7 @@ class TagCategory extends Component {
         // 对象-添加类目; 不请求类目详情
         if (nodeData.type === 2) {
           this.store.cateDetail = {
-            fullName: '客户',
+            fullName: nodeData.name,
             id: nodeData.id,
             type: 2, // 0 标签 1 类目 2 对象
           }
