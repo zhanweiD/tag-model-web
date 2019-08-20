@@ -98,7 +98,12 @@ export default class TagDetail extends Component {
                 isUsed ? <Tag color="green">使用中</Tag> : <Tag color="blue">未使用</Tag>
               }
             </div>
-            <TagDetailDrawer id={objId}><Button type="primary">绑定字段</Button></TagDetailDrawer>
+            <TagDetailDrawer
+              id={objId}
+              onUpdate={value => console.log(value)}
+            >
+              <Button type="primary">绑定字段</Button>
+            </TagDetailDrawer>
           </div>
           <NemoBaseInfo dataSource={baseInfo} className="d-info" />
         </div>
