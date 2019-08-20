@@ -6,6 +6,7 @@ import {observer} from 'mobx-react'
 import {
   Form, Input, Icon,
 } from 'antd'
+import {isEmptyValue} from '../common/util'
 import RangeInput from '../component-range-input'
 
 const FormItem = Form.Item
@@ -65,18 +66,20 @@ class SearchFilter extends React.Component {
               {
                 getFieldDecorator('keyword', {
                   initialValue: store.filterKeyword,
-                  // rules: [
-                  // ],
                 })(
                   <Search
                     placeholder="请输入标签关键词"
                     enterButton="搜索"
                     size="large"
                     style={{width: 552}}
-                    // onChange={e => this.handleKeywordChange(e.target.value)}
+                    onChange={e => {
+                      // 清空时触发
+                      if (!e.target.value) {
+                        this.handleKeywordChange(e.target.value)
+                      }
+                    }}
                     onSearch={value => this.handleKeywordChange(value)}
                     onPressEnter={e => this.handleKeywordChange(e.target.value)}
-                    onBlur={e => this.handleKeywordChange(e.target.value)}
                   />
                 )
               }
@@ -114,15 +117,18 @@ class SearchFilter extends React.Component {
               className="search-range-input"
               label="价值分"
               fieldNamePrefix="score-worth"
-              onChange={(values, rawValues) => {
+              onBlur={(values, rawValues) => {
+                // console.log(values, rawValues)
                 this.handleScoreChange('filterWorth', values, rawValues)
               }}
+              // orderInput
+              // orderOutput
             />
             <RangeInput
               className="search-range-input"
               label="质量分"
               fieldNamePrefix="score-quality"
-              onChange={(values, rawValues) => {
+              onBlur={(values, rawValues) => {
                 this.handleScoreChange('filterQuality', values, rawValues)
               }}
             />
@@ -130,7 +136,7 @@ class SearchFilter extends React.Component {
               className="search-range-input"
               label="热度"
               fieldNamePrefix="score-hot"
-              onChange={(values, rawValues) => {
+              onBlur={(values, rawValues) => {
                 this.handleScoreChange('filterHot', values, rawValues)
               }}
             />
@@ -177,7 +183,7 @@ class SearchFilter extends React.Component {
     const {store} = this.props
 
     // 原始值既不是没填，也不是整数
-    const isInvalid = rawValues.some(v => (v !== undefined && !(/^\d*$/).test(v)))
+    const isInvalid = rawValues.some(v => (!isEmptyValue(v) && !(/^\d*$/).test(v)))
 
     // 如果不是整数，那么不修改store，而且UI上会报错
     if (isInvalid) {

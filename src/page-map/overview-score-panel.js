@@ -88,7 +88,7 @@ export default class OverviewScorePanel extends React.Component {
     } = this.props
 
     const typeText = typeToText(type)
-    const lineOption = getLineChartOption(lineData)
+    const lineOption = getLineChartOption(lineData, type)
 
     return (
       <Row gutter={48} style={{height: '400px', padding: '16px 24px 24px 24px'}}>
