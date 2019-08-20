@@ -38,7 +38,8 @@ export default class SceneDetail extends Component {
 
     frameChange('nav', [
       navListMap.tagMgt,
-      {text: '标签场景'},
+      {url: '/scene#/', text: '标签场景'},
+      {text: '场景详情'},
     ])
     store.getDetail()
     store.getSourceList()
