@@ -52,9 +52,9 @@ export default class Scene extends Component {
     const {loading, list = []} = store
     return (
       <div className="scene-wrap p16 pt0">
-        <Spin spinning={loading}>
-          <div className="header">标签使用场景</div>
-          <Row gutter={16}> 
+        <div className="header">标签使用场景</div>
+        <Row gutter={16} className="scene-box"> 
+          <Spin spinning={loading}>
             <Col span={8}>
               <div className="add-scene FBH FBJC FBAC">
                 <div className="pt16" onClick={() => this.handleModalVisible()}>
@@ -123,8 +123,8 @@ export default class Scene extends Component {
                 </Col>
               ))
             }
-          </Row>
-        </Spin>
+          </Spin>
+        </Row>
         <ModalAdd store={store} />
       </div>
     )
