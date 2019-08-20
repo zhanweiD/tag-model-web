@@ -45,9 +45,9 @@ class StepThree extends Component {
     store.previewDataList.clear()
   }
 
-  componentWillUnmount() {
-    this.goBack()
-  }
+  // componentWillUnmount() {
+  //   this.goBack()
+  // }
 
   render() {
     const {history} = this.props

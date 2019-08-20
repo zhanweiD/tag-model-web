@@ -63,11 +63,11 @@ class Action extends Component {
           </div>
         </Menu.Item>
         <Menu.Item>
-          <Link to='/import'>导入类目及标签</Link>
-        </Menu.Item>{/* 
+          <Link to="/import">导入类目及标签</Link>
+        </Menu.Item>
         <Menu.Item>
-          <Link to="">导出类目及标签</Link>
-        </Menu.Item> */}
+          <Link to="/export">导出类目及标签</Link>
+        </Menu.Item>
       </Menu>
     )
     

@@ -26,6 +26,8 @@ export default class TagImport extends Component {
   }
 
   render() {
+    console.log('store.currStep')
+    console.log(store.currStep)
     return (
       <div className="page-import p16">
         <Steps current={store.currStep} className="steps">
