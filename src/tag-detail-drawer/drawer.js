@@ -74,6 +74,12 @@ export default class TagDetailDrawer extends Component {
         })
         setTimeout(() => {
           this.block = false
+          const {
+            onUpdate,
+          } = this.props
+          if (onUpdate) {
+            onUpdate()
+          }
         }, 200)
       })
     })
@@ -174,14 +180,14 @@ export default class TagDetailDrawer extends Component {
                     {
                       title: '标签中文名',
                       dataIndex: 'tagName',
-                      width: 80,
+                      width: 96,
                     },
                   ]}
                   resultTargetColumns={[
                     {
                       title: '字段英文名',
                       dataIndex: 'dataFieldName',
-                      width: 80,
+                      width: 69,
                     },
                   ]}
                   resultSourceFullColumns={[
@@ -193,29 +199,29 @@ export default class TagDetailDrawer extends Component {
                     {
                       title: '标签中文名',
                       dataIndex: 'tagName',
-                      width: 100,
+                      width: 80,
                     },
                     {
                       title: '数据类型',
                       dataIndex: 'tagValueTypeName',
-                      width: 100,
+                      width: 80,
                     },
                   ]}
                   resultTargetFullColumns={[
                     {
                       title: '英文名',
                       dataIndex: 'dataFieldName',
-                      width: 100,
+                      width: 60,
                     },
                     {
                       title: '字段类型',
                       dataIndex: 'dataFieldType',
-                      width: 100,
+                      width: 60,
                     },
                     {
                       title: '数据表',
                       dataIndex: 'dataTableName',
-                      width: 100,
+                      width: 130,
                     },
                   ]}
                   resultRowKey={record => record.tagId}
@@ -226,6 +232,7 @@ export default class TagDetailDrawer extends Component {
                       enName: tagEnName,
                       valueType: tagValueType,
                       valueTypeName: tagValueTypeName,
+                      isUsed,
                     },
                     {
                       dataStorageId,
@@ -235,21 +242,20 @@ export default class TagDetailDrawer extends Component {
                       dataFieldName,
                       dataFieldType,
                     }
-                  ) => {
-                    return {
-                      tagId,
-                      tagName,
-                      tagEnName,
-                      tagValueType,
-                      tagValueTypeName,
-                      dataStorageId,
-                      dataDbName,
-                      dataDbType,
-                      dataTableName,
-                      dataFieldName,
-                      dataFieldType,
-                    }
-                  }}
+                  ) => ({
+                    tagId,
+                    tagName,
+                    tagEnName,
+                    tagValueType,
+                    tagValueTypeName,
+                    dataStorageId,
+                    dataDbName,
+                    dataDbType,
+                    dataTableName,
+                    dataFieldName,
+                    dataFieldType,
+                    isUsed,
+                  })}
                   nameMappingField={['enName', 'dataFieldName']}
                   onChange={value => this.value = value}
                   sourceTitle="标签列表"
