@@ -18,8 +18,7 @@ const {TabPane} = Tabs
 class Step1 extends Component {
   exCate = observable.map({})
 
-  @observable autoExpandParent = true
-  @observable expandedKeys = []
+  // @observable expandedKeys = []
   @observable checkedKeys = []
   @observable selectedKeys = []
 
@@ -31,27 +30,26 @@ class Step1 extends Component {
         title: '名称',
         key: 'name',
         dataIndex: 'name',
-        width: 200,
-        render: text => <div className="omit" style={{width: '200px'}} title={text}>{text}</div>,
+        width: 150,
+        render: text => <div className="omit" style={{width: '150px'}} title={text}>{text}</div>,
       }, {
         title: '英文名',
         key: 'enName',
         dataIndex: 'enName',
-        width: 150,
-        render: text => <div className="omit" style={{width: '150px'}} title={text}>{text}</div>,
+        width: 120,
+        render: text => <div className="omit" style={{width: '120px'}} title={text}>{text}</div>,
       }, {
         title: '数据类型',
-        key: 'cateFullName',
-        dataIndex: 'cateFullName',
+        key: 'tagValueType',
+        dataIndex: 'tagValueType',
       }, {
         title: '是否枚举',
-        key: 'isEnum',
-        dataIndex: 'isEnum',
-        render: text => (text ? '是' : '否'),
+        key: 'isEnumStr',
+        dataIndex: 'isEnumStr',
       }, {
         title: '枚举显示值',
-        key: 'enumValue',
-        dataIndex: 'enumValue',
+        key: 'enumVal',
+        dataIndex: 'enumVal',
         width: 150,
         render: text => <div className="omit" style={{width: '150px'}} title={text}>{text}</div>,
       }, {
@@ -75,10 +73,9 @@ class Step1 extends Component {
     return arr
   }
 
-  @action onExpand = expandedKeys => {
-    this.expandedKeys.replace(expandedKeys)
-    this.autoExpandParent = false
-  }
+  // @action onExpand = expandedKeys => {
+  //   this.expandedKeys.replace(expandedKeys)
+  // }
 
   @action onCheck = checkedKeys => {
     this.checkedKeys.replace(checkedKeys)
@@ -105,60 +102,77 @@ class Step1 extends Component {
       // 叶子目录
       this.selectedKeys.replace(selectedKeys)
       store.getList(nodeData.id)
-    } else if (!this.expandedKeys.slice().includes(nodeData.id)) {
-      // 非叶子目录 展开子集
-      this.expandedKeys.push(nodeData.id)
-    }
+    } /*else {
+      if (this.expandedKeys.slice().includes(nodeData.id)) {
+        // 非叶子目录 折叠展示
+        this.expandedKeys.remove(nodeData.id)
+      } else {
+        this.expandedKeys.push(nodeData.id)
+      }
+    }*/
     return true
   }
 
   @action renderTreeNodes = data => data.map(item => {
     if (item.children) {
       return (
+        // <TreeNode
+        //   title={(
+        //     <Tooltip
+        //       key={item.name}
+        //       title={item.name}
+        //       placement="right"
+        //       overlayClassName="tooltip-light"
+        //     >
+        //       <div
+        //         className="omit"
+        //         style={{width: `${140 - item.level / 2 * 40}px`}}
+        //       >
+        //         {item.name}
+        //       </div>
+        //     </Tooltip>
+        //   )}
+        //   key={item.id}
+        //   nodeData={item}
+        // >
         <TreeNode
-          title={(
-            <Tooltip
-              key={item.name}
-              title={item.name}
-              placement="right"
-              overlayClassName="tooltip-light"
-            >
-              <div
-                className="omit"
-                style={{width: '100px'}}
-              >
-                {item.name}
+          title={(() => {
+            if (item.parentId !== 0) return <span>{item.name}</span>
+            return (
+              <div className="FBH" style={{color: '#0078ff'}}>
+                <div className="text-hidden">{item.name}</div>
+                <div className="pl4">{`(${item.tagCount || 0})`}</div>
               </div>
-            </Tooltip>
-          )}
+            )
+          })()}
           key={item.id}
           nodeData={item}
         >
-        {/* <TreeNode title={item.name} key={item.id} nodeData={item}> */}
           {this.renderTreeNodes(item.children)}
         </TreeNode>
       )
     }
     return (
       <TreeNode
-        title={(
-          <Tooltip
-            key={item.name}
-            title={item.name}
-            placement="right"
-            overlayClassName="tooltip-light"
-          >
-            <div
-              className="omit"
-              style={{width: '100px'}}
-            >
-              {item.name}
-            </div>
-          </Tooltip>
-        )}
+        // title={(
+        //   <Tooltip
+        //     key={item.name}
+        //     title={item.name}
+        //     placement="right"
+        //     overlayClassName="tooltip-light"
+        //   >
+        //     <div
+        //       className="omit"
+        //       style={{width: `${140 - item.level / 2 * 40}px`}}
+        //     >
+        //       {item.name}
+        //     </div>
+        //   </Tooltip>
+        // )}
+        title={item.name}
         key={item.id}
         nodeData={item}
-        disableCheckbox={!item.treeIds || (item.treeIds && !item.treeIds.length)}
+        // disableCheckbox={!item.treeIds || (item.treeIds && !item.treeIds.length)}
       />
     )
   })
@@ -174,19 +188,26 @@ class Step1 extends Component {
     return arr
   }
 
-
   @action goBack() {
     const {history} = this.props
     store.currStep = 0
     history.push('/')
   }
 
+  // 切换队形类型
   @action onChangeTab(e) {
-    const {history} = this.props
+    document.getElementById('searchKey').value = ''
+    this.exCate.clear()
+    this.checkedKeys.clear()
+    this.selectedKeys.clear()
+
     store.typeCode = +e
+    store.expandAll = false
+    store.searchKey = ''
     store.getTreeData()
   }
 
+  // 树 Actios
   @action.bound handleRefresh() {
     return store.getTreeData()
   }
@@ -229,7 +250,7 @@ class Step1 extends Component {
 
     return (
       <div className="export-select">
-        <Alert message={`当前已选择 ${this.exCate.size} 个类目，共 ${this.stdIds.slice().length} 个标签`} type="info" showIcon />
+        <Alert message={`当前已选择 ${this.stdIds.slice().length} 个标签`} type="info" showIcon />
 
         <Tabs
           defaultActiveKey={toJS(typeCodes)[0].objTypeCode}
@@ -241,6 +262,7 @@ class Step1 extends Component {
         </Tabs>
 
         <div className="FBH mt12 export-select-step1">
+ 
           <div className="export-select-tree">
             <div className="category-manager-action pl8 FBH FBAC">
               <div className="FB1">
@@ -260,12 +282,11 @@ class Step1 extends Component {
               store.treeLoading ? <div className="FBH FBJC pt32"><Spin /></div> : (
                 <Tree
                   checkable
+                  autoExpandParent
                   defaultExpandAll={store.expandAll}
                   defaultExpandedKeys={store.searchExpandedKeys.slice()}
-
                   // onExpand={this.onExpand}
                   // expandedKeys={this.expandedKeys.slice()}
-                  // autoExpandParent={this.autoExpandParent}
                   onCheck={this.onCheck}
                   checkedKeys={this.checkedKeys.slice()}
                   onSelect={this.onSelect}

@@ -20,27 +20,27 @@ class ModalDataSource extends Component {
   columns = [{
     title: '所属对象',
     dataIndex: 'objTypeName',
-    width: 100,
+    width: 80,
   }, {
     title: '对象名称',
     dataIndex: 'objName',
     width: 150,
-    render: text => <div title={text} style={{maxWidth: '150px'}} className="omit">{text}</div>,
+    render: text => <div title={text} style={{maxWidth: '120px'}} className="omit">{text}</div>,
   }, {
     title: '所属类目',
     dataIndex: 'catName',
-    width: 150,
-    render: text => <div title={text} style={{maxWidth: '150px'}} className="omit">{text}</div>,
+    width: 120,
+    render: text => <div title={text} style={{maxWidth: '100px'}} className="omit">{text}</div>,
   }, {
     title: '标签名称',
     dataIndex: 'tagName',
     width: 150,
-    render: text => <div title={text} style={{maxWidth: '150px'}} className="omit">{text}</div>,
+    render: text => <div title={text} style={{maxWidth: '120px'}} className="omit">{text}</div>,
   }, {
     title: '标签英文名',
     dataIndex: 'tagEnName',
     width: 150,
-    render: text => <div title={text} style={{maxWidth: '150px'}} className="omit">{text}</div>,
+    render: text => <div title={text} style={{maxWidth: '120px'}} className="omit">{text}</div>,
   }, 
   {
     title: '目的字段',
