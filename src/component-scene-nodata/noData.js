@@ -9,12 +9,14 @@ export default class NoData extends Component {
     text: PropTypes.string, // 说明文案；不传视为不需
     btnTxt: PropTypes.string, // 按钮文案；不传视为不需按钮
     onClick: PropTypes.func, // 按钮点击事件
+    isLoading: PropTypes.bool, // 判断当前页面是否在loading; 若页面正在loading 则空组件隐藏处理；避免出现loading 空组件同时出现的情况
   }
 
   static defaultProps = {
     pt: '13%',
     text: '',
     btnTxt: '',
+    isLoading: false,
     onClick: () => {},
   }
 
@@ -49,13 +51,14 @@ export default class NoData extends Component {
   }
 
   render() {
-    const {pt: paddingTop} = this.props
+    const {pt: paddingTop, isLoading} = this.props
     const style = {
       paddingTop,
       marginBottom: '8px',
     }
+
     return (
-      <div className="nodata">
+      <div className={`nodata ${isLoading ? 'no-show' : ''}`}>
         <div style={style}>
           <img width="180px" height="180px" src={nodata} alt="暂无数据" />
         </div>

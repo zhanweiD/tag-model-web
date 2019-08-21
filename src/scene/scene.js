@@ -125,7 +125,7 @@ export default class Scene extends Component {
            
                   </Row>
                 </Fragment>
-              ) : <NoData btnTxt="添加场景" onClick={() => this.handleModalVisible()} />
+              ) : <NoData btnTxt="添加场景" onClick={() => this.handleModalVisible()} isLoading={loading} />
             }
             <ModalAdd store={store} />
           </div>
