@@ -2,10 +2,9 @@ import {Component} from 'react'
 import {action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {
-  Tabs, Button, Icon, Spin, Tooltip,
+  Tabs, Button, Icon, Spin, Tooltip, Tag,
 } from 'antd'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
-// import {Link} from 'react-router-dom'
 
 import {Time} from '../common/util'
 import {navListMap} from '../common/constants'
@@ -97,8 +96,12 @@ export default class SceneDetail extends Component {
           <div className="info">
             <div className="FBH FBJ">
               <p className="name">
-                <span className="mr8">{info.name}</span> 
-                <Icon type="edit" onClick={this.sceneDetailVisible} />
+                <span>{info.name}</span> 
+                {
+                  !used && <Icon className="ml8" type="edit" onClick={this.sceneDetailVisible} style={{color: 'rgba(0,0,0, .65)'}} />
+                }
+                
+                <Tag className="ml10" color={used ? 'blue' : ''}>{used ? '使用中' : '未使用'}</Tag>
               </p>
               <div>
                 <Button className="mr8" href={`${window.__onerConfig.pathPrefix}/scene#/tags/${store.sceneId}`}>标签列表</Button>
