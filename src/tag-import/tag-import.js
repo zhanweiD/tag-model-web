@@ -15,7 +15,7 @@ const {Step} = Steps
 @observer
 export default class TagImport extends Component {
   componentWillMount() {
-    const {frameChange, match} = this.props
+    const {frameChange} = this.props
     frameChange('nav', [
       navListMap.assetMgt,
       navListMap.tagPool,
@@ -26,6 +26,8 @@ export default class TagImport extends Component {
   }
 
   render() {
+    console.log('store.currStep')
+    console.log(store.currStep)
     return (
       <div className="page-import p16">
         <Steps current={store.currStep} className="steps">

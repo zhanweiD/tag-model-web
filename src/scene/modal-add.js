@@ -132,10 +132,10 @@ class ModalAdd extends Component {
               rules: [{
                 required: true, message: '描述不能为空',
               }, {
-                max: 100, message: '不超过100个字',
+                max: 100, message: '描述不能超过100个字符',
               }],
             })(
-              <TextArea autoComplete="off" placeholder="请输入" />
+              <TextArea autoComplete="off" placeholder="不超过100个字" />
             )}
           </FormItem>
         </Form>
