@@ -20,9 +20,24 @@ $font-colors = {
     'f': #fff,
 }
 
+// 设计师喜欢用的透明度
+$opacitys = {
+  '45': 0.45,
+  '65': 0.65,
+  '85': 0.85,
+}
+
 for $key, $value in $font-colors
   .fc{$key}
     color $value
+  
+for $key, $value in $opacitys
+  .black{$key}
+    color rgba(0, 0, 0, $value)
+
+for $key, $value in $opacitys
+  .opacity{$key}
+    opacity $value
 
 // font size
 for $n in 0 12 14 16 18 20 22 24 26 28 30

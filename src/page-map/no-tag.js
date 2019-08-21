@@ -16,6 +16,7 @@ export default class NoTag extends React.Component {
       <div 
         style={{
           visibility: visible ? 'visible' : 'hidden',
+          marginTop: -70, // 需要往上移点
         }}
       >
         <Empty
@@ -24,9 +25,9 @@ export default class NoTag extends React.Component {
             height: 140,
           }}
           description={(
-            <span className="fs12" style={{color: 'rgba(0, 0, 0, 0.65)'}}>
-              没有任何标签，请在标签池中添加对象 -> 添加标签
-            </span>
+            <div className="fs12 mt12 black85 opacity65">
+              没有任何标签，请在标签池中添加对象 -&gt; 添加标签
+            </div>
           )}
         >
           <Button type="primary"><a href="/pool">去添加标签</a></Button>
