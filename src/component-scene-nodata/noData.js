@@ -25,17 +25,24 @@ export default class NoData extends Component {
     if (onClick) onClick()
   }
 
-  renderContent() {
-    const {text, btnTxt} = this.props
-
-    // 渲染按钮
-    if (btnTxt) {
-      return <Button type="primary" onClick={this.onClick}>{btnTxt}</Button>
-    }
+  renderText() {
+    const {text} = this.props
 
     // 渲染说明文字
     if (text) {
       return <div className="text">{text}</div>
+    }
+
+    return null
+  }
+
+
+  renderBtn() {
+    const {btnTxt} = this.props
+    
+    // 渲染按钮
+    if (btnTxt) {
+      return <Button type="primary" onClick={this.onClick}>{btnTxt}</Button>
     }
 
     return null
@@ -53,7 +60,10 @@ export default class NoData extends Component {
           <img width="180px" height="180px" src={nodata} alt="暂无数据" />
         </div>
         {
-          this.renderContent()
+          this.renderText()
+        }
+        {
+          this.renderBtn()
         }
       </div>
     )
