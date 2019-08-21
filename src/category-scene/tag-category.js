@@ -2,7 +2,7 @@ import {Component} from 'react'
 import {withRouter} from 'react-router-dom'
 import {observer, inject} from 'mobx-react'
 import {
-  toJS, observable, action, runInAction,
+  toJS, action, runInAction,
 } from 'mobx'
 import {Modal, Spin} from 'antd'
 import {DtTree} from '@dtwave/uikit'
@@ -24,8 +24,6 @@ const {confirm} = Modal
 @inject('sceneDetail')
 @observer
 class TagCategory extends Component {
-  // @observable updateKey = undefined
-
   constructor(props) {
     super(props)
     this.bigStore = props.bigStore
@@ -35,7 +33,7 @@ class TagCategory extends Component {
 
   @action.bound onselect(selectedKeys, info) {
     const {tagChange} = this.props
-    const {typeCode, id} = this.bigStore
+    const {id} = this.bigStore
     // 1. 展开节点
     info.node.onExpand()
 
@@ -61,6 +59,8 @@ class TagCategory extends Component {
         this.store.eStatus.editCategory = false
         this.store.modalVisible.editCategory = true
 
+        this.currSelectCategory = nodeData.id
+
         // 对象-添加类目; 不请求类目详情
         if (nodeData.type === 2) {
           this.store.cateDetail = {
@@ -84,6 +84,7 @@ class TagCategory extends Component {
         this.store.currentTreeItemKey = nodeData.id
         this.store.getSelectTag()
         this.store.modalVisible.selectTag = true
+        this.currSelectCategory = nodeData.id
       })
     },
   }
@@ -100,6 +101,7 @@ class TagCategory extends Component {
           this.store.eStatus.editCategory = true
           this.store.getCategoryDetail()
           this.store.modalVisible.editCategory = true
+          this.currSelectCategory = nodeData.id
         }
       })
     },
@@ -111,14 +113,30 @@ class TagCategory extends Component {
     onClick: (key, nodeData) => {
       runInAction(() => {
         this.store.currentTreeItemKey = nodeData.id
+        // 删除项为标签 0
+        if (!nodeData.type) this.currSelectCategory = nodeData.parentId
+
+        // 删除项为类目；且非一级类目 1
+        if (nodeData.type === 1) this.currSelectCategory = nodeData.parentId
+
         // 节点类型 type 0 标签 1 类目 2 对象
-        const tipStr = nodeData.type === 2 ? '所属该场景的全部对象、标签都会被移除，类目会被删除' : (
-          nodeData.type === 1 ? '所属该类目的子类目会被删除，标签也会被移除' : '该标签会被移除'
-        )
+        /* eslint-disable no-nested-ternary */
+        const tipStr = nodeData.type === 2 
+          ? '所属该场景的全部对象、标签都会被移除，类目会被删除' : (
+            nodeData.type === 1 
+              ? '所属该类目的子类目会被删除，标签也会被移除' : '该标签会被移除'
+          )
+        
         confirm({
           title: '确认删除？',
           content: tipStr,
           onOk: () => this.store.deleteNode(nodeData.type, () => {
+            // 删除项为标签
+            if (!nodeData.type) this.store.currentTreeItemKey = nodeData.parentId
+
+            // 删除项为类目；且非一级类目 1
+            if (nodeData.type === 1) this.store.currentTreeItemKey = nodeData.parentId
+
             // 为了场景的标签数 大费周折
             this.sceneDetailStore.getDetail()
             this.props.tagDel(nodeData.id)
@@ -166,6 +184,16 @@ class TagCategory extends Component {
   }
   
   return actionList
+}
+
+getSelectedKeys = () => {
+  if (this.bigStore.tagId) return [this.bigStore.tagId]
+
+  if (this.currSelectCategory && this.store.currentTreeItemKey === this.currSelectCategory) {
+    return [this.store.currentTreeItemKey]
+  }
+
+  return []
 }
 
 render() {
@@ -228,8 +256,9 @@ render() {
   const treeProps = {
     selectExpand: true,
     defaultExpandAll: this.store.expandAll,
-    selectedKeys: this.bigStore.id ? [this.bigStore.id] : [],
-    expandWithParentKeys: this.bigStore.id ? [this.bigStore.id] : [],
+    selectedKeys: this.getSelectedKeys(),
+    expandWithParentKeys: this.getSelectedKeys(),
+    // expandWithParentKeys: this.bigStore.tagId ? [this.bigStore.tagId] : [],
     type: 'tree',
     onSelect: this.onselect,
     // actionList,

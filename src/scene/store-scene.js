@@ -6,7 +6,7 @@ import io from './io'
 
 
 class SceneStore {
-  @observable loading = false
+  @observable loading = true
 
   // 场景列表
   @observable list = []
@@ -68,6 +68,10 @@ class SceneStore {
       })
     } catch (e) {
       errorTip(e.message)
+      runInAction(() => {
+        this.confirmLoading = false
+        this.modalVisible = false
+      })
     }
   }
 
@@ -101,6 +105,10 @@ class SceneStore {
       })
     } catch (e) {
       errorTip(e.message)
+      runInAction(() => {
+        this.confirmLoading = false
+        this.modalVisible = false
+      })
     }
   }
 

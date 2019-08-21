@@ -26,8 +26,6 @@ export default class SelectTag extends Component {
     this.store = new Store(props)
     this.store.categoryStore = new TagCategoryStore(props)
 
-    this.store.typeCode = 1
-    this.store.id = props.id || -1
 
     // 场景id
     this.store.sceneId = props.sceneId
@@ -63,6 +61,12 @@ export default class SelectTag extends Component {
     const {categoryStore} = this.store
     const target = categoryStore.cateList.filter(item => item.id === this.tagId) || []
     this.isTagDel = !target.length
+
+    // 删除项是当前选中项
+    if (this.isTagDel) {
+      this.store.tagId = undefined
+      this.tagId = undefined
+    }
   }
 
   goToAddObj = () => {
@@ -88,13 +92,14 @@ export default class SelectTag extends Component {
     const {treeData} = this.store.categoryStore
     return treeData.length
   }
-
+ 
   render() {
     const {
-      tagInfo, tagId, tagInfoLoading, tagExistFlag,
+      tagInfo, tagId, tagInfoLoading, tagExistFlag, tagExistFlagLoading,
     } = this.store
+
     const {
-      id,
+      // id,
       name,
       // used,
       enName,
@@ -172,14 +177,12 @@ export default class SelectTag extends Component {
                               }
                             </div>
                           )
-                          : <NoData btnTxt="选择对象" onClick={this.selectObj} />
+                          : <NoData btnTxt="选择对象" onClick={this.selectObj} isLoading={this.store.categoryStore.treeLoading} />
                       }
                     </Spin>
                   </div>
-                )
-                
-                    
-                : <NoData btnTxt="去添加对象" text="没有任何对象，请在标签池中添加！" onClick={this.goToAddObj} />
+                ) 
+                : <NoData btnTxt="去添加对象" text="没有任何对象，请在标签池中添加！" onClick={this.goToAddObj} isLoading={tagExistFlagLoading} />
             }
 
           </div>
