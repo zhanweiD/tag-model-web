@@ -1,5 +1,5 @@
 import {
-  observable, action, runInAction, toJS,
+  observable, action, runInAction,
 } from 'mobx'
 import {successTip, errorTip, listToTree} from '../common/util'
 import io from './io'
@@ -12,7 +12,6 @@ class TagCategoryStore {
   }
 
   @observable id = undefined
-  @observable typeCode = undefined
 
   @observable cateList = [] // 类目列表(平铺)
   @observable treeData = [] // 类目列表(树结构)
@@ -75,11 +74,15 @@ class TagCategoryStore {
   // 获取关联的对象
   // @observable relObjectList = []
 
+  // 当前选中的类目 用于添加类目展开
+  currSelectCategory = undefined
+
   @action destory() {
     this.expandAll = false
     this.searchExpandedKeys = []
     this.searchKey = undefined
     this.currentTreeItemKey = false
+    this.currSelectCategory = undefined
   }
 
   @action findParentId(id, data, expandedKeys) {
@@ -112,20 +115,36 @@ class TagCategoryStore {
       runInAction(() => {
         this.treeLoading = false
         this.searchExpandedKeys.clear()
+        let data = []
+        let objId
 
-        const data = res.map(item => {
-          // 关键字搜索定位
-          if (this.searchKey && item.name.includes(this.searchKey)) {
-            this.findParentId(item.id, res, this.searchExpandedKeys)
+        if (res.length) {
+          if (res.length > 1) {
+            // 对象id
+            objId = res.filter(item => item.parentId === 0)[0].id
           }
-          return item
-        })
+
+          data = res.map(item => {
+            // 关键字搜索定位
+            if (this.searchKey && item.name.includes(this.searchKey)) {
+              this.findParentId(item.id, res, this.searchExpandedKeys)
+            }
+
+            if (objId && item.parentId === objId) {
+              this.findParentId(item.id, res, this.searchExpandedKeys)
+            }
+            return item
+          }) 
+        }
 
         this.cateList.replace(data)
         this.treeData.replace(listToTree(data))
         if (cb) cb()
       })
     } catch (e) {
+      runInAction(() => {
+        this.treeLoading = false
+      })
       errorTip(e.message)
     }
   }
@@ -241,6 +260,9 @@ class TagCategoryStore {
       }
       runInAction(() => {
         successTip('删除成功')
+        // 删除对象
+        if (type === 2) this.destory()
+ 
         this.getCategoryList(() => {
           // 删除标签重新请求 场景详情 因为场景详情里面有 标签数这个扑街
           if (cb) cb()

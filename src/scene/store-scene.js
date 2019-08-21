@@ -68,6 +68,10 @@ class SceneStore {
       })
     } catch (e) {
       errorTip(e.message)
+      runInAction(() => {
+        this.confirmLoading = false
+        this.modalVisible = false
+      })
     }
   }
 
@@ -101,6 +105,10 @@ class SceneStore {
       })
     } catch (e) {
       errorTip(e.message)
+      runInAction(() => {
+        this.confirmLoading = false
+        this.modalVisible = false
+      })
     }
   }
 
