@@ -70,6 +70,7 @@ export default class NoObj extends React.Component {
         className="pool-no-obj"
         style={{
           visibility: visible ? 'visible' : 'hidden',
+          background: '#F4F6F9',
         }}
       >
         <Empty

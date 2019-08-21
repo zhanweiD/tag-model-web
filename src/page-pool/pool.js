@@ -14,15 +14,6 @@ import TagImport from '../tag-import'
 import TagExport from '../tag-export'
 import NoObj from './no-obj'
 
-// 仅测试用
-async function sleep(delay = 2000) {
-  await new Promise(resolve => {
-    setTimeout(() => {
-      resolve()
-    }, delay)
-  })
-}
-
 @observer
 export default class TagRouter extends Component {
   constructor(props) {
@@ -98,8 +89,6 @@ export default class TagRouter extends Component {
         loading: true,
       })
       const content = await io.checkObjExist()
-
-      // await sleep()
 
       this.setState({
         loading: false,

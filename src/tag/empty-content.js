@@ -29,7 +29,13 @@ export default class EmptyContent extends React.Component {
     }
 
     return (
-      <div className="FBV FBJC FBAC" style={{height: '100%'}}>
+      <div 
+        className="FBV FBJC FBAC" 
+        style={{
+          height: '100%',
+          background: '#F4F6F9',
+        }}
+      >
         <button 
           type="button" 
           className={getBtnClass(ADD)}
