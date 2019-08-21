@@ -123,10 +123,12 @@ export default class SelectTag extends Component {
     }, {
       title: '创建时间',
       value: <Time timestamp={cDate} />,
-    }, {
-      title: '业务逻辑',
-      value: descr,
-    }]
+    },
+    //  {
+    //   title: '业务逻辑',
+    //   value: descr,
+    // }
+    ]
 
     const tagCategoryOpt = {
       tagChange: this.tagChange,
@@ -153,18 +155,23 @@ export default class SelectTag extends Component {
                                   <Fragment>
                                     <div className="detail-info mb16">
                                       <Spin spinning={tagInfoLoading}>
-                                        <div className="d-head FBH FBJ">
-                                          <span className="mr10">{name}</span>
-                                          {/* 点击“标签详情”按钮，进入标签池中的标签详情 */}
-                                          <Button type="primary">
-                                            <a
-                                              target="_blank"
-                                              rel="noopener noreferrer"
-                                              href={`${window.__onerConfig.pathPrefix}/pool#/${objTypeCode}/${treeId}`}
-                                            >
+                                        <div className="d-head">
+                                          <div className="FBH FBJ">
+                                            <span className="mr10">{name}</span>
+                                            {/* 点击“标签详情”按钮，进入标签池中的标签详情 */}
+                                            <Button type="primary">
+                                              <a
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                href={`${window.__onerConfig.pathPrefix}/pool#/${objTypeCode}/${treeId}`}
+                                              >
                                               标签详情
-                                            </a>
-                                          </Button>
+                                              </a>
+                                            </Button>
+                                          </div>
+                                          <div className="descr-box">
+                                            {descr}
+                                          </div>
                                         </div>
                                         <NemoBaseInfo dataSource={baseInfo} key={Math.random()} className="d-info" />
                                       </Spin>

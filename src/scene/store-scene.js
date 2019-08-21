@@ -63,8 +63,8 @@ class SceneStore {
       runInAction(() => {
         this.confirmLoading = false
         this.modalVisible = false
-        successTip('添加成功')
         this.getList()
+        successTip('添加成功')
       })
     } catch (e) {
       errorTip(e.message)
@@ -83,8 +83,8 @@ class SceneStore {
       })
 
       runInAction(() => {
-        successTip('删除成功')
         this.getList()
+        successTip('删除成功')
       })
     } catch (e) {
       errorTip(e.message)
@@ -100,8 +100,8 @@ class SceneStore {
       runInAction(() => {
         this.confirmLoading = false
         this.modalVisible = false
-        successTip('编辑成功')
         this.getList()
+        successTip('编辑成功')
       })
     } catch (e) {
       errorTip(e.message)

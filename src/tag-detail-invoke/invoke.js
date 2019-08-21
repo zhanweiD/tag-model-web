@@ -99,8 +99,8 @@ export default class Invoke extends Component {
             ))
           }
         </div>
-        <div className="mb32 p16 bgf">
-          <h3 className="ct-title">调用趋势</h3>
+        <div className="mb32 p24 bgf">
+          <h3 className="chart-title">调用趋势</h3>
           <div className="time-range-wrap">
             <TimeRange
               key={aId}

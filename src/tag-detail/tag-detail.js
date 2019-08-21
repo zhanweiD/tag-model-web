@@ -82,28 +82,34 @@ export default class TagDetail extends Component {
       }, {
         title: '字段',
         value: fieldName,
-      }, {
-        title: '业务逻辑',
-        value: descr,
-      },
+      }, 
+      // {
+      //   title: '业务逻辑',
+      //   value: descr,
+      // },
     ]
 
     return (
       <div className="tag-detail">
         <div className="detail-info">
-          <div className="d-head FBH FBJ">
-            <div>
-              <span className="mr10">{name}</span>
-              {
-                isUsed ? <Tag color="green">使用中</Tag> : <Tag color="blue">未使用</Tag>
-              }
+          <div className="d-head">
+            <div className="FBH FBJ">
+              <div>
+                <span className="mr10">{name}</span>
+                {
+                  isUsed ? <Tag color="green">使用中</Tag> : <Tag color="blue">未使用</Tag>
+                }
+              </div>
+              <TagDetailDrawer
+                id={objId}
+                onUpdate={value => console.log(value)}
+              >
+                <Button type="primary">绑定字段</Button>
+              </TagDetailDrawer>
             </div>
-            <TagDetailDrawer
-              id={objId}
-              onUpdate={value => console.log(value)}
-            >
-              <Button type="primary">绑定字段</Button>
-            </TagDetailDrawer>
+            <div className="descr-box">
+              {descr}
+            </div>
           </div>
           <NemoBaseInfo dataSource={baseInfo} className="d-info" />
         </div>
