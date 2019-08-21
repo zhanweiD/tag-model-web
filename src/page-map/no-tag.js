@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {Empty, Button} from 'antd'
 import emptyIcon from '../icon/noData.svg'
+import {pathPrefix} from '../common/util'
 
 // 无标签的状态
 export default class NoTag extends React.Component {
@@ -30,7 +31,7 @@ export default class NoTag extends React.Component {
             </div>
           )}
         >
-          <Button type="primary"><a href="/pool">去添加标签</a></Button>
+          <Button type="primary"><a href={`${pathPrefix}/pool`}>去添加标签</a></Button>
         </Empty>
       </div>
     )

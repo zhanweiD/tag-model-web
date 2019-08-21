@@ -4,6 +4,7 @@ import {
   Modal, Form, Select, Row, Col, Icon, Tooltip, Cascader,
 } from 'antd'
 import {action} from 'mobx'
+import {pathPrefix} from '../common/util'
 
 const FormItem = Form.Item
 const {Option} = Select
@@ -110,7 +111,7 @@ class SearchModal extends React.Component {
                   <Col span={14} offset={4}>
                     <div>
                       <span className="fca">没有类目？</span>
-                      <a href={`/scene#/detail/${store.selectedSceneId}`}>去创建类目</a>
+                      <a href={`${pathPrefix}/scene#/detail/${store.selectedSceneId}`}>去创建类目</a>
                     </div>
                   </Col>
                 </Row>
