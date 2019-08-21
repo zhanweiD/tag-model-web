@@ -22,13 +22,13 @@ class Action extends Component {
   @action.bound handleEditCategory() {
     const {treeData} = this.store 
     if (toJS(treeData).length) return 
+     
+    // 获取选择对象
+    this.store.getSelectObj()
     
     this.store.currentTreeItemKey = 0
     this.store.eStatus.editObject = false
     this.store.modalVisible.editObject = true
-    
-    // 获取选择对象
-    this.store.getSelectObj()
   }
 
   @action.bound handleRefresh() {

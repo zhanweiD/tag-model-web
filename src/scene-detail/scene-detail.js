@@ -136,7 +136,7 @@ export default class SceneDetail extends Component {
             <SelectTag sceneId={store.sceneId} />
           </TabPane>
           <TabPane tab="目的数据源列表" key="2">
-            <DataSource store={store} />
+            <DataSource store={store} onClick={this.dbSourceVisible} />
           </TabPane>
         </Tabs>
         <ModalEditScene store={store} />
