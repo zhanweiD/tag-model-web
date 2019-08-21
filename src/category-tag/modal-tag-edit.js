@@ -147,7 +147,7 @@ class ModalTagEdit extends Component {
                   // {pattern: /^[\u4e00-\u9fa5]{1,30}$/, message: '输入限制为中文字符'},
                   {validator: this.handleNameValidator},
                 ],
-              })(<Input autoComplete="off" placeholder="不超过20个字，输入为中文字符" />)}
+              })(<Input autoComplete="off" placeholder="不超过20个字，允许中文、英文、数字或下划线" />)}
             </FormItem>
 
             <FormItem {...formItemLayout} label="英文名">
@@ -158,7 +158,7 @@ class ModalTagEdit extends Component {
                   {pattern: enNameReg, message: '不超过30个字，只能包含英文、数字或下划线，必须以英文开头'},
                   {validator: this.handleNameValidator},
                 ],
-              })(<Input autoComplete="off" placeholder="不超过30个字，输入为英文字符或数字" />)}
+              })(<Input autoComplete="off" placeholder="不超过30个字，允许英文、数字或下划线，必须以英文开头" />)}
             </FormItem>
 
             <FormItem {...formItemLayout} label="数据类型">
@@ -196,7 +196,7 @@ class ModalTagEdit extends Component {
                   <Input.TextArea
                     autoComplete="off"
                     rows="3"
-                    placeholder={`若标签值为枚举型，可将枚举代码值显示为易理解的值，例如：{"0":"女","1":"男"}`}
+                    placeholder={'若标签值为枚举型，可将枚举代码值显示为易理解的值，例如：{"0":"女","1":"男"}'}
                   />
                 )}
               </FormItem>

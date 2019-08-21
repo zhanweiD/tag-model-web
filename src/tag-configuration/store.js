@@ -3,15 +3,6 @@ import io from './io'
 import {errorTip, successTip} from '../common/util'
 import {listToTree} from '../page-map/util'
 
-// for test
-async function sleep(delay = 2000) {
-  await new Promise(resolve => {
-    setTimeout(() => {
-      resolve()
-    }, delay)
-  })
-}
-
 export default class Store {
   @observable initialList = [] // 第一步拿到的初始数据
 

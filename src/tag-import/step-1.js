@@ -14,6 +14,12 @@ class StepOne extends Component {
     if (type === 'typeCode') store.getObjs()
   }
 
+  @action goBack() {
+    const {history} = this.props
+    store.currStep = 0
+    history.push('/')
+  }
+
   render() {
     return (
       <div style={{width: '420px'}}>
@@ -49,6 +55,7 @@ class StepOne extends Component {
         </div>
         
         <div className="fac mt48">
+          <Button size="large" className="mr12" onClick={() => this.goBack()}>返回</Button>
           <Button
             type="primary"
             size="large"

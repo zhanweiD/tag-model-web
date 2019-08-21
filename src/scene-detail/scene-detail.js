@@ -70,6 +70,7 @@ export default class SceneDetail extends Component {
       cDate,
       invokeList = [],
       descr,
+      used,
     } = info
 
     // 详情信息
@@ -117,7 +118,7 @@ export default class SceneDetail extends Component {
                       <Button 
                         type="primary" 
                         onClick={this.dbSourceVisible} 
-                        disabled={store.isDbSourcEnough}
+                        disabled={store.isDbSourcEnough || used}
                       >
                         添加目的数据源
                       </Button>

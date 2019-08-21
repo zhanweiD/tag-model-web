@@ -241,10 +241,10 @@ render() {
     <div className="category-tree">
       <DtTreeBox {...treeBoxProps}>
         {(() => {
-          if (this.store.isLoading) {
+          if (this.store.treeLoading) {
             return <div style={{textAlign: 'center', margin: '100px 0'}}><Spin /></div>
           }
-          if (!this.store.isLoading && treeData.length) {
+          if (!this.store.treeLoading && treeData.length) {
             return (
               <DtTree {...treeProps}>
                 {loop(treeData)}

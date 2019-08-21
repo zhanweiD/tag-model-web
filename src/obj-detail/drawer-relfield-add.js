@@ -73,11 +73,11 @@ class DrawerRelfieldAdd extends Component {
       if (!err) {
         let arr = values.dataFieldName.map(item => store.fieldList.find(o => o.field === item))
         // 数据源相关参数
-        const storageObj = store.dacList.find(item => item.dataStorageId === values.dataStorageId)
+        const storageObj = toJS(store.dacList).find(item => item.dataStorageId === values.dataStorageId)
 
         if (store.baseInfo.objTypeCode === 3) {
-          const timeObj = getFieldObj(values.timeKey)
-          const addrObj = getFieldObj(values.addrKey)
+          const timeObj = values.timeKey && getFieldObj(values.timeKey)
+          const addrObj = values.addrKey && getFieldObj(values.addrKey)
 
           const mappingKeys = toJS(store.baseInfo).objRspList.map(item => {
             const o = getFieldObj(values[item.id])
@@ -87,27 +87,39 @@ class DrawerRelfieldAdd extends Component {
               file_type: o.type,
             })
           })
-          arr = arr.map(item => ({
-            dataStorageId: values.dataStorageId,
-            dataTableName: values.dataTableName,
-            dataFieldName: item.field,
-            dataFieldType: item.type,
-            dataTimeName: timeObj.field,
-            dataTimeType: timeObj.type,
-            dataAddrName: addrObj.field,
-            dataAddrType: addrObj.type,
-            mappingKeys: JSON.stringify(mappingKeys),
-            ...storageObj,
-          }))
+
+          arr = arr.map(item => {
+            const o = {
+              dataStorageId: values.dataStorageId,
+              dataTableName: values.dataTableName,
+              dataFieldName: item.field,
+              dataFieldType: item.type,
+              mappingKeys: JSON.stringify(mappingKeys),
+              ...storageObj,
+            }
+            if (timeObj) {
+              o.dataTimeName = timeObj.field
+              o.dataTimeType = timeObj.type
+            }
+            if (addrObj) {
+              o.dataAddrName = addrObj.field
+              o.dataAddrType = addrObj.type
+            }
+            return o
+          })
 
           // 关联的主键唯一性，覆盖
           this.stdlist.forEach(item => {
             if (item.dataStorageId === values.dataStorageId && item.dataTableName === values.dataTableName) {
-              item.dataTimeName = timeObj.field
-              item.dataTimeType = timeObj.type
-              item.dataAddrName = addrObj.field
-              item.dataAddrType = addrObj.type
-              item.mappingKeys = mappingKeys
+              if (timeObj) {
+                item.dataTimeName = timeObj.field
+                item.dataTimeType = timeObj.type
+              }
+              if (addrObj) {
+                item.dataAddrName = addrObj.field
+                item.dataAddrType = addrObj.type
+              }
+              item.mappingKeys = JSON.stringify(mappingKeys)
             }
           })
         } else {

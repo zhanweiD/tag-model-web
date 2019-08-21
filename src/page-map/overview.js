@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {observer} from 'mobx-react'
+import PropTypes from 'prop-types'
 
 import OverviewCards from './overview-cards'
 import OverviewScore from './overview-score'
@@ -16,10 +17,16 @@ import store from './store-overview'
  */
 @observer
 export default class Overview extends Component {
+  static propTypes = {
+    basicData: PropTypes.object, // 卡片的原始数据，因为页面初始化时要加载来判断是否无标签，所以就从外面传进来吧
+  }
+
   render() {
+    const {basicData} = this.props
+
     return (
       <div className="map-overview">
-        <OverviewCards store={store} />
+        <OverviewCards basicData={basicData} />
         <OverviewScore store={store} />
         <OverviewCall store={store} />
       </div>

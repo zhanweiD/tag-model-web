@@ -1,5 +1,6 @@
 import React from 'react'
 import {observer} from 'mobx-react'
+import PropTypes from 'prop-types'
 import {Row, Col} from 'antd'
 import OverviewCard from '../component-overview-card'
 
@@ -11,29 +12,47 @@ import OverviewCard from '../component-overview-card'
  * @class OverviewCards
  * @extends {React.Component}
  */
-@observer
+// @observer
 export default class OverviewCards extends React.Component {
-  componentDidMount() {
-    const {store} = this.props
-    store.getCardsData()
+  static propTypes = {
+    basicData: PropTypes.object, // 卡片的原始数据
   }
 
+  // componentDidMount() {
+  //   const {store} = this.props
+  //   store.getCardsData()
+  // }
+
   render() {
-    const {store} = this.props
+    // const {store} = this.props
+    // const {
+    //   cardsData: {
+    //     tagCount,
+    //     avgWorth,
+    //     maxWorth,
+    //     avgHot,
+    //     maxHot,
+    //     avgQuality,
+    //     maxQuality,
+    //     apiCount,
+    //     avgInvoke,
+    //     maxInvoke,
+    //   },
+    // } = store
+
+    const {basicData = {}} = this.props
     const {
-      cardsData: {
-        tagCount,
-        avgWorth,
-        maxWorth,
-        avgHot,
-        maxHot,
-        avgQuality,
-        maxQuality,
-        apiCount,
-        avgInvoke,
-        maxInvoke,
-      },
-    } = store
+      tagCount,
+      avgWorth,
+      maxWorth,
+      avgHot,
+      maxHot,
+      avgQuality,
+      maxQuality,
+      apiCount,
+      avgInvoke,
+      maxInvoke,
+    } = basicData
 
     const cards = [
       {

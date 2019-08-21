@@ -69,13 +69,13 @@ export default class Exponent extends Component {
 
   @action redrawVs(gte = this.defStartTime, lte = this.defEndTime) {
     store.getDailyVs(1, gte, lte, () => {
-      vsChart.setOption(getLineChartOpt({data: toJS(store.vsTrend), title: '价值分'}))
+      vsChart.setOption(getLineChartOpt({data: toJS(store.vsTrend), title: '应用价值分'}))
     })
   }
 
   @action redrawQs(gte = this.defStartTime, lte = this.defEndTime) {
     store.getDailyVs(3, gte, lte, () => {
-      qsChart.setOption(getLineChartOpt({data: toJS(store.qsTrend), title: '质量分'}))
+      qsChart.setOption(getLineChartOpt({data: toJS(store.qsTrend), title: '标签质量分'}))
     })
   }
 
@@ -141,7 +141,7 @@ export default class Exponent extends Component {
 
         </div>
         <div className="mb16 p16 bgf">
-          <h3 className="ct-title">标签价值分趋势</h3>
+          <h3 className="ct-title">价值分趋势</h3>
           <div className="time-range-wrap">
             <TimeRange
               key={aId}
@@ -164,7 +164,7 @@ export default class Exponent extends Component {
         </div>
 
         <div className="mb16 p16 bgf">
-          <h3 className="ct-title">标签质量分趋势</h3>
+          <h3 className="ct-title">质量分趋势</h3>
           <div className="time-range-wrap">
             <TimeRange
               key={aId}
