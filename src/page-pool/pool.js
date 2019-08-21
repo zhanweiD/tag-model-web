@@ -4,6 +4,7 @@ import {
   HashRouter as Router, Route, Switch, Redirect,
 } from 'react-router-dom'
 import {Spin} from 'antd'
+import cls from 'classnames'
 
 import Frame from '../frame'
 import io from './io'
@@ -50,7 +51,11 @@ export default class TagRouter extends Component {
           ]}
         >
           <div 
-            className="FBH FBJC FBAC" 
+            className={cls({
+              FBH: showNoObj,
+              FBJC: showNoObj,
+              FBAC: showNoObj,
+            })}
             style={{
               minHeight: '100%',
               background: (!loading && showNoObj) ? '#F4F6F9' : '',
@@ -98,7 +103,7 @@ export default class TagRouter extends Component {
 
       this.setState({
         loading: false,
-        showNoObj: !!content,
+        showNoObj: !content,
       })
     } catch (e) {
       this.setState({
