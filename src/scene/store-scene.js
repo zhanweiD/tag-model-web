@@ -6,7 +6,7 @@ import io from './io'
 
 
 class SceneStore {
-  @observable loading = true
+  @observable loading = false
 
   // 场景列表
   @observable list = []
