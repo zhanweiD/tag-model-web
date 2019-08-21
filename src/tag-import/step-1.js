@@ -1,7 +1,7 @@
 import {Component} from 'react'
 import {observable, action} from 'mobx'
 import {observer} from 'mobx-react'
-import {Button, Form, Select} from 'antd'
+import {Button, Select} from 'antd'
 import {withRouter} from 'react-router-dom'
 import store from './store-tag-import'
 
@@ -11,12 +11,16 @@ const {Option} = Select
 class StepOne extends Component {
   @action handleChange(type, e) {
     store[type] = e
-    if (type === 'typeCode') store.getObjs()
+    if (type === 'typeCode') {
+      store.objId = undefined
+      store.getObjs()
+    }
   }
 
   @action goBack() {
     const {history} = this.props
     store.currStep = 0
+    store.objId = undefined
     history.push('/')
   }
 
@@ -43,6 +47,7 @@ class StepOne extends Component {
           <Select
             placeholder="请下拉选择"
             style={{width: '320px'}}
+            value={store.objId}
             onChange={e => this.handleChange('objId', e)}
             disabled={!store.typeCode}
           >
