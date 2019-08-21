@@ -5,7 +5,7 @@ import {
 } from 'mobx'
 import {observer, Provider} from 'mobx-react'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
-import {Button, Empty, Spin} from 'antd'
+import {Button, Spin} from 'antd'
 
 import {Time} from '../common/util'
 import NoData from '../component-scene-nodata'
@@ -41,12 +41,23 @@ export default class SelectTag extends Component {
 
   componentWillMount() {
     this.store.isObjExist(() => {
-      this.store.categoryStore.getCategoryList()
+      this.store.categoryStore.getCategoryList(data => {
+        if (!data.length) return 
+        // 所有标签
+        const tagList = data.filter(item => !item.type)
+        if (!tagList.length) return 
+
+        // 存在标签,默认选中第一个
+        this.tagId = tagList[0].id
+        this.store.tagId = tagList[0].id
+        this.store.categoryStore.currentTreeItemKey = tagList[0].id
+        this.store.getTagDetail()
+      })
     })
 
-    if (this.tagId) {
-      this.store.getTagDetail()
-    }
+    // if (this.tagId) {
+    //   this.store.getTagDetail()
+    // }
   }
 
   @action tagChange = tagId => {
@@ -179,8 +190,7 @@ export default class SelectTag extends Component {
                                     <TrendTag store={this.store} tagId={this.store.tagId} />
                                     <TrendApi store={this.store} tagId={this.store.tagId} />
                                   </Fragment>
-                                ) : <div />
-                              // <div className="empty-box bgf"><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /></div>
+                                ) : <NoData text="请选择标签！" />
                               }
                             </div>
                           )
