@@ -1,0 +1,47 @@
+image: docker:git
+services:
+  - docker:dind
+
+variables:
+  DOCKER_DRIVER: overlay
+  PROJECT_NAME: asset_tag
+  VERSION: -v${CI_COMMIT_TAG}
+  # DOCKER_HOST: "tcp://localhost:2375"
+
+cache:
+  paths:
+    - tgz
+    - node_modules
+
+stages:
+  - build
+  - package
+  - deploy
+
+build:
+  image: docker.dtwave-inc.com/library/nodejs-web:8.12.0-alpine
+  stage: build
+  script:
+    - rm -rf tgz default
+    - npm install
+    - npm run down
+    - npm run build
+    - suffix=${VERSION} npm run tar -p
+    - ls
+  only:
+    - tags
+
+upload:
+  image: docker.dtwave-inc.com/library/mc
+  stage: package
+  cache:
+    paths:
+      - tgz
+  dependencies:
+    - build
+  script:
+    - mc mb dtwave-inc/shuxi-dev/frontend/${PROJECT_NAME}/${CI_COMMIT_TAG}/
+    - mc cp tgz/*${VERSION}.tgz dtwave-inc/shuxi-dev/frontend/${PROJECT_NAME}/${CI_COMMIT_TAG}/
+
+  only:
+    - tags
