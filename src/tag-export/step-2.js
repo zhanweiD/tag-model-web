@@ -1,7 +1,7 @@
 import {Component, Fragment} from 'react'
 import {observable, action, toJS} from 'mobx'
 import {observer} from 'mobx-react'
-import {Table, Button} from 'antd'
+import {Table, Button, Alert} from 'antd'
 import {withRouter, Link} from 'react-router-dom'
 
 import store from './store-tag-export'
@@ -21,6 +21,8 @@ class Step2 extends Component {
   render() {
     return (
       <Fragment>
+        <Alert message={`共 ${store.totalTag} 个标签。预览数据只展示10条记录`}  type="info" showIcon />
+
         <Table
           columns={toJS(store.previewDataHead)}
           loading={store.previewDataLoading}
