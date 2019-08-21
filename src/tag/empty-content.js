@@ -14,19 +14,19 @@ export default class EmptyContent extends React.Component {
     onClick: PropTypes.func, // 点击按钮要触发的事件
   }
 
-  state = {
-    activeType: ADD, // 当前激活的button，add：添加对象，import：导入标签及类目
-  }
+  // state = {
+  //   activeType: ADD, // 当前激活的button，add：添加对象，import：导入标签及类目
+  // }
 
   render() {
-    const {activeType} = this.state
+    // const {activeType} = this.state
 
-    const getBtnClass = type => {
-      return cls({
-        'empty-content-button': true,
-        'empty-content-button--active': activeType === type,
-      })
-    }
+    // const getBtnClass = type => {
+    //   return cls({
+    //     'empty-content-button': true,
+    //     'empty-content-button--active': activeType === type,
+    //   })
+    // }
 
     return (
       <div 
@@ -38,7 +38,8 @@ export default class EmptyContent extends React.Component {
       >
         <button 
           type="button" 
-          className={getBtnClass(ADD)}
+          // className={getBtnClass(ADD)}
+          className="empty-content-button"
           style={{
             marginTop: -60,
             marginBottom: 8,
@@ -59,7 +60,8 @@ export default class EmptyContent extends React.Component {
 
         <button 
           type="button" 
-          className={getBtnClass(IMPORT)}
+          // className={getBtnClass(IMPORT)}
+          className="empty-content-button"
           onClick={() => {
             this.handleClick(IMPORT)
           }}
@@ -81,9 +83,9 @@ export default class EmptyContent extends React.Component {
   handleClick(type = ADD) {
     const {onClick} = this.props
     
-    this.setState({
-      activeType: type,
-    })
+    // this.setState({
+    //   activeType: type,
+    // })
 
     if (typeof onClick === 'function') {
       onClick(type)
