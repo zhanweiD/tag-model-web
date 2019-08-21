@@ -42,12 +42,17 @@ class ModalSelectTag extends Component {
   columns = [{
     title: '名称',
     dataIndex: 'name',
+    width: 120,
+    render: text => <div title={text} style={{maxWidth: '100px'}} className="omit">{text}</div>,
   }, {
     title: '英文名',
     dataIndex: 'enName',
+    width: 100,
+    render: text => <div title={text} style={{maxWidth: '80px'}} className="omit">{text}</div>,
   }, {
     title: '数据类型',
     dataIndex: 'valueTypeName',
+    width: 100,
   }, {
     title: '是否枚举',
     dataIndex: 'is_enum',
@@ -55,14 +60,14 @@ class ModalSelectTag extends Component {
   }, {
     title: '枚举显示值',
     dataIndex: 'enumValue',
-    width: 150,
-    render: text => <div title={text} style={{width: '150px'}} className="omit">{text}</div>,
+    width: 120,
+    render: text => <div title={text} style={{maxWidth: '100px'}} className="omit">{text}</div>,
 
   }, {
     title: '业务逻辑',
     dataIndex: 'descr',
-    width: 200,
-    render: text => <div title={text} style={{width: '200px'}} className="omit">{text}</div>,
+    width: 150,
+    render: text => <div title={text} style={{maxWidth: '120px'}} className="omit">{text}</div>,
   }]
 
   // 获取类目数组 用于全选功能
@@ -275,7 +280,15 @@ class ModalSelectTag extends Component {
                 {this.renderTreeNodes(treeData)}
               </Tree>
             </div>
-            <Table columns={this.columns} rowKey="id" dataSource={this.list.slice()} rowSelection={rowSelection} pagination={false} className="FB1 ml24" />
+            <Table 
+              scroll={{y: 400}}
+              columns={this.columns} 
+              rowKey="id" 
+              dataSource={this.list.slice()} 
+              rowSelection={rowSelection} 
+              pagination={false} 
+              className="FB1 ml24"
+            />
           </div>
         </Spin>
       </Modal>
