@@ -14,23 +14,29 @@ import './main.styl'
 
 const {TabPane} = Tabs
 
+// 仅测试用
+async function sleep(delay = 2000) {
+  await new Promise(resolve => {
+    setTimeout(() => {
+      resolve()
+    }, delay)
+  })
+}
+
 /** 
  * @description 标签地图页面
  * @author 三千
 */
 export default class PageMap extends React.Component {
-  state = {
-    loading: false,
-    basicData: {}, // 卡片数据
-  }
-
   constructor(props) {
     super(props)
-    this.checkTagExist()
-  }
 
-  componentDidMount() {
-    console.log(this.state)
+    this.state = {
+      loading: true, // 数据加载成功之前都是loading
+      basicData: {}, // 卡片数据
+    }
+
+    this.checkTagExist()
   }
 
   render() {

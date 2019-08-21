@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {Empty, Button} from 'antd'
-import emptyIcon from '../icon/empty.svg'
+import emptyIcon from '../icon/noData.svg'
 
 // 无标签的状态
 export default class NoTag extends React.Component {
@@ -15,7 +15,7 @@ export default class NoTag extends React.Component {
     return (
       <div 
         style={{
-          visibility: visible ? 'hidden' : 'visible',
+          visibility: visible ? 'visible' : 'hidden',
         }}
       >
         <Empty
