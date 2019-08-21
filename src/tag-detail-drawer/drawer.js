@@ -15,11 +15,20 @@ export default class TagDetailDrawer extends Component {
   }
 
   block = false
+  id = ''
 
   showDrawer = () => {
     this.setState({
       visiable: true,
     })
+
+    const {
+      id,
+    } = this
+
+    if (id) {
+      this.getAllData(id)
+    }
   }
 
   onClose = () => {
@@ -31,12 +40,12 @@ export default class TagDetailDrawer extends Component {
 
   componentWillMount() {
     this.store = new Store()
-    const {
-      id,
-    } = this.props
-    if (id) {
-      this.getAllData(id)
-    }
+    // const {
+    //   id,
+    // } = this.props
+    // if (id) {
+    //   this.getAllData(id)
+    // }
   }
 
   getAllData = async id => {
@@ -89,10 +98,11 @@ export default class TagDetailDrawer extends Component {
     const {
       id,
     } = nextProps
-
-    if (id) {
-      this.getAllData(id)
-    }
+    this.id = id
+    //
+    // if (id) {
+    //   this.getAllData(id)
+    // }
   }
 
   componentDidMount() {
@@ -178,7 +188,7 @@ export default class TagDetailDrawer extends Component {
                   result={result}
                   resultSourceColumns={[
                     {
-                      title: '标签中文名',
+                      title: '标签名称',
                       dataIndex: 'tagName',
                       width: 96,
                     },
@@ -260,17 +270,25 @@ export default class TagDetailDrawer extends Component {
                   onChange={value => this.value = value}
                   sourceTitle="标签列表"
                   targetTitle="字段列表"
+                  sourceSearchPlaceholder="请输入名称搜索"
+                  targetSearchPlaceholder="请输入英文名搜索"
+                  disableKey={record => record.used === 1 || record.isUsed === 1}
                 />
               )
             }
-            <Button
-              type="primary"
-              onClick={this.submit}
-              loading={submitting}
-              style={{float: 'right', marginTop: '32px'}}
-            >
-              确认
-            </Button>
+            {
+              !loading
+              && (
+                <Button
+                  type="primary"
+                  onClick={this.submit}
+                  loading={submitting}
+                  style={{float: 'right', marginTop: '32px'}}
+                >
+                  确认
+                </Button>
+              )
+            }
           </Spin>
         </Drawer>
       </div>
