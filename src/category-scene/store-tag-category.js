@@ -110,7 +110,7 @@ class TagCategoryStore {
       
 
       runInAction(() => {
-        this.isLoading = false
+        this.treeLoading = false
         this.searchExpandedKeys.clear()
 
         const data = res.map(item => {
