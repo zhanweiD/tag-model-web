@@ -2,17 +2,12 @@ import {Component} from 'react'
 // import {observable, action, toJS} from 'mobx'
 import {observer} from 'mobx-react'
 import {
-  Table, Button, Empty, Spin,
+  Table, Button, Spin,
 } from 'antd'
+import NoData from '../component-scene-nodata'
 
 @observer
 export default class DataSource extends Component {
-  // componentWillMount() {
-  //   const {store} = this.props
-  //   store.getSourceList()
-  // }
-
-
   columns = [{
     title: '所属分类',
     dataIndex: 'objTypeName',
@@ -34,59 +29,71 @@ export default class DataSource extends Component {
   }]
 
   render() {
-    const {store: {sourceData}} = this.props
-
+    const {store: {sourceData}, onClick} = this.props
+    const {functionCodes} = window.__userConfig
+    let noDataConfig = {}
+    if (functionCodes.includes('asset_tag_occation_add_aim_datasoure')) {
+      noDataConfig = {
+        btnTxt: '添加目的数据源',
+        onClick: () => onClick(),
+      }
+    } else {
+      noDataConfig = {
+        text: '暂无数据',
+      }
+    }
     return (
       <div className="data-source p16">
-        <div className="bgf p16">
-          <Spin spinning={sourceData.loading}>
-            {
-              sourceData.data.length 
-                ? sourceData.data.map((item, index) => (
-                  <div className="mb48">
-                    <div className="mb24 FBH FBJ FBAC">
-                      <div className="fs14">
-                        <span className="mr48">
-                      目的数据源：
-                          {item.sourceName}
-                        </span>
-                        <span>
-                      目的数据表：
-                          {item.tableName}
-                        </span>
+        <Spin spinning={sourceData.loading}>
+          {
+            sourceData.data.length ? (
+              <div className="bgf p16">
+                {
+                  sourceData.data.map((item, index) => (
+                    <div className="mb48">
+                      <div className="mb24 FBH FBJ FBAC">
+                        <div className="fs14">
+                          <span className="mr48">
+                            目的数据源：
+                            {item.sourceName}
+                          </span>
+                          <span>
+                            目的数据表：
+                            {item.tableName}
+                          </span>
+                        </div>
+                        {/* 点击“配置数据服务”按钮，跳转至服务管理页面 */}
+                        {
+                          (index === 0) && (
+                            <Button type="primary">
+                              <a 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                href="/service/api"
+                              >
+                              配置数据服务
+                              </a>      
+                            </Button>
+                          )
+                        }
                       </div>
-                      {/* 点击“配置数据服务”按钮，跳转至服务管理页面 */}
-                      {
-                        (index === 0) && (
-                          <Button type="primary">
-                            <a 
-                              target="_blank" 
-                              rel="noopener noreferrer" 
-                              href="/service/api"
-                            >
-                               配置数据服务
-                            </a>      
-                          </Button>
-                        )
-                      }
+                      <Table 
+                        columns={this.columns} 
+                        loading={sourceData.loading}
+                        dataSource={item.details.slice()} 
+                        pagination={false}
+                      />
+                      <div className="total-box">
+                        合计
+                        {item.total}
+                        条记录
+                      </div>
                     </div>
-                    <Table 
-                      columns={this.columns} 
-                      loading={sourceData.loading}
-                      dataSource={item.details.slice()} 
-                      pagination={false}
-                    />
-                    <div className="total-box">
-                      合计
-                      {item.total}
-                      条记录
-                    </div>
-                  </div>
-
-                )) : <div className="empty-box bgf"><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /></div> 
-            }
-          </Spin>
-        </div>
+                  )) }
+              </div>
+            ) : <NoData {...noDataConfig} />
+          }
+        </Spin>
       </div>
     )
   }

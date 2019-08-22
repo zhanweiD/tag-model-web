@@ -31,6 +31,10 @@ class SelectTagStore {
   // 标签详情loading
   @observable tagInfoLoading = false
 
+  // 标签池时候存在对象标识；true 存在对象 false 不存在对象;
+  @observable tagExistFlag = false
+  @observable tagExistFlagLoading = false
+
   // 标签详情
   @action async getTagDetail() {
     this.tagInfoLoading = true
@@ -87,6 +91,33 @@ class SelectTagStore {
       })
     } catch (e) {
       errorTip(e.message)
+    }
+  }
+
+   // 判断标签池是否有对象
+   @action async isObjExist(cb) {
+    this.tagExistFlagLoading = true
+    try {
+      const res = await io.isObjExist()
+
+      runInAction(() => {
+        this.tagExistFlagLoading = false
+        
+        if (cb && res) {
+          // 标签池存在对象·
+          this.tagExistFlag = true
+          cb()
+        } else {
+          // 标签池 不存在对象
+          this.tagExistFlag = false
+        }
+      })
+    } catch (e) {
+      errorTip(e.message)
+      runInAction(() => {
+        this.tagExistFlagLoading = false
+        this.tagExistFlag = false
+      })
     }
   }
 }

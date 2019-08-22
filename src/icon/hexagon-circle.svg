@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="88px" height="101px" viewBox="0 0 88 101" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>编组 3</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="12.5%" y1="23.7769518%" x2="86.2469647%" y2="74.6911638%" id="linearGradient-1">
+            <stop stop-color="#FFFFFF" stop-opacity="0.5" offset="0%"></stop>
+            <stop stop-color="#F7FCFF" offset="16.6517103%"></stop>
+            <stop stop-color="#DCEEFF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="无标签-引导页面" transform="translate(-404.000000, -458.000000)" stroke="#C4E1FF">
+            <g id="编组-4" transform="translate(296.000000, 416.000000)">
+                <g id="编组-3" transform="translate(109.000000, 42.000000)">
+                    <g id="编组-2" opacity="0.800000012" transform="translate(0.000000, 1.098901)">
+                        <polygon id="多边形" fill="url(#linearGradient-1)" points="42.8254321 0 85.6508641 24.7252747 85.6508641 74.1758242 42.8254321 98.9010989 3.44442513e-14 74.1758242 7.10542736e-15 24.7252747"></polygon>
+                        <polyline id="路径" points="42.8254321 98.9010989 42.8254321 49.4505495 -2.84217094e-14 24.7252747"></polyline>
+                        <path d="M85.6508641,24.7252747 L42.8254321,49.4505495" id="路径-2"></path>
+                    </g>
+                    <path d="M0.861405296,74.7747253 L85.132211,74.7747253 L42.6849296,1.55194492 L0.861405296,74.7747253 Z" id="路径-3" opacity="0.800000012"></path>
+                    <circle id="椭圆形" fill="#FFFFFF" opacity="0.849999964" cx="43" cy="50" r="24"></circle>
+                    <polyline id="路径" opacity="0.200000003" points="42.8254321 100 42.8254321 50.5494505 -2.84217094e-14 25.8241758"></polyline>
+                    <path d="M85.6508641,25.8241758 L42.8254321,50.5494505" id="路径-2" opacity="0.200000003"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

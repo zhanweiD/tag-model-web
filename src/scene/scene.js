@@ -51,7 +51,18 @@ export default class Scene extends Component {
 
   render() {
     const {loading, list = []} = store
-
+    const {functionCodes} = window.__userConfig
+    let noDataConfig = {}
+    if (functionCodes.includes('asset_tag_add_occation')) {
+      noDataConfig = {
+        btnTxt: '添加场景',
+        onClick: () => this.handleModalVisible(),
+      }
+    } else {
+      noDataConfig = {
+        text: '暂无数据',
+      }
+    }
     return (
       <div className="scene-wrap">
         <div className="header">标签使用场景</div>
@@ -61,7 +72,7 @@ export default class Scene extends Component {
             {
               list.length ? (
                 <Fragment>
-                  <Button className="mb16" type="primary" onClick={() => this.handleModalVisible()}>添加场景</Button>
+                  {functionCodes.includes('asset_tag_add_occation') && <Button className="mb16" type="primary" onClick={() => this.handleModalVisible()}>添加场景</Button>}
                   <Row gutter={16}> 
            
                     {
@@ -79,9 +90,9 @@ export default class Scene extends Component {
                           <div className="card">
                             <div className="item-info">
                               <div className="c-name">
-                                <Link to={`/detail/${id}`} className={`name ${used ? 'use-name' : ''}`} title={name}>{name}</Link>
+                                <Link to={`/detail/${id}`} className={`name ${used ? 'use-name' : ''} hover-style omit`} title={name}>{name}</Link>
                                 <Tag color={used ? 'blue' : ''}>{used ? '使用中' : '未使用'}</Tag>
-                                <Icon type="right" />
+                                <Icon type="right" className="hover-style" />
                               </div>
                               <div className="c-info">
                                 <span className="mr20">
@@ -110,13 +121,18 @@ export default class Scene extends Component {
                               </div>
                             </div>
                             <div className="item-tool">
-                              <Button type="link" disabled={used} className="tool" onClick={() => this.handleModalVisible('edit', list[d])}>
-                                <Edit size="14" className={used ? 'i-used' : 'i-btn'} />
-                              </Button>
+                              {functionCodes.includes('asset_tag_edit_occation') && (
+                                <Button type="link" disabled={used} className="tool" onClick={() => this.handleModalVisible('edit', list[d])}>
+                                  <Edit size="14" className={used ? 'i-used' : 'i-btn'} />
+                                </Button>
+                              )}
+
                               <div className="line" />
-                              <Button type="link" disabled={used} className="tool" onClick={() => this.handleDel(id)}>
-                                <Del size="14" className={used ? 'i-used' : 'i-btn'} />
-                              </Button>
+                              {functionCodes.includes('asset_tag_del_occation') && (
+                                <Button type="link" disabled={used} className="tool" onClick={() => this.handleDel(id)}>
+                                  <Del size="14" className={used ? 'i-used' : 'i-btn'} />
+                                </Button>
+                              )}
                             </div>
                           </div>
                         </Col>
@@ -125,7 +141,12 @@ export default class Scene extends Component {
            
                   </Row>
                 </Fragment>
-              ) : <NoData btnTxt="添加场景" onClick={() => this.handleModalVisible()} />
+              ) : (
+                <NoData
+                  isLoading={loading}
+                  {...noDataConfig}
+                />
+              )
             }
             <ModalAdd store={store} />
           </div>

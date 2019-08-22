@@ -7,6 +7,7 @@ import TagStore from './store-tag'
 import TagCategory, {TagCategoryStore} from '../category-tag'
 import TagDetail from '../tag-detail'
 import ObjDetail from '../obj-detail'
+import EmptyContent from './empty-content'
 
 const {TabPane} = Tabs
 
@@ -43,6 +44,17 @@ export default class Tag extends Component {
     history.push(`/${e}`)
   }
 
+  @action onClickBtn(activeType) {
+    const {history} = this.props
+    if (activeType === 'add') {
+      this.store.categoryStore.modalVisible.editObject = true
+    } else if (activeType === 'import') {
+      history.push('/import')
+    } else if (activeType === 'export') {
+      history.push('/export')
+    }
+  }
+
   render() {
     const {typeCodes} = this.store
     const currentNode = toJS(this.store.currentNode)
@@ -68,6 +80,8 @@ export default class Tag extends Component {
                 if (currentNode && currentNode.aId) {
                   if (currentNode.type === 2) return <ObjDetail aId={currentNode.aId} updateKey={this.store.updateKey} />
                   if (currentNode.type === 0) return <TagDetail aId={currentNode.aId} updateKey={this.store.updateKey} />
+                } else {
+                  return <EmptyContent onClick={e => this.onClickBtn(e)} />
                 }
               })()}
             </div>

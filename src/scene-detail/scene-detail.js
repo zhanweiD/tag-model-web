@@ -2,20 +2,20 @@ import {Component} from 'react'
 import {action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {
-  Tabs, Button, Icon, Spin, Tooltip,
+  Tabs, Button, Icon, Spin, Tooltip, Tag,
 } from 'antd'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
-// import {Link} from 'react-router-dom'
 
 import {Time} from '../common/util'
 import {navListMap} from '../common/constants'
+import ModalEditScene from '../scene/modal-add'
+import Descr from '../component-detail-descr'
 import SelectTag from './select-tag'
 import DataSource from './data-source'
 import ModalDataSource from './modal-data-source'
-import ModalEditScene from '../scene/modal-add'
-
 import store from './store-scene-detail'
 
+const {functionCodes} = window.__userConfig
 const {TabPane} = Tabs
 
 @inject('frameChange')
@@ -86,10 +86,12 @@ export default class SceneDetail extends Component {
     }, {
       title: '标签数',
       value: tagCount,
-    }, {
-      title: '描述',
-      value: descr,
-    }]
+    },
+    // , {
+    //   title: '描述',
+    //   value: descr,
+    // }
+    ]
 
     return (
       <div className="scene-detail">
@@ -97,24 +99,31 @@ export default class SceneDetail extends Component {
           <div className="info">
             <div className="FBH FBJ">
               <p className="name">
-                <span className="mr8">{info.name}</span> 
-                <Icon type="edit" onClick={this.sceneDetailVisible} />
+                <span>{info.name}</span> 
+                {
+                  !used && <Icon className="ml8" type="edit" onClick={this.sceneDetailVisible} style={{color: 'rgba(0,0,0, .65)'}} />
+                }
+                
+                <Tag className="ml10" color={used ? 'blue' : ''}>{used ? '使用中' : '未使用'}</Tag>
               </p>
               <div>
                 <Button className="mr8" href={`${window.__onerConfig.pathPrefix}/scene#/tags/${store.sceneId}`}>标签列表</Button>
-                {
-                  store.isDbSourcEnough 
-                    ? (
-                      <Tooltip title="添加的目的数据源数量超过上限">
-                        <Button 
-                          type="primary" 
-                          onClick={this.dbSourceVisible} 
-                          disabled={store.isDbSourcEnough}
-                        >
-                        添加目的数据源
-                        </Button>                   
-                      </Tooltip>
-                    ) : (
+                {(() => {
+                  if (functionCodes.includes('asset_tag_occation_add_aim_datasoure')) {
+                    if (store.isDbSourcEnough) {
+                      return (
+                        <Tooltip title="添加的目的数据源数量超过上限">
+                          <Button
+                            type="primary"
+                            onClick={this.dbSourceVisible}
+                            disabled={store.isDbSourcEnough}
+                          >
+                            添加目的数据源
+                          </Button>
+                        </Tooltip>
+                      )
+                    }
+                    return (
                       <Button 
                         type="primary" 
                         onClick={this.dbSourceVisible} 
@@ -123,11 +132,13 @@ export default class SceneDetail extends Component {
                         添加目的数据源
                       </Button>
                     )
-                }
-               
+                  }
+                  return null
+                })()}
               </div>
             </div>
-            <NemoBaseInfo dataSource={baseInfo} key={Math.random()} className="ml4" />
+            <Descr text={descr} pr={210} />
+            <NemoBaseInfo dataSource={baseInfo} key={Math.random()} className="detail-border" />
           </div>
         </Spin>
        
@@ -136,7 +147,7 @@ export default class SceneDetail extends Component {
             <SelectTag sceneId={store.sceneId} />
           </TabPane>
           <TabPane tab="目的数据源列表" key="2">
-            <DataSource store={store} />
+            <DataSource store={store} onClick={this.dbSourceVisible} />
           </TabPane>
         </Tabs>
         <ModalEditScene store={store} />

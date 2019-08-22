@@ -10,6 +10,8 @@ import SvgUnExtend from '../svg-component/UnExtend'
 import SvgRefresh from '../svg-component/Refresh'
 import SvgTreeAdd from '../svg-component/TreeAdd'
 
+const {functionCodes} = window.__userConfig
+
 @inject('bigStore')
 @observer
 class Action extends Component {
@@ -22,13 +24,13 @@ class Action extends Component {
   @action.bound handleEditCategory() {
     const {treeData} = this.store 
     if (toJS(treeData).length) return 
+     
+    // 获取选择对象
+    this.store.getSelectObj()
     
     this.store.currentTreeItemKey = 0
     this.store.eStatus.editObject = false
     this.store.modalVisible.editObject = true
-    
-    // 获取选择对象
-    this.store.getSelectObj()
   }
 
   @action.bound handleRefresh() {
@@ -89,7 +91,7 @@ class Action extends Component {
 
         <div className="FBH pr6 pl6" style={{maxWidth: 70}}>
           <SvgRefresh size="14" onClick={this.handleRefresh} className="mr8 hand" />
-          {dropdownDom}
+          {functionCodes.includes('asset_tag_occation_select_obj') && dropdownDom}
           { this.store.expandAll ? (
             <SvgUnExtend size="14" className="hand" onClick={this.handleExpandAll} /> 
           ) : (

@@ -14,15 +14,6 @@ import './main.styl'
 
 const {TabPane} = Tabs
 
-// 仅测试用
-async function sleep(delay = 2000) {
-  await new Promise(resolve => {
-    setTimeout(() => {
-      resolve()
-    }, delay)
-  })
-}
-
 /** 
  * @description 标签地图页面
  * @author 三千
@@ -46,6 +37,7 @@ export default class PageMap extends React.Component {
     return (
       <Frame
         navList={[
+          navListMap.assetMgt,
           navListMap.tagMgt, 
           {
             text: '标签地图',

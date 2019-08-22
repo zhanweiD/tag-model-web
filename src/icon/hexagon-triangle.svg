@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="88px" height="101px" viewBox="0 0 88 101" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>编组</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="12.5%" y1="23.7769518%" x2="86.2469647%" y2="74.6911638%" id="linearGradient-1">
+            <stop stop-color="#FFFFFF" stop-opacity="0.5" offset="0%"></stop>
+            <stop stop-color="#F7FCFF" offset="16.6517103%"></stop>
+            <stop stop-color="#DCEEFF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="无标签-引导页面" transform="translate(-1124.000000, -458.000000)" stroke="#C4E1FF">
+            <g id="编组-4" transform="translate(1016.000000, 416.000000)">
+                <g id="编组" transform="translate(109.000000, 42.000000)">
+                    <g id="编组-3" opacity="0.800000012">
+                        <g id="编组-2" transform="translate(0.000000, 1.098901)">
+                            <polygon id="多边形" fill="url(#linearGradient-1)" points="42.8254321 0 85.6508641 24.7252747 85.6508641 74.1758242 42.8254321 98.9010989 2.73388239e-14 74.1758242 0 24.7252747"></polygon>
+                            <polyline id="路径" points="42.8254321 98.9010989 42.8254321 49.4505495 0 24.7252747"></polyline>
+                            <path d="M85.6508641,24.7252747 L42.8254321,49.4505495" id="路径-2"></path>
+                        </g>
+                        <path d="M0.865449874,74.7747253 L85.9412777,74.7747253 L43.088506,1.54489876 L0.865449874,74.7747253 Z" id="路径-3"></path>
+                    </g>
+                    <path d="M9.16605472,35.2247856 L39.7783882,80.9647547 C41.0071034,82.8006616 43.4914705,83.2928878 45.3273774,82.0641726 C45.7763299,81.7637027 46.1597664,81.3754052 46.454557,80.9227033 L76.2395302,35.1827342 C77.445021,33.3314949 76.9215384,30.8535255 75.0702991,29.6480347 C74.4208619,29.2251339 73.6625577,29 72.8875649,29 L12.4902582,29 C10.2811192,29 8.49025821,30.790861 8.49025821,33 C8.49025821,33.7921518 8.72546274,34.5664672 9.16605472,35.2247856 Z" id="路径-4" fill="#FFFFFF" opacity="0.849999964"></path>
+                    <polyline id="路径" opacity="0.25" points="42.8254321 100 42.8254321 50.5494505 -5.89750471e-13 25.8241758"></polyline>
+                    <path d="M85.6508641,25.8241758 L42.8254321,50.5494505" id="路径-2" opacity="0.25"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

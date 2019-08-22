@@ -88,6 +88,13 @@ ioContext.create('sceneDetail', {
     mockUrl: 'page-scene/alreadyDBSourceList',
     url: `${tagApi}/be_tag/occasion/alreadyDBSourceList`,
   },
+
+  // 判断标签池是否有对象
+  isObjExist: {
+    mock: isMock,
+    mockUrl: 'page-scene/isObjExist',
+    url: `${tagApi}/be_tag/tag/pool/obj_exist`,
+  },
 })
 
 export default ioContext.api.sceneDetail

@@ -26,6 +26,7 @@ class BackendExportStore {
   @observable previewDataHead = []
   @observable previewDataList = []
   @observable keyRedis = ''
+  @observable totalTag = undefined
 
   // 获取人、物、对象
   @action async getTypeCodes() {
@@ -104,6 +105,7 @@ class BackendExportStore {
       runInAction(() => {
         this.previewDataLoading = false
         this.keyRedis = res.keyRedis
+        this.totalTag = res.totalTag
 
         this.previewDataHead.clear()
         this.previewDataList.clear()

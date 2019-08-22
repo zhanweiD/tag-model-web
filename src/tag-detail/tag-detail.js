@@ -4,6 +4,8 @@ import {observer, inject} from 'mobx-react'
 import {Button, Tabs, Tag} from 'antd'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
 import {Time} from '../common/util'
+import Descr from '../component-detail-descr'
+
 import TagDetailExponent from '../tag-detail-exponent'
 import TagDetailInvoke from '../tag-detail-invoke'
 import TagDetailRelate from '../tag-detail-relate'
@@ -12,6 +14,7 @@ import TagDetailDrawer from '../tag-detail-drawer'
 import store from './store-tag-detail'
 
 const {TabPane} = Tabs
+const {functionCodes} = window.__userConfig
 
 @inject('bigStore')
 @observer
@@ -57,6 +60,7 @@ export default class TagDetail extends Component {
       fieldName,
       descr,
       isUsed,
+      isConfigured,
       objId,
     } = store.baseInfo
 
@@ -82,28 +86,38 @@ export default class TagDetail extends Component {
       }, {
         title: '字段',
         value: fieldName,
-      }, {
-        title: '业务逻辑',
-        value: descr,
-      },
+      }, 
+      // {
+      //   title: '业务逻辑',
+      //   value: descr,
+      // },
     ]
 
     return (
       <div className="tag-detail">
         <div className="detail-info">
-          <div className="d-head FBH FBJ">
-            <div>
-              <span className="mr10">{name}</span>
+          <div className="d-head">
+            <div className="FBH FBJ">
+              <div>
+                <span className="mr10">{name}</span>
+                {(() => {
+                  if (isUsed) return <Tag color="blue">使用中</Tag>
+                  if (isConfigured) return <Tag color="green">未使用</Tag>
+                  return <Tag>待配置</Tag>
+                })()}
+              </div>
               {
-                isUsed ? <Tag color="green">使用中</Tag> : <Tag color="blue">未使用</Tag>
+                functionCodes.includes('asset_tag_conf_tag_field') && (
+                  <TagDetailDrawer
+                    id={objId}
+                    onUpdate={value => console.log(value)}
+                  >
+                    <Button type="primary">绑定字段</Button>
+                  </TagDetailDrawer>
+                )
               }
             </div>
-            <TagDetailDrawer
-              id={objId}
-              onUpdate={value => console.log(value)}
-            >
-              <Button type="primary">绑定字段</Button>
-            </TagDetailDrawer>
+            <Descr text={descr} pr={85} />
           </div>
           <NemoBaseInfo dataSource={baseInfo} className="d-info" />
         </div>
@@ -113,7 +127,11 @@ export default class TagDetail extends Component {
           onChange={this.onTabChange}
         >
           <TabPane tab="标签指数" key="1">
-            <TagDetailExponent aId={store.id} isActive={this.tabActiveKey === '1'} />
+            <TagDetailExponent
+              aId={store.id}
+              isActive={this.tabActiveKey === '1'}
+              baseInfo={store.baseInfo}
+            />
           </TabPane>
           <TabPane tab="标签调用" key="2">
             <TagDetailInvoke aId={store.id} isActive={this.tabActiveKey === '2'} />

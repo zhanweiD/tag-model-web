@@ -10,7 +10,7 @@ class ImportStore {
   @observable typeCodes = []
   @observable objs = []
   @observable typeCode = ''
-  @observable objId = ''
+  @observable objId = undefined
 
 
   // 导出数据预览
