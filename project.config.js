@@ -104,9 +104,11 @@ module.exports = {
     // 自定义日志路径
     logRoot: config.logRoot || '',
 
+    minChrome: 40,
+
     // 白名单，不在白名单里的请求均为无效请求
     refererWhiteList: nattyStorage.env(SERVER_ENV, {
-      default: appConfig.domain || config.domain || config.accountDomain || '',
+      default: config.refererWhiteList || appConfig.domain || config.domain || config.accountDomain || '',
       development: [
         '0.0.0.0:9995',
         'localhost:9995',
