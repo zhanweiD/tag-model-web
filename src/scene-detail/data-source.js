@@ -30,7 +30,18 @@ export default class DataSource extends Component {
 
   render() {
     const {store: {sourceData}, onClick} = this.props
-
+    const {functionCodes} = window.__userConfig
+    let noDataConfig = {}
+    if (functionCodes.includes('asset_tag_occation_add_aim_datasoure')) {
+      noDataConfig = {
+        btnTxt: '添加目的数据源',
+        onClick: () => onClick(),
+      }
+    } else {
+      noDataConfig = {
+        text: '暂无数据',
+      }
+    }
     return (
       <div className="data-source p16">
         <Spin spinning={sourceData.loading}>
@@ -80,7 +91,7 @@ export default class DataSource extends Component {
                     </div>
                   )) }
               </div>
-            ) : <NoData btnTxt="添加目的数据源" onClick={() => onClick()} />
+            ) : <NoData {...noDataConfig} />
           }
         </Spin>
       </div>

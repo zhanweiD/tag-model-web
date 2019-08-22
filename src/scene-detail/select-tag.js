@@ -108,6 +108,33 @@ export default class SelectTag extends Component {
     const {
       tagInfo, tagId, tagInfoLoading, tagExistFlag, tagExistFlagLoading,
     } = this.store
+    const {functionCodes} = window.__userConfig
+    let noDataConfig = {
+      text: '暂无数据',
+    }
+    if (
+      functionCodes.includes('asset_tag_add_obj')
+      && !tagExistFlag
+    ) {
+      noDataConfig = {
+        btnTxt: '去添加对象',
+        text: '没有任何对象，请在标签池中添加！',
+        onClick: this.goToAddObj,
+        isLoading: tagExistFlagLoading,
+      }
+    }
+
+    if (
+      functionCodes.includes('asset_tag_occation_select_obj')
+      && tagExistFlag
+      && !this.objExistFlag
+    ) {
+      noDataConfig = {
+        btnTxt: '选择对象',
+        onClick: this.selectObj,
+        isLoading: this.store.categoryStore.treeLoading,
+      }
+    }
 
     const {
       // id,
@@ -122,23 +149,24 @@ export default class SelectTag extends Component {
       treeId,
     } = toJS(tagInfo)
     // 详情信息
-    const baseInfo = [{
-      title: '英文名',
-      value: enName,
-    }, {
-      title: '数据类型',
-      value: valueTypeName,
-    }, {
-      title: '创建者',
-      value: cUser,
-    }, {
-      title: '创建时间',
-      value: <Time timestamp={cDate} />,
-    },
-    //  {
-    //   title: '业务逻辑',
-    //   value: descr,
-    // }
+    const baseInfo = [
+      {
+        title: '英文名',
+        value: enName,
+      }, {
+        title: '数据类型',
+        value: valueTypeName,
+      }, {
+        title: '创建者',
+        value: cUser,
+      }, {
+        title: '创建时间',
+        value: <Time timestamp={cDate} />,
+      },
+      //  {
+      //   title: '业务逻辑',
+      //   value: descr,
+      // }
     ]
 
     const tagCategoryOpt = {
@@ -194,12 +222,12 @@ export default class SelectTag extends Component {
                               }
                             </div>
                           )
-                          : <NoData btnTxt="选择对象" onClick={this.selectObj} isLoading={this.store.categoryStore.treeLoading} />
+                          : <NoData {...noDataConfig} />
                       }
                     </Spin>
                   </div>
                 ) 
-                : <NoData btnTxt="去添加对象" text="没有任何对象，请在标签池中添加！" onClick={this.goToAddObj} isLoading={tagExistFlagLoading} />
+                : <NoData {...noDataConfig} />
             }
 
           </div>

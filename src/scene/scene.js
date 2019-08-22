@@ -17,7 +17,6 @@ import Edit from '../svg-component/Edit'
 import store from './store-scene'
 
 const {confirm} = Modal
-const {functionCodes} = window.__userConfig
 
 @inject('frameChange')
 @observer
@@ -52,12 +51,16 @@ export default class Scene extends Component {
 
   render() {
     const {loading, list = []} = store
+    const {functionCodes} = window.__userConfig
     let noDataConfig = {}
     if (functionCodes.includes('asset_tag_add_occation')) {
       noDataConfig = {
-        text: '',
         btnTxt: '添加场景',
         onClick: () => this.handleModalVisible(),
+      }
+    } else {
+      noDataConfig = {
+        text: '暂无数据',
       }
     }
     return (
@@ -118,13 +121,18 @@ export default class Scene extends Component {
                               </div>
                             </div>
                             <div className="item-tool">
-                              <Button type="link" disabled={used} className="tool" onClick={() => this.handleModalVisible('edit', list[d])}>
-                                <Edit size="14" className={used ? 'i-used' : 'i-btn'} />
-                              </Button>
+                              {functionCodes.includes('asset_tag_edit_occation') && (
+                                <Button type="link" disabled={used} className="tool" onClick={() => this.handleModalVisible('edit', list[d])}>
+                                  <Edit size="14" className={used ? 'i-used' : 'i-btn'} />
+                                </Button>
+                              )}
+
                               <div className="line" />
-                              <Button type="link" disabled={used} className="tool" onClick={() => this.handleDel(id)}>
-                                <Del size="14" className={used ? 'i-used' : 'i-btn'} />
-                              </Button>
+                              {functionCodes.includes('asset_tag_del_occation') && (
+                                <Button type="link" disabled={used} className="tool" onClick={() => this.handleDel(id)}>
+                                  <Del size="14" className={used ? 'i-used' : 'i-btn'} />
+                                </Button>
+                              )}
                             </div>
                           </div>
                         </Col>

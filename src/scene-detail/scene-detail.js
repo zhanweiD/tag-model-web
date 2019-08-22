@@ -8,13 +8,13 @@ import NemoBaseInfo from '@dtwave/nemo-base-info'
 
 import {Time} from '../common/util'
 import {navListMap} from '../common/constants'
+import ModalEditScene from '../scene/modal-add'
 import SelectTag from './select-tag'
 import DataSource from './data-source'
 import ModalDataSource from './modal-data-source'
-import ModalEditScene from '../scene/modal-add'
-
 import store from './store-scene-detail'
 
+const {functionCodes} = window.__userConfig
 const {TabPane} = Tabs
 
 @inject('frameChange')
@@ -107,19 +107,22 @@ export default class SceneDetail extends Component {
               </p>
               <div>
                 <Button className="mr8" href={`${window.__onerConfig.pathPrefix}/scene#/tags/${store.sceneId}`}>标签列表</Button>
-                {
-                  store.isDbSourcEnough 
-                    ? (
-                      <Tooltip title="添加的目的数据源数量超过上限">
-                        <Button 
-                          type="primary" 
-                          onClick={this.dbSourceVisible} 
-                          disabled={store.isDbSourcEnough}
-                        >
-                        添加目的数据源
-                        </Button>                   
-                      </Tooltip>
-                    ) : (
+                {(() => {
+                  if (functionCodes.includes('asset_tag_occation_add_aim_datasoure')) {
+                    if (store.isDbSourcEnough) {
+                      return (
+                        <Tooltip title="添加的目的数据源数量超过上限">
+                          <Button
+                            type="primary"
+                            onClick={this.dbSourceVisible}
+                            disabled={store.isDbSourcEnough}
+                          >
+                            添加目的数据源
+                          </Button>
+                        </Tooltip>
+                      )
+                    }
+                    return (
                       <Button 
                         type="primary" 
                         onClick={this.dbSourceVisible} 
@@ -128,8 +131,9 @@ export default class SceneDetail extends Component {
                         添加目的数据源
                       </Button>
                     )
-                }
-               
+                  }
+                  return null
+                })()}
               </div>
             </div>
             <div className="descr-box">

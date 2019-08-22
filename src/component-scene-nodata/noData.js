@@ -16,7 +16,7 @@ export default class NoData extends Component {
 
   static defaultProps = {
     pt: '13%',
-    text: '暂无数据',
+    text: '',
     btnTxt: '',
     isLoading: false,
     onClick: () => {},
