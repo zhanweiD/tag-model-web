@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 import {Button} from 'antd'
 import nodata from '../icon/noData.svg'
 
-const {functionCodes} = window.__userConfig
-
 export default class NoData extends Component {
   static propTypes = {
     pt: PropTypes.string, // 距离顶部的距离；默认 10%
@@ -53,7 +51,6 @@ export default class NoData extends Component {
   }
 
   render() {
-    console.log(functionCodes)
     const {pt: paddingTop, isLoading} = this.props
     const style = {
       paddingTop,
