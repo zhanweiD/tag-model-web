@@ -9,6 +9,7 @@ import {Button, Spin} from 'antd'
 
 import {Time} from '../common/util'
 import NoData from '../component-scene-nodata'
+import Descr from '../component-detail-descr'
 
 import TrendTag from './trend-tag'
 import TrendApi from './trend-api'
@@ -180,9 +181,7 @@ export default class SelectTag extends Component {
                                               </a>
                                             </Button>
                                           </div>
-                                          <div className="descr-box">
-                                            {descr}
-                                          </div>
+                                          <Descr text={descr} pr={85} />
                                         </div>
                                         <NemoBaseInfo dataSource={baseInfo} key={Math.random()} className="d-info" />
                                       </Spin>

@@ -1,10 +1,14 @@
 import {Component, Fragment} from 'react'
 import {observable, action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
-import {Button, Popconfirm, Tooltip, Table} from 'antd'
+import {
+  Button, Popconfirm, Tooltip, Table,
+} from 'antd'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
 import {Time} from '../common/util'
 import OverviewCard from '../component-overview-card'
+import Descr from '../component-detail-descr'
+
 import TagConfiguration from '../tag-configuration'
 import store from './store-obj-detail'
 import DrawerRelfieldList from '../obj-detail-relfield'
@@ -57,7 +61,10 @@ export default class ObjDetail extends Component {
                   <Popconfirm
                     title="你确定要移除该数据表吗？"
                     onConfirm={() => store.delObjFieldRel(record.dataStorageId, record.dataTableName)}
-                  ><a className="mr8">移除</a></Popconfirm>
+                  >
+                    <a className="mr8">移除</a>
+
+                  </Popconfirm>
                 )
               } else {
                 arr.push(<Tooltip title="数据表中有标签使用中，不可移除"><span className="mr8 disabled">移除</span></Tooltip>)
@@ -140,9 +147,6 @@ export default class ObjDetail extends Component {
       }, {
         title: '标签个数',
         value: tagCount,
-      }, {
-        title: '描述',
-        value: descr,
       },
     ]
     if (typeCode === 3) {
@@ -176,12 +180,15 @@ export default class ObjDetail extends Component {
     return (
       <div className="obj-detail">
         <div className="detail-info">
-          <div className="d-head FBH FBJ">
-            <span className="mr10">{name}</span>
-            <div>
-              <Button className="mr8" onClick={() => this.toViewRelField()}>已关联字段列表</Button>
-              <Button type="primary" onClick={() => this.toAddRelField()}>添加关联字段</Button>
+          <div className="d-head"> 
+            <div className="FBH FBJ">
+              <span className="mr10">{name}</span>
+              <div>
+                <Button className="mr8" onClick={() => this.toViewRelField()}>已关联字段列表</Button>
+                <Button type="primary" onClick={() => this.toAddRelField()}>添加关联字段</Button>
+              </div>
             </div>
+            <Descr text={descr} pr={230} />
           </div>
           <NemoBaseInfo dataSource={baseInfo} className="d-info" />
         </div>

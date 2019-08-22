@@ -8,6 +8,7 @@ import NemoBaseInfo from '@dtwave/nemo-base-info'
 
 import {Time} from '../common/util'
 import {navListMap} from '../common/constants'
+import Descr from '../component-detail-descr'
 import SelectTag from './select-tag'
 import DataSource from './data-source'
 import ModalDataSource from './modal-data-source'
@@ -132,10 +133,8 @@ export default class SceneDetail extends Component {
                
               </div>
             </div>
-            <div className="descr-box">
-              {descr}
-            </div>
-            <NemoBaseInfo dataSource={baseInfo} key={Math.random()} className="ml4" />
+            <Descr text={descr} pr={210} />
+            <NemoBaseInfo dataSource={baseInfo} key={Math.random()} className="detail-border" />
           </div>
         </Spin>
        
