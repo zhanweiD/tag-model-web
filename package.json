@@ -21,7 +21,7 @@
   "license": "MIT",
   "dependencies": {
     "@dtwave/nemo-base-info": "^1.0.3",
-    "@dtwave/oner-mapping": "1.0.7",
+    "@dtwave/oner-mapping": "1.0.9",
     "@dtwave/oner-server": "3.2.18",
     "echarts": "^4.2.1",
     "koa-forward-request2": "^1.0.1",
