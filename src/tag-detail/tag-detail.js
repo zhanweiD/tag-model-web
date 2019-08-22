@@ -12,6 +12,7 @@ import TagDetailDrawer from '../tag-detail-drawer'
 import store from './store-tag-detail'
 
 const {TabPane} = Tabs
+const {functionCodes} = window.__userConfig
 
 @inject('bigStore')
 @observer
@@ -57,6 +58,7 @@ export default class TagDetail extends Component {
       fieldName,
       descr,
       isUsed,
+      isConfigured,
       objId,
     } = store.baseInfo
 
@@ -94,16 +96,22 @@ export default class TagDetail extends Component {
           <div className="d-head FBH FBJ">
             <div>
               <span className="mr10">{name}</span>
-              {
-                isUsed ? <Tag color="green">使用中</Tag> : <Tag color="blue">未使用</Tag>
-              }
+              {(() => {
+                if (isUsed) return <Tag color="blue">使用中</Tag>
+                if (isConfigured) return <Tag color="green">未使用</Tag>
+                return <Tag>待配置</Tag>
+              })()}
             </div>
-            <TagDetailDrawer
-              id={objId}
-              onUpdate={value => console.log(value)}
-            >
-              <Button type="primary">绑定字段</Button>
-            </TagDetailDrawer>
+            {
+              functionCodes.includes('asset_tag_conf_tag_field') && (
+                <TagDetailDrawer
+                  id={objId}
+                  onUpdate={value => console.log(value)}
+                >
+                  <Button type="primary">绑定字段</Button>
+                </TagDetailDrawer>
+              )
+            }
           </div>
           <NemoBaseInfo dataSource={baseInfo} className="d-info" />
         </div>

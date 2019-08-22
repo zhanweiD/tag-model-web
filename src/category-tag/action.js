@@ -10,6 +10,8 @@ import SvgUnExtend from '../svg-component/UnExtend'
 import SvgRefresh from '../svg-component/Refresh'
 import SvgTreeAdd from '../svg-component/TreeAdd'
 
+const {functionCodes} = window.__userConfig
+
 @inject('bigStore')
 @observer
 class Action extends Component {
@@ -48,26 +50,37 @@ class Action extends Component {
   }
 
   render() {
-    const {typeCode, id} = this.bigStore
     const menu = (
       <Menu>
-        <Menu.Item>
-          <div
-            onClick={this.handleEditCategory}
-            style={{
-              margin: '-5px -12px',
-              padding: '5px 12px',
-            }}
-          >
-            添加对象
-          </div>
-        </Menu.Item>
-        <Menu.Item>
-          <Link to="/import">导入类目及标签</Link>
-        </Menu.Item>
-        {/* <Menu.Item>
-          <Link to="/export">导出类目及标签</Link>
-        </Menu.Item> */}
+        {
+          functionCodes.includes('asset_tag_add_obj') && (
+            <Menu.Item>
+              <div
+                onClick={this.handleEditCategory}
+                style={{
+                  margin: '-5px -12px',
+                  padding: '5px 12px',
+                }}
+              >
+                添加对象
+              </div>
+            </Menu.Item>
+          )
+        }
+        {
+          functionCodes.includes('asset_tag_import_tag_cate') && (
+            <Menu.Item>
+              <Link to="/import">导入类目及标签</Link>
+            </Menu.Item>
+          )
+        }
+        {
+          functionCodes.includes('asset_tag_export_tag_cate') && (
+            <Menu.Item>
+              <Link to="/export">导出类目及标签</Link>
+            </Menu.Item>
+          )
+        }
       </Menu>
     )
     
@@ -85,7 +98,13 @@ class Action extends Component {
 
         <div className="FBH pr6 pl6" style={{maxWidth: 70}}>
           <SvgRefresh size="14" onClick={this.handleRefresh} className="mr8 hand" />
-          {dropdownDom}
+          {
+            (
+              functionCodes.includes('asset_tag_add_obj')
+              || functionCodes.includes('asset_tag_import_tag_cate')
+              || functionCodes.includes('asset_tag_export_tag_cate')
+            ) && dropdownDom
+          }
           { this.store.expandAll ? (
             <SvgUnExtend size="14" className="hand" onClick={this.handleExpandAll} /> 
           ) : (

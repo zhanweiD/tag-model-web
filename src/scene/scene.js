@@ -17,6 +17,7 @@ import Edit from '../svg-component/Edit'
 import store from './store-scene'
 
 const {confirm} = Modal
+const {functionCodes} = window.__userConfig
 
 @inject('frameChange')
 @observer
@@ -51,7 +52,13 @@ export default class Scene extends Component {
 
   render() {
     const {loading, list = []} = store
-
+    let noDataConfig = {}
+    if (functionCodes.includes('asset_tag_add_occation')) {
+      noDataConfig = {
+        btnTxt: '添加场景',
+        onClick: () => this.handleModalVisible(),
+      }
+    }
     return (
       <div className="scene-wrap">
         <div className="header">标签使用场景</div>
@@ -61,7 +68,7 @@ export default class Scene extends Component {
             {
               list.length ? (
                 <Fragment>
-                  <Button className="mb16" type="primary" onClick={() => this.handleModalVisible()}>添加场景</Button>
+                  {functionCodes.includes('asset_tag_add_occation') && <Button className="mb16" type="primary" onClick={() => this.handleModalVisible()}>添加场景</Button>}
                   <Row gutter={16}> 
            
                     {
@@ -125,7 +132,12 @@ export default class Scene extends Component {
            
                   </Row>
                 </Fragment>
-              ) : <NoData btnTxt="添加场景" onClick={() => this.handleModalVisible()} isLoading={loading} />
+              ) : (
+                <NoData
+                  isLoading={loading}
+                  {...noDataConfig}
+                />
+              )
             }
             <ModalAdd store={store} />
           </div>

@@ -11,6 +11,8 @@ import DrawerRelfieldList from '../obj-detail-relfield'
 import DrawerRelfieldAdd from './drawer-relfield-add'
 import DrawerRelfieldEdit from './drawer-relfield-edit'
 
+const {functionCodes} = window.__userConfig
+
 @inject('bigStore')
 @observer
 export default class ObjDetail extends Component {
@@ -52,18 +54,27 @@ export default class ObjDetail extends Component {
           <Fragment>
             {(() => {
               const arr = []
-              if (!record.isUsed) {
-                arr.push(
-                  <Popconfirm
-                    title="你确定要移除该数据表吗？"
-                    onConfirm={() => store.delObjFieldRel(record.dataStorageId, record.dataTableName)}
-                  ><a className="mr8">移除</a></Popconfirm>
-                )
-              } else {
-                arr.push(<Tooltip title="数据表中有标签使用中，不可移除"><span className="mr8 disabled">移除</span></Tooltip>)
+              if (functionCodes.includes('asset_tag_delete_table')) {
+                if (!record.isUsed) {
+                  arr.push(
+                    <Popconfirm
+                      title="你确定要移除该数据表吗？"
+                      onConfirm={() => store.delObjFieldRel(record.dataStorageId, record.dataTableName)}
+                    ><a className="mr8">移除</a></Popconfirm>
+                  )
+                } else {
+                  arr.push(<Tooltip title="数据表中有标签使用中，不可移除"><span className="mr8 disabled">移除</span></Tooltip>)
+                }
               }
-              arr.push(<a className="mr8" onClick={() => this.toEditRelField(record)}>编辑字段</a>)
-              arr.push(<a onClick={() => this.toggleTagConfiguration(record)}>标签配置</a>)
+
+              if (functionCodes.includes('asset_tag_edit_field')) {
+                arr.push(<a className="mr8" onClick={() => this.toEditRelField(record)}>编辑字段</a>)
+              }
+
+              if (functionCodes.includes('asset_tag_conf_field_tag')) {
+                arr.push(<a onClick={() => this.toggleTagConfiguration(record)}>标签配置</a>)
+              }
+
               return arr
             })()}
           </Fragment>
@@ -180,7 +191,11 @@ export default class ObjDetail extends Component {
             <span className="mr10">{name}</span>
             <div>
               <Button className="mr8" onClick={() => this.toViewRelField()}>已关联字段列表</Button>
-              <Button type="primary" onClick={() => this.toAddRelField()}>添加关联字段</Button>
+              {
+                functionCodes.includes('asset_tag_rel_field') && (
+                  <Button type="primary" onClick={() => this.toAddRelField()}>添加关联字段</Button>
+                )
+              }
             </div>
           </div>
           <NemoBaseInfo dataSource={baseInfo} className="d-info" />

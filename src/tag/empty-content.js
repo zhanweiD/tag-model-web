@@ -7,6 +7,7 @@ import './empty-content.styl'
 
 const ADD = 'add'
 const IMPORT = 'import'
+const EXPORT = 'export'
 
 // 没有要展示的内容时的占位内容
 export default class EmptyContent extends React.Component {
@@ -19,6 +20,7 @@ export default class EmptyContent extends React.Component {
   }
 
   render() {
+    const {functionCodes} = window.__userConfig
     const {activeType} = this.state
 
     const getBtnClass = type => {
@@ -36,43 +38,70 @@ export default class EmptyContent extends React.Component {
           background: '#F4F6F9',
         }}
       >
-        <button 
-          type="button" 
-          className={getBtnClass(ADD)}
-          style={{
-            marginTop: -60,
-            marginBottom: 8,
-          }}
-          onClick={() => {
-            this.handleClick(ADD)
-          }}
-        >
-          <div className="empty-content-button__icon">
-            <img 
-              src={addIcon} 
-              alt="icon" 
-              height={20}
-            />
-          </div>
-          <span>添加对象</span>
-        </button>
+        {
+          functionCodes.includes('asset_tag_add_obj') && (
+            <button
+              type="button"
+              className={`mb8 ${getBtnClass(ADD)}`}
+              style={{
+                marginTop: -60,
+              }}
+              onClick={() => {
+                this.handleClick(ADD)
+              }}
+            >
+              <div className="empty-content-button__icon">
+                <img
+                  src={addIcon}
+                  alt="icon"
+                  height={20}
+                />
+              </div>
+              <span>添加对象</span>
+            </button>
+          )
+        }
+        {
+          functionCodes.includes('asset_tag_import_tag_cate') && (
+            <button
+              type="button"
+              className={`mb8 ${getBtnClass(IMPORT)}`}
+              onClick={() => {
+                this.handleClick(IMPORT)
+              }}
+            >
+              <div className="empty-content-button__icon">
+                <img
+                  src={importIcon}
+                  alt="icon"
+                  height={20}
+                />
+              </div>
+              <span>导入标签及类目</span>
+            </button>
+          )
+        }
 
-        <button 
-          type="button" 
-          className={getBtnClass(IMPORT)}
-          onClick={() => {
-            this.handleClick(IMPORT)
-          }}
-        >
-          <div className="empty-content-button__icon">
-            <img 
-              src={importIcon} 
-              alt="icon" 
-              height={20}
-            />
-          </div>
-          <span>导入标签及类目</span>
-        </button>
+        {
+          functionCodes.includes('asset_tag_export_tag_cate') && (
+            <button
+              type="button"
+              className={`mb8 ${getBtnClass(EXPORT)}`}
+              onClick={() => {
+                this.handleClick(EXPORT)
+              }}
+            >
+              <div className="empty-content-button__icon">
+                <img
+                  src={importIcon}
+                  alt="icon"
+                  height={20}
+                />
+              </div>
+              <span>导出类目及标签</span>
+            </button>
+          )
+        }
       </div>
     )
   } 
