@@ -110,7 +110,7 @@ export default class TagDetail extends Component {
                 functionCodes.includes('asset_tag_conf_tag_field') && (
                   <TagDetailDrawer
                     id={objId}
-                    onUpdate={value => console.log(value)}
+                    onUpdate={(v) => store.getBaseInfo()}
                   >
                     <Button type="primary">绑定字段</Button>
                   </TagDetailDrawer>

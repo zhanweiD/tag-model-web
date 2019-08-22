@@ -19,7 +19,7 @@ export default class TagImport extends Component {
     frameChange('nav', [
       navListMap.assetMgt,
       navListMap.tagPool,
-      {text: '导入类目及标签'},
+      {text: '导入标签及类目'},
     ])
 
     store.getTypeCodes()

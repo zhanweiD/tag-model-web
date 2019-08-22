@@ -18,7 +18,7 @@ export default class TagExport extends Component {
     frameChange('nav', [
       navListMap.assetMgt,
       navListMap.tagPool,
-      {text: '导出类目及标签'},
+      {text: '导出标签及类目'},
     ])
     store.getTypeCodes()
   }
