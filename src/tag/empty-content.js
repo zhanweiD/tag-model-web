@@ -1,8 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import cls from 'classnames'
-import addIcon from '../icon/add.svg'
-import importIcon from '../icon/import.svg'
+import SvgExport from '../svg-component/Export'
+import SvgImport from '../svg-component/Import'
+import SvgObjectAdd from '../svg-component/ObjectAdd'
+
 import './empty-content.styl'
 
 const ADD = 'add'
@@ -43,7 +45,7 @@ export default class EmptyContent extends React.Component {
             <button 
               type="button" 
               // className={getBtnClass(ADD)}
-              className="empty-content-button mb8"
+              className="empty-content-button mb8 FBH"
               style={{
                 marginTop: -60,
               }}
@@ -51,12 +53,8 @@ export default class EmptyContent extends React.Component {
                 this.handleClick(ADD)
               }}
             >
-              <div className="empty-content-button__icon">
-                <img 
-                  src={addIcon} 
-                  alt="icon" 
-                  height={20}
-                />
+              <div className="empty-content-button__icon FBH FBAC">
+                <SvgObjectAdd size="20" className="ml6" fill="#7AADFF" />
               </div>
               <span>添加对象</span>
             </button>
@@ -67,17 +65,13 @@ export default class EmptyContent extends React.Component {
             <button 
               type="button" 
               // className={getBtnClass(IMPORT)}
-              className="empty-content-button mb8"
+              className="empty-content-button mb8 FBH"
               onClick={() => {
                 this.handleClick(IMPORT)
               }}
             >
-              <div className="empty-content-button__icon">
-                <img 
-                  src={importIcon} 
-                  alt="icon" 
-                  height={20}
-                />
+              <div className="empty-content-button__icon FBH FBAC">
+                <SvgImport size="20" className="ml6" fill="#7AADFF" />
               </div>
               <span>导入标签及类目</span>
             </button>
@@ -89,17 +83,13 @@ export default class EmptyContent extends React.Component {
             <button 
               type="button" 
               // className={getBtnClass(IMPORT)}
-              className="empty-content-button"
+              className="empty-content-button FBH"
               onClick={() => {
-                this.handleClick(IMPORT)
+                this.handleClick(EXPORT)
               }}
             >
-              <div className="empty-content-button__icon">
-                <img 
-                  src={importIcon} 
-                  alt="icon" 
-                  height={20}
-                />
+              <div className="empty-content-button__icon FBH FBAC">
+                <SvgExport size="20" className="ml6" fill="#7AADFF" />
               </div>
               <span>导出类目及标签</span>
             </button>
