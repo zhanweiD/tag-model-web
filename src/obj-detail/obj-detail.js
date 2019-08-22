@@ -1,10 +1,14 @@
 import {Component, Fragment} from 'react'
 import {observable, action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
-import {Button, Popconfirm, Tooltip, Table} from 'antd'
+import {
+  Button, Popconfirm, Tooltip, Table,
+} from 'antd'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
 import {Time} from '../common/util'
 import OverviewCard from '../component-overview-card'
+import Descr from '../component-detail-descr'
+
 import TagConfiguration from '../tag-configuration'
 import store from './store-obj-detail'
 import DrawerRelfieldList from '../obj-detail-relfield'
@@ -151,9 +155,6 @@ export default class ObjDetail extends Component {
       }, {
         title: '标签个数',
         value: tagCount,
-      }, {
-        title: '描述',
-        value: descr,
       },
     ]
     if (typeCode === 3) {
@@ -187,16 +188,19 @@ export default class ObjDetail extends Component {
     return (
       <div className="obj-detail">
         <div className="detail-info">
-          <div className="d-head FBH FBJ">
-            <span className="mr10">{name}</span>
-            <div>
-              <Button className="mr8" onClick={() => this.toViewRelField()}>已关联字段列表</Button>
-              {
-                functionCodes.includes('asset_tag_rel_field') && (
-                  <Button type="primary" onClick={() => this.toAddRelField()}>添加关联字段</Button>
-                )
-              }
+          <div className="d-head"> 
+            <div className="FBH FBJ">
+              <span className="mr10">{name}</span>
+              <div>
+                <Button className="mr8" onClick={() => this.toViewRelField()}>已关联字段列表</Button>
+                {
+                  functionCodes.includes('asset_tag_rel_field') && (
+                    <Button type="primary" onClick={() => this.toAddRelField()}>添加关联字段</Button>
+                  )
+                }
+              </div>
             </div>
+            <Descr text={descr} pr={230} />
           </div>
           <NemoBaseInfo dataSource={baseInfo} className="d-info" />
         </div>

@@ -50,7 +50,7 @@ export function getTagTrendOpt(data, legend = []) {
       x: 10,
       y: 30,
       x2: 10,
-      y2: 35,
+      y2: 0,
     },
     tooltip: {
       trigger: 'axis',
@@ -127,7 +127,7 @@ export function getApiTrendOpt(data) {
       x: 10,
       y: 30,
       x2: 10,
-      y2: 35,
+      y2: 0,
     },
     
     tooltip: {

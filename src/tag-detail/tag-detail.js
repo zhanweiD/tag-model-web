@@ -4,6 +4,8 @@ import {observer, inject} from 'mobx-react'
 import {Button, Tabs, Tag} from 'antd'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
 import {Time} from '../common/util'
+import Descr from '../component-detail-descr'
+
 import TagDetailExponent from '../tag-detail-exponent'
 import TagDetailInvoke from '../tag-detail-invoke'
 import TagDetailRelate from '../tag-detail-relate'
@@ -115,9 +117,7 @@ export default class TagDetail extends Component {
                 )
               }
             </div>
-            <div className="descr-box">
-              {descr}
-            </div>
+            <Descr text={descr} pr={85} />
           </div>
           <NemoBaseInfo dataSource={baseInfo} className="d-info" />
         </div>
