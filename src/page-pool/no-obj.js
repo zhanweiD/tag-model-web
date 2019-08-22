@@ -79,7 +79,7 @@ export default class NoObj extends React.Component {
             height: 100,
           }}
           description={(
-            <div className="fs12 mt12 black85 opacity65">
+            <div className="fs12 mt12 black65">
               还未新建任何对象，请参考以下3种对象的创建方式
             </div>
           )}
@@ -96,7 +96,7 @@ export default class NoObj extends React.Component {
                   <span className="no-obj-card__title-text">{title}</span>
                 </div>
 
-                <div className="fs12 black85 opacity65 no-obj-card__info">
+                <div className="fs12 black65 no-obj-card__info">
                   {/* <p>能发出主动行为的主体</p>
                   <p>包括自然人或法人群体</p>
                   <p>例如客户、加盟商、员工等与人相关的标签</p>
@@ -104,7 +104,7 @@ export default class NoObj extends React.Component {
                   {info.map(text => <p>{text}</p>)}
                 </div>
 
-                <div className="fs12 black85 opacity45 no-obj-card__desc">
+                <div className="fs12 black45 no-obj-card__desc">
                   {/* <p>在创建标签前，首先您需要在人中</p>
                   <p>添加具体的对象</p> */}
                   {desc.map(text => <p>{text}</p>)}

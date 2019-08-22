@@ -5,7 +5,7 @@ import {
 } from 'mobx'
 import {observer, Provider} from 'mobx-react'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
-import {Button, Empty, Spin} from 'antd'
+import {Button, Spin} from 'antd'
 
 import {Time} from '../common/util'
 import NoData from '../component-scene-nodata'
@@ -41,12 +41,23 @@ export default class SelectTag extends Component {
 
   componentWillMount() {
     this.store.isObjExist(() => {
-      this.store.categoryStore.getCategoryList()
+      this.store.categoryStore.getCategoryList(data => {
+        if (!data.length) return 
+        // 所有标签
+        const tagList = data.filter(item => !item.type)
+        if (!tagList.length) return 
+
+        // 存在标签,默认选中第一个
+        this.tagId = tagList[0].id
+        this.store.tagId = tagList[0].id
+        this.store.categoryStore.currentTreeItemKey = tagList[0].id
+        this.store.getTagDetail()
+      })
     })
 
-    if (this.tagId) {
-      this.store.getTagDetail()
-    }
+    // if (this.tagId) {
+    //   this.store.getTagDetail()
+    // }
   }
 
   @action tagChange = tagId => {
@@ -123,10 +134,12 @@ export default class SelectTag extends Component {
     }, {
       title: '创建时间',
       value: <Time timestamp={cDate} />,
-    }, {
-      title: '业务逻辑',
-      value: descr,
-    }]
+    },
+    //  {
+    //   title: '业务逻辑',
+    //   value: descr,
+    // }
+    ]
 
     const tagCategoryOpt = {
       tagChange: this.tagChange,
@@ -153,18 +166,23 @@ export default class SelectTag extends Component {
                                   <Fragment>
                                     <div className="detail-info mb16">
                                       <Spin spinning={tagInfoLoading}>
-                                        <div className="d-head FBH FBJ">
-                                          <span className="mr10">{name}</span>
-                                          {/* 点击“标签详情”按钮，进入标签池中的标签详情 */}
-                                          <Button type="primary">
-                                            <a
-                                              target="_blank"
-                                              rel="noopener noreferrer"
-                                              href={`${window.__onerConfig.pathPrefix}/pool#/${objTypeCode}/${treeId}`}
-                                            >
+                                        <div className="d-head">
+                                          <div className="FBH FBJ">
+                                            <span className="mr10">{name}</span>
+                                            {/* 点击“标签详情”按钮，进入标签池中的标签详情 */}
+                                            <Button type="primary">
+                                              <a
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                href={`${window.__onerConfig.pathPrefix}/pool#/${objTypeCode}/${treeId}`}
+                                              >
                                               标签详情
-                                            </a>
-                                          </Button>
+                                              </a>
+                                            </Button>
+                                          </div>
+                                          <div className="descr-box">
+                                            {descr}
+                                          </div>
                                         </div>
                                         <NemoBaseInfo dataSource={baseInfo} key={Math.random()} className="d-info" />
                                       </Spin>
@@ -172,8 +190,7 @@ export default class SelectTag extends Component {
                                     <TrendTag store={this.store} tagId={this.store.tagId} />
                                     <TrendApi store={this.store} tagId={this.store.tagId} />
                                   </Fragment>
-                                ) : <div />
-                              // <div className="empty-box bgf"><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /></div>
+                                ) : <NoData text="请选择标签！" />
                               }
                             </div>
                           )

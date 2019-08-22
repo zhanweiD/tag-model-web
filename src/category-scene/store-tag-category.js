@@ -139,7 +139,7 @@ class TagCategoryStore {
 
         this.cateList.replace(data)
         this.treeData.replace(listToTree(data))
-        if (cb) cb()
+        if (cb) cb(data)
       })
     } catch (e) {
       runInAction(() => {

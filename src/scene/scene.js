@@ -55,6 +55,7 @@ export default class Scene extends Component {
     let noDataConfig = {}
     if (functionCodes.includes('asset_tag_add_occation')) {
       noDataConfig = {
+        text: '',
         btnTxt: '添加场景',
         onClick: () => this.handleModalVisible(),
       }
@@ -86,9 +87,9 @@ export default class Scene extends Component {
                           <div className="card">
                             <div className="item-info">
                               <div className="c-name">
-                                <Link to={`/detail/${id}`} className={`name ${used ? 'use-name' : ''}`} title={name}>{name}</Link>
+                                <Link to={`/detail/${id}`} className={`name ${used ? 'use-name' : ''} hover-style omit`} title={name}>{name}</Link>
                                 <Tag color={used ? 'blue' : ''}>{used ? '使用中' : '未使用'}</Tag>
-                                <Icon type="right" />
+                                <Icon type="right" className="hover-style" />
                               </div>
                               <div className="c-info">
                                 <span className="mr20">

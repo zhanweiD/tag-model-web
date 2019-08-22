@@ -140,8 +140,8 @@ export default class Exponent extends Component {
           }
 
         </div>
-        <div className="mb16 p16 bgf">
-          <h3 className="ct-title">价值分趋势</h3>
+        <div className="mb16 p24 bgf">
+          <h3 className="chart-title">价值分趋势</h3>
           <div className="time-range-wrap">
             <TimeRange
               key={aId}
@@ -163,8 +163,8 @@ export default class Exponent extends Component {
           />
         </div>
 
-        <div className="mb16 p16 bgf">
-          <h3 className="ct-title">质量分趋势</h3>
+        <div className="mb16 p24 bgf">
+          <h3 className="chart-title">质量分趋势</h3>
           <div className="time-range-wrap">
             <TimeRange
               key={aId}
@@ -185,8 +185,8 @@ export default class Exponent extends Component {
             style={{width: '100%', height: '300px'}}
           />
         </div>
-        <div className="mb16 p16 bgf">
-          <h3 className="ct-title">标签热度趋势</h3>
+        <div className="mb16 p24 bgf">
+          <h3 className="chart-title">标签热度趋势</h3>
           <div className="time-range-wrap">
             <TimeRange
               key={aId}
@@ -208,8 +208,8 @@ export default class Exponent extends Component {
           />
         </div>
 
-        <div className="p16 bgf">
-          <h3 className="ct-title">标签枚举值分布</h3>
+        <div className="p24 bgf">
+          <h3 className="chart-title">标签枚举值分布</h3>
           <div className="far" style={{zIndex: 2, position: 'absolute', right: 20}}>
             {/* <div className={cls('far', {hide: !store.valueEnumList.length})}> */}
             <span className="mr12">

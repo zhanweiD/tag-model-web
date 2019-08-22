@@ -15,20 +15,20 @@ export default class EmptyContent extends React.Component {
     onClick: PropTypes.func, // 点击按钮要触发的事件
   }
 
-  state = {
-    activeType: ADD, // 当前激活的button，add：添加对象，import：导入标签及类目
-  }
+  // state = {
+  //   activeType: ADD, // 当前激活的button，add：添加对象，import：导入标签及类目
+  // }
 
   render() {
     const {functionCodes} = window.__userConfig
-    const {activeType} = this.state
+    // const {activeType} = this.state
 
-    const getBtnClass = type => {
-      return cls({
-        'empty-content-button': true,
-        'empty-content-button--active': activeType === type,
-      })
-    }
+    // const getBtnClass = type => {
+    //   return cls({
+    //     'empty-content-button': true,
+    //     'empty-content-button--active': activeType === type,
+    //   })
+    // }
 
     return (
       <div 
@@ -40,9 +40,10 @@ export default class EmptyContent extends React.Component {
       >
         {
           functionCodes.includes('asset_tag_add_obj') && (
-            <button
-              type="button"
-              className={`mb8 ${getBtnClass(ADD)}`}
+            <button 
+              type="button" 
+              // className={getBtnClass(ADD)}
+              className="empty-content-button mb8"
               style={{
                 marginTop: -60,
               }}
@@ -51,9 +52,9 @@ export default class EmptyContent extends React.Component {
               }}
             >
               <div className="empty-content-button__icon">
-                <img
-                  src={addIcon}
-                  alt="icon"
+                <img 
+                  src={addIcon} 
+                  alt="icon" 
                   height={20}
                 />
               </div>
@@ -63,17 +64,18 @@ export default class EmptyContent extends React.Component {
         }
         {
           functionCodes.includes('asset_tag_import_tag_cate') && (
-            <button
-              type="button"
-              className={`mb8 ${getBtnClass(IMPORT)}`}
+            <button 
+              type="button" 
+              // className={getBtnClass(IMPORT)}
+              className="empty-content-button mb8"
               onClick={() => {
                 this.handleClick(IMPORT)
               }}
             >
               <div className="empty-content-button__icon">
-                <img
-                  src={importIcon}
-                  alt="icon"
+                <img 
+                  src={importIcon} 
+                  alt="icon" 
                   height={20}
                 />
               </div>
@@ -84,17 +86,18 @@ export default class EmptyContent extends React.Component {
 
         {
           functionCodes.includes('asset_tag_export_tag_cate') && (
-            <button
-              type="button"
-              className={`mb8 ${getBtnClass(EXPORT)}`}
+            <button 
+              type="button" 
+              // className={getBtnClass(IMPORT)}
+              className="empty-content-button"
               onClick={() => {
-                this.handleClick(EXPORT)
+                this.handleClick(IMPORT)
               }}
             >
               <div className="empty-content-button__icon">
-                <img
-                  src={importIcon}
-                  alt="icon"
+                <img 
+                  src={importIcon} 
+                  alt="icon" 
                   height={20}
                 />
               </div>
@@ -110,9 +113,9 @@ export default class EmptyContent extends React.Component {
   handleClick(type = ADD) {
     const {onClick} = this.props
     
-    this.setState({
-      activeType: type,
-    })
+    // this.setState({
+    //   activeType: type,
+    // })
 
     if (typeof onClick === 'function') {
       onClick(type)
