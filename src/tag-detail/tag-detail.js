@@ -127,7 +127,11 @@ export default class TagDetail extends Component {
           onChange={this.onTabChange}
         >
           <TabPane tab="标签指数" key="1">
-            <TagDetailExponent aId={store.id} isActive={this.tabActiveKey === '1'} />
+            <TagDetailExponent
+              aId={store.id}
+              isActive={this.tabActiveKey === '1'}
+              baseInfo={store.baseInfo}
+            />
           </TabPane>
           <TabPane tab="标签调用" key="2">
             <TagDetailInvoke aId={store.id} isActive={this.tabActiveKey === '2'} />
