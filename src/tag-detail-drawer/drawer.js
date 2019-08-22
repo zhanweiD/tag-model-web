@@ -1,6 +1,7 @@
 import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {Drawer, Spin, Button} from 'antd'
+import {ErrorEater} from '@dtwave/uikit'
 import Mapping from '@dtwave/oner-mapping'
 
 import Store from './store-drawer'
@@ -54,11 +55,17 @@ export default class TagDetailDrawer extends Component {
       await this.store.getFieldData(id)
       await this.store.getTagData(id)
 
+      this.value = this.store.result
+
       this.setState({
         loading: false,
       })
-    } catch (e) {
-
+    } catch (error) {
+      ErrorEater(
+        error,
+        'custom title',
+        e => console.log(e),
+      )
     }
   }
 
