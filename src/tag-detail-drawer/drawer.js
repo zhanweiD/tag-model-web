@@ -249,7 +249,6 @@ export default class TagDetailDrawer extends Component {
                       enName: tagEnName,
                       valueType: tagValueType,
                       valueTypeName: tagValueTypeName,
-                      isUsed,
                     },
                     {
                       dataStorageId,
@@ -258,6 +257,7 @@ export default class TagDetailDrawer extends Component {
                       dataTableName,
                       dataFieldName,
                       dataFieldType,
+                      isUsed,
                     }
                   ) => ({
                     tagId,
