@@ -91,7 +91,7 @@ export default class EmptyContent extends React.Component {
               <div className="empty-content-button__icon FBH FBAC">
                 <SvgExport size="20" className="ml6" fill="#7AADFF" />
               </div>
-              <span>导出类目及标签</span>
+              <span>导出标签及类目</span>
             </button>
           )
         }

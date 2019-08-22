@@ -70,14 +70,14 @@ class Action extends Component {
         {
           functionCodes.includes('asset_tag_import_tag_cate') && (
             <Menu.Item>
-              <Link to="/import">导入类目及标签</Link>
+              <Link to="/import">导入标签及类目</Link>
             </Menu.Item>
           )
         }
         {
           functionCodes.includes('asset_tag_export_tag_cate') && (
             <Menu.Item>
-              <Link to="/export">导出类目及标签</Link>
+              <Link to="/export">导出标签及类目</Link>
             </Menu.Item>
           )
         }
