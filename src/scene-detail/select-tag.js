@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import {Component, Fragment} from 'react'
 import {
   observable, action, toJS, computed,
@@ -27,7 +26,6 @@ export default class SelectTag extends Component {
     this.store = new Store(props)
     this.store.categoryStore = new TagCategoryStore(props)
 
-
     // 场景id
     this.store.sceneId = props.sceneId
 
@@ -42,23 +40,37 @@ export default class SelectTag extends Component {
 
   componentWillMount() {
     this.store.isObjExist(() => {
-      this.store.categoryStore.getCategoryList(data => {
+      this.store.categoryStore.getCategoryList((data, treeData) => {
+        // 没有对象
         if (!data.length) return 
+
         // 所有标签
         const tagList = data.filter(item => !item.type)
+
+        // 没有标签
         if (!tagList.length) return 
 
+
+        // 存在类目存在标签
+        const getFirstChildId = d => {
+          // 非标签
+          if (d.children) {
+            return getFirstChildId(d.children[0])
+          }
+
+          return d.id
+        }
+
+        // 获取节点 第一个标签 默认展开？管你想不想看
+        const tagId = getFirstChildId(treeData[0])
+
         // 存在标签,默认选中第一个
-        this.tagId = tagList[0].id
-        this.store.tagId = tagList[0].id
-        this.store.categoryStore.currentTreeItemKey = tagList[0].id
+        this.tagId = tagId
+        this.store.tagId = tagId
+        this.store.categoryStore.currentTreeItemKey = tagId
         this.store.getTagDetail()
       })
     })
-
-    // if (this.tagId) {
-    //   this.store.getTagDetail()
-    // }
   }
 
   @action tagChange = tagId => {
@@ -109,33 +121,52 @@ export default class SelectTag extends Component {
     const {
       tagInfo, tagId, tagInfoLoading, tagExistFlag, tagExistFlagLoading,
     } = this.store
-    const {functionCodes} = window.__userConfig
-    let noDataConfig = {
-      text: '暂无数据',
-    }
-    if (
-      functionCodes.includes('asset_tag_add_obj')
-      && !tagExistFlag
-    ) {
-      noDataConfig = {
-        btnTxt: '去添加对象',
-        text: '没有任何对象，请在标签池中添加！',
-        onClick: this.goToAddObj,
-        isLoading: tagExistFlagLoading,
-      }
+
+    const noTagConfig = {
+      btnText: '去添加对象',
+      onClick: this.goToAddObj,
+      isLoading: tagExistFlagLoading,
+      code: 'asset_tag_add_obj',
+      noAuthText: '暂无数据',
+      text: '没有任何对象，请在标签池中添加！',
     }
 
-    if (
-      functionCodes.includes('asset_tag_occation_select_obj')
-      && tagExistFlag
-      && !this.objExistFlag
-    ) {
-      noDataConfig = {
-        btnTxt: '选择对象',
-        onClick: this.selectObj,
-        isLoading: this.store.categoryStore.treeLoading,
-      }
+    const noObjConfig = {
+      btnText: '选择对象',
+      onClick: this.selectObj,
+      isLoading: this.store.categoryStore.treeLoading,
+      code: 'asset_tag_occation_select_obj',
+      noAuthText: '您暂无选择对象的权限',
     }
+
+
+    // const {functionCodes} = window.__userConfig
+    // let noDataConfig = {
+    //   text: '暂无数据',
+    // }
+    // if (
+    //   functionCodes.includes('asset_tag_add_obj')
+    //   && !tagExistFlag
+    // ) {
+    //   noDataConfig = {
+    //     btnText: '去添加对象',
+    //     text: '没有任何对象，请在标签池中添加！',
+    //     onClick: this.goToAddObj,
+    //     isLoading: tagExistFlagLoading,
+    //   }
+    // }
+
+    // if (
+    //   functionCodes.includes('asset_tag_occation_select_obj')
+    //   && tagExistFlag
+    //   && !this.objExistFlag
+    // ) {
+    //   noDataConfig = {
+    //     btnText: '选择对象',
+    //     onClick: this.selectObj,
+    //     isLoading: this.store.categoryStore.treeLoading,
+    //   }
+    // }
 
     const {
       // id,
@@ -164,10 +195,6 @@ export default class SelectTag extends Component {
         title: '创建时间',
         value: <Time timestamp={cDate} />,
       },
-      //  {
-      //   title: '业务逻辑',
-      //   value: descr,
-      // }
     ]
 
     const tagCategoryOpt = {
@@ -221,12 +248,12 @@ export default class SelectTag extends Component {
                               }
                             </div>
                           )
-                          : <NoData {...noDataConfig} />
+                          : <NoData {...noObjConfig} />
                       }
                     </Spin>
                   </div>
                 ) 
-                : <NoData {...noDataConfig} />
+                : <NoData {...noTagConfig} />
             }
 
           </div>

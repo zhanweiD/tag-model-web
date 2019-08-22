@@ -89,6 +89,14 @@ ioContext.create('sceneDetail', {
     url: `${tagApi}/be_tag/occasion/alreadyDBSourceList`,
   },
 
+  // 目的数据源 - 列表删除
+  dbSourceDel: {
+    mock: isMock,
+    method: 'POST',
+    mockUrl: 'page-scene/getContent',
+    url: `${tagApi}/be_tag/occasion/dbSourceDel`,
+  },
+
   // 判断标签池是否有对象
   isObjExist: {
     mock: isMock,

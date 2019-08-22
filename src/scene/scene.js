@@ -9,6 +9,8 @@ import {Link} from 'react-router-dom'
 import {Time} from '../common/util'
 import {navListMap} from '../common/constants'
 import NoData from '../component-scene-nodata'
+import AuthBox from '../component-auth-box'
+
 import ModalAdd from './modal-add'
 
 import Del from '../svg-component/Del'
@@ -51,18 +53,24 @@ export default class Scene extends Component {
 
   render() {
     const {loading, list = []} = store
-    const {functionCodes} = window.__userConfig
-    let noDataConfig = {}
-    if (functionCodes.includes('asset_tag_add_occation')) {
-      noDataConfig = {
-        btnTxt: '添加场景',
-        onClick: () => this.handleModalVisible(),
-      }
-    } else {
-      noDataConfig = {
-        text: '暂无数据',
-      }
+    
+    // const {functionCodes} = window.__userConfig
+    const noDataConfig = {
+      btnText: '添加场景',
+      onClick: () => this.handleModalVisible(),
+      code: 'asset_tag_add_occation',
+      noAuthText: '暂无数据',
     }
+    // if (functionCodes.includes('asset_tag_add_occation')) {
+    //   noDataConfig = {
+    //     btnText: '添加场景',
+    //     onClick: () => this.handleModalVisible(),
+    //   }
+    // } else {
+    //   noDataConfig = {
+    //     text: '暂无数据',
+    //   }
+    // }
     return (
       <div className="scene-wrap">
         <div className="header">标签使用场景</div>
@@ -72,7 +80,15 @@ export default class Scene extends Component {
             {
               list.length ? (
                 <Fragment>
-                  {functionCodes.includes('asset_tag_add_occation') && <Button className="mb16" type="primary" onClick={() => this.handleModalVisible()}>添加场景</Button>}
+                  {/* {functionCodes.includes('asset_tag_add_occation') && <Button className="mb16" type="primary" onClick={() => this.handleModalVisible()}>添加场景</Button>} */}
+                  <AuthBox 
+                    className="mb16" 
+                    code="asset_tag_add_occation" 
+                    type="primary" 
+                    onClick={() => this.handleModalVisible()}
+                  >
+                      添加场景
+                  </AuthBox>
                   <Row gutter={16}> 
            
                     {
@@ -121,18 +137,25 @@ export default class Scene extends Component {
                               </div>
                             </div>
                             <div className="item-tool">
-                              {functionCodes.includes('asset_tag_edit_occation') && (
+                              <AuthBox type="link" code="asset_tag_edit_occation" disabled={used} className="tool" onClick={() => this.handleModalVisible('edit', list[d])}>
+                                <Edit size="14" className={used ? 'i-used' : 'i-btn'} />
+                              </AuthBox>
+                              <div className="line" />
+                              <AuthBox type="link" code="asset_tag_del_occation" disabled={used} className="tool" onClick={() => this.handleDel(id)}>
+                                <Del size="14" className={used ? 'i-used' : 'i-btn'} />
+                              </AuthBox>
+                              {/* {functionCodes.includes('asset_tag_edit_occation') && (
                                 <Button type="link" disabled={used} className="tool" onClick={() => this.handleModalVisible('edit', list[d])}>
                                   <Edit size="14" className={used ? 'i-used' : 'i-btn'} />
                                 </Button>
-                              )}
+                              )} */}
 
-                              <div className="line" />
-                              {functionCodes.includes('asset_tag_del_occation') && (
+                              {/* <div className="line" /> */}
+                              {/* {functionCodes.includes('asset_tag_del_occation') && (
                                 <Button type="link" disabled={used} className="tool" onClick={() => this.handleDel(id)}>
                                   <Del size="14" className={used ? 'i-used' : 'i-btn'} />
                                 </Button>
-                              )}
+                              )} */}
                             </div>
                           </div>
                         </Col>

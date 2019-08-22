@@ -44,7 +44,8 @@ class SceneDetailStore {
 
   @observable isDbSourcEnough = false
   
-
+  @observable dbSourcSelectList = []
+  
   // 场景详情
   @action async getDetail() {
     this.loading = true
@@ -162,11 +163,14 @@ class SceneDetailStore {
       runInAction(() => {
         this.confirmLoading = false
         this.dbSourceVisible = false
-        successTip('操作成功')
         if (cb)cb()
         if (this.currentKey === '2') this.getSourceList()
+        successTip('操作成功')
       })
     } catch (e) {
+      runInAction(() => {
+        this.confirmLoading = false
+      })
       errorTip(e.message)
     }
   }
@@ -181,6 +185,8 @@ class SceneDetailStore {
 
       runInAction(() => {
         this.sourceData.data.replace(res)
+        this.dbSourcSelectList = res.map(() => false)
+
         this.sourceData.loading = false
         if (res.length === 10) this.isDbSourcEnough = true
       })
@@ -188,6 +194,23 @@ class SceneDetailStore {
       runInAction(() => {
         this.sourceData.loading = false
       })
+      errorTip(e.message)
+    }
+  }
+
+    // 目的数据源 - 列表 - 删除
+    @action async dbSourceDel(params) {
+    try {
+      await io.dbSourceDel({
+        occasionId: this.sceneId,
+        ...params,
+      })
+  
+      runInAction(() => {
+        this.getSourceList()
+        successTip('操作成功')
+      })
+    } catch (e) {
       errorTip(e.message)
     }
   }

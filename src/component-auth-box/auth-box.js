@@ -6,8 +6,8 @@ const {functionCodes} = window.__userConfig
 
 class AuthBox extends Component {
   static propTypes = {
-    code: PropTypes.string,
-    isButton: PropTypes.bool,
+    code: PropTypes.string, // 权限code
+    isButton: PropTypes.bool, // 类型是否为按钮
   }
 
   static defaultProps = {

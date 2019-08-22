@@ -2,20 +2,21 @@ import {Component} from 'react'
 import {action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {
-  Tabs, Button, Icon, Spin, Tooltip, Tag,
+  Tabs, Button, Icon, Spin, Tooltip, Tag, Alert,
 } from 'antd'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
 
 import {Time} from '../common/util'
 import {navListMap} from '../common/constants'
 import ModalEditScene from '../scene/modal-add'
+import AuthBox from '../component-auth-box'
 import Descr from '../component-detail-descr'
 import SelectTag from './select-tag'
 import DataSource from './data-source'
 import ModalDataSource from './modal-data-source'
 import store from './store-scene-detail'
 
-const {functionCodes} = window.__userConfig
+// const {functionCodes} = window.__userConfig
 const {TabPane} = Tabs
 
 @inject('frameChange')
@@ -86,15 +87,17 @@ export default class SceneDetail extends Component {
     }, {
       title: '标签数',
       value: tagCount,
-    },
-    // , {
-    //   title: '描述',
-    //   value: descr,
-    // }
-    ]
+    }]
 
     return (
       <div className="scene-detail">
+        <Alert
+          showIcon
+          closable
+          type="warning"
+          className="fs12"
+          message="已添加目的数据源或场景使用中，无法在场景中继续选择或移除对象，添加、编辑或删除类目，选择或移除标签，只能查看类目与标签详情。"
+        />
         <Spin spinning={store.loading}>
           <div className="info">
             <div className="FBH FBJ">
@@ -108,7 +111,31 @@ export default class SceneDetail extends Component {
               </p>
               <div>
                 <Button className="mr8" href={`${window.__onerConfig.pathPrefix}/scene#/tags/${store.sceneId}`}>标签列表</Button>
-                {(() => {
+                <AuthBox code="asset_tag_occation_add_aim_datasoure" isButton={false}>
+                  {
+                    store.isDbSourcEnough 
+                      ? (
+                        <Tooltip title="添加的目的数据源数量超过上限10个">
+                          <Button 
+                            type="primary" 
+                            onClick={this.dbSourceVisible} 
+                            disabled={store.isDbSourcEnough}
+                          >
+                        添加目的数据源
+                          </Button>                   
+                        </Tooltip>
+                      ) : (
+                        <Button 
+                          type="primary" 
+                          onClick={this.dbSourceVisible} 
+                          disabled={used}
+                        >
+                        添加目的数据源
+                        </Button>
+                      )
+                  }
+                </AuthBox>
+                {/* {(() => {
                   if (functionCodes.includes('asset_tag_occation_add_aim_datasoure')) {
                     if (store.isDbSourcEnough) {
                       return (
@@ -134,7 +161,7 @@ export default class SceneDetail extends Component {
                     )
                   }
                   return null
-                })()}
+                })()} */}
               </div>
             </div>
             <Descr text={descr} pr={210} />

@@ -1,13 +1,21 @@
 import {Component} from 'react'
-// import {observable, action, toJS} from 'mobx'
+import {
+  observable, action, computed,
+} from 'mobx'
 import {observer} from 'mobx-react'
 import {
-  Table, Button, Spin,
+  Table, Button, Spin, Checkbox, Modal,
 } from 'antd'
 import NoData from '../component-scene-nodata'
 
+// const {functionCodes} = window.__userConfig
+const {confirm} = Modal
+
 @observer
 export default class DataSource extends Component {
+  @observable checkAll = false
+  @observable indeterminate = false
+
   columns = [{
     title: '所属分类',
     dataIndex: 'objTypeName',
@@ -28,64 +36,162 @@ export default class DataSource extends Component {
     dataIndex: 'filedName',
   }]
 
-  render() {
-    const {store: {sourceData}, onClick} = this.props
-    const {functionCodes} = window.__userConfig
-    let noDataConfig = {}
-    if (functionCodes.includes('asset_tag_occation_add_aim_datasoure')) {
-      noDataConfig = {
-        btnTxt: '添加目的数据源',
-        onClick: () => onClick(),
+  @computed get selectLen() {
+    const {store: {dbSourcSelectList}} = this.props
+    return dbSourcSelectList.filter(item => item).length
+  }
+
+
+  @action onItemSelect(index, e) {
+    const {store: {dbSourcSelectList}} = this.props
+    const value = e.target.checked
+    dbSourcSelectList[index] = value
+
+    if (this.selectLen) {
+      // 全选
+      if (this.selectLen === dbSourcSelectList.length) {
+        this.checkAll = true
+        this.indeterminate = true
+        return
       }
+      
+      // 非全选
+      this.checkAll = false
+      this.indeterminate = true
     } else {
-      noDataConfig = {
-        text: '暂无数据',
-      }
+      // 全不选
+      this.checkAll = false
+      this.indeterminate = false
     }
+  }
+
+  // 控制全选
+  @action onAllSelect(e) {
+    const {store} = this.props
+    const value = e.target.checked
+
+    this.checkAll = value
+    this.indeterminate = false
+
+    store.dbSourcSelectList = Array.from({length: store.dbSourcSelectList.length}, () => value)
+  }
+
+  // 批量移除
+  @action remove = () => {
+    const {store} = this.props
+    const {sourceData, dbSourcSelectList} = store
+    const list = dbSourcSelectList.map((item, index) => sourceData.data[index])
+
+    const delTableList = []
+    const storageIdList = []
+    list.forEach(item => {
+      delTableList.push(item.tableName)
+      storageIdList.push(item.storageId)
+    })
+
+    const params = {
+      delTableList,
+      storageIdList,
+    }
+
+    const that = this
+    confirm({
+      title: '确认移除 ？',
+      content: '将会移除选择的目的数据源',
+      onOk() {
+        store.dbSourceDel(params)
+        that.checkAll = false
+        that.indeterminate = false
+      },
+      onCancel() {
+        console.log('Cancel')
+      },
+    })
+  }
+
+  render() {
+    const {store: {sourceData, dbSourcSelectList, info}, onClick} = this.props
+
+    const noDataConfig = {
+      code: 'asset_tag_occation_add_aim_datasoure',
+      noAuthText: '您暂无添加场景的权限',
+      btnText: '添加目的数据源',
+      btnDisabled: info.used,
+      onClick: () => onClick(),
+      isLoading: sourceData.loading,
+    }
+
+    // const {functionCodes} = window.__userConfig
+    // let noDataConfig = {}
+    // if (functionCodes.includes('asset_tag_occation_add_aim_datasoure')) {
+    //   noDataConfig = {
+    //     btnTxt: '添加目的数据源',
+    //     onClick: () => onClick(),
+    //   }
+    // } else {
+    //   noDataConfig = {
+    //     text: '暂无数据',
+    //   }
+    // }
+
     return (
       <div className="data-source p16">
         <Spin spinning={sourceData.loading}>
           {
             sourceData.data.length ? (
               <div className="bgf p16">
+                <div className="FBH FBJ FBAC mb16">
+                  <Checkbox 
+                    checked={this.checkAll}
+                    indeterminate={this.indeterminate}
+                    onChange={e => this.onAllSelect(e)}
+                  >
+                  全选
+                  </Checkbox>
+                  <div>
+                    <Button className="mr8" disabled={!this.selectLen} onClick={this.remove}>                           
+                      批量移除数据源
+                    </Button>
+                    {/* 点击“配置数据服务”按钮，跳转至服务管理页面 */}
+                    <Button type="primary">
+                      <a 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        href="/service/api"
+                      >
+                      配置数据服务
+                      </a>      
+                    </Button>
+                  </div>
+                </div>
                 {
-                  sourceData.data.map((item, index) => (
+                  dbSourcSelectList.map((item, index) => (
                     <div className="mb48">
                       <div className="mb24 FBH FBJ FBAC">
                         <div className="fs14">
+                          <Checkbox 
+                            checked={item}
+                            onChange={v => this.onItemSelect(index, v)}
+                          />
                           <span className="mr48">
                             目的数据源：
-                            {item.sourceName}
+                            {sourceData.data[index].sourceName}
                           </span>
                           <span>
                             目的数据表：
-                            {item.tableName}
+                            {sourceData.data[index].tableName}
                           </span>
                         </div>
-                        {/* 点击“配置数据服务”按钮，跳转至服务管理页面 */}
-                        {
-                          (index === 0) && (
-                            <Button type="primary">
-                              <a 
-                                target="_blank" 
-                                rel="noopener noreferrer" 
-                                href="/service/api"
-                              >
-                              配置数据服务
-                              </a>      
-                            </Button>
-                          )
-                        }
                       </div>
                       <Table 
                         columns={this.columns} 
-                        loading={sourceData.loading}
-                        dataSource={item.details.slice()} 
+                        // loading={sourceData.loading}
+                        dataSource={sourceData.data[index].details.slice()} 
                         pagination={false}
                       />
                       <div className="total-box">
                         合计
-                        {item.total}
+                        {sourceData.data[index].total}
                         条记录
                       </div>
                     </div>
