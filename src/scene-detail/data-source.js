@@ -51,10 +51,10 @@ export default class DataSource extends Component {
       // 全选
       if (this.selectLen === dbSourcSelectList.length) {
         this.checkAll = true
-        this.indeterminate = true
+        this.indeterminate = false
         return
       }
-      
+
       // 非全选
       this.checkAll = false
       this.indeterminate = true
@@ -80,10 +80,17 @@ export default class DataSource extends Component {
   @action remove = () => {
     const {store} = this.props
     const {sourceData, dbSourcSelectList} = store
-    const list = dbSourcSelectList.map((item, index) => sourceData.data[index])
+
+    const list = []
+
+    dbSourcSelectList.forEach((item, index) => {
+      if (item) list.push(sourceData.data[index])
+    })
+
 
     const delTableList = []
     const storageIdList = []
+
     list.forEach(item => {
       delTableList.push(item.tableName)
       storageIdList.push(item.storageId)
@@ -93,7 +100,7 @@ export default class DataSource extends Component {
       delTableList,
       storageIdList,
     }
-
+ 
     const that = this
     confirm({
       title: '确认移除 ？',
