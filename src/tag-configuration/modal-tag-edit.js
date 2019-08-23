@@ -12,6 +12,7 @@ const {Option} = Select
 
 class ModalTagEdit extends Component {
   static propTypes = {
+    title: PropTypes.string,
     visible: PropTypes.bool.isRequired, // 是否可见
     tagDetail: PropTypes.object, // 标签对象
     onCancel: PropTypes.func.isRequired, // 关闭弹框回调
@@ -35,12 +36,13 @@ class ModalTagEdit extends Component {
       visible,
       onCancel,
       cateList = [],
+      title,
     } = this.props
 
     const {isEnum, confirmLoading} = this.state
 
     const modalProps = {
-      title: '编辑标签',
+      title: title || '编辑标签',
       visible,
       onCancel,
       onOk: this.handleOk,
