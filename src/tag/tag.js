@@ -47,6 +47,12 @@ export default class Tag extends Component {
   @action onClickBtn(activeType) {
     const {history} = this.props
     if (activeType === 'add') {
+      // 获取关联的人/物
+      if (this.store.typeCode === 3) {
+        this.store.categoryStore.getRelObj()
+      }
+      this.store.categoryStore.currentTreeItemKey = 0
+      this.store.categoryStore.eStatus.editObject = false
       this.store.categoryStore.modalVisible.editObject = true
     } else if (activeType === 'import') {
       history.push('/import')

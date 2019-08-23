@@ -3,7 +3,6 @@ import {
 } from 'mobx'
 import {successTip, errorTip, listToTree} from '../common/util'
 import io from './io'
-import { destroyFns } from 'antd/lib/modal/Modal';
 
 class TagCategoryStore {
   constructor(props) {
@@ -54,6 +53,7 @@ class TagCategoryStore {
   @observable moveTreeData = []
 
   // 获取关联的对象
+  @observable relObjectListLoading = false
   @observable relObjectList = []
 
   @action destory() {
@@ -106,39 +106,13 @@ class TagCategoryStore {
 
   // 获取关联的对象
   @action async getRelObj(id) {
+    this.relObjectListLoading = true
     try {
       const res = await io.getRelObj({
         id,
       })
-      // const res = [
-      //   {
-      //     id: 1,
-      //     createTime: '2019.07.13',
-      //     name: '保险产品',
-      //     creator: '望舒',
-      //     descr: '测试对象',
-      //     objType: '人',
-      //     objTypeCode: 1,
-      //     tagCount: 100,
-      //     tenantId: 4,
-      //     userId: 1,
-      //     isUserd: 0,
-      //   },
-      //   {
-      //     id: 2,
-      //     createTime: '2019.07.13',
-      //     name: '保险人',
-      //     creator: '望舒',
-      //     descr: '测试对象1',
-      //     objType: '物',
-      //     objTypeCode: 2,
-      //     tagCount: 1000,
-      //     tenantId: 4,
-      //     userId: 1,
-      //     isUserd: 1,
-      //   },
-      // ]
       runInAction(() => {
+        this.relObjectListLoading = false
         const arr = res.map(item => ({
           id: item.id,
           name: item.name,
@@ -147,6 +121,9 @@ class TagCategoryStore {
         this.relObjectList.replace(arr)
       })
     } catch (e) {
+      runInAction(() => {
+        this.relObjectListLoading = false
+      })
       errorTip(e.message)
     }
   }
@@ -266,20 +243,6 @@ class TagCategoryStore {
         id: this.currentTreeItemKey,
       })
       runInAction(() => {
-        // const res2 = {
-        //   id: 9999,
-        //   catePath: '客户',
-        //   createTime: '2019.07.13',
-        //   creator: '望舒',
-        //   descr: '测试类目',
-        //   name: '望舒测试一级类目',
-        //   objType: '人',
-        //   objTypeCode: 1,
-        //   tenantId: 4,
-        //   userId: 1,
-        //   level: 1,
-        //   parentId: 0,
-        // }
         this.cateDetail = res
         this.detailLoading = false
       })
