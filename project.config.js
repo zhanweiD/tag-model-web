@@ -38,7 +38,7 @@ module.exports = {
     
     // 页面配置
     page: {
-      title: '数据资产管理中心',
+      title: '数据资产管理',
       css: ['common.css'],
       js: [
         'common.js',

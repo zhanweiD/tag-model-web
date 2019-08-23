@@ -39,6 +39,9 @@ export default class Tag extends Component {
   }
 
   @action onChangeTab(e) {
+    // 防止点击过快，接口没返回时Tab已切换(tab高亮map到数据错乱)
+    if (this.store.categoryStore.treeLoading) return false
+
     const {history} = this.props
     this.store.typeCode = +e
     history.push(`/${e}`)
