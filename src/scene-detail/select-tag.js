@@ -223,8 +223,8 @@ export default class SelectTag extends Component {
                                     <div className="detail-info mb16">
                                       <Spin spinning={tagInfoLoading}>
                                         <div className="d-head">
-                                          <div className="FBH FBJ">
-                                            <span className="mr10">{name}</span>
+                                          <div className="FBH FBJ mb16">
+                                            <span className="pt8">{name}</span>
                                             {/* 点击“标签详情”按钮，进入标签池中的标签详情 */}
                                             <Button type="primary">
                                               <a

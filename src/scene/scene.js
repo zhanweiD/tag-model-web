@@ -2,14 +2,15 @@ import {Component, Fragment} from 'react'
 import {action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {
-  Row, Col, Spin, Modal, Icon, Tag, Button,
+  Row, Col, Spin, Modal, Icon,
 } from 'antd'
 import {Link} from 'react-router-dom'
 
-import {Time} from '../common/util'
+// import {Time} from '../common/util'
 import {navListMap} from '../common/constants'
 import NoData from '../component-scene-nodata'
 import AuthBox from '../component-auth-box'
+import Tag from '../component-tag'
 
 import ModalAdd from './modal-add'
 
@@ -104,10 +105,17 @@ export default class Scene extends Component {
                       }, d) => (
                         <Col span={8}>
                           <div className="card">
-                            <div className="item-info">
+                            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */} 
+                            <div
+                              className="item-info"
+                              onClick={() => {
+                                window.location.href = `${window.__onerConfig.pathPrefix}/scene#/detail/${id}`
+                              }}
+                            >
                               <div className="c-name">
-                                <Link to={`/detail/${id}`} className={`name ${used ? 'use-name' : ''} hover-style omit`} title={name}>{name}</Link>
-                                <Tag color={used ? 'blue' : ''}>{used ? '使用中' : '未使用'}</Tag>
+                                <Link to={`/detail/${id}`} className="name hover-style omit" title={name}>{name}</Link>
+                                {/* <Tag color={used ? 'blue' : ''}>{used ? '使用中' : '未使用'}</Tag> */}
+                                <Tag text={used ? '使用中' : '未使用'} color={used ? 'blue' : 'gray'} />
                                 <Icon type="right" className="hover-style" />
                               </div>
                               <div className="c-info FBH">

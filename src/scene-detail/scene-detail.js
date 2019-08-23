@@ -2,7 +2,7 @@ import {Component} from 'react'
 import {action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {
-  Tabs, Button, Icon, Spin, Tooltip, Tag, Alert,
+  Tabs, Button, Icon, Spin, Tooltip, Alert,
 } from 'antd'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
 
@@ -11,9 +11,12 @@ import {navListMap} from '../common/constants'
 import ModalEditScene from '../scene/modal-add'
 import AuthBox from '../component-auth-box'
 import Descr from '../component-detail-descr'
+import Tag from '../component-tag'
+
 import SelectTag from './select-tag'
 import DataSource from './data-source'
 import ModalDataSource from './modal-data-source'
+
 import store from './store-scene-detail'
 
 // const {functionCodes} = window.__userConfig
@@ -47,6 +50,7 @@ export default class SceneDetail extends Component {
   }
 
   @action.bound dbSourceVisible() {
+    store.dbSourceVisible = true
     store.getDBSource()
   }
 
@@ -61,6 +65,8 @@ export default class SceneDetail extends Component {
 
   componentWillUnmount() {
     store.isDbSourcEnough = false
+    store.sourceData.data.clear()
+    store.info = {}
   }
 
   render() {
@@ -91,23 +97,29 @@ export default class SceneDetail extends Component {
 
     return (
       <div className="scene-detail">
-        <Alert
-          showIcon
-          closable
-          type="warning"
-          className="fs12"
-          message="已添加目的数据源或场景使用中，无法在场景中继续选择或移除对象，添加、编辑或删除类目，选择或移除标签，只能查看类目与标签详情。"
-        />
+        {
+          store.sourceData.data.length ? (
+            <Alert
+              showIcon
+              closable
+              type="warning"
+              className="fs12"
+              message="已添加目的数据源或场景使用中，无法在场景中继续选择或移除对象，添加、编辑或删除类目，选择或移除标签，只能查看类目与标签详情。"
+            />
+          ) : null
+        }
+       
         <Spin spinning={store.loading}>
           <div className="info">
-            <div className="FBH FBJ">
+            <div className="FBH FBJ pr8 pl8">
               <p className="name">
                 <span>{info.name}</span> 
                 {
                   !used && <Icon className="ml8" type="edit" onClick={this.sceneDetailVisible} style={{color: 'rgba(0,0,0, .65)'}} />
                 }
                 
-                <Tag className="ml10" color={used ? 'blue' : ''}>{used ? '使用中' : '未使用'}</Tag>
+                {/* <Tag className="ml10" color={used ? 'blue' : ''}>{used ? '使用中' : '未使用'}</Tag> */}
+                <Tag className="ml10" text={used ? '使用中' : '未使用'} color={used ? 'blue' : 'gray'} />
               </p>
               <div>
                 <Button className="mr8" href={`${window.__onerConfig.pathPrefix}/scene#/tags/${store.sceneId}`}>标签列表</Button>
@@ -117,6 +129,7 @@ export default class SceneDetail extends Component {
                       ? (
                         <Tooltip title="添加的目的数据源数量超过上限10个">
                           <Button 
+                            // className="mr8"
                             type="primary" 
                             onClick={this.dbSourceVisible} 
                             disabled={store.isDbSourcEnough}
@@ -126,6 +139,7 @@ export default class SceneDetail extends Component {
                         </Tooltip>
                       ) : (
                         <Button 
+                          // className="mr8"
                           type="primary" 
                           onClick={this.dbSourceVisible} 
                           disabled={used}
@@ -164,7 +178,7 @@ export default class SceneDetail extends Component {
                 })()} */}
               </div>
             </div>
-            <Descr text={descr} pr={210} />
+            <Descr text={descr} pr={210} className="pl8" />
             <NemoBaseInfo dataSource={baseInfo} key={Math.random()} className="detail-border" />
           </div>
         </Spin>
