@@ -96,7 +96,7 @@ class ModalObjectEdit extends Component {
     const {typeCode} = this.bigStore
     const {form: {getFieldDecorator}} = this.props
     const {
-      objectDetail, eStatus: {editObject}, modalVisible, confirmLoading, relObjectList,
+      objectDetail, eStatus: {editObject}, modalVisible, confirmLoading, relObjectList, relObjectListLoading,
     } = this.store
 
     const modalProps = {
@@ -158,6 +158,7 @@ class ModalObjectEdit extends Component {
                       mode="multiple"
                       style={{width: '100%'}}
                       placeholder="请选择"
+                      loading={relObjectListLoading}
                     >
                       {
                         relObjectList.map(item => (
