@@ -73,6 +73,17 @@ export default class SelectTag extends Component {
     })
   }
 
+  componentWillReceiveProps(nextProps) {
+    const {dataSourceLen} = this.props
+    if (dataSourceLen !== nextProps.dataSourceLen) {
+      // dataSourceLen === 0 无数据源 至 有数据源;需刷新标签树
+      // nextProps.dataSourceLen 有数据源 至 无数据源;需刷新标签树
+      if (dataSourceLen === 0 || nextProps.dataSourceLen === 0) {
+        this.store.categoryStore.getCategoryList()
+      }
+    }
+  }
+
   @action tagChange = tagId => {
     if (tagId && tagId !== this.tagId) {
       this.store.getTagDetail()

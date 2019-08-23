@@ -185,7 +185,7 @@ export default class SceneDetail extends Component {
        
         <Tabs defaultActiveKey="1" animated={false} onChange={this.onTabChange}>
           <TabPane tab="标签选择" key="1">    
-            <SelectTag sceneId={store.sceneId} />
+            <SelectTag sceneId={store.sceneId} dataSourceLen={store.sourceData.data.length} />
           </TabPane>
           <TabPane tab="目的数据源列表" key="2">
             <DataSource store={store} onClick={this.dbSourceVisible} />
