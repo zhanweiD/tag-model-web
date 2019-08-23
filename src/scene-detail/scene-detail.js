@@ -16,6 +16,7 @@ import Tag from '../component-tag'
 import SelectTag from './select-tag'
 import DataSource from './data-source'
 import ModalDataSource from './modal-data-source'
+
 import store from './store-scene-detail'
 
 // const {functionCodes} = window.__userConfig
@@ -49,6 +50,7 @@ export default class SceneDetail extends Component {
   }
 
   @action.bound dbSourceVisible() {
+    store.dbSourceVisible = true
     store.getDBSource()
   }
 

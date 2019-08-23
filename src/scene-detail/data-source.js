@@ -147,7 +147,7 @@ export default class DataSource extends Component {
         <Spin spinning={sourceData.loading}>
           {
             sourceData.data.length ? (
-              <div className="bgf p16">
+              <div className="bgf p24">
                 <div className="FBH FBJ FBAC mb16">
                   <Checkbox 
                     checked={this.checkAll}

@@ -4,7 +4,7 @@ import {
   observable, action, toJS,
 } from 'mobx'
 import {
-  Modal, Table, Alert, Select, Tooltip, Icon, Form, Button,
+  Modal, Table, Alert, Select, Tooltip, Icon, Form, Button, Spin,
 } from 'antd'
 
 const {Option} = Select
@@ -44,22 +44,22 @@ class ModalDataSource extends Component {
   }, 
   {
     title: '目的字段',
-    dataIndex: 'fileds',
+    dataIndex: 'fields',
     width: 150,
-    render: (text, record, index) => {
+    render: (text, record) => {
       const {form: {getFieldDecorator}} = this.props
       return (
         <FormItem className="mb0" style={{textAlign: 'center'}}>
           {getFieldDecorator(record.tagId, {
-            initialValue: record.fileds.filter(d => d.name === record.tagEnName).length ? record.tagEnName : undefined,
+            initialValue: record.fields.filter(d => d.name === record.tagEnName).length ? record.tagEnName : undefined,
             rules: [{
               required: true, message: '目的字段不能为空',
             }, {
               validator: this.handleValidator,
             }],
           })(
-            <Select style={{width: '100%'}} onChange={e => this.onFieldChange(e, `fileds_${index}`)}>
-              {record.fileds.map(({name}) => <Option value={name} key={name}>{name}</Option>)}
+            <Select style={{width: '100%'}} onChange={e => this.onFieldChange(e)}>
+              {record.fields.map(({name}) => <Option value={name} key={name}>{name}</Option>)}
             </Select>
           )}
         </FormItem>
@@ -141,8 +141,8 @@ class ModalDataSource extends Component {
   // 重置
   @action.bound reset() {
     const {store: {dbSourceData, dbTable}} = this.props
-    this.dbTableValue = ''
-    this.dbSourceValue = ''
+    this.dbTableValue = undefined
+    this.dbSourceValue = undefined
     this.isFieldRepeat = false
     
     // 清空表格数据
@@ -159,6 +159,8 @@ class ModalDataSource extends Component {
         dbTable,
         dbSourceData,
         confirmLoading,
+        dbTableLoading,
+        dbSourceLoading,
       },
     } = this.props
 
@@ -191,6 +193,7 @@ class ModalDataSource extends Component {
                 style={{width: 150}} 
                 placeholder="请选择" 
                 onChange={this.onSourceChange}
+                notFoundContent={dbSourceLoading ? <Spin size="small" /> : <div>暂无目的数据源数据</div>}
               >
                 {
                   toJS(dbSource).map(({value, label, children}) => <Option value={value} key={value} dbtable={children}>{label}</Option>)
@@ -214,7 +217,7 @@ class ModalDataSource extends Component {
                 style={{width: 150}} 
                 placeholder="请选择" 
                 onChange={this.onTableChange}
-                notFoundContent={null}
+                notFoundContent={dbTableLoading ? <Spin size="small" /> : <div>暂无目的数据表数据</div>}
               >
                 {
                   toJS(dbTable).map(({value, label, used}) => <Option value={label} key={value} disabled={used}>{label}</Option>)

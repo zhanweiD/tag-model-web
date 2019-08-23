@@ -23,9 +23,11 @@ class SceneDetailStore {
 
   // 数据源(下拉框)
   @observable dbSource = []
+  @observable dbSourceLoading = false
 
   // 数据表(下拉框)
   @observable dbTable = []
+  @observable dbTableLoading = false
 
   // 确认按钮loading
   @observable confirmLoading = false
@@ -43,9 +45,9 @@ class SceneDetailStore {
   }
 
   @observable isDbSourcEnough = false
-  
+
   @observable dbSourcSelectList = []
-  
+
   // 场景详情
   @action async getDetail() {
     this.loading = true
@@ -94,9 +96,10 @@ class SceneDetailStore {
   /**
    * 目的数据源相关
    */
-  
+
   // 数据源数据
   @action async getDBSource() {
+    this.dbSourceLoading = true
     try {
       const res = await io.getDBSource({
         occasionId: this.sceneId,
@@ -104,23 +107,25 @@ class SceneDetailStore {
 
       runInAction(() => {
         this.dbSource.replace(res)
-        this.dbSourceVisible = true
+        this.dbSourceLoading = false
       })
     } catch (e) {
       errorTip(e.message)
     }
   }
 
-    // 数据表数据
-    @action async getDbTableList(storageId) {
+  // 数据表数据
+  @action async getDbTableList(storageId) {
+    this.dbTableLoading = true
     try {
       const res = await io.getDbTableList({
         occasionId: this.sceneId,
         storageId,
       })
-  
+
       runInAction(() => {
         this.dbTable.replace(res)
+        this.dbTableLoading = false
       })
     } catch (e) {
       errorTip(e.message)
@@ -129,27 +134,27 @@ class SceneDetailStore {
 
   // 添加目的数据源 - 列表
   @action async getDBSourceList(params) {
-      this.dbSourceData.loading = true
-      try {
-        const res = await io.getDBSourceList({
-          occasionId: this.sceneId,
-          ...params,
-        }) || []
+    this.dbSourceData.loading = true
+    try {
+      const res = await io.getDBSourceList({
+        occasionId: this.sceneId,
+        ...params,
+      }) || []
 
-        runInAction(() => {
-          this.dbSourceData.data = res.details.map(item => ({
-            fileds: res.fileds || [],
-            ...item,
-          }))
-          this.dbSourceData.loading = false
-        })
-      } catch (e) {
-        runInAction(() => {
-          this.dbSourceVisible = false
-        })
-        errorTip(e.message)
-      }
+      runInAction(() => {
+        this.dbSourceData.data = res.details.map(item => ({
+          fields: res.fields || [],
+          ...item,
+        }))
+        this.dbSourceData.loading = false
+      })
+    } catch (e) {
+      runInAction(() => {
+        this.dbSourceVisible = false
+      })
+      errorTip(e.message)
     }
+  }
 
   // 目的数据源 - 保存
   @action async saveStorage(params, cb) {
@@ -163,14 +168,11 @@ class SceneDetailStore {
       runInAction(() => {
         this.confirmLoading = false
         this.dbSourceVisible = false
-        if (cb)cb()
+        if (cb) cb()
         this.getSourceList()
         successTip('操作成功')
       })
     } catch (e) {
-      runInAction(() => {
-        this.confirmLoading = false
-      })
       errorTip(e.message)
     }
   }
@@ -198,14 +200,14 @@ class SceneDetailStore {
     }
   }
 
-    // 目的数据源 - 列表 - 删除
-    @action async dbSourceDel(params) {
+  // 目的数据源 - 列表 - 删除
+  @action async dbSourceDel(params) {
     try {
       await io.dbSourceDel({
         occasionId: this.sceneId,
         ...params,
       })
-  
+
       runInAction(() => {
         this.getSourceList()
         successTip('操作成功')
