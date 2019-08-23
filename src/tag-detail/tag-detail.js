@@ -97,8 +97,8 @@ export default class TagDetail extends Component {
       <div className="tag-detail">
         <div className="detail-info">
           <div className="d-head">
-            <div className="FBH FBJ mb16">
-              <div className="pt8">
+            <div className="FBH FBJ FBAC">
+              <div>
                 <span className="mr10">{name}</span>
                 {(() => {
                   if (isUsed) return <Tag color="blue">使用中</Tag>
@@ -117,7 +117,7 @@ export default class TagDetail extends Component {
                 )
               }
             </div>
-            <Descr text={descr} pr={85} />
+            <Descr text={descr} pr={85} className="mt8" />
           </div>
           <NemoBaseInfo dataSource={baseInfo} className="d-info" />
         </div>

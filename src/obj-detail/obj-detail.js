@@ -64,7 +64,9 @@ export default class ObjDetail extends Component {
                     <Popconfirm
                       title="你确定要移除该数据表吗？"
                       onConfirm={() => store.delObjFieldRel(record.dataStorageId, record.dataTableName)}
-                    ><a className="mr8">移除</a></Popconfirm>
+                    >
+                      <a className="mr8">移除</a>
+                    </Popconfirm>
                   )
                 } else {
                   arr.push(<Tooltip title="数据表中有标签使用中，不可移除"><span className="mr8 disabled">移除</span></Tooltip>)
@@ -189,8 +191,8 @@ export default class ObjDetail extends Component {
       <div className="obj-detail">
         <div className="detail-info">
           <div className="d-head"> 
-            <div className="FBH FBJ">
-              <span className="mr10">{name}</span>
+            <div className="FBH FBJ FBAC">
+              <span>{name}</span>
               <div>
                 <Button className="mr8" onClick={() => this.toViewRelField()}>已关联字段列表</Button>
                 {
@@ -200,7 +202,7 @@ export default class ObjDetail extends Component {
                 }
               </div>
             </div>
-            <Descr text={descr} pr={230} />
+            <Descr text={descr} pr={230} className="mt8" />
           </div>
           <NemoBaseInfo dataSource={baseInfo} className="d-info" />
         </div>

@@ -111,8 +111,8 @@ export default class SceneDetail extends Component {
        
         <Spin spinning={store.loading}>
           <div className="info">
-            <div className="FBH FBJ pr8 pl8">
-              <p className="name">
+            <div className="FBH FBJ FBAC pr8 pl8">
+              <div className="name">
                 <span>{info.name}</span> 
                 {
                   !used && <Icon className="ml8" type="edit" onClick={this.sceneDetailVisible} style={{color: 'rgba(0,0,0, .65)'}} />
@@ -120,7 +120,7 @@ export default class SceneDetail extends Component {
                 
                 {/* <Tag className="ml10" color={used ? 'blue' : ''}>{used ? '使用中' : '未使用'}</Tag> */}
                 <Tag className="ml10" text={used ? '使用中' : '未使用'} color={used ? 'blue' : 'gray'} />
-              </p>
+              </div>
               <div>
                 <Button className="mr8" href={`${window.__onerConfig.pathPrefix}/scene#/tags/${store.sceneId}`}>标签列表</Button>
                 <AuthBox code="asset_tag_occation_add_aim_datasoure" isButton={false}>
@@ -178,7 +178,7 @@ export default class SceneDetail extends Component {
                 })()} */}
               </div>
             </div>
-            <Descr text={descr} pr={210} className="pl8" />
+            <Descr text={descr} pr={210} className="pl8 mt8" />
             <NemoBaseInfo dataSource={baseInfo} key={Math.random()} className="detail-border" />
           </div>
         </Spin>
