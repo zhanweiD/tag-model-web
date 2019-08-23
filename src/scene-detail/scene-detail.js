@@ -93,13 +93,18 @@ export default class SceneDetail extends Component {
 
     return (
       <div className="scene-detail">
-        <Alert
-          showIcon
-          closable
-          type="warning"
-          className="fs12"
-          message="已添加目的数据源或场景使用中，无法在场景中继续选择或移除对象，添加、编辑或删除类目，选择或移除标签，只能查看类目与标签详情。"
-        />
+        {
+          store.dbSourceData.data.length ? (
+            <Alert
+              showIcon
+              closable
+              type="warning"
+              className="fs12"
+              message="已添加目的数据源或场景使用中，无法在场景中继续选择或移除对象，添加、编辑或删除类目，选择或移除标签，只能查看类目与标签详情。"
+            />
+          ) : null
+        }
+       
         <Spin spinning={store.loading}>
           <div className="info">
             <div className="FBH FBJ pr8 pl8">
