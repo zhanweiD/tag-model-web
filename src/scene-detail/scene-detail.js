@@ -2,7 +2,7 @@ import {Component} from 'react'
 import {action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {
-  Tabs, Button, Icon, Spin, Tooltip, Tag, Alert,
+  Tabs, Button, Icon, Spin, Tooltip, Alert,
 } from 'antd'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
 
@@ -11,6 +11,8 @@ import {navListMap} from '../common/constants'
 import ModalEditScene from '../scene/modal-add'
 import AuthBox from '../component-auth-box'
 import Descr from '../component-detail-descr'
+import Tag from '../component-tag'
+
 import SelectTag from './select-tag'
 import DataSource from './data-source'
 import ModalDataSource from './modal-data-source'
@@ -107,7 +109,8 @@ export default class SceneDetail extends Component {
                   !used && <Icon className="ml8" type="edit" onClick={this.sceneDetailVisible} style={{color: 'rgba(0,0,0, .65)'}} />
                 }
                 
-                <Tag className="ml10" color={used ? 'blue' : ''}>{used ? '使用中' : '未使用'}</Tag>
+                {/* <Tag className="ml10" color={used ? 'blue' : ''}>{used ? '使用中' : '未使用'}</Tag> */}
+                <Tag className="ml10" text={used ? '使用中' : '未使用'} color={used ? 'blue' : 'gray'} />
               </p>
               <div>
                 <Button className="mr8" href={`${window.__onerConfig.pathPrefix}/scene#/tags/${store.sceneId}`}>标签列表</Button>
