@@ -283,20 +283,33 @@ export default class TagDetailDrawer extends Component {
                 />
               )
             }
-            {
-              !loading
-              && (
+          </Spin>
+          {
+            !loading
+            && (
+              <div
+                style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  width: '100%',
+                  borderTop: '1px solid #e8e8e8',
+                  padding: '10px 16px',
+                  textAlign: 'right',
+                  left: 0,
+                  background: '#fff',
+                }}
+              >
                 <Button
                   type="primary"
                   onClick={this.submit}
                   loading={submitting}
-                  style={{float: 'right', marginTop: '32px'}}
+                  style={{float: 'right'}}
                 >
                   确认
                 </Button>
-              )
-            }
-          </Spin>
+              </div>
+            )
+          }
         </Drawer>
       </div>
     )
