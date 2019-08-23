@@ -34,8 +34,8 @@ export default class ObjDetail extends Component {
         dataIndex: 'dataTableName',
       }, {
         title: '数据源',
-        key: 'dataDbName',
-        dataIndex: 'dataDbName',
+        key: 'dataStorageName',
+        dataIndex: 'dataStorageName',
       }, {
         title: '数据源类型',
         key: 'storageTypeName',
