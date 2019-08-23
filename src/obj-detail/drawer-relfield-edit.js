@@ -20,17 +20,36 @@ class DrawerRelfieldEdit extends Component {
         key: 'dataFieldName',
         dataIndex: 'dataFieldName',
       }, {
+        title: '是否主键',
+        key: 'primaryKey',
+        dataIndex: 'primaryKey',
+        render: text => <span>{text ? '是' : '否'}</span>,
+      }, {
         title: '字段类型',
         key: 'dataFieldType',
         dataIndex: 'dataFieldType',
         width: 150,
       }, {
-        title: '使用状态',
+        title: () => (
+          <div className="FBH FBJB FBAC">
+            <span>使用状态</span>
+            <Tooltip title="字段绑定的标签是否被使用">
+              <Icon type="question-circle-o" className="ml8 mt4" />
+            </Tooltip>
+          </div>
+        ),
         key: 'isUsed',
         dataIndex: 'isUsed',
         render: text => <span>{text ? '使用中' : '未使用'}</span>,
       }, {
-        title: '操作',
+        title: () => (
+          <div className="FBH FBJB FBAC">
+            <span>操作</span>
+            <Tooltip title="若字段绑定的标签已被使用，或者该字段为主键，则不能被移除" placement="topRight">
+              <Icon type="question-circle-o" className="ml8 mt4" />
+            </Tooltip>
+          </div>
+        ),
         render: (text, record) => {
           const {isMajorKey, isUsed} = record
           if (isMajorKey || isUsed) {
@@ -41,7 +60,7 @@ class DrawerRelfieldEdit extends Component {
           }
           return (
             <Popconfirm
-              title="你确定要移吗？"
+              title="你确定要移除该字段吗？"
               onConfirm={() => this.removeItem(record)}
             ><a className="mr8">移除</a></Popconfirm>
           )
@@ -128,9 +147,9 @@ class DrawerRelfieldEdit extends Component {
   }
 
   render() {
-    console.log(this.stdlist.length)
-    const {form: {getFieldDecorator}} = this.props
+    const {form: {getFieldDecorator}, curentItem} = this.props
     const {modalVisible, fieldList} = store
+    if (!curentItem) return false
 
     const modalProps = {
       title: '编辑关联字段',
@@ -152,10 +171,10 @@ class DrawerRelfieldEdit extends Component {
         <Form>
           <Spin spinning={store.drawerLoading}>
             <FormItem {...formItemLayout} label="数据源">
-              <span className="ant-form-text">China</span>
+              <span className="ant-form-text">{curentItem.dataStorageName}</span>
             </FormItem>
             <FormItem {...formItemLayout} label="数据表">
-              <span className="ant-form-text">China</span>
+              <span className="ant-form-text">{curentItem.dataTableName}</span>
             </FormItem>
             
             <FormItem {...formItemLayout} label="添加新的关联字段">

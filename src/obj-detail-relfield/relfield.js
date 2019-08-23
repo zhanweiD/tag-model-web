@@ -1,7 +1,7 @@
 import {Component, Fragment} from 'react'
 import {observer, inject} from 'mobx-react'
 import {action, observable, toJS} from 'mobx'
-import {Drawer, Select, Table, Tooltip, Popconfirm, Input} from 'antd'
+import {Drawer, Select, Table, Tooltip, Popconfirm, Input, Icon} from 'antd'
 import store from './store-relfield'
 import ModalTagEdit from '../tag-configuration/modal-tag-edit'
 
@@ -48,7 +48,14 @@ class DrawerRelfield extends Component {
         dataIndex: 'isConfigured',
         render: text => <span>{text ? '已配置' : '待配置'}</span>,
       }, {
-        title: '使用状态',
+        title: () => (
+          <div className="FBH FBJB FBAC">
+            <span>使用状态</span>
+            <Tooltip title="字段绑定的标签是否被使用">
+              <Icon type="question-circle-o" className="ml8 mt4" />
+            </Tooltip>
+          </div>
+        ),
         key: 'isUsed',
         dataIndex: 'isUsed',
         render: text => <span>{text ? '使用中' : '未使用'}</span>,

@@ -2,7 +2,7 @@ import {Component, Fragment} from 'react'
 import {observable, action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {
-  Button, Popconfirm, Tooltip, Table,
+  Button, Popconfirm, Tooltip, Table, Icon,
 } from 'antd'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
 import {Time} from '../common/util'
@@ -41,14 +41,21 @@ export default class ObjDetail extends Component {
         key: 'storageTypeName',
         dataIndex: 'storageTypeName',
       }, {
-        title: '已配置/未关联',
+        title: '已配置/已关联',
         key: 'configuredField',
         dataIndex: 'configuredField',
         render: (text, record) => (
           <div>{`${text}/${record.associatedField}`}</div>
         ),
       }, {
-        title: '已有标签被使用',
+        title: () => (
+          <div className="FBH FBJB FBAC">
+            <span>已有标签被使用</span>
+            <Tooltip title="是否存在关联字段被配置成标签，且标签被使用">
+              <Icon type="question-circle-o" className="ml8 mt4" />
+            </Tooltip>
+          </div>
+        ),
         key: 'isUsed',
         dataIndex: 'isUsed',
         render: text => <div>{text ? '是' : '否'}</div>,
