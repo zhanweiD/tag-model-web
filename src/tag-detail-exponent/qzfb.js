@@ -32,14 +32,14 @@ export default class Qzfb extends Component {
 
     this.getData()
     store.getValueStatus()
-    window.addEventListener('resize', () => this.resize())
+    window.addEventListener('resize', this.resize)
   }
 
   @action getData = () => {
     this.redrawEnume()
   }
 
-  @action resize = () => {
+  @action resize() {
     if (enumeChart && this.enume)enumeChart.resize()
   }
 
@@ -56,7 +56,7 @@ export default class Qzfb extends Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', () => this.resize())
+    window.removeEventListener('resize', this.resize)
   }
 
   render() {

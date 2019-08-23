@@ -31,7 +31,7 @@ export default class Invoke extends Component {
 
   componentDidMount() {
     this.updateDate()
-    window.addEventListener('resize', () => this.resize())
+    window.addEventListener('resize', this.resize)
   }
 
   drawChart = data => {
@@ -55,14 +55,14 @@ export default class Invoke extends Component {
     })
   }
 
-  @action resize = () => {
+  @action resize() {
     if (this.chartLine) this.chartLine.resize()
   }
 
   componentWillUnmount() {
+    window.removeEventListener('resize', this.resize)
     if (this.chartLine) this.chartLine.dispose()
     this.chartLine = null
-    window.removeEventListener('resize', () => this.resize())
   }
 
   render() {

@@ -51,7 +51,7 @@ export default class Exponent extends Component {
 
     this.getData()
     // store.getValueStatus()
-    window.addEventListener('resize', () => this.resize())
+    window.addEventListener('resize', this.resize)
   }
 
   @action getData = () => {
@@ -61,9 +61,9 @@ export default class Exponent extends Component {
     // this.redrawEnume()
   }
 
-  @action resize = () => {
-    if (vsChart)vsChart.resize()
-    if (qsChart)qsChart.resize()
+  @action resize() {
+    if (vsChart) vsChart.resize()
+    if (qsChart) qsChart.resize()
     if (hotChart)hotChart.resize()
     // if (enumeChart && this.enume)enumeChart.resize()
   }
@@ -99,11 +99,10 @@ export default class Exponent extends Component {
   // }
 
   componentWillUnmount() {
+    window.removeEventListener('resize', this.resize)
     if (vsChart)vsChart.dispose()
     if (qsChart)qsChart.dispose()
     if (hotChart)hotChart.dispose()
-
-    window.removeEventListener('resize', () => this.resize())
   }
 
   render() {
