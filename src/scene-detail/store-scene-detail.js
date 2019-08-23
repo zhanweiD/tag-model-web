@@ -164,7 +164,7 @@ class SceneDetailStore {
         this.confirmLoading = false
         this.dbSourceVisible = false
         if (cb)cb()
-        if (this.currentKey === '2') this.getSourceList()
+        this.getSourceList()
         successTip('操作成功')
       })
     } catch (e) {
