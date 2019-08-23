@@ -63,6 +63,8 @@ export default class SceneDetail extends Component {
 
   componentWillUnmount() {
     store.isDbSourcEnough = false
+    store.sourceData.data.clear()
+    store.info = {}
   }
 
   render() {
@@ -94,7 +96,7 @@ export default class SceneDetail extends Component {
     return (
       <div className="scene-detail">
         {
-          store.dbSourceData.data.length ? (
+          store.sourceData.data.length ? (
             <Alert
               showIcon
               closable
