@@ -61,28 +61,31 @@ class DrawerRelfield extends Component {
         render: (text, record, index) => (
           <Fragment>
             {(() => {
+              const {functionCodes} = window.__userConfig
               const arr = []
-              if (!record.isUsed) {
-                arr.push(
-                  <Popconfirm
-                    title="你确定要移除该字段吗？"
-                    onConfirm={() => store.delObjFieldRel(record)}
-                  ><a className="mr8">移除</a></Popconfirm>
-                )
-              } else {
-                arr.push(<Tooltip title="使用中，不可移除"><span className="mr8 disabled">移除</span></Tooltip>)
+              if (functionCodes.includes('asset_tag_rel_field')) {
+                if (!record.isUsed) {
+                  arr.push(
+                    <Popconfirm
+                      title="你确定要移除该字段吗？"
+                      onConfirm={() => store.delObjFieldRel(record)}
+                    ><a className="mr8">移除</a></Popconfirm>
+                  )
+                } else {
+                  arr.push(<Tooltip title="使用中，不可移除"><span className="mr8 disabled">移除</span></Tooltip>)
+                }
               }
-
-              if (!record.isUsed) {
-                arr.push(<a className="mr8" onClick={() => this.showEditModal(index, record)}>标签配置</a>)
-              } else {
-                arr.push(
-                  <Tooltip title="使用中，不可配置">
-                    <span className="mr8 disabled">标签配置</span>
-                  </Tooltip>
-                )
+              if (functionCodes.includes('asset_tag_conf_field_tag')) {
+                if (!record.isUsed) {
+                  arr.push(<a className="mr8" onClick={() => this.showEditModal(index, record)}>标签配置</a>)
+                } else {
+                  arr.push(
+                    <Tooltip title="使用中，不可配置">
+                      <span className="mr8 disabled">标签配置</span>
+                    </Tooltip>
+                  )
+                }
               }
-
               return arr
             })()}
           </Fragment>
