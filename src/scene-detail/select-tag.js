@@ -73,6 +73,17 @@ export default class SelectTag extends Component {
     })
   }
 
+  componentWillReceiveProps(nextProps) {
+    const {dataSourceLen} = this.props
+    if (dataSourceLen !== nextProps.dataSourceLen) {
+      // dataSourceLen === 0 无数据源 至 有数据源;需刷新标签树
+      // nextProps.dataSourceLen 有数据源 至 无数据源;需刷新标签树
+      if (dataSourceLen === 0 || nextProps.dataSourceLen === 0) {
+        this.store.categoryStore.getCategoryList()
+      }
+    }
+  }
+
   @action tagChange = tagId => {
     if (tagId && tagId !== this.tagId) {
       this.store.getTagDetail()
@@ -223,8 +234,8 @@ export default class SelectTag extends Component {
                                     <div className="detail-info mb16">
                                       <Spin spinning={tagInfoLoading}>
                                         <div className="d-head">
-                                          <div className="FBH FBJ mb16">
-                                            <span className="pt8">{name}</span>
+                                          <div className="FBH FBJ FBAC">
+                                            <span>{name}</span>
                                             {/* 点击“标签详情”按钮，进入标签池中的标签详情 */}
                                             <Button type="primary">
                                               <a
@@ -236,7 +247,7 @@ export default class SelectTag extends Component {
                                               </a>
                                             </Button>
                                           </div>
-                                          <Descr text={descr} pr={85} />
+                                          <Descr text={descr} pr={85} className="mt8" />
                                         </div>
                                         <NemoBaseInfo dataSource={baseInfo} key={Math.random()} className="d-info" />
                                       </Spin>

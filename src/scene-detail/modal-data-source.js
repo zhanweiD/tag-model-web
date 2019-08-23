@@ -166,7 +166,7 @@ class ModalDataSource extends Component {
 
     return (
       <Modal
-        width={800}
+        width={900}
         title="添加目的数据源"
         destroyOnClose
         maskClosable={false}
@@ -190,7 +190,7 @@ class ModalDataSource extends Component {
             <div className="FB1">
               <span className="mr8">目的数据源</span>
               <Select 
-                style={{width: 150}} 
+                style={{width: 200}} 
                 placeholder="请选择" 
                 onChange={this.onSourceChange}
                 notFoundContent={dbSourceLoading ? <Spin size="small" /> : <div>暂无目的数据源数据</div>}
@@ -214,7 +214,7 @@ class ModalDataSource extends Component {
               </span>
               <Select 
                 value={this.dbTableValue} 
-                style={{width: 150}} 
+                style={{width: 200}} 
                 placeholder="请选择" 
                 onChange={this.onTableChange}
                 notFoundContent={dbTableLoading ? <Spin size="small" /> : <div>暂无目的数据表数据</div>}
