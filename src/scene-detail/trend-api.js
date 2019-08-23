@@ -11,7 +11,7 @@ export default class TrendApi extends Component {
 
   componentDidMount() {
     this.getData()
-    window.addEventListener('resize', this.resize)
+    window.addEventListener('resize', () => this.resize())
   }
 
   componentWillReceiveProps(nextProps) {
@@ -25,9 +25,6 @@ export default class TrendApi extends Component {
   }
 
   drawChart = data => {
-    if (!this.lineRef) return 
-    if (this.chartLine) this.chartLine.clear()
-
     this.chartLine = echarts.init(this.lineRef)
     
     this.chartLine.setOption(getApiTrendOpt(
@@ -55,7 +52,7 @@ export default class TrendApi extends Component {
   componentWillUnmount() {
     if (this.chartLine) this.chartLine.dispose()
     this.chartLine = null
-    window.removeEventListener('resize', this.resize)
+    window.removeEventListener('resize', () => this.resize())
   }
 
   render() {

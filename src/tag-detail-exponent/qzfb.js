@@ -32,7 +32,7 @@ export default class Qzfb extends Component {
 
     this.getData()
     store.getValueStatus()
-    window.addEventListener('resize', this.resize)
+    window.addEventListener('resize', () => this.resize())
   }
 
   @action getData = () => {
@@ -55,7 +55,9 @@ export default class Qzfb extends Component {
     })
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() {
+    window.removeEventListener('resize', () => this.resize())
+  }
 
   render() {
     const {total, pieTemplateDtoList, name} = store.enumeData

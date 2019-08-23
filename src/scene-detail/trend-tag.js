@@ -11,7 +11,7 @@ export default class TrendTag extends Component {
 
   componentDidMount() {
     this.getData()
-    window.addEventListener('resize', this.resize)
+    window.addEventListener('resize', () => this.resize())
   }
 
   componentWillReceiveProps(nextProps) {
@@ -25,11 +25,7 @@ export default class TrendTag extends Component {
   }
 
   drawChart = data => {
-    if (!this.lineRef) return 
-    if (this.chartLine) this.chartLine.clear()
-    
     this.chartLine = echarts.init(this.lineRef)
-
     const legend = data[0] && data[0].data.map(d => d.name)
 
     this.chartLine.setOption(getTagTrendOpt(
@@ -57,7 +53,7 @@ export default class TrendTag extends Component {
   componentWillUnmount() {
     if (this.chartLine) this.chartLine.dispose()
     this.chartLine = null
-    window.removeEventListener('resize', this.resize)
+    window.removeEventListener('resize', () => this.resize())
   }
 
   render() {

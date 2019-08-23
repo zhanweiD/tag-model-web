@@ -51,7 +51,7 @@ export default class Exponent extends Component {
 
     this.getData()
     // store.getValueStatus()
-    window.addEventListener('resize', this.resize)
+    window.addEventListener('resize', () => this.resize())
   }
 
   @action getData = () => {
@@ -103,7 +103,7 @@ export default class Exponent extends Component {
     if (qsChart)qsChart.dispose()
     if (hotChart)hotChart.dispose()
 
-    window.removeEventListener('resize', this.resize)
+    window.removeEventListener('resize', () => this.resize())
   }
 
   render() {
