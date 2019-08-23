@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import {observable, action, toJS} from 'mobx'
+import {observable} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {Button, Tabs, Tag} from 'antd'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
@@ -97,8 +97,8 @@ export default class TagDetail extends Component {
       <div className="tag-detail">
         <div className="detail-info">
           <div className="d-head">
-            <div className="FBH FBJ">
-              <div>
+            <div className="FBH FBJ mb16">
+              <div className="pt8">
                 <span className="mr10">{name}</span>
                 {(() => {
                   if (isUsed) return <Tag color="blue">使用中</Tag>
@@ -110,7 +110,7 @@ export default class TagDetail extends Component {
                 functionCodes.includes('asset_tag_conf_tag_field') && (
                   <TagDetailDrawer
                     id={objId}
-                    onUpdate={(v) => store.getBaseInfo()}
+                    onUpdate={() => store.getBaseInfo()}
                   >
                     <Button type="primary">绑定字段</Button>
                   </TagDetailDrawer>

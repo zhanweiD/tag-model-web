@@ -102,7 +102,7 @@ export default class SceneDetail extends Component {
         />
         <Spin spinning={store.loading}>
           <div className="info">
-            <div className="FBH FBJ">
+            <div className="FBH FBJ pr8 pl8">
               <p className="name">
                 <span>{info.name}</span> 
                 {
@@ -120,6 +120,7 @@ export default class SceneDetail extends Component {
                       ? (
                         <Tooltip title="添加的目的数据源数量超过上限10个">
                           <Button 
+                            // className="mr8"
                             type="primary" 
                             onClick={this.dbSourceVisible} 
                             disabled={store.isDbSourcEnough}
@@ -129,6 +130,7 @@ export default class SceneDetail extends Component {
                         </Tooltip>
                       ) : (
                         <Button 
+                          // className="mr8"
                           type="primary" 
                           onClick={this.dbSourceVisible} 
                           disabled={used}
@@ -167,7 +169,7 @@ export default class SceneDetail extends Component {
                 })()} */}
               </div>
             </div>
-            <Descr text={descr} pr={210} />
+            <Descr text={descr} pr={210} className="pl8" />
             <NemoBaseInfo dataSource={baseInfo} key={Math.random()} className="detail-border" />
           </div>
         </Spin>

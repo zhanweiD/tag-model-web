@@ -34,7 +34,6 @@ ioContext.create('sceneDetail', {
     url: `${tagApi}/be_tag/occasion/tree/obj/cat/tag/detail`,
   },
 
-
   // API调用数趋势
   getApiTrend: {
     mock: isMock,
