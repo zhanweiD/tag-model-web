@@ -50,7 +50,7 @@ export default class Scene extends Component {
   }, {
     title: '使用状态',
     dataIndex: 'used',
-    render: text => (text ? '是' : '否'),
+    render: text => (text ? '使用中' : '未使用'),
   }, {
     title: '被API调用次数 ',
     dataIndex: 'apiInvokeCount',
