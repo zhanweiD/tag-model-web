@@ -110,15 +110,15 @@ export default class Scene extends Component {
                                 <Tag color={used ? 'blue' : ''}>{used ? '使用中' : '未使用'}</Tag>
                                 <Icon type="right" className="hover-style" />
                               </div>
-                              <div className="c-info">
-                                <span className="mr20">
+                              <div className="c-info FBH">
+                                <div className="mr20 omit">
                           创建者：
                                   {cUser}
-                                </span> 
-                                <span>
+                                </div> 
+                                <div className="omit">
                           创建时间：
-                                  <Time timestamp={cDate} />
-                                </span>
+                                  {moment(+cDate).format('YYYY-MM-DD')}
+                                </div>
                               </div>
                               <div className="c-descr omit" title={descr}>
                           描述：

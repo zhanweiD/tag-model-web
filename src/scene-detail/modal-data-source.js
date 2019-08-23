@@ -164,7 +164,7 @@ class ModalDataSource extends Component {
 
     return (
       <Modal
-        width={1000}
+        width={800}
         title="添加目的数据源"
         destroyOnClose
         maskClosable={false}

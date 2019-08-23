@@ -83,6 +83,7 @@ export default class DataSource extends Component {
 
     const list = []
 
+    // 筛选选中项
     dbSourcSelectList.forEach((item, index) => {
       if (item) list.push(sourceData.data[index])
     })
@@ -90,7 +91,7 @@ export default class DataSource extends Component {
 
     const delTableList = []
     const storageIdList = []
-
+    // 筛选参数
     list.forEach(item => {
       delTableList.push(item.tableName)
       storageIdList.push(item.storageId)
