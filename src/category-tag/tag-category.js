@@ -65,7 +65,8 @@ class TagCategory extends Component {
 
   @action getMenuList = item => {
     const {history} = this.props
-    
+    const {functionCodes} = window.__userConfig
+
     const addCateKey = {
       key: 'cate',
       value: '添加类目',
@@ -186,7 +187,7 @@ class TagCategory extends Component {
     }
 
     // ”标签“节点有【移动至】
-    if (item.type === 0) {
+    if (functionCodes.includes('asset_tag_move') && item.type === 0) {
       actionList.splice(0, 0, moveKey)
     }
 
