@@ -174,6 +174,7 @@ class ModalObjectEdit extends Component {
             <FormItem {...formItemLayout} label="描述">
               {getFieldDecorator('descr', {
                 rules: [
+                  {required: false, message: ''},
                   {transform: value => value.trim()},
                   {max: 100, message: '描述不能超过100个字符'},
                 ],
