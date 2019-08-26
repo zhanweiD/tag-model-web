@@ -44,6 +44,8 @@ export default class Tag extends Component {
 
     const {history} = this.props
     this.store.typeCode = +e
+    this.store.id = undefined
+    this.store.currentNode = undefined
     history.push(`/${e}`)
   }
 

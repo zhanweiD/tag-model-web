@@ -43,9 +43,9 @@ export default class TagRouter extends Component {
         >
           <div 
             className={cls({
-              FBH: showNoObj,
-              FBJC: showNoObj,
-              FBAC: showNoObj,
+              FBH: showNoObj || loading,
+              FBJC: showNoObj || loading,
+              FBAC: showNoObj || loading,
             })}
             style={{
               minHeight: '100%',
@@ -58,7 +58,7 @@ export default class TagRouter extends Component {
               wrapperClassName="FB1"
             >
               {
-                showNoObj ? <NoObj visible={!loading} onClick={() => this.hideNoObj()} />
+                !loading && (showNoObj ? <NoObj visible={!loading} onClick={() => this.hideNoObj()} />
                   : (
                     <Switch>
                       <Route exact strict path="/import" component={TagImport} />
@@ -73,7 +73,7 @@ export default class TagRouter extends Component {
                         }}
                       />
                     </Switch>
-                  )
+                  ))
               }
             </Spin>
           </div>
