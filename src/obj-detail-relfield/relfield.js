@@ -179,7 +179,7 @@ class DrawerRelfield extends Component {
   }
 
   render() {
-    const {store: {modalVisible}} = this.props
+    const {store: {modalVisible, dailyCard: {configuredField, associatedField,}}} = this.props
     const {tagModalVisible, editingTagIndex} = this
 
     const modalProps = {
@@ -195,28 +195,34 @@ class DrawerRelfield extends Component {
     return (
       <Drawer {...modalProps}>
         <div>
-          <div className="mb16">
-            <span className="pl">配置状态: </span>
-            <Select
-              defaultValue=""
-              style={{width: 120}}
-              className="mr8"
-              onChange={e => this.handleSearch(e, 'isConfigured')}
-            >
-              <Option value="">全部</Option>
-              {
-                window.njkData.dict.configureStatus.map(item => (
-                  <Option key={item.key} value={item.key}>{item.value}</Option>
-                ))
-              }
-            </Select>
-            <Search
-              ref={el => this.keywordEl = el}
-              placeholder="请输入字段名称"
-              onChange={e => this.handleChangeKeyword(e)}
-              onSearch={e => this.handleSearch(e, 'keyword')}
-              style={{width: 200}}
-            />
+          <div className="FBH FBJB">
+            <div className="mb16">
+              <span className="pl">配置状态: </span>
+              <Select
+                defaultValue=""
+                style={{width: 120}}
+                className="mr8"
+                onChange={e => this.handleSearch(e, 'isConfigured')}
+              >
+                <Option value="">全部</Option>
+                {
+                  window.njkData.dict.configureStatus.map(item => (
+                    <Option key={item.key} value={item.key}>{item.value}</Option>
+                  ))
+                }
+              </Select>
+              <Search
+                ref={el => this.keywordEl = el}
+                placeholder="请输入字段名称"
+                onChange={e => this.handleChangeKeyword(e)}
+                onSearch={e => this.handleSearch(e, 'keyword')}
+                style={{width: 200}}
+              />
+            </div>
+            <div>
+              <span className="pr4">已配置/已关联: </span>
+              {`${configuredField}/${associatedField}`}
+            </div>
           </div>
           <Table
             onChange={store.handleChange}
