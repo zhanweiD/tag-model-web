@@ -25,6 +25,11 @@ export default class TagImport extends Component {
     store.getTypeCodes()
   }
 
+  componentWillUnmount() {
+    store.currStep = 0
+    store.objId = undefined
+  }
+
   render() {
     return (
       <div className="page-import p16">
