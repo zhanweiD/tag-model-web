@@ -7,6 +7,7 @@ import {
   Table, Button, Spin, Checkbox, Modal,
 } from 'antd'
 import NoData from '../component-scene-nodata'
+import AuthBox from '../component-auth-box'
 
 // const {functionCodes} = window.__userConfig
 const {confirm} = Modal
@@ -157,11 +158,12 @@ export default class DataSource extends Component {
                   全选
                   </Checkbox>
                   <div>
-                    <Button className="mr8" disabled={!this.selectLen} onClick={this.remove}>                           
+                    {/* code 待更换 */}
+                    <AuthBox code="asset_tag_occation_add_aim_datasoure" className="mr8" disabled={!this.selectLen} onClick={this.remove}>                           
                       批量移除数据源
-                    </Button>
+                    </AuthBox>
                     {/* 点击“配置数据服务”按钮，跳转至服务管理页面 */}
-                    <Button type="primary">
+                    <AuthBox code="asset_tag_occation_add_aim_datasoure" type="primary">
                       <a 
                         target="_blank" 
                         rel="noopener noreferrer" 
@@ -169,7 +171,7 @@ export default class DataSource extends Component {
                       >
                       配置数据服务
                       </a>      
-                    </Button>
+                    </AuthBox>
                   </div>
                 </div>
                 {
