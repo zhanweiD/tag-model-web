@@ -277,6 +277,8 @@ export default class TagDetailDrawer extends Component {
                   onChange={value => this.value = value}
                   sourceTitle="标签列表"
                   targetTitle="字段列表"
+                  sourceTipTitle="字段："
+                  targetTipTitle="名称："
                   sourceSearchPlaceholder="请输入名称搜索"
                   targetSearchPlaceholder="请输入英文名搜索"
                   disableKey={record => record.used === 1 || record.isUsed === 1}
