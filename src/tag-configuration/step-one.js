@@ -22,9 +22,9 @@ const columns = [
     key: 'isConfigured',
     dataIndex: 'isConfigured',
     render: v => (
-      +v === 1 
+      +v === 1
         ? <Badge color="#52C41A" text="已配置" /> 
-        : <Badge color="rgba(0,0,0,0.25)" text="未配置" />
+        : <Badge color="rgba(0,0,0,0.25)" text="待配置" />
     ),
   },
   {
@@ -37,8 +37,8 @@ const columns = [
     key: 'isUsed',
     dataIndex: 'isUsed',
     render: v => (
-      +v === 1 
-        ? <Badge color="#1890FF" text="使用中" /> 
+      +v === 1
+        ? <Badge color="#1890FF" text="使用中" />
         : <Badge color="rgba(0,0,0,0.25)" text="未使用" />
     ),
     width: '11%',

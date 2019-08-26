@@ -9,6 +9,7 @@ import {Time} from '../common/util'
 import OverviewCard from '../component-overview-card'
 import Descr from '../component-detail-descr'
 
+import QuestionTooltip from '../component-question-tooltip'
 import TagConfiguration from '../tag-configuration'
 import store from './store-obj-detail'
 import DrawerRelfieldList from '../obj-detail-relfield'
@@ -48,13 +49,11 @@ export default class ObjDetail extends Component {
           <div>{`${text}/${record.associatedField}`}</div>
         ),
       }, {
-        title: () => (
-          <div className="FBH FBJB FBAC">
-            <span>已有标签被使用</span>
-            <Tooltip title="是否存在关联字段被配置成标签，且标签被使用">
-              <Icon type="question-circle-o" className="ml8 mt4" />
-            </Tooltip>
-          </div>
+        title: (
+          <span>
+            已有标签被使用
+            <QuestionTooltip tip="是否存在关联字段被配置成标签，且标签被使用" />
+          </span>
         ),
         key: 'isUsed',
         dataIndex: 'isUsed',

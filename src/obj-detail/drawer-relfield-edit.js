@@ -1,8 +1,9 @@
 import {Component, Fragment} from 'react'
 import {observer} from 'mobx-react'
 import {action, observable, toJS} from 'mobx'
-import {Form, Button, Drawer, Spin, Select, Table, Tooltip, Icon, Popconfirm} from 'antd'
+import {Form, Button, Drawer, Spin, Select, Table, Tooltip, Icon, Popconfirm, Badge} from 'antd'
 import store from './store-obj-detail'
+import QuestionTooltip from '../component-question-tooltip'
 
 const FormItem = Form.Item
 const {Option} = Select
@@ -30,25 +31,25 @@ class DrawerRelfieldEdit extends Component {
         dataIndex: 'dataFieldType',
         width: 150,
       }, {
-        title: () => (
-          <div className="FBH FBJB FBAC">
-            <span>使用状态</span>
-            <Tooltip title="字段绑定的标签是否被使用">
-              <Icon type="question-circle-o" className="ml8 mt4" />
-            </Tooltip>
-          </div>
+        title: (
+          <span>
+            使用状态
+            <QuestionTooltip tip="字段绑定的标签是否被使用" />
+          </span>
         ),
         key: 'isUsed',
         dataIndex: 'isUsed',
-        render: text => <span>{text ? '使用中' : '未使用'}</span>,
+        render: v => (
+          +v === 1
+            ? <Badge color="#1890FF" text="使用中" />
+            : <Badge color="rgba(0,0,0,0.25)" text="未使用" />
+        ),
       }, {
-        title: () => (
-          <div className="FBH FBJB FBAC">
-            <span>操作</span>
-            <Tooltip title="若字段绑定的标签已被使用，或者该字段为主键，则不能被移除" placement="topRight">
-              <Icon type="question-circle-o" className="ml8 mt4" />
-            </Tooltip>
-          </div>
+        title: (
+          <span>
+            操作
+            <QuestionTooltip tip="若字段绑定的标签已被使用，或者该字段为主键，则不能被移除" placement="topRight" />
+          </span>
         ),
         render: (text, record) => {
           const {isMajorKey, isUsed} = record

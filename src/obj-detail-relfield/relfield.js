@@ -1,9 +1,10 @@
 import {Component, Fragment} from 'react'
 import {observer, inject} from 'mobx-react'
 import {action, observable, toJS} from 'mobx'
-import {Drawer, Select, Table, Tooltip, Popconfirm, Input, Icon} from 'antd'
-import store from './store-relfield'
+import {Drawer, Select, Table, Tooltip, Popconfirm, Input, Icon, Badge} from 'antd'
 import ModalTagEdit from '../tag-configuration/modal-tag-edit'
+import QuestionTooltip from '../component-question-tooltip'
+import store from './store-relfield'
 
 const {Option} = Select
 const {Search} = Input
@@ -46,19 +47,25 @@ class DrawerRelfield extends Component {
         title: '配置状态',
         key: 'isConfigured',
         dataIndex: 'isConfigured',
-        render: text => <span>{text ? '已配置' : '待配置'}</span>,
+        render: v => (
+          +v === 1
+            ? <Badge color="#52C41A" text="已配置" /> 
+            : <Badge color="rgba(0,0,0,0.25)" text="待配置" />
+        ),
       }, {
-        title: () => (
-          <div className="FBH FBJB FBAC">
-            <span>使用状态</span>
-            <Tooltip title="字段绑定的标签是否被使用">
-              <Icon type="question-circle-o" className="ml8 mt4" />
-            </Tooltip>
-          </div>
+        title: (
+          <span>
+            使用状态
+            <QuestionTooltip tip="字段绑定的标签是否被使用" />
+          </span>
         ),
         key: 'isUsed',
         dataIndex: 'isUsed',
-        render: text => <span>{text ? '使用中' : '未使用'}</span>,
+        render: v => (
+          +v === 1
+            ? <Badge color="#1890FF" text="使用中" /> 
+            : <Badge color="rgba(0,0,0,0.25)" text="未使用" />
+        ),
       }, {
         title: '标签名称',
         key: 'name',

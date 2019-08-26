@@ -2,6 +2,7 @@ import {Component, Fragment} from 'react'
 import {observer} from 'mobx-react'
 import {action, observable, toJS} from 'mobx'
 import {Form, Button, Drawer, Spin, Select, Table, Tooltip, Icon, Popconfirm} from 'antd'
+import QuestionTooltip from '../component-question-tooltip'
 import store from './store-obj-detail'
 
 const FormItem = Form.Item
@@ -219,10 +220,8 @@ class DrawerRelfieldAdd extends Component {
             {...formItemLayout}
             label={(
               <span>
-                关系时间主键 &nbsp;
-                <Tooltip title="发生这个关系的时间字段">
-                  <Icon type="question-circle-o" />
-                </Tooltip>
+                关系时间主键
+                <QuestionTooltip tip="发生这个关系的时间字段" />
               </span>
             )}
           >
@@ -250,10 +249,8 @@ class DrawerRelfieldAdd extends Component {
             {...formItemLayout}
             label={(
               <span>
-                关系地点主键 &nbsp;
-                <Tooltip title="发生这个关系的地点字段">
-                  <Icon type="question-circle-o" />
-                </Tooltip>
+                关系地点主键
+                <QuestionTooltip tip="发生这个关系的地点字段" />
               </span>
             )}
           >
@@ -339,10 +336,8 @@ class DrawerRelfieldAdd extends Component {
               {...formItemLayout} 
               label={(
                 <span>
-                  数据源 &nbsp;
-                  <Tooltip title="在数据源管理被授权，且在元数据中被采集进来的数据源">
-                    <Icon type="question-circle-o" />
-                  </Tooltip>
+                  数据源
+                  <QuestionTooltip tip="在数据源管理被授权，且在元数据中被采集进来的数据源" />
                 </span>
               )}
             >
@@ -370,10 +365,8 @@ class DrawerRelfieldAdd extends Component {
               {...formItemLayout} 
               label={(
                 <span>
-                  数据表 &nbsp;
-                  <Tooltip title="同一个数据源下的数据表不能被重复选择">
-                    <Icon type="question-circle-o" />
-                  </Tooltip>
+                  数据表
+                  <QuestionTooltip tip="同一个数据源下的数据表不能被重复选择" />
                 </span>
               )}
             >
