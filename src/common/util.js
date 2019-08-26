@@ -298,6 +298,8 @@ export function getDataTypeByCode(code) {
 
 export function getNamePattern(max = 20) {
   return [{
+    transform: value => value.trim(),
+  }, {
     max, 
     message: `名称不能超过${max}个字符`,
   }, {

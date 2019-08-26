@@ -109,8 +109,6 @@ class ModalEditCategory extends Component {
                 rules: [
                   {required: true, message: '名称不可为空'},
                   ...getNamePattern(),
-                  // {max: 20, message: '名称不能超过20个字符'},
-                  // {pattern: /^[\u4e00-\u9fa5]{1,30}$/, message: '输入限制为中文字符'},
                   {validator: this.handleNameValidator},
                 ],
                 validateFirst: true,
@@ -140,6 +138,7 @@ class ModalEditCategory extends Component {
             <FormItem {...formItemLayout} label="描述">
               {getFieldDecorator('descr', {
                 rules: [
+                  {transform: value => value.trim()},
                   {max: 100, message: '描述不能超过100个字符'},
                 ],
                 initialValue: editCategory ? cateDetail.descr : undefined,

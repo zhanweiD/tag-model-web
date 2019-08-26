@@ -143,8 +143,6 @@ class ModalTagEdit extends Component {
                 rules: [
                   {required: true, message: '名称不可为空'},
                   ...getNamePattern(),
-                  // {max: 20, message: '名称不能超过20个字符'},
-                  // {pattern: /^[\u4e00-\u9fa5]{1,30}$/, message: '输入限制为中文字符'},
                   {validator: this.handleNameValidator},
                 ],
               })(<Input autoComplete="off" placeholder="不超过20个字，允许中文、英文、数字或下划线" />)}
@@ -154,6 +152,7 @@ class ModalTagEdit extends Component {
               {getFieldDecorator('enName', {
                 initialValue: editTag ? tagDetail.enName : undefined,
                 rules: [
+                  {transform: value => value.trim()},
                   {required: true, message: '英文名不可为空'},
                   {pattern: enNameReg, message: '不超过30个字，只能包含英文、数字或下划线，必须以英文开头'},
                   {validator: this.handleNameValidator},
@@ -187,8 +186,8 @@ class ModalTagEdit extends Component {
               <FormItem {...formItemLayout} label="枚举显示值">
                 {getFieldDecorator('enumValue', {
                   rules: [
+                    {transform: value => value.trim()},
                     // {required: true, message: '枚举显示值不可为空'},
-                    {max: 100, message: '业务逻辑不能超过100个字符'},
                     {validator: this.handleEnumValueValidator},
                   ],
                   initialValue: editTag ? tagDetail.enumValue : undefined,
@@ -204,7 +203,10 @@ class ModalTagEdit extends Component {
 
             <FormItem {...formItemLayout} label="业务逻辑">
               {getFieldDecorator('descr', {
-                rules: [{max: 100, message: '业务逻辑不能超过100个字符'}],
+                rules: [
+                  {transform: value => value.trim()},
+                  {max: 100, message: '业务逻辑不能超过100个字符'},
+                ],
                 initialValue: editTag ? tagDetail.descr : undefined,
               })(
                 <Input.TextArea

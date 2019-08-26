@@ -67,23 +67,18 @@ class ModalTagEdit extends Component {
                 initialValue: tagDetail.name || undefined,
                 rules: [
                   {required: true, message: '名称不可为空'},
-                  // {max: 20, message: '名称不能超过20个字符'},
-                  // {pattern: /^[\u4e00-\u9fa5]{1,30}$/, message: '输入限制为中文字符'},
-                  // {pattern: nameReg, message: '1~20字，允许中文/英文/数字/下划线，不允许“数栖”或“下划线”开头'},
                   ...getNamePattern(),
                 ],
-              })(<Input autoComplete="off" placeholder="1~20字，允许中文/英文/数字/下划线，不允许“数栖”或“下划线”开头" />)}
+              })(<Input autoComplete="off" placeholder="不超过20个字，允许中文、英文、数字或下划线" />)}
             </FormItem>
 
             <FormItem {...formItemLayout} label="英文名">
               {getFieldDecorator('enName', {
                 initialValue: tagDetail.enName || undefined,
                 rules: [
+                  {transform: value => value.trim()},
                   {required: true, message: '英文名不可为空'},
-                  // {max: 30, message: '请输入少于30个字'},
                   {pattern: enNameReg, message: '不超过30个字，只能包含英文、数字或下划线，必须以英文开头'},
-                  // {pattern: /^(?!\d+$)[a-zA-Z0-9_]{1,30}$/, message: '仅支持小写字母、数字和下划线的组合'},
-                  // {validator: this.handleNameValidator},
                 ],
               })(<Input autoComplete="off" placeholder="不超过30个字，允许英文、数字或下划线，必须以英文开头" />)}
             </FormItem>
@@ -115,6 +110,7 @@ class ModalTagEdit extends Component {
               <FormItem {...formItemLayout} label="枚举显示值">
                 {getFieldDecorator('enumValue', {
                   rules: [
+                    {transform: value => value.trim()},
                     // {required: true, message: '枚举显示值不可为空'},
                     {validator: this.handleEnumValueValidator},
                   ],
@@ -142,7 +138,10 @@ class ModalTagEdit extends Component {
 
             <FormItem {...formItemLayout} label="业务逻辑">
               {getFieldDecorator('descr', {
-                rules: [{max: 100, message: '业务逻辑不能超过100个字符'}],
+                rules: [
+                  {transform: value => value.trim()},
+                  {max: 100, message: '业务逻辑不能超过100个字符'},
+                ],
                 initialValue: tagDetail.descr || undefined,
               })(
                 <Input.TextArea

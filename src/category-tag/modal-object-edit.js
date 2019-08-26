@@ -126,8 +126,6 @@ class ModalObjectEdit extends Component {
                 rules: [
                   {required: true, message: '名称不可为空'},
                   ...getNamePattern(),
-                  // {max: 20, message: '名称不能超过20个字符'},
-                  // {pattern: /^[\u4e00-\u9fa5]{1,30}$/, message: '输入限制为中文字符'},
                   {validator: this.handleNameValidator},
                 ],
               })(<Input autoComplete="off" placeholder="不超过20个字，允许中文、英文、数字或下划线" />)}
@@ -137,6 +135,7 @@ class ModalObjectEdit extends Component {
               {getFieldDecorator('enName', {
                 initialValue: editObject ? objectDetail.enName : undefined,
                 rules: [
+                  {transform: value => value.trim()},
                   {required: true, message: '英文名不可为空'},
                   {pattern: enNameReg, message: '不超过30个字，只能包含英文、数字或下划线，必须以英文开头'},
                   {validator: this.handleNameValidator},
@@ -175,6 +174,7 @@ class ModalObjectEdit extends Component {
             <FormItem {...formItemLayout} label="描述">
               {getFieldDecorator('descr', {
                 rules: [
+                  {transform: value => value.trim()},
                   {max: 100, message: '描述不能超过100个字符'},
                 ],
                 initialValue: editObject ? objectDetail.descr : undefined,
