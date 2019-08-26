@@ -70,7 +70,7 @@ class DrawerRelfield extends Component {
             {(() => {
               const {functionCodes} = window.__userConfig
               const arr = []
-              if (functionCodes.includes('asset_tag_rel_field')) {
+              if (functionCodes.includes('asset_tag_delete_table')) {
                 if (!record.isUsed) {
                   arr.push(
                     <Popconfirm
