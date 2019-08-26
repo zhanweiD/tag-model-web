@@ -123,8 +123,10 @@ export default class ObjDetail extends Component {
   }
 
   @action toEditRelField(item) {
-    store.getFieldList(item.dataStorageId, item.dataTableName)
-    store.getRelDbField(item.dataStorageId, item.dataTableName)
+    // store.getFieldList(item.dataStorageId, item.dataTableName)
+    store.getRelDbField(item.dataStorageId, item.dataTableName, () => {
+      store.getFieldList(item.dataStorageId, item.dataTableName)
+    })
     store.modalVisible.editRelField = true
     this.curentItem = item
   }

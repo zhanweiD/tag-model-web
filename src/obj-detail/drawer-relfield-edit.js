@@ -192,7 +192,7 @@ class DrawerRelfieldEdit extends Component {
                 >
                   {
                     fieldList.map(item => (
-                      <Option key={item.field} value={item.field}>{item.field}</Option>
+                      <Option key={item.field} value={item.field} disabled={item.disabled}>{item.field}</Option>
                     ))
                   }
                 </Select>

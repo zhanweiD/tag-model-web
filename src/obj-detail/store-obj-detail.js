@@ -147,10 +147,13 @@ class ObjDetailStore {
       const res = await io.getFieldList({
         storageId,
         tableName,
-      })
+      }) || []
       runInAction(() => {
         this.fieldListLoading = false
-        res && this.fieldList.replace(res)
+        res.map(item => {
+          item.disabled = _.map(toJS(this.relDbField), 'dataFieldName').includes(item.field)
+        })
+        this.fieldList.replace(res)
       })
     } catch (e) {
       errorTip(e.message)
@@ -199,7 +202,7 @@ class ObjDetailStore {
   }
   
   // 获取已关联字段列表(编辑时)
-  @action async getRelDbField(storageId, tableName) {
+  @action async getRelDbField(storageId, tableName, cb) {
     this.relDbFieldLoading = true
     try {
       const res = await io.getRelDbField({
@@ -217,6 +220,7 @@ class ObjDetailStore {
             isUsed: item.isUsed,
           })
         })
+        cb && cb()
       })
     } catch (e) {
       runInAction(() => {
