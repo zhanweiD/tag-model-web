@@ -139,7 +139,7 @@ class ModalTagEdit extends Component {
             <FormItem {...formItemLayout} label="业务逻辑">
               {getFieldDecorator('descr', {
                 rules: [
-                  {transform: value => value.trim()},
+                  // {transform: value => value.trim()},
                   {max: 100, message: '业务逻辑不能超过100个字符'},
                 ],
                 initialValue: tagDetail.descr || undefined,
