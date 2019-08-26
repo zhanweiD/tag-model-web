@@ -123,7 +123,7 @@ export default class DataSource extends Component {
 
     const noDataConfig = {
       code: 'asset_tag_occation_add_aim_datasoure',
-      noAuthText: '您暂无添加场景的权限',
+      noAuthText: '您暂无添加目的数据源的权限',
       btnText: '添加目的数据源',
       btnDisabled: info.used,
       onClick: () => onClick(),
