@@ -62,7 +62,7 @@ class ImportStore {
       let {canImportData, preViewFailData} = data
       if (!canImportData) canImportData = []
       if (!preViewFailData) preViewFailData = []
-      const allPreviewData = canImportData.concat(preViewFailData)
+      const allPreviewData = preViewFailData.concat(canImportData)
 
       runInAction(() => {
         this.previewDataLoading = false
