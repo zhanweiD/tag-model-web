@@ -233,6 +233,7 @@ class DrawerRelfield extends Component {
           {
             tagModalVisible && (
               <ModalTagEdit
+                title="标签配置"
                 tagDetail={toJS(store.list[editingTagIndex] || {})} // 传进去时toJS一下
                 visible={tagModalVisible}
                 onCancel={this.closeEditModal}
