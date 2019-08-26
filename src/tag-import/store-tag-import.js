@@ -31,7 +31,7 @@ class ImportStore {
 
   @action async getTypeCodes() {
     try {
-      const res = await io.getTypeCodes()
+      const res = await io.getTypeCodes() || []
       runInAction(() => {
         this.typeCodes.replace(res)
       })

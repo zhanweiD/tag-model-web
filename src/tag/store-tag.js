@@ -19,7 +19,7 @@ export default class TagStore {
   @observable typeCodes = []
   @action async getTypeCodes(cb) {
     try {
-      const res = await io.getTypeCodes()
+      const res = await io.getTypeCodes() || []
       runInAction(() => {
         this.typeCodes.replace(res)
         cb && cb()

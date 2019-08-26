@@ -31,7 +31,7 @@ class BackendExportStore {
   // 获取人、物、对象
   @action async getTypeCodes() {
     try {
-      const res = await io.getTypeCodes()
+      const res = await io.getTypeCodes() || []
       runInAction(() => {
         this.typeCode = res[0].objTypeCode
         this.typeCodes.replace(res)

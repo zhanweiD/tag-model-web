@@ -229,25 +229,13 @@ class TagCategory extends Component {
             actionList: this.getMenuList(item),
             className: 'node-tag',
           }
-          if (item.aId !== -1) {
+          if (item.type === 0) { // 标签
             dtTreeNodeProps.showIcon = true
             dtTreeNodeProps.iconNodeSrc = tag
           } else {
             dtTreeNodeProps.showIcon = false
           }
           arr.push(<DtTreeNode {...dtTreeNodeProps} />)
-          // arr.push(
-          //   <DtTreeNode
-          //     showIcon
-          //     nodeData={item}
-          //     itemKey={item.id}
-          //     title={item.name}
-          //     selectable={item.type !== 1}
-          //     actionList={this.getMenuList(item)}
-          //     iconNodeSrc={tag}
-          //     className="node-tag"
-          //   />
-          // )
         }
       })
 
