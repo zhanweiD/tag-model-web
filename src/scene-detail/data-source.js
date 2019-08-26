@@ -150,13 +150,15 @@ export default class DataSource extends Component {
             sourceData.data.length ? (
               <div className="bgf p24">
                 <div className="FBH FBJ FBAC mb16">
-                  <Checkbox 
-                    checked={this.checkAll}
-                    indeterminate={this.indeterminate}
-                    onChange={e => this.onAllSelect(e)}
-                  >
-                  全选
-                  </Checkbox>
+                  <AuthBox code="asset_tag_occation_del_aim_datasoure" isButton={false}>                           
+                    <Checkbox 
+                      checked={this.checkAll}
+                      indeterminate={this.indeterminate}
+                      onChange={e => this.onAllSelect(e)}
+                    >
+                    全选
+                    </Checkbox>
+                  </AuthBox>
                   <div>
                     <AuthBox code="asset_tag_occation_del_aim_datasoure" className="mr8" disabled={!this.selectLen} onClick={this.remove}>                           
                       批量移除数据源
@@ -178,10 +180,12 @@ export default class DataSource extends Component {
                     <div className="mb48">
                       <div className="mb24 FBH FBJ FBAC">
                         <div className="fs14">
-                          <Checkbox 
-                            checked={item}
-                            onChange={v => this.onItemSelect(index, v)}
-                          />
+                          <AuthBox code="asset_tag_occation_del_aim_datasoure" isButton={false}>  
+                            <Checkbox 
+                              checked={item}
+                              onChange={v => this.onItemSelect(index, v)}
+                            />
+                          </AuthBox>
                           <span className="mr48">
                             目的数据源：
                             {sourceData.data[index].sourceName}
