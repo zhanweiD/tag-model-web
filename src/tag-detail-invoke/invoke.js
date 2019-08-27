@@ -61,7 +61,7 @@ export default class Invoke extends Component {
   componentWillUnmount() {
     window.removeEventListener('resize', () => this.resize())
     if (this.invokeChart) this.invokeChart.dispose()
-    this.lineRef = null
+    this.invokeChart = null
   }
 
   render() {

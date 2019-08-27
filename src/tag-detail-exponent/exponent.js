@@ -103,6 +103,9 @@ export default class Exponent extends Component {
     if (vsChart)vsChart.dispose()
     if (qsChart)qsChart.dispose()
     if (hotChart)hotChart.dispose()
+    vsChart = null
+    qsChart = null
+    hotChart = null
   }
 
   render() {
