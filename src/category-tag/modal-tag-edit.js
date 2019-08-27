@@ -33,10 +33,13 @@ class ModalTagEdit extends Component {
       form: {validateFields},
     } = this.props
     const {
-      eStatus: {editTag}, cateDetail, tagDetail, currentTreeItemKey,
+      eStatus: {editTag}, cateDetail, tagDetail, currentTreeItemKey, 
+      props: {history},
     } = this.store
     const {typeCode} = this.bigStore
 
+    console.log(this.props)
+    console.log(this.store.props)
     validateFields((err, values) => {
       if (!err) {
         const param = Object.assign(values, {
@@ -57,8 +60,14 @@ class ModalTagEdit extends Component {
           param.parentId = currentTreeItemKey
         }
 
-        this.store.updateTag(param, () => {
+        this.store.updateTag(param, res => {
           this.bigStore.updateKey = Math.random()
+          this.bigStore.id = res.treeId
+          this.bigStore.currentNode = {
+            aId: res.id,
+            type: 0,
+          }
+          history.push(`/${typeCode}/${res.treeId}`)
         })
       }
     })

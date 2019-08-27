@@ -300,10 +300,11 @@ class TagCategoryStore {
   @action async updateTag(params, cb) {
     this.confirmLoading = true
     try {
+      let res
       if (!params.id) {
-        await io.addTag(params)
+        res = await io.addTag(params)
       } else {
-        await io.editTag(params)
+        res = await io.editTag(params)
       }
       runInAction(() => {
         successTip('操作成功')
@@ -311,7 +312,7 @@ class TagCategoryStore {
         this.modalVisible.editTag = false
         this.tagDetail = false
         this.getCategoryList()
-        cb && cb()
+        cb && cb(res)
       })
     } catch (e) {
       runInAction(() => {
