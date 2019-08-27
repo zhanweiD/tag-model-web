@@ -19,13 +19,13 @@ export default class Qzfb extends Component {
     store.getValueStatus()
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (store.id !== nextProps.aId && nextProps.isActive) {
-      store.id = nextProps.aId
-      this.getData()
-      store.getValueStatus()
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if (store.id !== nextProps.aId && nextProps.isActive) {
+  //     store.id = nextProps.aId
+  //     this.getData()
+  //     store.getValueStatus()
+  //   }
+  // }
 
   componentDidMount() {
     enumeChart = echarts.init(this.enume)

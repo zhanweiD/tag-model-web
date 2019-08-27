@@ -21,13 +21,13 @@ export default class Invoke extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (store.id !== nextProps.aId && nextProps.isActive) {
-      store.id = nextProps.aId
-      store.getInvokeCard()
-      this.updateDate()
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if (store.id !== nextProps.aId) {
+  //     store.id = nextProps.aId
+  //     store.getInvokeCard()
+  //     this.updateDate()
+  //   }
+  // }
 
   componentDidMount() {
     this.invokeChart = echarts.init(this.lineRef)
