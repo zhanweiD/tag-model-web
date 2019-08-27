@@ -5,7 +5,21 @@ import {
   Table, Button, Badge,
 } from 'antd'
 import OmitTooltip from '../component-omit-tooltip'
+import {pathPrefix, errorTip} from '../common/util'
+import io from './io'
 
+// 点击标签名跳转到标签详情
+async function jumpToTagDetail(tag) {
+  try {
+    const node = await io.getTreeNode({
+      aid: tag.id,
+    })
+
+    window.location.href = `${pathPrefix}/pool#/${node.objTypeCode || 1}/${node.id}`
+  } catch (e) {
+    errorTip(e.message)
+  }
+}
 
 // 表格columns对象
 const columns = [
@@ -14,7 +28,11 @@ const columns = [
     title: '名称',
     dataIndex: 'name',
     key: 'name',
-    render: name => <OmitTooltip text={name} maxWidth={150} />,
+    render: (name, record) => (
+      <a onClick={() => jumpToTagDetail(record)}>
+        <OmitTooltip text={name} maxWidth={150} />
+      </a>
+    ),
   },
   {
     title: '数据类型',

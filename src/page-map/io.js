@@ -87,6 +87,12 @@ ioContext.create('map', {
     url: getUrl('overview/tag_invoke_percent'),
     method: 'GET',
   },
+
+  // 根据标签id请求标签的在类目树的信息，获取treeId
+  getTreeNode: {
+    url: getUrl('tag/pool/get_tree_node'),
+    method: 'GET',
+  },
 })
 
 export default ioContext.api.map
