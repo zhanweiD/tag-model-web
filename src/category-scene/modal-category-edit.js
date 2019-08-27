@@ -130,8 +130,7 @@ class ModalEditCategory extends Component {
             <FormItem {...formItemLayout} label="描述">
               {getFieldDecorator('descr', {
                 rules: [
-                  {required: false, message: ''},
-                  {transform: value => value.trim()},
+                  {transform: value => value && value.trim()},
                   {max: 100, message: '描述不能超过100个字符'},
                 ],
                 initialValue: editCategory ? cateDetail.descr : undefined,

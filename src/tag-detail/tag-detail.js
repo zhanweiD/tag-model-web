@@ -52,7 +52,7 @@ export default class TagDetail extends Component {
       // 标签
       name,
       enName,
-      valueName,
+      valueTypeName,
       isEnum,
       creator,
       createTime,
@@ -70,7 +70,7 @@ export default class TagDetail extends Component {
         value: enName,
       }, {
         title: '数据类型',
-        value: valueName,
+        value: valueTypeName,
       }, {
         title: '是否枚举',
         value: isEnum ? '是' : '否',
