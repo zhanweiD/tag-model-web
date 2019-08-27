@@ -51,7 +51,7 @@ export default class NoData extends Component {
 
     // 渲染说明文字
     if (text) {
-      return <div className="text">{text}</div>
+      return <div className="text" dangerouslySetInnerHTML={{__html: text}} />
     }
 
     return null

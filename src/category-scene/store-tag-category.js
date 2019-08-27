@@ -58,6 +58,7 @@ class TagCategoryStore {
 
   // 对象详情
   // @observable objectDetail = false
+  @observable objName = ''
 
   // 类目详情
   @observable cateDetail = false
@@ -135,10 +136,14 @@ class TagCategoryStore {
             }
             return item
           }) 
+          
+          // 获取对象名字
+          this.objName = res.filter(item => item.type === 2)[0].name
         }
 
         this.cateList.replace(data)
         this.treeData.replace(listToTree(data))
+
         if (cb) cb(data, listToTree(data))
       })
     } catch (e) {
