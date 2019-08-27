@@ -176,6 +176,7 @@ class ObjDetailStore {
       runInAction(() => {
         successTip('添加成功')
         // 更新
+        this.getDailyCard()
         this.getList()
         cb && cb()  
       })

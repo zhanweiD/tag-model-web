@@ -205,7 +205,13 @@ export default class ObjDetail extends Component {
                 <Button className="mr8" onClick={() => this.toViewRelField()}>已关联字段列表</Button>
                 {
                   functionCodes.includes('asset_tag_rel_field') && (
-                    <Button type="primary" onClick={() => this.toAddRelField()}>添加关联字段</Button>
+                    tableCount < 5
+                      ? <Button type="primary" onClick={() => this.toAddRelField()}>添加关联字段</Button>
+                      : (
+                        <Tooltip title="最多只能添加5张数据表">
+                          <Button type="primary" disabled>添加关联字段</Button>
+                        </Tooltip>
+                      )
                   )
                 }
               </div>
