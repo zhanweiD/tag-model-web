@@ -54,7 +54,7 @@ export default class TrendTag extends Component {
   componentWillUnmount() {
     window.removeEventListener('resize', () => this.resize())
     if (this.chartLine) this.chartLine.dispose()
-    this.lineRef = null
+    this.chartLine = null
   }
 
   render() {

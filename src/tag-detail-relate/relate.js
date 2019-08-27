@@ -20,13 +20,13 @@ export default class Related extends Component {
     store.tagLineage(data => { me.dagBox.drawDag(data) })
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (store.id !== nextProps.aId && nextProps.isActive) {
-      const me = this
-      store.id = nextProps.aId
-      store.tagLineage(data => { me.dagBox.drawDag(data) })
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if (store.id !== nextProps.aId) {
+  //     const me = this
+  //     store.id = nextProps.aId
+  //     store.tagLineage(data => { me.dagBox.drawDag(data) })
+  //   }
+  // }
 
   render() {
     const me = this

@@ -34,14 +34,14 @@ export default class Exponent extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (store.id !== nextProps.aId && nextProps.isActive) {
-      store.id = nextProps.aId
-      this.getData()
-      store.getDailyCard()
-      // store.getValueStatus()
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if (store.id !== nextProps.aId) {
+  //     store.id = nextProps.aId
+  //     this.getData()
+  //     store.getDailyCard()
+  //     // store.getValueStatus()
+  //   }
+  // }
 
   componentDidMount() {
     vsChart = echarts.init(this.vs)
@@ -103,6 +103,9 @@ export default class Exponent extends Component {
     if (vsChart)vsChart.dispose()
     if (qsChart)qsChart.dispose()
     if (hotChart)hotChart.dispose()
+    vsChart = null
+    qsChart = null
+    hotChart = null
   }
 
   render() {
