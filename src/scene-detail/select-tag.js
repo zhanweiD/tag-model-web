@@ -149,36 +149,7 @@ export default class SelectTag extends Component {
       code: 'asset_tag_occation_select_obj',
       noAuthText: '您暂无选择对象的权限',
     }
-
-
-    // const {functionCodes} = window.__userConfig
-    // let noDataConfig = {
-    //   text: '暂无数据',
-    // }
-    // if (
-    //   functionCodes.includes('asset_tag_add_obj')
-    //   && !tagExistFlag
-    // ) {
-    //   noDataConfig = {
-    //     btnText: '去添加对象',
-    //     text: '没有任何对象，请在标签池中添加！',
-    //     onClick: this.goToAddObj,
-    //     isLoading: tagExistFlagLoading,
-    //   }
-    // }
-
-    // if (
-    //   functionCodes.includes('asset_tag_occation_select_obj')
-    //   && tagExistFlag
-    //   && !this.objExistFlag
-    // ) {
-    //   noDataConfig = {
-    //     btnText: '选择对象',
-    //     onClick: this.selectObj,
-    //     isLoading: this.store.categoryStore.treeLoading,
-    //   }
-    // }
-
+    
     const {
       // id,
       name,
@@ -218,7 +189,7 @@ export default class SelectTag extends Component {
         <div className="select-tag FBH">
           <TagCategory {...tagCategoryOpt} />
 
-          <div className="FB1 m16">
+          <div className="FB1 m16" style={{overflowX: 'hidden'}}>
             {
               tagExistFlag
                 ? (
