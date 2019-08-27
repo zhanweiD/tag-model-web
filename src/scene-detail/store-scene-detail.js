@@ -67,11 +67,14 @@ class SceneDetailStore {
 
   // 场景编辑
   @action async editScene(params) {
+    this.confirmLoading = true
+
     try {
       await io.editScene(params)
 
       runInAction(() => {
         this.modalVisible = false
+        this.confirmLoading = false
         successTip('编辑成功')
         this.getDetail()
       })
@@ -210,7 +213,7 @@ class SceneDetailStore {
 
       runInAction(() => {
         this.getSourceList()
-        successTip('操作成功')
+        successTip('删除成功')
       })
     } catch (e) {
       errorTip(e.message)
