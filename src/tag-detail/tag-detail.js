@@ -125,6 +125,7 @@ export default class TagDetail extends Component {
           defaultActiveKey="1"
           animated={false}
           onChange={this.onTabChange}
+          key={this.updateKey}
         >
           <TabPane tab="标签指数" key="1">
             <TagDetailExponent
