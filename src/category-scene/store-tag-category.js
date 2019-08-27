@@ -172,6 +172,7 @@ class TagCategoryStore {
 
   // 选择对象 - 保存
   @action async saveObj(params) {
+    this.confirmLoading = true
     try {
       await io.saveObj({
         occasionId: this.sceneId,
@@ -179,8 +180,9 @@ class TagCategoryStore {
       })
 
       runInAction(() => {
-        // successTip("操作成功")
+        successTip('操作成功')
         this.modalVisible.editObject = false
+        this.confirmLoading = false
         // 刷新类目树 ？ 
         this.getCategoryList()
       })
