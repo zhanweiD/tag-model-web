@@ -70,7 +70,7 @@ export default class Exponent extends Component {
 
   @action redrawVs(gte = this.defStartTime, lte = this.defEndTime) {
     store.getDailyVs(1, gte, lte, () => {
-      vsChart.setOption(getLineChartOpt({data: toJS(store.vsTrend), title: '应用价值分'}))
+      vsChart.setOption(getLineChartOpt({data: toJS(store.vsTrend), title: '标签价值分'}))
     })
   }
 
