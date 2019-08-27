@@ -67,6 +67,7 @@ class ModalTagEdit extends Component {
             aId: res.id,
             type: 0,
           }
+          this.store.currentTreeItemKey = res.treeId
           history.push(`/${typeCode}/${res.treeId}`)
         })
       }

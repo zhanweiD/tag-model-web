@@ -159,7 +159,7 @@ class TagCategoryStore {
   }
   
   // 删除节点
-  @action async deleteNode(type) {
+  @action async deleteNode(type, cb) {
     try {
       const params = {
         deleteId: this.currentTreeItemKey,
@@ -175,19 +175,7 @@ class TagCategoryStore {
         successTip('删除成功')
         this.getCategoryList()
 
-
-        // // 如果要删除的节点和当前选中的是同一个, 则要跳转路由，且清空选中节点
-        // if (this.cateId !== this.currentTreeItemKey) {
-        //   this.getCategoryList(() => {
-        //     // 父类目、跨父类目删除
-        //     if (!toJS(this.cateList).filter(item => item.id === this.cateId).length) {
-        //       this.props.history.push('/-1')
-        //     }
-        //   })
-        // } else {
-        //   this.props.history.push('/-1')
-        //   this.getCategoryList()
-        // }
+        cb && cb()
       })
     } catch (e) {
       errorTip(e.message)

@@ -64,7 +64,6 @@ class TagCategory extends Component {
 
 
   @action getMenuList = item => {
-    const {history} = this.props
     const {functionCodes} = window.__userConfig
 
     const addCateKey = {
@@ -131,7 +130,41 @@ class TagCategory extends Component {
           confirm({
             title: '确认删除？',
             content: tipStr,
-            onOk: () => this.store.deleteNode(nodeData.type),
+            onOk: () => this.store.deleteNode(nodeData.type, () => {
+              const {history, match} = this.store.props
+              const findObjId = (tagId, list) => {
+                let tempObjItem
+                const loop = (id, data) => {
+                  data.forEach(o => {
+                    if (o.id === id) {
+                      if (o.parentId !== 0) {
+                        loop(o.parentId, data)
+                      } else {
+                        tempObjItem = o
+                        return false
+                      }
+                    }
+                  })
+                }
+                loop(tagId, list)
+                return tempObjItem
+              }
+
+              if (
+                nodeData.type === 2
+                || (nodeData.type === 0 && +match.params.id === this.store.currentTreeItemKey)
+              ) {
+                const objItem = findObjId(nodeData.id, toJS(this.store.cateList))
+                this.bigStore.updateKey = Math.random()
+                this.bigStore.id = objItem.id
+                this.bigStore.currentNode = {
+                  aId: objItem.aId,
+                  type: 2,
+                }
+                this.store.currentTreeItemKey = objItem.id
+                history.push(`/${this.typeCode}/${objItem.id}`)
+              }
+            }),
           })
         })
       },
