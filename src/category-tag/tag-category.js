@@ -6,7 +6,8 @@ import {
 } from 'mobx'
 import {Modal, Spin} from 'antd'
 import {DtTree} from '@dtwave/uikit'
-import physicalAll from '../icon/physical-all.svg'
+import treeUnfold from '../icon/tree-unfold.svg'
+import treeFold from '../icon/tree-fold.svg'
 import tag from '../icon/tag.svg'
 import Action from './action'
 
@@ -260,7 +261,7 @@ class TagCategory extends Component {
             dtTreeNodeProps.showIcon = false
           } else {
             dtTreeNodeProps.showIcon = true
-            dtTreeNodeProps.iconNodeSrc = physicalAll
+            dtTreeNodeProps.iconNodeSrc = treeFold
           }
           arr.push(<DtTreeNode {...dtTreeNodeProps}>{loop(item.children)}</DtTreeNode>)
         } else {
@@ -275,7 +276,7 @@ class TagCategory extends Component {
           if (item.type === 0) { // 标签
             dtTreeNodeProps.iconNodeSrc = tag
           } else {
-            dtTreeNodeProps.iconNodeSrc = physicalAll
+            dtTreeNodeProps.iconNodeSrc = treeFold
           }
           arr.push(<DtTreeNode {...dtTreeNodeProps} />)
         }

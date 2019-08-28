@@ -6,7 +6,8 @@ import {
 } from 'mobx'
 import {Modal, Spin} from 'antd'
 import {DtTree} from '@dtwave/uikit'
-import physicalAll from '../icon/physical-all.svg'
+import treeUnfold from '../icon/tree-unfold.svg'
+import treeFold from '../icon/tree-fold.svg'
 import tag from '../icon/tag.svg'
 import Action from './action'
 
@@ -222,7 +223,7 @@ render() {
           dtTreeNodeProps.showIcon = false
         } else {
           dtTreeNodeProps.showIcon = true
-          dtTreeNodeProps.iconNodeSrc = physicalAll
+          dtTreeNodeProps.iconNodeSrc = treeFold
         }
         arr.push(<DtTreeNode {...dtTreeNodeProps}>{loop(item.children)}</DtTreeNode>)
       } else {
@@ -239,7 +240,7 @@ render() {
           dtTreeNodeProps.iconNodeSrc = tag
         } else if (item.type === 1) {
           dtTreeNodeProps.showIcon = true
-          dtTreeNodeProps.iconNodeSrc = physicalAll
+          dtTreeNodeProps.iconNodeSrc = treeFold
         } else if (item.type === 2) { // 对象
           dtTreeNodeProps.showIcon = false
         }
