@@ -94,7 +94,7 @@ export default class TagDetail extends Component {
     ]
 
     return (
-      <div className="tag-detail">
+      <div className="tag-detail bgf">
         <div className="detail-info">
           <div className="d-head">
             <div className="FBH FBJ FBAC">

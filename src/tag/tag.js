@@ -86,7 +86,7 @@ export default class Tag extends Component {
         <Provider bigStore={this.store}>
           <div className="FBH tag-container">
             <TagCategory typeCode={this.store.typeCode} />
-            <div className="FB1 mt16 ml16 mr16 bgf" style={{overflowX: 'hidden'}}>
+            <div className="FB1 mt16 ml16 mr16" style={{overflowX: 'hidden'}}>
               {(() => {
                 if (currentNode && currentNode.aId) {
                   if (currentNode.type === 2) return <ObjDetail aId={currentNode.aId} updateKey={this.store.updateKey} />
