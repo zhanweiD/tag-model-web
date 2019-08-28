@@ -210,7 +210,18 @@ class DrawerRelfieldAdd extends Component {
   renderItemDom(getFieldDecorator, formItemLayout, fieldList, fieldListLoading) {
     if (store.baseInfo.objTypeCode === 3) {
       const objSelect = toJS(store.baseInfo).objRspList.map(item => (
-        <FormItem {...formItemLayout} label={`${item.name}主键`}>
+        <FormItem
+          {...formItemLayout}
+          label={(
+            <span
+              className="omit"
+              title={`${item.name}主键`}
+              style={{width: '115px', height: '16px', lineHeight: '16px', display: 'inline-block',}}
+            >
+              {`${item.name}主键`}
+            </span>
+          )}
+        >
           {getFieldDecorator(`${item.id}`, {
             initialValue: undefined,
             rules: [
