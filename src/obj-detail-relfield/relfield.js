@@ -78,7 +78,7 @@ class DrawerRelfield extends Component {
               const {functionCodes} = window.__userConfig
               const arr = []
               if (functionCodes.includes('asset_tag_delete_table')) {
-                if (!record.isUsed) {
+                if (!record.isUsed && !record.isMajorKey) {
                   arr.push(
                     <Popconfirm
                       title="你确定要移除该字段吗？"
@@ -86,7 +86,7 @@ class DrawerRelfield extends Component {
                     ><a className="mr8">移除</a></Popconfirm>
                   )
                 } else {
-                  arr.push(<Tooltip title="使用中，不可移除"><span className="mr8 disabled">移除</span></Tooltip>)
+                  arr.push(<Tooltip title={record.isUsed ? '使用中，不可移除' : '主键不可移除'}><span className="mr8 disabled">移除</span></Tooltip>)
                 }
               }
               if (functionCodes.includes('asset_tag_conf_field_tag')) {
@@ -182,6 +182,8 @@ class DrawerRelfield extends Component {
       cb && cb()
       this.props.bigStore.categoryStore.getCategoryList()
       this.closeEditModal()
+      this.props.store.getDailyCard()
+      this.props.store.getList()
     })
   }
 

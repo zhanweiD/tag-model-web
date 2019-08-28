@@ -194,6 +194,7 @@ class ObjDetailStore {
       }
       runInAction(() => {
         successTip('添加成功')
+        this.getDailyCard()
         this.getList()
         cb && cb()
       })
@@ -218,6 +219,7 @@ class ObjDetailStore {
           this.relDbField.push({
             dataFieldName: item.dataFieldName,
             dataFieldType: item.dataFieldType,
+            isMajorKey: item.isMajorKey,
             isUsed: item.isUsed,
           })
         })

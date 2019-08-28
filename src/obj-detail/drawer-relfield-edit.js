@@ -22,8 +22,8 @@ class DrawerRelfieldEdit extends Component {
         dataIndex: 'dataFieldName',
       }, {
         title: '是否主键',
-        key: 'primaryKey',
-        dataIndex: 'primaryKey',
+        key: 'isMajorKey',
+        dataIndex: 'isMajorKey',
         render: text => <span>{text ? '是' : '否'}</span>,
       }, {
         title: '字段类型',
