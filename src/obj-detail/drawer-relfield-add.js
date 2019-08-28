@@ -156,6 +156,25 @@ class DrawerRelfieldAdd extends Component {
     this.stdlist.remove(item)
   }
 
+
+  @action getFields() {
+    const fields = {}
+    if (store.baseInfo.objTypeCode === 3) {
+      _.map(toJS(store.baseInfo).objRspList, 'id').concat(['timeKey', 'addrKey']).map(item => {
+        fields[item] = {
+          value: undefined,
+          errors: null,
+        }
+      })
+    } else {
+      fields.mappingKey = {
+        value: undefined,
+        errors: null,
+      }
+    }
+    return fields
+  }
+
   @action changeStorageId(e) {
     this.dataStorageId = e
 
@@ -170,6 +189,7 @@ class DrawerRelfieldAdd extends Component {
         value: undefined,
         errors: null,
       },
+      ...this.getFields(),
     })
   }
 
@@ -183,6 +203,7 @@ class DrawerRelfieldAdd extends Component {
         value: undefined,
         errors: null,
       },
+      ...this.getFields(),
     })
   }
 
