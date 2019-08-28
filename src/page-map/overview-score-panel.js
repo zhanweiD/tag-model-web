@@ -56,9 +56,9 @@ export default class OverviewScorePanel extends React.Component {
   tableColumns = [
     {
       title: '排名',
-      dataIndex: 'index',
-      key: 'index',
-      render: (v, record, index) => index + 1,
+      dataIndex: 'rank',
+      key: 'rank',
+      // render: v => v,
     },
     {
       title: '标签名',
