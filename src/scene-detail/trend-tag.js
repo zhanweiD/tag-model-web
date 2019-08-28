@@ -1,6 +1,5 @@
 import {Component} from 'react'
 import {action} from 'mobx'
-// import {Empty} from 'antd'
 import TimeRange from '../time-range'
 import {getTagTrendOpt} from './charts-options'
 
@@ -26,9 +25,7 @@ export default class TrendTag extends Component {
     }
   }
 
-  drawChart = data => {
-    const legend = data[0] && data[0].data.map(d => d.name)
-
+  drawChart = (data, legend) => {
     this.chartLine.setOption(getTagTrendOpt(
       data, legend
     ))
@@ -42,8 +39,8 @@ export default class TrendTag extends Component {
       endDate: lte,
     }
     
-    store.getTagTrend(params, res => {
-      if (res.length) this.drawChart(res)
+    store.getTagTrend(params, (data, legend) => {
+      this.drawChart(data, legend)
     })
   }
 

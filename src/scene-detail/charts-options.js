@@ -26,7 +26,7 @@ function getColors(len) {
 // 标签调用次数趋势图配置
 export function getTagTrendOpt(data, legend = []) {
   const colorList = getColors(legend.length)
-  
+
   const series = legend.length ? legend.map(name => ({
     name,
     type: 'line',

@@ -26,7 +26,10 @@ class SelectTagStore {
   @observable apiTrendData = []
 
   // 标签调用次数趋势
-  @observable tagTrendData = []
+  @observable tagTrendData = {
+    dataList: [],
+    nameList: [],
+  }
 
   // 标签详情loading
   @observable tagInfoLoading = false
@@ -85,9 +88,13 @@ class SelectTagStore {
       })
 
       runInAction(() => {
-        this.tagTrendData.clear()
-        this.tagTrendData = res
-        if (cb) cb(toJS(res))
+        // this.tagTrendData.dataList.clear()
+        // this.tagTrendData.nameList.clear()
+
+        // this.tagTrendData.dataList.replace(res.dataList || [])
+        // this.tagTrendData.nameList.replace(res.nameList || [])
+
+        if (cb) cb(res.dataList || [], res.nameList || [])
       })
     } catch (e) {
       errorTip(e.message)
