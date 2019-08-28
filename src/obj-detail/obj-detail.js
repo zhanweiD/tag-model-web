@@ -194,6 +194,7 @@ export default class ObjDetail extends Component {
         values: [configuredField, associatedField],
       },
     ]
+    const maxTableCount = typeCode === 3 ? 1 : 5
 
     return (
       <div className="obj-detail">
@@ -205,10 +206,10 @@ export default class ObjDetail extends Component {
                 <Button className="mr8" onClick={() => this.toViewRelField()}>已关联字段列表</Button>
                 {
                   functionCodes.includes('asset_tag_rel_field') && (
-                    tableCount < 5
+                    tableCount < maxTableCount
                       ? <Button type="primary" onClick={() => this.toAddRelField()}>添加关联字段</Button>
                       : (
-                        <Tooltip title="最多只能添加5张数据表">
+                        <Tooltip title={`最多只能添加${maxTableCount}张数据表`}>
                           <Button type="primary" disabled>添加关联字段</Button>
                         </Tooltip>
                       )
