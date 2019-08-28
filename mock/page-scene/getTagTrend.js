@@ -215,40 +215,66 @@ module.exports = {
   //   },
   // ],
   // content: [{data: [], totalCount: 0, date: 1565452800000}, {data: [], totalCount: 0, date: 1565539200000}, {data: [], totalCount: 0, date: 1565625600000}, {data: [], totalCount: 0, date: 1565712000000}, {data: [], totalCount: 0, date: 1565798400000}, {data: [], totalCount: 0, date: 1565884800000}, {data: [], totalCount: 0, date: 1565971200000}],
-  content: [{
-    data: [
+  content: {
+    nameList: ['api-1调用次数', 'api-2调用次数', 'api-3调用次数'],
+    dataList: [
       {
-        invokeCount: 444,
-        name: '哈哈哈好好',
+        date: 24234324324,
+        data: [
+          {
+            name: 'api-1调用次数',
+            invokeCount: 1,
+          },
+          {
+            name: 'api-2调用次数',
+            invokeCount: 2,
+          },
+        ],
+        totalCount: 3,
+      },
+      {
+        date: 24234324324,
+        data: [
+          {
+            name: 'api-1调用次数',
+            invokeCount: 1,
+          },
+         
+        ],
+        totalCount: 3,
+      },
+      {
+        date: 24234324324,
+        data: [],
+        totalCount: 3,
+      }, {
+        date: 24234324324,
+        data: [{
+          name: 'api-2调用次数',
+          invokeCount: 10,
+        }, {
+          name: 'api-3调用次数',
+          invokeCount: 20,
+        }],
+        totalCount: 3,
+      }, {
+        date: 24234324324,
+        data: [],
+        totalCount: 3,
+      }, {
+        date: 24234324324,
+        data: [],
+        totalCount: 3,
+      }, {
+        date: 24234324324,
+        data: [{
+          name: 'api-3调用次数',
+          invokeCount: 2,
+        }],
+        totalCount: 3,
       },
     ],
-    totalCount: 0,
-    date: 1565452800000,
-  }, {
-    data: [],
-    totalCount: 0,
-    date: 1565452800000,
-  }, {
-    data: [],
-    totalCount: 0,
-    date: 1565452800000,
-  }, {
-    data: [],
-    totalCount: 0,
-    date: 1565452800000,
-  }, {
-    data: [],
-    totalCount: 0,
-    date: 1565452800000,
-  }, {
-    data: [],
-    totalCount: 0,
-    date: 1565452800000,
-  }, {
-    data: [],
-    totalCount: 0,
-    date: 1565452800000,
-  }],
+  },
 }
 
 
