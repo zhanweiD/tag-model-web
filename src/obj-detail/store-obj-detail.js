@@ -241,6 +241,7 @@ class ObjDetailStore {
       })
       runInAction(() => {
         successTip('移除成功')
+        this.getDailyCard()
         this.getList()
       })
     } catch (e) {
