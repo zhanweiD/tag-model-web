@@ -150,10 +150,8 @@ class TagCategory extends Component {
                 return tempObjItem
               }
 
-              if (
-                nodeData.type === 2
-                || (nodeData.type === 0 && +match.params.id === this.store.currentTreeItemKey)
-              ) {
+              // 删除标签跳转
+              if (nodeData.type === 0 && +match.params.id === this.store.currentTreeItemKey) {
                 const objItem = findObjId(nodeData.id, toJS(this.store.cateList))
                 this.bigStore.updateKey = Math.random()
                 this.bigStore.id = objItem.id
@@ -163,6 +161,15 @@ class TagCategory extends Component {
                 }
                 this.store.currentTreeItemKey = objItem.id
                 history.push(`/${this.typeCode}/${objItem.id}`)
+              }
+
+              // 删除对象跳转
+              if (nodeData.type === 2) {
+                this.bigStore.updateKey = Math.random()
+                this.bigStore.id = undefined
+                this.bigStore.currentNode = undefined
+                this.store.currentTreeItemKey = undefined
+                history.push(`/${this.typeCode}`)
               }
             }),
           })
