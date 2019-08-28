@@ -240,41 +240,42 @@ class TagCategory extends Component {
       const arr = []
       tree.forEach(item => {
         if (item.children && item.children.length) {
-          arr.push(
-            <DtTreeNode
-              showIcon
-              nodeData={item}
-              itemKey={item.id}
-              title={(() => {
-                if (item.parentId !== 0) return <span>{item.name}</span>
-                return (
-                  <div className="FBH" style={{color: '#0078ff'}}>
-                    <div className="text-hidden">{item.name}</div>
-                    <div className="pl4">{`(${item.tagCount || 0})`}</div>
-                  </div>
-                )
-              })()}
-              actionList={this.getMenuList(item)}
-              selectable={item.type !== 1}
-              iconNodeSrc={physicalAll}
-            >
-              {loop(item.children)}
-            </DtTreeNode>
-          )
+          const dtTreeNodeProps = {
+            nodeData: item,
+            itemKey: item.id,
+            title: (() => {
+              if (item.parentId !== 0) return <span>{item.name}</span>
+              return (
+                <div className="FBH" style={{color: '#0078ff'}}>
+                  <div className="text-hidden">{item.name}</div>
+                  <div className="pl4">{`(${item.tagCount || 0})`}</div>
+                </div>
+              )
+            })(),
+            actionList: this.getMenuList(item),
+            selectable: item.type !== 1,
+          }
+
+          if (item.type === 2) { // 对象
+            dtTreeNodeProps.showIcon = false
+          } else {
+            dtTreeNodeProps.showIcon = true
+            dtTreeNodeProps.iconNodeSrc = physicalAll
+          }
+          arr.push(<DtTreeNode {...dtTreeNodeProps}>{loop(item.children)}</DtTreeNode>)
         } else {
           const dtTreeNodeProps = {
+            showIcon: true,
             nodeData: item,
             itemKey: item.id,
             title: item.name,
             selectable: item.type !== 1,
             actionList: this.getMenuList(item),
-            className: 'node-tag',
           }
           if (item.type === 0) { // 标签
-            dtTreeNodeProps.showIcon = true
             dtTreeNodeProps.iconNodeSrc = tag
           } else {
-            dtTreeNodeProps.showIcon = false
+            dtTreeNodeProps.iconNodeSrc = physicalAll
           }
           arr.push(<DtTreeNode {...dtTreeNodeProps} />)
         }
