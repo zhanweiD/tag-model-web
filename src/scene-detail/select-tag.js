@@ -51,24 +51,29 @@ export default class SelectTag extends Component {
         if (!tagList.length) return 
 
 
-        // 存在类目存在标签
+        // 存在类目存在标签; 查找第一个标签
         const getFirstChildId = d => {
-          // 非标签
-          if (d.children) {
-            return getFirstChildId(d.children[0])
-          }
+          let tagId
+          for (let i = 0; i < d.length; i++) {
+            const tagChild = data.filter(item => item.treeId === d[i].id && !item.type)
 
-          return d.id
+            if (tagChild.length) {
+              tagId = tagChild[0].id
+              break
+            }
+          }
+          return tagId
         }
 
-        // 获取节点 第一个标签 默认展开？管你想不想看
-        const tagId = getFirstChildId(treeData[0])
+        const tagId = getFirstChildId(treeData)
 
-        // 存在标签,默认选中第一个
-        this.tagId = tagId
-        this.store.tagId = tagId
-        this.store.categoryStore.currentTreeItemKey = tagId
-        this.store.getTagDetail()
+        if (tagId) {
+          // 存在标签,默认选中第一个
+          this.tagId = tagId
+          this.store.tagId = tagId
+          this.store.categoryStore.currentTreeItemKey = tagId
+          this.store.getTagDetail()
+        }
       })
     })
   }
@@ -226,7 +231,7 @@ export default class SelectTag extends Component {
                                     <TrendTag store={this.store} tagId={this.store.tagId} />
                                     <TrendApi store={this.store} tagId={this.store.tagId} />
                                   </Fragment>
-                                ) : <NoData text={`请在已选择的 ${this.store.categoryStore.objName} 对象中，选择需要使用的标签！<br/>（注：选择的标签必须放在对象的某个类目下）`} />
+                                ) : <NoData text={`请在已选择的 ${this.store.categoryStore.objName.join(' / ')} 对象中，选择需要使用的标签！<br/>（注：选择的标签必须放在对象的某个类目下）`} />
                               }
                             </div>
                           )

@@ -58,7 +58,7 @@ class TagCategoryStore {
 
   // 对象详情
   // @observable objectDetail = false
-  @observable objName = ''
+  @observable objName = []
 
   // 类目详情
   @observable cateDetail = false
@@ -117,12 +117,12 @@ class TagCategoryStore {
         this.treeLoading = false
         this.searchExpandedKeys.clear()
         let data = []
-        let objId
+        let objId = []
 
         if (res.length) {
           if (res.length > 1) {
             // 对象id
-            objId = res.filter(item => item.parentId === 0)[0].id
+            objId = res.filter(item => item.parentId === 0).map(item => item.id)
           }
 
           data = res.map(item => {
@@ -131,14 +131,15 @@ class TagCategoryStore {
               this.findParentId(item.id, res, this.searchExpandedKeys)
             }
 
-            if (objId && item.parentId === objId) {
+            // 只有一个对象时 默认展开一级类目
+            if (objId.length === 1 && objId.includes(item.parentId)) {
               this.findParentId(item.id, res, this.searchExpandedKeys)
             }
             return item
           }) 
           
           // 获取对象名字
-          this.objName = res.filter(item => item.type === 2)[0].name
+          this.objName = res.filter(item => item.type === 2).map(item => item.name)
         }
 
         this.cateList.replace(data)
