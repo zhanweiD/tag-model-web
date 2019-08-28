@@ -49,7 +49,7 @@ exports.SearchForm = Form.create({
               )}
             </FormItem>
           </Col>
-          <Col span={8}>
+          {/* <Col span={8}>
             <FormItem
               {...formItemLayout}
               label="使用状态"
@@ -71,7 +71,7 @@ exports.SearchForm = Form.create({
                 </Select>
               )}
             </FormItem>
-          </Col>
+          </Col> */}
           <Col span={8}>
             <FormItem
               {...formItemLayout}

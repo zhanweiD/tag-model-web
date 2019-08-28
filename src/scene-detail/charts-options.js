@@ -33,8 +33,8 @@ export function getTagTrendOpt(data, legend = []) {
     symbol: 'none',
     smooth: 0.3,
     data: _.map(data, d => {
-      const obj = d.data.filter(i => i.name === name)[0]
-      return obj.count
+      const obj = d.data.filter(i => i.name === name)[0] || {}
+      return obj.invokeCount || 0
     }),
   })) : [{
     name: 'noData',

@@ -155,12 +155,13 @@ export default class DataSource extends Component {
                       checked={this.checkAll}
                       indeterminate={this.indeterminate}
                       onChange={e => this.onAllSelect(e)}
+                      disabled={info.used}
                     >
                     全选
                     </Checkbox>
                   </AuthBox>
                   <div>
-                    <AuthBox code="asset_tag_occation_del_aim_datasoure" className="mr8" disabled={!this.selectLen} onClick={this.remove}>                           
+                    <AuthBox code="asset_tag_occation_del_aim_datasoure" className="mr8" disabled={!this.selectLen || info.used} onClick={this.remove}>                           
                       批量移除数据源
                     </AuthBox>
                     {/* 点击“配置数据服务”按钮，跳转至服务管理页面 */}
@@ -183,6 +184,7 @@ export default class DataSource extends Component {
                           <AuthBox code="asset_tag_occation_del_aim_datasoure" isButton={false}>  
                             <Checkbox 
                               checked={item}
+                              disabled={info.used}
                               onChange={v => this.onItemSelect(index, v)}
                             />
                           </AuthBox>
