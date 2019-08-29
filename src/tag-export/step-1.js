@@ -194,8 +194,11 @@ class Step1 extends Component {
     history.push('/')
   }
 
-  // 切换队形类型
+  // 切换对象类型
   @action onChangeTab(e) {
+    // 防止点击过快，接口没返回时Tab已切换(tab高亮map到数据错乱)
+    if (store.treeLoading) return false
+
     document.getElementById('searchKey').value = ''
     this.exCate.clear()
     this.checkedKeys.clear()
