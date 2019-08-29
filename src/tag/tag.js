@@ -68,6 +68,7 @@ export default class Tag extends Component {
 
   render() {
     const {typeCodes} = this.store
+    if (!typeCodes || !typeCodes.length) return null
     const currentNode = toJS(this.store.currentNode)
     return (
       <div className="FBV" style={{minHeight: '100%'}}>

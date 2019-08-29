@@ -230,6 +230,7 @@ class Step1 extends Component {
 
   render() {
     const {typeCodes} = store
+    if (!typeCodes || !typeCodes.length) return null
     const currCate = this.selectedKeys.slice()[0]
     const rowSelection = {
       selectedRowKeys: toJS(this.exCate.get(this.selectedKeys.slice()[0])),
@@ -256,7 +257,7 @@ class Step1 extends Component {
         <Alert message={`当前已选择 ${this.stdIds.slice().length} 个标签`} type="info" showIcon />
 
         <Tabs
-          defaultActiveKey={toJS(typeCodes)[0].objTypeCode}
+          activeKey={`${store.typeCode}`}
           animated={false}
           onChange={e => this.onChangeTab(e)}
           className="pl4"
