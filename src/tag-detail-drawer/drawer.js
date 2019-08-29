@@ -165,15 +165,25 @@ export default class TagDetailDrawer extends Component {
                     {
                       title: '英文名',
                       dataIndex: 'dataFieldName',
+                      width: 80,
                     },
                     {
                       title: '字段类型',
                       dataIndex: 'dataFieldType',
+                      width: 80,
                     },
                     {
                       title: '数据表',
                       dataIndex: 'dataTableName',
+                      width: 90,
                     },
+                    /*
+                    {
+                      title: '',
+                      width: 10,
+                      render: () => <span></span>,
+                    },
+                    */
                   ]}
                   sourceColumns={[
                     {
