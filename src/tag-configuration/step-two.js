@@ -175,6 +175,7 @@ export default class StepTwo extends React.Component {
               selectedRowKeys: store.secondSelectedRows.map(item => item.dataFieldName),
               onChange: this.onRowSelect,
             }}
+            pagination={false}
             // scroll={{x: 1400}}
           />
 

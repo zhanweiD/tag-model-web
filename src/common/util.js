@@ -1,5 +1,6 @@
 import {Component} from 'react'
-import {Icon, message, Modal} from 'antd'
+import {Icon, message} from 'antd'
+import {ErrorEater} from '@dtwave/uikit'
 
 export const pathPrefix = window.__onerConfig.pathPrefix || ''
 // const {apiV} = window.__keeper
@@ -41,17 +42,11 @@ export function successTip(content) {
 
 // 统一失败提示
 export function errorTip(title, content) {
-  const l = arguments.length
-  if (l === 0) {
-    title = '系统异常'
-  } else if (l === 1) {
-    content = title
-    title = ''
-  }
-  Modal.error({
+  ErrorEater(
+    'default',
     title,
-    content,
-  })
+    e => console.log(e),
+  )
 }
 
 // 统一信息提示
@@ -298,7 +293,7 @@ export function getDataTypeByCode(code) {
 
 export function getNamePattern(max = 20) {
   return [{
-    transform: value => value.trim(),
+    transform: value => value && value.trim(),
   }, {
     max, 
     message: `名称不能超过${max}个字符`,

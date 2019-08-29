@@ -194,10 +194,11 @@ export default class ObjDetail extends Component {
         values: [configuredField, associatedField],
       },
     ]
+    const maxTableCount = typeCode === 3 ? 1 : 5
 
     return (
       <div className="obj-detail">
-        <div className="detail-info">
+        <div className="detail-info bgf">
           <div className="d-head"> 
             <div className="FBH FBJ FBAC">
               <span>{name}</span>
@@ -205,7 +206,13 @@ export default class ObjDetail extends Component {
                 <Button className="mr8" onClick={() => this.toViewRelField()}>已关联字段列表</Button>
                 {
                   functionCodes.includes('asset_tag_rel_field') && (
-                    <Button type="primary" onClick={() => this.toAddRelField()}>添加关联字段</Button>
+                    tableCount < maxTableCount
+                      ? <Button type="primary" onClick={() => this.toAddRelField()}>添加关联字段</Button>
+                      : (
+                        <Tooltip title={`最多只能添加${maxTableCount}张数据表`}>
+                          <Button type="primary" disabled>添加关联字段</Button>
+                        </Tooltip>
+                      )
                   )
                 }
               </div>
@@ -215,7 +222,7 @@ export default class ObjDetail extends Component {
           <NemoBaseInfo dataSource={baseInfo} className="d-info" />
         </div>
 
-        <div className="FBH bgf pt24 pb24">
+        <div className="FBH bgf pt24 pb24 mb16">
           {
             cards.map((item, index) => (
               <div className="FB1" style={{borderLeft: index !== 0 ? '1px solid #E8E8E8' : ''}}>
@@ -225,21 +232,22 @@ export default class ObjDetail extends Component {
           }
         </div>
 
-        <Table
-          className="p24"
-          style={{paddingTop: 0}}
-          rowKey="id"
-          onChange={store.handleChange}
-          columns={this.tableCol}
-          loading={store.tableLoading}
-          dataSource={store.list.slice()}
-          pagination={{
-            pageSize: store.pagination.pageSize,
-            current: store.pagination.currentPage,
-            total: store.pagination.count,
-            showTotal: () => `合计${store.pagination.count}条记录`,
-          }}
-        />
+        <div className="pt24 pl24 pr24 pb8 bgf">
+          <Table
+            style={{paddingTop: 0}}
+            rowKey="id"
+            onChange={store.handleChange}
+            columns={this.tableCol}
+            loading={store.tableLoading}
+            dataSource={store.list.slice()}
+            pagination={{
+              pageSize: store.pagination.pageSize,
+              current: store.pagination.currentPage,
+              total: store.pagination.count,
+              showTotal: () => `合计${store.pagination.count}条记录`,
+            }}
+          />
+        </div>
 
         <DrawerRelfieldAdd />
         <DrawerRelfieldEdit
@@ -261,6 +269,7 @@ export default class ObjDetail extends Component {
               storageId={this.curentItem.dataStorageId}
               tableName={this.curentItem.dataTableName}
               onSuccess={() => {
+                store.getDailyCard()
                 store.getList()
                 this.bigStore.categoryStore.getCategoryList()
               }}

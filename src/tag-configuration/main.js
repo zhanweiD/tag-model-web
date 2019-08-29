@@ -92,7 +92,7 @@ export default class TagConfiguration extends Component {
         </Steps>
 
         {/* 内容区域 */}
-        <div style={{height: 'calc(100vh - 55px - 48px - 64px - 53px)'}}>
+        <div style={{paddingBottom: '28px'}}>
           <Content store={store} />
         </div>
 

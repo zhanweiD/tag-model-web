@@ -26,15 +26,15 @@ function getColors(len) {
 // 标签调用次数趋势图配置
 export function getTagTrendOpt(data, legend = []) {
   const colorList = getColors(legend.length)
-  
+
   const series = legend.length ? legend.map(name => ({
     name,
     type: 'line',
     symbol: 'none',
     smooth: 0.3,
     data: _.map(data, d => {
-      const obj = d.data.filter(i => i.name === name)[0]
-      return obj.count
+      const obj = d.data.filter(i => i.name === name)[0] || {}
+      return obj.invokeCount || 0
     }),
   })) : [{
     name: 'noData',

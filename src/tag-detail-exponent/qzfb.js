@@ -19,13 +19,13 @@ export default class Qzfb extends Component {
     store.getValueStatus()
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (store.id !== nextProps.aId && nextProps.isActive) {
-      store.id = nextProps.aId
-      this.getData()
-      store.getValueStatus()
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if (store.id !== nextProps.aId && nextProps.isActive) {
+  //     store.id = nextProps.aId
+  //     this.getData()
+  //     store.getValueStatus()
+  //   }
+  // }
 
   componentDidMount() {
     enumeChart = echarts.init(this.enume)
@@ -102,7 +102,7 @@ export default class Qzfb extends Component {
                     <ul className="mr32">
                       <li className="FBH mb8" style={{width: '350px'}}>
                         <div style={{width: '50%'}}>
-                          <span className="interval ml24">取值</span>
+                          <span className="ml24">取值</span>
                         </div>
                         <span style={{width: '30%'}}>记录数占比</span>
                         <span className="ml16" style={{width: '20%'}}>记录数</span>

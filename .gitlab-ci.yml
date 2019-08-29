@@ -5,7 +5,7 @@ services:
 variables:
   DOCKER_DRIVER: overlay
   PROJECT_NAME: asset-tag-web
-  VERSION: -v${CI_COMMIT_TAG}
+  VERSION: -web-v${CI_COMMIT_TAG}
   # DOCKER_HOST: "tcp://localhost:2375"
 
 cache:

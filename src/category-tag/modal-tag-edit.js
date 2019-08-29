@@ -33,10 +33,13 @@ class ModalTagEdit extends Component {
       form: {validateFields},
     } = this.props
     const {
-      eStatus: {editTag}, cateDetail, tagDetail, currentTreeItemKey,
+      eStatus: {editTag}, cateDetail, tagDetail, currentTreeItemKey, 
+      props: {history, match},
     } = this.store
     const {typeCode} = this.bigStore
 
+    console.log(this.props)
+    console.log(this.store.props)
     validateFields((err, values) => {
       if (!err) {
         const param = Object.assign(values, {
@@ -57,8 +60,16 @@ class ModalTagEdit extends Component {
           param.parentId = currentTreeItemKey
         }
 
-        this.store.updateTag(param, () => {
+        this.store.updateTag(param, res => {
           this.bigStore.updateKey = Math.random()
+          this.bigStore.id = res.treeId
+          this.bigStore.currentNode = {
+            aId: res.id,
+            type: 0,
+          }
+          match.params.id = res.treeId
+          this.store.currentTreeItemKey = res.treeId
+          history.push(`/${typeCode}/${res.treeId}`)
         })
       }
     })
@@ -152,7 +163,7 @@ class ModalTagEdit extends Component {
               {getFieldDecorator('enName', {
                 initialValue: editTag ? tagDetail.enName : undefined,
                 rules: [
-                  {transform: value => value.trim()},
+                  {transform: value => value && value.trim()},
                   {required: true, message: '英文名不可为空'},
                   {pattern: enNameReg, message: '不超过30个字，只能包含英文、数字或下划线，必须以英文开头'},
                   {validator: this.handleNameValidator},
@@ -186,7 +197,7 @@ class ModalTagEdit extends Component {
               <FormItem {...formItemLayout} label="枚举显示值">
                 {getFieldDecorator('enumValue', {
                   rules: [
-                    {transform: value => value.trim()},
+                    {transform: value => value && value.trim()},
                     // {required: true, message: '枚举显示值不可为空'},
                     {validator: this.handleEnumValueValidator},
                   ],
@@ -204,7 +215,7 @@ class ModalTagEdit extends Component {
             <FormItem {...formItemLayout} label="业务逻辑">
               {getFieldDecorator('descr', {
                 rules: [
-                  {transform: value => value.trim()},
+                  {transform: value => value && value.trim()},
                   {max: 100, message: '业务逻辑不能超过100个字符'},
                 ],
                 initialValue: editTag ? tagDetail.descr : undefined,

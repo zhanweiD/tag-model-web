@@ -21,24 +21,23 @@ export default class Invoke extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (store.id !== nextProps.aId && nextProps.isActive) {
-      store.id = nextProps.aId
-      store.getInvokeCard()
-      this.updateDate()
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if (store.id !== nextProps.aId) {
+  //     store.id = nextProps.aId
+  //     store.getInvokeCard()
+  //     this.updateDate()
+  //   }
+  // }
 
   componentDidMount() {
+    this.invokeChart = echarts.init(this.lineRef)
     this.updateDate()
-    window.addEventListener('resize', this.resize)
+    window.addEventListener('resize', () => this.resize())
   }
 
   drawChart = data => {
     if (this.invokeChart) this.invokeChart.clear()
 
-    this.invokeChart = echarts.init(this.lineRef)
-    
     this.invokeChart.setOption(getInvokeOpt(
       data
     ))
@@ -56,13 +55,13 @@ export default class Invoke extends Component {
   }
 
   @action resize() {
-    if (this.chartLine) this.chartLine.resize()
+    if (this.invokeChart) this.invokeChart.resize()
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.resize)
-    if (this.chartLine) this.chartLine.dispose()
-    this.chartLine = null
+    window.removeEventListener('resize', () => this.resize())
+    if (this.invokeChart) this.invokeChart.dispose()
+    this.invokeChart = null
   }
 
   render() {

@@ -1,7 +1,7 @@
 import {Component} from 'react'
 import {action} from 'mobx'
 import {observer, inject} from 'mobx-react'
-import {Table} from 'antd'
+import {Table, Badge} from 'antd'
 
 import {navListMap} from '../common/constants'
 import {SearchForm} from './search-form'
@@ -50,7 +50,9 @@ export default class Scene extends Component {
   }, {
     title: '使用状态',
     dataIndex: 'used',
-    render: text => (text ? '使用中' : '未使用'),
+    // render: text => (text ? '使用中' : '未使用'),
+    render: text => (text ? <Badge color="green" text="使用中" />
+      : <Badge color="blue" text="未使用" />),
   }, {
     title: '被API调用次数 ',
     dataIndex: 'apiInvokeCount',
@@ -60,6 +62,7 @@ export default class Scene extends Component {
   componentWillMount() {
     const {frameChange} = this.props
     frameChange('nav', [
+      navListMap.assetMgt,
       navListMap.tagMgt,
       {url: '/scene#/', text: '标签场景'},
       {url: `/scene#/detail/${store.sceneId}`, text: '场景详情'},

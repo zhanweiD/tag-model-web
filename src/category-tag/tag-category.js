@@ -6,7 +6,8 @@ import {
 } from 'mobx'
 import {Modal, Spin} from 'antd'
 import {DtTree} from '@dtwave/uikit'
-import physicalAll from '../icon/physical-all.svg'
+import treeUnfold from '../icon/tree-unfold.svg'
+import treeFold from '../icon/tree-fold.svg'
 import tag from '../icon/tag.svg'
 import Action from './action'
 
@@ -64,7 +65,6 @@ class TagCategory extends Component {
 
 
   @action getMenuList = item => {
-    const {history} = this.props
     const {functionCodes} = window.__userConfig
 
     const addCateKey = {
@@ -131,7 +131,48 @@ class TagCategory extends Component {
           confirm({
             title: '确认删除？',
             content: tipStr,
-            onOk: () => this.store.deleteNode(nodeData.type),
+            onOk: () => this.store.deleteNode(nodeData.type, () => {
+              const {history, match} = this.store.props
+              const findObjId = (tagId, list) => {
+                let tempObjItem
+                const loop = (id, data) => {
+                  data.forEach(o => {
+                    if (o.id === id) {
+                      if (o.parentId !== 0) {
+                        loop(o.parentId, data)
+                      } else {
+                        tempObjItem = o
+                        return false
+                      }
+                    }
+                  })
+                }
+                loop(tagId, list)
+                return tempObjItem
+              }
+
+              // 删除标签跳转
+              if (nodeData.type === 0 && +match.params.id === this.store.currentTreeItemKey) {
+                const objItem = findObjId(nodeData.id, toJS(this.store.cateList))
+                this.bigStore.updateKey = Math.random()
+                this.bigStore.id = objItem.id
+                this.bigStore.currentNode = {
+                  aId: objItem.aId,
+                  type: 2,
+                }
+                this.store.currentTreeItemKey = objItem.id
+                history.push(`/${this.typeCode}/${objItem.id}`)
+              }
+
+              // 删除对象跳转
+              if (nodeData.type === 2) {
+                this.bigStore.updateKey = Math.random()
+                this.bigStore.id = undefined
+                this.bigStore.currentNode = undefined
+                this.store.currentTreeItemKey = undefined
+                history.push(`/${this.typeCode}`)
+              }
+            }),
           })
         })
       },
@@ -196,45 +237,47 @@ class TagCategory extends Component {
 
   render() {
     const treeData = toJS(this.store.treeData)
+    const getIconNodeSrc = e => e ? treeUnfold : treeFold
     const loop = tree => {
       const arr = []
       tree.forEach(item => {
         if (item.children && item.children.length) {
-          arr.push(
-            <DtTreeNode
-              showIcon
-              nodeData={item}
-              itemKey={item.id}
-              title={(() => {
-                if (item.parentId !== 0) return <span>{item.name}</span>
-                return (
-                  <div className="FBH" style={{color: '#0078ff'}}>
-                    <div className="text-hidden">{item.name}</div>
-                    <div className="pl4">{`(${item.tagCount || 0})`}</div>
-                  </div>
-                )
-              })()}
-              actionList={this.getMenuList(item)}
-              selectable={item.type !== 1}
-              iconNodeSrc={physicalAll}
-            >
-              {loop(item.children)}
-            </DtTreeNode>
-          )
+          const dtTreeNodeProps = {
+            nodeData: item,
+            itemKey: item.id,
+            title: (() => {
+              if (item.parentId !== 0) return <span>{item.name}</span>
+              return (
+                <div className="FBH" style={{color: '#0078ff'}}>
+                  <div className="text-hidden">{item.name}</div>
+                  <div className="pl4">{`(${item.tagCount || 0})`}</div>
+                </div>
+              )
+            })(),
+            actionList: this.getMenuList(item),
+            selectable: item.type !== 1,
+          }
+
+          if (item.type === 2) { // 对象
+            dtTreeNodeProps.showIcon = false
+          } else {
+            dtTreeNodeProps.showIcon = true
+            dtTreeNodeProps.iconNodeSrc = e => getIconNodeSrc(e)
+          }
+          arr.push(<DtTreeNode {...dtTreeNodeProps}>{loop(item.children)}</DtTreeNode>)
         } else {
           const dtTreeNodeProps = {
+            showIcon: true,
             nodeData: item,
             itemKey: item.id,
             title: item.name,
             selectable: item.type !== 1,
             actionList: this.getMenuList(item),
-            className: 'node-tag',
           }
           if (item.type === 0) { // 标签
-            dtTreeNodeProps.showIcon = true
             dtTreeNodeProps.iconNodeSrc = tag
           } else {
-            dtTreeNodeProps.showIcon = false
+            dtTreeNodeProps.iconNodeSrc = e => getIconNodeSrc(e)
           }
           arr.push(<DtTreeNode {...dtTreeNodeProps} />)
         }

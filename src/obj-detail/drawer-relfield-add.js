@@ -156,6 +156,25 @@ class DrawerRelfieldAdd extends Component {
     this.stdlist.remove(item)
   }
 
+
+  @action getFields() {
+    const fields = {}
+    if (store.baseInfo.objTypeCode === 3) {
+      _.map(toJS(store.baseInfo).objRspList, 'id').concat(['timeKey', 'addrKey']).map(item => {
+        fields[item] = {
+          value: undefined,
+          errors: null,
+        }
+      })
+    } else {
+      fields.mappingKey = {
+        value: undefined,
+        errors: null,
+      }
+    }
+    return fields
+  }
+
   @action changeStorageId(e) {
     this.dataStorageId = e
 
@@ -170,6 +189,7 @@ class DrawerRelfieldAdd extends Component {
         value: undefined,
         errors: null,
       },
+      ...this.getFields(),
     })
   }
 
@@ -183,13 +203,25 @@ class DrawerRelfieldAdd extends Component {
         value: undefined,
         errors: null,
       },
+      ...this.getFields(),
     })
   }
 
   renderItemDom(getFieldDecorator, formItemLayout, fieldList, fieldListLoading) {
     if (store.baseInfo.objTypeCode === 3) {
       const objSelect = toJS(store.baseInfo).objRspList.map(item => (
-        <FormItem {...formItemLayout} label={`${item.name}主键`}>
+        <FormItem
+          {...formItemLayout}
+          label={(
+            <span
+              className="omit"
+              title={`${item.name}主键`}
+              style={{width: '115px', height: '16px', lineHeight: '16px', display: 'inline-block',}}
+            >
+              {`${item.name}主键`}
+            </span>
+          )}
+        >
           {getFieldDecorator(`${item.id}`, {
             initialValue: undefined,
             rules: [

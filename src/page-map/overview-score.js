@@ -32,7 +32,7 @@ export default class OverviewScore extends React.Component {
     const {panelsData} = store
 
     return (
-      <div className="white-block mt16 pt16">
+      <div className="bgf mt16 pt16">
         <Tabs
           activeKey={currentTab}
           tabBarExtraContent={(

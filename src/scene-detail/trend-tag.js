@@ -1,6 +1,5 @@
 import {Component} from 'react'
 import {action} from 'mobx'
-// import {Empty} from 'antd'
 import TimeRange from '../time-range'
 import {getTagTrendOpt} from './charts-options'
 
@@ -10,8 +9,10 @@ export default class TrendTag extends Component {
   chartLine = null
 
   componentDidMount() {
+    this.chartLine = echarts.init(this.lineRef)
     this.getData()
-    window.addEventListener('resize', this.resize)
+
+    window.addEventListener('resize', () => this.resize())
   }
 
   componentWillReceiveProps(nextProps) {
@@ -24,10 +25,7 @@ export default class TrendTag extends Component {
     }
   }
 
-  drawChart = data => {
-    this.chartLine = echarts.init(this.lineRef)
-    const legend = data[0] && data[0].data.map(d => d.name)
-
+  drawChart = (data, legend) => {
     this.chartLine.setOption(getTagTrendOpt(
       data, legend
     ))
@@ -41,8 +39,8 @@ export default class TrendTag extends Component {
       endDate: lte,
     }
     
-    store.getTagTrend(params, res => {
-      if (res.length) this.drawChart(res)
+    store.getTagTrend(params, (data, legend) => {
+      this.drawChart(data, legend)
     })
   }
 
@@ -51,7 +49,7 @@ export default class TrendTag extends Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.resize)
+    window.removeEventListener('resize', () => this.resize())
     if (this.chartLine) this.chartLine.dispose()
     this.chartLine = null
   }

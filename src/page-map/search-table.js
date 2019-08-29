@@ -5,7 +5,22 @@ import {
   Table, Button, Badge,
 } from 'antd'
 import OmitTooltip from '../component-omit-tooltip'
+import {pathPrefix, errorTip} from '../common/util'
+import AuthBox from '../component-auth-box'
+import io from './io'
 
+// 点击标签名跳转到标签详情
+async function jumpToTagDetail(tag) {
+  try {
+    const node = await io.getTreeNode({
+      aid: tag.id,
+    })
+
+    window.location.href = `${pathPrefix}/pool#/${node.objTypeCode || 1}/${node.id}`
+  } catch (e) {
+    errorTip(e.message)
+  }
+}
 
 // 表格columns对象
 const columns = [
@@ -14,7 +29,11 @@ const columns = [
     title: '名称',
     dataIndex: 'name',
     key: 'name',
-    render: name => <OmitTooltip text={name} maxWidth={150} />,
+    render: (name, record) => (
+      <a onClick={() => jumpToTagDetail(record)}>
+        <OmitTooltip text={name} maxWidth={150} />
+      </a>
+    ),
   },
   {
     title: '数据类型',
@@ -95,23 +114,23 @@ export default class SearchTable extends React.Component {
 
     // 当前页的选中项id数组
     const selectedRowKeys = (store.selectedTags[store.currentPage] || []).map(tag => tag.id)
+    const {functionCodes} = window.__userConfig
 
     return (
-      <div className="search-table white-block p24 mt16" key={randomKey}>
+      <div className="search-table bgf p24 mt16" key={randomKey}>
         {/* 批量添加按钮 */}
-        <div>
-          <Button 
-            type="primary" 
-            disabled={btnDisabled}
-            onClick={this.onButtonClick}
-          >
-            批量添加至场景
-          </Button>
-        </div>
+        <AuthBox
+          code="asset_tag_map_add_occation"
+          disabled={btnDisabled}
+          onClick={this.onButtonClick}
+        >
+          批量添加至场景
+        </AuthBox>
         
         {/* 表格 */}
         <div className="mt8">
           <Table
+            rowKey="id"
             loading={store.loading}
             dataSource={store.tagList}
             columns={columns}
@@ -121,18 +140,18 @@ export default class SearchTable extends React.Component {
               total: +store.totalCount,
               showTotal: () => `合计${store.totalCount}条记录`,
             }}
-            rowKey="id"
-            rowSelection={{
-              selectedRowKeys,
-              onChange: this.onSelectChange,
-              getCheckboxProps() {
-                return {
-                  defaultChecked: false,
-                  disabled: !store.filterObjId, // 对象名称选择“全部”时，不可选择
-                }
-              },
-            }}
             onChange={this.onTableChange}
+            rowSelection={
+              functionCodes.includes('asset_tag_map_add_occation') ? {
+                selectedRowKeys,
+                onChange: this.onSelectChange,
+                getCheckboxProps() {
+                  return {
+                    defaultChecked: false,
+                    disabled: !store.filterObjId, // 对象名称选择“全部”时，不可选择
+                  }
+                },
+              } : null}
           />
         </div>
       </div>

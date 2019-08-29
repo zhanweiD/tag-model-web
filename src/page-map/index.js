@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {Tabs, Spin} from 'antd'
+import cls from 'classnames'
 import Frame from '../frame'
 import {navListMap} from '../common/constants'
 
@@ -44,8 +45,12 @@ export default class PageMap extends React.Component {
           },
         ]}
       >
-        <div 
-          className="FBH FBJC FBAC" 
+        <div
+          className={cls({
+            FBH: isNoTag || loading,
+            FBJC: isNoTag || loading,
+            FBAC: isNoTag || loading,
+          })}
           style={{
             minHeight: '100%',
             background: (!loading && isNoTag) ? '#F4F6F9' : '',
@@ -59,7 +64,7 @@ export default class PageMap extends React.Component {
             {
               isNoTag ? <NoTag visible={!loading} />
                 : (
-                  <div className="page-map">
+                  <div className="page-map FBV">
                     <h2 className="fs16 fc0 mb16 ml16" style={{fontWeight: 'normal'}}>标签地图</h2>
                     <Tabs animated={false} tabBarStyle={{paddingLeft: '16px'}}>
                       <TabPane tab="标签概览" key="overview">

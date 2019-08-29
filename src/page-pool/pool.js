@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom'
 import {Spin} from 'antd'
 import cls from 'classnames'
+import {errorTip} from '../common/util'
 
 import Frame from '../frame'
 import io from './io'
@@ -89,7 +90,6 @@ export default class TagRouter extends Component {
         loading: true,
       })
       const content = await io.checkObjExist()
-
       this.setState({
         loading: false,
         showNoObj: !content,
@@ -98,6 +98,7 @@ export default class TagRouter extends Component {
       this.setState({
         loading: false,
       })
+      errorTip(e)
     }
   }
 

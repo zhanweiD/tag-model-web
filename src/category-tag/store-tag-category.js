@@ -159,7 +159,7 @@ class TagCategoryStore {
   }
   
   // 删除节点
-  @action async deleteNode(type) {
+  @action async deleteNode(type, cb) {
     try {
       const params = {
         deleteId: this.currentTreeItemKey,
@@ -175,19 +175,7 @@ class TagCategoryStore {
         successTip('删除成功')
         this.getCategoryList()
 
-
-        // // 如果要删除的节点和当前选中的是同一个, 则要跳转路由，且清空选中节点
-        // if (this.cateId !== this.currentTreeItemKey) {
-        //   this.getCategoryList(() => {
-        //     // 父类目、跨父类目删除
-        //     if (!toJS(this.cateList).filter(item => item.id === this.cateId).length) {
-        //       this.props.history.push('/-1')
-        //     }
-        //   })
-        // } else {
-        //   this.props.history.push('/-1')
-        //   this.getCategoryList()
-        // }
+        cb && cb()
       })
     } catch (e) {
       errorTip(e.message)
@@ -300,10 +288,11 @@ class TagCategoryStore {
   @action async updateTag(params, cb) {
     this.confirmLoading = true
     try {
+      let res
       if (!params.id) {
-        await io.addTag(params)
+        res = await io.addTag(params)
       } else {
-        await io.editTag(params)
+        res = await io.editTag(params)
       }
       runInAction(() => {
         successTip('操作成功')
@@ -311,7 +300,7 @@ class TagCategoryStore {
         this.modalVisible.editTag = false
         this.tagDetail = false
         this.getCategoryList()
-        cb && cb()
+        cb && cb(res)
       })
     } catch (e) {
       runInAction(() => {

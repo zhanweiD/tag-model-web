@@ -84,8 +84,10 @@ class ModalSelectTag extends Component {
     const tagArr = selectTagData.filter(item => !item.type) || []
     // 所有标签列表数据
     const list = tagArr.map(item => item.tag)
+
+    const canSelectedList = list.filter(item => !item.used)
     // 所有标签列表rowKeys
-    const rowKeys = list.map(item => item.id)
+    const rowKeys = canSelectedList.map(item => item.id)
 
     return {
       list,
@@ -127,7 +129,10 @@ class ModalSelectTag extends Component {
     // 生成 0-n 数组
     // if (list.length) rowKeys = Array.from({length: list.length}).map((v, k) => k)
 
-    rowKeys = list.map(item => item.id)
+    // 可选数组
+    const canselectedList = list.filter(item => !item.used)
+    
+    rowKeys = canselectedList.map(item => item.id)
 
     // 更改全选状态
 
@@ -257,7 +262,8 @@ class ModalSelectTag extends Component {
           <Button 
             type="primary" 
             onClick={e => this.handleSubmit(e)} 
-            disabled={!this.list.slice().length}
+            // disabled={!this.list.slice().length}
+            disabled={!this.rowKeys.length}
             loading={confirmLoading}
           >
             确定

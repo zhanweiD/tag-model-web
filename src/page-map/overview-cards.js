@@ -95,7 +95,7 @@ export default class OverviewCards extends React.Component {
     const colSpan = 24 / (cards.length || 1)
 
     return (
-      <div className="white-block pt24 pb24">
+      <div className="bgf pt24 pb24">
         <Row>
           {
             cards.map((data, index) => (
