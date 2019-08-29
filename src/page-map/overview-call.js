@@ -29,7 +29,7 @@ export default class OverviewCall extends React.Component {
     const {apiCountData, tagCallTimesData} = store
 
     return (
-      <div className="white-block mt16">
+      <div className="bgf mt16">
         {/* 标签调用标题部分 */}
         <div
           className="FBH FBJB"

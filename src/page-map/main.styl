@@ -1,24 +1,19 @@
 $black45 = rgba(0, 0, 0, 0.45)
 
-// 白色背景的矩形div，稍微带点圆角
-.white-block
-  background-color #fff
-  border-radius 2px
-
 /*        标签地图 - 页面样式         */
 .page-map
-  width 100%
+  // width 100%
   min-height 100%
   padding 16px 0 0 4px // 左侧4px边距是和导航栏之间的间隙
-  overflow-x hidden
-  display flex
-  flex-direction column
+  // overflow-x hidden
+  // display flex
+  // flex-direction column
   .ant-tabs
     flex 1
   .ant-tabs-bar
     margin-bottom 0
   .map-overview, .map-search
-    background-color #f7f7f7
+    background-color #f4f6f9
     padding 16px
     // 减去这一块上面的内容高度和页面底部的padding-bottom；主要是没数据时需要撑开
     min-height calc(100vh - 176px)

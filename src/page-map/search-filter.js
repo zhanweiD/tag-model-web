@@ -58,7 +58,7 @@ class SearchFilter extends React.Component {
     })
     
     return (
-      <div className="search-filter white-block p24">
+      <div className="search-filter bgf p24">
         <Form>
           {/* 搜索输入框 */}
           <div className="fac" style={{height: '40px', marginTop: '40px'}}>
@@ -175,6 +175,7 @@ class SearchFilter extends React.Component {
   @action.bound handleKeywordChange(value) {
     const {store} = this.props
     store.filterKeyword = value.trim()
+    store.currentPage = 1
     this.doSearch()
   }
 
