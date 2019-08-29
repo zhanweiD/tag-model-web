@@ -237,6 +237,7 @@ class TagCategory extends Component {
 
   render() {
     const treeData = toJS(this.store.treeData)
+    const getIconNodeSrc = e => e ? treeUnfold : treeFold
     const loop = tree => {
       const arr = []
       tree.forEach(item => {
@@ -261,7 +262,7 @@ class TagCategory extends Component {
             dtTreeNodeProps.showIcon = false
           } else {
             dtTreeNodeProps.showIcon = true
-            dtTreeNodeProps.iconNodeSrc = treeFold
+            dtTreeNodeProps.iconNodeSrc = e => getIconNodeSrc(e)
           }
           arr.push(<DtTreeNode {...dtTreeNodeProps}>{loop(item.children)}</DtTreeNode>)
         } else {
@@ -276,7 +277,7 @@ class TagCategory extends Component {
           if (item.type === 0) { // 标签
             dtTreeNodeProps.iconNodeSrc = tag
           } else {
-            dtTreeNodeProps.iconNodeSrc = treeFold
+            dtTreeNodeProps.iconNodeSrc = e => getIconNodeSrc(e)
           }
           arr.push(<DtTreeNode {...dtTreeNodeProps} />)
         }

@@ -199,6 +199,7 @@ getSelectedKeys = () => {
 
 render() {
   const treeData = toJS(this.store.treeData)
+  const getIconNodeSrc = e => e ? treeUnfold : treeFold
   const loop = tree => {
     const arr = []
     tree.forEach(item => {
@@ -223,7 +224,7 @@ render() {
           dtTreeNodeProps.showIcon = false
         } else {
           dtTreeNodeProps.showIcon = true
-          dtTreeNodeProps.iconNodeSrc = treeFold
+          dtTreeNodeProps.iconNodeSrc = e => getIconNodeSrc(e)
         }
         arr.push(<DtTreeNode {...dtTreeNodeProps}>{loop(item.children)}</DtTreeNode>)
       } else {
@@ -240,7 +241,7 @@ render() {
           dtTreeNodeProps.iconNodeSrc = tag
         } else if (item.type === 1) {
           dtTreeNodeProps.showIcon = true
-          dtTreeNodeProps.iconNodeSrc = treeFold
+          dtTreeNodeProps.iconNodeSrc = e => getIconNodeSrc(e)
         } else if (item.type === 2) { // 对象
           dtTreeNodeProps.showIcon = false
         }
