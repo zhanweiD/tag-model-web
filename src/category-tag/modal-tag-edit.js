@@ -34,7 +34,7 @@ class ModalTagEdit extends Component {
     } = this.props
     const {
       eStatus: {editTag}, cateDetail, tagDetail, currentTreeItemKey, 
-      props: {history},
+      props: {history, match},
     } = this.store
     const {typeCode} = this.bigStore
 
@@ -67,6 +67,7 @@ class ModalTagEdit extends Component {
             aId: res.id,
             type: 0,
           }
+          match.params.id = res.treeId
           this.store.currentTreeItemKey = res.treeId
           history.push(`/${typeCode}/${res.treeId}`)
         })
