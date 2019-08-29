@@ -231,7 +231,7 @@ export default class SelectTag extends Component {
                                     <TrendTag store={this.store} tagId={this.store.tagId} />
                                     <TrendApi store={this.store} tagId={this.store.tagId} />
                                   </Fragment>
-                                ) : <NoData text={`请在已选择的 ${this.store.categoryStore.objName.join(' / ')} 对象中，选择需要使用的标签！<br/>（注：选择的标签必须放在对象的某个类目下）`} />
+                                ) : <NoData text={`请在已选择的 ${this.store.categoryStore.objName.map(item => `“${item}”`).join(' ')} 对象中，选择需要使用的标签！<br/>（注：选择的标签必须放在对象的某个类目下）`} />
                               }
                             </div>
                           )
