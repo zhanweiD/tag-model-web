@@ -37,8 +37,8 @@ class DrawerRelfield extends Component {
         dataIndex: 'dataDbName',
       }, {
         title: '数据源类型',
-        key: 'storageTypeName',
-        dataIndex: 'storageTypeName',
+        key: 'dataDbTypeName',
+        dataIndex: 'dataDbTypeName',
       }, {
         title: '数据表名称',
         key: 'dataTableName',
