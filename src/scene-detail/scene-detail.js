@@ -117,7 +117,7 @@ export default class SceneDetail extends Component {
                 <span>{info.name}</span>
                 <AuthBox code="asset_tag_edit_occation" isButton={false}>
                   {
-                    !used && <Icon className="ml8" type="edit" onClick={this.sceneDetailVisible} style={{color: 'rgba(0,0,0, .65)'}} />
+                    !used && <Icon className="ml8" type="edit" onClick={this.sceneDetailVisible} style={{color: 'rgba(0,0,0, .45)'}} />
                   }
                 </AuthBox>
                 {/* <Tag className="ml10" color={used ? 'blue' : ''}>{used ? '使用中' : '未使用'}</Tag> */}
