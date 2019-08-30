@@ -5,7 +5,7 @@ import io from './io'
 class BackendExportStore {
   @observable currStep = 0
 
-  @observable typeCode = undefined
+  @observable typeCode = window.njkData.typeCodes[0].objTypeCode
   @observable searchKey = ''
 
   @observable treeLoading = false

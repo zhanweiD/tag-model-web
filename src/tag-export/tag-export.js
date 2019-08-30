@@ -26,6 +26,7 @@ export default class TagExport extends Component {
     store.treeData.clear()
     store.cateList.clear()
     store.list.clear()
+    store.typeCode = window.njkData.typeCodes[0].objTypeCode
   }
 
   render() {

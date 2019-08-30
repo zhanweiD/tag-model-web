@@ -66,7 +66,7 @@ export default class TagRouter extends Component {
                       <Route exact strict path="/export" component={TagExport} />
                       <Route exact strict path="/:type/:id" component={TaglPool} />
                       <Route exact strict path="/:type" component={TaglPool} />
-                      <Redirect exact from="/" to="/1" />
+                      <Redirect exact from="/" to={`/${window.njkData.typeCodes[0].objTypeCode}`} />
 
                       <Route
                         render={() => {
