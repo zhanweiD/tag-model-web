@@ -164,7 +164,7 @@ class DrawerRelfield extends Component {
 
     // 将undefined的值改成空字符串
     Object.keys(values).forEach(key => {
-      valuesCopy[key] = values[key] === undefined ? '' : values[key].trim()
+      valuesCopy[key] = values[key] === undefined ? '' : (typeof values[key] === 'string' ? values[key].trim() : values[key])
     })
 
     // 要更新parentId字段（对应当前所属类目的id）
