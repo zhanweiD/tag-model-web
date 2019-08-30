@@ -25,6 +25,7 @@ class StepOne extends Component {
   }
 
   render() {
+    const {typeCodes} = window.njkData
     return (
       <div style={{width: '420px'}}>
         <div>
@@ -35,7 +36,7 @@ class StepOne extends Component {
             onChange={e => this.handleChange('typeCode', e)}
           >
             {
-              store.typeCodes.map(item => (
+              typeCodes.map(item => (
                 <Option key={item.objTypeCode} value={item.objTypeCode}>{item.objTypeName}</Option>
               ))
             }

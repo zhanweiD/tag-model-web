@@ -20,7 +20,6 @@ export default class TagExport extends Component {
       navListMap.tagPool,
       {text: '导出标签及类目'},
     ])
-    store.getTypeCodes()
   }
 
   componentWillUnmount() {
@@ -30,8 +29,6 @@ export default class TagExport extends Component {
   }
 
   render() {
-    const {typeCodes} = store
-    if (!typeCodes.length) return null
     return (
       <div className="p16">
         <Steps current={store.currStep} style={{width: '70%', margin: '24px auto'}}>

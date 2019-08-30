@@ -229,8 +229,7 @@ class Step1 extends Component {
   }
 
   render() {
-    const {typeCodes} = store
-    if (!typeCodes || !typeCodes.length) return null
+    const {typeCodes} = window.njkData
     const currCate = this.selectedKeys.slice()[0]
     const rowSelection = {
       selectedRowKeys: toJS(this.exCate.get(this.selectedKeys.slice()[0])),

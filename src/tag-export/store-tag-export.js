@@ -6,7 +6,6 @@ class BackendExportStore {
   @observable currStep = 0
 
   @observable typeCode = undefined
-  @observable typeCodes = []
   @observable searchKey = ''
 
   @observable treeLoading = false
@@ -27,19 +26,6 @@ class BackendExportStore {
   @observable previewDataList = []
   @observable keyRedis = ''
   @observable totalTag = undefined
-
-  // 获取人、物、对象
-  @action async getTypeCodes() {
-    try {
-      const res = await io.getTypeCodes() || []
-      runInAction(() => {
-        this.typeCode = res[0].objTypeCode
-        this.typeCodes.replace(res)
-      })
-    } catch (e) {
-      errorTip(e.message)
-    }
-  }
 
   @action async getTreeData() {
     try {

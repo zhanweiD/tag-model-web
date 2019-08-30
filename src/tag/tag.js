@@ -22,10 +22,10 @@ export default class Tag extends Component {
     this.store.categoryStore = new TagCategoryStore(props)
     // this.store.categoryStore.getCategoryList()
 
-    this.store.getTypeCodes(() => {
-      this.store.typeCode = +params.type || toJS(this.store.typeCodes)[0].objTypeCode
-      this.store.id = +params.id
-    })
+
+    const {typeCodes} = window.njkData
+    this.store.typeCode = +params.type || typeCodes[0].objTypeCode
+    this.store.id = +params.id
   }
 
   componentWillMount() {
@@ -67,8 +67,7 @@ export default class Tag extends Component {
   }
 
   render() {
-    const {typeCodes} = this.store
-    if (!typeCodes || !typeCodes.length) return null
+    const {typeCodes} = window.njkData
     const currentNode = toJS(this.store.currentNode)
     return (
       <div className="FBV" style={{minHeight: '100%'}}>

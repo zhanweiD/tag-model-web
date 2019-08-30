@@ -7,7 +7,7 @@ import io from './io'
 class ImportStore {
   @observable currStep = 0
  
-  @observable typeCodes = []
+  // @observable typeCodes = []
   @observable objs = []
   @observable typeCode = ''
   @observable objId = undefined
@@ -29,16 +29,16 @@ class ImportStore {
   // 导出按钮loading状态
   @observable importDataLoading = false
 
-  @action async getTypeCodes() {
-    try {
-      const res = await io.getTypeCodes() || []
-      runInAction(() => {
-        this.typeCodes.replace(res)
-      })
-    } catch (e) {
-      errorTip(e.message)
-    }
-  }
+  // @action async getTypeCodes() {
+  //   try {
+  //     const res = await io.getTypeCodes() || []
+  //     runInAction(() => {
+  //       this.typeCodes.replace(res)
+  //     })
+  //   } catch (e) {
+  //     errorTip(e.message)
+  //   }
+  // }
 
   @action async getObjs() {
     try {

@@ -7,10 +7,6 @@ ioContext.create('tagImport', {
     method: 'POST',
   },
   
-  getTypeCodes: {
-    url: `${tagApi}/be_tag/tag/import/obj_type/drop_down_box`,
-  },
-
   getObjs: {
     url: `${tagApi}/be_tag/tag/import/obj/drop_down_box`,
   },

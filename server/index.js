@@ -61,22 +61,21 @@ module.exports = [
           method: 'GET',
           json: true,
         }
-
-        // const functionCodesOpt = {
-        //   uri: `${config('server.apiPrefix')}/api/v1/data-asset-tag/common/list_function`,
-        //   qs: {
-        //     tenantId,
-        //     userId,
-        //   },
-        //   method: 'GET',
-        //   json: true,
-        // }
+        const typeCodesOptions = {
+          uri: `${config('server.apiPrefix')}/api/v1/be_tag/tag/import/obj_type/drop_down_box`,
+          qs: {
+            tenantId,
+            userId,
+          },
+          method: 'GET',
+          json: true,
+        }
 
         try {
           const rs = await rp(options)
           ctx.njkData.dict = rs.content
-        //   const rs2 = await rp(functionCodesOpt)
-        //   ctx.njkData.functionCodes = rs2.content
+          const rs2 = await rp(typeCodesOptions)
+          ctx.njkData.typeCodes = rs2.content
         } catch (e) {
           console.log(e)
         }

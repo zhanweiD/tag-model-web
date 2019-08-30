@@ -22,7 +22,7 @@ export default class TagImport extends Component {
       {text: '导入标签及类目'},
     ])
 
-    store.getTypeCodes()
+    // store.getTypeCodes()
   }
 
   componentWillUnmount() {
