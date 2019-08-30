@@ -203,6 +203,16 @@ export function isJsonFormat(str) {
   }
   return true
 }
+// trim string
+export function trimFormValues(values) {
+  Object.keys(values).map(k => {
+    if (typeof values[k] === 'string') {
+      values[k] = values[k].trim()
+    }
+  })
+  return values
+}
+
 
 // 判断某个值是不是空
 export function isEmptyValue(value) {

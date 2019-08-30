@@ -8,7 +8,7 @@ import {
 import {action} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {isExitMsg} from '../common/constants'
-import {getNamePattern} from '../common/util'
+import {getNamePattern, trimFormValues} from '../common/util'
 
 const FormItem = Form.Item
 
@@ -35,6 +35,7 @@ class ModalEditCategory extends Component {
 
     validateFields((err, values) => {
       if (!err) {
+        values = trimFormValues(values)
         const params = {
           name: values.name,
           descr: values.descr,

@@ -5,7 +5,7 @@ import {
 import {observable, action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {isExitMsg} from '../common/constants'
-import {enNameReg, getNamePattern} from '../common/util'
+import {enNameReg, getNamePattern, trimFormValues} from '../common/util'
 
 const FormItem = Form.Item
 const {Option} = Select
@@ -33,6 +33,7 @@ class ModalObjectEdit extends Component {
 
     validateFields((err, values) => {
       if (!err) {
+        values = trimFormValues(values)
         const param = {
           name: values.name,
           enName: values.enName,

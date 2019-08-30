@@ -5,7 +5,7 @@ import {
 import {observable, action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {isExitMsg} from '../common/constants'
-import {isJsonFormat, enNameReg, getNamePattern} from '../common/util'
+import {isJsonFormat, enNameReg, getNamePattern, trimFormValues} from '../common/util'
 
 const FormItem = Form.Item
 const {Option} = Select
@@ -42,6 +42,7 @@ class ModalTagEdit extends Component {
     console.log(this.store.props)
     validateFields((err, values) => {
       if (!err) {
+        values = trimFormValues(values)
         const param = Object.assign(values, {
           isEnum: +values.isEnum,
           objTypeCode: typeCode,
