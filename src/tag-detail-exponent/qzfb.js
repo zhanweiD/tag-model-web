@@ -116,7 +116,7 @@ export default class Qzfb extends Component {
                               <span className="circle mb2" style={{background: colorList[index]}} />
                               <span className="interval">{key}</span>
                             </div>
-                            <span style={{width: '30%'}}>{`${ratio * 100}%`}</span>
+                            <span style={{width: '30%'}}>{`${(ratio * 100).toFixed(2)}%`}</span>
                             <span className="ml16" style={{width: '20%'}}>{count}</span>
                           </li>
                         ))
