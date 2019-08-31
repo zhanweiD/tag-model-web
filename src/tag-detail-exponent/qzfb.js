@@ -1,5 +1,5 @@
 import {Component, Fragment} from 'react'
-import {action, toJS, observable} from 'mobx'
+import {action} from 'mobx'
 import {observer} from 'mobx-react'
 import {
   Button, Tooltip, Icon, Empty,
@@ -32,7 +32,7 @@ export default class Qzfb extends Component {
 
     this.getData()
     store.getValueStatus()
-    window.addEventListener('resize', this.resize)
+    window.addEventListener('resize', () => this.resize())
   }
 
   @action getData = () => {
@@ -56,7 +56,7 @@ export default class Qzfb extends Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.resize)
+    window.removeEventListener('resize', () => this.resize())
   }
 
   render() {
