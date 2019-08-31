@@ -1,19 +1,17 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {Tabs, Spin} from 'antd'
+import {
+  HashRouter as Router, Route, Switch, Redirect,
+} from 'react-router-dom'
+import {Spin} from 'antd'
 import cls from 'classnames'
 import Frame from '../frame'
 import {navListMap} from '../common/constants'
 
-import Overview from './overview'
-import Search from './search'
+import Map from './map'
 import NoTag from './no-tag'
-
 import io from './io'
-
 import './main.styl'
-
-const {TabPane} = Tabs
 
 /** 
  * @description 标签地图页面
@@ -36,6 +34,7 @@ export default class PageMap extends React.Component {
     const isNoTag = !basicData.tagCount
 
     return (
+      <Router>
       <Frame
         navList={[
           navListMap.assetMgt,
@@ -64,22 +63,21 @@ export default class PageMap extends React.Component {
             {
               isNoTag ? <NoTag visible={!loading} />
                 : (
-                  <div className="page-map FBV">
-                    <h2 className="fs16 fc0 mb16 ml16" style={{fontWeight: 'normal'}}>标签地图</h2>
-                    <Tabs animated={false} tabBarStyle={{paddingLeft: '16px'}}>
-                      <TabPane tab="标签概览" key="overview">
-                        <Overview basicData={basicData} />
-                      </TabPane>
-                      <TabPane tab="标签搜索" key="search">
-                        <Search />
-                      </TabPane>
-                    </Tabs>
-                  </div>
+                  <Switch>
+                    <Route exact strict path="/:type" render={props => <Map {...props} basicData={basicData} />} />
+                    <Redirect exact from="/" to="/overview" />
+                    <Route
+                      render={() => {
+                        window.location.href = '/404'
+                      }}
+                    />
+                  </Switch>
                 )
             }
           </Spin>
         </div>
       </Frame>
+      </Router>
     )
   }
 
