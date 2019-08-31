@@ -203,6 +203,8 @@ class SearchStore {
         occTags,
       })
       successTip('批量添加成功')
+      this.currentPage = 1
+      this.getTagList()
       cb && cb()
     } catch (err) {
       errorTip(err.message)
