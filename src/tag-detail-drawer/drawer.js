@@ -21,6 +21,7 @@ export default class TagDetailDrawer extends Component {
   showDrawer = () => {
     this.setState({
       visiable: true,
+      loading: true,
     })
 
     const {
@@ -66,6 +67,9 @@ export default class TagDetailDrawer extends Component {
         'custom title',
         e => console.log(e),
       )
+      this.setState({
+        loading: false,
+      })
     }
   }
 
