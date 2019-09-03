@@ -269,6 +269,7 @@ export default class ObjDetail extends Component {
               storageId={this.curentItem.dataStorageId}
               tableName={this.curentItem.dataTableName}
               onSuccess={() => {
+                store.getBaseInfo()
                 store.getDailyCard()
                 store.getList()
                 this.bigStore.categoryStore.getCategoryList()
