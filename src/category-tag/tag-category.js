@@ -151,8 +151,8 @@ class TagCategory extends Component {
                 return tempObjItem
               }
 
-              // 删除标签跳转
-              if (nodeData.type === 0 && +match.params.id === this.store.currentTreeItemKey) {
+              // 删除标签、类目的跳转全跳转到对象级别上
+              if (nodeData.type === 0 || nodeData.type === 1) { // && +match.params.id === this.store.currentTreeItemKey
                 const objItem = findObjId(nodeData.id, toJS(this.store.cateList))
                 this.bigStore.updateKey = Math.random()
                 this.bigStore.id = objItem.id
