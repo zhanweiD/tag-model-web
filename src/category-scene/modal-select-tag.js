@@ -7,7 +7,7 @@ import {
   observable, action, toJS, computed,
 } from 'mobx'
 import {
-  Modal, Tree, Table, Checkbox, Spin, message, Button,
+  Modal, Tree, Table, Checkbox, Spin, message, Button, Tooltip,
 } from 'antd'
 
 const {TreeNode} = Tree
@@ -52,7 +52,7 @@ class ModalSelectTag extends Component {
   }, {
     title: '数据类型',
     dataIndex: 'valueTypeName',
-    width: 100,
+    // width: 100,
   }, {
     title: '是否枚举',
     dataIndex: 'is_enum',
@@ -60,8 +60,8 @@ class ModalSelectTag extends Component {
   }, {
     title: '枚举显示值',
     dataIndex: 'enumValue',
-    width: 120,
-    render: text => <div title={text} style={{maxWidth: '100px'}} className="omit">{text}</div>,
+    width: 100,
+    render: text => <div title={text} style={{maxWidth: '80px'}} className="omit">{text}</div>,
 
   }, {
     title: '业务逻辑',
@@ -201,22 +201,42 @@ class ModalSelectTag extends Component {
     this.selectedRows = []
   }
 
+  renderTooltip = (text = '', max = 10) => {
+    if (text.length > max) {
+      return (
+        <Tooltip title={text}>
+          <span>{`${text.slice(0, max)}...`}</span>
+        </Tooltip>
+      )
+    }
+
+    return <span>{text}</span>
+  }
+
 
   renderTreeNodes = data => data.map(item => {
     // 类目 且 类目的子集不是标签
     if (item.children) {
       if (item.children[0].type) {
         return (
-          <TreeNode title={item.name} key={item.id} dataRef={item}>
+          <TreeNode title={this.renderTooltip(item.name)} key={item.id} dataRef={item}>
             {this.renderTreeNodes(item.children)}
           </TreeNode>
+         
         )
       } 
-      return <TreeNode title={item.name} key={item.id} tags={item.children} />
+      return <TreeNode title={this.renderTooltip(item.name)} key={item.id} tags={item.children} />
     }
 
     if (item.type === 1) {
-      return <TreeNode title={item.name} key={item.id} disableCheckbox={item.used} {...item} />
+      return (
+        <TreeNode 
+          title={this.renderTooltip(item.name)}
+          key={item.id} 
+          disableCheckbox={item.used} 
+          {...item} 
+        />
+      )
     }
 
     return null
@@ -277,6 +297,7 @@ class ModalSelectTag extends Component {
                 checked={this.allChecked}
                 indeterminate={this.indeterminate}
                 onChange={this.handleAllSelect} 
+                className="all"
               >
                 全选
               </Checkbox>
@@ -286,15 +307,16 @@ class ModalSelectTag extends Component {
                 {this.renderTreeNodes(treeData)}
               </Tree>
             </div>
-            <Table 
-              scroll={{y: 400}}
-              columns={this.columns} 
-              rowKey="id" 
-              dataSource={this.list.slice()} 
-              rowSelection={rowSelection} 
-              pagination={false} 
-              className="FB1 ml24"
-            />
+            <div className="table-tree FB1">
+              <Table 
+                scroll={{y: 400}}
+                columns={this.columns} 
+                rowKey="id" 
+                dataSource={this.list.slice()} 
+                rowSelection={rowSelection} 
+                pagination={false} 
+              />
+            </div>
           </div>
         </Spin>
       </Modal>
