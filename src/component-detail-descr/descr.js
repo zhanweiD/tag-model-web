@@ -18,6 +18,7 @@ export default class Descr extends Component {
     const {text, pr, className} = this.props
     const style = {
       paddingRight: `${pr}px`,
+      maxWidth: `${1120 + pr}px`,
     }
 
     return (
