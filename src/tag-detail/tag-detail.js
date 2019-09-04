@@ -119,7 +119,7 @@ export default class TagDetail extends Component {
             </div>
             <Descr text={descr} pr={85} className="mt8" />
           </div>
-          <NemoBaseInfo dataSource={baseInfo} className="d-info" />
+          <NemoBaseInfo dataSource={baseInfo} className="d-info" style={{marginBottom: '0px'}} />
         </div>
         <Tabs
           defaultActiveKey="1"
