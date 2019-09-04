@@ -193,7 +193,7 @@ class ObjDetailStore {
         await io.updateRelField(param)
       }
       runInAction(() => {
-        successTip('添加成功')
+        successTip('编辑成功')
         this.getDailyCard()
         this.getList()
         cb && cb()
