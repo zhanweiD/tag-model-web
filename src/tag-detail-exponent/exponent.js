@@ -1,14 +1,10 @@
-import {Component, Fragment} from 'react'
+import {Component} from 'react'
 import {action, toJS} from 'mobx'
 import {observer} from 'mobx-react'
-import {
-  Button, Tooltip, Icon, Empty,
-} from 'antd'
 import TimeRange from '../time-range'
 import {getLineChartOpt} from '../common/config-charts'
 import OverviewCard from '../component-overview-card'
-// import {Time} from '../common/util'
-// import getPieOpt from './charts-options'
+
 import Qzfb from './qzfb'
 
 import store from './store-exponent'
@@ -16,9 +12,6 @@ import store from './store-exponent'
 let vsChart
 let qsChart
 let hotChart
-// let enumeChart
-
-// const colorList = ['#39A0FF', '#36CBCB', '#4DCB73', '#FAD338', '#F2637B', '#9760E4']
 
 @observer
 export default class Exponent extends Component {
@@ -30,27 +23,15 @@ export default class Exponent extends Component {
     if (aId) {
       store.id = aId
       store.getDailyCard()
-      // store.getValueStatus()
     }
   }
-
-  // componentWillReceiveProps(nextProps) {
-  //   if (store.id !== nextProps.aId) {
-  //     store.id = nextProps.aId
-  //     this.getData()
-  //     store.getDailyCard()
-  //     // store.getValueStatus()
-  //   }
-  // }
 
   componentDidMount() {
     vsChart = echarts.init(this.vs)
     qsChart = echarts.init(this.qs)
     hotChart = echarts.init(this.hot)
-    // enumeChart = echarts.init(this.enume)
 
     this.getData()
-    // store.getValueStatus()
     window.addEventListener('resize', () => this.resize())
   }
 
@@ -58,14 +39,12 @@ export default class Exponent extends Component {
     this.redrawVs() 
     this.redrawQs()
     this.redrawHot()
-    // this.redrawEnume()
   }
 
   @action resize() {
     if (vsChart) vsChart.resize()
     if (qsChart) qsChart.resize()
     if (hotChart)hotChart.resize()
-    // if (enumeChart && this.enume)enumeChart.resize()
   }
 
   @action redrawVs(gte = this.defStartTime, lte = this.defEndTime) {
@@ -86,18 +65,6 @@ export default class Exponent extends Component {
     })
   }
 
-  // @action redrawEnume() {
-  //   store.getEnumeData(data => {
-  //     const renderData = data.map(({
-  //       count, key,
-  //     }) => ({
-  //       name: key,
-  //       value: count,
-  //     }))
-  //     if (renderData.length)enumeChart.setOption(getPieOpt(renderData))
-  //   })
-  // }
-
   componentWillUnmount() {
     window.removeEventListener('resize', () => this.resize())
     if (vsChart)vsChart.dispose()
@@ -110,7 +77,6 @@ export default class Exponent extends Component {
 
   render() {
     const {worthScore, qualityScore, hotScore} = store.dailyCard
-    // const {total, pieTemplateDtoList, name} = store.enumeData
     const {aId, baseInfo} = this.props
     const cards = [
       {

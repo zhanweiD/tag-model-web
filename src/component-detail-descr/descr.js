@@ -1,4 +1,4 @@
-import {Component} from 'react'
+import {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 
 export default class Descr extends Component {
@@ -21,9 +21,16 @@ export default class Descr extends Component {
     }
 
     return (
-      <div className={`descr ${className}`} style={style}>
-        {text}
-      </div>
+      <Fragment>
+        {
+          text ? (
+            <div className={`descr ${className}`} style={style}>
+              {text}
+            </div>
+          ) : null
+        }
+      </Fragment>
+      
     )
   }
 }

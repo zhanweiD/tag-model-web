@@ -19,7 +19,6 @@ import ModalDataSource from './modal-data-source'
 
 import store from './store-scene-detail'
 
-// const {functionCodes} = window.__userConfig
 const {TabPane} = Tabs
 
 @inject('frameChange')
@@ -112,75 +111,49 @@ export default class SceneDetail extends Component {
        
         <Spin spinning={store.loading}>
           <div className="info">
-            <div className="FBH FBJ FBAC pr8 pl8">
-              <div className="name">
-                <span>{info.name}</span>
-                <AuthBox code="asset_tag_edit_occation" isButton={false}>
-                  {
-                    !used && <Icon className="ml8" type="edit" onClick={this.sceneDetailVisible} style={{color: 'rgba(0,0,0, .45)'}} />
-                  }
-                </AuthBox>
-                {/* <Tag className="ml10" color={used ? 'blue' : ''}>{used ? '使用中' : '未使用'}</Tag> */}
-                <Tag className="ml10" text={used ? '使用中' : '未使用'} color={used ? 'blue' : 'gray'} />
-              </div>
-              <div>
-                <Button className="mr8" href={`${window.__onerConfig.pathPrefix}/scene#/tags/${store.sceneId}`}>标签列表</Button>
-                <AuthBox code="asset_tag_occation_add_aim_datasoure" isButton={false}>
-                  {
-                    store.isDbSourcEnough 
-                      ? (
-                        <Tooltip title="添加的目的数据源数量超过上限10个">
-                          <Button 
+            <div className="pr24 pl24">
+              <div className="FBH FBJ FBAC">
+                <div className="name">
+                  <span>{info.name}</span>
+                  <AuthBox code="asset_tag_edit_occation" isButton={false}>
+                    {
+                      !used && <Icon className="ml8" type="edit" onClick={this.sceneDetailVisible} style={{color: 'rgba(0,0,0, .45)'}} />
+                    }
+                  </AuthBox>
+                  <Tag className="ml10" text={used ? '使用中' : '未使用'} color={used ? 'blue' : 'gray'} />
+                </div>
+                <div>
+                  <Button className="mr8" href={`${window.__onerConfig.pathPrefix}/scene#/tags/${store.sceneId}`}>标签列表</Button>
+                  <AuthBox code="asset_tag_occation_add_aim_datasoure" isButton={false}>
+                    {
+                      store.isDbSourcEnough 
+                        ? (
+                          <Tooltip title="添加的目的数据源数量超过上限10个">
+                            <Button 
                             // className="mr8"
+                              type="primary" 
+                              onClick={this.dbSourceVisible} 
+                              disabled={store.isDbSourcEnough}
+                            >
+                        添加目的数据源
+                            </Button>                   
+                          </Tooltip>
+                        ) : (
+                          <Button 
+                          // className="mr8"
                             type="primary" 
                             onClick={this.dbSourceVisible} 
-                            disabled={store.isDbSourcEnough}
+                            disabled={used}
                           >
                         添加目的数据源
-                          </Button>                   
-                        </Tooltip>
-                      ) : (
-                        <Button 
-                          // className="mr8"
-                          type="primary" 
-                          onClick={this.dbSourceVisible} 
-                          disabled={used}
-                        >
-                        添加目的数据源
-                        </Button>
-                      )
-                  }
-                </AuthBox>
-                {/* {(() => {
-                  if (functionCodes.includes('asset_tag_occation_add_aim_datasoure')) {
-                    if (store.isDbSourcEnough) {
-                      return (
-                        <Tooltip title="添加的目的数据源数量超过上限">
-                          <Button
-                            type="primary"
-                            onClick={this.dbSourceVisible}
-                            disabled={store.isDbSourcEnough}
-                          >
-                            添加目的数据源
                           </Button>
-                        </Tooltip>
-                      )
+                        )
                     }
-                    return (
-                      <Button 
-                        type="primary" 
-                        onClick={this.dbSourceVisible} 
-                        disabled={store.isDbSourcEnough || used}
-                      >
-                        添加目的数据源
-                      </Button>
-                    )
-                  }
-                  return null
-                })()} */}
+                  </AuthBox>
+                </div>
               </div>
+              <Descr text={descr} pr={210} className="mt8" />
             </div>
-            <Descr text={descr} pr={210} className="pl8 mt8" />
             <NemoBaseInfo dataSource={baseInfo} key={Math.random()} className="detail-border" />
           </div>
         </Spin>
