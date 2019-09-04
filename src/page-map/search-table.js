@@ -145,10 +145,10 @@ export default class SearchTable extends React.Component {
               functionCodes.includes('asset_tag_map_add_occation') ? {
                 selectedRowKeys,
                 onChange: this.onSelectChange,
-                getCheckboxProps() {
+                getCheckboxProps(record) {
                   return {
                     defaultChecked: false,
-                    disabled: !store.filterObjId, // 对象名称选择“全部”时，不可选择
+                    disabled: !store.filterObjId || !record.isHasField, // 1.对象名称选择“全部”时 2.标签未绑定字段。不可选择
                   }
                 },
               } : null}
