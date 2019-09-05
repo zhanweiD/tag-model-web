@@ -38,6 +38,10 @@ export default class ObjDetail extends Component {
         key: 'dataStorageName',
         dataIndex: 'dataStorageName',
       }, {
+        title: '数据源id',
+        key: 'dataStorageId',
+        dataIndex: 'dataStorageId',
+      }, {
         title: '数据源类型',
         key: 'storageTypeName',
         dataIndex: 'storageTypeName',
