@@ -10,7 +10,7 @@ const {Option} = Select
 
 @observer
 class DrawerRelfieldEdit extends Component {
-  @observable updateKey = undefined
+  @observable updateKey = false
   @observable stdlist = []
 
   constructor(props) {
@@ -81,7 +81,7 @@ class DrawerRelfieldEdit extends Component {
     const {form} = this.props
     store.modalVisible.editRelField = false
 
-    this.updateKey = undefined
+    this.updateKey = false
     this.stdlist.clear()
     form.resetFields()
   }

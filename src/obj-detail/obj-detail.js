@@ -126,9 +126,9 @@ export default class ObjDetail extends Component {
     // store.getFieldList(item.dataStorageId, item.dataTableName)
     store.getRelDbField(item.dataStorageId, item.dataTableName, () => {
       store.getFieldList(item.dataStorageId, item.dataTableName)
+      store.modalVisible.editRelField = true
+      this.curentItem = item
     })
-    store.modalVisible.editRelField = true
-    this.curentItem = item
   }
 
   @action toggleTagConfiguration(item) {
@@ -251,7 +251,7 @@ export default class ObjDetail extends Component {
 
         <DrawerRelfieldAdd />
         <DrawerRelfieldEdit
-          updateKey={store.relDbField.length}
+          updateKey={store.modalVisible.editRelField}
           curentItem={this.curentItem}
           defStdlist={toJS(store.relDbField)}
         />
