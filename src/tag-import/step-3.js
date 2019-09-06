@@ -59,7 +59,7 @@ class StepThree extends Component {
           <Alert message={toJS(this.alertInfo)} type="info" showIcon className="fl" />
           {
             store.failKey && (
-              <Tooltip title="解析失败记录文件只保留10分钟" placement="top">
+              // <Tooltip title="解析失败记录文件只保留10分钟" placement="top">
                 <div
                   className="FBH FBJE FBAC hand"
                   style={{width: '150px', color: '#0078ff'}}
@@ -70,7 +70,7 @@ class StepThree extends Component {
                   <SvgDownload size="14" />
                   <span className="pl8">导出解析失败的记录</span>
                 </div>
-              </Tooltip>
+              // </Tooltip>
             )
           }
         </div>
