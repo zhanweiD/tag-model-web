@@ -4,7 +4,7 @@ import {
   Modal, Form, Input, Spin, Select, Switch, Cascader,
 } from 'antd'
 import {
-  isJsonFormat, enNameReg, getNamePattern, DATA_TYPES,
+  isJsonFormat, enNameReg, getNamePattern,
 } from '../common/util'
 
 const FormItem = Form.Item
@@ -90,7 +90,7 @@ class ModalTagEdit extends Component {
               })(
                 <Select placeholder="请下拉选择">
                   {
-                    DATA_TYPES.map(item => (
+                    ((window.njkData.dict || {}).dataType || []).map(item => (
                       <Option key={item.key} value={item.key}>{item.value}</Option>
                     ))
                   }

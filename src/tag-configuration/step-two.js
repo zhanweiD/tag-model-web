@@ -8,7 +8,6 @@ import {
 } from 'antd'
 import QuestionTooltip from '../component-question-tooltip'
 import OmitTooltip from '../component-omit-tooltip'
-import {getDataTypeByCode} from '../common/util'
 import ModalTagEdit from './modal-tag-edit'
 import ModalCateSelect from './modal-cate-select'
 
@@ -63,7 +62,7 @@ export default class StepTwo extends React.Component {
         title: '数据类型',
         key: 'valueType',
         dataIndex: 'valueType',
-        render: v => getDataTypeByCode(v), // 1: 离散型 2：整数型 3: 小数型 4: 文本型 5: 日期型
+        render: text => <span>{((window.njkData.dict || {}).dataType || []).find(item => item.key === text).value}</span>,
       },
       {
         title: '是否枚举',

@@ -215,7 +215,7 @@ class DrawerRelfield extends Component {
               >
                 <Option value="">全部</Option>
                 {
-                  window.njkData.dict.configureStatus.map(item => (
+                  ((window.njkData.dict || {}).configureStatus || []).map(item => (
                     <Option key={item.key} value={item.key}>{item.value}</Option>
                   ))
                 }

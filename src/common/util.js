@@ -256,43 +256,6 @@ export function getTimeRangeToToday({
   return [start, end]
 }
 
-// 数据类型映射 (window.njkData下一旦服务失败就报错了，不可靠啊...)
-export const DATA_TYPES = [
-  {
-    key: 2,
-    value: '整数型',
-  },
-  {
-    key: 3,
-    value: '小数型',
-  },
-  {
-    key: 4,
-    value: '文本型',
-  },
-  {
-    key: 5,
-    value: '日期型',
-  },
-]
-
-// 根据数据类型的数字code 获取对应的文本
-export function getDataTypeByCode(code) {
-  switch (+code) {
-    case 1:
-      return '离散型'
-    case 2:
-      return '整数型'
-    case 3:
-      return '小数型'
-    case 4:
-      return '文本型'
-    case 5:
-      return '日期型'
-    default:
-      return `未知类型, code: ${code}`
-  }
-}
 
 /**
  * @description 名称正则校验
