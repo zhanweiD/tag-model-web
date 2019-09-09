@@ -57,6 +57,7 @@ export default class TagDetail extends Component {
       creator,
       createTime,
       dataSource,
+      tableName,
       fieldName,
       descr,
       isUsed,
@@ -83,6 +84,9 @@ export default class TagDetail extends Component {
       }, {
         title: '数据源',
         value: dataSource,
+      }, {
+        title: '数据表',
+        value: tableName,
       }, {
         title: '字段',
         value: fieldName,
