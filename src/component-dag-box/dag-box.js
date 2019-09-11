@@ -121,6 +121,7 @@ export default class DagBox extends Component {
 
     dagObject.zoom = d3.behavior.zoom().scaleExtent([0.5, 3]).on('zoom', me.zoomed.bind(me))
     svg.call(dagObject.zoom).on('dblclick.zoom', null)
+    svg.call(dagObject.zoom).on('wheel.zoom', null)
 
     const {width} = svg[0][0].getBoundingClientRect()
     const {height} = svg[0][0].getBoundingClientRect()
