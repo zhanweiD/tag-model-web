@@ -89,7 +89,7 @@ export default class SceneDetail extends Component {
       value: <Time timestamp={cDate} />,
     }, {
       title: '调用的API名称',
-      value: invokeList.join('、'),
+      value: invokeList.filter(item => item !== null).join('、'),
     }, {
       title: '标签数',
       value: tagCount,
