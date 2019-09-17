@@ -489,6 +489,7 @@ class DrawerRelfieldAdd extends Component {
           <Button
             type="primary"
             disabled={!this.stdlist.length}
+            loading={store.addRelFieldLoading}
             onClick={() => {
               store.addRelField(this.stdlist.slice(), () => {
                 this.handleOnCancel()

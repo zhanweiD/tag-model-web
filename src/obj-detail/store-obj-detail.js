@@ -35,8 +35,8 @@ class ObjDetailStore {
   // @observable order = ''
   // @observable sort = ''
 
-
   // 添加关联字段
+  @observable addRelFieldLoading = false
   @observable drawerLoading = false
   @observable dacList = []
   @observable tableList = []
@@ -161,6 +161,7 @@ class ObjDetailStore {
   }
 
   @action async addRelField(filedObjReqList, cb) {
+    this.addRelFieldLoading = true
     try {
       if (this.baseInfo.objTypeCode === 3) {
         await io.addRelFieldAss({
@@ -174,6 +175,7 @@ class ObjDetailStore {
         })
       }
       runInAction(() => {
+        this.addRelFieldLoading = false
         successTip('添加成功')
         // 更新
         this.getDailyCard()
@@ -181,6 +183,9 @@ class ObjDetailStore {
         cb && cb()  
       })
     } catch (e) {
+      runInAction(() => {
+        this.addRelFieldLoading = false
+      })
       errorTip(e.message)
     }
   }
