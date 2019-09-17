@@ -24,7 +24,7 @@ export default class Related extends Component {
     const me = this
     return (
       <div className="tag-relate">
-        <div className="bgf" style={{height: 'calc(100vh - 350px)'}}>
+        <div className="bgf" style={{height: 'calc(100vh - 400px)'}}>
           <DagBox
             ref={dag => me.dagBox = dag}
             current={store.id}
