@@ -56,7 +56,7 @@ class RelfieldStore {
     this.getList()
   }
 
-  @action async delObjFieldRel(o) {
+  @action async delObjFieldRel(o, cb) {
     try {
       await io.delObjFieldRel({
         objId: this.id,
@@ -67,8 +67,8 @@ class RelfieldStore {
       })
       runInAction(() => {
         successTip('移除成功')
-        this.getDailyCard()
         this.getList()
+        cb && cb()
       })
     } catch (e) {
       errorTip(e.message)
