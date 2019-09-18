@@ -6,7 +6,6 @@ import {
 } from 'antd'
 import {Link} from 'react-router-dom'
 
-// import {Time} from '../common/util'
 import {navListMap} from '../common/constants'
 import NoData from '../component-scene-nodata'
 import AuthBox from '../component-auth-box'
@@ -92,7 +91,7 @@ export default class Scene extends Component {
                       添加场景
                   </AuthBox>
                   <Row gutter={16}> 
-           
+                  
                     {
                       list.map(({
                         id,
@@ -104,7 +103,7 @@ export default class Scene extends Component {
                         apiCount,
                         descr,
                       }, d) => (
-                        <Col span={8}>
+                        <Col span={8} xxl={{span: 6}}>
                           <div className="card">
                             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */} 
                             <div
