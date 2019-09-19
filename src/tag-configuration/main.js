@@ -78,7 +78,7 @@ export default class TagConfiguration extends Component {
         title="配置标签"
         visible={visible}
         // width="73%"
-        width={1020} // 大抽屉统一1020px
+        width={1120}
         onClose={this.onClose}
         maskClosable={false}
       >

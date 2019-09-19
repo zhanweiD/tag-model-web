@@ -147,7 +147,7 @@ export default class TagDetailDrawer extends Component {
           closable
           onClose={this.onClose}
           visible={visiable}
-          width={1020}
+          width={1120}
           maskClosable={false}
         >
           <Spin spinning={loading}>

@@ -199,7 +199,7 @@ class DrawerRelfield extends Component {
       title: '已关联字段列表',
       visible: modalVisible.viewRelField,
       maskClosable: false,
-      width: 1020,
+      width: 1120,
       destroyOnClose: true,
       onClose: this.handleOnCancel,
     }
