@@ -8,7 +8,7 @@ export default class Card extends Component {
     title: PropTypes.string, // 卡片标题
     link: PropTypes.string, // 卡片跳转链接
     tag: PropTypes.arrayOf(PropTypes.object), // 状态t标签
-    labelList: PropTypes.arrayOf(PropTypes.object), // 基本信息；eg：创建者、描述
+    labelList: PropTypes.arrayOf(PropTypes.object), // 基本信息；eg：创建者、创建时间
     descr: PropTypes.string, // 描述
     countList: PropTypes.arrayOf(PropTypes.object), // 指标数量信息
     actions: PropTypes.arrayOf(PropTypes.object), // 卡片操作组, 卡片底部
