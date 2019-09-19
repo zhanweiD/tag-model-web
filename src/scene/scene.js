@@ -2,14 +2,15 @@ import {Component, Fragment} from 'react'
 import {action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {
-  Row, Col, Spin, Modal, Icon,
+  Spin, Modal,
 } from 'antd'
-import {Link} from 'react-router-dom'
+import {DtGrid} from '@dtwave/uikit'
 
 import {navListMap} from '../common/constants'
 import NoData from '../component-scene-nodata'
 import AuthBox from '../component-auth-box'
 import Tag from '../component-tag'
+import Card from '../component-card'
 
 import ModalAdd from './modal-add'
 
@@ -55,23 +56,13 @@ export default class Scene extends Component {
   render() {
     const {loading, list = []} = store
     
-    // const {functionCodes} = window.__userConfig
     const noDataConfig = {
       btnText: '添加场景',
       onClick: () => this.handleModalVisible(),
       code: 'asset_tag_add_occation',
       noAuthText: '暂无数据',
     }
-    // if (functionCodes.includes('asset_tag_add_occation')) {
-    //   noDataConfig = {
-    //     btnText: '添加场景',
-    //     onClick: () => this.handleModalVisible(),
-    //   }
-    // } else {
-    //   noDataConfig = {
-    //     text: '暂无数据',
-    //   }
-    // }
+
     return (
       <div className="scene-wrap">
         <div className="header">标签使用场景</div>
@@ -81,7 +72,6 @@ export default class Scene extends Component {
             {
               list.length ? (
                 <Fragment>
-                  {/* {functionCodes.includes('asset_tag_add_occation') && <Button className="mb16" type="primary" onClick={() => this.handleModalVisible()}>添加场景</Button>} */}
                   <AuthBox 
                     className="mb16" 
                     code="asset_tag_add_occation" 
@@ -90,8 +80,7 @@ export default class Scene extends Component {
                   >
                       添加场景
                   </AuthBox>
-                  <Row gutter={16}> 
-                  
+                  <DtGrid row={3} fixedHeight={192}>
                     {
                       list.map(({
                         id,
@@ -103,74 +92,49 @@ export default class Scene extends Component {
                         apiCount,
                         descr,
                       }, d) => (
-                        <Col span={8} xxl={{span: 6}}>
-                          <div className="card">
-                            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */} 
-                            <div
-                              className="item-info"
-                              onClick={() => {
-                                window.location.href = `${window.__onerConfig.pathPrefix}/scene#/detail/${id}`
-                              }}
+                        <Card 
+                          className="card"
+                          title={name}
+                          // eslint-disable-next-line no-underscore-dangle
+                          link={`${window.__onerConfig.pathPrefix}/scene#/detail/${id}`}
+                          tag={[<Tag text={used ? '使用中' : '未使用'} color={used ? 'blue' : 'gray'} className="mr8" />]}
+                          labelList={[{
+                            label: '创建者',
+                            value: cUser,
+                          }, {
+                            label: '创建时间',
+                            value: moment(+cDate).format('YYYY-MM-DD HH-MM-SS'),
+                          }]}
+                          descr={descr}
+                          countList={[{
+                            label: '标签数',
+                            value: tagCount,
+                          }, {
+                            label: 'API数',
+                            value: apiCount,
+                          }]}
+                          actions={[
+                            <AuthBox 
+                              type="link" // antd@Button 属性
+                              disabled={used} 
+                              code="asset_tag_edit_occation" 
+                              onClick={() => this.handleModalVisible('edit', list[d])}
                             >
-                              <div className="c-name">
-                                <Link to={`/detail/${id}`} className="name hover-style omit" title={name}>{name}</Link>
-                                {/* <Tag color={used ? 'blue' : ''}>{used ? '使用中' : '未使用'}</Tag> */}
-                                <Tag text={used ? '使用中' : '未使用'} color={used ? 'blue' : 'gray'} />
-                                <Icon type="right" className="hover-style" />
-                              </div>
-                              <div className="c-info FBH">
-                                <div className="mr20 omit">
-                          创建者：
-                                  {cUser}
-                                </div> 
-                                <div className="omit">
-                          创建时间：
-                                  {moment(+cDate).format('YYYY-MM-DD')}
-                                </div>
-                              </div>
-                              <div className="c-descr omit" title={descr}>
-                          描述：
-                                {descr}
-                              </div>
-                              <div className="count-info">
-                                <div>
-                                  <span>标签数</span>
-                                  <div className="count">{tagCount}</div>
-                                </div>
-                                <div className="line" />
-                                <div>
-                                  <span>API数</span>
-                                  <div className="count">{apiCount}</div>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="item-tool">
-                              <AuthBox type="link" code="asset_tag_edit_occation" disabled={used} className="tool" onClick={() => this.handleModalVisible('edit', list[d])}>
-                                <Edit size="14" className={used ? 'i-used' : 'i-btn'} />
-                              </AuthBox>
-                              <div className="line" />
-                              <AuthBox type="link" code="asset_tag_del_occation" disabled={used} className="tool" onClick={() => this.handleDel(id)}>
-                                <Del size="14" className={used ? 'i-used' : 'i-btn'} />
-                              </AuthBox>
-                              {/* {functionCodes.includes('asset_tag_edit_occation') && (
-                                <Button type="link" disabled={used} className="tool" onClick={() => this.handleModalVisible('edit', list[d])}>
-                                  <Edit size="14" className={used ? 'i-used' : 'i-btn'} />
-                                </Button>
-                              )} */}
-
-                              {/* <div className="line" /> */}
-                              {/* {functionCodes.includes('asset_tag_del_occation') && (
-                                <Button type="link" disabled={used} className="tool" onClick={() => this.handleDel(id)}>
-                                  <Del size="14" className={used ? 'i-used' : 'i-btn'} />
-                                </Button>
-                              )} */}
-                            </div>
-                          </div>
-                        </Col>
+                              <Edit size="14" className={used ? 'i-used' : ''} />
+                            </AuthBox>,
+                            <AuthBox 
+                              type="link" // antd@Button 属性
+                              disabled={used} 
+                              code="asset_tag_del_occation" 
+                              onClick={() => this.handleDel(id)}
+                            >
+                              <Del size="14" className={used ? 'i-used' : ''} />
+                            </AuthBox>,
+                          ]}
+                        />
                       )) 
                     }
-           
-                  </Row>
+                  </DtGrid>
                 </Fragment>
               ) : (
                 <NoData
