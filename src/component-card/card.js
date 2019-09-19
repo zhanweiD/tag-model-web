@@ -124,7 +124,7 @@ export default class Card extends Component {
           countList.map(({label = '', value = ''}, index) => (
             <Fragment>
               <div>
-                <span>{label}</span>
+                <span className="card-omit">{label}</span>
                 <div className={`${preCls}-count-info-count`}>{value}</div>
               </div>
               {

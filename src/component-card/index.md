@@ -47,7 +47,7 @@
 | tag             | Array<ReactNode>   | option   |  -             | 卡片状态标签  |
 | labelList       | Array<{label: string, value: string}>   | option   |  -      |  基本信息eg：创建者、创建时间 |
 | descr           | string             | option   |  -    | 描述信息
-| countList       | Array<{label: string, value: number}>   | option   |  - |  指标数量信息；eg: {label: 标签数, value: 23} |
+| countList       | Array<{label: string, value: number}>   | option   |  - |  指标数量信息；eg: {label: 标签数, value: 23} 数量最多4个可保证布局|
 | actions         | Array<ReactNode>   | option   |  -            |  卡片操作组
 | hasDescr        | boolean            | option   |  true            | 卡片是否存在描述, 用于区分“无描述”与“存在描述, 描述为空”情况  |
 
@@ -56,8 +56,8 @@
  // 覆盖DtDrid hover效果属性; DtDrid组件需要优化
   .dt-grid .dt-row .dt-item
     border-radius 4px
-    -webkit-transition all .3s linear
-    transition all .3s linear
+    -webkit-transition all .2s linear
+    transition all .2s linear
     
     &:not(.dt-grid-empty):hover
       -webkit-box-shadow 0px 3px 10px #DDE0E4
