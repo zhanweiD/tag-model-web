@@ -69,7 +69,10 @@ export default class Card extends Component {
       const remain = i % infoLineCount // 模
 
       if (remain === 0) {
-        arr[int] = [labelList[i], labelList[i + 1]]
+        arr[int] = [labelList[i]]
+        
+        // 尾项容错
+        if (labelList[i + 1]) arr[int].push(labelList[i + 1])
       }
     }
 
