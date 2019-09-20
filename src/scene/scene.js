@@ -116,7 +116,8 @@ export default class Scene extends Component {
                           actions={[
                             <AuthBox 
                               type="link" // antd@Button 属性
-                              disabled={used} 
+                              disabled={used}
+                              className="p0"
                               code="asset_tag_edit_occation" 
                               onClick={() => this.handleModalVisible('edit', list[d])}
                             >
@@ -125,6 +126,7 @@ export default class Scene extends Component {
                             <AuthBox 
                               type="link" // antd@Button 属性
                               disabled={used} 
+                              className="p0"
                               code="asset_tag_del_occation" 
                               onClick={() => this.handleDel(id)}
                             >
