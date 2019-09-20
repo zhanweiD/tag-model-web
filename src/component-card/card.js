@@ -15,6 +15,7 @@ export default class Card extends Component {
     className: PropTypes.string,
     preCls: PropTypes.string, // 样式属性前缀
     hasDescr: PropTypes.bool, // 描述存在判断标识;默认存在描述
+    infoLineCount: PropTypes.number, // 基本信息每行个数
   }
 
   static defaultProps = {
@@ -26,8 +27,55 @@ export default class Card extends Component {
     countList: [], // Array<{label: string, value: number}>
     actions: [], // Array<ReactNode>
     className: '', // string
-    preCls: 'dt-card2', // string; 防撞车专用;oner-uikit 已有card组件;.styl 文件中定义同样变量;更改需同步奥
+    preCls: 'dt-card2', // string; 防撞车专用;oner-uikit 已有card组件;.styl 文件中定义同样变量;更改需同步o
     hasDescr: true, // 用于区别“无描述”与“描述无内容”
+    infoLineCount: 2, // 基本信息每行个数
+  }
+
+  // 渲染卡片基本信息 eg：创建者、创建时间
+  getInfoDom() {
+    const {preCls, labelList, infoLineCount} = this.props
+
+    if (!labelList || !Array.isArray(labelList) || !labelList.length) return null
+
+    const arr = []
+    const len = labelList.length 
+
+    const domItem = list => (
+      <div className={`${preCls}-info`}>
+        {
+          list.map(({label = '', value = ''}) => (
+            <span className={`${preCls}-info-item card-omit`} title={value}>
+              {
+                label 
+                  ? `${label}：`
+                  : null
+              }
+              {value}
+            </span>
+          ))
+        }
+      </div>
+    )
+    
+    // 卡片基本信息项 少于或等于2项; 减少不必要的循环遍历
+    if (len <= 2) {
+      return domItem(labelList)
+    } 
+    
+    // 卡片基本信息项 大于2项
+    for (let i = 0; i < len; i += 1) {
+      const int = parseInt(i / infoLineCount, 10) // 取整
+      const remain = i % infoLineCount // 模
+
+      if (remain === 0) {
+        arr[int] = [labelList[i], labelList[i + 1]]
+      }
+    }
+
+    const dom = arr.map(item => domItem(item))
+
+    return dom
   }
 
   // 渲染卡片操作组
@@ -59,7 +107,6 @@ export default class Card extends Component {
       title = '', 
       link = '', 
       tag = [], 
-      labelList = [], 
       descr = '', 
       countList = [], 
       actions,
@@ -92,22 +139,7 @@ export default class Card extends Component {
     )
 
     // 渲染卡片基本信息
-    const InfoDom = labelList && labelList.length ? (
-      <div className={`${preCls}-info`}>
-        {
-          labelList.map(({label = '', value = ''}) => (
-            <span className={`${preCls}-info-item card-omit`} title={value}>
-              {
-                label 
-                  ? `${label}：`
-                  : null
-              }
-              {value}
-            </span>
-          ))
-        }
-      </div>
-    ) : null
+    const InfoDom = this.getInfoDom()
 
     // 渲染卡片描述信息
     const DescrDom = hasDescr ? (
@@ -149,7 +181,6 @@ export default class Card extends Component {
         </div>
         {actionDom}
       </div>
-     
     )
   }
 }
