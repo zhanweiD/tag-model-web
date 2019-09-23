@@ -4,13 +4,12 @@ import {observer, inject} from 'mobx-react'
 import {
   Spin, Modal,
 } from 'antd'
-import {DtGrid} from '@dtwave/uikit'
+import {DtGrid, DtNewCard} from '@dtwave/uikit'
 
 import {navListMap} from '../common/constants'
 import NoData from '../component-scene-nodata'
 import AuthBox from '../component-auth-box'
 import Tag from '../component-tag'
-import Card from '../component-card'
 
 import ModalAdd from './modal-add'
 
@@ -92,7 +91,7 @@ export default class Scene extends Component {
                         apiCount,
                         descr,
                       }, d) => (
-                        <Card 
+                        <DtNewCard 
                           className="card"
                           title={name}
                           // eslint-disable-next-line no-underscore-dangle
