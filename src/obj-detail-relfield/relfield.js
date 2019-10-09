@@ -75,6 +75,7 @@ class DrawerRelfield extends Component {
         render: (text, record, index) => (
           <Fragment>
             {(() => {
+              const bigStore = this.props.store
               const {functionCodes} = window.__userConfig
               const arr = []
               if (functionCodes.includes('asset_tag_delete_table')) {
@@ -82,7 +83,10 @@ class DrawerRelfield extends Component {
                   arr.push(
                     <Popconfirm
                       title="你确定要移除该字段吗？"
-                      onConfirm={() => store.delObjFieldRel(record)}
+                      onConfirm={() => store.delObjFieldRel(record, () => {
+                        bigStore.getDailyCard()
+                        bigStore.getList()
+                      })}
                     ><a className="mr8">移除</a></Popconfirm>
                   )
                 } else {
@@ -195,7 +199,7 @@ class DrawerRelfield extends Component {
       title: '已关联字段列表',
       visible: modalVisible.viewRelField,
       maskClosable: false,
-      width: 1020,
+      width: 1120,
       destroyOnClose: true,
       onClose: this.handleOnCancel,
     }

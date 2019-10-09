@@ -116,35 +116,24 @@ class Step1 extends Component {
   @action renderTreeNodes = data => data.map(item => {
     if (item.children) {
       return (
-        // <TreeNode
-        //   title={(
-        //     <Tooltip
-        //       key={item.name}
-        //       title={item.name}
-        //       placement="right"
-        //       overlayClassName="tooltip-light"
-        //     >
-        //       <div
-        //         className="omit"
-        //         style={{width: `${140 - item.level / 2 * 40}px`}}
-        //       >
-        //         {item.name}
-        //       </div>
-        //     </Tooltip>
-        //   )}
-        //   key={item.id}
-        //   nodeData={item}
-        // >
         <TreeNode
-          title={(() => {
-            if (item.parentId !== 0) return <span>{item.name}</span>
-            return (
-              <div className="FBH" style={{color: '#0078ff'}}>
-                <div className="text-hidden">{item.name}</div>
-                <div className="pl4">{`(${item.tagCount || 0})`}</div>
-              </div>
-            )
-          })()}
+          title={(
+            <div
+              title={item.name}
+              className="omit"
+              style={{width: `${140 - item.level / 2 * 40}px`}}
+            >
+              {(() => {
+                if (item.parentId !== 0) return <span>{item.name}</span>
+                return (
+                  <div className="FBH" style={{color: '#0078ff'}}>
+                    <div className="omit">{item.name}</div>
+                    <div className="pl4">{`(${item.tagCount || 0})`}</div>
+                  </div>
+                )
+              })()}
+            </div>
+          )}
           key={item.id}
           nodeData={item}
         >
@@ -154,25 +143,17 @@ class Step1 extends Component {
     }
     return (
       <TreeNode
-        // title={(
-        //   <Tooltip
-        //     key={item.name}
-        //     title={item.name}
-        //     placement="right"
-        //     overlayClassName="tooltip-light"
-        //   >
-        //     <div
-        //       className="omit"
-        //       style={{width: `${140 - item.level / 2 * 40}px`}}
-        //     >
-        //       {item.name}
-        //     </div>
-        //   </Tooltip>
-        // )}
-        title={item.name}
+        title={(
+          <div
+            title={item.name}
+            className="omit"
+            style={{width: `${140 - item.level / 2 * 40}px`}}
+          >
+            {item.name}
+          </div>
+        )}
         key={item.id}
         nodeData={item}
-        // disableCheckbox={!item.treeIds || (item.treeIds && !item.treeIds.length)}
       />
     )
   })
