@@ -27,7 +27,6 @@ module.exports = [
       }
 
       if (!ctx.njkData.ico || !ctx.njkData.logo) {
-
         // 获取租户是否自己配置了logo
         try {
           const tenantInfo = await rp({
@@ -75,7 +74,16 @@ module.exports = [
           const rs = await rp(options)
           ctx.njkData.dict = rs.content
           const rs2 = await rp(typeCodesOptions)
-          ctx.njkData.typeCodes = rs2.content
+          ctx.njkData.typeCodes = rs2.content || [{
+            objTypeCode: 1,
+            objTypeName: '人',
+          }, {
+            objTypeCode: 2,
+            objTypeName: '物',
+          }, {
+            objTypeCode: 3,
+            objTypeName: '关系',
+          }]
         } catch (e) {
           console.log(e)
         }
