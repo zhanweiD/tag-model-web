@@ -1,0 +1,273 @@
+import {
+  observable, action, runInAction,
+} from 'mobx'
+import {
+  successTip, failureTip, errorTip, listToTree,
+} from '../common/util'
+import io from './io'
+
+class Store {
+  @observable typeCode // 实体 vs 关系
+  @observable objId // 当前选中对象id
+  @observable projectId // 项目id 
+  @observable tabId // 当前详情tabID 
+
+  //* ------------------------------ 类目树相关 start ------------------------------*//
+  @observable searchKey // 类目树搜索值
+  @observable treeLoading = false
+  @observable expandAll = false
+  @observable treeData = [] // 类目树数据
+  @observable searchExpandedKeys = [] // 关键字搜索展开的树节点
+  @observable currentSelectKeys = undefined// 默认展开的树节点
+
+  // 选择对象
+  @observable selectObjVisible = false
+  @observable selectObjLoading = false
+  @observable selectObjConfirmLoading = false
+  @observable objCateTree = []
+  @observable objCateExpandedKeys = [] // 关键字搜索展开的树节点
+  @observable selectedObjList = []
+  @observable selectedObjLoading = false
+
+  @action destory() {
+    this.searchKey = undefined
+    this.expandAll = false
+    this.searchExpandedKeys = []
+    this.currentSelectKeys = undefined
+  }
+
+  @action findParentId(id, data, expandedKeys) {
+    data.forEach(item => {
+      if (item.parentId !== 0 && item.id === id) {
+        expandedKeys.push(item.parentId)
+        this.findParentId(item.parentId, data, this.searchExpandedKeys)
+      }
+    })
+  }
+
+  //* ------------------------------ 类目树相关 end ------------------------------*//
+  //* ------------------------------ 对象详情 start ------------------------------*//
+  @observable detailLoading = false
+  @observable objDetail = {}
+  @observable objCard = {}
+  //* ------------------------------ 对象详情 end ------------------------------*//
+
+  @observable confirmLoading = false
+  /**
+   * @description 获取对象类目树
+   */
+  @action async getObjTree(cb) {
+    this.treeLoading = true
+
+    try {
+      const res = await io.getObjTree({
+        type: this.typeCode,
+        searchKey: this.searchKey,
+        projectId: this.projectId,
+      })
+      runInAction(() => {
+        this.treeLoading = false
+        this.searchExpandedKeys.clear()
+
+        let data = res
+
+        // 判断是否进行搜索
+        if (this.searchKey) {
+          data = res.map(item => {
+            // 关键字搜索定位
+            if (this.searchKey && item.name.includes(this.searchKey)) {
+              this.findParentId(item.id, res, this.searchExpandedKeys)
+            }
+            return item
+          })
+        }
+
+        if (!this.objId) {
+          const firstObject = res.filter(item => item.parentId !== 0)[0]
+          // 默认展开第一个对象
+          this.currentSelectKeys = firstObject && firstObject.aId
+        } else {
+          this.currentSelectKeys = this.objId
+        }
+       
+        // 获取所有类目的数据；用于编辑对象时选择所属类目
+        // this.categoryData = res.filter(item => item.parentId === 0)
+        this.treeData = listToTree(data)
+      })
+
+      if (cb) cb()
+    } catch (e) {
+      runInAction(() => {
+        this.treeLoading = false
+      })
+      errorTip(e.message)
+    }
+  }
+
+  /**
+   * @description 选择对象类目树
+   */
+  @action async getObjCate(params) {
+    this.selectObjLoading = true
+    try {
+      const res = await io.getObjCate({
+        ...params,
+        projectId: this.projectId,
+      })
+      runInAction(() => {
+        this.selectObjLoading = false
+        let data = res
+        // 判断是否进行搜索
+        if (params.searchKey) {
+          data = res.map(item => {
+            // 关键字搜索定位
+            if (params.searchKey && item.name.includes(params.searchKey)) {
+              this.findParentId(item.id, res, this.objCateExpandedKeys)
+            }
+            return item
+          })
+        }
+        this.objCateTree = listToTree(data)
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  /**
+   * @description 已选对象列表
+   */
+  @action async getObjSelectedList(cb) {
+    this.selectedObjLoading = true
+    try {
+      const res = await io.getObjSelectedList({
+        projectId: this.projectId,
+      })
+      runInAction(() => {
+        let data = res
+        if (data.length) {
+          data = res.map(d => ({
+            aId: d.id,
+            ...d,
+          }))
+        }
+        if (cb) cb(data)
+        this.selectedObjList = data
+        this.selectedObjLoading = false
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  /**
+   * @description 获取选择对象列表信息加入选择列表
+   */
+  @action async getObjSelectedDetail(objIds, cb) {
+    this.selectedObjLoading = true
+    try {
+      const res = await io.getObjSelectedDetail({
+        objIds,
+        projectId: this.projectId,
+      })
+      runInAction(() => {
+        let data = res
+        if (data.length) {
+          data = res.map(d => ({
+            aId: d.id,
+            ...d,
+          }))
+        }
+        if (cb) cb(data)
+        this.selectedObjLoading = false
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  /**
+   * @description 保存已选对象
+   */
+  @action async saveSelectedObj(params, cb) {
+    this.selectObjConfirmLoading = true
+    try {
+      const res = await io.saveSelectedObj({
+        projectId: this.projectId,
+        ...params,
+      })
+      runInAction(() => {
+        if (res.success) {
+          successTip('操作成功')
+          this.selectObjVisible = false
+        } else {
+          failureTip('操作失败')
+        }
+        this.selectObjConfirmLoading = false
+        if (cb)cb()
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  /**
+   * @description 对象详情
+   */
+  @action async getObjDetail() {
+    // this.detailLoading = true
+    try {
+      const res = await io.getObjDetail({
+        id: this.objId,
+        projectId: this.projectId,
+      })
+      runInAction(() => {
+        // this.detailLoading = false
+        this.objDetail = res
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  /**
+   * @description 移除对象
+   */
+  @action async removeObj(cb) {
+    try {
+      const res = await io.removeObj({
+        id: this.objDetail.id,
+        projectId: this.projectId,
+      })
+      runInAction(() => {
+        if (res.success) {
+          successTip('操作成功')
+        } else {
+          failureTip('操作失败')
+        }
+        if (cb)cb()
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  /**
+   * @description 对象配置指标卡
+   */
+  @action async getObjCard() {
+    try {
+      const res = await io.getObjCard({
+        id: this.objId,
+        projectId: this.projectId,
+      })
+      runInAction(() => {
+        this.objCard = res
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+}
+
+export default new Store()

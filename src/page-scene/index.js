@@ -1,6 +1,8 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
-import Scene from './scene'
+import Project from './main'
 
-ReactDOM.render(<Scene />, document.getElementById('root'))
+import './main.styl'
+
+ReactDOM.render(<Project />, document.getElementById('root'))

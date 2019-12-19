@@ -6,7 +6,7 @@ import ModalConfigColumns from './modal-config-columns'
 import HelloStore from './store-hello'
 
 const store = new HelloStore()
-
+/** */
 const allColumns = [
   {
     title: '中文名',

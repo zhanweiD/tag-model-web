@@ -1,0 +1,24 @@
+.detail-header{
+  display: flex;
+  padding: 16px 24px;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0,0,0,.1);
+  background: #fff;
+}
+
+.detail-name{
+  font-size: 16px;
+  color: rgba(0, 0, 0, .85);
+  margin-bottom: 8px;
+}
+
+
+.detail-descr{
+  max-width: 1120px;
+  margin-right: 200px;
+}
+
+.detail-base-info{
+  padding: 16px 24px;
+  background: #fff;
+}

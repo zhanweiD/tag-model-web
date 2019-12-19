@@ -1,23 +1,23 @@
-// 这里面的 k v 键值对会被渲染到 html 里。主要放一些容易改动的配置，修改后无需重新发布项目
-let config = {
-  apps: {},
-}
-try {
-  config = require('/opt/conf/front/config.json')
-} catch (e) {
-  // console.error('/opt/conf/front/config.json  配置文件不存在')
-}
-module.exports = ENV => {
-  const env = data => data[ENV]
+/*
+ * @description 主要放一些容易改动的配置，修改后无需重新发布项目
+*/
+const navListMap = require('./navList')
+// let config = {
+//   apps: {},
+// }
+// try {
+//   config = require('/opt/conf/front/config.json')
+// } catch (e) {
+//   // console.error('/opt/conf/front/config.json  配置文件不存在')
+// }
 
-  if (ENV === 'development') {
-    config.submenu = {
-      data_asset: [],
-    }
-  }
+module.exports = ENV => {
+  // const env = data => data[ENV]
 
   const data = {
-    submenu: config.submenu || {},
+    userCenterV: 4, // 用户中心
+    apiV: 1, // 接口版本号
+    navListMap, // 面包屑设置
   }
   return data
 }

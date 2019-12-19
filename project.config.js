@@ -1,8 +1,13 @@
 const path = require('path')
 const pkg = require('./package.json')
 
-const env = require(process.env.ONER_SERVER_ENV === 'development' ? '../@dtwave/oner-server/common/env' : '@dtwave/oner-server/common/env')
+const isDev = process.env.ONER_SERVER_ENV === 'development'
+const envPath = isDev ? '../@dtwave/oner-server/common/env' : '@dtwave/oner-server/common/env'
+// eslint-disable-next-line import/no-dynamic-require
+const env = require(envPath)
+
 const plugins = require('./server')
+const keeper = require('./server/keeper')(env)
 
 const {nattyStorage} = env
 const {SERVER_ENV} = env
@@ -35,10 +40,11 @@ module.exports = {
     privateCdn: nattyStorage.env(SERVER_ENV, {
       default: true,
     }),
-    
+
     // 页面配置
     page: {
       title: '数据资产管理',
+      icon: '//cdn.dtwave.com/public/ide/dtwave.ico',
       css: ['common.css'],
       js: [
         'common.js',
@@ -52,18 +58,17 @@ module.exports = {
         '//cdn.dtwave.com/public/antd/3.18.2/antd.min.js',
         '//cdn.dtwave.com/public/lodash/4.17.4/lodash.min.js',
       ],
-      // 场景
+      // 标签管理
+      'tag-management': {
+        js: [
+          '//cdn.dtwave.com/public/ide/d3.v3.js',
+          '//cdn.dtwave.com/public/ide/data-manage-dagre.js',
+        ],
+      },
+      // 标签场景
       scene: {
         js: [
           '//cdn.dtwave.com/public/echarts/4.2.0/echarts.min.js',
-        ],
-      },
-      // 标签池
-      pool: {
-        js: [
-          '//cdn.dtwave.com/public/echarts/4.2.0/echarts.min.js',
-          '//cdn.dtwave.com/public/ide/d3.v3.js',
-          '//cdn.dtwave.com/public/ide/data-manage-dagre.js',
         ],
       },
       njkPath: path.join(__dirname, 'template.njk'),
@@ -138,13 +143,10 @@ module.exports = {
 
     // Node层代理API的域名，网关的，一般不用改
     apiPrefix: nattyStorage.env(SERVER_ENV, {
-      // 成飞开发
+      // 标准版开发环境 74
       development: 'http://192.168.90.74:9018',
-      // 成飞测试  
-      // development: 'http://192.168.90.111:9018',
       test: 'http://10.51.44.149:9018',
       production: 'http://api-in.dtwave-inc.com',
-      // default: config.gatewayDomain,
       default: appConfig.apiDomain || config.gatewayDomain,
     }),
 
@@ -177,16 +179,18 @@ module.exports = {
 
       // 和用户中心有关接口前缀
       apiPrefix: nattyStorage.env(SERVER_ENV, {
-        default: `${config.gatewayDomain}/api/v4/uic`,
-        development: 'http://192.168.90.74:9018/api/v4/uic',
-        test: 'http://10.27.232.131:9018/api/v4/uic',
-        production: 'http://api-in.dtwave-inc.com/api/v4/uic',
+        default: `${config.gatewayDomain}/api/v${keeper.userCenterV}/uic`,
+        // 标准版开发环境 74
+        development: `http://192.168.90.74:9018/api/v${keeper.userCenterV}/uic`,
+        test: `http://10.27.232.131:9018/api/v${keeper.userCenterV}/uic`,
+        production: `http://api-in.dtwave-inc.com/api/v${keeper.userCenterV}/uic`,
       }),
 
       // 使用用户中心的时候开启，用户中心的域名，主要要用这个拼登录/注册页地址
       loginUrlPrefix: nattyStorage.env(SERVER_ENV, {
         default: config.accountDomain,
         // default: `http://127.0.0.1:${config.apps.account4.port}`, // config.accountDomain,
+        // 标准版开发环境 74
         development: 'http://192.168.90.75:8899',
         test: 'http://account4.test.dtwave-inc.com',
         production: 'http://account4.dtwave-inc.com',
@@ -198,6 +202,7 @@ module.exports = {
     fs: {
       apiPrefix: nattyStorage.env(SERVER_ENV, {
         default: config.gatewayDomain,
+        // 标准版开发环境 74
         development: 'http://192.168.90.74:9018',
         test: 'http://10.51.44.149:9018',
         production: 'http://api-in.dtwave-inc.com',

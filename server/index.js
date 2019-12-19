@@ -85,6 +85,16 @@ module.exports = [
             objTypeName: '关系',
           }]
         } catch (e) {
+          ctx.njkData.typeCodes = [{
+            objTypeCode: 1,
+            objTypeName: '人',
+          }, {
+            objTypeCode: 2,
+            objTypeName: '物',
+          }, {
+            objTypeCode: 3,
+            objTypeName: '关系',
+          }]
           console.log(e)
         }
       }
