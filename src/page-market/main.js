@@ -102,6 +102,29 @@ export default class Market extends Component {
     window.location.href = `${window.__onerConfig.pathPrefix || '/'}/tag-management`
   }
 
+  // 是否有进行搜索操作
+  isSearch = () => {
+    const {
+      hotWord, 
+      objectId,
+      useProjectId, 
+      ownProjectId,
+      projectPermission,
+    } = store
+
+    if (
+      typeof hotWord === 'undefined'
+    && useProjectId === ''
+    && objectId === ''
+    && typeof projectPermission === 'undefined'
+    && ownProjectId === ''
+    ) {
+      return false
+    }
+
+    return true
+  }
+
   render() {
     const {
       useProjectId, 
@@ -145,7 +168,13 @@ export default class Market extends Component {
           <div>
             <div className="content-header">{navListMap.market.text}</div>
             {
-              list.length ? (
+              !list.length && !this.isSearch() ? (
+                <NoData
+                  isLoading={tableLoading}
+                  {...noDataConfig}
+                />
+               
+              ) : (
                 <Fragment>
                   <Search store={store} />
                   <div className="search-list">
@@ -153,11 +182,6 @@ export default class Market extends Component {
                     <Modal store={store} />
                   </div>
                 </Fragment>
-              ) : (
-                <NoData
-                  isLoading={tableLoading}
-                  {...noDataConfig}
-                />
               )
             }
           </div>

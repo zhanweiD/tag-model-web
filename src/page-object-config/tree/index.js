@@ -86,6 +86,8 @@ export default class Tree extends Component {
       treeLoading, treeData, expandAll, currentSelectKeys, selectObjVisible,
     } = this.store
 
+    const {history} = this.props
+
     const treeBoxConfig = {
       titleHeight: 34,
       title: <Action store={this.store} key={this.store.typeCode} />,
@@ -107,6 +109,7 @@ export default class Tree extends Component {
 
     const selectObjConfig = {
       visible: selectObjVisible,
+      history,
       // store,
     }
   

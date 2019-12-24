@@ -36,7 +36,7 @@ class Store extends ListContentStore(io.getList) {
       const res = await io.getDataSource()
       runInAction(() => {
         this.selectLoading = false
-        this.dataSource = changeToOptions(toJS(res))('dataDbName', 'dataStorageId')
+        this.dataSource = changeToOptions(toJS(res || []))('dataDbName', 'dataStorageId')
       })
     } catch (e) {
       errorTip(e.message)

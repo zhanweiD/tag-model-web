@@ -7,8 +7,7 @@ import {observable, action} from 'mobx'
 import {Button} from 'antd'
 import {ListContent} from '../../component'
 import {Time, keyToName} from '../../common/util'
-import {APPLY_TYPE} from '../../common/constants'
-import ApprovalStatus from '../common/comp-approval-status'
+import {getTableStatus, APPLY_TYPE} from '../common/comp-approval-status'
 import ModalDetail from '../common/comp-approval-modal'
 import ModalBackout from './modal-backout'
 import seach from './search'
@@ -45,7 +44,7 @@ export default class MyRequests extends Component {
       title: '申请状态',
       key: 'status',
       dataIndex: 'status',
-      render: v => <ApprovalStatus status={v} />,
+      render: v => getTableStatus({status: v}),
     }, {
       title: '操作',
       key: 'action',
@@ -56,7 +55,7 @@ export default class MyRequests extends Component {
           {/* eslint-disable-next-line no-underscore-dangle */}
           <a href onClick={() => this.viewDetail(record)}>查看详情</a>
           {
-            !(record.status === 3) ? (
+            (record.status === 0) ? (
               <Fragment>
                 <span className="table-action-line" />
                 <a href onClick={() => this.backout(record.id)}>撤销</a>

@@ -1,5 +1,7 @@
 import ioContext from '../../common/io-context'
-import {sceneApi, tagApi, get} from '../../common/util'
+import {
+  sceneApi, tagApi, get, post,
+} from '../../common/util'
 
 const api = {
   getDetail: get(`${sceneApi}/detail`), // 场景详情
@@ -14,9 +16,9 @@ const api = {
   getDBSource: get(`${sceneApi}/dbSourceList`), // 数据源数据
   getDbTableList: get(`${sceneApi}/dbSourceTableList`), // 数据表数据
   getDBSourceList: get(`${sceneApi}/beingDBSourceList`), // 添加目的数据源 - 列表
-  saveStorage: get(`${sceneApi}/saveStorage`), // 添加数据源 - 保存
+  saveStorage: post(`${sceneApi}/saveStorage`), // 添加数据源 - 保存
   getSourceList: get(`${sceneApi}/alreadyDBSourceList`), // 目的数据源 - 列表
-  dbSourceDel: get(`${sceneApi}/dbSourceDel`), // 目的数据源 - 列表删除
+  dbSourceDel: post(`${sceneApi}/dbSourceDel`), // 目的数据源 - 列表删除
   isObjExist: get(`${tagApi}/be_tag/tag/pool/obj_exist`), // 判断标签池是否有对象
 }
 

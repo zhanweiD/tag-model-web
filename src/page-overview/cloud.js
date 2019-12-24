@@ -6,7 +6,7 @@ import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {Empty, Spin} from 'antd'
 
-const cloud = require('d3-cloud')
+const cloud = require('../third/d3.layout.cloud')
 
 @observer
 export default class Cloud extends Component {
@@ -63,13 +63,13 @@ export default class Cloud extends Component {
 
   render() {
     const {
-      cloudData, entityCount, relCount, loading,
+      cloudData = [], entityCount, relCount, loading,
     } = this.store
 
     return (
       <div className="object-cloud">
         <div className="object-cloud-header">
-          <span>对象视图</span>
+          <span>对象云图</span>
           <div className="object-cloud-count">
             <span className="mr24">
               实体：

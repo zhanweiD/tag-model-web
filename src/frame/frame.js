@@ -36,9 +36,11 @@ class Frame extends Component {
   }
 
   renderNav() {
-    const {page} = this.props
+    const {page, location, pageUrl} = this.props
 
     if (page !== 'space' || store.projectList.length === 0) return null
+
+    if (pageUrl && location.pathname !== pageUrl) return null
 
     return (
       <Select
@@ -48,11 +50,6 @@ class Frame extends Component {
         optionFilterProp="children"
         onChange={this.selectProject}
         value={store.projectId}
-        // onFocus={onFocus}
-        // onBlur={onBlur}
-        // onSearch={onSearch}
-        // filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-        // }
       >
         {
           store.projectList.map(d => <Option key={d.id} value={d.id}>{d.name}</Option>)

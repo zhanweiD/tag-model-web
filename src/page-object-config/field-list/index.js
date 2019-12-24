@@ -116,9 +116,11 @@ export default class FieldList extends Component {
   @action.bound selectDataSource(storageId) {
     store.tableName = undefined
 
-    store.getDataSheet({
-      storageId,
-    })
+    if (storageId) {
+      store.getDataSheet({
+        storageId,
+      })
+    }
   }
 
   render() {

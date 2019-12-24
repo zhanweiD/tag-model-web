@@ -7,8 +7,7 @@ import {observable, action} from 'mobx'
 import {Button} from 'antd'
 import {ListContent} from '../../component'
 import {Time, keyToName} from '../../common/util'
-import {APPLY_TYPE} from '../../common/constants'
-import ApprovalStatus from '../common/comp-approval-status'
+import {getTableStatus, APPLY_TYPE} from '../common/comp-approval-status'
 import ModalDetail from '../common/comp-approval-modal'
 import seach from './search'
 
@@ -34,8 +33,8 @@ export default class Approved extends Component {
       dataIndex: 'content',
     }, {
       title: '申请人',
-      key: 'userName',
-      dataIndex: 'userName',
+      key: 'applyUserName',
+      dataIndex: 'applyUserName',
     }, {
       title: '申请时间',
       key: 'cTime',
@@ -45,7 +44,7 @@ export default class Approved extends Component {
       title: '申请状态',
       key: 'status',
       dataIndex: 'status',
-      render: v => <ApprovalStatus status={v} />,
+      render: v => getTableStatus({status: v}),
     }, {
       title: '操作',
       key: 'action',

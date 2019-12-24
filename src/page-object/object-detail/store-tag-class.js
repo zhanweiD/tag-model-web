@@ -29,6 +29,7 @@ class Store {
   @observable currentSelectKeys = undefined
   @observable defaultCate = {}// 默认类目
   @observable categoryData = [] // 所有类目
+  @observable keyword = undefined // 标签列表搜索关键字
 
   // 选择标签弹窗 - 标签列表
   @observable tagListModal = {

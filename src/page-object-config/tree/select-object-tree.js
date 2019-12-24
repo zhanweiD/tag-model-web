@@ -49,6 +49,18 @@ export default class CateTree extends Component {
     onCheck(selectNodes)
   }
 
+  /**
+   * @description 查询树节点
+   */
+  @action.bound searchTree(data) {
+    this.searchKey = data
+    const {selTypeCode} = this.props
+    this.store.getObjCate({
+      searchKey: data,
+      type: selTypeCode,
+    })
+  }
+
   renderTreeNodes = data => data.map(item => {
     const {listDataIds} = this.props
 
@@ -78,7 +90,7 @@ export default class CateTree extends Component {
 
   render() {
     const {selectObjLoading, objCateTree} = this.store
-    const {listDataIds} = this.props
+    const {listDataIds, selTypeCode} = this.props
 
     const checkedKeys = this.checkedKeys.length 
       ? this.checkedKeys.slice() 
@@ -89,8 +101,9 @@ export default class CateTree extends Component {
         <div className="object-tree-header">
           <NoBorderInput
             placeholder="请输入对象名称搜索"
-            // value={searchKey}
-            onChange={this.onSearch}
+            value={this.searchKey}
+            onChange={this.searchTree}
+            key={selTypeCode}
           />
           <IconChakan size="14" className="mr8" onClick={this.onSearch} />
         </div>

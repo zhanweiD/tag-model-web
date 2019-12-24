@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import {action} from 'mobx'
+import {action, toJS} from 'mobx'
 import {observer} from 'mobx-react'
 import {Drawer, Button, Spin} from 'antd'
 import {ModalForm} from '../../component'
@@ -18,6 +18,10 @@ export default class DrawerCreate extends Component {
   @action.bound selectObject(id) {
     this.store.ownObject = id
     this.form.resetFields(['cateId', 'name', 'enName'])
+
+    this.store.drawerTagInfo.parentId = undefined
+    this.store.drawerTagInfo.name = undefined
+    this.store.drawerTagInfo.enName = undefined
 
     this.store.getTagCateSelectList({
       id,
@@ -56,6 +60,7 @@ export default class DrawerCreate extends Component {
       control: {
         options: tagCateSelectList,
         valueName: 'id',
+        selectCon: ['isLeaf', 2],
       },
     }, {
       label: '标签名称',
@@ -111,6 +116,10 @@ export default class DrawerCreate extends Component {
       hide: !isEnum,
       initialValue: drawerTagInfo.enumValue,
       component: 'textArea',
+      rules: [
+        '@transformTrim',
+        '@required',
+      ],
       control: {
         placeholder: '若标签值为枚举型，可将枚举代码值显示为易理解的值，例如：{"0":"女","1":"男"}',
       },

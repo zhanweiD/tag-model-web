@@ -7,6 +7,7 @@ import io from './io'
 
 class Store extends ListContentStore(io.getList) {
   @observable projectId
+  @observable useProjectId
   @observable projectName
 
   @observable ownProjectList = []
@@ -34,10 +35,9 @@ class Store extends ListContentStore(io.getList) {
   }
 
   @action async getObject() {
-    console.log(this.projectId)
     try {
       const res = await io.getObject({
-        projectId: this.projectId,
+        projectId: this.useProjectId,
       })
       runInAction(() => {
         this.objectList = res
@@ -84,7 +84,7 @@ class Store extends ListContentStore(io.getList) {
     this.confirmLoading = true
     try {
       const res = await io.addToScene({
-        projectId: this.projectId,
+        projectId: this.useProjectId,
         ...params,
       })
       runInAction(() => {
@@ -107,7 +107,7 @@ class Store extends ListContentStore(io.getList) {
   @action async getProjectDetail() {
     try {
       const res = await io.getProjectDetail({
-        id: this.projectId,
+        id: this.useProjectId,
       })
       runInAction(() => {
         this.projectName = res.name

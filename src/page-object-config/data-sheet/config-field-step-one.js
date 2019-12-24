@@ -28,16 +28,16 @@ const columns = [
   {
     title: (
       <span>
-        使用状态
-        <QuestionTooltip tip="字段绑定的标签是否被使用" />
+        标签状态
+        <QuestionTooltip tip="字段绑定的标签是否发布" />
       </span>
     ),
-    key: 'isUsed',
-    dataIndex: 'isUsed',
+    key: 'status',
+    dataIndex: 'status',
     render: v => (
-      +v === 1
-        ? <Badge color="#1890FF" text="使用中" />
-        : <Badge color="rgba(0,0,0,0.25)" text="未使用" />
+      +v === 2
+        ? <Badge color="#1890FF" text="已发布" />
+        : <Badge color="rgba(0,0,0,0.25)" text="未发布" />
     ),
     width: '11%',
   },

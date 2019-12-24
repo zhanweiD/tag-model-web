@@ -51,6 +51,9 @@ class Store extends ListContentStore(io.getList) {
     this.storageId = undefined
     this.tableName = undefined
     this.majorKeyField = undefined
+
+    this.entity1Key = undefined
+    this.entity2Key = undefined
     
     this.dataSourceList.clear()
     this.dataSheetList.clear()
@@ -83,8 +86,8 @@ class Store extends ListContentStore(io.getList) {
         projectId: this.projectId,
       })
       runInAction(() => {
-        this.dataSourceList = res
-        this.dataSourceSelectList = changeToOptions(res)('storageName', 'storageId')
+        this.dataSourceList = res ? [res] : []
+        this.dataSourceSelectList = res ? changeToOptions([res])('storageName', 'storageId') : []
       })
     } catch (e) {
       errorTip(e.message)
@@ -159,7 +162,10 @@ class Store extends ListContentStore(io.getList) {
       runInAction(() => {
         this.selectedRows = _.filter(res, d => d.id)
         this.selectedRowKeys = _.map(this.selectedRows.slice(), 'dataFieldName')
-        this.fieldTableList = _.filter(res, d => d.dataFieldName !== this.editSelectedItem.mappingKey) 
+        this.fieldTableList = _.filter(res,
+          d => d.dataFieldName !== this.editSelectedItem.mappingKey 
+           && d.dataFieldName !== this.entity1Key
+           && d.dataFieldName !== this.entity2Key) 
       })
     } catch (e) {
       errorTip(e.message)
@@ -195,13 +201,16 @@ class Store extends ListContentStore(io.getList) {
         filedObjReqList,
       })
       runInAction(() => {
-        this.confirmLoading = false
         this.nextStep()
         this.fieldSuccessInfo()
         if (cb) cb()
       })
     } catch (e) {
       errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        this.confirmLoading = false
+      })
     }
   }
 
@@ -242,13 +251,16 @@ class Store extends ListContentStore(io.getList) {
         filedObjAssReqList,
       })
       runInAction(() => {
-        this.confirmLoading = false
         this.nextStep()
         this.fieldSuccessInfo()
         if (cb) cb()
       })
     } catch (e) {
       errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        this.confirmLoading = false
+      })
     }
   }
 
@@ -340,6 +352,27 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
+  /**
+   * @description 获取关联对象下关联主键与实体主键信息
+   */
+  @action async getAssMappingKey(cb) {
+    try {
+      const res = await io.getAssMappingKey({
+        id: this.objId,
+        projectId: this.projectId,
+      })
+
+      runInAction(() => {
+        this.entity1Key = res.MappingKeys[0].filed_name
+        this.entity2Key = res.MappingKeys[1].filed_name
+
+        if (cb) cb() 
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+  
   /**
    * @description 移除数据表
    */

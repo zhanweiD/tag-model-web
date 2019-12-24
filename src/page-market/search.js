@@ -41,7 +41,8 @@ export default class Search extends Component {
     if (typeof this.projectPermission === 'undefined') {
       this.store.projectPermission = 0
     }
-    this.useProjectName = arr.props.children
+
+    this.store.useProjectName = arr.props.children
     this.store.useProjectId = v
     this.store.updateList()
   }

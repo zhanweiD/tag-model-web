@@ -12,7 +12,7 @@ export default class ModalProject extends Component {
   }
 
   selectContent= () => {
-    const {detail, selectLoading, dataSource} = this.store
+    const {detail, selectLoading, dataSource = []} = this.store
     return [{
       label: '项目名称',
       key: 'name',

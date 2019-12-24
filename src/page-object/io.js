@@ -22,7 +22,10 @@ const api = {
   getObjDetail: get(`${objectApi}/object_basic`), // 对象基础信息
   getObjCard: get(`${objectApi}/object_card`), // 对象详情指标卡
   changeObjStatus: post(`${objectApi}/update_object_status`), // 修改对象发布状态
-  getObjView: get(`${objectApi}/object_view`), // 对象视图
+  getObjView: get(`${objectApi}/object_view`, {
+    mock: false,
+    mockUrl: 'page-overview/object-view',
+  }), // 对象视图
 
   //* ------------------------------ 标签类目 ------------------------------*//
   getTagCateTree: get(`${tagClassApi}/cate_tree`, {overrideSelfConcurrent: true}), // 标签类目树

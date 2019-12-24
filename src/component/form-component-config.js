@@ -40,18 +40,18 @@ const SelectTypes = ({
   )
 }
 
-const createTreeNode = (data, valueName, titleName) => {
-  if (!data) return null
+const createTreeNode = (data = [], valueName, titleName, selectCon) => {
+  if (!data.length) return null
 
   return data.map(node => (
     <antd.TreeSelect.TreeNode
       value={valueName ? node[valueName] : node.aId}
       title={titleName ? node[titleName] : node.name}
       key={node.aId}
-      selectable={node.isLeaf === 2}
+      selectable={selectCon ? (node[selectCon[0]] === selectCon[1]) : node.isLeaf === 2}
     >
       {
-        createTreeNode(node.children, valueName, titleName)
+        createTreeNode(node.children, valueName, titleName, selectCon)
       }
     </antd.TreeSelect.TreeNode>
   ))
@@ -80,7 +80,7 @@ export default ({
         {...rest}
       >
         {
-          createTreeNode(options, rest.valueName, rest.titleName)
+          createTreeNode(options, rest.valueName, rest.titleName, rest.selectCon)
         }
       </antd.TreeSelect>
     ), 

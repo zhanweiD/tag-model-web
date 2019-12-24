@@ -6,7 +6,7 @@ import {observer} from 'mobx-react'
 import {observable, action} from 'mobx'
 import {ListContent} from '../../component'
 import {Time, keyToName} from '../../common/util'
-import {APPLY_TYPE} from '../../common/constants'
+import {APPLY_TYPE} from '../common/comp-approval-status'
 import ModalDetail from '../common/comp-approval-modal'
 import seach from './search'
 

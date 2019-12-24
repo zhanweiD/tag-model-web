@@ -159,6 +159,7 @@ export default class ModalObject extends Component {
       component: 'input',
       rules: [
         '@transformTrim',
+        {validator: this.checkName},
       ],
     }, {
       label: '所属类目',
@@ -193,6 +194,7 @@ export default class ModalObject extends Component {
       control: {
         options: toJS(this.store.relToEntityData),
         multiple: true,
+        selectCon: ['type', 2],
       },
     }, {
       label: '对象描述',

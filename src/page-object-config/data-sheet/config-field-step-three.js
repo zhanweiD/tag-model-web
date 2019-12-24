@@ -30,7 +30,7 @@ export default class StepThree extends React.Component {
               {`数据表名称： ${successResult.dataTableName || '-'}`}
             </div>
             <div>
-              {`数据源： ${successResult.dataDbName || '-'}`}
+              {`数据源： ${successResult.dataStorageName || '-'}`}
             </div>
             <div>
               {`数据源类型： ${successResult.storageTypeName || '-'}`}

@@ -35,7 +35,6 @@ class ModalTagMove extends Component {
           treeId: currentTreeItemKey,
           moveCateId: values.objIds.pop(),
         }
-        console.log(param)
 
         this.store.moveTag(param)
       }

@@ -1,5 +1,7 @@
 import ioContext from '../../../common/io-context'
-import {sceneApi, tagApi, get} from '../../../common/util'
+import {
+  sceneApi, tagApi, get, post,
+} from '../../../common/util'
 
 const api = {
   getCategoryList: get(`${sceneApi}/tree/list`), // 获取类目列表
@@ -18,7 +20,7 @@ const api = {
 
   //* ------------------------------ 标签-相关接口 ------------------------------*//
   selectTag: get(`${sceneApi}/tree/obj/cat/selectTag`), // 选择标签-树
-  saveTag: get(`${sceneApi}/tree/obj/cat/saveTag`), // 选择标签-保存
+  saveTag: post(`${sceneApi}/tree/obj/cat/saveTag`), // 选择标签-保存
   deleteTag: get(`${sceneApi}/tree/cat/tag/del`), // 标签 - 移除
   checkIsExist: get(`${sceneApi}/check_cat_name`), // 重名校验
 }

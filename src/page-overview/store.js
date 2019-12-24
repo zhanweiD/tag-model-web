@@ -1,10 +1,11 @@
 import {
   observable, action, runInAction,
 } from 'mobx'
-import {successTip, errorTip} from '../common/util'
+import {errorTip} from '../common/util'
 import io from './io'
 
 class Store {
+  @observable cardInfo = {} // 指标卡
   @observable cloudData = [] // 对象视图
   @observable entityCount = 0 // 实体总数
   @observable relCount = 0 // 关系总数
@@ -14,16 +15,27 @@ class Store {
 
   @observable loading = false
 
+  @action async getCardInfo() {
+    try {
+      const res = await io.getCardInfo()
+      runInAction(() => {
+        this.cardInfo = res
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
   @action async getObjCloud(cb) {
     this.loading = true
     try {
       const res = await io.getObjCloud(cb)
       runInAction(() => {
-        console.log(res.entityObj, res.relObj)
-        this.cloudData = res.objList
-        this.entityCount = res.entityObj
-        this.relCount = res.relObj
-        if (cb && res.objList.length) cb(res.objList, this.getRanKMax(res.objList, 'relCount'))
+        this.cloudData = res.objList || []
+        this.entityCount = res.entityObj || 0
+        this.relCount = res.relObj || 0
+
+        if (cb && res.objList && res.objList.length) cb(res.objList, this.getRanKMax(res.objList, 'relCount'))
       })
     } catch (e) {
       errorTip(e.message)
@@ -38,7 +50,7 @@ class Store {
     try {
       const res = await io.tagInvokeYday()
       runInAction(() => {
-        this.tagInvokeYday = res
+        this.tagInvokeYday = res || []
         if (cb && res.length)cb(res, this.getRanKMax(res))
       })
     } catch (e) {
@@ -50,7 +62,7 @@ class Store {
     try {
       const res = await io.tagUnpopular()
       runInAction(() => {
-        this.tagUnpopular = res
+        this.tagUnpopular = res || []
         if (cb && res.length)cb(res, this.getRanKMax(res))
       })
     } catch (e) {
@@ -62,7 +74,7 @@ class Store {
     try {
       const res = await io.tagInvokeAll()
       runInAction(() => {
-        this.tagInvokeAll = res
+        this.tagInvokeAll = res || []
         if (cb && res.length)cb(res, this.getRanKMax(res))
       })
     } catch (e) {
@@ -71,7 +83,7 @@ class Store {
   }
 
   // 获取最大值
-  getRanKMax(arr, countKeyName = 'count') {
+  getRanKMax(arr = [], countKeyName = 'count') {
     if (!arr.length) return 0
     const count = _.map(arr, countKeyName)
     const max = Math.max.apply(null, count)

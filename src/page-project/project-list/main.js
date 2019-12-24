@@ -1,7 +1,7 @@
 /**
  * @description 项目列表
  */
-import {Component} from 'react'
+import {Component, Fragment} from 'react'
 import {action} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {Popconfirm, Badge, Button} from 'antd'
@@ -61,15 +61,31 @@ export default class ProjectList extends Component {
       dataIndex: 'action',
       render: (text, record) => (
         <div className="FBH FBAC">
-          <Link to={`/${record.id}`}>项目配置</Link>
-          <span className="table-action-line" />
+          {record.config && (
+            <Fragment>
+              <Link to={`/${record.id}`}>项目配置</Link>
+              <span className="table-action-line" />
+            </Fragment>
+          )}
           <a href onClick={() => this.toSpace(record)}>项目空间</a>
-          <span className="table-action-line" />
-          <a href onClick={() => this.openModal('edit', record)}>编辑</a>
-          <span className="table-action-line" />
-          <Popconfirm placement="topRight" title="项目被删除后不可恢复，确认删除？" onConfirm={() => this.delItem(record.id)}>
-            <a href>删除</a>
-          </Popconfirm>
+          {
+            record.edit && (
+              <Fragment>
+                <span className="table-action-line" />
+                <a href onClick={() => this.openModal('edit', record)}>编辑</a>
+              </Fragment>
+            )
+          }
+          {
+            record.del && (
+              <Fragment>
+                <span className="table-action-line" />
+                <Popconfirm placement="topRight" title="项目被删除后不可恢复，确认删除？" onConfirm={() => this.delItem(record.id)}>
+                  <a href>删除</a>
+                </Popconfirm>
+              </Fragment>
+            )
+          }
         </div>
       ),
     },
@@ -86,7 +102,7 @@ export default class ProjectList extends Component {
     // 请求项目列表，放在父组件进行请求是因为需要在外层做空数据判断。
     // 若返回数据为空[]。则渲染 NoData 组件。
     // 要是请求放在列表组件ListContent中的话, 就必须渲染表格的dom 影响体验
-    store.getList() 
+    store.getList()
   }
 
   /**
@@ -107,7 +123,7 @@ export default class ProjectList extends Component {
   delItem = id => {
     store.delList(id)
   }
-  
+
   /**
    * @description 跳转到项目空间
    */
@@ -150,9 +166,12 @@ export default class ProjectList extends Component {
     return (
       <div className="page-project">
         <div className="content-header">{navListMap.project.text}</div>
-        {
+        <div className="list-content">
+          <ListContent {...listConfig} />
+        </div>
+        {/* {
           list.length ? (
-            <div className="list-content"> 
+            <div className="list-content">
               <ListContent {...listConfig} />
             </div>
           ) : (
@@ -161,7 +180,7 @@ export default class ProjectList extends Component {
               {...noDataConfig}
             />
           )
-        }
+        } */}
         <ModalProject store={store} />
       </div>
     )

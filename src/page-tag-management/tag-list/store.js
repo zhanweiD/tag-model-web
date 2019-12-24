@@ -243,7 +243,7 @@ class Store extends ListContentStore(io.getList) {
     try {
       const res = await io.deleteTag(params)
       runInAction(() => {
-        if (res.success) {
+        if (res) {
           successTip('操作成功')
           this.getList()
         } else {

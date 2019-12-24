@@ -78,11 +78,10 @@ class ProjectConfig extends Component {
   }
 
   @action openModal = (type, data = {}) => {
-    if (type === 'edit') {
+    if (type === 'add') {
     // 请求用户名下拉列表
       store.getUsers()
     }
-
     // 请求角色下拉列表
     store.getRole()
     

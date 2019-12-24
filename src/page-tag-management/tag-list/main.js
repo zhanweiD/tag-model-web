@@ -136,7 +136,7 @@ export default class TagManagement extends Component {
           <Popconfirm
             placement="topRight"
             title="确认取消申请？"
-            onConfirm={store.tagApply({
+            onConfirm={() => store.tagApply({
               type: 3,
               id: record.id,
             })}
@@ -148,14 +148,14 @@ export default class TagManagement extends Component {
         {record.status === 2
           && record.isUsed === 0
           && record.publish === 1
-          && <a href onClick={() => store.openModal({type: 2, id: record.id})}>下架申请</a>}
+          && <a href onClick={() => store.openModal({type: 0, id: record.id})}>下架申请</a>}
 
         {/* 标签状态: 已发布 未使用 下架审核中 操作: 取消申请 */}
         {record.status === 2 && record.isUsed === 0 && record.publish === 3 && (
           <Popconfirm
             placement="topRight"
             title="确认取消申请？"
-            onConfirm={store.tagApply({
+            onConfirm={() => store.tagApply({
               type: 3,
               id: record.id,
             })}
@@ -175,7 +175,7 @@ export default class TagManagement extends Component {
           <Popconfirm
             placement="topRight"
             title="确认取消申请？"
-            onConfirm={store.tagApply({
+            onConfirm={() => store.tagApply({
               type: 3,
               id: record.id,
             })}
@@ -188,14 +188,14 @@ export default class TagManagement extends Component {
         {record.status === 2
           && record.isUsed === 1
           && record.publish === 1
-          && <a href onClick={() => store.openModal({type: 2, id: record.id})}>下架申请</a>}
+          && <a href onClick={() => store.openModal({type: 0, id: record.id})}>下架申请</a>}
 
         {/* 标签状态: 已发布 已使用 下架审核中 操作: 取消申请 */}
         {record.status === 2 && record.isUsed === 1 && record.publish === 3 && (
           <Popconfirm
             placement="topRight"
             title="确认取消申请？"
-            onConfirm={store.tagApply({
+            onConfirm={() => store.tagApply({
               type: 3,
               id: record.id,
             })}
@@ -226,6 +226,27 @@ export default class TagManagement extends Component {
     window.location.href = `${window.__onerConfig.pathPrefix || '/'}/project`
   }
 
+  renderNodata =() => {
+    const {spaceInfo} = window
+
+    const noProjectDataConfig = {
+      btnText: '去创建项目',
+      onClick: this.goProjectList,
+      text: '没有任何项目，去项目列表页创建项目吧！',
+    }
+
+    console.log(spaceInfo.finish && !spaceInfo.projectList.length)
+    if (spaceInfo && spaceInfo.finish && !spaceInfo.projectList.length) {
+      return (
+        <NoData
+          {...noProjectDataConfig}
+        />
+      )
+    } 
+
+    return <Loading mode="block" height={200} />
+  }
+
 
   render() {
     const {
@@ -249,20 +270,16 @@ export default class TagManagement extends Component {
 
     const {spaceInfo} = window
 
-    const noProjectDataConfig = {
-      btnText: '去创建项目',
-      onClick: this.goProjectList,
-      text: '没有任何项目，去项目列表页创建项目吧！',
-    }
-
     return (
       <div>
         {
           spaceInfo && spaceInfo.projectId && spaceInfo.projectList && spaceInfo.projectList.length
             ? (
-              <div className="bgf">
+              <div>
                 <div className="content-header">{navListMap.tagManagement.text}</div>
-                <ListContent {...listConfig} />
+                <div className="m16">
+                  <ListContent {...listConfig} />
+                </div>
                 <ModalTagApply store={store} />
                 <DrawerCreate store={store} />
                 <DrawerTagConfig
@@ -273,16 +290,7 @@ export default class TagManagement extends Component {
                   onUpdate={updateTagConfig}
                 />
               </div>
-            ) : null
-        }
-
-        {
-          spaceInfo.finish
-            ? (
-              <NoData
-                {...noProjectDataConfig}
-              />
-            ) : <Loading mode="block" height={200} />
+            ) : this.renderNodata()
         }
       </div>
     )

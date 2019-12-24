@@ -15,6 +15,7 @@ import TagClass from './tag-class'
 import ObjectView from './object-view'
 
 import store from './store'
+import './index.styl'
 
 @inject('bigStore')
 @observer
@@ -23,6 +24,7 @@ export default class ObjectDetail extends Component {
     super(props)
     this.bigStore = props.bigStore
     store.objId = props.bigStore.objId
+    store.typeCode = props.bigStore.typeCode
   }
 
   componentWillMount() {
@@ -170,7 +172,7 @@ export default class ObjectDetail extends Component {
         </Spin>
         <div className="bgf">
           <TabRoute tabs={[{name: '对象视图', value: 1}]} />
-          <ObjectView />
+          <ObjectView store={store} updateDetailKey={this.props.updateDetailKey} objId={objId} />
         </div>
         <TagClass {...tagClassConfig} />
       </div>

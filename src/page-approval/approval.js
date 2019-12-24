@@ -19,7 +19,7 @@ const menuMap = [{
 const ContentMap = {
   'my-requests': MyRequests,
   'pending-approval': PendingApproval,
-  'approved': Approved, 
+  approved: Approved, 
 }
 
 export default class Approval extends Component {
@@ -37,7 +37,7 @@ export default class Approval extends Component {
       <div className="page-approval">
         <Menu
           style={{width: 180, height: '100%'}}
-          defaultSelectedKeys={['my-requests']}
+          defaultSelectedKeys={[type]}
           mode="inline"
           onClick={this.onMenuClick}
         >

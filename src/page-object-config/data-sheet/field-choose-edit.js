@@ -23,7 +23,8 @@ export default class FieldChoose extends Component {
       this.store.storageId = editSelectedItem.dataStorageId
       this.store.tableName = editSelectedItem.dataTableName
       this.store.majorKeyField = editSelectedItem.mappingKey
-      this.store.getReledFieldList()
+      
+      this.store.getAssMappingKey(() => this.store.getReledFieldList())
     }
   }
 
@@ -68,6 +69,8 @@ export default class FieldChoose extends Component {
       fieldTableList,
       selectedRowKeys,
       editSelectedItem,
+      entity1Key,
+      entity2Key,
     } = this.store
 
     const {objDetail} = this.bigStore
@@ -82,7 +85,7 @@ export default class FieldChoose extends Component {
       label: '数据源',
       labelTooltip: '在数据源管理被授权，且在元数据中被采集进来的数据源',
       key: 'dataStorageId',
-      component: 'select',
+      component: 'input',
       initialValue: dataStorageName,
       control: {
         disabled: true,
@@ -91,7 +94,7 @@ export default class FieldChoose extends Component {
       label: '数据表',
       labelTooltip: '同一个数据源下的数据表不能被重复选择',
       key: 'dataTableName',
-      component: 'select',
+      component: 'input',
       initialValue: dataTableName,
       control: {
         disabled: true,
@@ -100,41 +103,31 @@ export default class FieldChoose extends Component {
       label: '关联的主键',
       key: 'majorKey', 
       hide: !this.bigStore.objDetail.objPk, // 关系对象未设置对象主键；关联的主键input 隐藏
-      component: 'select',
+      component: 'input',
       initialValue: mappingKey,
       control: {
         disabled: true,
       },
     }, 
-    // {
-    //   label: objDetail.objRspList && objDetail.objRspList[0].name,
-    //   key: objDetail.objRspList && objDetail.objRspList[0].id,
-    //   hide: objDetail.objTypeCode === 4, 
-    //   component: 'select',
-    //   initialValue: entity1Key,
-    //   rules: [
-    //     '@requiredSelect',
-    //   ],
-    //   control: {
-    //     options: fieldList,
-    //     placeholder: '请选择',
-    //     onSelect: v => this.selectEntityKey(v, 1, objDetail.objRspList[0].id),
-    //   },
-    // }, {
-    //   label: objDetail.objRspList && objDetail.objRspList[1].name,
-    //   key: objDetail.objRspList && objDetail.objRspList[1].id,
-    //   hide: this.bigStore.objDetail.objTypeCode === 4, 
-    //   component: 'select',
-    //   initialValue: entity2Key,
-    //   rules: [
-    //     '@requiredSelect',
-    //   ],
-    //   control: {
-    //     options: fieldList,
-    //     placeholder: '请选择',
-    //     onSelect: v => this.selectEntityKey(v, 2, objDetail.objRspList[1].id),
-    //   },
-    // }
+    {
+      label: objDetail.objRspList && objDetail.objRspList[0].name,
+      key: objDetail.objRspList && objDetail.objRspList[0].id,
+      hide: objDetail.objTypeCode === 4, 
+      component: 'input',
+      initialValue: entity1Key,
+      control: {
+        disabled: true,
+      },
+    }, {
+      label: objDetail.objRspList && objDetail.objRspList[1].name,
+      key: objDetail.objRspList && objDetail.objRspList[1].id,
+      hide: this.bigStore.objDetail.objTypeCode === 4, 
+      component: 'input',
+      initialValue: entity2Key,
+      control: {
+        disabled: true,
+      },
+    },
     ]
 
     const rowSelection = {

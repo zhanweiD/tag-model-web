@@ -50,6 +50,10 @@ class Store {
   @observable detailLoading = false
   @observable objDetail = {}
   @observable objCard = {}
+
+  @observable objView = {} // 对象视图
+  @observable objViewLoading = false // 对象视图
+
   //* ------------------------------ 对象详情 end ------------------------------*//
 
   @observable confirmLoading = false
@@ -82,14 +86,18 @@ class Store {
           })
         }
 
-        if (!this.objId) {
-          const firstObject = res.filter(item => item.parentId !== 0)[0]
-          // 默认展开第一个对象
-          this.currentSelectKeys = firstObject && firstObject.aId
+        if (res.length) {
+          if (!this.objId) {
+            const firstObject = res.filter(item => item.parentId !== 0)[0]
+            // 默认展开第一个对象
+            this.currentSelectKeys = firstObject && firstObject.aId
+          } else {
+            this.currentSelectKeys = this.objId
+          }
         } else {
-          this.currentSelectKeys = this.objId
+          this.currentSelectKeys = undefined
         }
-       
+
         // 获取所有类目的数据；用于编辑对象时选择所属类目
         // this.categoryData = res.filter(item => item.parentId === 0)
         this.treeData = listToTree(data)
@@ -203,11 +211,14 @@ class Store {
         } else {
           failureTip('操作失败')
         }
-        this.selectObjConfirmLoading = false
-        if (cb)cb()
+        if (cb) cb()
       })
     } catch (e) {
       errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        this.selectObjConfirmLoading = false
+      })
     }
   }
 
@@ -245,7 +256,7 @@ class Store {
         } else {
           failureTip('操作失败')
         }
-        if (cb)cb()
+        if (cb) cb()
       })
     } catch (e) {
       errorTip(e.message)
@@ -266,6 +277,56 @@ class Store {
       })
     } catch (e) {
       errorTip(e.message)
+    }
+  }
+
+  /**
+   * @description 对象视图
+   */
+  @action async getObjView(cb) {
+    this.objViewLoading = true
+    try {
+      const res = await io.getObjView({
+        id: this.objId,
+        projectId: this.projectId,
+      })
+      runInAction(() => {
+        this.objView = res
+        if (cb) cb()
+      })
+    } catch (e) {
+      errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        this.objViewLoading = false
+      })
+    }
+  }
+
+  @observable modelLoading = false
+  @observable businessModel = {}
+
+  /**
+   * @description 逻辑模型
+   */
+  @action async getBusinessModel(cb) {
+    this.modelLoading = true
+    try {
+      const res = await io.getBusinessModel({
+        id: this.objId,
+        projectId: this.projectId,
+      })
+      
+      runInAction(() => {
+        this.businessModel = res
+        if (cb) cb()
+      })
+    } catch (e) {
+      errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        this.modelLoading = false
+      })
     }
   }
 }

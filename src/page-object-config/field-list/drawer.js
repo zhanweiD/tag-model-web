@@ -1,11 +1,17 @@
 import {Component} from 'react'
-import {action} from 'mobx'
+import {action, toJS} from 'mobx'
 import {observer} from 'mobx-react'
 import {Drawer, Button} from 'antd'
 import {ModalForm} from '../../component'
 import {changeToOptions} from '../../common/util'
 
 const dataTypeData = changeToOptions((window.njkData.dict || {}).dataType || [])('value', 'key')
+
+// 名称类型映射: 1 中文名 2 英文名
+const nameTypeMap = {
+  name: 1,
+  enName: 2,
+}
 
 @observer
 export default class DrawerTagConfig extends Component {
@@ -16,6 +22,8 @@ export default class DrawerTagConfig extends Component {
 
   selectContent= () => {
     const {modalInfo: {detail}, isEnum, tagTreeData} = this.store
+    console.log(toJS(detail))
+    console.log(detail.pathIds.slice(), toJS(tagTreeData))
     return [{
       label: '标签名称',
       key: 'name',
@@ -24,7 +32,7 @@ export default class DrawerTagConfig extends Component {
       rules: [
         '@transformTrim',
         '@required',
-        // {validator: this.checkName},
+        {validator: this.checkName},
       ],
     }, {
       label: '唯一标识',
@@ -34,7 +42,7 @@ export default class DrawerTagConfig extends Component {
       rules: [
         '@transformTrim',
         '@required',
-        // {validator: this.checkName},
+        {validator: this.checkName},
       ],
     }, {
       label: '数据类型',
@@ -64,6 +72,10 @@ export default class DrawerTagConfig extends Component {
       hide: !isEnum,
       initialValue: detail.enumValue,
       component: 'textArea',
+      rules: [
+        '@transformTrim',
+        '@required',
+      ],
       control: {
         placeholder: '若标签值为枚举型，可将枚举代码值显示为易理解的值，例如：{"0":"女","1":"男"}',
       },
@@ -124,10 +136,7 @@ export default class DrawerTagConfig extends Component {
           enName: values.enName,
           descr: values.descr,
           pathIds: values.pathIds,
-          parentId: detail.parentId || (
-            values.pathIds && values.pathIds.length 
-              ? values.pathIds[values.pathIds.length - 1] 
-              : null),
+          parentId: values.pathIds && values.pathIds.length ? values.pathIds[values.pathIds.length - 1] : detail.parentId, 
         }]
 
         store.createBatchTag(params)
@@ -135,17 +144,24 @@ export default class DrawerTagConfig extends Component {
     })
   }
 
-  // checkName = (rule, value, callback) => {
-  //   const params = {
-  //     name: value,
-  //   }
+  /**
+   * @description 重名校验
+   */
+  checkName = (rule, value, callback) => {
+    const {modalInfo: {detail}} = this.store
 
-  //   if (this.store.detail.id) {
-  //     params.id = this.store.detail.id
-  //   }
+    const params = {
+      name: value,
+      nameType: nameTypeMap[rule.field], // 名称类型: 1 中文名 2 英文名
+    }
+    
+    if (detail.id) {
+      params.id = detail.id
+    }
 
-  //   this.store.checkName(params, callback)
-  // }
+    this.store.checkName(params, callback)
+  }
+
 
   render() {
     const {modalInfo, confirmLoading} = this.store

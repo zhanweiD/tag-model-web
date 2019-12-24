@@ -1,6 +1,6 @@
 import {Component} from 'react'
 import {action} from 'mobx'
-import TimeRange from '../../component'
+import {TimeRange} from '../../component'
 import {getApiTrendOpt} from './charts-options'
 
 export default class TrendApi extends Component {

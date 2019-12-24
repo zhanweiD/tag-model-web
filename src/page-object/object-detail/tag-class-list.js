@@ -50,6 +50,9 @@ export default class TagList extends Component {
 
   onSearch = keyword => {
     const {tagList} = this.store
+
+    this.store.keyword = keyword
+
     this.store.getTagList({
       keyword,
       currentPage: 1,
@@ -91,7 +94,7 @@ export default class TagList extends Component {
 
 
   render() {
-    const {tagList} = this.store
+    const {tagList, keyword} = this.store
 
     const rowSelection = {
       selectedRowKeys: this.selectedRowKeys,
@@ -118,12 +121,17 @@ export default class TagList extends Component {
       text: '没有任何标签，请在当前页面选择标签！',
     }
 
-
     return (
       <div className="pt32">
         <p className="mb16">标签列表</p>
         {
-          tagList.list.length ? (
+          !tagList.list.length && typeof keyword === 'undefined' ? (
+            <NoData
+              isLoading={tagList.loading}
+              {...noDataConfig}
+            />
+          
+          ) : (
             <Fragment>
               <div className="FBH FBJB mb16">
                 <Button onClick={() => this.moveTo()} disabled={!this.selectedRowKeys.length} type="primary">批量移动至</Button>
@@ -136,11 +144,6 @@ export default class TagList extends Component {
               </div>
               <Table {...listConfig} />
             </Fragment>
-          ) : (
-            <NoData
-              isLoading={tagList.loading}
-              {...noDataConfig}
-            />
           )
         }
        

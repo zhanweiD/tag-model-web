@@ -8,6 +8,7 @@ const api = {
   getDataSheet: get(`${baseApi}/project/object/list_table`), // 添加关联字段 - 数据表列表
   getTagTree: get(`${baseApi}/cate/cate_tree`), // 标签配置 - 获取标签可移动的标签类目树
   createBatchTag: post(`${baseApi}/tag/pool/create_batch_tag`), // 标签配置 - 批量创建标签及标签字段关系
+  checkName: post(`${baseApi}/tag/name_check`), // 重名校验
 } 
 
 ioContext.create('objectConfigField', api) 

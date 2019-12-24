@@ -23,28 +23,30 @@ const navList = [
 
 @observer
 export default class Overview extends Component {
-  componentWillMount() {
-
+  componentDidMount() {
+    store.getCardInfo()
   }
 
   render() {
+    const {cardInfo} = store
+
     const cards = [
       {
         title: '实体总数',
         tooltipText: '已经发布的实体总数',
-        values: [1],
+        values: [cardInfo.entityCount || 0],
       }, {
         title: '关系总数',
         tooltipText: '已经发布的关系总数',
-        values: [2],
+        values: [cardInfo.relCount || 0],
       }, {
         title: '标签总数',
         tooltipText: '租户级别，公开的标签总数',
-        values: [3],
+        values: [cardInfo.tagCount || 0],
       }, {
         title: '项目总数',
         tooltipText: '关于标签中心的项目总数(使用中)',
-        values: [4],
+        values: [cardInfo.projectCount || 0],
       },
     ]
 

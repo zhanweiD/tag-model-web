@@ -1,4 +1,4 @@
-import {APPLY_TYPE, APPLY_STATUS} from '../../common/constants'
+import {APPLY_TYPE, APPROVAL_STATUS} from '../common/comp-approval-status'
 
 const serach = ({projectList = [], applicant = []}) => [
   {
@@ -37,7 +37,7 @@ const serach = ({projectList = [], applicant = []}) => [
     initialValue: '',
     control: {
       defaultAll: true,
-      options: APPLY_STATUS,
+      options: APPROVAL_STATUS,
     },
     component: 'select',
   }, {

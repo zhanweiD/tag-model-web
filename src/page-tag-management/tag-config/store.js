@@ -48,7 +48,8 @@ class DrawerStore {
       const res = await io.getTagData({
         id: this.objId,
         projectId: this.projectId,
-        tagIds: this.tagIds,
+        // tagIds: this.tagIds,
+        tagIds: [],
       })
       
       this.source = res || []

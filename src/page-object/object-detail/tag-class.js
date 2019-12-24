@@ -44,6 +44,7 @@ export default class TagClass extends Component {
  // 打开选择标签弹窗
  @action.bound openSelectTag() {
    store.modalSelectTagVisible = true
+   store.keyword = undefined
    store.getTagList({
      cateId: store.defaultCate.id,
      currentPage: 1,

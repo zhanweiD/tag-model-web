@@ -96,13 +96,18 @@ class Store {
           })
         }
 
-        if (!this.objId) {
-          const firstObject = res.filter(item => item.parentId !== 0)[0]
-          // 默认展开第一个对象
-          this.currentSelectKeys = firstObject && firstObject.aId
-          this.objId = firstObject && firstObject.aId
+        if (res.length) {
+          if (!this.objId) {
+            const firstObject = res.filter(item => item.parentId !== 0)[0]
+            // 默认展开第一个对象
+            this.currentSelectKeys = firstObject && firstObject.aId
+            this.objId = firstObject && firstObject.aId
+          } else {
+            this.currentSelectKeys = this.objId
+          }
         } else {
-          this.currentSelectKeys = this.objId
+          this.objId = undefined
+          this.currentSelectKeys = undefined
         }
        
         // 获取所有类目的数据；用于编辑对象时选择所属类目

@@ -1,8 +1,8 @@
-import {dateFormat} from './constants'
+import {DATE_FORMAT} from './constants'
 
 const nameTextStyleColor = 'rgba(0, 0, 0, .45)'
 const areaColor = '#31C5E9'
-const formatterFn = title => params => `日期: ${moment(+params[0].axisValue).format(dateFormat)} <br/>${title}: ${params[0].value}`
+const formatterFn = title => params => `日期: ${moment(+params[0].axisValue).format(DATE_FORMAT)} <br/>${title}: ${params[0].value}`
 
 // eslint-disable-next-line import/prefer-default-export
 export function getLineChartOpt({

@@ -50,7 +50,7 @@ export default class ModalTagAppl extends Component {
       confirmLoading,
     } = this.store
     const modalConfig = {
-      title: `${+applyInfo.type === 2 ? '上架' : '下架'}申请`,
+      title: `${+applyInfo.type === 1 ? '上架' : '下架'}申请`,
       visible,
       onCancel: this.handleCancel,
       onOk: this.submit,

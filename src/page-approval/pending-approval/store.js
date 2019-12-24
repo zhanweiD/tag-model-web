@@ -52,7 +52,10 @@ class Store extends ListContentStore(io.getList) {
       await io.goApproval(params)
       runInAction(() => {
         successTip('操作成功')
-        this.confirmLoading = true
+        this.confirmLoading = false
+        this.getList({
+          currentPage: 1,
+        })
         if (cb) cb()
       })
     } catch (e) {

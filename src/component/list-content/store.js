@@ -14,6 +14,7 @@ const filterUndefinedValues = values => {
   const filterKeys = Object.keys(values).filter(d => values[d] !== undefined && values[d] !== '')
   const filterObj = {}
   _.forEach(filterKeys, key => filterObj[key] = values[key])
+
   return filterObj
 }
 
@@ -81,7 +82,7 @@ const ListContentStore = apiFunc => class _Store {
         ...this.initParams,
         ...this.tableSorter,
         pageSize,
-        currentPage,
+        currentPage: currentPage || 1,
         ...params,
       }))
       runInAction(() => {

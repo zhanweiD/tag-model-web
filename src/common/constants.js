@@ -26,27 +26,3 @@
 export const IS_EXIT_MSG = '名称已经存在'
 
 export const DATE_FORMAT = 'YYYY-MM-DD'
-
-// 审批管理 - 申请类型
-export const APPLY_TYPE = [{
-  name: '授权使用',
-  value: 0,
-}, {
-  name: '上下架',
-  value: 1,
-}]
-
-// 审批管理 - 申请状态
-export const APPLY_STATUS = [{
-  name: '审核中',
-  value: 0,
-}, {
-  name: '审核通过',
-  value: 1,
-}, {
-  name: '审核失败',
-  value: 2,
-}, {
-  name: '已撤销',
-  value: 3,
-}]

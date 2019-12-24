@@ -1,4 +1,4 @@
-import {APPLY_TYPE} from '../../common/constants'
+import {APPLY_TYPE} from '../common/comp-approval-status'
 
 const serach = ({projectList = [], applicant = []}) => [
   {

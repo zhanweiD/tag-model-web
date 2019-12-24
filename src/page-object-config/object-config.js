@@ -47,6 +47,25 @@ export default class ObjectConfig extends Component {
     window.location.href = `${window.__onerConfig.pathPrefix || '/'}/project`
   }
 
+  renderNodata =() => {
+    const {spaceInfo} = window
+
+    const noProjectDataConfig = {
+      btnText: '去创建项目',
+      onClick: this.goProjectList,
+      text: '没有任何项目，去项目列表页创建项目吧！',
+    }
+
+    if (spaceInfo && spaceInfo.finish && !spaceInfo.projectList.length) {
+      return (
+        <NoData
+          {...noProjectDataConfig}
+        />
+      )
+    } 
+    return <Loading mode="block" height={200} />
+  }
+
   render() {
     const {history} = this.props
     const {typeCode, objId} = store
@@ -60,12 +79,6 @@ export default class ObjectConfig extends Component {
       changeUrl: true,
     }
     const {spaceInfo} = window
-
-    const noProjectDataConfig = {
-      btnText: '去创建项目',
-      onClick: this.goProjectList,
-      text: '没有任何项目，去项目列表页创建项目吧！',
-    }
 
     // warning here
     const noObjDataConfig = {
@@ -95,16 +108,8 @@ export default class ObjectConfig extends Component {
                   </div>
                 </div>
               </Provider>
-            ) : null
-        }
-
-        {
-          spaceInfo.finish   
-            ? (
-              <NoData
-                {...noProjectDataConfig}
-              />
-            ) : <Loading mode="block" height={200} />
+            ) 
+            : this.renderNodata()
         }
       </div>
     )

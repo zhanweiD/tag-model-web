@@ -7,9 +7,11 @@ import io from '../io'
 class Store {
   // 基本详情
   @observable objId // 对象id
+  @observable typeCode // 对象类型
   @observable objDetail = {} // 对象详情
   @observable objCard = {} // 指标卡
   @observable objView = {} // 对象视图
+  @observable objViewLoading = false // 对象视图
 
   @observable loading = false
   @observable releaseLoading = false
@@ -46,16 +48,22 @@ class Store {
   }
 
   // 对象视图
-  @action async getObjView() {
+  @action async getObjView(cb) {
+    this.objViewLoading = true
     try {
       const res = await io.getObjView({
         id: this.objId,
       })
       runInAction(() => {
         this.objView = res
+        if (cb) cb()
       })
     } catch (e) {
       errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        this.objViewLoading = false
+      })
     }
   }
 

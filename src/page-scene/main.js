@@ -14,11 +14,11 @@ export default class Scene extends Component {
   render() {
     return (
       <Router>
-        <Frame page="space">
+        <Frame page="space" pageUrl="/">
           <Switch>
-            <Route exact path="/:sceneId" component={SceneDetail} />
-            <Route exact strict path="/:sceneId/tags" component={TagList} />
             <Route exact path="/" component={SceneList} />
+            <Route exact path="/:sceneId" component={SceneDetail} /> 
+            <Route exact strict path="/:sceneId/tags" component={TagList} />
             <Route
               render={() => {
                 window.location.href = '/404'

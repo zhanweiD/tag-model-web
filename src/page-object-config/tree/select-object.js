@@ -78,6 +78,10 @@ export default class SelectObject extends Component {
     this.store.saveSelectedObj(params, () => {
       t.store.getObjTree(() => {
         t.store.objId = t.store.currentSelectKeys
+
+        if (!t.store.objId) {
+          t.props.history.push(`/${t.store.typeCode}`)
+        }
       })
       t.destroy()
     })

@@ -14,6 +14,7 @@ import {objDetailTabMap} from './util'
 import ObjectView from './object-view'
 import DataSheet from './data-sheet'
 import FieldList from './field-list'
+import BusinessModel from './business-model'
 
 const {confirm} = Modal
 
@@ -137,7 +138,8 @@ export default class ObjectDetail extends Component {
     }
 
     const {tag} = tagMap[objDetail.isUsed === undefined ? 'noData' : objDetail.isUsed]
-    const Content = [ObjectView, DataSheet, FieldList, ObjectView][tabId]
+    const Content = [ObjectView, DataSheet, FieldList, BusinessModel][tabId]
+    // const Content = [ObjectView, DataSheet, FieldList, ObjectView][tabId]
 
     return (
       <div className="object-detail">
@@ -163,7 +165,7 @@ export default class ObjectDetail extends Component {
         </Spin>
         <TabRoute {...tabConfig} />
         <div className="object-tab-content">
-          <Content objId={objId} />
+          <Content objId={objId} bigStore={this.store} />
         </div>
       </div>
     )

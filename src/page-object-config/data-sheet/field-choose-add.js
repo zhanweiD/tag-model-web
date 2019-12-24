@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-closing-tag-location */
 import {Component} from 'react'
-import {action, toJS} from 'mobx'
+import {action} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {Button, Table} from 'antd'
 import {ModalForm} from '../../component'
@@ -36,7 +36,6 @@ export default class FieldChooseAdd extends Component {
       if (!err) {
         _.delay(() => {
           this.store.fieldTableList = this.store.fieldList.filter(d => !d.disabled)
-          console.log(toJS(this.store.fieldTableList))
           this.store.fieldListLoading = false
         }, 100)
       }

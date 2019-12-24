@@ -13,7 +13,7 @@ export default class Page extends Component {
   render() {
     return (
       <Router>
-        <Frame page="space">
+        <Frame page="space" pageUrl="/">
           <Switch>
             <Route exact path="/:tagId" component={TagDetail} />
             <Route exact path="/" component={TagList} />

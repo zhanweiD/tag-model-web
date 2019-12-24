@@ -7,5 +7,10 @@ const deployConfig = {
   74: {
     web: '192.168.90.74',
   },
+  // 标准版测试 144
+  144: {
+    web: '192.168.90.144',
+    dir: '/opt/workspace/front',
+  },
 }
 module.exports = deployConfig
