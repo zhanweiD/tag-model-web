@@ -108,16 +108,16 @@ export default class TagApply extends Component {
                 
                   })(<Select placeholder="请选择使用项目">
                     {
-                      useProjectList.map(({useProjectId: id, useProjectName}) => (
+                      useProjectList.map(({useProjectId: id, useProjectName: name}) => (
                         <Option 
                           key={id} 
                           value={id}
                         >
-                          {useProjectName}
+                          {name}
                         </Option>
                       ))
                     }
-                     </Select>)
+                  </Select>)
                 }
               </FormItem>
             )
@@ -134,11 +134,11 @@ export default class TagApply extends Component {
             })(
               <Radio.Group>
                 <Radio value={1}>永久</Radio>
-                <Radio value={0}>自定义</Radio>
+                {/* <Radio value={0}>自定义</Radio> */}
               </Radio.Group>
             )}
           </FormItem>
-          {!getFieldValue('forever') ? (
+          {/* {!getFieldValue('forever') ? (
             <FormItem
               {...formItemLayout}
               label="自定义时长"
@@ -152,7 +152,7 @@ export default class TagApply extends Component {
               )}
             </FormItem>
           )
-            : null }
+            : null } */}
          
           <FormItem
             {...formItemLayout}

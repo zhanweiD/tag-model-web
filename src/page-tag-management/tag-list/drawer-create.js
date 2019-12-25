@@ -49,7 +49,8 @@ export default class DrawerCreate extends Component {
         options: objectSelectList,
         onSelect: v => this.selectObject(v),
       },
-    }, {
+    }, 
+    {
       label: '所属类目',
       key: 'cateId',
       initialValue: drawerTagInfo.parentId ? [drawerTagInfo.parentId] : undefined,
@@ -58,11 +59,13 @@ export default class DrawerCreate extends Component {
         '@requiredSelect',
       ],
       control: {
+        disabled: !ownObject,
         options: tagCateSelectList,
         valueName: 'id',
         selectCon: ['isLeaf', 2],
       },
-    }, {
+    }, 
+    {
       label: '标签名称',
       key: 'name',
       initialValue: drawerTagInfo.name,
@@ -70,6 +73,7 @@ export default class DrawerCreate extends Component {
       rules: [
         '@transformTrim',
         '@required',
+        '@max32',
         {validator: this.checkName},
       ],
       control: {
@@ -83,6 +87,7 @@ export default class DrawerCreate extends Component {
       rules: [
         '@transformTrim',
         '@required',
+        '@max32',
         {validator: this.checkName},
       ],
       control: {
@@ -139,6 +144,9 @@ export default class DrawerCreate extends Component {
       key: 'descr',
       initialValue: drawerTagInfo.descr,
       component: 'textArea',
+      rules: [
+        '@max128',
+      ],
     }]
   }
 

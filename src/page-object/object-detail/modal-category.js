@@ -36,6 +36,7 @@ export default class ModalCategory extends Component {
       rules: [
         '@transformTrim',
         '@required',
+        '@max32',
         {validator: this.checkName}, // here warning
       ],
     }, {
@@ -43,6 +44,9 @@ export default class ModalCategory extends Component {
       key: 'descr',
       initialValue: judgeEditType(detail.descr, editType),
       component: 'textArea',
+      rules: [
+        '@max128',
+      ],
     }]
 
     const modalConfig = {

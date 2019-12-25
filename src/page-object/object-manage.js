@@ -35,10 +35,18 @@ export default class ObjectManage extends Component {
     store.updateTreeKey = Math.random()
   }
 
+  @action addObject = () => {
+    store.addObjectUpdateKey = Math.random()
+  }
+
   render() {
     const {history} = this.props
     const {
-      typeCode, objId, updateTreeKey, updateDetailKey,
+      typeCode, 
+      objId, 
+      updateTreeKey,
+      updateDetailKey,
+      addObjectUpdateKey,
     } = store
 
     const tabConfig = {
@@ -52,7 +60,7 @@ export default class ObjectManage extends Component {
 
     const noDataConfig = {
       btnText: '添加对象',
-      // onClick: () => this.handleModalVisible(),
+      onClick: this.addObject,
       code: 'asset_tag_obj_add_edit_del_publish',
       noAuthText: '暂无数据',
       text: '没有任何对象，请在当前页面添加对象！',
@@ -64,11 +72,19 @@ export default class ObjectManage extends Component {
           <div className="content-header">{navListMap.object.text}</div>
           <TabRoute {...tabConfig} />
           <div className="object-content">
-            <Tree updateTreeKey={updateTreeKey} history={history} />
+            <Tree 
+              history={history}
+              updateTreeKey={updateTreeKey} 
+              addObjectUpdateKey={addObjectUpdateKey}
+            />
             {
-              objId ? <ObjectDetail updateDetailKey={updateDetailKey} objId={objId} /> : (
+              objId ? (
+                <ObjectDetail 
+                  updateDetailKey={updateDetailKey} 
+                  objId={objId} 
+                />
+              ) : (
                 <NoData
-                  // isLoading={loading}
                   {...noDataConfig}
                 />
               )

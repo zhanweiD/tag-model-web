@@ -22,8 +22,7 @@ export default class DrawerTagConfig extends Component {
 
   selectContent= () => {
     const {modalInfo: {detail}, isEnum, tagTreeData} = this.store
-    console.log(toJS(detail))
-    console.log(detail.pathIds.slice(), toJS(tagTreeData))
+
     return [{
       label: '标签名称',
       key: 'name',
@@ -32,6 +31,7 @@ export default class DrawerTagConfig extends Component {
       rules: [
         '@transformTrim',
         '@required',
+        '@max32',
         {validator: this.checkName},
       ],
     }, {
@@ -42,6 +42,7 @@ export default class DrawerTagConfig extends Component {
       rules: [
         '@transformTrim',
         '@required',
+        '@max32',
         {validator: this.checkName},
       ],
     }, {
@@ -96,6 +97,9 @@ export default class DrawerTagConfig extends Component {
       key: 'descr',
       initialValue: detail.descr,
       component: 'textArea',
+      rules: [
+        '@max128',
+      ],
     }]
   }
 

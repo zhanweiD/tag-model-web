@@ -18,6 +18,7 @@ export default class ModalTagAppl extends Component {
     rules: [
       '@transformTrim',
       '@required',
+      '@max128',
     ],
   }]
 

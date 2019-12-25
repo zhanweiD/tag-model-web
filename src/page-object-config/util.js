@@ -24,10 +24,12 @@ export const objDetailTabMap = [{
 }, {
   name: '字段列表',
   value: 2,
-}, {
-  name: '业务模型',
-  value: 3,
-}]
+},
+//  {
+//   name: '业务模型',
+//   value: 3,
+// }
+]
 
 // 使用状态
 export const usedStatusMap = status => {

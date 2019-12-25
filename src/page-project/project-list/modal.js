@@ -21,6 +21,7 @@ export default class ModalProject extends Component {
       rules: [
         '@transformTrim',
         '@required',
+        '@max32',
         {validator: this.checkName},
       ],
     }, {

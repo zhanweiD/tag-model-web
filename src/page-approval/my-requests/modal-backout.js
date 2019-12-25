@@ -46,6 +46,7 @@ export default class ModalBackout extends Component {
               rules: [
                 {transform: value => value && value.trim()},
                 {required: true, whitespace: true, message: '描述不可为空'},
+                {max: 128, whitespace: true, message: '输入不能超过128个字符'},
               ],
             })(
               <TextArea placeholder="请输入撤销申请描述" />

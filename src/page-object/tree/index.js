@@ -81,12 +81,21 @@ export default class Tree extends Component {
   }
 
   componentWillReceiveProps(next) {
-    const {updateTreeKey} = this.props
+    const {updateTreeKey, addObjectUpdateKey} = this.props
     if (!_.isEqual(updateTreeKey, next.updateTreeKey)) {
       store.typeCode = this.bigStore.typeCode
       store.objId = this.bigStore.objId
 
       this.getTreeData()
+    }
+
+    if (!_.isEqual(addObjectUpdateKey, next.addObjectUpdateKey)) {
+      store.categoryModal = {
+        visible: true,
+        editType: 'add',
+        type: 'add',
+        detail: {},
+      }
     }
   }
 

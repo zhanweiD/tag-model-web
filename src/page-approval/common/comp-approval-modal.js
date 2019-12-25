@@ -133,10 +133,10 @@ export default class ModalDetail extends Component {
         <NormalLableItem label="权限归属" value={data.projectName} />
         <NormalLableItem label="申请内容" value={data.content} />
         <NormalLableItem label="申请时长" value={foreverMap[+data.forever]} />
-        {
+        {/* {
           data.forever !== 1
           && <NormalLableItem label="自定义时长" value={`${moment(+data.startTime).format('YYYY-MM-DD')} ~ ${moment(+data.endTime).format('YYYY-MM-DD')}`} />
-        }
+        } */}
         <NormalLableItem label="申请人" value={data.applyUserName} />
         <NormalLableItem label="申请时间" value={moment(+data.cTime).format('YYYY-MM-DD HH:mm:ss')} />
         <NormalLableItem label="申请理由" value={data.applyDescr} />
@@ -207,6 +207,7 @@ export default class ModalDetail extends Component {
               rules: [
                 {transform: value => value && value.trim()},
                 {required: true, whitespace: true, message: '审批描述不可为空'},
+                {max: 128, whitespace: true, message: '输入不能超过128个字符'},
               ],
             })(
               <TextArea placeholder="请输入审批描述" />

@@ -5,7 +5,9 @@ import {Component, Fragment} from 'react'
 import {observer, inject} from 'mobx-react'
 import {action} from 'mobx'
 import {Button} from 'antd'
-import {ListContent, Tag} from '../component'
+import {
+  ListContent, Tag, Loading, NoData,
+} from '../component'
 import {getDataTypeName} from '../common/util'
 import ModalApply from './modal-apply'
 
@@ -43,6 +45,11 @@ export default class TagSearch extends Component {
     const {frameChange} = this.props
     frameChange('nav', navList)
     // 获取所属对象下拉数据
+
+    // 请求列表，放在父组件进行请求是因为需要在外层做空数据判断。
+    // 若返回数据为空[]。则渲染 NoData 组件。
+    // 要是请求放在列表组件ListContent中的话, 就必须渲染表格的dom 影响体验
+    store.getList()
   }
 
   columns = [
@@ -87,12 +94,12 @@ export default class TagSearch extends Component {
       render: (text, record) => (
         <div className="FBH FBAC">
           {/* eslint-disable-next-line no-underscore-dangle */}
-          <a href={`${window.__onerConfig.pathPrefix}/tag-management#/${record.id}`}>标签详情</a>  
+          <a href={`${window.__onerConfig.pathPrefix}/tag-management#/${record.id}`}>标签详情</a>
           <span className="table-action-line" />
           {
-            record.status === 0 
-              ? <a href onClick={() => this.openApplyModal(record)}>权限申请</a> 
-              : <a href onClick={() => this.openSceneModal(record)}>添加到业务场景</a> 
+            record.status === 0
+              ? <a href onClick={() => this.openApplyModal(record)}>权限申请</a>
+              : <a href onClick={() => this.openSceneModal(record)}>添加到业务场景</a>
           }
         </div>
       ),
@@ -103,12 +110,12 @@ export default class TagSearch extends Component {
     if (!store.projectName) {
       store.getProjectDetail()
     }
-    store.tagIds.replace([data.id]) 
+    store.tagIds.replace([data.id])
     store.modalApplyVisible = true
   }
 
   @action.bound openSceneModal() {
-    store.occTags.replace([this.rowKeys]) 
+    store.occTags.replace([this.rowKeys])
     store.modalSceneVisible = true
   }
 
@@ -125,9 +132,59 @@ export default class TagSearch extends Component {
    * @description 批量添加到业务场景
    */
   @action.bound batchAction() {
-    store.tagIds.replace(store.rowKeys) 
+    store.tagIds.replace(store.rowKeys)
     store.modalVisible = true
   }
+
+  // 是否有进行搜索操作
+  isSearch = () => {
+    const {
+      hotWord,
+      objectId,
+      useProjectId,
+      ownProjectId,
+      projectPermission,
+    } = store
+
+    if (
+      typeof hotWord === 'undefined'
+      && useProjectId === ''
+      && objectId === ''
+      && typeof projectPermission === 'undefined'
+      && ownProjectId === ''
+    ) {
+      return false
+    }
+
+    return true
+  }
+
+
+  // 跳转到项目列表
+  goProjectList = () => {
+    window.location.href = `${window.__onerConfig.pathPrefix || '/'}/project`
+  }
+
+  renderNodata = () => {
+    const {spaceInfo} = window
+
+    const noProjectDataConfig = {
+      btnText: '去创建项目',
+      onClick: this.goProjectList,
+      text: '没有任何项目，去项目列表页创建项目吧！',
+    }
+
+    if (spaceInfo && spaceInfo.finish && !spaceInfo.projectList.length) {
+      return (
+        <NoData
+          {...noProjectDataConfig}
+        />
+      )
+    }
+
+    return <Loading mode="block" height={200} />
+  }
+
 
   render() {
     const {useProjectId, list} = store
@@ -136,32 +193,36 @@ export default class TagSearch extends Component {
       selectedRowKeys: store.rowKeys.slice(),
       onChange: this.onTableCheck,
       getCheckboxProps: record => ({
-        disabled: !record.status, // 标签权限状态为无效 不可添加到业务场景
+        disabled: record.status === 2, // 标签权限状态为无效 不可添加到业务场景
       }),
     }
 
     const buttons = list.length ? [
       <Button type="primary" disabled={!store.rowKeys.length} onClick={this.batchAction}>批量添加到业务场景</Button>,
       <span className="ml8">
-        已选择 
+        已选择
         <span style={{color: '#0078FF'}} className="mr4 ml4">{store.rowKeys.length}</span>
         项
       </span>,
     ] : null
-  
+
     const listConfig = {
       columns: this.columns,
       initParams: {useProjectId},
       buttons,
       rowSelection,
       rowKey: 'id',
+      initGetDataByParent: true, // 初始请求 在父层组件处理。列表组件componentWillMount内不再进行请求
       store, // 必填属性
     }
+
+    const {spaceInfo} = window
+
     return (
       <div>
         <div className="content-header">{navListMap.tagSearch.text}</div>
         {
-          useProjectId ? (
+          spaceInfo && spaceInfo.projectId && spaceInfo.projectList && spaceInfo.projectList.length ? (
             <Fragment>
               <Search store={store} />
               <div className="search-list">
@@ -169,7 +230,7 @@ export default class TagSearch extends Component {
                 <ModalApply store={store} />
               </div>
             </Fragment>
-          ) : null
+          ) : this.renderNodata()
         }
       </div>
     )

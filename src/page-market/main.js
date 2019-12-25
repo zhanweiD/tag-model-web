@@ -25,7 +25,7 @@ const navList = [
 @observer
 export default class Market extends Component {
   componentWillMount() {
-    // 请求项目列表，放在父组件进行请求是因为需要在外层做空数据判断。
+    // 请求列表，放在父组件进行请求是因为需要在外层做空数据判断。
     // 若返回数据为空[]。则渲染 NoData 组件。
     // 要是请求放在列表组件ListContent中的话, 就必须渲染表格的dom 影响体验
     store.getList()

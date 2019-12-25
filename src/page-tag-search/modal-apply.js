@@ -105,11 +105,11 @@ export default class TagApply extends Component {
             })(
               <Radio.Group>
                 <Radio value={1}>永久</Radio>
-                <Radio value={0}>自定义</Radio>
+                {/* <Radio value={0}>自定义</Radio> */}
               </Radio.Group>
             )}
           </FormItem>
-          {!getFieldValue('forever') ? (
+          {/* {!getFieldValue('forever') ? (
             <FormItem
               {...formItemLayout}
               label="自定义时长"
@@ -123,7 +123,7 @@ export default class TagApply extends Component {
               )}
             </FormItem>
           )
-            : null }
+            : null } */}
          
           <FormItem
             {...formItemLayout}
@@ -132,6 +132,7 @@ export default class TagApply extends Component {
             {getFieldDecorator('applyDescr', {
               rules: [
                 {required: true, message: '请输入申请理由'},
+                {max: 128, whitespace: true, message: '输入不能超过128个字符'},
               ],
             })(
               <TextArea placeholder="请输入申请理由" />

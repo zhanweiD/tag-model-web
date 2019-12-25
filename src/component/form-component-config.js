@@ -114,6 +114,8 @@ export const mergeRules = (rules, label) => {
     '@transformTrim': {transform: value => value && value.trim()}, // 输入类型为string；校验时进行trim()去掉前后空格
     '@required': {required: true, whitespace: true, message: `请输入${label}`},
     '@requiredSelect': {required: true, message: `请选择${label}`},
+    '@max32': {max: 32, message: '输入不能超过32个字符'},
+    '@max128': {max: 128, message: '输入不能超过128个字符'},
   }
 
   return rules.map(rule => (typeof rule === 'string' ? map[rule] : rule))

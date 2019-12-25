@@ -75,27 +75,20 @@ module.exports = [
           ctx.njkData.dict = rs.content
           const rs2 = await rp(typeCodesOptions)
           ctx.njkData.typeCodes = rs2.content || [{
-            objTypeCode: 1,
-            objTypeName: '人',
-          }, {
-            objTypeCode: 2,
-            objTypeName: '物',
-          }, {
             objTypeCode: 3,
             objTypeName: '关系',
+          }, {
+            objTypeCode: 4,
+            objTypeName: '实体',
           }]
         } catch (e) {
           ctx.njkData.typeCodes = [{
-            objTypeCode: 1,
-            objTypeName: '人',
-          }, {
-            objTypeCode: 2,
-            objTypeName: '物',
-          }, {
             objTypeCode: 3,
             objTypeName: '关系',
+          }, {
+            objTypeCode: 4,
+            objTypeName: '实体',
           }]
-          console.log(e)
         }
       }
       await next()

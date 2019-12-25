@@ -14,7 +14,7 @@ import {objDetailTabMap} from './util'
 import ObjectView from './object-view'
 import DataSheet from './data-sheet'
 import FieldList from './field-list'
-import BusinessModel from './business-model'
+// import BusinessModel from './business-model'
 
 const {confirm} = Modal
 
@@ -138,8 +138,8 @@ export default class ObjectDetail extends Component {
     }
 
     const {tag} = tagMap[objDetail.isUsed === undefined ? 'noData' : objDetail.isUsed]
-    const Content = [ObjectView, DataSheet, FieldList, BusinessModel][tabId]
-    // const Content = [ObjectView, DataSheet, FieldList, ObjectView][tabId]
+    // const Content = [ObjectView, DataSheet, FieldList, BusinessModel][tabId]
+    const Content = [ObjectView, DataSheet, FieldList][tabId]
 
     return (
       <div className="object-detail">

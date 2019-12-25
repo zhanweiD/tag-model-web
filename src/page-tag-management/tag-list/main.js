@@ -218,7 +218,7 @@ export default class TagManagement extends Component {
     const {frameChange} = this.props
     frameChange('nav', navList)
     // 获取所属对象下拉数据
-    store.getObjectSelectList()
+    store.getObjectSelectList() 
   }
 
   // 跳转到项目列表
@@ -235,7 +235,6 @@ export default class TagManagement extends Component {
       text: '没有任何项目，去项目列表页创建项目吧！',
     }
 
-    console.log(spaceInfo.finish && !spaceInfo.projectList.length)
     if (spaceInfo && spaceInfo.finish && !spaceInfo.projectList.length) {
       return (
         <NoData
@@ -272,11 +271,11 @@ export default class TagManagement extends Component {
 
     return (
       <div>
+        <div className="content-header">{navListMap.tagManagement.text}</div>
         {
           spaceInfo && spaceInfo.projectId && spaceInfo.projectList && spaceInfo.projectList.length
             ? (
-              <div>
-                <div className="content-header">{navListMap.tagManagement.text}</div>
+              <Fragment>
                 <div className="m16">
                   <ListContent {...listConfig} />
                 </div>
@@ -289,10 +288,11 @@ export default class TagManagement extends Component {
                   onClose={closeTagConfig}
                   onUpdate={updateTagConfig}
                 />
-              </div>
+              </Fragment>
             ) : this.renderNodata()
-        }
+        }    
       </div>
+
     )
   }
 }

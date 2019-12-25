@@ -29,6 +29,9 @@ class Store {
   @observable selectedObjList = []
   @observable selectedObjLoading = false
 
+  @observable selectObjUpdateKey = undefined
+
+
   @action destory() {
     this.searchKey = undefined
     this.expandAll = false
@@ -320,7 +323,7 @@ class Store {
 
       runInAction(() => {
         const data = this.getLinksObj(res.links, res.obj)
-        console.log(data)
+
         this.businessModel = data
         if (cb) cb()
       })

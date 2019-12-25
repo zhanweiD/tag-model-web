@@ -2,7 +2,7 @@
  * @description 项目列表
  */
 import {Component, Fragment} from 'react'
-import {action} from 'mobx'
+import {action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {Popconfirm, Badge, Button} from 'antd'
 import {Link} from 'react-router-dom'
@@ -99,7 +99,7 @@ export default class ProjectList extends Component {
     // 页面初始化
     store.getCuser() // 获取项目所有者列表
 
-    // 请求项目列表，放在父组件进行请求是因为需要在外层做空数据判断。
+    // 请求列表，放在父组件进行请求是因为需要在外层做空数据判断。
     // 若返回数据为空[]。则渲染 NoData 组件。
     // 要是请求放在列表组件ListContent中的话, 就必须渲染表格的dom 影响体验
     store.getList()
@@ -146,7 +146,9 @@ export default class ProjectList extends Component {
   }
 
   render() {
-    const {cUser, list, tableLoading} = store
+    const {
+      cUser, list, tableLoading, searchParams,
+    } = store
 
     const noDataConfig = {
       btnText: '创建项目',
@@ -166,11 +168,11 @@ export default class ProjectList extends Component {
     return (
       <div className="page-project">
         <div className="content-header">{navListMap.project.text}</div>
-        <div className="list-content">
+        {/* <div className="list-content">
           <ListContent {...listConfig} />
-        </div>
-        {/* {
-          list.length ? (
+        </div> */}
+        {
+          list.length || JSON.stringify(searchParams) !== '{}' ? (
             <div className="list-content">
               <ListContent {...listConfig} />
             </div>
@@ -180,7 +182,7 @@ export default class ProjectList extends Component {
               {...noDataConfig}
             />
           )
-        } */}
+        }
         <ModalProject store={store} />
       </div>
     )

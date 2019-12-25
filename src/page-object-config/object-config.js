@@ -1,7 +1,7 @@
 /**
  * @description 项目空间 - 对象配置
  */
-import {Component} from 'react'
+import {Component, Fragment} from 'react'
 import {action} from 'mobx'
 import {observer, Provider} from 'mobx-react'
 import {TabRoute, Loading, NoData} from '../component'
@@ -42,6 +42,10 @@ export default class ObjectConfig extends Component {
     })
   }
 
+  @action selectObject = () => {
+    store.selectObjUpdateKey = Math.random()
+  }
+
   // 跳转到项目列表
   goProjectList = () => {
     window.location.href = `${window.__onerConfig.pathPrefix || '/'}/project`
@@ -68,7 +72,12 @@ export default class ObjectConfig extends Component {
 
   render() {
     const {history} = this.props
-    const {typeCode, objId} = store
+    const {
+      typeCode, 
+      objId, 
+      treeLoading,
+      selectObjUpdateKey, 
+    } = store
 
     const tabConfig = {
       tabs,
@@ -83,34 +92,37 @@ export default class ObjectConfig extends Component {
     // warning here
     const noObjDataConfig = {
       btnText: '选择对象',
-      onClick: this.goProjectList,
+      onClick: this.selectObject,
       text: '没有任何对象，请在当前页面选择对象！',
+      isLoading: treeLoading,
     }
 
     return (
       <div>
-        {
-          spaceInfo && spaceInfo.projectId && spaceInfo.projectList && spaceInfo.projectList.length 
-            ? (
-              <Provider bigStore={store}>
-                <div className="page-object">
-                  <div className="content-header">{navListMap.objectConfig.text}</div>
-                  <TabRoute {...tabConfig} />
-                  <div className="object-content">
-                    <Tree history={history} />
-                    {
-                      objId ? <ObjectDetail objId={objId} history={history} /> : (
-                        <NoData
-                          {...noObjDataConfig}
-                        />
-                      )
-                    }
-                  </div>
-                </div>
-              </Provider>
-            ) 
-            : this.renderNodata()
-        }
+        <Provider bigStore={store}>
+          <div className="page-object">
+            <div className="content-header">{navListMap.objectConfig.text}</div>
+            {
+              spaceInfo && spaceInfo.projectId && spaceInfo.projectList && spaceInfo.projectList.length
+                ? (
+                  <Fragment>
+                    <TabRoute {...tabConfig} />
+                    <div className="object-content">
+                      <Tree history={history} selectObjUpdateKey={selectObjUpdateKey} />
+                      {
+                        objId ? <ObjectDetail objId={objId} history={history} /> : (
+                          <NoData
+                            {...noObjDataConfig}
+                          />
+                        )
+                      }
+                    </div>
+                  </Fragment>
+                ) 
+                : this.renderNodata()
+            }      
+          </div>
+        </Provider>
       </div>
     )
   }

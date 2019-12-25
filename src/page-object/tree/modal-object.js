@@ -47,6 +47,7 @@ export default class ModalObject extends Component {
       rules: [
         '@transformTrim',
         '@required',
+        '@max32',
         {validator: this.checkName},
       ],
     }, {
@@ -57,6 +58,7 @@ export default class ModalObject extends Component {
       rules: [
         '@transformTrim',
         '@required',
+        '@max32',
         {validator: this.checkName},
       ],
     }, {
@@ -67,6 +69,7 @@ export default class ModalObject extends Component {
       rules: [
         '@transformTrim',
         '@required',
+        '@max32',
         {validator: this.checkName},
       ],
     }, {
@@ -95,6 +98,9 @@ export default class ModalObject extends Component {
       key: 'descr',
       initialValue: data.descr,
       component: 'textArea',
+      rules: [
+        '@max128',
+      ],
     }]
 
     const modalConfig = {
@@ -140,6 +146,7 @@ export default class ModalObject extends Component {
       rules: [
         '@transformTrim',
         '@required',
+        '@max32',
         {validator: this.checkName},
       ],
     }, {
@@ -150,6 +157,7 @@ export default class ModalObject extends Component {
       rules: [
         '@transformTrim',
         '@required',
+        '@max32',
         {validator: this.checkName},
       ],
     }, {
@@ -159,6 +167,7 @@ export default class ModalObject extends Component {
       component: 'input',
       rules: [
         '@transformTrim',
+        '@max32',
         {validator: this.checkName},
       ],
     }, {
@@ -201,6 +210,9 @@ export default class ModalObject extends Component {
       key: 'descr',
       initialValue: data.descr,
       component: 'textArea',
+      rules: [
+        '@max128',
+      ],
     }]
 
     const modalConfig = {

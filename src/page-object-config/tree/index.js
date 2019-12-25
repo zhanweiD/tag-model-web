@@ -28,6 +28,13 @@ export default class Tree extends Component {
     this.getTreeData()
   }
 
+  componentWillReceiveProps(next) {
+    const {selectObjUpdateKey} = this.props
+    if (!_.isEqual(selectObjUpdateKey, next.selectObjUpdateKey)) {
+      this.store.selectObjVisible = true
+    }
+  }
+
   getTreeData() {
     this.store.getObjTree(() => {
       this.store.objId = this.store.currentSelectKeys
