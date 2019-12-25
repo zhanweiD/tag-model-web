@@ -4,7 +4,7 @@
 import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
 import {
-  observable, action, toJS,
+  observable, action,
 } from 'mobx'
 import {Tree} from 'antd'
 import {NoBorderInput, Loading} from '../../component'
@@ -25,7 +25,7 @@ export default class CateTree extends Component {
 
   componentWillReceiveProps(next) {
     const {removeListItem, selTypeCode} = this.props
-    if (!_.isEqual(removeListItem, next.removeListItem)) {
+    if (!_.isEqual(removeListItem, next.removeListItem) && next.removeListItem) {
       this.checkedKeys = this.checkedKeys.filter(
         id => (+id !== +next.removeListItem.id) && (+id !== +next.removeListItem.objCatId)
       )

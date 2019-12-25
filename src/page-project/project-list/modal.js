@@ -56,6 +56,9 @@ export default class ModalProject extends Component {
       key: 'descr',
       initialValue: detail.descr,
       component: 'textArea',
+      rules: [
+        '@max128',
+      ],
     }]
   }
 
