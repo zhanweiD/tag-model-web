@@ -52,7 +52,7 @@ export default class TagSearch extends Component {
       dataIndex: 'name',
       render: (text, record) => (
         <div>
-          <span>{text}</span>
+          <span className="mr8">{text}</span>
           {
             record.status === 1 ? <Tag status="success" /> : null
           }

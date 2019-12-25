@@ -12,6 +12,7 @@ const api = {
   getObjCard: get(`${projectSpaceApi}/object/object_card`), // 对象配置指标卡
   getObjView: get(`${projectSpaceApi}/object/object_view`), // 对象视图
   getBusinessModel: get(`${projectSpaceApi}/object/business_model`), // 逻辑模型
+  getBMRelation: get(`${projectSpaceApi}/object/list_relation`), // 项目下与对象相关的关系对象列表
   getObjCate: get(`${projectSpaceApi}/object/obj_cate_tree`), // 选择对象-对象类目树
   getObjSelectedList: get(`${projectSpaceApi}/object/list_obj`), // 选择对象- 已选对象列表
   getObjSelectedDetail: get(`${projectSpaceApi}/object/list_obj_info`), // 选择对象- 获取选择对象列表信息加入选择列表

@@ -78,6 +78,7 @@ export default class PendingApproval extends Component {
 
   @action modalCancel = () => {
     this.visible = false 
+    store.detail = {}
   } 
 
   handleSubmit = params => {

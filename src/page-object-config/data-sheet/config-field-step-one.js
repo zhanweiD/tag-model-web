@@ -72,7 +72,7 @@ export default class StepOne extends React.Component {
             getCheckboxProps(value) {
               return {
                 defaultChecked: false,
-                disabled: +value.isUsed === 1,
+                disabled: +value.isUsed === 1 || value.status === 2, // 标签被使用 或者 标签已发布不能操作
               }
             },
           }}

@@ -69,6 +69,7 @@ export default class Approved extends Component {
 
   @action modalCancel = () => {
     this.visible = false 
+    store.detail = {}
   } 
 
   /**

@@ -17,6 +17,7 @@ export default class FieldChoose extends Component {
 
   componentWillMount() {
     const {show} = this.props
+    const {objDetail} = this.bigStore
 
     if (show) {
       const {editSelectedItem} = this.store
@@ -24,7 +25,10 @@ export default class FieldChoose extends Component {
       this.store.tableName = editSelectedItem.dataTableName
       this.store.majorKeyField = editSelectedItem.mappingKey
       
-      this.store.getAssMappingKey(() => this.store.getReledFieldList())
+      if (+objDetail.objTypeCode === 3) {
+        this.store.getAssMappingKey(() => this.store.getReledFieldList())
+      }
+      this.store.getReledFieldList()
     }
   }
 
@@ -133,6 +137,9 @@ export default class FieldChoose extends Component {
     const rowSelection = {
       selectedRowKeys,
       onChange: this.selectFieldTable,
+      getCheckboxProps: value => ({
+        disabled: value.status === 2, // 已发布标签 不能取消
+      }),
     }
 
     const listConfig = {

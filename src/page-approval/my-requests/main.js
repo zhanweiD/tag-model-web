@@ -101,6 +101,7 @@ export default class MyRequests extends Component {
 
   @action modalCancel = () => {
     this.visible = false 
+    store.detail = {}
   } 
 
   @action modalBackoutCancel = () => {

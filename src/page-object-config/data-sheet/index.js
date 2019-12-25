@@ -64,9 +64,14 @@ export default class DataSheet extends Component {
       width: 220,
       render: (text, record) => (
         <div>
-          <Popconfirm placement="topRight" title="你确定要移除该数据表吗？" onConfirm={() => this.removeList(record)}>
-            <a href>移除</a>
-          </Popconfirm>
+          {
+            (record.isUsed || record.status === 2) ? <span className="disabled">移除</span> : (
+              <Popconfirm placement="topRight" title="你确定要移除该数据表吗？" onConfirm={() => this.removeList(record)}>
+                <a href>移除</a>
+              </Popconfirm>
+            )
+          }
+          
           <span className="table-action-line" />
           <a href onClick={() => this.editRelField(record)}>编辑关联字段</a>
           <span className="table-action-line" />

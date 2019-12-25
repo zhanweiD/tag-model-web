@@ -27,6 +27,9 @@ const ListContentStore = apiFunc => class _Store {
   // 加载标识
   @observable tableLoading = false
 
+  // 搜索条件
+  @observable searchParams = {}
+
   // 列表默认创建时间排序
   @observable tableSorter = {}
   // @observable tableSorter = {
@@ -81,6 +84,7 @@ const ListContentStore = apiFunc => class _Store {
       const res = await apiFunc(filterUndefinedValues({
         ...this.initParams,
         ...this.tableSorter,
+        ...this.searchParams,
         pageSize,
         currentPage: currentPage || 1,
         ...params,

@@ -118,9 +118,10 @@ class ModalSelectTag extends Component {
   @action.bound onTreeCheck(keys, {checkedNodes}) {
     let list = []
     let rowKeys = []
-
+     
     _.forEach(checkedNodes, ({props}) => {
       if (!props.children && props.tags) {
+        console.log('props.tags', props.tags)
         const tagInfo = props.tags.map(item => item.tag)
         list = list.concat(tagInfo)
       }
@@ -215,6 +216,7 @@ class ModalSelectTag extends Component {
 
 
   renderTreeNodes = data => data.map(item => {
+    console.log(item)
     // 类目 且 类目的子集不是标签
     if (item.children) {
       if (item.children[0].type) {
@@ -225,6 +227,7 @@ class ModalSelectTag extends Component {
          
         )
       } 
+
       return <TreeNode title={this.renderTooltip(item.name)} key={item.id} tags={item.children} />
     }
 

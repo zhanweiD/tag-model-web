@@ -29,7 +29,6 @@ const option = {
   },
 }
 
-
 @observer
 export default class BusinessModel extends Component {
   constructor(props) {
@@ -42,13 +41,26 @@ export default class BusinessModel extends Component {
   addTablesData
 
   componentDidMount() {
-    this.store.getBusinessModel(() => this.initSvg())
+    this.getData()
   }
 
   componentWillReceiveProps(next) {
     const {objId} = this.props
     if (!_.isEqual(objId, next.objId)) {
-      this.store.getBusinessModel(() => this.initSvg())
+      this.getData()
+    }
+  }
+
+  getData() {
+    const t = this
+    if (t.store.typeCode === '4') {
+      t.store.getBMRelation(
+        res => t.store.getBusinessModel(() => t.initSvg(), {
+          relationId: res[0] && res[0].id,
+        })
+      )
+    } else {
+      t.store.getBusinessModel(() => t.initSvg())
     }
   }
 
@@ -63,8 +75,8 @@ export default class BusinessModel extends Component {
 
     // 初始化 力导向图
     this.forceSimulation = d3.forceSimulation()
-      .force('charge', d3.forceManyBody().strength(-100))// 电荷力
-      .force('center', d3.forceCenter(svgWidth / 2, svgHeight / 2))
+      .force('charge', d3.forceManyBody().strength())// 电荷力
+      .force('center', d3.forceCenter((svgWidth / 2) - option.colsWidth / 2, svgHeight / 2 - 100))
       .force('forceCollide', d3.forceCollide().radius(option.colsWidth / 2 + 50))// 检测碰撞
       .force('y', d3.forceY(() => 0))
       .force('link', d3.forceLink().id(d => d.id))// link
@@ -77,20 +89,31 @@ export default class BusinessModel extends Component {
       this.container.attr('transform', d3.event.transform)
     })
 
-
     this.svg.call(zoom)
+    this.svg.call(zoom).on('dblclick.zoom', null)
     this.svg.call(zoom).on('wheel.zoom', null)
 
     this.container.append('g').attr('class', 'links')
+
+
+    // this.container.append('foreignObject')
+    //   .attr('dx', 10)
+    //   .attr('width', 30)
+    //   .attr('height', 30)
+    //   .append('xhtml:div')
+    //   // .html('<div id="select"></div>')
+    //   .html(d => `<select id="select" onchange="${this.relClick()}">
+    //     <option value="0" class="relObj" id="rel${0}">选项一</option>
+    //     <option value="1" class="relObj" id="rel${0}">选项二</option>
+    // </select>`)
+
     this.draw()
   }
-
 
   tick = () => { // force 迭代执行函数
     // eslint-disable-next-line no-unused-expressions
     this.allTables && this.allTables
       .attr('transform', d => `translate(${d.x},${d.y})`)
-      .attr('cy', () => 0)
     // eslint-disable-next-line no-unused-expressions
     this.allLinks && this.allLinks.attr('points', this.linkFn)
   }
@@ -98,27 +121,13 @@ export default class BusinessModel extends Component {
   draw() {
     const {obj, links} = this.store.businessModel
     this.obj = toJS(obj)
-  
-    console.log(this.obj)
-    this.links = [
-      // {
-      //   source: 6435,
-      //   target: 64356,
-      //   relation: 'line1',
-      //   sourceIndex: 0,
-      //   targetIndex: 0,
-      //   value: 1,
-      // }, 
-    // {
-    //   source: `table${0}`,
-    //   target: `table${2}`,
-    //   relation: 'line1',
-    //   sourceIndex: 1,
-    //   targetIndex: 0,
-    //   value: 1,
-    // },
-    ]
-
+    this.links = toJS(links)
+    if (this.addTablesData) {
+      this.allTables.exit().remove()
+      this.allLinks.exit().remove()
+      this.addTablesData.exit().remove()
+    }
+   
     this.forceInit(this.obj, this.links)
     this.addTables() 
     this.addLinks()
@@ -127,9 +136,11 @@ export default class BusinessModel extends Component {
   // 在nodes、links原对象上添加位置属性
   forceInit() { // 在nodes、links原对象上添加位置属性
     this.forceSimulation.nodes(this.obj)
+      .force('y', d3.forceY(() => 0))
       .on('tick', this.tick)
     this.forceSimulation.force('link')
       .links(this.links)
+      .id(d => d.id)
       .distance(d => d.value * option.colsWidth + 100)
   }
 
@@ -146,6 +157,9 @@ export default class BusinessModel extends Component {
     // 添加表头
     this.addTitle()
     this.addColsWrap()
+    this.gsAddBorder({
+      type: 'init',
+    })
     this.addFooter()
   }
 
@@ -170,7 +184,31 @@ export default class BusinessModel extends Component {
       .attr('dominant-baseline', 'middle')
   }
 
-  // 创建字段g
+  // 当前选择对象是实体对象，关联多个关系对象，关系对象可下拉框选择
+  addEntityTitle() {
+    const tTitle = this.addTablesData.append('g')
+      .attr('class', 'table-title')
+    tTitle.append('rect')
+      .attr('height', option.tableTitleHeight)
+      .attr('width', option.colsWidth)
+
+    // tTitle.append('rect')
+    //   .attr('height', option.tableTitleHeight)
+    //   .attr('width', option.colsWidth)
+    //   .attr('fill', 'rgba(0, 0, 0, .06)')
+    //   .style('cursor', 'pointer')
+
+    // tTitle.append('text')
+    //   .text(d => d.name)
+    // // .attr('dx', () => colsWidth/2)
+    //   .attr('dx', 48)
+    //   .attr('dy', option.tableTitleHeight / 2)
+    //   .attr('class', 'svg-text')
+    //   .attr('text-anchor', 'middle')
+    //   .attr('dominant-baseline', 'middle')
+  }
+
+  // 创建单元格g
   addColsWrap() {
     this.addTablesData.append('g')
       .attr('class', 'table-cols')
@@ -182,7 +220,10 @@ export default class BusinessModel extends Component {
   addColsGs() {
     this.addColsGsData = this.addTablesData.select('.table-cols')
       .selectAll('g')
-      .data(d => d.tag)
+      .data(d => {
+        const marjorTag = d.tag.filter(i => i.configType === 2)
+        return marjorTag
+      })
       .enter()
       .append('g')
       .attr('transform', (d, i) => `translate(${0},${i * option.colsHeight})`)
@@ -195,7 +236,7 @@ export default class BusinessModel extends Component {
     this.colsAdd()
   }
 
-  // 添加字段信息
+  // 添加单元格信息
   colsAdd() {
     this.addColsGsData.append('rect')
       .attr('height', () => option.colsHeight)
@@ -209,7 +250,7 @@ export default class BusinessModel extends Component {
       .attr('height', 30)
       .append('xhtml:div')
       .html(d => {
-        if (d.configType === 2) return `<img src=${erMajorKey} class="major-key"/>` 
+        if (d.isMajor === 1) return `<img src=${erMajorKey} class="major-key"/>` 
         return `<img src=${erRelKey} class="major-key"/>` 
       })
 
@@ -236,24 +277,38 @@ export default class BusinessModel extends Component {
 
     this.allFooter = this.allTables.selectAll('.table-foot')
 
-    this.updateFoot()
+    this.updateFoot({
+      type: 'init',
+    })
   }
 
   // 添加底部按钮
-  updateFoot(data) {
+  updateFoot({data, type}) {
     this.allFooter = this.allTables.selectAll('.table-foot')
-    this.allFooter.attr('transform', 
-      d => `translate(${0},${option.tableTitleHeight + option.colsHeight * d.tag.length - 10})`)  
 
+    if (type === 'init') {
+      this.allFooter.attr('transform', 
+        d => {
+          const marjorTag = d.tag.filter(item => item.configType === 2)
+          return `translate(${0},${option.tableTitleHeight + option.colsHeight * marjorTag.length - 10})`
+        }) 
+    }
+    
     if (data) {
       if (data.isAddCols) {
         this.allFooter
           .selectAll(`#${data.name}${data.id} .pull-down`)
           .html(`<img src=${option.footerImgSrc.close} class="pull-down-click" />`)
+
+        this.allTables.selectAll(`#${data.name}${data.id} .table-foot`).attr('transform',
+          d => `translate(${0},${option.tableTitleHeight + option.colsHeight * d.tag.length - 10})`)
       } else {
         this.allFooter
           .selectAll(`#${data.name}${data.id} .pull-down`)
           .html(`<img src=${option.footerImgSrc.open} class="pull-down-click" />`)
+
+        this.allTables.selectAll(`#${data.name}${data.id} .table-foot`).attr('transform',
+          d => `translate(${0},${option.tableTitleHeight + option.colsHeight * d.tag.filter(item => item.configType === 2).length - 10})`)
       }
     }
   }
@@ -300,16 +355,15 @@ export default class BusinessModel extends Component {
         res[2] = [d.target.x - option.offLine, d.target.y]
       }
     }
-    res[0][1] += d.sourceIndex * option.colsHeight + option.tableTitleHeight / 2 + option.colsHeight / 4
-    res[1][1] += d.sourceIndex * option.colsHeight + option.tableTitleHeight / 2 + option.colsHeight / 4
-    res[2][1] += d.targetIndex * option.colsHeight + option.tableTitleHeight / 2
-    res[3][1] += d.targetIndex * option.colsHeight + option.tableTitleHeight / 2
-
+    res[0][1] += d.sourceIndex * option.colsHeight + option.tableTitleHeight / 2 
+    res[1][1] += d.sourceIndex * option.colsHeight + option.tableTitleHeight / 2
+    res[2][1] += d.targetIndex * option.colsHeight + option.tableTitleHeight / 2 + option.colsHeight / 4
+    res[3][1] += d.targetIndex * option.colsHeight + option.tableTitleHeight / 2 + option.colsHeight / 4
+    
     return res.map(v => v.join(',')).join(' ')
   }
 
-   
-  // 字段展开
+  // 单元格展开
   addExtColsGs = obj => {
     this.addColsGsData = d3.select(`#${obj.name}${obj.id}`).select('.table-cols')
       .selectAll('g')
@@ -321,46 +375,79 @@ export default class BusinessModel extends Component {
     this.colsAdd()
   }
 
-  // 字段收起
-  delColsGs() {
+  // 单元格收起
+  delColsGs = obj => {
     this.allColsGs = this.allTables.select('.table-cols')
       .selectAll('g')
-      .data(d => d.tag)
+      .data(d => {
+        if (d.id === obj.id) {
+          return d.tag.filter(item => item.configType === 2)
+        }
+        return d.tag
+      })
     this.allColsGs.exit().remove()
   }
 
   addCols = data => {
-    const len = data.tag.length
-    console.log(len)
-    // const col = new Array(2).fill(1).map((v, i2) => ({
-    //   id: `${data.id}cols${i2 + len}`,
-    //   name: `${data.id}colsName${i2 + len}`,
-    // }))
-
-    // 展开
+    // 收起
     if (data.isAddCols) {
       data.isAddCols = false
       data.footerSrc = option.footerImgSrc.open
 
       data.allCols = data.tag
       data.tag = data.linkCols
-      this.delColsGs()
+      this.delColsGs(data)
     } else {
-      // 收起
+      // 展开
       data.isAddCols = true
       data.footerSrc = option.footerImgSrc.close
 
       data.linkCols = data.tag.concat()
-      data.tag = data.tag.concat([])
+      // data.tag = data.tag.concat([]) 
       this.addExtColsGs(data)
     }
-    this.updateFoot(data)
+    this.updateFoot({
+      data,
+    })
+
+    this.gsAddBorder({
+      data,
+    })
+  }
+
+  // 添加边框
+  gsAddBorder({type, data}) {
+    if (type === 'init') {
+      this.addTablesData.append('rect').attr('class', 'table-border')
+        .attr('height', d => option.colsHeight * d.tag.filter(item => item.configType === 2).length + option.tableTitleHeight)
+        .attr('width', () => option.colsWidth)
+        .attr('rx', 2)
+        .attr('stroke', '#d9d9d9')
+        .attr('stroke-width', '1px')
+        .attr('fill-opacity', '0')
+    }
+
+    if (data) {
+      if (data.isAddCols) {
+        this.addTablesData.selectAll(`#${data.name}${data.id} .table-border`)
+          .attr('height', option.colsHeight * data.tag.length + option.tableTitleHeight)
+      } else {
+        this.addTablesData.selectAll(`#${data.name}${data.id} .table-border`)
+          .attr('height', option.colsHeight * data.tag.filter(item => item.configType === 2).length + option.tableTitleHeight)
+      }
+    }
+  }
+
+  reDraw = () => {
+    this.initSvg()
   }
 
   render() {
     return (
       <div className="business-model">
+        {/* <a onClick={this.reDraw}>wq</a> */}
         <svg id="box" />
+
       </div>
     )
   }

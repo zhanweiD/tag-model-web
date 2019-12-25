@@ -72,6 +72,7 @@ export default class ListContent extends Component {
       onSearch, beforeSearch, paginationConfig,
     } = this.props
     let newVal = value
+
     // 列表请求前 参数处理
     if (beforeSearch) {
       newVal = beforeSearch(value)
@@ -80,10 +81,12 @@ export default class ListContent extends Component {
     if (onSearch) {
       onSearch() 
     } else {
+      this.store.searchParams = newVal
+
       this.store.getList({
         pageSize: paginationConfig.pageSize || 10, // 默认pageSize 10
         currentPage: 1, // 搜索重置列表
-        ...newVal,
+        // ...newVal,
       })
     }
   }

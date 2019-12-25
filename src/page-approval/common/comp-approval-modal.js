@@ -14,26 +14,26 @@ const foreverMap = {
   1: '永久',
 }
 
-const applyInfo = [{
-  label: '权限归属',
-  key: 'projectName',
-}, {
-  label: '申请内容',
-  key: 'content', 
-}, {
-  label: '申请时长',
-  key: 'forever',
-  map: foreverMap,
-}, {
-  label: '申请人',
-  key: 'applyUserName',
-}, {
-  label: '申请时间',
-  key: 'cTime',
-}, {
-  label: '申请理由',
-  key: 'applyDescr',
-}]
+// const applyInfo = [{
+//   label: '权限归属',
+//   key: 'projectName',
+// }, {
+//   label: '申请内容',
+//   key: 'content', 
+// }, {
+//   label: '申请时长',
+//   key: 'forever',
+//   map: foreverMap,
+// }, {
+//   label: '申请人',
+//   key: 'applyUserName',
+// }, {
+//   label: '申请时间',
+//   key: 'cTime',
+// }, {
+//   label: '申请理由',
+//   key: 'applyDescr',
+// }]
 
 const approvalInfo = [{
   label: '操作人',
@@ -58,6 +58,10 @@ const backoutInfo = [{
 }]
 
 const statusMap = {
+  0: {
+    text: '审核中',
+    status: 'wait',
+  }, 
   1: {
     text: '审批通过',
     status: 'success',
@@ -74,17 +78,31 @@ const statusMap = {
 
 const LableItem = ({
   data, label, keyName, map,
-}) => (
+}) => {
+  console.log(keyName)
+  return (
+    <div className="mb8">
+      <span className="approval-detail-label">
+        {label}
+   ：
+      </span>
+      {
+        (keyName === 'mTime' || keyName === 'cTime') 
+          ? <Time timestamp={data[keyName]} /> 
+          : <span>{map ? map[data[keyName]] : data[keyName]}</span>
+      }
+    </div>
+  )
+}
+
+
+const NormalLableItem = ({label, value}) => (
   <div className="mb8">
     <span className="approval-detail-label">
       {label}
-       ：
+      ：
     </span>
-    {
-      (keyName === 'mTime' || keyName === 'cTime') 
-        ? <Time timestamp={data[keyName]} /> 
-        : <span>{map ? map[data[keyName]] : data[keyName]}</span>
-    }
+    <span>{value}</span>
   </div>
 )
 
@@ -109,9 +127,19 @@ export default class ModalDetail extends Component {
     return (
       <div className="approval-detail">
         <div className="approval-detail-title">申请信息</div>
-        {
+        {/* {
           applyInfo.map(({label, key, map}) => <LableItem data={data} label={label} keyName={data.status === 3 && key === 'reviewUserName' ? 'applyUserName' : key} map={map} />)
+        } */}
+        <NormalLableItem label="权限归属" value={data.projectName} />
+        <NormalLableItem label="申请内容" value={data.content} />
+        <NormalLableItem label="申请时长" value={foreverMap[+data.forever]} />
+        {
+          data.forever !== 1
+          && <NormalLableItem label="自定义时长" value={`${moment(+data.startTime).format('YYYY-MM-DD')} ~ ${moment(+data.endTime).format('YYYY-MM-DD')}`} />
         }
+        <NormalLableItem label="申请人" value={data.applyUserName} />
+        <NormalLableItem label="申请时间" value={moment(+data.cTime).format('YYYY-MM-DD HH:mm:ss')} />
+        <NormalLableItem label="申请理由" value={data.applyDescr} />
       </div>
     )
   }
@@ -123,7 +151,8 @@ export default class ModalDetail extends Component {
     const {fromPage, data} = this.props
 
     // 待我审批与我的申请（未审批）页面；不渲染审批信息
-    if (fromPage === 'willApproval' || fromPage === 'application' || !data.status) return null
+    // if (fromPage === 'willApproval' || fromPage === 'application') return null
+    if (fromPage === 'willApproval' || data.status === 3 || data.status === 0) return null
 
     return (
       <div className="approval-detail">
@@ -144,7 +173,7 @@ export default class ModalDetail extends Component {
   renderBackoutInfo() {
     const {fromPage, data} = this.props
 
-    if (fromPage !== 'application') return null
+    if (data.status !== 3) return null
 
     return (
       <div className="approval-detail">
