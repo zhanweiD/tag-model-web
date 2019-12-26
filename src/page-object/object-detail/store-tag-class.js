@@ -219,7 +219,7 @@ class Store {
           loading: false,
           list: res.data,
           currentPage: res.currentPage || 1,
-          pageSize: res.pageSize || 10,
+          pageSize: res.pages || 10,
           total: res.totalCount,
         }
         if (type === 'modal') {

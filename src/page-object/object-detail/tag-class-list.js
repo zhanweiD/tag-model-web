@@ -124,6 +124,9 @@ export default class TagList extends Component {
         total: tagList.total,
       },
       onChange: this.changeTable,
+      style: {
+        paddingBottom: '60px',
+      },
     }
 
     const noDataConfig = {

@@ -173,6 +173,7 @@ export default class ModalObject extends Component {
       rules: [
         '@transformTrim',
         '@max32',
+        {pattern: enNameReg, message: '不超过32个字，只能包含英文、数字或下划线，必须以英文开头'},
         {validator: this.checkName},
       ],
     }, {

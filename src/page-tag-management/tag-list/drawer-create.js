@@ -176,6 +176,8 @@ export default class DrawerCreate extends Component {
   @action handleCancel = () => {
     this.store.drawerTagInfo = {}
     this.store.drawerTagVisible = false
+    this.store.isEnum = false
+    this.store.tagCateSelectList.clear()
     // this.store.resetModal()
   }
 
