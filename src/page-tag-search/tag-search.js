@@ -10,6 +10,7 @@ import {
 } from '../component'
 import {getDataTypeName} from '../common/util'
 import ModalApply from './modal-apply'
+import ModalScene from './modal-scene'
 
 import store from './store'
 import './main.styl'
@@ -119,7 +120,7 @@ export default class TagSearch extends Component {
   }
 
   @action.bound openSceneModal() {
-    store.occTags.replace([this.rowKeys])
+    store.tagIds.replace([this.rowKeys])
     store.modalSceneVisible = true
   }
 
@@ -137,7 +138,7 @@ export default class TagSearch extends Component {
    */
   @action.bound batchAction() {
     store.tagIds.replace(store.rowKeys)
-    store.modalVisible = true
+    store.modalSceneVisible = true
   }
 
   // 是否有进行搜索操作
@@ -232,6 +233,7 @@ export default class TagSearch extends Component {
               <div className="search-list">
                 <ListContent {...listConfig} />
                 <ModalApply store={store} />
+                <ModalScene store={store} />
               </div>
             </Fragment>
           ) : this.renderNodata()

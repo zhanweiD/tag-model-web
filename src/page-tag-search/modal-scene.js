@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import {action} from 'mobx'
+import {action, toJS} from 'mobx'
 import {observer} from 'mobx-react'
 import {Modal} from 'antd'
 import {ModalForm} from '../component'
@@ -40,10 +40,12 @@ export default class ModalScene extends Component {
     this.form.validateFields((err, values) => {
       if (!err) {
         const params = {
-
+          ...values,
+          occTags: toJS(store.tagIds), 
         }
-        params.occTags.replace(store.occTags) 
-        // store.addToScene(values, () => {
+
+        // params.occTags.replace(store.occTags) 
+        // store.addToScene(params, () => {
         //   t.handleCancel()
         // })
       }
@@ -51,10 +53,10 @@ export default class ModalScene extends Component {
   }
 
   render() {
-    const {visible, confirmLoading} = this.store
+    const {modalSceneVisible, confirmLoading} = this.store
     const modalConfig = {
       title: '添加到业务场景',
-      visible,
+      visible: modalSceneVisible,
       onCancel: this.handleCancel,
       onOk: this.submit,
       maskClosable: false,
@@ -64,7 +66,7 @@ export default class ModalScene extends Component {
     }
     
     const formConfig = {
-      selectContent: visible && this.selectContent(),
+      selectContent: modalSceneVisible && this.selectContent(),
       wrappedComponentRef: form => { this.form = form ? form.props.form : form },
     }
     return (

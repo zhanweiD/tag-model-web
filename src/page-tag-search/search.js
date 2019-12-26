@@ -45,6 +45,7 @@ export default class Search extends Component {
   // 更新列表
   @action.bound updateList() {
     const params = {
+      useProjectId: this.store.useProjectId,
       type: this.permissionType,
       projectId: this.ownProjectId,
       objId: this.objectId,

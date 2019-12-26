@@ -18,7 +18,7 @@ class Store extends ListContentStore(io.getList) {
   @observable modalSceneVisible = false
   @observable confirmLoading = false
   @observable tagIds = []
-  @observable occTags = []
+  // @observable occTags = []
 
   @observable selectedRows = []
   @observable rowKeys = []
