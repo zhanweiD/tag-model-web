@@ -16,7 +16,7 @@ const api = {
   getCategoryDetail: get(`${sceneApi}/tree/obj/cat/detail`), // 类目详情
   addObjCategory: get(`${sceneApi}/tree/obj/addCat`), // 对象-添加类目
   editCategory: get(`${sceneApi}/tree/obj/cat/edit`), // 类目-添加类目
-  deleteCategory: get(`${tagApi}/be_tag/tree/obj/cat/del`), // 类目-删除类目
+  deleteCategory: get(`${sceneApi}/tree/obj/cat/del`), // 类目-删除类目
 
   //* ------------------------------ 标签-相关接口 ------------------------------*//
   selectTag: get(`${sceneApi}/tree/obj/cat/selectTag`), // 选择标签-树

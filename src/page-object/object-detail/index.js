@@ -136,6 +136,10 @@ export default class ObjectDetail extends Component {
         title: '标签总数',
         tooltipText: '该对象下公开的标签总数',
         values: [objCard.tagCount],
+      }, {
+        title: '业务场景数',
+        // tooltipText: '该对象下公开的标签总数',
+        values: [objCard.occasionCount],
       },
     ]
 

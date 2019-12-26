@@ -11,6 +11,7 @@ class Store extends ListContentStore(io.getList) {
   @observable projectList = []
   @observable detail = {} // 详情
   @observable confirmLoading = false
+  @observable detailLoading = false
 
   @action async getProject() {
     try {
@@ -24,6 +25,7 @@ class Store extends ListContentStore(io.getList) {
   }
 
   @action async getDetail(id) {
+    this.detailLoading = true
     try {
       const res = await io.getDetail({id})
       runInAction(() => {
@@ -31,6 +33,10 @@ class Store extends ListContentStore(io.getList) {
       })
     } catch (e) {
       errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        this.detailLoading = false
+      })
     }
   }
 

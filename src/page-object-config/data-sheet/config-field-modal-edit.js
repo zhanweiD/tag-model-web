@@ -76,7 +76,7 @@ class ModalTagEdit extends Component {
                 rules: [
                   {transform: value => value && value.trim()},
                   {required: true, message: '英文名不可为空'},
-                  {pattern: enNameReg, message: '不超过30个字，只能包含英文、数字或下划线，必须以英文开头'},
+                  {pattern: enNameReg, message: '不超过32个字，只能包含英文、数字或下划线，必须以英文开头'},
                 ],
               })(<Input autoComplete="off" placeholder="不超过30个字，允许英文、数字或下划线，必须以英文开头" />)}
             </FormItem>
@@ -109,7 +109,7 @@ class ModalTagEdit extends Component {
                 {getFieldDecorator('enumValue', {
                   rules: [
                     {transform: value => value && value.trim()},
-                    // {required: true, message: '枚举显示值不可为空'},
+                    {required: true, message: '枚举显示值不可为空'},
                     {validator: this.handleEnumValueValidator},
                   ],
                   initialValue: tagDetail.enumValue || undefined,

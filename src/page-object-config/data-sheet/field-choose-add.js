@@ -64,7 +64,9 @@ export default class FieldChooseAdd extends Component {
   @action.bound selectDataSource(storageId) {
     this.store.storageId = storageId
     this.store.tableName = undefined
+
     this.form.resetFields(['dataTableName', 'majorKey'])
+
     this.initData()
 
     this.store.getDataSheet()
@@ -188,7 +190,8 @@ export default class FieldChooseAdd extends Component {
       },
     }, {
       label: objDetail.objRspList && objDetail.objRspList[0].name,
-      key: objDetail.objRspList && objDetail.objRspList[0].id,
+      // key: objDetail.objRspList && objDetail.objRspList[0].id,
+      key: 'entity1Key',
       hide: objDetail.objTypeCode === 4, 
       component: 'select',
       initialValue: entity1Key,
@@ -202,7 +205,8 @@ export default class FieldChooseAdd extends Component {
       },
     }, {
       label: objDetail.objRspList && objDetail.objRspList[1].name,
-      key: objDetail.objRspList && objDetail.objRspList[1].id,
+      // key: objDetail.objRspList && objDetail.objRspList[1].id,
+      key: 'entity2Key',
       hide: this.bigStore.objDetail.objTypeCode === 4, 
       component: 'select',
       initialValue: entity2Key,

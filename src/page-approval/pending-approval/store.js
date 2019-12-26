@@ -12,6 +12,7 @@ class Store extends ListContentStore(io.getList) {
   @observable projectList = []
   @observable detail = {} // 详情
   @observable confirmLoading = false
+  @observable detailLoading = false
 
   @action async getApplicant() {
     try {
@@ -36,6 +37,8 @@ class Store extends ListContentStore(io.getList) {
   }
 
   @action async getDetail(id) {
+    this.detailLoading = true
+
     try {
       const res = await io.getDetail({id})
       runInAction(() => {
@@ -43,6 +46,10 @@ class Store extends ListContentStore(io.getList) {
       })
     } catch (e) {
       errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        this.detailLoading = false
+      })
     }
   }
 
@@ -52,17 +59,17 @@ class Store extends ListContentStore(io.getList) {
       await io.goApproval(params)
       runInAction(() => {
         successTip('操作成功')
-        this.confirmLoading = false
         this.getList({
           currentPage: 1,
         })
         if (cb) cb()
       })
     } catch (e) {
+      errorTip(e.message)
+    } finally {
       runInAction(() => {
         this.confirmLoading = false
       })
-      errorTip(e.message)
     }
   }
 }

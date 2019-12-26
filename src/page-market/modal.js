@@ -62,6 +62,9 @@ export default class TagApply extends Component {
 
   @action handleCancel() {
     this.store.modalVisible = false
+    this.store.modalType = undefined
+    this.store.selectItem = {}
+
     this.handleReset()
   }
 
@@ -75,7 +78,13 @@ export default class TagApply extends Component {
   render() {
     const {form: {getFieldDecorator, getFieldValue}} = this.props
     const {
-      confirmLoading, modalVisible, useProjectList, useProjectId, useProjectName,
+      confirmLoading, 
+      modalVisible, 
+      useProjectList, 
+      useProjectId, 
+      useProjectName, 
+      modalType,
+      selectItem,
     } = this.store
 
     const modalConfig = {
@@ -87,6 +96,10 @@ export default class TagApply extends Component {
       onOk: e => this.handleOk(e),
       onCancel: () => this.handleCancel(),
     }
+
+    const canUseProject = modalType === 'one' 
+      ? useProjectList.filter(d => d.useProjectId !== selectItem.projectId) 
+      : useProjectList
 
     return (
       <Modal
@@ -108,7 +121,7 @@ export default class TagApply extends Component {
                 
                   })(<Select placeholder="请选择使用项目">
                     {
-                      useProjectList.map(({useProjectId: id, useProjectName: name}) => (
+                      canUseProject.map(({useProjectId: id, useProjectName: name}) => (
                         <Option 
                           key={id} 
                           value={id}

@@ -2,7 +2,9 @@
  * @description 审批详情-弹窗
  */
 import {Component} from 'react'
-import {Modal, Form, Input} from 'antd'
+import {
+  Modal, Form, Input, Spin,
+} from 'antd'
 import {Time} from '../../common/util'
 import {Tag} from '../../component'
 
@@ -78,22 +80,19 @@ const statusMap = {
 
 const LableItem = ({
   data, label, keyName, map,
-}) => {
-  console.log(keyName)
-  return (
-    <div className="mb8">
-      <span className="approval-detail-label">
-        {label}
+}) => (
+  <div className="mb8">
+    <span className="approval-detail-label">
+      {label}
    ：
-      </span>
-      {
-        (keyName === 'mTime' || keyName === 'cTime') 
-          ? <Time timestamp={data[keyName]} /> 
-          : <span>{map ? map[data[keyName]] : data[keyName]}</span>
-      }
-    </div>
-  )
-}
+    </span>
+    {
+      (keyName === 'mTime' || keyName === 'cTime') 
+        ? <Time timestamp={data[keyName]} /> 
+        : <span>{map ? map[data[keyName]] : data[keyName]}</span>
+    }
+  </div>
+)
 
 
 const NormalLableItem = ({label, value}) => (
@@ -198,7 +197,7 @@ export default class ModalDetail extends Component {
 
     return (
       <div className="approval-detail">
-        <div className="approval-detail-title">
+        <div className="approval-detail-title approval-required">
           审批描述
         </div>
         <Form className="pl16 pr16">
@@ -221,7 +220,7 @@ export default class ModalDetail extends Component {
 
   render() {
     const {
-      visible, title, handleCancel, footer, confirmLoading,
+      visible, title, handleCancel, footer, confirmLoading, detailLoading,
     } = this.props
 
     const modalConfig = {
@@ -237,18 +236,20 @@ export default class ModalDetail extends Component {
     }
     return (
       <Modal {...modalConfig}>
-        {
-          this.renderApplyInfo()
-        }
-        {
-          this.renderBackoutInfo()
-        }
-        {
-          this.renderApprovalInfo()
-        }
-        {
-          this.renderApprovalDescr()
-        }
+        <Spin spinning={detailLoading}>
+          {
+            this.renderApplyInfo()
+          }
+          {
+            this.renderBackoutInfo()
+          }
+          {
+            this.renderApprovalInfo()
+          }
+          {
+            this.renderApprovalDescr()
+          }
+        </Spin>
       </Modal>
     )
   }

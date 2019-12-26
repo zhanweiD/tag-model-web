@@ -74,7 +74,7 @@ class ModalObjectEdit extends Component {
               label={(
                 <span>
                 对象名称&nbsp;
-                  <Tooltip title="选择对象时，只能单选一个人/物/关系，以便场景里的标签可合成一张数据表，通过一个API输出">
+                  <Tooltip title="选择对象时，只能单选一个实体/关系，以便场景里的标签可合成一张数据表，通过一个API输出">
                     <Icon type="question-circle" />
                   </Tooltip>
                 </span>

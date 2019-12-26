@@ -6,7 +6,7 @@ import {observer} from 'mobx-react'
 import {
   Input, Icon, Select,
 } from 'antd'
-import {observable, action} from 'mobx'
+import {action} from 'mobx'
 
 const {Option} = Select
 
@@ -14,7 +14,7 @@ const permissionTypeMap = [{
   name: '有效',
   value: 1,
 }, {
-  name: '无效',
+  name: '失效',
   value: 0,
 }]
  
@@ -25,67 +25,71 @@ export default class Search extends Component {
     this.store = props.store
   }
 
-  @observable expand = false
-  @observable permissionType = '' // 使用权限状态
-  @observable ownProjectId = '' // 所属项目id
-  @observable objectId = '' // 对象id
-  @observable hotWord = undefined // 关键词
-
   componentDidMount() {
     this.store.getOwnProject()
     this.store.getObject()
   }
 
   @action.bound initData() {
-    this.projectPermission = 0
-    this.ownProjectId = ''
-    this.objectId = ''
+    this.store.projectPermission = 0
+    this.store.ownProjectId = ''
+    this.store.objectId = ''
   }
 
   // 更新列表
   @action.bound updateList() {
     const params = {
       useProjectId: this.store.useProjectId,
-      type: this.permissionType,
-      projectId: this.ownProjectId,
-      objId: this.objectId,
-      hotWord: this.hotWord,
+      type: this.store.permissionType,
+      projectId: this.store.ownProjectId,
+      objId: this.store.objectId,
+      hotWord: this.store.hotWord,
       currentPage: 1,
     }
     this.store.getList(params)
   }
 
   @action.bound expandToggle() {
-    this.expand = !this.expand 
+    this.store.expand = !this.store.expand 
   }
 
   @action.bound onSearch(v) {
-    this.hotWord = v.trim()
+    this.store.hotWord = v.trim()
     this.updateList()
   }
 
   @action.bound permissionTypeSelect(v) {
-    this.permissionType = v
+    this.store.permissionType = v
     this.updateList()
   }
 
   @action.bound ownProjectSelect(v) {
-    this.ownProjectId = v
+    this.store.ownProjectId = v
     this.updateList()
   }
 
   @action.bound ownObjectSelect(v) {
-    this.objectId = v
+    this.store.objectId = v
+    this.store.selectedRows.clear()
+    this.store.rowKeys.clear()
+    this.store.tagIds.clear()
     this.updateList()
   }
 
   @action.bound projectPermissionSelect(e) {
-    this.projectPermission = e.target.value
+    this.store.projectPermission = e.target.value
     this.updateList()
   } 
 
   render() {
-    const {ownProjectList, objectList} = this.store
+    const {
+      ownProjectList, 
+      objectList,
+      expand,
+      ownProjectId,
+      objectId,
+      permissionType,
+    } = this.store
     return (
       <div className="market-search">
         <div className="search-box">
@@ -98,14 +102,14 @@ export default class Search extends Component {
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
           <div className="advanced-search-btn" onClick={this.expandToggle}>
             <span>高级检索</span>
-            <Icon type={this.expand ? 'up' : 'down'} style={{marginLeft: '4px'}} />
+            <Icon type={expand ? 'up' : 'down'} style={{marginLeft: '4px'}} />
           </div>
         </div>
-        <div className="advanced-search" style={{display: this.expand ? 'block' : 'none'}}>
+        <div className="advanced-search" style={{display: expand ? 'block' : 'none'}}>
           <div className="FBH">
             <div>
               <span className="mr8">所属项目</span>
-              <Select value={this.ownProjectId} className="mr16" style={{width: 240}} onChange={this.ownProjectSelect}>
+              <Select value={ownProjectId} className="mr16" style={{width: 240}} onChange={this.ownProjectSelect}>
                 <Option value="">全部</Option>
                 {
                   ownProjectList.map(
@@ -121,7 +125,7 @@ export default class Search extends Component {
                 }
               </Select>
               <span className="mr8">对象</span>
-              <Select value={this.objectId} className="mr16" style={{width: 240}} onChange={this.ownObjectSelect}>
+              <Select value={objectId} className="mr16" style={{width: 240}} onChange={this.ownObjectSelect}>
                 <Option value="">全部</Option>
                 {
                   objectList.map(
@@ -137,7 +141,7 @@ export default class Search extends Component {
                 }
               </Select>
               <span className="mr8">使用权限状态</span>
-              <Select value={this.permissionType} style={{width: 240}} onChange={this.permissionTypeSelect}>
+              <Select value={permissionType} style={{width: 240}} onChange={this.permissionTypeSelect}>
                 <Option value="">全部</Option>
                 {
                   permissionTypeMap.map(

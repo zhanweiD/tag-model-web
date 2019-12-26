@@ -142,6 +142,9 @@ export default class DataSheet extends Component {
       columns: this.columns,
       initParams: {objId, projectId},
       buttons: [<Button type="primary" onClick={() => this.openDrawer('add')}>添加关联表</Button>],
+      paginationConfig: {
+        hideOnSinglePage: true, // 只有一页时隐藏
+      }, 
       store, // 必填属性
     }
 

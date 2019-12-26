@@ -9,12 +9,13 @@ class Store extends ListContentStore(io.getList) {
   @observable applicant = []
   @observable projectList = []
   @observable detail = {} // 详情
+  @observable detailLoading = false
 
   @action async getApplicant() {
     try {
       const res = await io.getApplicant()
       runInAction(() => {
-        this.applicant = changeToOptions(res)('applyUserName', 'getApplicant')
+        this.applicant = changeToOptions(res)('applyUserName', 'applyUserId')
       })
     } catch (e) {
       errorTip(e.message)
@@ -33,6 +34,7 @@ class Store extends ListContentStore(io.getList) {
   }
 
   @action async getDetail(id) {
+    this.detailLoading = true
     try {
       const res = await io.getDetail({id})
       runInAction(() => {
@@ -40,6 +42,10 @@ class Store extends ListContentStore(io.getList) {
       })
     } catch (e) {
       errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        this.detailLoading = false
+      })
     }
   }
 }

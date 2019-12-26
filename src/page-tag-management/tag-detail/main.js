@@ -73,7 +73,7 @@ export default class TagManagement extends Component {
     // 不同状态的相应map
     const tagMap = {
       0: <Tag status="wait" text="未使用" />,
-      1: <Tag status="success" text="使用中" />,
+      1: <Tag status="process" text="使用中" />,
     }
 
     return (

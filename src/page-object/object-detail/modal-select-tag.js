@@ -48,7 +48,7 @@ export default class ModalSelectTag extends Component {
       cateId: this.store.defaultCate.id,
       currentPage: pagination.current,
       pageSize: pagination.pageSize,
-    })
+    }, 'modal')
   }
 
   @action.bound handleOk() {
@@ -121,7 +121,9 @@ export default class ModalSelectTag extends Component {
       pagination: {
         current: tagListModal.currentPage,
         pageSize: tagListModal.pageSize,
+        total: tagListModal.total,
       },
+      style: {maxHeight: '400px', overflowY: 'auto'},
       onChange: this.changeTable,
     }
     return (

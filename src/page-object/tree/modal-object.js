@@ -3,8 +3,10 @@ import {action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {Modal} from 'antd'
 import {ModalForm} from '../../component'
-import {changeToOptions} from '../../common/util'
-import {targetTypeMap, nameTypeMap, modalDefaultConfig} from '../util'
+import {changeToOptions, enNameReg} from '../../common/util'
+import {
+  targetTypeMap, nameTypeMap, modalDefaultConfig,
+} from '../util'
 
 @inject('bigStore')
 @observer
@@ -59,6 +61,7 @@ export default class ModalObject extends Component {
         '@transformTrim',
         '@required',
         '@max32',
+        {pattern: enNameReg, message: '不超过32个字，只能包含英文、数字或下划线，必须以英文开头'},
         {validator: this.checkName},
       ],
     }, {
@@ -70,6 +73,7 @@ export default class ModalObject extends Component {
         '@transformTrim',
         '@required',
         '@max32',
+        {pattern: enNameReg, message: '不超过32个字，只能包含英文、数字或下划线，必须以英文开头'},
         {validator: this.checkName},
       ],
     }, {
@@ -158,6 +162,7 @@ export default class ModalObject extends Component {
         '@transformTrim',
         '@required',
         '@max32',
+        {pattern: enNameReg, message: '不超过32个字，只能包含英文、数字或下划线，必须以英文开头'},
         {validator: this.checkName},
       ],
     }, {
@@ -241,7 +246,7 @@ export default class ModalObject extends Component {
    */
   @action checkEntityNum = (rule, value, callback) => {
     if (value && value.length !== 2) {
-      callback('请选择两个关联的人/物') // 请选择两个关联的人/物
+      callback('请选择两个关联的实体')
     } else {
       callback()
     }
@@ -256,6 +261,11 @@ export default class ModalObject extends Component {
         detail,
       },
     } = this.store
+
+    if (rule.field === 'objPk' && !value) {
+      callback()
+      return 
+    } 
 
     const params = {
       name: value,
@@ -289,9 +299,13 @@ export default class ModalObject extends Component {
 
     this.form.validateFields((err, values) => {
       if (!err) {
+        const param = {
+          ...values,
+          objPk: values.objPk === '' ? undefined : values.objPk,
+        }
         // 编辑 
         if (editType === 'edit') {
-          const params = {id: detail.id, ...values}
+          const params = {id: detail.id, ...param}
           store.editNode(params, type, () => {
             // 编辑节点为当前选中节点
             if (detail.id === t.bigStore.objId) {
@@ -303,7 +317,7 @@ export default class ModalObject extends Component {
           })
         } else {
           // 新增
-          store.addNode(values, type, () => {
+          store.addNode(param, type, () => {
             t.bigStore.objId = store.objId
             t.handleCancel()
           })

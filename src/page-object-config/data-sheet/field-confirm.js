@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import {action} from 'mobx'
+import {action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {Button, Table, Popconfirm} from 'antd'
 import {relStatusMap, configStatusMap, tagStatusMap} from '../util'
@@ -67,9 +67,11 @@ export default class FieldConfirm extends Component {
       title: '操作',
       dataIndex: 'action',
       render: (text, record) => (
-        <Popconfirm placement="topRight" title="确定移除？" onConfirm={() => this.removeField(record.field)}>
-          <a href>移除</a>
-        </Popconfirm>
+        record.status === 2 ? <span className="disabled">移除</span> : (
+          <Popconfirm placement="topRight" title="确定移除？" onConfirm={() => this.removeFieldEdit(record.dataFieldName)}>
+            <a href>移除</a>
+          </Popconfirm>
+        )
       ),
     },
   ]
@@ -77,6 +79,12 @@ export default class FieldConfirm extends Component {
   @action removeField(field) {
     const {selectedRows, selectedRowKeys} = this.store
     this.store.selectedRows = selectedRows.filter(d => d.field !== field)
+    this.store.selectedRowKeys = selectedRowKeys.filter(d => d !== field)
+  }
+
+  @action removeFieldEdit(field) {
+    const {selectedRows, selectedRowKeys} = this.store
+    this.store.selectedRows = selectedRows.filter(d => d.dataFieldName !== field)
     this.store.selectedRowKeys = selectedRowKeys.filter(d => d !== field)
   }
 

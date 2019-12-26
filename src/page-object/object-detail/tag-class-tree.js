@@ -61,7 +61,7 @@ export default class ObjectTree extends Component {
 
   getCateDetail = () => {
     const {currentSelectKeys, tagList} = this.store
-    
+    this.store.keyword = undefined
     this.store.getTagCateDetail()
     this.store.getTagList({
       cateId: currentSelectKeys,

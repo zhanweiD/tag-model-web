@@ -13,6 +13,8 @@ class Store extends ListContentStore(io.getList) {
   @observable modalVisible = false
   @observable confirmLoading = false
   @observable tagIds = []
+  @observable modalType = undefined
+  @observable selectItem = {}
 
   @observable expand = false
   @observable useProjectId = '' // 使用项目id; 只有选择了使用项目;标签列表才会出现checkbox框 进行批量操作

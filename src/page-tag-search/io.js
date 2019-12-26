@@ -11,6 +11,7 @@ const api = {
   addToScene: post(`${tagSearchApi}/save_tag_occ`), // 批量添加标签至场景
   applyTag: post(`${marketApi}/tagApply`), // 标签申请
   getProjectDetail: get(`${projectApi}/details`), // 项目详情
+  getSceneCate: get(`${tagSearchApi}/list_occ_cate`), // 获取指定场景下的类目列表
 } 
 
 ioContext.create('tagSearch', api) 

@@ -216,7 +216,6 @@ class ModalSelectTag extends Component {
 
 
   renderTreeNodes = data => data.map(item => {
-    console.log(item)
     // 类目 且 类目的子集不是标签
     if (item.children) {
       if (item.children[0].type) {

@@ -36,7 +36,7 @@ export default class Approval extends Component {
     return (
       <div className="page-approval">
         <Menu
-          style={{width: 180, height: '100%'}}
+          className="approval-menu"
           defaultSelectedKeys={[type]}
           mode="inline"
           onClick={this.onMenuClick}

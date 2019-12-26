@@ -86,7 +86,9 @@ export default class Approved extends Component {
   }
 
   render() {
-    const {projectList, applicant, detail} = store
+    const {
+      projectList, applicant, detail, detailLoading,
+    } = store
 
     const listConfig = {
       columns: this.columns,
@@ -102,6 +104,7 @@ export default class Approved extends Component {
       data: detail,
       handleCancel: this.modalCancel,
       footer: [<Button onClick={this.modalCancel}>关闭</Button>], 
+      detailLoading,
     }
     return (
       <div className="page-approval">

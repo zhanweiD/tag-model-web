@@ -122,7 +122,9 @@ export default class MyRequests extends Component {
   }
 
   render() {
-    const {projectList, detail, confirmLoading} = store
+    const {
+      projectList, detail, confirmLoading, detailLoading,
+    } = store
     
     const listConfig = {
       columns: this.columns,
@@ -144,6 +146,7 @@ export default class MyRequests extends Component {
           <Button onClick={this.modalCancel}>关闭</Button>,
           <Button type="primary" onClick={this.backout}>撤销申请</Button>,
         ], 
+      detailLoading,
     }
 
     // 撤销弹窗属性配置

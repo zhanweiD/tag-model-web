@@ -220,18 +220,25 @@ class Store {
           list: res.data,
           currentPage: res.currentPage || 1,
           pageSize: res.pageSize || 10,
+          total: res.totalCount,
         }
         if (type === 'modal') {
           this.tagListModal = data
-          this.tagListModal.loading = false
         } else {
           this.tagList = data
-          this.tagList.loading = false
         }
         if (cb) cb()
       })
     } catch (e) {
       errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        if (type === 'modal') {
+          this.tagListModal.loading = false
+        } else {
+          this.tagList.loading = false
+        }
+      })
     }
   }
 

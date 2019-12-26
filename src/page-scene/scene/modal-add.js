@@ -17,31 +17,22 @@ const formItemLayout = {
 @Form.create()
 @observer
 class ModalAdd extends Component {
-  handleSubmit(e) {
-    const {
-      form: 
-      {
-        validateFields,
-      }, 
-      store,
-    } = this.props
+  @action handleSubmit = e => {
+    const {form: {validateFieldsAndScroll}, store} = this.props
 
-    e.preventDefault()
-
-    validateFields((err, params) => {
+    validateFieldsAndScroll((err, values) => {
       if (err) {
         return
       }
-    
       if (store.isEdit) {
         store.editScene({
           occasionId: store.info.id,
-          ...params,
+          ...values,
         }, () => {
           this.handleReset()
         })
       } else {
-        store.addScene(params, () => {
+        store.addScene(values, () => {
           this.handleReset()
         })
       }
@@ -72,7 +63,7 @@ class ModalAdd extends Component {
   }
 
 
-  @action handleCancel() {
+  @action handleCancel = () => {
     const {store} = this.props
     this.handleReset()
     store.modalVisible = false
@@ -104,8 +95,8 @@ class ModalAdd extends Component {
         maskClosable={false}
         destroyOnClose
         title={isEdit ? '编辑场景' : '添加场景'}
-        onOk={e => this.handleSubmit(e)}
-        onCancel={() => this.handleCancel()}
+        onOk={this.handleSubmit}
+        onCancel={this.handleCancel}
         confirmLoading={confirmLoading}
       >
         <Form>

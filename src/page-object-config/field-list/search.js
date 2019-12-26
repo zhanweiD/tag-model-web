@@ -39,7 +39,7 @@ const serach = ({
     },
     component: 'select',
   }, {
-    label: '关键字',
+    label: '字段名称',
     key: 'keyword',
     component: 'input',
   },

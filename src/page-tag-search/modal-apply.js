@@ -36,8 +36,10 @@ export default class TagApply extends Component {
       if (err) {
         return
       }
+
       const params = {
-        useProjectId: values.useProjectId || this.store.projectId,
+        
+        useProjectId: values.useProjectId || this.store.useProjectId,
         applyDescr: values.applyDescr,
       }
       // 申请时长为永远

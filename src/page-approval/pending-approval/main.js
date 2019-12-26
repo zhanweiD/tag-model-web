@@ -109,7 +109,7 @@ export default class PendingApproval extends Component {
 
   render() {
     const {
-      projectList, applicant, detail, confirmLoading,
+      projectList, applicant, detail, confirmLoading, detailLoading,
     } = store
     const listConfig = {
       columns: this.columns,
@@ -127,6 +127,7 @@ export default class PendingApproval extends Component {
       handleSubmit: this.handleSubmit,
       fromPage: 'willApproval',
       confirmLoading,
+      detailLoading,
     }
 
     return (

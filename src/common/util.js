@@ -150,7 +150,7 @@ export function listToTree(data) {
 }
 
 // 标签、对象英文名校验正则
-export const enNameReg = /^[a-zA-Z][a-zA-Z0-9_]{0,29}$/
+export const enNameReg = /^[a-zA-Z][a-zA-Z0-9_]{0,31}$/
 
 /**
  * @description 根据数据类型code 返回 数据类型name; 常用数据类型 整数型/小数型/文本型/日期型

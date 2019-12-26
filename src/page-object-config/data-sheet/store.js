@@ -63,6 +63,7 @@ class Store extends ListContentStore(io.getList) {
     this.selectedRowKeys.clear()
     this.selectedRows.clear()
     this.editSelectedItem = {}
+    this.fieldListLoading = false
 
     if (cb) cb()
   }
@@ -310,12 +311,15 @@ class Store extends ListContentStore(io.getList) {
 
       runInAction(() => {
         this.successInfo = res
-        this.confirmLoading = false
         this.nextStep()
         if (cb) cb()
       })
     } catch (e) {
       errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        this.confirmLoading = false
+      })
     }
   }
 
@@ -343,12 +347,15 @@ class Store extends ListContentStore(io.getList) {
 
       runInAction(() => {
         this.successInfo = res
-        this.confirmLoading = false
         this.nextStep()
         if (cb) cb()
       })
     } catch (e) {
       errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        this.confirmLoading = false
+      })
     }
   }
 

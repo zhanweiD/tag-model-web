@@ -1,9 +1,9 @@
 import {Component} from 'react'
-import {action, toJS} from 'mobx'
+import {action} from 'mobx'
 import {observer} from 'mobx-react'
 import {Drawer, Button, Spin} from 'antd'
 import {ModalForm} from '../../component'
-import {changeToOptions} from '../../common/util'
+import {changeToOptions, enNameReg, isJsonFormat} from '../../common/util'
 import {tagConfigMethodMap, nameTypeMap} from './util'
 
 const dataTypeData = changeToOptions((window.njkData.dict || {}).dataType || [])('value', 'key')
@@ -53,16 +53,20 @@ export default class DrawerCreate extends Component {
     {
       label: '所属类目',
       key: 'cateId',
-      initialValue: drawerTagInfo.parentId ? [drawerTagInfo.parentId] : undefined,
-      component: 'selectTree',
+      initialValue: drawerTagInfo.pathIds && drawerTagInfo.pathIds.length ? drawerTagInfo.pathIds.slice(2) : undefined,
+      component: 'cascader',
       rules: [
         '@requiredSelect',
       ],
       control: {
         disabled: !ownObject,
         options: tagCateSelectList,
-        valueName: 'id',
-        selectCon: ['isLeaf', 2],
+        // valueName: 'id',
+        // selectCon: ['isLeaf', 2],
+        fieldNames: {
+          label: 'name',
+          value: 'id',
+        },
       },
     }, 
     {
@@ -88,6 +92,7 @@ export default class DrawerCreate extends Component {
         '@transformTrim',
         '@required',
         '@max32',
+        {pattern: enNameReg, message: '不超过32个字，只能包含英文、数字或下划线，必须以英文开头'},
         {validator: this.checkName},
       ],
       control: {
@@ -124,6 +129,7 @@ export default class DrawerCreate extends Component {
       rules: [
         '@transformTrim',
         '@required',
+        {validator: this.handleEnumValueValidator},
       ],
       control: {
         placeholder: '若标签值为枚举型，可将枚举代码值显示为易理解的值，例如：{"0":"女","1":"男"}',
@@ -150,6 +156,19 @@ export default class DrawerCreate extends Component {
     }]
   }
 
+  // 校验枚举值输入
+  handleEnumValueValidator(rule, value, callback) {
+    if (value) {
+      if (!isJsonFormat(value)) {
+        callback('请输入正确的JSON格式')
+      }
+      callback()
+    } else {
+      callback()
+    }
+  }
+
+
   @action.bound changeIsEnum(e) {
     this.store.isEnum = e
   }
@@ -168,6 +187,8 @@ export default class DrawerCreate extends Component {
       if (!err) {
         const params = {
           ...values,
+          cateId: values.cateId[values.cateId.length - 1],
+          // pathIds: values.cateId,
           isEnum: values.isEnum ? 1 : 0,
         }
 

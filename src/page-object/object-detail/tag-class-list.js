@@ -92,6 +92,17 @@ export default class TagList extends Component {
     }, 'list')
   }
 
+  @action.bound changeTable = pagination => {
+    this.store.tagList.currentPage = pagination.current
+
+    this.store.getTagList({
+      keyword: this.store.keyword,
+      currentPage: pagination.current,
+      pageSize: this.store.tagList.pageSize,
+      cateId: this.store.currentSelectKeys,
+    }, 'list')
+  }
+
 
   render() {
     const {tagList, keyword} = this.store
@@ -110,9 +121,9 @@ export default class TagList extends Component {
       pagination: {
         current: tagList.currentPage,
         pageSize: tagList.pageSize,
+        total: tagList.total,
       },
-      // warning here
-      // onChange: this.changeTable,
+      onChange: this.changeTable,
     }
 
     const noDataConfig = {

@@ -128,7 +128,7 @@ export default class Scene extends Component {
                                 title={name}
                                 // eslint-disable-next-line no-underscore-dangle
                                 link={`${window.__onerConfig.pathPrefix}/scene#/${id}`}
-                                tag={[<Tag text={used ? '使用中' : '未使用'} color={used ? 'blue' : 'gray'} className="mr8" />]}
+                                tag={[<Tag status={used ? 'process' : 'wait'} text={used ? '使用中' : '未使用'} className="mr8" />]}
                                 labelList={[{
                                   label: '创建者',
                                   value: cUser,

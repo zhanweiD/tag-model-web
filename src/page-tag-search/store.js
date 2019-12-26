@@ -1,7 +1,9 @@
 import {
   observable, action, runInAction,
 } from 'mobx'
-import {successTip, failureTip, errorTip} from '../common/util'
+import {
+  successTip, failureTip, errorTip, changeToOptions, listToTree,
+} from '../common/util'
 import {ListContentStore} from '../component/list-content'
 import io from './io'
 
@@ -10,9 +12,20 @@ class Store extends ListContentStore(io.getList) {
   @observable useProjectId
   @observable projectName
 
+
+  @observable expand = false
+  @observable permissionType = '' // 使用权限状态
+  @observable ownProjectId = '' // 所属项目id
+  @observable objectId = '' // 对象id
+  @observable hotWord = undefined // 关键词
+
+  
   @observable ownProjectList = []
   @observable objectList = []
   @observable sceneList = []
+  @observable sceneCate = []
+  @observable selectItem = {}
+  @observable sceneType = undefined
 
   @observable modalApplyVisible = false
   @observable modalSceneVisible = false
@@ -47,11 +60,29 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  @action async getSceneList() {
+  @action async getSceneList(params) {
     try {
-      const res = await io.getSceneList()
+      const res = await io.getSceneList({
+        objId: this.objectId,
+        projectId: this.useProjectId,
+        ...params,
+      })
       runInAction(() => {
-        this.sceneList = res
+        this.sceneList = changeToOptions(res)('name', 'id')
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  @action async getSceneCate(params) {
+    try {
+      const res = await io.getSceneCate({
+        objId: this.objectId || this.selectItem.objId,
+        ...params,
+      })
+      runInAction(() => {
+        this.sceneCate = listToTree(res)
       })
     } catch (e) {
       errorTip(e.message)

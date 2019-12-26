@@ -70,13 +70,15 @@ export default class Market extends Component {
           {/* eslint-disable-next-line no-underscore-dangle */}
           <a href={`${window.__onerConfig.pathPrefix}/tag-management#/${record.id}`}>查看详情</a>  
           <span className="table-action-line" />
-          <a href onClick={() => this.openModal(record)} className={record.status ? 'disabled' : ''}>申请</a>
+          <a href onClick={() => this.openModal(record, 'one')} className={record.status ? 'disabled' : ''}>申请</a>
         </div>
       ),
     },
   ]
 
-  @action.bound openModal(data) {
+  @action.bound openModal(data, type) {
+    store.modalType = type   
+    store.selectItem = data
     store.tagIds.replace([data.id]) 
     store.modalVisible = true
   }
@@ -93,6 +95,7 @@ export default class Market extends Component {
    * @description 批量申请
    */
   @action.bound batchApply() {
+    store.modalType = 'batch' 
     store.tagIds.replace(store.rowKeys) 
     store.modalVisible = true
   }

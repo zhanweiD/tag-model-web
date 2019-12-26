@@ -29,7 +29,7 @@ const navList = [
 const statusMap = {
   0: '有效',
   1: '有效',
-  2: '无效',
+  2: '失效',
 }
 
 @inject('frameChange')
@@ -55,6 +55,22 @@ export default class TagSearch extends Component {
     store.getList({
       useProjectId: store.useProjectId,
     })
+    store.initParams = {
+      useProjectId: store.useProjectId,
+    }
+  }
+
+  componentWillUnmount() {
+    store.tagIds.clear()
+    store.selectedRows.clear()
+    store.rowKeys.clear()
+    store.expand = false
+    store.permissionType = '' // 使用权限状态
+    store.ownProjectId = '' // 所属项目id
+    store.objectId = '' // 对象id
+    store.hotWord = undefined // 关键词
+    store.selectItem = {}
+    store.sceneType = undefined
   }
 
   columns = [
@@ -62,14 +78,6 @@ export default class TagSearch extends Component {
       key: 'name',
       title: '标签名称',
       dataIndex: 'name',
-      render: (text, record) => (
-        <div>
-          <span className="mr8">{text}</span>
-          {
-            record.status === 1 ? <Tag status="success" /> : null
-          }
-        </div>
-      ),
     }, {
       key: 'enName',
       title: '唯一标识',
@@ -91,7 +99,7 @@ export default class TagSearch extends Component {
       key: 'status',
       title: '使用权限状态',
       dataIndex: 'status',
-      render: text => statusMap[+text] || '无效',
+      render: text => statusMap[+text] || '失效',
     }, {
       key: 'action',
       title: '操作',
@@ -102,7 +110,7 @@ export default class TagSearch extends Component {
           <a href={`${window.__onerConfig.pathPrefix}/tag-management#/${record.id}`}>标签详情</a>
           <span className="table-action-line" />
           {
-            record.status === 0
+            record.status === 2
               ? <a href onClick={() => this.openApplyModal(record)}>权限申请</a>
               : <a href onClick={() => this.openSceneModal(record)}>添加到业务场景</a>
           }
@@ -119,7 +127,12 @@ export default class TagSearch extends Component {
     store.modalApplyVisible = true
   }
 
-  @action.bound openSceneModal() {
+  @action.bound openSceneModal(data) {
+    store.selectItem = data
+    store.sceneType = 'one'
+    store.getSceneList({
+      objId: data.objId,
+    })
     store.tagIds.replace([this.rowKeys])
     store.modalSceneVisible = true
   }
@@ -137,6 +150,8 @@ export default class TagSearch extends Component {
    * @description 批量添加到业务场景
    */
   @action.bound batchAction() {
+    store.getSceneList()
+    store.sceneType = 'batch'
     store.tagIds.replace(store.rowKeys)
     store.modalSceneVisible = true
   }
@@ -192,17 +207,17 @@ export default class TagSearch extends Component {
 
 
   render() {
-    const {useProjectId, list} = store
+    const {useProjectId, list, objectId} = store
 
-    const rowSelection = {
+    const rowSelection = objectId ? {
       selectedRowKeys: store.rowKeys.slice(),
       onChange: this.onTableCheck,
       getCheckboxProps: record => ({
         disabled: record.status === 2, // 标签权限状态为无效 不可添加到业务场景
       }),
-    }
+    } : null
 
-    const buttons = list.length ? [
+    const buttons = list.length && objectId ? [
       <Button type="primary" disabled={!store.rowKeys.length} onClick={this.batchAction}>批量添加到业务场景</Button>,
       <span className="ml8">
         已选择

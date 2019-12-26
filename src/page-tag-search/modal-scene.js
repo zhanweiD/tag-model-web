@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import {action, toJS} from 'mobx'
+import {action, toJS, observable} from 'mobx'
 import {observer} from 'mobx-react'
 import {Modal} from 'antd'
 import {ModalForm} from '../component'
@@ -11,27 +11,56 @@ export default class ModalScene extends Component {
     this.store = props.store
   }
 
+  @observable sceneId = undefined
+
+  @action.bound selectScene(id) {
+    this.store.sceneId = id
+    this.form.resetFields(['catId'])
+    this.store.objId = undefined
+    this.store.sceneCate.clear()
+
+    this.store.getSceneCate({
+      occasionId: id,
+    })
+  }
+
   selectContent= () => [{
     label: '业务场景',
-    key: 'scene',
+    key: 'occasionId',
     rules: [
       '@requiredSelect',
     ],
     control: {
-      options: [{
-        name: 'hive',
-        value: 'hive',
-      }],
+      options: this.store.sceneList,
+      onSelect: v => this.selectScene(v),
     },
     component: 'select',
   }, {
-    label: '描述',
-    key: 'descr',
-    component: 'textArea',
-  }]
+    label: '场景类目',
+    key: 'catId',
+    component: 'cascader',
+    rules: [
+      '@requiredSelect',
+    ],
+    control: {
+      // disabled: !this.store.sceneId,
+      options: toJS(this.store.sceneCate),
+      fieldNames: {
+        label: 'name',
+        value: 'id',
+      },
+    },
+  }, 
+  // {
+  //   label: '描述',
+  //   key: 'descr',
+  //   component: 'textArea',
+  // }
+  ]
 
   @action handleCancel = () => {
     this.store.modalSceneVisible = false
+    this.store.sceneType = undefined
   }
 
   submit = () => {
@@ -39,15 +68,34 @@ export default class ModalScene extends Component {
     const {store} = t
     this.form.validateFields((err, values) => {
       if (!err) {
-        const params = {
-          ...values,
-          occTags: toJS(store.tagIds), 
-        }
+        const catId = values.catId[values.catId.length - 1]
+        const {occasionId} = values
+        let occTags
 
-        // params.occTags.replace(store.occTags) 
-        // store.addToScene(params, () => {
-        //   t.handleCancel()
-        // })
+        if (store.sceneType === 'one') {
+          occTags = [{
+            occasionId,
+            catId, 
+            objId: store.selectItem.objId,
+            tagId: store.selectItem.id,
+          }]
+        } else {
+          const objId = store.objectId
+          const tags = toJS(store.tagIds)
+
+          occTags = tags.map(tagId => ({
+            occasionId,
+            catId,
+            objId,
+            tagId: tagId || store.selectItem.id,
+          }))
+        }
+       
+        store.addToScene({
+          occTags,
+        }, () => {
+          t.handleCancel()
+        })
       }
     })
   }

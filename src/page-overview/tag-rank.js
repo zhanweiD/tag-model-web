@@ -101,7 +101,7 @@ export default class TagRank extends Component {
       .enter()
       .append('text')
       .attr('y', (d, i) => rectDistance * i + rectH + 36)
-      .text(d => `${d.objName}—${d.tagName}`)
+      .text(d => `${d.objName}——${d.tagName}`)
       .attr('fill', 'rgba(0,0,0, 0.45)')
 
     
