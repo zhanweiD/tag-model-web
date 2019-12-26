@@ -80,7 +80,7 @@ export default class Action extends Component {
     return (
       <div className="object-tree-action">
         <NoBorderInput 
-          placeholder="请输入对象名称搜索" 
+          placeholder="请输入名称搜索" 
           onChange={this.searchTree}
           onPressEnter={this.searchTree}
         />
