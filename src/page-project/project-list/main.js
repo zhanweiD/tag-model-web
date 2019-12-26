@@ -2,7 +2,7 @@
  * @description 项目列表
  */
 import {Component, Fragment} from 'react'
-import {action, toJS} from 'mobx'
+import {action} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {Popconfirm, Badge, Button} from 'antd'
 import {Link} from 'react-router-dom'
@@ -68,7 +68,20 @@ export default class ProjectList extends Component {
             </Fragment>
           )}
           <a href onClick={() => this.toSpace(record)}>项目空间</a>
+          <span className="table-action-line" />
           {
+            record.status === 1 ? <span className="disabled">编辑</span> : <a href onClick={() => this.openModal('edit', record)}>编辑</a>
+          }
+          <span className="table-action-line" />
+          {
+            record.status === 1 ? <span className="disabled">删除</span> : (
+              <Popconfirm placement="topRight" title="项目被删除后不可恢复，确认删除？" onConfirm={() => this.delItem(record.id)}>
+                <a href>删除</a>
+              </Popconfirm>
+            )
+          }
+        
+          {/* {
             record.edit && (
               <Fragment>
                 <span className="table-action-line" />
@@ -85,7 +98,7 @@ export default class ProjectList extends Component {
                 </Popconfirm>
               </Fragment>
             )
-          }
+          } */}
         </div>
       ),
     },

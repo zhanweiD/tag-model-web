@@ -217,8 +217,13 @@ export default class TagManagement extends Component {
     // 面包屑设置
     const {frameChange} = this.props
     frameChange('nav', navList)
-    // 获取所属对象下拉数据
-    store.getObjectSelectList() 
+  }
+
+  componentDidMount() {
+    if (store.projectId) {
+      // 获取所属对象下拉数据
+      store.getObjectSelectList() 
+    }
   }
 
   // 跳转到项目列表

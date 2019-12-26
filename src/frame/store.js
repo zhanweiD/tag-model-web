@@ -18,6 +18,10 @@ class Store {
         pageSize: 9999,
       })
 
+      // const res = {
+      //   data: [],
+      // }
+
       let {projectId} = this
       if (!projectId && res.data.length) {
         projectId = res.data[0].id
@@ -30,15 +34,22 @@ class Store {
       } 
      
       runInAction(() => {
-        window.spaceInfo.projectList = res.data
-        window.spaceInfo.finish = true
+        if (res.data.length === 0) {
+          window.spaceInfo = {}
+          window.spaceInfo.projectList = res.data
+          window.spaceInfo.finish = true
+        } else {
+          window.spaceInfo.projectList = res.data
+          window.spaceInfo.finish = true
+        }
+      
         this.projectId = projectId
         this.projectList = res.data
       })
     } catch (e) {
       window.spaceInfo = {}
       errorTip(e.message)
-    }
+    } 
   }
 
   // // 点击项目空间

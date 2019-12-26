@@ -25,9 +25,8 @@ class Frame extends Component {
     // 项目空间
     if (page === 'space') {
       const projectId = storage.get('tag_projectId')
- 
+      window.spaceInfo = {}
       if (projectId) {
-        window.spaceInfo = {}
         window.spaceInfo.projectId = +projectId
       }
       

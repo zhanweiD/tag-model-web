@@ -45,11 +45,15 @@ export default class TagSearch extends Component {
     const {frameChange} = this.props
     frameChange('nav', navList)
     // 获取所属对象下拉数据
+  }
 
+  componentDidMount() {
     // 请求列表，放在父组件进行请求是因为需要在外层做空数据判断。
     // 若返回数据为空[]。则渲染 NoData 组件。
     // 要是请求放在列表组件ListContent中的话, 就必须渲染表格的dom 影响体验
-    store.getList()
+    store.getList({
+      useProjectId: store.useProjectId,
+    })
   }
 
   columns = [
