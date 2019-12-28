@@ -26,9 +26,11 @@ const SelectTypes = ({
   }
   return (
     <antd.Select 
+      showSearch
       placeholder={placeholder || createSelectPlaceholder(label)} 
       getPopupContainer={triggerNode => triggerNode.parentElement}
       // notFoundContent={rest.selectLoading ? <antd.Spin size="small" /> : <div>暂无数据源</div>}
+      optionFilterProp="children"
       {...rest}
     >
       {

@@ -6,7 +6,9 @@ import {action} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {Button, Popconfirm} from 'antd'
 import {Link} from 'react-router-dom'
-import {ListContent, Loading, NoData} from '../../component'
+import {
+  ListContent, Loading, NoData, OmitTooltip,
+} from '../../component'
 import {
   tagStatusBadgeMap,
   usedStatusBadgeMap,
@@ -41,7 +43,7 @@ export default class TagManagement extends Component {
     key: 'name',
     title: '标签名称',
     dataIndex: 'name',
-    render: (text, record) => <Link to={`/${record.id}`}>{text}</Link>,
+    render: (text, record) => <Link to={`/${record.id}`}><OmitTooltip maxWidth={120} text={text} /></Link>,
   }, {
     key: 'configType',
     title: '配置方式',

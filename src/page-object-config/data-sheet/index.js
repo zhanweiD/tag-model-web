@@ -1,13 +1,13 @@
 /**
  * @description 对象配置 - 数据表
  */
-import {Component} from 'react'
+import {Component, Fragment} from 'react'
 import {action, observable} from 'mobx'
 import {observer, inject, Provider} from 'mobx-react'
 import {
   Button, Drawer, Steps, Popconfirm,
 } from 'antd'
-import {ListContent} from '../../component'
+import {ListContent, QuestionTooltip} from '../../component'
 import FieldChooseAdd from './field-choose-add'
 import FieldChooseEdit from './field-choose-edit'
 import FieldConfirm from './field-confirm'
@@ -83,9 +83,9 @@ export default class DataSheet extends Component {
 
   componentWillReceiveProps(next) {
     const {objId} = this.props
-    store.objId = next.objId
 
     if (objId !== next.objId) {
+      store.objId = next.objId
       store.getList({
         currentPage: 1,
         objId: next.objId,
@@ -102,7 +102,9 @@ export default class DataSheet extends Component {
     store.removeList(params, () => {
       t.bigStore.getObjDetail()
       t.bigStore.getObjCard()
-      store.getList()
+      store.getList({
+        objId: store.objId,
+      })
     })
   }
 
@@ -129,19 +131,41 @@ export default class DataSheet extends Component {
     this.tagConfigVisible = false
   }
 
-  @action.bound tagConfigSyccess() {
-    store.getList()
+  @action.bound tagConfigSuccess() {
+    store.getList({
+      objId: store.objId,
+    })
   }
 
   render() {
     const {
-      drawerVisible, currentStep, closeDrawer, objId, projectId, drawerType,
+      drawerVisible,
+      currentStep,
+      closeDrawer,
+      objId,
+      projectId,
+      drawerType,
+      typeCode,
+      list,
     } = store
 
+    // typeCode = 3 关系对象；typeCode = 4 实体对象；
+    const buttons = +typeCode === 3 ? (
+      <Fragment>
+        <Button type="primary" onClick={() => this.openDrawer('add')} disabled={list.length === 1}>添加关联表</Button>
+        <QuestionTooltip tip="最多只能添加1张表" />
+      </Fragment>
+    ) : (
+      <Fragment>
+        <Button type="primary" onClick={() => this.openDrawer('add')} disabled={list.length === 5}>添加关联表</Button>
+        <QuestionTooltip tip="最多只能添加5张表" />
+      </Fragment>
+    )
+    console.log(objId, projectId)
     const listConfig = {
       columns: this.columns,
       initParams: {objId, projectId},
-      buttons: [<Button type="primary" onClick={() => this.openDrawer('add')}>添加关联表</Button>],
+      buttons: [buttons],
       paginationConfig: {
         hideOnSinglePage: true, // 只有一页时隐藏
       }, 
@@ -183,7 +207,7 @@ export default class DataSheet extends Component {
               <ConfigField 
                 visible={this.tagConfigVisible} 
                 onClose={this.closeTagConfig}
-                onSuccess={this.tagConfigSyccess}
+                onSuccess={this.tagConfigSuccess}
               />
             )
           }

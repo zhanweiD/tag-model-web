@@ -7,6 +7,7 @@ import {observable, action} from 'mobx'
 import {
   Table, Input, Popconfirm, Tooltip,
 } from 'antd'
+import {OmitTooltip} from '../../component'
 import {Time} from '../../common/util'
 import {usedStatusMap} from '../util'
 
@@ -26,17 +27,20 @@ export default class ObjectList extends Component {
     {
       title: '对象名称',
       dataIndex: 'name',
-      key: 'miao',
+      key: 'name',
+      render: text => <OmitTooltip maxWidth={80} text={text} />,
     },
     {
       title: '对象描述',
       dataIndex: 'descr',
       key: 'descr',
+      render: text => <OmitTooltip maxWidth={80} text={text} />,
     },
     {
       title: '对象类目',
       dataIndex: 'objCatName',
       key: 'objCatName',
+      render: text => <OmitTooltip maxWidth={80} text={text} />,
     },
     {
       title: '添加人',

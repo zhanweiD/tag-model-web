@@ -7,7 +7,9 @@ import {action} from 'mobx'
 import {HashRouter as Router} from 'react-router-dom'
 import {Button} from 'antd'
 import Frame from '../frame'
-import {ListContent, Tag, NoData} from '../component'
+import {
+  ListContent, Tag, NoData, OmitTooltip,
+} from '../component'
 import {getDataTypeName} from '../common/util'
 import Search from './search'
 import Modal from './modal'
@@ -38,7 +40,7 @@ export default class Market extends Component {
       dataIndex: 'name',
       render: (text, record) => (
         <div>
-          <span>{text}</span>
+          <OmitTooltip maxWidth={120} text={text} />
           {
             record.status === 1 ? <Tag status="success" className="ml8" text="审批中" /> : null
           }
@@ -48,10 +50,12 @@ export default class Market extends Component {
       key: 'enName',
       title: '唯一标识',
       dataIndex: 'enName',
+      render: text => <OmitTooltip maxWidth={120} text={text} />,
     }, {
       key: 'objName',
       title: '对象',
       dataIndex: 'objName',
+      render: text => <OmitTooltip maxWidth={120} text={text} />,
     }, {
       key: 'valueType',
       title: '数据类型',
@@ -61,6 +65,7 @@ export default class Market extends Component {
       key: 'projectName',
       title: '所属项目',
       dataIndex: 'projectName',
+      render: text => <OmitTooltip maxWidth={120} text={text} />,
     }, {
       key: 'action',
       title: '操作',

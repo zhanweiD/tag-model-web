@@ -2,7 +2,7 @@ import {Component, Fragment} from 'react'
 import {action, observable} from 'mobx'
 import {observer} from 'mobx-react'
 import {Table, Button, Input} from 'antd'
-import {NoData} from '../../component'
+import {NoData, OmitTooltip} from '../../component'
 import ModalMove from './modal-move'
 
 const {Search} = Input
@@ -20,9 +20,11 @@ export default class TagList extends Component {
     {
       title: '标签名称',
       dataIndex: 'name',
+      render: text => <OmitTooltip maxWidth={100} text={text} />,
     }, {
       title: '唯一标识',
       dataIndex: 'enName',
+      render: text => <OmitTooltip maxWidth={100} text={text} />,
     }, {
       title: '数据类型',
       dataIndex: 'valueTypeName',
@@ -32,6 +34,7 @@ export default class TagList extends Component {
     }, {
       title: '描述',
       dataIndex: 'descr',
+      render: text => <OmitTooltip maxWidth={120} text={text} />,
     }, {
       title: '操作',
       dataIndex: 'action',

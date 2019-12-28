@@ -18,7 +18,7 @@ class Store extends ListContentStore(io.getList) {
     try {
       const res = await io.getApplicant()
       runInAction(() => {
-        this.applicant = changeToOptions(res)('applyUserName', 'getApplicant')
+        this.applicant = changeToOptions(res)('applyUserName', 'applyUserId')
       })
     } catch (e) {
       errorTip(e.message)

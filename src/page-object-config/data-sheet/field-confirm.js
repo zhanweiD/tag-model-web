@@ -98,6 +98,7 @@ export default class FieldConfirm extends Component {
           t.bigStore.getObjDetail()
           t.bigStore.getObjCard()
           t.store.getList({
+            objId: t.store.objId,
             currentPage: 1,
           })
         })
@@ -106,6 +107,7 @@ export default class FieldConfirm extends Component {
           t.bigStore.getObjDetail()
           t.bigStore.getObjCard()
           t.store.getList({
+            objId: t.store.objId,
             currentPage: 1,
           })
         })
@@ -118,6 +120,7 @@ export default class FieldConfirm extends Component {
           t.bigStore.getObjDetail()
           t.bigStore.getObjCard()
           t.store.getList({
+            objId: t.store.objId,
             currentPage: 1,
           })
         })
@@ -126,6 +129,7 @@ export default class FieldConfirm extends Component {
           t.bigStore.getObjDetail()
           t.bigStore.getObjCard()
           t.store.getList({
+            objId: t.store.objId,
             currentPage: 1,
           })
         })

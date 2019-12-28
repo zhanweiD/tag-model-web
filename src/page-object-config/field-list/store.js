@@ -112,6 +112,7 @@ class Store extends ListContentStore(io.getList) {
           this.modalInfo.visible = false
           // 刷新字段列表
           this.getList({
+            objId: this.objId,
             currentPage: 1,
           })
         } else {

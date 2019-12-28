@@ -6,7 +6,7 @@ import {observer, inject} from 'mobx-react'
 import {action} from 'mobx'
 import {Button} from 'antd'
 import {
-  ListContent, Tag, Loading, NoData,
+  ListContent, Loading, NoData, OmitTooltip,
 } from '../component'
 import {getDataTypeName} from '../common/util'
 import ModalApply from './modal-apply'
@@ -78,10 +78,12 @@ export default class TagSearch extends Component {
       key: 'name',
       title: '标签名称',
       dataIndex: 'name',
+      render: text => <OmitTooltip maxWidth={120} text={text} />,
     }, {
       key: 'enName',
       title: '唯一标识',
       dataIndex: 'enName',
+      render: text => <OmitTooltip maxWidth={120} text={text} />,
     }, {
       key: 'valueType',
       title: '数据类型',
@@ -91,10 +93,12 @@ export default class TagSearch extends Component {
       key: 'objName',
       title: '对象名称',
       dataIndex: 'objName',
+      render: text => <OmitTooltip maxWidth={120} text={text} />,
     }, {
       key: 'projectName',
       title: '所属项目',
       dataIndex: 'projectName',
+      render: text => <OmitTooltip maxWidth={120} text={text} />,
     }, {
       key: 'status',
       title: '使用权限状态',

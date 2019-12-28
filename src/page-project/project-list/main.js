@@ -7,7 +7,7 @@ import {observer, inject} from 'mobx-react'
 import {Popconfirm, Badge, Button} from 'antd'
 import {Link} from 'react-router-dom'
 import {Time, pathPrefix} from '../../common/util'
-import {ListContent, NoData} from '../../component'
+import {ListContent, NoData, OmitTooltip} from '../../component'
 import storage from '../../common/nattyStorage'
 
 import seach from './search'
@@ -31,7 +31,11 @@ export default class ProjectList extends Component {
       key: 'name',
       title: '项目名称',
       dataIndex: 'name',
-      render: (text, record) => <Link to={`/${record.id}`}>{text}</Link>,
+      render: (text, record) => (
+        <Link to={`/${record.id}`}> 
+          <OmitTooltip maxWidth={100} text={text} />
+        </Link>
+      ),
     }, {
       key: 'cUserName',
       title: '所有者',
@@ -49,6 +53,7 @@ export default class ProjectList extends Component {
       key: 'descr',
       title: '项目描述',
       dataIndex: 'descr',
+      render: text => <OmitTooltip maxWidth={120} text={text} />,
     }, {
       key: 'cTime',
       title: '创建时间',

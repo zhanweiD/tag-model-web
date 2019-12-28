@@ -40,6 +40,15 @@ export default class ConfigField extends Component {
     store.storageId = editSelectedItem.dataStorageId
   }
 
+  componentWillUnmount() {
+    store.initialList.clear()
+    store.secondTableList.clear()
+    store.cateList.clear()
+    store.defaultCateId = undefined
+    store.secondSelectedRows.clear()
+    store.successResult = {}
+  }
+
   render() {
     const {visible} = this.props
 

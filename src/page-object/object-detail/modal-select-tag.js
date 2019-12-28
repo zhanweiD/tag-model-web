@@ -4,23 +4,28 @@ import {observer} from 'mobx-react'
 import {
   Modal, Table, Alert, Button,
 } from 'antd'
+import {OmitTooltip} from '../../component'
 
 const columns = [
   {
     title: '标签名称',
     dataIndex: 'name',
+    render: text => <OmitTooltip maxWidth={120} text={text} />,
   }, {
     title: '唯一标识',
     dataIndex: 'enName',
+    render: text => <OmitTooltip maxWidth={120} text={text} />,
   }, {
     title: '数据类型',
     dataIndex: 'valueTypeName',
   }, {
     title: '所属项目',
     dataIndex: 'projectName',
+    render: text => <OmitTooltip maxWidth={120} text={text} />,
   }, {
     title: '描述',
     dataIndex: 'descr',
+    render: text => <OmitTooltip maxWidth={120} text={text} />,
   },
 ]
 

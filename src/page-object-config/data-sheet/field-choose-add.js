@@ -3,7 +3,7 @@ import {Component} from 'react'
 import {action} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {Button, Table} from 'antd'
-import {ModalForm} from '../../component'
+import {ModalForm, OmitTooltip} from '../../component'
 
 @inject('bigStore')
 @observer
@@ -189,7 +189,7 @@ export default class FieldChooseAdd extends Component {
         onSelect: v => this.selectMajorKey(v),
       },
     }, {
-      label: objDetail.objRspList && objDetail.objRspList[0].name,
+      label: <OmitTooltip text={objDetail.objRspList && objDetail.objRspList[0].name} maxWidth={75} className="rel-entity-name" />,
       // key: objDetail.objRspList && objDetail.objRspList[0].id,
       key: 'entity1Key',
       hide: objDetail.objTypeCode === 4, 
@@ -204,7 +204,7 @@ export default class FieldChooseAdd extends Component {
         onSelect: v => this.selectEntityKey(v, 1, objDetail.objRspList[0].id),
       },
     }, {
-      label: objDetail.objRspList && objDetail.objRspList[1].name,
+      label: <OmitTooltip text={objDetail.objRspList && objDetail.objRspList[1].name} maxWidth={75} className="rel-entity-name" />,
       // key: objDetail.objRspList && objDetail.objRspList[1].id,
       key: 'entity2Key',
       hide: this.bigStore.objDetail.objTypeCode === 4, 

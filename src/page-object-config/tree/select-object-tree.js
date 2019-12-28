@@ -7,7 +7,7 @@ import {
   observable, action,
 } from 'mobx'
 import {Tree} from 'antd'
-import {NoBorderInput, Loading} from '../../component'
+import {NoBorderInput, Loading, OmitTooltip} from '../../component'
 import {IconChakan} from '../../icon-comp'
 
 const {TreeNode} = Tree
@@ -67,7 +67,7 @@ export default class CateTree extends Component {
     if (item.children) {
       return (
         <TreeNode
-          title={item.name}
+          title={<OmitTooltip maxWidth={120} text={item.name} />}
           key={item.aId}
           dataRef={item}
           selectable={false}
@@ -80,7 +80,7 @@ export default class CateTree extends Component {
     return (
       <TreeNode
         key={item.aId}
-        title={item.name}
+        title={<OmitTooltip maxWidth={120} text={item.name} />}
         selectable={false}
         objectData={item}
         disableCheckbox={listDataIds.includes(item.aId)}

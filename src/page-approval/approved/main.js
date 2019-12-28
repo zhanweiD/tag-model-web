@@ -5,7 +5,7 @@ import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {observable, action} from 'mobx'
 import {Button} from 'antd'
-import {ListContent} from '../../component'
+import {ListContent, OmitTooltip} from '../../component'
 import {Time, keyToName} from '../../common/util'
 import {getTableStatus, APPLY_TYPE} from '../common/comp-approval-status'
 import ModalDetail from '../common/comp-approval-modal'
@@ -31,6 +31,7 @@ export default class Approved extends Component {
       title: '申请内容',
       key: 'content',
       dataIndex: 'content',
+      render: text => <OmitTooltip maxWidth={120} text={text} />,
     }, {
       title: '申请人',
       key: 'applyUserName',

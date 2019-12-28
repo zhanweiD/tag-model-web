@@ -29,9 +29,9 @@ export default class FieldList extends Component {
 
   componentWillReceiveProps(next) {
     const {objId} = this.props
-    store.objId = next.objId
-
+    
     if (objId !== next.objId) {
+      store.objId = next.objId
       store.getList({
         currentPage: 1,
         objId: next.objId,
@@ -112,7 +112,9 @@ export default class FieldList extends Component {
     store.removeList(params, () => {
       t.bigStore.getObjDetail()
       t.bigStore.getObjCard()
-      store.getList()
+      store.getList({
+        objId: store.objId,
+      })
     })
   }
 
@@ -153,6 +155,9 @@ export default class FieldList extends Component {
       columns: this.columns,
       searchParams: seach(searchParams),
       initParams: {objId, projectId},
+      // paginationConfig: {
+      //   hideOnSinglePage: true, // 只有一页时隐藏
+      // }, 
       store, // 必填属性
     }
 
