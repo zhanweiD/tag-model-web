@@ -71,6 +71,7 @@ export default class TagSearch extends Component {
     store.hotWord = undefined // 关键词
     store.selectItem = {}
     store.sceneType = undefined
+    store.searchParams = {}
   }
 
   columns = [

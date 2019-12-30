@@ -73,9 +73,13 @@ export default class Market extends Component {
       render: (text, record) => (
         <div className="FBH FBAC">
           {/* eslint-disable-next-line no-underscore-dangle */}
-          <a href={`${window.__onerConfig.pathPrefix}/tag-management#/${record.id}`}>查看详情</a>  
-          <span className="table-action-line" />
-          <a href onClick={() => this.openModal(record, 'one')} className={record.status ? 'disabled' : ''}>申请</a>
+          <a href={`${window.__onerConfig.pathPrefix}/tag-management#/${record.id}`}>查看详情</a> 
+          <span className="table-action-line" /> 
+          {
+            record.status ? <span className="disabled"> 申请</span> : (
+              <a href onClick={() => this.openModal(record, 'one')}>申请</a>
+            )
+          }
         </div>
       ),
     },

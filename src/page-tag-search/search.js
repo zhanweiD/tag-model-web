@@ -38,12 +38,18 @@ export default class Search extends Component {
 
   // 更新列表
   @action.bound updateList() {
-    const params = {
+    this.store.searchParams = {
       useProjectId: this.store.useProjectId,
       type: this.store.permissionType,
       projectId: this.store.ownProjectId,
       objId: this.store.objectId,
       hotWord: this.store.hotWord,
+    }
+
+    this.store.selectedRows.clear()
+    this.store.rowKeys.clear()
+    
+    const params = {
       currentPage: 1,
     }
     this.store.getList(params)

@@ -37,12 +37,18 @@ class Store extends ListContentStore(io.getList) {
 
    // 更新列表
    @action.bound updateList() {
-    const params = {
+    this.searchParams = {
       hotWord: this.hotWord,
       useProjectId: this.useProjectId,
       projectId: this.ownProjectId,
       objId: this.objectId,
       type: this.projectPermission,
+    }
+
+    this.selectedRows.clear()
+    this.rowKeys.clear()
+
+    const params = {
       currentPage: 1,
     }
     this.getList(params)

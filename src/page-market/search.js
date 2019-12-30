@@ -45,6 +45,8 @@ export default class Search extends Component {
     this.store.useProjectName = arr.props.children
     this.store.useProjectId = v
     this.store.updateList()
+    this.store.selectedRows.clear()
+    this.store.rowKeys.clear()
   }
 
   @action.bound ownProjectSelect(v) {
