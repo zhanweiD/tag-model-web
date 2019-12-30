@@ -53,12 +53,12 @@ export default class ObjectList extends Component {
       key: 'createTime',
       render: text => <Time timestamp={text} />,
     },
-    {
-      title: '使用状态',
-      dataIndex: 'isUsed',
-      key: 'isUsed',
-      render: v => usedStatusMap(+v),
-    },
+    // {
+    //   title: '使用状态',
+    //   dataIndex: 'isUsed',
+    //   key: 'isUsed',
+    //   render: v => usedStatusMap(+v),
+    // },
     {
       title: '数据表数',
       dataIndex: 'tableCount',

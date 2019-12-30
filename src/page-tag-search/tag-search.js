@@ -72,6 +72,10 @@ export default class TagSearch extends Component {
     store.selectItem = {}
     store.sceneType = undefined
     store.searchParams = {}
+    store.pagination = {
+      pageSize: 10,
+      currentPage: 1,
+    }
   }
 
   columns = [

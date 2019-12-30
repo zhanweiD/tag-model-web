@@ -33,6 +33,9 @@ class ModalCateSelect extends React.Component {
 
     const {confirmLoading} = this.state
 
+    const defaultCate = options.filter(d => d.aId === -1)
+    const defaultCateV = defaultCate.length ? [defaultCate[0].id] : undefined
+
     return (
       <Modal
         title="选择所属类目"
@@ -49,7 +52,7 @@ class ModalCateSelect extends React.Component {
           >
             {
               getFieldDecorator('pathIds', {
-                initialValue: undefined,
+                initialValue: defaultCateV,
                 rules: [
                   {
                     required: true,

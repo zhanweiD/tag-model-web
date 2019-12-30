@@ -15,7 +15,8 @@ const api = {
   //* ------------------------------ 类目-相关接口 ------------------------------*//
   getCategoryDetail: get(`${sceneApi}/tree/obj/cat/detail`), // 类目详情
   addObjCategory: get(`${sceneApi}/tree/obj/addCat`), // 对象-添加类目
-  editCategory: get(`${sceneApi}/tree/obj/cat/edit`), // 类目-添加类目
+  addCategory: get(`${sceneApi}/tree/obj/cat/addCat`), // 类目-添加类目
+  editCategory: get(`${sceneApi}/tree/obj/cat/edit`), //  类目-编辑类目
   deleteCategory: get(`${sceneApi}/tree/obj/cat/del`), // 类目-删除类目
 
   //* ------------------------------ 标签-相关接口 ------------------------------*//
