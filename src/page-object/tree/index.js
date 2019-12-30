@@ -25,6 +25,8 @@ import store from './store'
 const {DtTreeNode, DtTreeBox} = DtTree
 const {confirm} = Modal
 
+const {functionCodes} = window.__userConfig
+
 @inject('bigStore')
 @observer
 export default class Tree extends Component {
@@ -200,10 +202,22 @@ export default class Tree extends Component {
     //   return node.aId === -1 ? this.categoryMenus.slice(0, 2) : this.categoryMenus
     // }
 
-    if (node.type === 3) {
+    // 对象管理类目权限code 对象类目（添加、编辑、删除） ```asset_tag_obj_cat_add_edit_del``` --管理员
+    if (+node.type === 3 && !functionCodes.includes('asset_tag_obj_cat_add_edit_del')) {
+      return [{key: 'view', value: '查看对象类目', onClick: (key, data) => this.openModal(key, data, TARGET_CATEGORY)}] // 只有查看详情权限
+    }
+    // 对象管理对象权限code对象（添加、编辑、删除、发布、取消发布）```asset_tag_obj_add_edit_del_publish``` --管理员
+    if (+node.type === 2 && !functionCodes.includes('asset_tag_obj_add_edit_del_publish')) {
+      return [] 
+    }
+
+    if (+node.type === 3) {
       return this.categoryMenus(node.canEdit, node.canDelete)
     }
-    return this.objectMenus(node.canEdit, node.canDelete)
+
+    if (+node.type === 2) {
+      return this.objectMenus(node.canEdit, node.canDelete)
+    }
   }
   
   /**

@@ -16,7 +16,7 @@ const serach = ({projectList = []}) => [
     initialValue: '',
     control: {
       defaultAll: true,
-      options: projectList,
+      options: projectList.length ? projectList : [{name: '全部', value: ''}],
     },
     component: 'select',
   }, {

@@ -13,6 +13,8 @@ import ModalCategory from './modal-category'
 const {DtTreeBox, DtTreeNode} = DtTree
 const {confirm} = Modal
 
+const {functionCodes} = window.__userConfig
+
 @observer
 export default class ObjectTree extends Component {
   constructor(props) {
@@ -137,6 +139,11 @@ export default class ObjectTree extends Component {
 
   // 设置节点的菜单
   setActionList = node => {
+    // 类目 && 无权限 权限code "asset_tag_tag_cat_add_edit_del"
+    if (!functionCodes.includes('asset_tag_tag_cat_add_edit_del')) {
+      return []
+    }
+
     // 叶子类目
     if (node.isLeaf === 2) {
       return this.leafCategoryMenus(node.canEdit, node.canDelete)

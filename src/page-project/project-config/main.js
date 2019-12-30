@@ -7,7 +7,7 @@ import {observer, inject} from 'mobx-react'
 import {withRouter} from 'react-router'
 import {Popconfirm, Button, Spin} from 'antd'
 import {Time} from '../../common/util'
-import {DetailHeader, ListContent} from '../../component'
+import {DetailHeader, ListContent, AuthBox} from '../../component'
 import ModalProjectConfig from './modal'
 
 import store from './store'
@@ -59,11 +59,17 @@ class ProjectConfig extends Component {
       width: 150,
       render: (text, record) => (
         <div>
-          <a href onClick={() => this.openModal('edit', record)}>编辑</a>
-          <span className="table-action-line" />
-          <Popconfirm placement="topRight" title="确认删除？" onConfirm={() => this.delItem(record.id)}>
-            <a href>删除</a>
-          </Popconfirm>
+          <AuthBox
+            code="asset_tag_project_member_add_edit_del"
+            isButton={false}
+          >
+            <a href onClick={() => this.openModal('edit', record)}>编辑</a>
+            <span className="table-action-line" />
+            <Popconfirm placement="topRight" title="确认删除？" onConfirm={() => this.delItem(record.id)}>
+              <a href>删除</a>
+            </Popconfirm>
+          </AuthBox>
+        
         </div>
       ),
     },
@@ -116,7 +122,7 @@ class ProjectConfig extends Component {
       columns: this.columns,
       initParams: {id},
       store, // 必填属性
-      buttons: [<Button type="primary" onClick={() => this.openModal('add')}>添加成员</Button>],
+      buttons: [<AuthBox code="asset_tag_project_member_add_edit_del" type="primary" onClick={() => this.openModal('add')}>添加成员</AuthBox>],
     }
     return (
       <div className="project-config">

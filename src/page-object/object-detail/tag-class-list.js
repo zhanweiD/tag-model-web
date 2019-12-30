@@ -1,11 +1,12 @@
 import {Component, Fragment} from 'react'
 import {action, observable} from 'mobx'
 import {observer} from 'mobx-react'
-import {Table, Button, Input} from 'antd'
-import {NoData, OmitTooltip} from '../../component'
+import {Table, Input} from 'antd'
+import {NoData, OmitTooltip, AuthBox} from '../../component'
 import ModalMove from './modal-move'
 
 const {Search} = Input
+const {functionCodes} = window.__userConfig
 
 @observer
 export default class TagList extends Component {
@@ -110,14 +111,14 @@ export default class TagList extends Component {
   render() {
     const {tagList, keyword} = this.store
 
-    const rowSelection = {
+    const rowSelection = functionCodes.includes('asset_tag_tag_tag_select_move') && {
       selectedRowKeys: this.selectedRowKeys,
       onChange: this.changeRow,
     }
 
     const listConfig = {
       rowKey: 'id',
-      rowSelection,
+      rowSelection: rowSelection || null,
       columns: this.columns,
       loading: tagList.loading,
       dataSource: tagList.list,
@@ -136,6 +137,8 @@ export default class TagList extends Component {
       btnText: '选择标签',
       onClick: this.props.openSelectTag,
       text: '没有任何标签，请在当前页面选择标签！',
+      code: 'asset_tag_tag_tag_select_move',
+      noAuthText: '没有任何标签',
     }
 
     return (
@@ -151,7 +154,7 @@ export default class TagList extends Component {
           ) : (
             <Fragment>
               <div className="FBH FBJB mb16">
-                <Button onClick={() => this.moveTo()} disabled={!this.selectedRowKeys.length} type="primary">批量移动至</Button>
+                <AuthBox code="asset_tag_tag_tag_select_move" onClick={() => this.moveTo()} disabled={!this.selectedRowKeys.length} type="primary">批量移动至</AuthBox>
                 <Search
                   placeholder="请输入关键字搜索"
                   onSearch={value => this.onSearch(value)}

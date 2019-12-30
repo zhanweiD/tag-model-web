@@ -4,10 +4,12 @@
 import {Component, Fragment} from 'react'
 import {action} from 'mobx'
 import {observer, inject} from 'mobx-react'
-import {Popconfirm, Badge, Button} from 'antd'
+import {Popconfirm, Badge} from 'antd'
 import {Link} from 'react-router-dom'
 import {Time, pathPrefix} from '../../common/util'
-import {ListContent, NoData, OmitTooltip} from '../../component'
+import {
+  ListContent, NoData, OmitTooltip, AuthBox,
+} from '../../component'
 import storage from '../../common/nattyStorage'
 
 import seach from './search'
@@ -66,44 +68,56 @@ export default class ProjectList extends Component {
       dataIndex: 'action',
       render: (text, record) => (
         <div className="FBH FBAC">
-          {record.config && (
+          {record.config === 1 && (
             <Fragment>
               <Link to={`/${record.id}`}>项目配置</Link>
               <span className="table-action-line" />
             </Fragment>
           )}
+
           <a href onClick={() => this.toSpace(record)}>项目空间</a>
-          <span className="table-action-line" />
-          {
-            record.status === 1 ? <span className="disabled">编辑</span> : <a href onClick={() => this.openModal('edit', record)}>编辑</a>
-          }
-          <span className="table-action-line" />
-          {
-            record.status === 1 ? <span className="disabled">删除</span> : (
-              <Popconfirm placement="topRight" title="项目被删除后不可恢复，确认删除？" onConfirm={() => this.delItem(record.id)}>
-                <a href>删除</a>
-              </Popconfirm>
-            )
-          }
-        
-          {/* {
-            record.edit && (
-              <Fragment>
-                <span className="table-action-line" />
-                <a href onClick={() => this.openModal('edit', record)}>编辑</a>
-              </Fragment>
-            )
-          }
-          {
-            record.del && (
-              <Fragment>
-                <span className="table-action-line" />
-                <Popconfirm placement="topRight" title="项目被删除后不可恢复，确认删除？" onConfirm={() => this.delItem(record.id)}>
-                  <a href>删除</a>
-                </Popconfirm>
-              </Fragment>
-            )
-          } */}
+
+          {(() => {
+            if (record.edit) {
+              if (record.status === 1) {
+                return (
+                  <Fragment>
+                    <span className="table-action-line" />
+                    <span className="disabled">编辑</span> 
+                  </Fragment>
+                )
+              } 
+              return (
+                <Fragment>
+                  <span className="table-action-line" />
+                  <a href onClick={() => this.openModal('edit', record)}>编辑</a>
+                </Fragment>
+              ) 
+            } 
+            return null
+          })()}
+
+          {(() => {
+            if (record.del) {
+              if (record.status === 1) {
+                return (
+                  <Fragment>
+                    <span className="table-action-line" />
+                    <span className="disabled">删除</span> 
+                  </Fragment>
+                )
+              } 
+              return (
+                <Fragment>
+                  <span className="table-action-line" />
+                  <Popconfirm placement="topRight" title="项目被删除后不可恢复，确认删除？" onConfirm={() => this.delItem(record.id)}>
+                    <a href>删除</a>
+                  </Popconfirm>
+                </Fragment>
+              )
+            } 
+            return null
+          })()}
         </div>
       ),
     },
@@ -172,13 +186,15 @@ export default class ProjectList extends Component {
       btnText: '创建项目',
       onClick: () => this.openModal('add'),
       text: '没有任何项目，请在当前页面创建项目！',
+      code: 'asset_tag_project_add',
+      noAuthText: '没有任何项目',
     }
 
     const listConfig = {
       columns: this.columns,
       searchParams: seach({cUser}),
       beforeSearch: this.beforeSearch,
-      buttons: [<Button type="primary" onClick={() => this.openModal('add')}>添加项目</Button>],
+      buttons: [<AuthBox code="asset_tag_project_add" type="primary" onClick={() => this.openModal('add')}>添加项目</AuthBox>],
       initGetDataByParent: true, // 初始请求 在父层组件处理。列表组件componentWillMount内不再进行请求
       store, // 必填属性
     }

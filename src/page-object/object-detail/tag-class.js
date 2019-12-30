@@ -5,7 +5,7 @@ import {Component} from 'react'
 import {Drawer, Button} from 'antd'
 import {action} from 'mobx'
 import {observer} from 'mobx-react'
-import {DetailHeader} from '../../component'
+import {DetailHeader, AuthBox} from '../../component'
 import {Time} from '../../common/util'
 
 import Tree from './tag-class-tree'
@@ -89,13 +89,14 @@ export default class TagClass extends Component {
              descr={cateDetail.descr}
              actions={[
                cateDetail.name !== '默认类目' ? (
-                 <Button 
+                 <AuthBox 
+                   code="asset_tag_tag_tag_select_move"
                    type="primary" 
                    className="mr4"
                    onClick={this.openSelectTag}
                  >
                 选择标签
-                 </Button>
+                 </AuthBox>
                ) : null,
              ]}
              baseInfo={baseInfo}

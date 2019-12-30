@@ -7,7 +7,7 @@ import {Button, Spin} from 'antd'
 import {action} from 'mobx'
 import {Time} from '../../common/util'
 import {
-  DetailHeader, Tag, OverviewCardWrap, TabRoute,
+  DetailHeader, Tag, OverviewCardWrap, TabRoute, AuthBox,
 } from '../../component'
 import {typeCodeMap, objStatusMap} from '../util'
 
@@ -104,11 +104,25 @@ export default class ObjectDetail extends Component {
       },
       0: {
         tag: <Tag status="wait" text="待发布" />,
-        button: <Button loading={releaseLoading} className="mr8" onClick={() => this.handleRelease('release')}>发布</Button>,
+        button: <AuthBox 
+          loading={releaseLoading} 
+          className="mr8" 
+          onClick={() => this.handleRelease('release')}
+          code="asset_tag_obj_add_edit_del_publish"
+        >
+        发布
+                </AuthBox>,
       },
       1: {
         tag: <Tag status="success" text="已发布" />,
-        button: <Button loading={releaseLoading} className="mr8" onClick={() => this.handleRelease('cancel')}>取消发布</Button>,
+        button: <AuthBox 
+          loading={releaseLoading} 
+          className="mr8" 
+          onClick={() => this.handleRelease('cancel')}
+          code="asset_tag_obj_add_edit_del_publish"
+        >
+        取消发布
+                </AuthBox>,
       },
       2: {
         tag: <Tag status="process" text="使用中" />,

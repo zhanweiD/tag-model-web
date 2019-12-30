@@ -22,6 +22,8 @@ const ContentMap = {
   approved: Approved, 
 }
 
+const {functionCodes} = window.__userConfig
+
 export default class Approval extends Component {
   onMenuClick = e => {
     const {history} = this.props
@@ -32,6 +34,11 @@ export default class Approval extends Component {
     const {match} = this.props
     const type = (match.params && match.params.type) || 'my-requests' // 默认页面 我的申请
     const Content = ContentMap[type]
+  
+    const myMenuMap = functionCodes.includes('asset_tag_apply_approval') ? menuMap : [{
+      name: '我的申请',
+      value: 'my-requests',
+    }]
 
     return (
       <div className="page-approval">
@@ -42,7 +49,7 @@ export default class Approval extends Component {
           onClick={this.onMenuClick}
         >
           {
-            menuMap.map(({name, value}) => <Menu.Item key={value}>{name}</Menu.Item>)
+            myMenuMap.map(({name, value}) => <Menu.Item key={value}>{name}</Menu.Item>)
           }
         </Menu>
         <div className="approval-content">

@@ -5,7 +5,7 @@ const serach = ({cUser = []}) => [
     initialValue: '',
     control: {
       defaultAll: true,
-      options: cUser,
+      options: cUser.length ? cUser : [{name: '全部', value: ''}],
     },
     component: 'select',
   }, {
