@@ -47,6 +47,7 @@ class Store extends ListContentStore(io.getList) {
 
     this.selectedRows.clear()
     this.rowKeys.clear()
+    this.tagIds.clear()
 
     const params = {
       currentPage: 1,

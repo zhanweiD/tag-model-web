@@ -48,6 +48,7 @@ export default class Search extends Component {
 
     this.store.selectedRows.clear()
     this.store.rowKeys.clear()
+    this.store.tagIds.clear()
     
     const params = {
       currentPage: 1,
