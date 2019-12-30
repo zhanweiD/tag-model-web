@@ -12,9 +12,9 @@ module.exports = {
     forever: 0, // 申请时长是否永久0否1是	
     applyDescr: '申请理由',
     approvalDescr: '审批描述',
-    reviewUserName: '审核人名字',
-    mTime: 32313421421, // 审核操作时间
-    status: 2, // 申请状态 0 审核中 1 审核通过 2 审核失败 3 撤销
+    reviewUserName: '审批人名字',
+    mTime: 32313421421, // 审批操作时间
+    status: 2, // 申请状态 0 审批中 1 审批通过 2 审批未通过 3 撤销
     type: 0,
   },
 }

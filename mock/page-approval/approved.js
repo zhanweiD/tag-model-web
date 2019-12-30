@@ -18,7 +18,7 @@ module.exports = {
         userName: '申请人',
         cTime: 21321321321,
         appyInterval: '2019/09/09-2021/08/01', //  申请时长,
-        status: 0, // 0 审核中 1 审核通过 2 审核失败
+        status: 0, // 0 审批中 1 审批通过 2 审批未通过
       },
       {
         id: 53453245435435,
@@ -28,7 +28,7 @@ module.exports = {
         userName: '申请人',
         cTime: 21321321321,
         appyInterval: '永久', //  申请时长
-        status: 0, // 0 审核中 1 审核通过 2 审核失败
+        status: 0, // 0 审批中 1 审批通过 2 审批未通过
       },
     ],
   },

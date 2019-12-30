@@ -133,7 +133,7 @@ export default class TagManagement extends Component {
           </Fragment>
         )}
 
-        {/* 标签状态: 已发布 未使用 上架审核中 操作: 取消申请 */}
+        {/* 标签状态: 已发布 未使用 上架审批中 操作: 取消申请 */}
         {record.status === 2 && record.isUsed === 0 && record.publish === 2 && (
           <Popconfirm
             placement="topRight"
@@ -152,7 +152,7 @@ export default class TagManagement extends Component {
           && record.publish === 1
           && <a href onClick={() => store.openModal({type: 0, id: record.id})}>下架申请</a>}
 
-        {/* 标签状态: 已发布 未使用 下架审核中 操作: 取消申请 */}
+        {/* 标签状态: 已发布 未使用 下架审批中 操作: 取消申请 */}
         {record.status === 2 && record.isUsed === 0 && record.publish === 3 && (
           <Popconfirm
             placement="topRight"
@@ -172,7 +172,7 @@ export default class TagManagement extends Component {
           && record.publish === 0
           && <a href onClick={() => store.openModal({type: 1, id: record.id})}>上架申请</a>}
 
-        {/* 标签状态: 已发布 已使用 上架审核中 操作: 取消申请 */}
+        {/* 标签状态: 已发布 已使用 上架审批中 操作: 取消申请 */}
         {record.status === 2 && record.isUsed === 1 && record.publish === 2 && (
           <Popconfirm
             placement="topRight"
@@ -192,7 +192,7 @@ export default class TagManagement extends Component {
           && record.publish === 1
           && <a href onClick={() => store.openModal({type: 0, id: record.id})}>下架申请</a>}
 
-        {/* 标签状态: 已发布 已使用 下架审核中 操作: 取消申请 */}
+        {/* 标签状态: 已发布 已使用 下架审批中 操作: 取消申请 */}
         {record.status === 2 && record.isUsed === 1 && record.publish === 3 && (
           <Popconfirm
             placement="topRight"

@@ -53,10 +53,10 @@ export const publishStatusMap = [{
   name: '上架',
   value: 1,
 }, {
-  name: '下架审核中',
+  name: '下架审批中',
   value: 2,
 }, {
-  name: '上架审核中',
+  name: '上架审批中',
   value: 3,
 }]
 
@@ -66,8 +66,8 @@ export const publishStatusBadgeMap = status => {
   switch (status) {
     case 0: color = '#d9d9d9'; text = '下架'; break
     case 1: color = '#108ee9'; text = '上架'; break
-    case 2: color = '#0078FF '; text = '下架审核中'; break
-    case 3: color = '#0078FF '; text = '上架审核中'; break
+    case 2: color = '#0078FF '; text = '下架审批中'; break
+    case 3: color = '#0078FF '; text = '上架审批中'; break
     default: color = '#d9d9d9'; text = '下架'; break
   }
 

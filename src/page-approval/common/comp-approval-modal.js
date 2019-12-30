@@ -61,7 +61,7 @@ const backoutInfo = [{
 
 const statusMap = {
   0: {
-    text: '审核中',
+    text: '审批中',
     status: 'wait',
   }, 
   1: {
