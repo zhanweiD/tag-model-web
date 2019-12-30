@@ -39,7 +39,7 @@ export default class Market extends Component {
       title: '标签名称',
       dataIndex: 'name',
       render: (text, record) => (
-        <div>
+        <div className="FBH">
           <OmitTooltip maxWidth={120} text={text} />
           {
             record.status === 1 ? <Tag status="success" className="ml8" text="审批中" /> : null

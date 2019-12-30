@@ -13,8 +13,6 @@ import {
   IconTreeAdd,
 } from '../../../icon-comp'
 
-const {functionCodes} = window.__userConfig
-
 @inject('bigStore')
 @observer
 class Action extends Component {
@@ -94,7 +92,7 @@ class Action extends Component {
 
         <div className="FBH pr6 pl6" style={{maxWidth: 70}}>
           <IconRefresh size="14" onClick={this.handleRefresh} className="mr8 hand" />
-          {functionCodes.includes('asset_tag_occation_select_obj') && dropdownDom}
+          {this.bigStore.functionCodes.includes('asset_tag_project_obj_select') && dropdownDom}
           { this.store.expandAll ? (
             <IconUnExtend size="14" className="hand" onClick={this.handleExpandAll} /> 
           ) : (

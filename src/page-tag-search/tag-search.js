@@ -4,9 +4,9 @@
 import {Component, Fragment} from 'react'
 import {observer, inject} from 'mobx-react'
 import {action} from 'mobx'
-import {Button} from 'antd'
+// import {Button} from 'antd'
 import {
-  ListContent, Loading, NoData, OmitTooltip,
+  ListContent, Loading, NoData, OmitTooltip, AuthBox,
 } from '../component'
 import {getDataTypeName} from '../common/util'
 import ModalApply from './modal-apply'
@@ -46,6 +46,8 @@ export default class TagSearch extends Component {
     const {frameChange} = this.props
     frameChange('nav', navList)
     // 获取所属对象下拉数据
+
+    store.getAuthCode()
   }
 
   componentDidMount() {
@@ -117,12 +119,20 @@ export default class TagSearch extends Component {
         <div className="FBH FBAC">
           {/* eslint-disable-next-line no-underscore-dangle */}
           <a href={`${window.__onerConfig.pathPrefix}/tag-management#/${record.id}`}>标签详情</a>
-          <span className="table-action-line" />
-          {
-            record.status === 2
-              ? <a href onClick={() => this.openApplyModal(record)}>权限申请</a>
-              : <a href onClick={() => this.openSceneModal(record)}>添加到业务场景</a>
-          }
+          <AuthBox 
+            code="asset_tag_project_tag_search_add_occ" 
+            myFunctionCodes={store.functionCodes}
+            isButton={false}
+          >
+            <span className="table-action-line" />
+
+            {
+              record.status === 2
+                ? <a href onClick={() => this.openApplyModal(record)}>权限申请</a>
+                : <a href onClick={() => this.openSceneModal(record)}>添加到业务场景</a>
+            }
+          </AuthBox>
+        
         </div>
       ),
     },
@@ -201,6 +211,8 @@ export default class TagSearch extends Component {
       btnText: '去创建项目',
       onClick: this.goProjectList,
       text: '没有任何项目，去项目列表页创建项目吧！',
+      code: 'asset_tag_project_add',
+      noAuthText: '没有任何项目',
     }
 
     if (spaceInfo && spaceInfo.finish && !spaceInfo.projectList.length) {
@@ -216,9 +228,11 @@ export default class TagSearch extends Component {
 
 
   render() {
-    const {useProjectId, list, objectId} = store
+    const {
+      useProjectId, list, objectId, functionCodes,
+    } = store
 
-    const rowSelection = objectId ? {
+    const rowSelection = objectId && functionCodes.includes('asset_tag_project_tag_search_add_occ') ? {
       selectedRowKeys: store.rowKeys.slice(),
       onChange: this.onTableCheck,
       getCheckboxProps: record => ({
@@ -227,12 +241,27 @@ export default class TagSearch extends Component {
     } : null
 
     const buttons = list.length && objectId ? [
-      <Button type="primary" disabled={!store.rowKeys.length} onClick={this.batchAction}>批量添加到业务场景</Button>,
-      <span className="ml8">
+      <AuthBox 
+        code="asset_tag_project_tag_search_add_occ" 
+        myFunctionCodes={functionCodes}
+        type="primary"
+        disabled={!store.rowKeys.length} 
+        onClick={this.batchAction}
+      >
+批量添加到业务场景
+
+      </AuthBox>,
+      <AuthBox 
+        code="asset_tag_project_tag_search_add_occ" 
+        myFunctionCodes={functionCodes}
+        isButton={false}
+      >
+        <span className="ml8">
         已选择
-        <span style={{color: '#0078FF'}} className="mr4 ml4">{store.rowKeys.length}</span>
+          <span style={{color: '#0078FF'}} className="mr4 ml4">{store.rowKeys.length}</span>
         项
-      </span>,
+        </span>
+      </AuthBox>,    
     ] : null
 
     const listConfig = {

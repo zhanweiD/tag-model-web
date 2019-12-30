@@ -28,8 +28,13 @@ export default class Main extends Component {
 
   render() {
     const {
-      name, descr, actions, baseInfo, tag,
+      name, descr, actions, baseInfo, tag, btnMinWidth,
     } = this.props
+
+    const btnStyle = btnMinWidth ? {
+      minWidth: `${btnMinWidth}px`,
+    } : null
+
     return (
       <div>
         <div className="detail-header">
@@ -41,7 +46,7 @@ export default class Main extends Component {
             <div className="detail-descr">{descr}</div>
           </div>
           <div />
-          <div>
+          <div style={btnStyle} className="far">
             {
               this.renderAction(actions)
             }

@@ -3,7 +3,7 @@
  */
 import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
-import {Spin, Button} from 'antd'
+import {Spin} from 'antd'
 import {DetailHeader, TabRoute, Tag} from '../../component'
 import {Time} from '../../common/util'
 import TagRelate from './tag-relate'

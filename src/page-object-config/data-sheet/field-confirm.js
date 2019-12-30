@@ -139,7 +139,9 @@ export default class FieldConfirm extends Component {
 
   render() {
     const {show} = this.props
-    const {selectedRows, confirmLoading, drawerType} = this.store
+    const {
+      selectedRows, confirmLoading, drawerType, fieldTableList,
+    } = this.store
 
     const listConfig = {
       columns: drawerType === 'edit' ? this.columnsEdit : this.columnsAdd,
@@ -148,6 +150,14 @@ export default class FieldConfirm extends Component {
     }
     return (
       <div style={{display: show ? 'block' : 'none'}}>
+        <div className="mb8 fs12">
+          <span style={{color: 'rgba(0, 0, 0, .45)'}}>已选字段/字段总数 ：</span>
+          <span style={{color: '#0078FF'}}>
+            {selectedRows.length}
+              /
+          </span>
+          <span style={{color: 'rgba(0, 0, 0, .45)'}}>{fieldTableList.length}</span>
+        </div>
         <Table {...listConfig} />
         <div className="bottom-button">
           <Button className="mr8" onClick={this.store.lastStep}>上一步</Button>

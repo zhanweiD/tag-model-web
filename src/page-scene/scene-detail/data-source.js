@@ -8,7 +8,6 @@ import {
 } from 'antd'
 import {NoData, AuthBox} from '../../component'
 
-// const {functionCodes} = window.__userConfig
 const {confirm} = Modal
 
 @observer
@@ -118,15 +117,20 @@ export default class DataSource extends Component {
   }
 
   render() {
-    const {store: {sourceData, dbSourcSelectList, info}, onClick} = this.props
+    const {
+      store: {
+        sourceData, dbSourcSelectList, info, functionCodes,
+      }, onClick,
+    } = this.props
 
     const noDataConfig = {
-      code: 'asset_tag_occation_add_aim_datasoure',
+      code: 'asset_tag_project_occ_data_source',
       noAuthText: '您暂无添加目的数据源的权限',
       btnText: '添加目的数据源',
       btnDisabled: info.used,
       onClick: () => onClick(),
       isLoading: sourceData.loading,
+      myFunctionCodes: functionCodes,
     }
 
     return (
@@ -136,7 +140,11 @@ export default class DataSource extends Component {
             sourceData.data.length ? (
               <div className="bgf p24">
                 <div className="FBH FBJ FBAC mb16">
-                  <AuthBox code="asset_tag_occation_del_aim_datasoure" isButton={false}>                           
+                  <AuthBox 
+                    code="asset_tag_project_occ_data_source" 
+                    myFunctionCodes={functionCodes}
+                    isButton={false}
+                  >                           
                     <Checkbox 
                       checked={this.checkAll}
                       indeterminate={this.indeterminate}
@@ -147,11 +155,21 @@ export default class DataSource extends Component {
                     </Checkbox>
                   </AuthBox>
                   <div>
-                    <AuthBox code="asset_tag_occation_del_aim_datasoure" className="mr8" disabled={!this.selectLen || info.used} onClick={this.remove}>                           
+                    <AuthBox 
+                      code="asset_tag_project_occ_data_source" 
+                      myFunctionCodes={functionCodes}
+                      className="mr8" 
+                      disabled={!this.selectLen || info.used}
+                      onClick={this.remove}
+                    >                           
                       批量移除数据源
                     </AuthBox>
                     {/* 点击“配置数据服务”按钮，跳转至服务管理页面 */}
-                    <AuthBox code="asset_tag_occation_config_datasoure" type="primary">
+                    <AuthBox 
+                      myFunctionCodes={functionCodes}
+                      code="asset_tag_project_occ_data_source" 
+                      type="primary"
+                    >
                       <a 
                         target="_blank" 
                         rel="noopener noreferrer" 
@@ -167,7 +185,11 @@ export default class DataSource extends Component {
                     <div className="mb48">
                       <div className="mb24 FBH FBJ FBAC">
                         <div className="fs14">
-                          <AuthBox code="asset_tag_occation_del_aim_datasoure" isButton={false}>  
+                          <AuthBox 
+                            myFunctionCodes={functionCodes}
+                            code="asset_tag_project_occ_data_source"
+                            isButton={false}
+                          >  
                             <Checkbox 
                               checked={item}
                               disabled={info.used}

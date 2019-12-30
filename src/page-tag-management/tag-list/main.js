@@ -4,10 +4,10 @@
 import {Component, Fragment} from 'react'
 import {action} from 'mobx'
 import {observer, inject} from 'mobx-react'
-import {Button, Popconfirm} from 'antd'
+import {Popconfirm} from 'antd'
 import {Link} from 'react-router-dom'
 import {
-  ListContent, Loading, NoData, OmitTooltip,
+  ListContent, Loading, NoData, OmitTooltip, AuthBox,
 } from '../../component'
 import {
   tagStatusBadgeMap,
@@ -78,133 +78,139 @@ export default class TagManagement extends Component {
     width: 150,
     render: (text, record) => (
       <div className="FBH FBAC">
-        {/* 标签状态: 待配置 未使用  操作: 配置/编辑/删除 */}
-        {record.status === 0 && (
-          <Fragment>
-            <a href onClick={() => store.openTagConfig(record)}>配置</a>
-            <span className="table-action-line" />
-            <a href onClick={() => store.openDrawer('edit', record)}>编辑</a>
-            <span className="table-action-line" />
-            <Popconfirm placement="topRight" title="确认删除？" onConfirm={() => this.remove(record)}>
-              <a href>删除</a>
-            </Popconfirm>
-          </Fragment>
-        )}
+        <AuthBox
+          code="asset_tag_project_tag_operator"
+          myFunctionCodes={store.functionCodes}
+          isButton={false}
+        >
+          {/* 标签状态: 待配置 未使用  操作: 配置/编辑/删除 */}
+          {record.status === 0 && (
+            <Fragment>
+              <a href onClick={() => store.openTagConfig(record)}>配置</a>
+              <span className="table-action-line" />
+              <a href onClick={() => store.openDrawer('edit', record)}>编辑</a>
+              <span className="table-action-line" />
+              <Popconfirm placement="topRight" title="确认删除？" onConfirm={() => this.remove(record)}>
+                <a href>删除</a>
+              </Popconfirm>
+            </Fragment>
+          )}
 
-        {/* 标签状态: 待发布 未使用  操作: 发布/配置/编辑/删除 */}
-        {record.status === 1 && (
-          <Fragment>
+          {/* 标签状态: 待发布 未使用  操作: 发布/配置/编辑/删除 */}
+          {record.status === 1 && (
+            <Fragment>
+              <Popconfirm
+                placement="topRight"
+                title="确认发布？"
+                onConfirm={() => store.updateTagStatus({
+                  status: 2,
+                  id: record.id,
+                })}
+              >
+                <a href>发布</a>
+              </Popconfirm>
+              <span className="table-action-line" />
+              <a href onClick={() => store.openTagConfig(record)}>配置</a>
+              <span className="table-action-line" />
+              <a href onClick={() => store.openDrawer('edit', record)}>编辑</a>
+              <span className="table-action-line" />
+              <Popconfirm placement="topRight" title="确认删除？" onConfirm={() => this.remove(record)}>
+                <a href>删除</a>
+              </Popconfirm>
+            </Fragment>
+          )}
+
+          {/* 标签状态: 已发布 未使用 下架  操作: 取消发布/上架申请 */}
+          {record.status === 2 && record.isUsed === 0 && record.publish === 0 && (
+            <Fragment>
+              <Popconfirm
+                placement="topRight"
+                title="确认取消发布？"
+                onConfirm={() => store.updateTagStatus({
+                  status: 1,
+                  id: record.id,
+                })}
+              >
+                <a href>取消发布</a>
+              </Popconfirm>
+              <span className="table-action-line" />
+              <a href onClick={() => store.openModal({type: 1, id: record.id})}>上架申请</a>
+            </Fragment>
+          )}
+
+          {/* 标签状态: 已发布 未使用 上架审批中 操作: 取消申请 */}
+          {record.status === 2 && record.isUsed === 0 && record.publish === 2 && (
             <Popconfirm
               placement="topRight"
-              title="确认发布？"
-              onConfirm={() => store.updateTagStatus({
-                status: 2,
+              title="确认取消申请？"
+              onConfirm={() => store.tagApply({
+                type: 3,
                 id: record.id,
               })}
             >
-              <a href>发布</a>
+              <a href>取消申请</a>
             </Popconfirm>
-            <span className="table-action-line" />
-            <a href onClick={() => store.openTagConfig(record)}>配置</a>
-            <span className="table-action-line" />
-            <a href onClick={() => store.openDrawer('edit', record)}>编辑</a>
-            <span className="table-action-line" />
-            <Popconfirm placement="topRight" title="确认删除？" onConfirm={() => this.remove(record)}>
-              <a href>删除</a>
-            </Popconfirm>
-          </Fragment>
-        )}
-
-        {/* 标签状态: 已发布 未使用 下架  操作: 取消发布/上架申请 */}
-        {record.status === 2 && record.isUsed === 0 && record.publish === 0 && (
-          <Fragment>
-            <Popconfirm
-              placement="topRight"
-              title="确认取消发布？"
-              onConfirm={() => store.updateTagStatus({
-                status: 1,
-                id: record.id,
-              })}
-            >
-              <a href>取消发布</a>
-            </Popconfirm>
-            <span className="table-action-line" />
-            <a href onClick={() => store.openModal({type: 1, id: record.id})}>上架申请</a>
-          </Fragment>
-        )}
-
-        {/* 标签状态: 已发布 未使用 上架审批中 操作: 取消申请 */}
-        {record.status === 2 && record.isUsed === 0 && record.publish === 2 && (
-          <Popconfirm
-            placement="topRight"
-            title="确认取消申请？"
-            onConfirm={() => store.tagApply({
-              type: 3,
-              id: record.id,
-            })}
-          >
-            <a href>取消申请</a>
-          </Popconfirm>
-        )}
-        {/* 标签状态: 已发布 未使用 上架 操作: 下架申请 */}
-        {record.status === 2
+          )}
+          {/* 标签状态: 已发布 未使用 上架 操作: 下架申请 */}
+          {record.status === 2
           && record.isUsed === 0
           && record.publish === 1
           && <a href onClick={() => store.openModal({type: 0, id: record.id})}>下架申请</a>}
 
-        {/* 标签状态: 已发布 未使用 下架审批中 操作: 取消申请 */}
-        {record.status === 2 && record.isUsed === 0 && record.publish === 3 && (
-          <Popconfirm
-            placement="topRight"
-            title="确认取消申请？"
-            onConfirm={() => store.tagApply({
-              type: 3,
-              id: record.id,
-            })}
-          >
-            <a href>取消申请</a>
-          </Popconfirm>
-        )}
+          {/* 标签状态: 已发布 未使用 下架审批中 操作: 取消申请 */}
+          {record.status === 2 && record.isUsed === 0 && record.publish === 3 && (
+            <Popconfirm
+              placement="topRight"
+              title="确认取消申请？"
+              onConfirm={() => store.tagApply({
+                type: 3,
+                id: record.id,
+              })}
+            >
+              <a href>取消申请</a>
+            </Popconfirm>
+          )}
 
-        {/* 标签状态: 已发布 已使用 下架 操作: 上架申请 */}
-        {record.status === 2
+          {/* 标签状态: 已发布 已使用 下架 操作: 上架申请 */}
+          {record.status === 2
           && record.isUsed === 1
           && record.publish === 0
           && <a href onClick={() => store.openModal({type: 1, id: record.id})}>上架申请</a>}
 
-        {/* 标签状态: 已发布 已使用 上架审批中 操作: 取消申请 */}
-        {record.status === 2 && record.isUsed === 1 && record.publish === 2 && (
-          <Popconfirm
-            placement="topRight"
-            title="确认取消申请？"
-            onConfirm={() => store.tagApply({
-              type: 3,
-              id: record.id,
-            })}
-          >
-            <a href>取消申请</a>
-          </Popconfirm>
-        )}
+          {/* 标签状态: 已发布 已使用 上架审批中 操作: 取消申请 */}
+          {record.status === 2 && record.isUsed === 1 && record.publish === 2 && (
+            <Popconfirm
+              placement="topRight"
+              title="确认取消申请？"
+              onConfirm={() => store.tagApply({
+                type: 3,
+                id: record.id,
+              })}
+            >
+              <a href>取消申请</a>
+            </Popconfirm>
+          )}
 
-        {/* 标签状态: 已发布 已使用 上架 操作: 下架申请 */}
-        {record.status === 2
+          {/* 标签状态: 已发布 已使用 上架 操作: 下架申请 */}
+          {record.status === 2
           && record.isUsed === 1
           && record.publish === 1
           && <a href onClick={() => store.openModal({type: 0, id: record.id})}>下架申请</a>}
 
-        {/* 标签状态: 已发布 已使用 下架审批中 操作: 取消申请 */}
-        {record.status === 2 && record.isUsed === 1 && record.publish === 3 && (
-          <Popconfirm
-            placement="topRight"
-            title="确认取消申请？"
-            onConfirm={() => store.tagApply({
-              type: 3,
-              id: record.id,
-            })}
-          >
-            <a href>取消申请</a>
-          </Popconfirm>
-        )}
+          {/* 标签状态: 已发布 已使用 下架审批中 操作: 取消申请 */}
+          {record.status === 2 && record.isUsed === 1 && record.publish === 3 && (
+            <Popconfirm
+              placement="topRight"
+              title="确认取消申请？"
+              onConfirm={() => store.tagApply({
+                type: 3,
+                id: record.id,
+              })}
+            >
+              <a href>取消申请</a>
+            </Popconfirm>
+          )}
+        </AuthBox>
       </div>
     ),
   }]
@@ -219,6 +225,8 @@ export default class TagManagement extends Component {
     // 面包屑设置
     const {frameChange} = this.props
     frameChange('nav', navList)
+
+    store.getAuthCode()
   }
 
   componentDidMount() {
@@ -240,6 +248,8 @@ export default class TagManagement extends Component {
       btnText: '去创建项目',
       onClick: this.goProjectList,
       text: '没有任何项目，去项目列表页创建项目吧！',
+      code: 'asset_tag_project_add',
+      noAuthText: '没有任何项目',
     }
 
     if (spaceInfo && spaceInfo.finish && !spaceInfo.projectList.length) {
@@ -269,7 +279,14 @@ export default class TagManagement extends Component {
       columns: this.columns,
       initParams: {projectId},
       searchParams: seach({objectSelectList}),
-      buttons: [<Button type="primary" onClick={() => openDrawer('add')}>创建标签</Button>],
+      buttons: [<AuthBox 
+        code="asset_tag_project_tag_operator" 
+        myFunctionCodes={store.functionCodes}
+        type="primary" 
+        onClick={() => openDrawer('add')}
+      >
+创建标签
+      </AuthBox>],
       rowKey: 'id',
       store, // 必填属性
     }

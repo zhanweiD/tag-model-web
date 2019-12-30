@@ -1,7 +1,7 @@
 import {Component, Fragment} from 'react'
 import {action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
-import {Spin, Modal} from 'antd'
+import {Spin, Modal, Button} from 'antd'
 import {DtGrid, DtNewCard} from '@dtwave/uikit'
 import {
   Tag, NoData, AuthBox, Loading,
@@ -37,6 +37,7 @@ export default class Scene extends Component {
     frameChange('nav', navList)
     
     store.getList()
+    store.getAuthCode()
   }
 
   @action handleModalVisible(type, data = {}) {
@@ -68,6 +69,8 @@ export default class Scene extends Component {
       btnText: '去创建项目',
       onClick: this.goProjectList,
       text: '没有任何项目，去项目列表页创建项目吧！',
+      code: 'asset_tag_project_add',
+      noAuthText: '没有任何项目',
     }
 
     if (spaceInfo && spaceInfo.finish && !spaceInfo.projectList.length) {
@@ -81,14 +84,15 @@ export default class Scene extends Component {
   }
 
   render() {
-    const {loading, list = []} = store
+    const {loading, list = [], functionCodes} = store
     const {spaceInfo} = window
     
     const noDataConfig = {
       btnText: '添加场景',
       onClick: () => this.handleModalVisible(),
-      code: 'asset_tag_add_occation',
+      code: 'asset_tag_project_occ_operator',
       noAuthText: '暂无数据',
+      myFunctionCodes: functionCodes,
     }
 
     return (
@@ -105,7 +109,8 @@ export default class Scene extends Component {
                       <Fragment>
                         <AuthBox 
                           className="mb16" 
-                          code="asset_tag_add_occation" 
+                          code="asset_tag_project_occ_operator" 
+                          myFunctionCodes={store.functionCodes}
                           type="primary" 
                           onClick={() => this.handleModalVisible()}
                         >
@@ -144,26 +149,28 @@ export default class Scene extends Component {
                                   label: 'API数',
                                   value: apiCount,
                                 }]}
-                                actions={[
-                                  <AuthBox 
+                                actions={functionCodes.includes('asset_tag_project_occ_operator') ? [
+                                  <Button 
                                     type="link" // antd@Button 属性
                                     disabled={used}
                                     className="p0"
-                                    code="asset_tag_edit_occation" 
+                                    // code="asset_tag_project_occ_operator" 
+                                    // myFunctionCodes={functionCodes}
                                     onClick={() => this.handleModalVisible('edit', list[d])}
                                   >
                                     <IconEdit size="14" className={used ? 'i-used' : ''} />
-                                  </AuthBox>,
-                                  <AuthBox 
+                                  </Button>,
+                                  <Button 
                                     type="link" // antd@Button 属性
                                     disabled={used} 
                                     className="p0"
-                                    code="asset_tag_del_occation" 
+                                    // code="asset_tag_project_occ_operator" 
+                                    // myFunctionCodes={functionCodes}
                                     onClick={() => this.handleDel(id)}
                                   >
                                     <IconDel size="14" className={used ? 'i-used' : ''} />
-                                  </AuthBox>,
-                                ]}
+                                  </Button>,
+                                ] : null}
                               />
                             )) 
                           }

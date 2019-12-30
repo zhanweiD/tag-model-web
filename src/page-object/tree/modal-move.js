@@ -1,16 +1,18 @@
 import {Component} from 'react'
 import {action} from 'mobx'
-import {observer} from 'mobx-react'
+import {observer, inject} from 'mobx-react'
 import {Modal} from 'antd'
 import {ModalForm} from '../../component'
 import {changeToOptions} from '../../common/util'
 import {modalDefaultConfig} from '../util'
 
+@inject('bigStore')
 @observer
 export default class ModalMove extends Component {
   constructor(props) {
     super(props)
     this.store = props.store
+    this.bigStore = props.bigStore
   }
 
   @action.bound handleCancel() {
@@ -34,6 +36,12 @@ export default class ModalMove extends Component {
           ...values,
         }
         store.moveObject(params, () => {
+          // 编辑节点为当前选中节点
+          if (+detail.aId === +t.bigStore.objId) {
+            // 刷新对象详情
+            t.bigStore.updateDetailKey = Math.random()
+          }
+
           t.handleCancel()
         })
       }

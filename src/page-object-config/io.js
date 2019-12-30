@@ -1,6 +1,6 @@
 import ioContext from '../common/io-context'
 import {
-  projectSpaceApi, get, post,
+  projectSpaceApi, baseApi, get, post,
 } from '../common/util'
 
 
@@ -17,6 +17,9 @@ const api = {
   getObjSelectedList: get(`${projectSpaceApi}/object/list_obj`), // 选择对象- 已选对象列表
   getObjSelectedDetail: get(`${projectSpaceApi}/object/list_obj_info`), // 选择对象- 获取选择对象列表信息加入选择列表
   saveSelectedObj: post(`${projectSpaceApi}/object/save_obj`), // 选择对象- 项目对象选择保存
+
+  // 权限code
+  getAuthCode: get(`${baseApi}/project/getFunctionCodes`),
 } 
 
 ioContext.create('objectConfig', api) 

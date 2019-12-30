@@ -62,7 +62,7 @@ export default class ObjectManage extends Component {
       btnText: '添加对象',
       onClick: this.addObject,
       code: 'asset_tag_obj_add_edit_del_publish',
-      noAuthText: '暂无数据',
+      noAuthText: '暂无对象',
       text: '没有任何对象，请在当前页面添加对象！',
     }
 

@@ -147,6 +147,24 @@ class Store extends ListContentStore(io.getList) {
       errorTip(e.message)
     }
   }
+
+  @observable functionCodes = []
+
+  /**
+   * @description 权限code
+   */
+  @action async getAuthCode() {
+    try {
+      const res = await io.getAuthCode({
+        projectId: this.useProjectId,
+      })
+      runInAction(() => {
+        this.functionCodes = res
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
 }
 
 export default new Store()

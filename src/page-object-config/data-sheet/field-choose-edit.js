@@ -159,7 +159,14 @@ export default class FieldChoose extends Component {
     return (
       <div style={{display: show ? 'block' : 'none'}}>
         <ModalForm {...formConfig} />
-
+        <div className="mb8 fs12">
+          <span style={{color: 'rgba(0, 0, 0, .45)'}}>已选字段/字段总数 ：</span>
+          <span style={{color: '#0078FF'}}>
+            {selectedRowKeys.length}
+              /
+          </span>
+          <span style={{color: 'rgba(0, 0, 0, .45)'}}>{fieldTableList.length}</span>
+        </div>
         <Table {...listConfig} />
         <div className="bottom-button">
           <Button style={{marginRight: 8}} onClick={() => this.store.closeDrawer()}>取消</Button>

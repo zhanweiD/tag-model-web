@@ -45,6 +45,7 @@ export default class SceneDetail extends Component {
 
     store.getDetail()
     store.getSourceList()
+    store.getAuthCode()
   }
 
   @action.bound dbSourceVisible() {
@@ -103,7 +104,11 @@ export default class SceneDetail extends Component {
 
     const actions = [
       <Button className="mr8" href={`${window.__onerConfig.pathPrefix}/scene#/${store.sceneId}/tags`}>标签列表</Button>,
-      <AuthBox code="asset_tag_occation_add_aim_datasoure" isButton={false}>
+      <AuthBox 
+        code="asset_tag_project_occ_data_source"
+        myFunctionCodes={store.functionCodes} 
+        isButton={false}
+      >
         {
           store.isDbSourcEnough
             ? (
@@ -115,7 +120,7 @@ export default class SceneDetail extends Component {
                   disabled={store.isDbSourcEnough}
                 >
                   添加目的数据源
-              </Button>
+                </Button>
               </Tooltip>
             ) : (
               <Button
@@ -125,10 +130,10 @@ export default class SceneDetail extends Component {
                 disabled={used}
               >
                 添加目的数据源
-            </Button>
+              </Button>
             )
         }
-      </AuthBox>
+      </AuthBox>,
     ]
 
     return (
@@ -147,16 +152,18 @@ export default class SceneDetail extends Component {
 
         <Spin spinning={store.loading}>
           <DetailHeader
-            name={
+            name={(
               <Fragment>
                 <span>{name}</span>
-                <AuthBox code="asset_tag_edit_occation" isButton={false}>
+                <AuthBox code="asset_tag_project_occ_operator" myFunctionCodes={store.functionCodes} isButton={false}>
                   {
-                    !used && <Icon className="ml8" type="edit" onClick={this.sceneDetailVisible} style={{ color: 'rgba(0,0,0, .45)' }} />
+                    !used && <Icon className="ml8" type="edit" onClick={this.sceneDetailVisible} style={{color: 'rgba(0,0,0, .45)'}} />
                   }
                 </AuthBox>
-              </Fragment>}
+              </Fragment>
+            )}
             descr={descr}
+            btnMinWidth={230}
             baseInfo={baseInfo}
             tag={tagMap[used]}
             actions={actions}

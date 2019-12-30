@@ -77,6 +77,8 @@ export default class SelectTag extends Component {
         }
       })
     })
+
+    this.store.getAuthCode()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -136,24 +138,26 @@ export default class SelectTag extends Component {
  
   render() {
     const {
-      tagInfo, tagId, tagInfoLoading, tagExistFlag, tagExistFlagLoading,
+      tagInfo, tagId, tagInfoLoading, tagExistFlag, tagExistFlagLoading, functionCodes,
     } = this.store
 
     const noTagConfig = {
       btnText: '去添加对象',
       onClick: this.goToAddObj,
       isLoading: tagExistFlagLoading,
-      code: 'asset_tag_add_obj',
+      code: 'asset_tag_project_occ_operator',
       noAuthText: '暂无数据',
-      text: '没有任何对象，请在标签池中添加！',
+      text: '没有任何对象，请在对象管理中添加！',
+      myFunctionCodes: functionCodes,
     }
 
     const noObjConfig = {
       btnText: '选择对象',
       onClick: this.selectObj,
       isLoading: this.store.categoryStore.treeLoading,
-      code: 'asset_tag_occation_select_obj',
+      code: 'asset_tag_project_occ_operator',
       noAuthText: '您暂无选择对象的权限',
+      myFunctionCodes: functionCodes,
     }
     
     const {
@@ -214,7 +218,7 @@ export default class SelectTag extends Component {
                                         descr={descr}
                                         baseInfo={baseInfo}
                                         // 点击“标签详情”按钮，进入标签池中的标签详情
-                                        actions={<Button type="primary"><a href>标签详情</a></Button>}
+                                        // actions={<Button type="primary"><a href>标签详情</a></Button>}
                                         // actions={
                                         //   <Button type="primary">
                                         //     <a

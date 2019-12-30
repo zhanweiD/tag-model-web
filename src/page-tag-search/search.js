@@ -147,7 +147,7 @@ export default class Search extends Component {
                   )
                 }
               </Select>
-              <span className="mr8">使用权限状态</span>
+              {/* <span className="mr8">使用权限状态</span>
               <Select value={permissionType} style={{width: 240}} onChange={this.permissionTypeSelect}>
                 <Option value="">全部</Option>
                 {
@@ -162,7 +162,7 @@ export default class Search extends Component {
                     )
                   )
                 }
-              </Select>
+              </Select> */}
             </div>
           </div>
         </div>

@@ -390,6 +390,24 @@ class Store {
       obj: resObj,
     }
   }
+
+  @observable functionCodes = []
+
+  /**
+   * @description 权限code
+   */
+  @action async getAuthCode() {
+    try {
+      const res = await io.getAuthCode({
+        projectId: this.projectId,
+      })
+      runInAction(() => {
+        this.functionCodes = res
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
 }
 
 export default new Store()

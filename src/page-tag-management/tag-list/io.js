@@ -15,6 +15,9 @@ const api = {
   updateTagStatus: post(`${tagManagementApi}/update_tag_status`), // 修改标签发布状态
 
   checkName: post(`${tagManagementApi}/name_check`), // 重名校验
+
+  // 权限code
+  getAuthCode: get(`${baseApi}/project/getFunctionCodes`),
 } 
 
 ioContext.create('overview', api) 

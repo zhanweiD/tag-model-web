@@ -60,11 +60,11 @@ export default class Action extends Component {
         </Menu.Item>
       </Menu>
     )
-    return (
+    return this.store.functionCodes.includes('asset_tag_project_obj_select') ? (
       <Dropdown overlay={menu}>
         <IconTreeAdd size="14" className="mr8 hand" />
       </Dropdown>
-    )
+    ) : null
   }
 
   render() {

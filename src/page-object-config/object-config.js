@@ -31,6 +31,11 @@ export default class ObjectConfig extends Component {
     store.tabId = match.params.tabId || '0' // 当前详情tabID；默认数据视图
   }
 
+  componentWillMount() {
+    // 权限code
+    store.getAuthCode()
+  }
+
   @action changeTab = code => {
     store.typeCode = code
     store.objId = undefined
@@ -58,6 +63,8 @@ export default class ObjectConfig extends Component {
       btnText: '去创建项目',
       onClick: this.goProjectList,
       text: '没有任何项目，去项目列表页创建项目吧！',
+      code: 'asset_tag_project_add',
+      noAuthText: '没有任何项目',
     }
 
     if (spaceInfo && spaceInfo.finish && !spaceInfo.projectList.length) {
@@ -95,6 +102,9 @@ export default class ObjectConfig extends Component {
       onClick: this.selectObject,
       text: '没有任何对象，请在当前页面选择对象！',
       isLoading: treeLoading,
+      code: 'asset_tag_project_obj_select',
+      noAuthText: '没有任何对象',
+      myFunctionCodes: store.functionCodes,
     }
 
     return (

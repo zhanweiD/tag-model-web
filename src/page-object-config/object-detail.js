@@ -3,11 +3,11 @@
  */
 import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
-import {Spin, Button, Modal} from 'antd'
+import {Spin, Modal} from 'antd'
 import {action} from 'mobx'
 import {Time} from '../common/util'
 import {
-  TabRoute, DetailHeader, OverviewCardWrap, Tag,
+  TabRoute, DetailHeader, OverviewCardWrap, Tag, AuthBox,
 } from '../component'
 import {objDetailTabMap} from './util'
 
@@ -151,13 +151,15 @@ export default class ObjectDetail extends Component {
               baseInfo={baseInfo}
               tag={tag}
               actions={[
-                <Button 
+                <AuthBox 
+                  code="asset_tag_project_obj_select"
+                  myFunctionCodes={this.store.functionCodes}
                   type="primary" 
                   onClick={this.remove}
                   disabled={objDetail.isUsed} // 使用中对象不可以移除
                 >
                   移除
-                </Button>,
+                </AuthBox>,
               ]}
             />
             <OverviewCardWrap cards={cards} />

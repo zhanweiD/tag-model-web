@@ -5,7 +5,7 @@ import {Component} from 'react'
 import {action} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {Popconfirm} from 'antd'
-import {ListContent, QuestionTooltip} from '../../component'
+import {ListContent, QuestionTooltip, AuthBox} from '../../component'
 import {tagStatusMap, configStatusMap} from '../util'
 import DrawerTagConfig from './drawer'
 import seach from './search'
@@ -82,20 +82,31 @@ export default class FieldList extends Component {
       dataIndex: 'action',
       render: (text, record) => (
         <div className="FBH FBAC">
-          {
-            record.status === 2 ? <span className="disabled">移除</span> : (
-              <Popconfirm placement="topRight" title="确定移除？" onConfirm={() => this.removeList(record)}>
-                <a href>移除</a>
-              </Popconfirm>
-            )
-          }
-          <span className="table-action-line" />
-          {
-            record.status === 2 
-              ? <span className="disabled">标签配置</span> 
-              : <a href onClick={() => this.openModal(record)}>标签配置</a>
-          }
-         
+          <AuthBox
+            code="asset_tag_project_obj_table_field"
+            myFunctionCodes={this.bigStore.functionCodes}
+            isButton={false}
+          >
+            {
+              record.status === 2 ? <span className="disabled">移除</span> : (
+                <Popconfirm placement="topRight" title="确定移除？" onConfirm={() => this.removeList(record)}>
+                  <a href>移除</a>
+                </Popconfirm>
+              )
+            }
+          </AuthBox>
+          <AuthBox
+            code="asset_tag_project_field_tag"
+            myFunctionCodes={this.bigStore.functionCodes}
+            isButton={false}
+          >
+            <span className="table-action-line" />
+            {
+              record.status === 2 
+                ? <span className="disabled">标签配置</span> 
+                : <a href onClick={() => this.openModal(record)}>标签配置</a>
+            }
+          </AuthBox>
         </div>
       ),
     },

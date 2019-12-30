@@ -1,6 +1,6 @@
 import ioContext from '../common/io-context'
 import {
-  tagSearchApi, marketApi, projectApi, get, post,
+  tagSearchApi, marketApi, projectApi, baseApi, get, post,
 } from '../common/util'
 
 const api = {
@@ -12,6 +12,9 @@ const api = {
   applyTag: post(`${marketApi}/tagApply`), // 标签申请
   getProjectDetail: get(`${projectApi}/details`), // 项目详情
   getSceneCate: get(`${tagSearchApi}/list_occ_cate`), // 获取指定场景下的类目列表
+
+  // 权限code
+  getAuthCode: get(`${baseApi}/project/getFunctionCodes`),
 } 
 
 ioContext.create('tagSearch', api) 

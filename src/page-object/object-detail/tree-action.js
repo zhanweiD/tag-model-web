@@ -10,6 +10,8 @@ import {
   IconRefresh, IconTreeAdd, IconUnExtend, IconExtend,
 } from '../../icon-comp'
 
+const {functionCodes} = window.__userConfig
+
 @observer
 export default class Action extends Component {
   constructor(props) {
@@ -69,11 +71,11 @@ export default class Action extends Component {
         </Menu.Item>
       </Menu>
     )
-    return (
+    return functionCodes.includes('asset_tag_tag_cat_add_edit_del') ? (
       <Dropdown overlay={menu}>
         <IconTreeAdd size="14" className="mr8 hand" />
       </Dropdown>
-    )
+    ) : null
   }
 
   render() {

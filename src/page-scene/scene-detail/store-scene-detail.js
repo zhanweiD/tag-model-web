@@ -1,7 +1,7 @@
 import {
   observable, action, runInAction,
 } from 'mobx'
-import {successTip, errorTip} from '../../common/util'
+import {successTip, errorTip, failureTip} from '../../common/util'
 import io from './io'
 
 
@@ -207,14 +207,36 @@ class SceneDetailStore {
   // 目的数据源 - 列表 - 删除
   @action async dbSourceDel(params) {
     try {
-      await io.dbSourceDel({
+      const res = await io.dbSourceDel({
         occasionId: this.sceneId,
         ...params,
       })
 
       runInAction(() => {
-        this.getSourceList()
-        successTip('删除成功')
+        if (res) {
+          this.getSourceList()
+          successTip('删除成功')
+        } else {
+          failureTip('操作失败')
+        }
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  @observable functionCodes = []
+
+  /**
+   * @description 权限code
+   */
+  @action async getAuthCode() {
+    try {
+      const res = await io.getAuthCode({
+        projectId: this.projectId,
+      })
+      runInAction(() => {
+        this.functionCodes = res
       })
     } catch (e) {
       errorTip(e.message)

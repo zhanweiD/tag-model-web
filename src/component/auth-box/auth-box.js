@@ -16,10 +16,14 @@ class AuthBox extends Component {
   }
 
   getAuth = () => {
-    const {code} = this.props
+    const {code, myFunctionCodes} = this.props
     if (!code) {
       console.error('需配置权限code')
       return false
+    }
+
+    if (myFunctionCodes) {
+      return myFunctionCodes.includes(code)
     }
 
     return functionCodes.includes(code)

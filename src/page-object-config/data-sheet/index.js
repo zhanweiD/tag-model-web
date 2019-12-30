@@ -5,9 +5,9 @@ import {Component, Fragment} from 'react'
 import {action, observable} from 'mobx'
 import {observer, inject, Provider} from 'mobx-react'
 import {
-  Button, Drawer, Steps, Popconfirm,
+  Drawer, Steps, Popconfirm, Button,
 } from 'antd'
-import {ListContent, QuestionTooltip} from '../../component'
+import {ListContent, QuestionTooltip, AuthBox} from '../../component'
 import FieldChooseAdd from './field-choose-add'
 import FieldChooseEdit from './field-choose-edit'
 import FieldConfirm from './field-confirm'
@@ -64,18 +64,29 @@ export default class DataSheet extends Component {
       width: 220,
       render: (text, record) => (
         <div>
-          {
-            (record.isUsed || record.status === 2) ? <span className="disabled">移除</span> : (
-              <Popconfirm placement="topRight" title="你确定要移除该数据表吗？" onConfirm={() => this.removeList(record)}>
-                <a href>移除</a>
-              </Popconfirm>
-            )
-          }
-          
-          <span className="table-action-line" />
-          <a href onClick={() => this.editRelField(record)}>编辑关联字段</a>
-          <span className="table-action-line" />
-          <a href onClick={() => this.openTagConfig(record)}>标签配置</a>
+          <AuthBox
+            code="asset_tag_project_obj_table_field"
+            myFunctionCodes={this.bigStore.functionCodes}
+            isButton={false}
+          >
+            {
+              (record.isUsed || record.status === 2) ? <span className="disabled">移除</span> : (
+                <Popconfirm placement="topRight" title="你确定要移除该数据表吗？" onConfirm={() => this.removeList(record)}>
+                  <a href>移除</a>
+                </Popconfirm>
+              )
+            }
+            <span className="table-action-line" />
+            <a href onClick={() => this.editRelField(record)}>编辑关联字段</a>
+          </AuthBox>
+          <AuthBox
+            code="asset_tag_project_field_tag"
+            myFunctionCodes={this.bigStore.functionCodes}
+            isButton={false}
+          >
+            <span className="table-action-line" />
+            <a href onClick={() => this.openTagConfig(record)}>标签配置</a>
+          </AuthBox>
         </div>
       ),
     },
@@ -152,16 +163,42 @@ export default class DataSheet extends Component {
     // typeCode = 3 关系对象；typeCode = 4 实体对象；
     const buttons = +typeCode === 3 ? (
       <Fragment>
-        <Button type="primary" onClick={() => this.openDrawer('add')} disabled={list.length === 1}>添加关联表</Button>
-        <QuestionTooltip tip="最多只能添加1张表" />
+        <AuthBox
+          code="asset_tag_project_obj_table_field" 
+          myFunctionCodes={this.bigStore.functionCodes}
+          isButton={false}
+        >
+          <Button 
+            type="primary" 
+       
+            onClick={() => this.openDrawer('add')} 
+            disabled={list.length === 1}
+          >
+        添加关联表
+          </Button>
+          <QuestionTooltip tip="最多只能添加1张表" />
+        </AuthBox>
+       
       </Fragment>
     ) : (
       <Fragment>
-        <Button type="primary" onClick={() => this.openDrawer('add')} disabled={list.length === 5}>添加关联表</Button>
-        <QuestionTooltip tip="最多只能添加5张表" />
+        <AuthBox
+          code="asset_tag_project_obj_table_field" 
+          myFunctionCodes={this.bigStore.functionCodes}
+          isButton={false}
+        >
+          <Button 
+            type="primary" 
+            onClick={() => this.openDrawer('add')} 
+            disabled={list.length === 5}
+          >
+        添加关联表
+          </Button>
+          <QuestionTooltip tip="最多只能添加5张表" />
+        </AuthBox>
       </Fragment>
     )
-    console.log(objId, projectId)
+
     const listConfig = {
       columns: this.columns,
       initParams: {objId, projectId},
