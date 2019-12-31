@@ -81,14 +81,14 @@ export default class MyRequests extends Component {
     this.visible = true
   }
 
-  handleSubmit = params => {
+  @action handleSubmit = params => {
     const t = this
-
     store.backout({
       id: this.backoutId,
       ...params,
     }, () => {
       t.modalBackoutVisible = false
+      t.modalCancel()
     })
   }
 
@@ -145,7 +145,7 @@ export default class MyRequests extends Component {
         ? [<Button onClick={this.modalCancel}>关闭</Button>]
         : [
           <Button onClick={this.modalCancel}>关闭</Button>,
-          <Button type="primary" onClick={this.backout}>撤销申请</Button>,
+          <Button type="primary" onClick={() => this.backout(detail.id)}>撤销申请</Button>,
         ], 
       detailLoading,
     }

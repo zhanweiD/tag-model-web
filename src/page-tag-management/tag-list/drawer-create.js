@@ -19,6 +19,7 @@ export default class DrawerCreate extends Component {
     this.store.ownObject = id
     this.form.resetFields(['cateId', 'name', 'enName'])
 
+    this.store.drawerTagInfo.pathIds = []
     this.store.drawerTagInfo.parentId = undefined
     this.store.drawerTagInfo.name = undefined
     this.store.drawerTagInfo.enName = undefined
@@ -36,7 +37,7 @@ export default class DrawerCreate extends Component {
       tagCateSelectList, 
       objectSelectList,
     } = this.store
-
+    
     return [{
       label: '所属对象',
       key: 'objId',

@@ -23,6 +23,10 @@ export default class DrawerTagConfig extends Component {
   selectContent= () => {
     const {modalInfo: {detail}, isEnum, tagTreeData} = this.store
 
+    // 默认类目
+    const defaultCate = tagTreeData.filter(d => d.aId === -1)
+    const defaultCateV = defaultCate.length ? [defaultCate[0].id] : undefined
+
     return [{
       label: '标签名称',
       key: 'name',
@@ -85,7 +89,7 @@ export default class DrawerTagConfig extends Component {
     }, {
       label: '所属类目',
       key: 'pathIds',
-      initialValue: detail.pathIds && detail.pathIds.length ? detail.pathIds.slice(2) : undefined,
+      initialValue: detail.pathIds && detail.pathIds.length ? detail.pathIds.slice(2) : defaultCateV,
       component: 'cascader',
       rules: [
         '@requiredSelect',

@@ -238,6 +238,13 @@ export default class TagManagement extends Component {
     }
   }
 
+  componentWillUnmount() {
+    store.pagination = {
+      pageSize: 10,
+      currentPage: 1,
+    }
+  }
+
   // 跳转到项目列表
   goProjectList = () => {
     window.location.href = `${window.__onerConfig.pathPrefix || '/'}/project`
@@ -288,7 +295,7 @@ export default class TagManagement extends Component {
         onClick={() => openDrawer('add')}
       >
 创建标签
-      </AuthBox>],
+                </AuthBox>],
       rowKey: 'id',
       store, // 必填属性
     }

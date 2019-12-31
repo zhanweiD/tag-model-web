@@ -56,6 +56,10 @@ class ModalTagEdit extends Component {
       colon: false,
     }
 
+    // 默认类目
+    const defaultCate = cateList.filter(d => d.aId === -1)
+    const defaultCateV = defaultCate.length ? [defaultCate[0].id] : undefined
+
     return (
       <Modal {...modalProps}>
         <Form>
@@ -125,7 +129,7 @@ class ModalTagEdit extends Component {
 
             <FormItem {...formItemLayout} label="所属类目">
               {getFieldDecorator('pathIds', {
-                initialValue: tagDetail.pathIds || undefined,
+                initialValue: tagDetail.pathIds || defaultCateV,
               })(
                 <Cascader
                   options={cateList}

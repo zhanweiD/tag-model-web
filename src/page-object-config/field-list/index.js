@@ -39,6 +39,14 @@ export default class FieldList extends Component {
     }
   }
 
+  componentWillUnmount() {
+    store.list.clear()
+    store.pagination = {
+      pageSize: 10,
+      currentPage: 1,
+    }
+  }
+
   columns = [
     {
       key: 'dataFieldName',

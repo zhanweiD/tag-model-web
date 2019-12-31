@@ -203,7 +203,10 @@ class Store extends ListContentStore(io.getList) {
       })
       runInAction(() => {
         if (res.success) {
+          successTip('操作成功')
           if (cb) cb()
+        } else {
+          failureTip('操作失败')
         }
       })
     } catch (e) {
@@ -226,7 +229,10 @@ class Store extends ListContentStore(io.getList) {
       })
       runInAction(() => {
         if (res.success) {
+          successTip('操作成功')
           if (cb) cb()
+        } else {
+          failureTip('操作失败')
         }
       })
     } catch (e) {

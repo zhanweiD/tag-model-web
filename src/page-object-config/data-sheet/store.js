@@ -1,5 +1,5 @@
 import {
-  observable, action, runInAction, toJS,
+  observable, action, runInAction,
 } from 'mobx'
 import {
   successTip, failureTip, errorTip, changeToOptions,
@@ -106,7 +106,7 @@ class Store extends ListContentStore(io.getList) {
         storageId: this.storageId,
       })
       runInAction(() => {
-        this.dataSheetList = res
+        this.dataSheetList = res || []
         this.dataSheetSelectList = res.map(d => ({
           name: d.tableName,
           value: d.tableName,
