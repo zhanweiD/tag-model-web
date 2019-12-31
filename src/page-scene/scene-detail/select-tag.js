@@ -78,7 +78,9 @@ export default class SelectTag extends Component {
       })
     })
 
-    this.store.getAuthCode()
+    if (this.store.projectId) {
+      this.store.getAuthCode()
+    }
   }
 
   componentWillReceiveProps(nextProps) {

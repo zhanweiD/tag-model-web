@@ -79,8 +79,9 @@ class ProjectConfig extends Component {
     // 面包屑设置
     const {frameChange} = this.props
     frameChange('nav', navList)
-
-    store.getDetail()
+    if (store.projectId) {
+      store.getDetail()
+    }
   }
 
   @action openModal = (type, data = {}) => {

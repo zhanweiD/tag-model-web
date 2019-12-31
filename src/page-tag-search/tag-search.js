@@ -47,7 +47,9 @@ export default class TagSearch extends Component {
     frameChange('nav', navList)
     // 获取所属对象下拉数据
 
-    store.getAuthCode()
+    if (store.useProjectId) {
+      store.getAuthCode()
+    }
   }
 
   componentDidMount() {

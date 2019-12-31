@@ -32,6 +32,20 @@ class Store {
         }
         window.spaceInfo = spaceInfo
       } 
+
+      if (projectId && res.data.length) {
+        const filter = res.data.filter(d => +d.id === +projectId)
+        // 项目不存在项目列表中
+        if (!filter.length) {
+          projectId = res.data[0].id
+          storage.set('tag_projectId', res.data[0].id)
+          const spaceInfo = {
+            projectId,
+            projectList: res.data,
+          }
+          window.spaceInfo = spaceInfo
+        }
+      }
      
       runInAction(() => {
         if (res.data.length === 0) {

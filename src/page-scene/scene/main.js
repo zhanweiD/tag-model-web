@@ -36,8 +36,10 @@ export default class Scene extends Component {
     const {frameChange} = this.props
     frameChange('nav', navList)
     
-    store.getList()
-    store.getAuthCode()
+    if (store.projectId) {
+      store.getList()
+      store.getAuthCode()
+    }
   }
 
   @action handleModalVisible(type, data = {}) {

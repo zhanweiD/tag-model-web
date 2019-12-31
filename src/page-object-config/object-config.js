@@ -32,8 +32,10 @@ export default class ObjectConfig extends Component {
   }
 
   componentWillMount() {
-    // 权限code
-    store.getAuthCode()
+    if (store.projectId) {
+      // 权限code
+      store.getAuthCode()
+    }
   }
 
   @action changeTab = code => {

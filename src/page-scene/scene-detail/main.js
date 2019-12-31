@@ -45,7 +45,9 @@ export default class SceneDetail extends Component {
 
     store.getDetail()
     store.getSourceList()
-    store.getAuthCode()
+    if (store.projectId) {
+      store.getAuthCode()
+    }
   }
 
   @action.bound dbSourceVisible() {

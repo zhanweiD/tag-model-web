@@ -90,7 +90,7 @@ export default class TagManagement extends Component {
               <span className="table-action-line" />
               <a href onClick={() => store.openDrawer('edit', record)}>编辑</a>
               <span className="table-action-line" />
-              <Popconfirm placement="topRight" title="确认删除？" onConfirm={() => this.remove(record)}>
+              <Popconfirm placement="topRight" title="标签被删除后不可恢复，确定删除？" onConfirm={() => this.remove(record)}>
                 <a href>删除</a>
               </Popconfirm>
             </Fragment>
@@ -114,7 +114,7 @@ export default class TagManagement extends Component {
               <span className="table-action-line" />
               <a href onClick={() => store.openDrawer('edit', record)}>编辑</a>
               <span className="table-action-line" />
-              <Popconfirm placement="topRight" title="确认删除？" onConfirm={() => this.remove(record)}>
+              <Popconfirm placement="topRight" title="标签被删除后不可恢复，确定删除？" onConfirm={() => this.remove(record)}>
                 <a href>删除</a>
               </Popconfirm>
             </Fragment>
@@ -226,7 +226,9 @@ export default class TagManagement extends Component {
     const {frameChange} = this.props
     frameChange('nav', navList)
 
-    store.getAuthCode()
+    if (store.projectId) {
+      store.getAuthCode()
+    }
   }
 
   componentDidMount() {
