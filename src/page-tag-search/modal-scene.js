@@ -14,7 +14,7 @@ export default class ModalScene extends Component {
   @observable sceneId = undefined
 
   @action.bound selectScene(id) {
-    this.store.sceneId = id
+    this.sceneId = id
     this.form.resetFields(['catId'])
     this.store.objId = undefined
     this.store.sceneCate.clear()
@@ -43,7 +43,7 @@ export default class ModalScene extends Component {
       '@requiredSelect',
     ],
     control: {
-      // disabled: !this.store.sceneId,
+      // disabled: !this.sceneId,
       options: toJS(this.store.sceneCate),
       fieldNames: {
         label: 'name',
@@ -60,7 +60,9 @@ export default class ModalScene extends Component {
 
   @action handleCancel = () => {
     this.store.modalSceneVisible = false
-    this.store.sceneType = undefined
+    this.store.sceneType = undefined  
+    this.store.sceneCate.clear()
+    this.sceneId = undefined
   }
 
   submit = () => {
@@ -101,7 +103,7 @@ export default class ModalScene extends Component {
   }
 
   render() {
-    const {modalSceneVisible, confirmLoading} = this.store
+    const {modalSceneVisible, confirmLoading, sceneCate} = this.store
     const modalConfig = {
       title: '添加到业务场景',
       visible: modalSceneVisible,
@@ -111,6 +113,7 @@ export default class ModalScene extends Component {
       width: 525,
       destroyOnClose: true,
       confirmLoading,
+      className: 'noCateBox',
     }
     
     const formConfig = {
@@ -120,6 +123,10 @@ export default class ModalScene extends Component {
     return (
       <Modal {...modalConfig}>
         <ModalForm {...formConfig} />
+        {
+          sceneCate.length === 0 && this.sceneId ? <a href={`${window.__onerConfig.pathPrefix}/scene#/${this.sceneId}`} className="noCate">没有类目？ 去场景中创建类目</a> : null
+        }
+    
       </Modal>
     )
   }

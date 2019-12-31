@@ -53,6 +53,14 @@ class Store {
     visible: false,
   }
 
+  @action findParentId(id, data, expandedKeys) {
+    data.forEach(item => {
+      if (item.parentId !== 0 && item.id === id) {
+        expandedKeys.push(item.parentId)
+        this.findParentId(item.parentId, data, this.searchExpandedKeys)
+      }
+    })
+  }
 
   @action async getTagCateDetail() {
     try {

@@ -37,8 +37,26 @@ export default class TagClass extends Component {
 
  @action destory = () => {
    store.currentSelectKeys = undefined
+   store.searchKey = undefined
+   store.keyword = undefined
    store.defaultCate = {}
    store.categoryData.clear()
+   store.treeData.clear()
+   store.searchExpandedKeys.clear()
+
+   store.tagList = {
+     list: [],
+     loading: false,
+     currentPage: 1,
+     pageSize: 10,
+   }
+
+   store.tagListModal = {
+     list: [],
+     loading: false,
+     currentPage: 1,
+     pageSize: 5,
+   }
  }
 
  // 打开选择标签弹窗
