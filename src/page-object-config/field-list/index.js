@@ -25,6 +25,7 @@ export default class FieldList extends Component {
 
   componentWillMount() {
     store.getDataSource()
+    this.initData()
   }
 
   componentWillReceiveProps(next) {
@@ -39,8 +40,9 @@ export default class FieldList extends Component {
     }
   }
 
-  componentWillUnmount() {
+  @action initData() {
     store.list.clear()
+    store.searchParams = {}
     store.pagination = {
       pageSize: 10,
       currentPage: 1,

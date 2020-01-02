@@ -212,7 +212,7 @@ export function Time({timestamp, placeholder}) {
  * @param max 名称长度最大值; 默认20
  */
 
-export function getNamePattern(max = 20) {
+export function getNamePattern(max = 32) {
   return [{
     transform: value => value && value.trim(),
   }, {

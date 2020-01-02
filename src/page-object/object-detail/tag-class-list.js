@@ -40,7 +40,7 @@ export default class TagList extends Component {
       title: '操作',
       dataIndex: 'action',
       width: 90,
-      render: (text, record) => <a href onClick={() => this.moveTo(record)}>移动至</a>,
+      render: (text, record) => (functionCodes.includes('asset_tag_tag_tag_select_move') ? <a href onClick={() => this.moveTo(record)}>移动至</a> : null),
     },
   ]
 

@@ -113,7 +113,7 @@ class ModalAdd extends Component {
               }],
               validateFirst: true,
             })(
-              <Input autoComplete="off" placeholder="不超过20个字，允许中文、英文、数字或下划线" />
+              <Input autoComplete="off" placeholder="不超过32个字，允许中文、英文、数字或下划线" />
             )}
           </FormItem>
           <FormItem {...formItemLayout} label="描述">
@@ -124,10 +124,10 @@ class ModalAdd extends Component {
               }, {
                 required: true, message: '描述不能为空',
               }, {
-                max: 100, message: '描述不超过100个字符',
+                max: 128, message: '描述不超过128个字符',
               }],
             })(
-              <TextArea autoComplete="off" placeholder="不超过100个字" />
+              <TextArea autoComplete="off" placeholder="不超过128个字" />
             )}
           </FormItem>
         </Form>

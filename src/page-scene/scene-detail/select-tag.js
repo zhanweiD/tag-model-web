@@ -163,7 +163,7 @@ export default class SelectTag extends Component {
     }
     
     const {
-      // id,
+      id,
       name,
       // used,
       enName,
@@ -171,9 +171,10 @@ export default class SelectTag extends Component {
       cUser,
       cDate,
       descr,
-      objTypeCode,
-      treeId,
+      // objTypeCode,
+      // treeId,
     } = toJS(tagInfo)
+
     // 详情信息
     const baseInfo = [
       {
@@ -220,7 +221,7 @@ export default class SelectTag extends Component {
                                         descr={descr}
                                         baseInfo={baseInfo}
                                         // 点击“标签详情”按钮，进入标签池中的标签详情
-                                        // actions={<Button type="primary"><a href>标签详情</a></Button>}
+                                        actions={[<Button href={`${window.__onerConfig.pathPrefix}/tag-management#/${id}`} type="primary"><a href>标签详情</a></Button>]}
                                         // actions={
                                         //   <Button type="primary">
                                         //     <a

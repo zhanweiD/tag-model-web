@@ -92,6 +92,10 @@ export default class DataSheet extends Component {
     },
   ]
 
+  componentWillMount() {
+    this.initData()
+  }
+
   componentWillReceiveProps(next) {
     const {objId} = this.props
 
@@ -101,6 +105,14 @@ export default class DataSheet extends Component {
         currentPage: 1,
         objId: next.objId,
       })
+    }
+  }
+
+  @action initData() {
+    store.searchParams = {}
+    store.pagination = {
+      pageSize: 10,
+      currentPage: 1,
     }
   }
 

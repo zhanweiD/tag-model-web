@@ -229,6 +229,7 @@ export default class TagManagement extends Component {
     if (store.projectId) {
       store.getAuthCode()
     }
+    this.initData()
   }
 
   componentDidMount() {
@@ -238,7 +239,8 @@ export default class TagManagement extends Component {
     }
   }
 
-  componentWillUnmount() {
+  @action initData() {
+    store.searchParams = {}
     store.pagination = {
       pageSize: 10,
       currentPage: 1,
@@ -295,7 +297,7 @@ export default class TagManagement extends Component {
         onClick={() => openDrawer('add')}
       >
 创建标签
-                </AuthBox>],
+      </AuthBox>],
       rowKey: 'id',
       store, // 必填属性
     }

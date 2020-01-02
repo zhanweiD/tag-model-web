@@ -71,7 +71,7 @@ class ModalTagEdit extends Component {
                   {required: true, message: '名称不可为空'},
                   ...getNamePattern(),
                 ],
-              })(<Input autoComplete="off" placeholder="不超过20个字，允许中文、英文、数字或下划线" />)}
+              })(<Input autoComplete="off" placeholder="不超过32个字，允许中文、英文、数字或下划线" />)}
             </FormItem>
 
             <FormItem {...formItemLayout} label="英文名">
@@ -82,7 +82,7 @@ class ModalTagEdit extends Component {
                   {required: true, message: '英文名不可为空'},
                   {pattern: enNameReg, message: '不超过32个字，只能包含英文、数字或下划线，必须以英文开头'},
                 ],
-              })(<Input autoComplete="off" placeholder="不超过30个字，允许英文、数字或下划线，必须以英文开头" />)}
+              })(<Input autoComplete="off" placeholder="不超过32个字，允许英文、数字或下划线，必须以英文开头" />)}
             </FormItem>
 
             <FormItem {...formItemLayout} label="数据类型">
@@ -142,14 +142,14 @@ class ModalTagEdit extends Component {
               {getFieldDecorator('descr', {
                 rules: [
                   {transform: value => value && value.trim()},
-                  {max: 100, message: '业务逻辑不能超过100个字符'},
+                  {max: 128, message: '业务逻辑不能超过128个字符'},
                 ],
                 initialValue: tagDetail.descr || undefined,
               })(
                 <Input.TextArea
                   autoComplete="off"
                   rows="3"
-                  placeholder="标签表示的业务逻辑，例如“该用户的售手机号”，不超过100个字"
+                  placeholder="标签表示的业务逻辑，例如“该用户的售手机号”，不超过128个字"
                 />
               )}
             </FormItem>
