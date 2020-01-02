@@ -182,21 +182,17 @@ export default class TagSearch extends Component {
     const {
       hotWord,
       objectId,
-      useProjectId,
       ownProjectId,
-      projectPermission,
+      // projectPermission,
     } = store
 
     if (
       typeof hotWord === 'undefined'
-      && useProjectId === ''
-      && objectId === ''
-      && typeof projectPermission === 'undefined'
       && ownProjectId === ''
+      && objectId === ''
     ) {
       return false
     }
-
     return true
   }
 
@@ -204,6 +200,11 @@ export default class TagSearch extends Component {
   // 跳转到项目列表
   goProjectList = () => {
     window.location.href = `${window.__onerConfig.pathPrefix || '/'}/project`
+  }
+
+  // 跳转到标签管理
+  goTagManager = () => {
+    window.location.href = `${window.__onerConfig.pathPrefix || '/'}/tag-management`
   }
 
   renderNodata = () => {
@@ -231,7 +232,7 @@ export default class TagSearch extends Component {
 
   render() {
     const {
-      useProjectId, list, objectId, functionCodes,
+      useProjectId, list, objectId, functionCodes, tableLoading,
     } = store
 
     const rowSelection = objectId && functionCodes.includes('asset_tag_project_tag_search_add_occ') ? {
@@ -276,6 +277,15 @@ export default class TagSearch extends Component {
       store, // 必填属性
     }
 
+    const noDataConfig = {
+      btnText: '去创建标签',
+      onClick: this.goTagManager,
+      text: '没有任何标签，去标签管理创建标签吧!',
+      code: 'asset_tag_project_tag_operator',
+      noAuthText: '没有任何标签',
+      myFunctionCodes: functionCodes,
+    }
+
     const {spaceInfo} = window
 
     return (
@@ -283,14 +293,25 @@ export default class TagSearch extends Component {
         <div className="content-header">{navListMap.tagSearch.text}</div>
         {
           spaceInfo && spaceInfo.projectId && spaceInfo.projectList && spaceInfo.projectList.length ? (
-            <Fragment>
-              <Search store={store} />
-              <div className="search-list">
-                <ListContent {...listConfig} />
-                <ModalApply store={store} />
-                <ModalScene store={store} />
-              </div>
-            </Fragment>
+            <div>
+              {
+                !list.length && !this.isSearch() ? (
+                  <NoData
+                    isLoading={tableLoading}
+                    {...noDataConfig}
+                  />
+                ) : (
+                  <Fragment>
+                    <Search store={store} />
+                    <div className="search-list">
+                      <ListContent {...listConfig} />
+                      <ModalApply store={store} />
+                      <ModalScene store={store} />
+                    </div>
+                  </Fragment>
+                ) 
+              }  
+            </div>
           ) : this.renderNodata()
         }
       </div>

@@ -32,7 +32,7 @@ const navList = [
 
 @inject('frameChange')
 @observer
-export default class TagManagement extends Component {
+export default class TagList extends Component {
   constructor(props) {
     super(props)
     const {spaceInfo} = window
@@ -236,9 +236,20 @@ export default class TagManagement extends Component {
     if (store.projectId) {
       // 获取所属对象下拉数据
       store.getObjectSelectList() 
+
+      // 请求列表，放在父组件进行请求是因为需要在外层做空数据判断。
+      // 若返回数据为空[]。则渲染 NoData 组件。
+      // 要是请求放在列表组件ListContent中的话, 就必须渲染表格的dom 影响体验
+      store.getList({
+        projectId: store.projectId,
+      })
+      store.initParams = {
+        projectId: store.projectId,
+      }
     }
   }
 
+  // 初始化数据，一般情况不需要，此项目存在项目空间中项目的切换，全局性更新，较为特殊
   @action initData() {
     store.searchParams = {}
     store.pagination = {
@@ -246,6 +257,21 @@ export default class TagManagement extends Component {
       currentPage: 1,
     }
   }
+
+  // 是否有进行搜索操作
+  isSearch = () => {
+    const {
+      searchParams,
+    } = store
+
+    if (
+      JSON.stringify(searchParams) === '{}'
+    ) {
+      return false
+    }
+    return true
+  }
+
 
   // 跳转到项目列表
   goProjectList = () => {
@@ -284,7 +310,18 @@ export default class TagManagement extends Component {
       updateTagConfig,
       objectSelectList,
       openDrawer,
+      list, 
+      tableLoading,
     } = store
+
+    const noDataConfig = {
+      btnText: '创建标签',
+      onClick: () => openDrawer('add'),
+      text: '没有任何标签，去创建标签吧',
+      code: 'asset_tag_project_tag_operator',
+      myFunctionCodes: store.functionCodes,
+      noAuthText: '没有任何标签',
+    }
 
     const listConfig = {
       columns: this.columns,
@@ -299,6 +336,7 @@ export default class TagManagement extends Component {
 创建标签
       </AuthBox>],
       rowKey: 'id',
+      initGetDataByParent: true, // 初始请求 在父层组件处理。列表组件componentWillMount内不再进行请求
       store, // 必填属性
     }
 
@@ -312,7 +350,15 @@ export default class TagManagement extends Component {
             ? (
               <Fragment>
                 <div className="m16">
-                  <ListContent {...listConfig} />
+                  {
+                    !list.length && !this.isSearch() ? (
+                      <NoData
+                        isLoading={tableLoading}
+                        {...noDataConfig}
+                      />
+                    ) : <ListContent {...listConfig} />
+                  }
+                  
                 </div>
                 <ModalTagApply store={store} />
                 <DrawerCreate store={store} />
