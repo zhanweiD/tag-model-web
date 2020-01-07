@@ -14,17 +14,6 @@
       {{ onerConfig | safe }}
       {{ njkData | safe }}
       {{ windowKeeper | safe }}
-
-      // 动态参加ico
-      const icoNode = document.createElement('link')
-      icoNode.setAttribute('rel', 'shortcut icon')
-      icoNode.setAttribute('type', 'image/x-icon')
-      if (window.njkData.ico) {
-        icoNode.setAttribute('href', window.njkData.ico)
-      } else {
-        icoNode.setAttribute('href', "{{pageConfig.icon}}")
-      }
-      document.head.appendChild(icoNode)
     </script>
   </head>
   <body class="dt-ant-12">

@@ -63,7 +63,9 @@ export default class Scene extends Component {
   componentWillMount() {
     const {frameChange} = this.props
     frameChange('nav', [
+      navListMap.asset,
       navListMap.tagCenter,
+      navListMap.space,
       navListMap.scene,
       {url: `/scene#/${store.sceneId}`, text: '场景详情'},
       {text: '标签列表'},

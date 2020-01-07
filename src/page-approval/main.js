@@ -10,6 +10,7 @@ import Approval from './approval'
 // eslint-disable-next-line no-underscore-dangle
 const {navListMap} = window.__keeper
 const navList = [
+  navListMap.asset,
   navListMap.tagCenter,
   {text: navListMap.approval.text},
 ]

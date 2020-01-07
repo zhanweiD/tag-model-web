@@ -3,8 +3,14 @@
  * @description 面包屑设置
 */
 
+
 // 标签中心
 const tagCenter = {
+  // 资产管理
+  asset: {
+    url: '/',
+    text: '资产管理',
+  },
   tagCenter: {
     url: '/overview',
     text: '标签中心',

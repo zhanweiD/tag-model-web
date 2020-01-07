@@ -21,6 +21,7 @@ import Search from './search'
 // eslint-disable-next-line no-underscore-dangle
 const {navListMap} = window.__keeper
 const navList = [
+  navListMap.asset,
   navListMap.tagCenter,
   navListMap.space,
   navListMap.tagSearch,
@@ -232,7 +233,7 @@ export default class TagSearch extends Component {
 
   render() {
     const {
-      useProjectId, list, objectId, functionCodes, tableLoading,
+      useProjectId, list, objectId, functionCodes, tableLoading, expand,
     } = store
 
     const rowSelection = objectId && functionCodes.includes('asset_tag_project_tag_search_add_occ') ? {
@@ -303,7 +304,7 @@ export default class TagSearch extends Component {
                 ) : (
                   <Fragment>
                     <Search store={store} />
-                    <div className="search-list">
+                    <div className={`search-list ${expand ? 'open-height' : 'close-height'}`}>
                       <ListContent {...listConfig} />
                       <ModalApply store={store} />
                       <ModalScene store={store} />

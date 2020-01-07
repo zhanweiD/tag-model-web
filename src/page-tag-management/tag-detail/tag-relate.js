@@ -14,7 +14,11 @@ export default class Related extends Component {
 
   componentDidMount() {
     const me = this
-    this.store.tagLineage(data => { me.dagBox.drawDag(data) })
+    this.store.tagLineage(data => {
+      if (me.dagBox) {
+        me.dagBox.drawDag(data)
+      } 
+    })
   }
 
   render() {

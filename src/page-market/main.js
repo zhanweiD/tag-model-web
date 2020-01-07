@@ -20,6 +20,7 @@ import store from './store'
 // eslint-disable-next-line no-underscore-dangle
 const {navListMap} = window.__keeper
 const navList = [
+  navListMap.asset,
   navListMap.tagCenter,
   navListMap.market,
 ]
@@ -142,6 +143,7 @@ export default class Market extends Component {
       useProjectId, 
       tableLoading, 
       list,
+      expand,
     } = store
 
     const rowSelection = {
@@ -189,7 +191,7 @@ export default class Market extends Component {
               ) : (
                 <Fragment>
                   <Search store={store} />
-                  <div className="search-list">
+                  <div className={`search-list ${expand ? 'open-height' : 'close-height'}`}>
                     <ListContent {...listConfig} />
                     <Modal store={store} />
                   </div>

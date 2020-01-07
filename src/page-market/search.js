@@ -110,8 +110,8 @@ export default class Search extends Component {
                 }
               </Select>
               <Radio.Group onChange={this.projectPermissionSelect} value={projectPermission}>
-                <Radio value={1} disabled={!this.store.useProjectId}>有使用权限</Radio>
-                <Radio value={0} disabled={!this.store.useProjectId}>无使用权限</Radio>
+                <Radio value={1} disabled={!this.store.useProjectId} className="fs12">有使用权限</Radio>
+                <Radio value={0} disabled={!this.store.useProjectId} className="fs12">无使用权限</Radio>
               </Radio.Group>
             </div>
           </div>

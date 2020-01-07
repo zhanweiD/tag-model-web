@@ -14,6 +14,7 @@ import './main.styl'
 // eslint-disable-next-line no-underscore-dangle
 const {navListMap} = window.__keeper
 const navList = [
+  navListMap.asset,
   navListMap.tagCenter,
   navListMap.object,
 ]

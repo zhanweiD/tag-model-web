@@ -89,13 +89,15 @@ const ListContentStore = apiFunc => class _Store {
         currentPage: currentPage || 1,
         ...params,
       }))
+      // const res = {
+      //   data: [],
+      // }
       runInAction(() => {
         const {
           data = [],
         } = res
         this.tableLoading = false
         this.list.replace(data)
-        // this.list.replace([])
 
         this.pagination = {
           pageSize: res.pageSize || 10,

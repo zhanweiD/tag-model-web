@@ -2,12 +2,12 @@ const rp = require('request-promise')
 const download = require('./download')
 const upload = require('./upload')
 
-let configJson = {}
-try {
-  configJson = require('/opt/conf/front/config.json')
-} catch (e) {
-  console.error('/opt/conf/front/config.json  配置文件不存在')
-}
+// let configJson = {}
+// try {
+//   configJson = require('/opt/conf/front/config.json')
+// } catch (e) {
+//   console.error('/opt/conf/front/config.json  配置文件不存在')
+// }
 
 module.exports = [
   // eslint-disable-next-line func-names
@@ -21,32 +21,32 @@ module.exports = [
       // 获取默认logo、ico
       ctx.njkData = {
         productId: config('server.authorize.productId'),
-        ico: configJson.ico,
-        logo: configJson.logo,
-        logoText: configJson.logoText,
+        // ico: configJson.ico,
+        // logo: configJson.logo,
+        // logoText: configJson.logoText,
       }
 
-      if (!ctx.njkData.ico || !ctx.njkData.logo) {
-        // 获取租户是否自己配置了logo
-        try {
-          const tenantInfo = await rp({
-            uri: `${config.sure('server.authorize.apiPrefix')}/api/v4/uic/tenant/${tenantId}`,
-            qs: {
-              userId,
-            },
-            method: 'GET',
-            json: true,
-          })
-          if (!ctx.njkData.ico && tenantInfo && tenantInfo.content) {
-            ctx.njkData.ico = tenantInfo.content.businessLicense
-          }
-          if (!ctx.njkData.logo && tenantInfo && tenantInfo.content) {
-            ctx.njkData.logo = tenantInfo.content.icon
-          }
-        } catch (e) {
-          console.log(e)
-        }
-      }
+      // if (!ctx.njkData.ico || !ctx.njkData.logo) {
+      //   // 获取租户是否自己配置了logo
+      //   try {
+      //     const tenantInfo = await rp({
+      //       uri: `${config.sure('server.authorize.apiPrefix')}/api/v4/uic/tenant/${tenantId}`,
+      //       qs: {
+      //         userId,
+      //       },
+      //       method: 'GET',
+      //       json: true,
+      //     })
+      //     if (!ctx.njkData.ico && tenantInfo && tenantInfo.content) {
+      //       ctx.njkData.ico = tenantInfo.content.businessLicense
+      //     }
+      //     if (!ctx.njkData.logo && tenantInfo && tenantInfo.content) {
+      //       ctx.njkData.logo = tenantInfo.content.icon
+      //     }
+      //   } catch (e) {
+      //     console.log(e)
+      //   }
+      // }
 
 
       // 获取全站的数据字典接口

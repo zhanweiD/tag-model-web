@@ -26,7 +26,9 @@ import store from './store'
 // eslint-disable-next-line no-underscore-dangle
 const {navListMap} = window.__keeper
 const navList = [
+  navListMap.asset,
   navListMap.tagCenter,
+  navListMap.space,
   {text: navListMap.tagManagement.text},
 ]
 
@@ -296,7 +298,7 @@ export default class TagList extends Component {
         />
       )
     } 
-
+    console.log(123)
     return <Loading mode="block" height={200} />
   }
 
@@ -334,7 +336,7 @@ export default class TagList extends Component {
         onClick={() => openDrawer('add')}
       >
 创建标签
-      </AuthBox>],
+                </AuthBox>],
       rowKey: 'id',
       initGetDataByParent: true, // 初始请求 在父层组件处理。列表组件componentWillMount内不再进行请求
       store, // 必填属性
@@ -343,23 +345,21 @@ export default class TagList extends Component {
     const {spaceInfo} = window
 
     return (
-      <div>
+      <div className="page-tag-list">
         <div className="content-header">{navListMap.tagManagement.text}</div>
         {
           spaceInfo && spaceInfo.projectId && spaceInfo.projectList && spaceInfo.projectList.length
             ? (
               <Fragment>
-                <div className="m16">
-                  {
-                    !list.length && !this.isSearch() ? (
-                      <NoData
-                        isLoading={tableLoading}
-                        {...noDataConfig}
-                      />
-                    ) : <ListContent {...listConfig} />
-                  }
-                  
-                </div>
+                {
+                  !list.length && !this.isSearch() ? (
+                    <NoData
+                      isLoading={tableLoading}
+                      {...noDataConfig}
+                    />
+                  ) : <div className="list-content"><ListContent {...listConfig} /></div>
+                }
+
                 <ModalTagApply store={store} />
                 <DrawerCreate store={store} />
                 <DrawerTagConfig
@@ -372,6 +372,7 @@ export default class TagList extends Component {
               </Fragment>
             ) : this.renderNodata()
         }    
+       
       </div>
 
     )

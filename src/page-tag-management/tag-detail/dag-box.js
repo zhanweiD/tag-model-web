@@ -307,7 +307,7 @@ export default class DagBox extends Component {
   }
 
   // 更新图
-  drawDag(data) {
+  drawDag = data => {
     const me = this
     if (!data.nodes) {
       return
