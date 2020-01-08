@@ -49,10 +49,9 @@ const ListContentStore = apiFunc => class _Store {
    * @param {number} pageSize
    */
   @action.bound handlePageChange(curPage, pageSize) {
-    this.pagination = {
-      pageSize,
-      currentPage: curPage,
-    }
+    this.pagination.pageSize = pageSize
+    this.pagination.currentPage = curPage
+
     this.getList()
   }
 

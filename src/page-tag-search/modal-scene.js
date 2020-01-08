@@ -124,9 +124,9 @@ export default class ModalScene extends Component {
       <Modal {...modalConfig}>
         <ModalForm {...formConfig} />
         {
-          sceneCate.length === 0 && this.sceneId ? <a href={`${window.__onerConfig.pathPrefix}/scene#/${this.sceneId}`} className="noCate">没有类目？ 去场景中创建类目</a> : null
+          this.sceneId ? <a href={`${window.__onerConfig.pathPrefix}/scene#/${this.sceneId}`} className="noCate">没有类目？ 去场景中创建类目</a> : null
         }
-    
+        {/* <a href={`${window.__onerConfig.pathPrefix}/scene#/${this.sceneId}`} className="noCate">没有类目？ 去场景中创建类目</a> */}
       </Modal>
     )
   }

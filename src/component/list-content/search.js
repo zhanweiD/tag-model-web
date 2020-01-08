@@ -19,14 +19,14 @@ const formItemLayout = {
     md: {span: 7},
     lg: {span: 9},
     xl: {span: 6},
-    xxl: {span: 4},
+    xxl: {span: 5},
   },
   wrapperCol: {
     sm: {span: 18},
     md: {span: 17}, // >=768
     lg: {span: 15}, // >=992
     xl: {span: 18}, // >=1200
-    xxl: {span: 20}, // >=1600
+    xxl: {span: 19}, // >=1600
   },
 }
 
