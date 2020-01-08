@@ -171,9 +171,9 @@ export default class Market extends Component {
     }
 
     const noDataConfig = {
-      btnText: '去上架标签',
-      onClick: this.goTagManager,
-      text: '没有任何公开标签，去标签管理上架标签吧!',
+      // btnText: '去上架标签',
+      // onClick: this.goTagManager,
+      text: '没有任何公开标签!',
     }
 
     return (

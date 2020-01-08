@@ -101,6 +101,9 @@ export default class DataSheet extends Component {
 
     if (objId !== next.objId) {
       store.objId = next.objId
+      // 重置列表默认参数
+      store.initParams.objId = next.objId
+      
       store.getList({
         currentPage: 1,
         objId: next.objId,

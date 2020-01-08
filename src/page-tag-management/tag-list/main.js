@@ -245,6 +245,7 @@ export default class TagList extends Component {
       store.getList({
         projectId: store.projectId,
       })
+      // 设置列表默认参数；因为列表请求放在列表组件外部，所以 设置默认参数也在列表组件外部
       store.initParams = {
         projectId: store.projectId,
       }

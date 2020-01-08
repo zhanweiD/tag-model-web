@@ -26,7 +26,7 @@ export default class ObjectConfig extends Component {
     const {spaceInfo} = window
 
     store.projectId = spaceInfo && spaceInfo.projectId
-    store.typeCode = match.params.typeCode || '4'
+    store.typeCode = match.params.typeCode || '3'
     store.objId = match.params.objId
     store.tabId = match.params.tabId || '0' // 当前详情tabID；默认数据视图
   }

@@ -60,6 +60,7 @@ export default class TagSearch extends Component {
     store.getList({
       useProjectId: store.useProjectId,
     })
+    // 设置列表默认参数；因为列表请求放在列表组件外部，所以 设置默认参数也在列表组件外部
     store.initParams = {
       useProjectId: store.useProjectId,
     }

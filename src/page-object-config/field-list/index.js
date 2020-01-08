@@ -33,10 +33,18 @@ export default class FieldList extends Component {
     
     if (objId !== next.objId) {
       store.objId = next.objId
-      store.getList({
-        currentPage: 1,
-        objId: next.objId,
-      })
+
+      store.getDataSource() // 请求数据源
+      this.initData()
+      // // 请求列表数据
+      // store.getList({
+      //   currentPage: 1,
+      //   objId: next.objId,
+      // })
+      // // 重置搜索框
+      // if (this.table) {
+      //   this.table.handleReset()
+      // }
     }
   }
 
@@ -185,7 +193,7 @@ export default class FieldList extends Component {
 
     return (
       <div>
-        <ListContent {...listConfig} />
+        <ListContent {...listConfig} key={objId} />
         <DrawerTagConfig store={store} />
       </div>
     )

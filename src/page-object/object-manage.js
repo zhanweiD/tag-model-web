@@ -23,7 +23,7 @@ export default class ObjectManage extends Component {
   constructor(props) {
     super(props)
     const {match} = props
-    store.typeCode = match.params.typeCode || '4'
+    store.typeCode = match.params.typeCode || '3'
     store.objId = match.params.objId
   }
 

@@ -34,11 +34,13 @@ export default class ProjectList extends Component {
       key: 'name',
       title: '项目名称',
       dataIndex: 'name',
-      render: (text, record) => (
-        <Link to={`/${record.id}`}> 
-          <OmitTooltip maxWidth={100} text={text} />
-        </Link>
-      ),
+      render: (text, record) => (record.config === 1 
+        ? (
+          <Link to={`/${record.id}`}> 
+            <OmitTooltip maxWidth={100} text={text} />
+          </Link>
+        ) : <OmitTooltip maxWidth={100} text={text} />)
+      ,
     }, {
       key: 'cUserName',
       title: '所有者',
