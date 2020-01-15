@@ -11,7 +11,17 @@ function download(app) {
   // 提供下载中转
   router.all(`${pathPrefix}/file/download/*`, async ctx => {
     const url = ctx.url.replace(`${pathPrefix}/file/download`, '')
-    ctx.forward(`${config('server.apiPrefix')}${url}`)
+    const {tenantId, userId} = ctx.global
+    const productId = config('server.authorize.productId')
+    
+    const option = {
+      headers: {
+        'X-Dtwave-Access-TenantId': tenantId,
+        'X-Dtwave-Access-UserId': userId,
+        'X-Dtwave-Access-ProductId': productId,
+      },
+    }
+    ctx.forward(`${config('server.apiPrefix')}${url}`, option)
   })
 }
 module.exports = download

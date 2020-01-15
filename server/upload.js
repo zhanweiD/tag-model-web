@@ -16,14 +16,16 @@ function upload(app) {
   const pathPrefix = config('server.pathPrefix')
 
   router.all(`${pathPrefix}/upload/tag*`, async ctx => {
-    const {tenantId} = ctx.global
+    const {tenantId, userId} = ctx.global
+    const productId = config('server.authorize.productId')
+
     const pro = new Promise(async (resolve, reject) => {
       const form = new formidable.IncomingForm()
       form.encoding = 'utf-8'
       form.uploadDir = TMP_PATH
       form.keepExtensions = true
 
-
+      
       form.parse(ctx.req, async (error, fields, files) => {
         if (error) {
           reject(error)
@@ -42,6 +44,11 @@ function upload(app) {
             aId: id,
           }, fields),
           json: true,
+          headers: {
+            'X-Dtwave-Access-TenantId': tenantId,
+            'X-Dtwave-Access-UserId': userId,
+            'X-Dtwave-Access-ProductId': productId,
+          },
         }
 
         try {
