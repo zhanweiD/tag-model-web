@@ -4,7 +4,9 @@
 import {Component, Fragment} from 'react'
 import {action} from 'mobx'
 import {observer, inject} from 'mobx-react'
-import {Popconfirm, Badge} from 'antd'
+import {
+  Popconfirm, Badge, Icon, Dropdown, Menu,
+} from 'antd'
 import {Link} from 'react-router-dom'
 import {Time, pathPrefix} from '../../common/util'
 import {
@@ -21,10 +23,29 @@ import store from './store'
 // eslint-disable-next-line no-underscore-dangle
 const {navListMap} = window.__keeper
 const navList = [
-  navListMap.asset,
   navListMap.tagCenter,
   {text: navListMap.project.text},
 ]
+
+const menu = (
+  <Menu>
+    <Menu.Item>
+      <a target="_blank" rel="noopener noreferrer" href="">
+      标签管理
+      </a>
+    </Menu.Item>
+    <Menu.Item>
+      <a target="_blank" rel="noopener noreferrer" href="">
+      标签加工
+      </a>
+    </Menu.Item>
+    <Menu.Item>
+      <a target="_blank" rel="noopener noreferrer" href="">
+      标签应用
+      </a>
+    </Menu.Item>
+  </Menu>
+)
 
 @inject('frameChange')
 @observer
@@ -67,7 +88,7 @@ export default class ProjectList extends Component {
     }, {
       key: 'action',
       title: '操作',
-      width: 210,
+      // width: 210,
       dataIndex: 'action',
       render: (text, record) => (
         <div className="FBH FBAC">
@@ -78,22 +99,21 @@ export default class ProjectList extends Component {
             </Fragment>
           )}
 
-          <a href onClick={() => this.toSpace(record)}>项目空间</a>
-
           {(() => {
             if (record.edit) {
               if (record.status === 1) {
                 return (
                   <Fragment>
-                    <span className="table-action-line" />
+                    
                     <span className="disabled">编辑</span> 
+                    <span className="table-action-line" />
                   </Fragment>
                 )
               } 
               return (
                 <Fragment>
-                  <span className="table-action-line" />
                   <a href onClick={() => this.openModal('edit', record)}>编辑</a>
+                  <span className="table-action-line" />
                 </Fragment>
               ) 
             } 
@@ -105,22 +125,29 @@ export default class ProjectList extends Component {
               if (record.status === 1) {
                 return (
                   <Fragment>
-                    <span className="table-action-line" />
                     <span className="disabled">删除</span> 
+                    <span className="table-action-line" />
                   </Fragment>
                 )
               } 
               return (
                 <Fragment>
-                  <span className="table-action-line" />
                   <Popconfirm placement="topRight" title="项目被删除后不可恢复，确认删除？" onConfirm={() => this.delItem(record.id)}>
                     <a href>删除</a>
                   </Popconfirm>
+                  <span className="table-action-line" />
                 </Fragment>
               )
             } 
             return null
           })()}
+
+          <Dropdown overlay={menu}>
+            <a href>
+更多
+              <Icon type="down" />
+            </a>
+          </Dropdown>
         </div>
       ),
     },
@@ -147,8 +174,9 @@ export default class ProjectList extends Component {
   @action openModal = (type, data = {}) => {
     store.detail = data
     store.visible = true
-    store.type = type
+    store.modalType = type
     store.getDataSource()
+    store.getGroups()
   }
 
   /**

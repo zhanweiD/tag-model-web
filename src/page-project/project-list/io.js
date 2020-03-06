@@ -9,6 +9,9 @@ const api = {
   getCuser: get(`${projectApi}/cUser`), // 项目创建人下拉列表
   getDataSource: get(`${projectApi}/dataStorage`), // 数据源下拉列表
   checkName: get(`${projectApi}/checkName`, {overrideSelfConcurrent: true}), // 检查项目名字是否重复
+
+  getEnginesSource: get(`${projectApi}/getEnginesByStorageId`), // 计算引擎下拉列表
+  getGroups: get(`${projectApi}/getGroups`), // 取资源组下拉列表
 } 
 
 ioContext.create('project', api) 

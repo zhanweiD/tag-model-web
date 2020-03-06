@@ -31,7 +31,7 @@ export default class FieldList extends Component {
   componentWillReceiveProps(next) {
     const {objId} = this.props
     
-    if (objId !== next.objId) {
+    if (+objId !== +next.objId) {
       store.objId = next.objId
 
       store.getDataSource() // 请求数据源

@@ -15,13 +15,18 @@ export const baseApi = `${pathPrefix}/api/v${apiV}/be_tag`
 export const overviewApi = `${pathPrefix}/api/v${apiV}/be_tag/overview`// 总览
 export const projectApi = `${pathPrefix}/api/v${apiV}/be_tag/project` // 项目列表
 export const approvalApi = `${pathPrefix}/api/v${apiV}/be_tag/apply` // 审批管理
-export const objectApi = `${pathPrefix}/api/v${apiV}/be_tag/object` // 对象管理
+
 export const tagClassApi = `${pathPrefix}/api/v${apiV}/be_tag/cate` // 标签类目
 export const projectSpaceApi = `${pathPrefix}/api/v${apiV}/be_tag/project` // 项目空间
 export const marketApi = `${pathPrefix}/api/v${apiV}/be_tag/tagMarket` // 标签集市
-export const tagSearchApi = `${pathPrefix}/api/v${apiV}/be_tag/map` // 标签搜索
-export const tagManagementApi = `${pathPrefix}/api/v${apiV}/be_tag/tag` // 标签管理
+
+export const tagModalApi = `${pathPrefix}/api/v${apiV}/be_tag/tag` // 标签模型
 export const sceneApi = `${pathPrefix}/api/v${apiV}/be_tag/occasion` // 场景管理
+
+// 4.9.0
+export const objectApi = `${pathPrefix}/api/v${apiV}/be_tag/object` // 对象管理
+export const derivativeApi = `${pathPrefix}/api/v${apiV}/be_tag/derivative` // 衍生标签
+export const tagWarehouseApi = `${pathPrefix}/api/v${apiV}/be_tag/map` // 标签仓库
 
 const createRequestFn = method => (url, config) => ({
   url,
@@ -41,7 +46,7 @@ export const post = createRequestFn('POST')
  * @param1 labelName 返回数据label 字段名
  * @param2 valueName 返回数据value 字段名
  */
-export const changeToOptions = list => (labelName, valueName) => list.map(obj => ({ name: obj[labelName], value: obj[valueName] }))
+export const changeToOptions = list => (labelName, valueName) => list.map((obj={}) => ({ name: obj[labelName], value: obj[valueName] }))
 
 /**
  * @description 遍历数组根据"id"值查找对应的"name"
@@ -156,7 +161,7 @@ export const enNameReg = /^[a-zA-Z][a-zA-Z0-9_]{0,31}$/
  * @description 根据数据类型code 返回 数据类型name; 常用数据类型 整数型/小数型/文本型/日期型
  * @param {*} code 
  */
-const dataType = window.njkData.dict.dataType || []
+const dataType = window.njkData.dict && window.njkData.dict.dataType || []
 
 export const getDataTypeName = (code) => {
 

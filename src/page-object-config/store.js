@@ -12,6 +12,8 @@ class Store {
   @observable projectId // 项目id 
   @observable tabId // 当前详情tabID 
 
+  @observable objType // 实体 vs 简单关系 vs 复杂关系
+
   //* ------------------------------ 类目树相关 start ------------------------------*//
   @observable searchKey // 类目树搜索值
   @observable treeLoading = false
@@ -228,16 +230,15 @@ class Store {
   /**
    * @description 对象详情
    */
-  @action async getObjDetail() {
-    // this.detailLoading = true
+  @action async getObjDetail(cb) {
     try {
       const res = await io.getObjDetail({
         id: this.objId,
         projectId: this.projectId,
       })
       runInAction(() => {
-        // this.detailLoading = false
         this.objDetail = res
+        if (cb) cb(res)
       })
     } catch (e) {
       errorTip(e.message)
@@ -310,10 +311,13 @@ class Store {
   @observable businessModel = {}
 
   /**
-   * @description 逻辑模型
+   * @description 业务模型
    */
   @action async getBusinessModel(cb, params) {
     this.modelLoading = true
+    if (!this.objId) {
+      return
+    }
     try {
       const res = await io.getBusinessModel({
         id: this.objId,

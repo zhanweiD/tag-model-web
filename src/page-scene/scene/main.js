@@ -18,7 +18,6 @@ const {confirm} = Modal
 // eslint-disable-next-line no-underscore-dangle
 const {navListMap} = window.__keeper
 const navList = [
-  navListMap.asset,
   navListMap.tagCenter,
   navListMap.space,
   {text: navListMap.scene.text},

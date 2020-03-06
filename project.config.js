@@ -43,9 +43,12 @@ module.exports = {
 
     // 页面配置
     page: {
-      title: '数据资产管理',
+      title: '标签中心',
       icon: '//cdn.dtwave.com/public/ide/dtwave.ico',
-      css: ['common.css'],
+      css: [
+        'common.css',
+        '//cdn.dtwave.com/public/ide/iconfont/font.css',
+      ],
       js: [
         'common.js',
         '//cdn.dtwave.com/public/babel-polyfill/6.23.0/polyfill.min.js',
@@ -58,7 +61,7 @@ module.exports = {
         '//cdn.dtwave.com/public/antd/3.18.2/antd.min.js',
         '//cdn.dtwave.com/public/lodash/4.17.4/lodash.min.js',
       ],
-      // 标签管理
+      // 标签模型
       'tag-management': {
         js: [
           '//cdn.dtwave.com/public/ide/d3.v3.js',
@@ -71,6 +74,23 @@ module.exports = {
           '//cdn.dtwave.com/public/echarts/4.2.0/echarts.min.js',
         ],
       },
+
+      'tag-processe': {
+        css: [
+          '//cdn.dtwave.com/public/ide/codemirror-theme.css',
+          '//cdn.dtwave.com/public/ide/lint.css',
+        ],
+
+        js: [
+          '//cdn.dtwave.com/public/jquery/2.0.0/jquery.min.js?order=1',
+          '//cdn.dtwave.com/public/ide/codemirror.js',
+          '//cdn.dtwave.com/public/ide/show-hint.js',
+          '//cdn.dtwave.com/public/ide/sql-hint.js',
+          '//cdn.dtwave.com/public/ide/sql.js',
+          '//cdn.dtwave.com/public/ide/lint.js',
+        ],
+      },
+
       njkPath: path.join(__dirname, 'template.njk'),
       commonPage: {
         js: [
@@ -138,14 +158,14 @@ module.exports = {
 
     // 多页应用用的到 自定义路由，默认文件夹 page- 后面的名字
     router: {
-      // 'overview' : '/',
+      overview: '/',
     },
 
     // Node层代理API的域名，网关的，一般不用改
     apiPrefix: nattyStorage.env(SERVER_ENV, {
       // 标准版开发环境 74
-      // development: 'http://192.168.90.74:9018',
-      development: 'http://192.168.90.144:9018',
+      development: 'http://192.168.90.74:9018',
+      // development: 'http://192.168.90.144:9018',
       test: 'http://10.51.44.149:9018',
       production: 'http://api-in.dtwave-inc.com',
       default: appConfig.apiDomain || config.gatewayDomain,
@@ -164,9 +184,9 @@ module.exports = {
       // productId 找晓涛要，每个项目都会有的
       productId: nattyStorage.env(SERVER_ENV, {
         default: appConfig.productId || '',
-        development: 1111,
-        test: 1111,
-        production: 1111,
+        development: 2222,
+        test: 2222,
+        production: 2222,
       }),
 
       // 每个项目都有自己的 code ，用户中心配权限用得到

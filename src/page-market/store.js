@@ -16,14 +16,15 @@ class Store extends ListContentStore(io.getList) {
   @observable modalType = undefined
   @observable selectItem = {}
 
-  @observable expand = false
+  // @observable expand = false
   @observable useProjectId = '' // 使用项目id; 只有选择了使用项目;标签列表才会出现checkbox框 进行批量操作
   @observable useProjectName = '' // 使用项目id; 只有选择了使用项目;标签列表才会出现checkbox框 进行批量操作
-  @observable projectPermission = undefined // 项目使用权限
+
+  @observable projectPermission = 1 // 项目使用权限
   @observable ownProjectId = '' // 所属项目id
   @observable objectId = '' // 对象id
   @observable hotWord = undefined // 关键词
-  
+
   @observable selectedRows = []
   @observable rowKeys = []
 
@@ -35,8 +36,8 @@ class Store extends ListContentStore(io.getList) {
     this.useProjectId = ''
   }
 
-   // 更新列表
-   @action.bound updateList() {
+  // 更新列表
+  @action.bound updateList() {
     this.searchParams = {
       hotWord: this.hotWord,
       useProjectId: this.useProjectId,
@@ -56,15 +57,15 @@ class Store extends ListContentStore(io.getList) {
   }
 
   @action async getUseProject() {
-     try {
-       const res = await io.getUseProject()
-       runInAction(() => {
-         this.useProjectList = res
-       })
-     } catch (e) {
-       errorTip(e.message)
-     }
-   }
+    try {
+      const res = await io.getUseProject()
+      runInAction(() => {
+        this.useProjectList = res
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
 
   @action async getOwnProject() {
     try {
@@ -99,7 +100,7 @@ class Store extends ListContentStore(io.getList) {
           this.updateList()
           this.selectedRows.clear()
           this.rowKeys.clear()
-        } 
+        }
       })
     } catch (e) {
       errorTip(e.message)

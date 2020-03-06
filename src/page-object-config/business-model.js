@@ -4,7 +4,8 @@
 import * as d3 from 'd3'
 import {Component} from 'react'
 import {observer} from 'mobx-react'
-import {toJS} from 'mobx'
+import {toJS, observable} from 'mobx'
+import {Select, Button} from 'antd'
 
 import erClose from '../icon-svg/er-close.svg'
 import erOpen from '../icon-svg/er-open.svg'
@@ -12,6 +13,8 @@ import erRelKey from '../icon-svg/er-rel-key.svg'
 import erMajorKey from '../icon-svg/er-major-key.svg'
 
 import './business-model.styl'
+
+const {Option} = Select
 
 const option = {
   svgW: '100%',
@@ -21,7 +24,7 @@ const option = {
 
   colsHeight: 40, // 单元格高度
   colsWidth: 256, // 单元格
-  offLine: 20, // 连线的节点偏移
+  offLine: 50, // 连线的节点偏移
   tableTitleHeight: 55, // 表头高度
   footerImgSrc: {
     open: erOpen,
@@ -36,9 +39,12 @@ export default class BusinessModel extends Component {
     this.store = props.bigStore
   }
 
+  @observable relObjId = undefined
+
   allTables
   allLinks
   addTablesData
+  entitySelect
 
   componentDidMount() {
     this.getData()
@@ -46,7 +52,7 @@ export default class BusinessModel extends Component {
 
   componentWillReceiveProps(next) {
     const {objId} = this.props
-    if (!_.isEqual(objId, next.objId)) {
+    if (!_.isEqual(+objId, +next.objId) && +next.objId) {
       this.getData()
     }
   }
@@ -55,9 +61,13 @@ export default class BusinessModel extends Component {
     const t = this
     if (t.store.typeCode === '4') {
       t.store.getBMRelation(
-        res => t.store.getBusinessModel(() => t.initSvg(), {
-          relationId: res[0] && res[0].id,
-        })
+        res => {
+          t.relObjId = res[0] && res[0].id
+
+          t.store.getBusinessModel(() => t.initSvg(), {
+            relationId: res[0] && res[0].id,
+          })
+        }
       )
     } else {
       t.store.getBusinessModel(() => t.initSvg())
@@ -69,51 +79,48 @@ export default class BusinessModel extends Component {
       .attr('width', option.svgW)
       .attr('height', option.svgH)
     this.svg.selectAll('#box g').remove()
+    d3.select('#entity_select #entity_select_box').style('display', 'none')
 
+    if (this.svg.node()) {
+      const {width: svgWidth, height: svgHeight} = this.svg.node().getBoundingClientRect()
 
-    const {width: svgWidth, height: svgHeight} = this.svg.node().getBoundingClientRect()
-
-    // 初始化 力导向图
-    this.forceSimulation = d3.forceSimulation()
-      .force('charge', d3.forceManyBody().strength())// 电荷力
-      .force('center', d3.forceCenter((svgWidth / 2) - option.colsWidth / 2, svgHeight / 2 - 100))
-      .force('forceCollide', d3.forceCollide().radius(option.colsWidth / 2 + 50))// 检测碰撞
-      .force('y', d3.forceY(() => 0))
-      .force('link', d3.forceLink().id(d => d.id))// link
-
-
-    // 用于放大，缩小的容器
-    this.container = this.svg.append('g')
-
-    const zoom = d3.zoom().on('zoom', () => {
-      this.container.attr('transform', d3.event.transform)
-    })
-
-    this.svg.call(zoom)
-    this.svg.call(zoom).on('dblclick.zoom', null)
-    this.svg.call(zoom).on('wheel.zoom', null)
-
-    this.container.append('g').attr('class', 'links')
-
-
-    // this.container.append('foreignObject')
-    //   .attr('dx', 10)
-    //   .attr('width', 30)
-    //   .attr('height', 30)
-    //   .append('xhtml:div')
-    //   // .html('<div id="select"></div>')
-    //   .html(d => `<select id="select" onchange="${this.relClick()}">
-    //     <option value="0" class="relObj" id="rel${0}">选项一</option>
-    //     <option value="1" class="relObj" id="rel${0}">选项二</option>
-    // </select>`)
-
-    this.draw()
+      // 初始化 力导向图
+      this.forceSimulation = d3.forceSimulation()
+        .force('charge', d3.forceManyBody().strength())// 电荷力
+        .force('center', d3.forceCenter((svgWidth / 2) - option.colsWidth / 2, svgHeight / 2 - 100))
+        .force('forceCollide', d3.forceCollide().radius(option.colsWidth / 2 + 50))// 检测碰撞
+        .force('y', d3.forceY(() => 0))
+        .force('link', d3.forceLink().id(d => d.id))// link
+  
+  
+      // 用于放大，缩小的容器
+      this.container = this.svg.append('g')
+  
+      const zoom = d3.zoom().on('zoom', () => {
+        this.container.attr('transform', d3.event.transform)
+      })
+  
+      this.svg.call(zoom).on('dblclick.zoom', null).on('wheel.zoom', null)
+  
+      this.container.append('g').attr('class', 'links')
+  
+      this.draw()
+    }
   }
 
   tick = () => { // force 迭代执行函数
     // eslint-disable-next-line no-unused-expressions
-    this.allTables && this.allTables
-      .attr('transform', d => `translate(${d.x},${d.y})`)
+    if (this.allTables) {
+      this.allTables
+        .attr('transform', (d, i) => {
+          if (this.entitySelect && i === 1) {
+            this.entitySelect.style('top', `${d.y + 11}px`)
+            this.entitySelect.style('left', `${d.x + 24}px`)
+          }
+          return `translate(${d.x},${d.y})`
+        })
+    }
+
     // eslint-disable-next-line no-unused-expressions
     this.allLinks && this.allLinks.attr('points', this.linkFn)
   }
@@ -129,8 +136,9 @@ export default class BusinessModel extends Component {
     }
    
     this.forceInit(this.obj, this.links)
-    this.addTables() 
     this.addLinks()
+
+    this.addTables() 
   }
   
   // 在nodes、links原对象上添加位置属性
@@ -138,6 +146,7 @@ export default class BusinessModel extends Component {
     this.forceSimulation.nodes(this.obj)
       .force('y', d3.forceY(() => 0))
       .on('tick', this.tick)
+
     this.forceSimulation.force('link')
       .links(this.links)
       .id(d => d.id)
@@ -154,8 +163,14 @@ export default class BusinessModel extends Component {
       .attr('transform', d => `translate(${d.x},${d.y})`)
 
     this.allTables = this.container.selectAll('.tbClass').data(this.obj)
-    // 添加表头
-    this.addTitle()
+
+    // 添加表头 实体对象特殊处理 关联的关系表头为下拉框
+    if (this.store.typeCode === '4') {
+      this.addEntityTitle()
+    } else {
+      this.addTitle()
+    }
+  
     this.addColsWrap()
     this.gsAddBorder({
       type: 'init',
@@ -186,26 +201,39 @@ export default class BusinessModel extends Component {
 
   // 当前选择对象是实体对象，关联多个关系对象，关系对象可下拉框选择
   addEntityTitle() {
+    const {typeCode} = this.store
+
     const tTitle = this.addTablesData.append('g')
       .attr('class', 'table-title')
+
+    const {obj} = this.store.businessModel
+
+    if (obj.length > 1) {
+      this.entitySelect = d3.select('#entity_select')
+      d3.select('#entity_select #entity_select_box').style('display', 'block')
+    }
+
+   
     tTitle.append('rect')
       .attr('height', option.tableTitleHeight)
       .attr('width', option.colsWidth)
+      .attr('fill', 'rgba(0, 0, 0, .06)')
+      .style('cursor', 'pointer')
+      .attr('class', 'entity-title')
 
-    // tTitle.append('rect')
-    //   .attr('height', option.tableTitleHeight)
-    //   .attr('width', option.colsWidth)
-    //   .attr('fill', 'rgba(0, 0, 0, .06)')
-    //   .style('cursor', 'pointer')
-
-    // tTitle.append('text')
-    //   .text(d => d.name)
-    // // .attr('dx', () => colsWidth/2)
-    //   .attr('dx', 48)
-    //   .attr('dy', option.tableTitleHeight / 2)
-    //   .attr('class', 'svg-text')
-    //   .attr('text-anchor', 'middle')
-    //   .attr('dominant-baseline', 'middle')
+    tTitle.append('text')
+      .text(d => {
+        if (+typeCode === 4 && d.objTypeCode === 3) {
+          return ''
+        }
+        return d.name
+      })
+      // .attr('dx', () => option.colsWidth / 2)
+      .attr('dx', 48)
+      .attr('dy', option.tableTitleHeight / 2)
+      .attr('class', 'svg-text')
+      .attr('text-anchor', 'middle')
+      .attr('dominant-baseline', 'middle')
   }
 
   // 创建单元格g
@@ -442,12 +470,31 @@ export default class BusinessModel extends Component {
     this.initSvg()
   }
 
+  handleChange = value => {
+    this.relObjId = value
+
+    d3.select('#entity_select #entity_select_box').style('display', 'none')
+
+    this.store.getBusinessModel(() => this.initSvg(), {
+      relationId: value,
+    })
+  }
+
   render() {
+    const {relList} = this.store
+
     return (
       <div className="business-model">
-        {/* <a onClick={this.reDraw}>wq</a> */}
         <svg id="box" />
-
+        <div id="entity_select" style={{position: 'absolute'}}>
+          <div id="entity_select_box" style={{display: 'none'}}> 
+            <Select value={this.relObjId} style={{width: 208}} onChange={this.handleChange}>
+              {
+                relList.map(d => <Option value={d.id}>{d.name}</Option>)
+              }
+            </Select>
+          </div>
+        </div>
       </div>
     )
   }

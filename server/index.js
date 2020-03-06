@@ -10,6 +10,7 @@ module.exports = [
 
     router.get('/*', async (ctx, next) => {
       const {tenantId, userId} = ctx.global
+
       const productId = config('server.authorize.productId')
 
       // 获取默认logo、ico

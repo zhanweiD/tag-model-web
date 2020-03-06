@@ -22,7 +22,7 @@ const ContentMap = {
   approved: Approved, 
 }
 
-const {functionCodes} = window.__userConfig
+const {functionCodes = []} = window.__userConfig
 
 export default class Approval extends Component {
   onMenuClick = e => {

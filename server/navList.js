@@ -64,7 +64,7 @@ const space = {
   },
   tagManagement: {
     url: '/tag-management',
-    text: '标签管理',
+    text: '标签模型',
   },
   tagDetail: {
     text: '标签详情',
@@ -81,9 +81,9 @@ const space = {
     // url: '/scene',
     text: '标签列表',
   },
-  tagSearch: {
+  tagWarehouse: {
     url: '/tag-search',
-    text: '标签搜索',
+    text: '标签仓库',
   },
 }
 

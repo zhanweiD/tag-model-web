@@ -1,7 +1,7 @@
 /**
  * @description 标签集市 - 搜索
  */
-import {Component} from 'react'
+import {Component, Fragment} from 'react'
 import {observer} from 'mobx-react'
 import {
   Input, Icon, Select, Radio,
@@ -21,11 +21,6 @@ export default class Search extends Component {
     this.store.getUseProject()
     this.store.getOwnProject()
     this.store.getObject()
-  }
-
-
-  @action.bound expandToggle() {
-    this.store.expand = !this.store.expand 
   }
 
   @action.bound onSearch(v) {
@@ -66,7 +61,7 @@ export default class Search extends Component {
 
   render() {
     const {
-      useProjectList, 
+      // useProjectList, 
       ownProjectList, 
       objectList, 
       useProjectId,
@@ -83,57 +78,10 @@ export default class Search extends Component {
             size="large"
             onSearch={this.onSearch}
           />
-          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-          <div className="advanced-search-btn" onClick={this.expandToggle}>
-            <span>高级检索</span>
-            <Icon type={this.store.expand ? 'up' : 'down'} style={{marginLeft: '4px'}} />
-          </div>
         </div>
-        <div className="advanced-search" style={{display: this.store.expand ? 'block' : 'none'}}>
-          <div className="FBH mb24">
-            <span className="advanced-search-title">检索角度：</span>
+        <div className="advanced-search">
+          <div className="FBH mb16">
             <div>
-              <span className="advanced-search-label">使用项目</span>
-              <Select value={useProjectId} style={{width: 240}} className="mr24" onChange={this.useProjectSelect}>
-                <Option value="">全部</Option>
-                {
-                  useProjectList.map(
-                    ({useProjectId: id, useProjectName}) => (
-                      <Option 
-                        key={id} 
-                        value={id}
-                      >
-                        {useProjectName}
-                      </Option>
-                    )
-                  )
-                }
-              </Select>
-              <Radio.Group onChange={this.projectPermissionSelect} value={projectPermission}>
-                <Radio value={1} disabled={!this.store.useProjectId} className="fs12">有使用权限</Radio>
-                <Radio value={0} disabled={!this.store.useProjectId} className="fs12">无使用权限</Radio>
-              </Radio.Group>
-            </div>
-          </div>
-          <div className="FBH">
-            <span className="advanced-search-title">过滤条件：</span>
-            <div>
-              <span className="advanced-search-label">对象</span>
-              <Select value={objectId} className="mr8" style={{width: 240}} onChange={this.ownObjectSelect}>
-                <Option value="">全部</Option>
-                {
-                  objectList.map(
-                    ({objId, objName}) => (
-                      <Option 
-                        key={objId} 
-                        value={objId}
-                      >
-                        {objName}
-                      </Option>
-                    )
-                  )
-                }
-              </Select>
               <span className="advanced-search-label">所属项目</span>
               <Select value={ownProjectId} style={{width: 240}} onChange={this.ownProjectSelect}>
                 <Option value="">全部</Option>
@@ -150,8 +98,36 @@ export default class Search extends Component {
                   )
                 }
               </Select>
+              <span className="advanced-search-label">对象</span>
+              <Select value={objectId} className="mr8" style={{width: 240}} onChange={this.ownObjectSelect}>
+                <Option value="">全部</Option>
+                {
+                  objectList.map(
+                    ({objId, objName}) => (
+                      <Option 
+                        key={objId} 
+                        value={objId}
+                      >
+                        {objName}
+                      </Option>
+                    )
+                  )
+                }
+              </Select>
+              {
+                useProjectId ? (
+                  <Fragment>
+                    <span className="advanced-search-radio ml8">是否展示有使用权限</span>
+                    <Radio.Group onChange={this.projectPermissionSelect} value={projectPermission}>
+                      <Radio value={1} disabled={!this.store.useProjectId} className="fs12">是</Radio>
+                      <Radio value={0} disabled={!this.store.useProjectId} className="fs12">否</Radio>
+                    </Radio.Group>
+                  </Fragment>
+                ) : null
+              }
             </div>
           </div>
+         
         </div>
       </div>
     )

@@ -21,6 +21,8 @@ module.exports = ENV => {
     logoText: config.logoText || '', // 页面上的logo旁边的文字
     logoLink: config.logoLink || '', // 页面上的logo链接
     ico: config.ico || '', // 页面上的ico
+
+    logLimit: 4096, // 日志截取字符串长度 (4096后端设置的值)
   }
   return data
 }

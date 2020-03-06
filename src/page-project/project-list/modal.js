@@ -11,8 +11,20 @@ export default class ModalProject extends Component {
     this.store = props.store
   }
 
+  /**
+   * @description 选择数据源；请求计算引擎
+   * @param {*} storageId 数据源id
+   */
+  @action.bound selectDataSource(storageId) {
+    this.form.resetFields(['engineId'])
+    this.store.getEnginesSource(storageId)
+  }
+
+
   selectContent= () => {
-    const {detail, selectLoading, dataSource = []} = this.store
+    const {
+      detail, selectLoading, dataSource = [], dataEnginesSource = [], dataGroupData = [],
+    } = this.store
     return [{
       label: '项目名称',
       key: 'name',
@@ -48,9 +60,51 @@ export default class ModalProject extends Component {
       ],
       control: {
         options: dataSource,
+        onSelect: v => this.selectDataSource(v),
       },
       selectLoading, // 下拉框loading效果
       component: 'select',
+      extra: <span>
+若无可用的数据源，请先
+        <a className="ml4" target="_blank" rel="noopener noreferrer" href="/ent/datasource#/">添加数据源或授权</a>
+             </span>,
+    }, {
+      label: '计算引擎',
+      key: 'engineId',
+      initialValue: detail.engineId,
+      rules: [
+        '@requiredSelect',
+      ],
+      control: {
+        options: dataEnginesSource,
+      },
+      component: 'select',
+    }, {
+      label: '资源组',
+      key: 'groupIdList',
+      initialValue: detail.groupIdList || undefined,
+      rules: [
+        '@requiredSelect',
+      ],
+      control: {
+        mode: 'multiple',
+        options: dataGroupData,
+      },
+      component: 'select',
+      extra: <span>
+若无可用的数据源，请先
+        <a className="ml4" target="_blank" rel="noopener noreferrer" href="/ent/resource#/">添加资源组或授权</a>
+             </span>,
+    }, {
+      label: '调度队列',
+      key: 'queueName',
+      initialValue: detail.queueName,
+      component: 'input',
+      rules: [
+        '@transformTrim',
+        '@required',
+        '@max32',
+      ],
     }, {
       label: '描述',
       key: 'descr',

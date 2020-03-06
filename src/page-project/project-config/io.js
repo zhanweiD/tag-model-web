@@ -9,6 +9,8 @@ const api = {
   editList: post(`${projectApi}/memberEdit`), // 编辑项目
   getUsers: get(`${projectApi}/user`), // 项目里可添加用户下拉列表
   getRole: get(`${projectApi}/role`), // 项目成员角色列表
+
+  getParamsList: get(`${projectApi}/sysPa`), // 参数配置列表
 } 
 
 ioContext.create('projectConfig', api) 

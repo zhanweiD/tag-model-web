@@ -108,6 +108,19 @@ class Store extends ListContentStore(io.getList) {
       errorTip(e.message)
     }
   }
+
+  @observable paramsList = []
+  
+  @action async getParamsList() {
+    try {
+      const res = await io.getParamsList()
+      runInAction(() => {
+        this.paramsList = res
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
 }
 
 export default new Store()

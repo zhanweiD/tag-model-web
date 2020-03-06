@@ -52,8 +52,7 @@ export default class ObjectView extends Component {
       t.container.attr('transform', d3.event.transform)
     })
 
-    this.svg.call(zoom)
-    this.svg.call(zoom).on('wheel.zoom', null)
+    this.svg.call(zoom).on('dblclick.zoom', null).on('wheel.zoom', null)
 
     const render = new dagreD3.render()
 
@@ -138,14 +137,16 @@ export default class ObjectView extends Component {
 
     render(this.container, g)
 
-    const {width: svgWidth, height: svgHeight} = this.svg.node().getBoundingClientRect()
+    if (this.svg.node()) {
+      const {width: svgWidth, height: svgHeight} = this.svg.node().getBoundingClientRect()
 
-    const initialScale = 1.2
-    this.svg.call(
-      zoom.transform, 
-      d3.zoomIdentity.translate((svgWidth - g.graph().width * initialScale) / 2,
-        (svgHeight - g.graph().height * initialScale) / 2).scale(initialScale)
-    )
+      const initialScale = 1.2
+      this.svg.call(
+        zoom.transform, 
+        d3.zoomIdentity.translate((svgWidth - g.graph().width * initialScale) / 2,
+          (svgHeight - g.graph().height * initialScale) / 2).scale(initialScale)
+      )
+    }
   }
 
   render() {

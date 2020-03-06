@@ -39,6 +39,7 @@ export default class ModalForm extends Component {
       component: type,
       control,
       hide,
+      extra,
       ...rest
     }) => (
       <Fragment>
@@ -53,6 +54,7 @@ export default class ModalForm extends Component {
                   <QuestionTooltip tip={labelTooltip} />
                 </span>
               ) : label}
+              extra={extra}
             >
               {getFieldDecorator(key, {
                 initialValue, 

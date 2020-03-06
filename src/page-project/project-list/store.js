@@ -10,6 +10,8 @@ import io from './io'
 class Store extends ListContentStore(io.getList) {
   @observable cUser = [] // 项目所有者 
   @observable dataSource = [] // 数据源 
+  @observable dataEnginesSource = [] // 计算引擎 
+  @observable dataGroupData = [] // 资源组 
   @observable detail = {} // 项目详情
 
   // modal
@@ -35,14 +37,47 @@ class Store extends ListContentStore(io.getList) {
     try {
       const res = await io.getDataSource()
       runInAction(() => {
+        if (res) {
+          this.dataSource = changeToOptions(toJS(res || []))('dataDbName', 'dataStorageId')
+        }
+      })
+    } catch (e) {
+      errorTip(e.message)
+    } finally {
+      runInAction(() => {
         this.selectLoading = false
-        this.dataSource = changeToOptions(toJS(res || []))('dataDbName', 'dataStorageId')
+      })
+    }
+  }
+
+  @action async getEnginesSource(dataStorageId) {
+    try {
+      const res = await io.getEnginesSource({
+        dataStorageId,
+      })
+      runInAction(() => {
+        if (res && res.length) {
+          this.dataEnginesSource = changeToOptions(toJS(res || []))('engineName', 'engineId')
+        }
       })
     } catch (e) {
       errorTip(e.message)
     }
   }
 
+  @action async getGroups() {
+    try {
+      const res = await io.getGroups()
+      runInAction(() => {
+        if (res) {
+          this.dataGroupData = changeToOptions(toJS(res || []))('groupName', 'groupId')
+        }
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+  
   @action async delList(id) {
     try {
       await io.delList({id})

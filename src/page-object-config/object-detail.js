@@ -9,12 +9,12 @@ import {Time} from '../common/util'
 import {
   TabRoute, DetailHeader, OverviewCardWrap, Tag, AuthBox,
 } from '../component'
-import {objDetailTabMap} from './util'
+import {objDetailTabMap, objTypeMap} from './util'
 
 import ObjectView from './object-view'
 import DataSheet from './data-sheet'
 import FieldList from './field-list'
-// import BusinessModel from './business-model'
+import BusinessModel from './business-model'
 
 const {confirm} = Modal
 
@@ -32,7 +32,7 @@ export default class ObjectDetail extends Component {
 
   componentWillReceiveProps(next) {
     const {objId} = this.props
-    if (!_.isEqual(objId, next.objId)) {
+    if (!_.isEqual(+objId, +next.objId)) {
       this.getData()
     }
   }
@@ -74,24 +74,29 @@ export default class ObjectDetail extends Component {
       detailLoading, objDetail, objCard, tabId, typeCode, objId,
     } = this.store
     const baseInfo = [{
-      title: '唯一标识',
+      title: '对象标识',
       value: objDetail.enName,
-    }, {
-      title: '创建者',
-      value: objDetail.creator,
-    }, {
-      title: '创建时间',
-      value: <Time timestamp={objDetail.createTime} />,
-    }, {
+    }, 
+    // {
+    //   title: '创建者',
+    //   value: objDetail.creator,
+    // }, 
+    {
       title: '对象类型',
-      value: objDetail.objType,
+      value: objTypeMap[objDetail.type],
     }, {
       title: '对象类目',
       value: objDetail.objCatName,
-    }, {
-      title: '对象主键',
-      value: objDetail.objPk,
-    }]
+    },
+    {
+      title: '创建时间',
+      value: <Time timestamp={objDetail.createTime} />,
+    }, 
+    // {
+    //   title: '对象主键',
+    //   value: objDetail.objPk,
+    // }
+    ]
 
     const cards = [{
       title: '数据表',
@@ -105,11 +110,13 @@ export default class ObjectDetail extends Component {
       title: '引用标签数',
       tooltipText: '项目内从其他项目申请过来的标签数（有使用权限）',
       values: [objCard.referencedTagCount],
-    }, {
-      title: '业务场景数',
-      tooltipText: '项目内创建的业务场景数',
-      values: [objCard.occasionCount],
-    }]
+    }, 
+    // {
+    //   title: '业务场景数',
+    //   tooltipText: '项目内创建的业务场景数',
+    //   values: [objCard.occasionCount],
+    // }
+    ]
 
     // 不同状态的相应map
     const tagMap = {
@@ -138,8 +145,8 @@ export default class ObjectDetail extends Component {
     }
 
     const {tag} = tagMap[objDetail.isUsed === undefined ? 'noData' : objDetail.isUsed]
-    // const Content = [ObjectView, DataSheet, FieldList, BusinessModel][tabId]
-    const Content = [ObjectView, DataSheet, FieldList][tabId]
+    const Content = [ObjectView, DataSheet, FieldList, BusinessModel][tabId]
+    // const Content = [ObjectView, DataSheet, FieldList][tabId]
 
     return (
       <div className="object-detail">

@@ -1,7 +1,6 @@
 /* type和相应antd组件映射 */
 import React from 'react'
 import * as antd from 'antd'
-import {isArray} from 'util'
 
 const createInputPlaceholder = label => (label ? `请输入${label}` : undefined) // 生成input默认的Placeholder值
 
@@ -12,7 +11,7 @@ const SelectTypes = ({
   label, placeholder, options = [], ...rest
 }) => {
   const mergeOption = options
-  if (isArray(options) && !options.length && rest.defaultAll) {
+  if (Array.isArray(options) && !options.length && rest.defaultAll) {
     mergeOption.unshift({
       name: '全部',
       value: '',
@@ -24,6 +23,7 @@ const SelectTypes = ({
       value: '',
     })
   }
+
   return (
     <antd.Select 
       showSearch
@@ -34,7 +34,7 @@ const SelectTypes = ({
       {...rest}
     >
       {
-        options && options.map(({name, ...optionProps}) => (
+        mergeOption && mergeOption.map(({name, ...optionProps}) => (
           <antd.Select.Option key={optionProps.value} {...optionProps}>{name}</antd.Select.Option>
         ))
       }

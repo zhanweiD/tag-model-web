@@ -25,10 +25,10 @@ export const objDetailTabMap = [{
   name: '字段列表',
   value: 2,
 },
-//  {
-//   name: '业务模型',
-//   value: 3,
-// }
+{
+  name: '业务模型',
+  value: 3,
+},
 ]
 
 // 使用状态
@@ -83,4 +83,11 @@ export const tagStatusMap = status => {
   }
 
   return <Badge color={color} text={text} />
+}
+
+// 对象类型映射
+export const objTypeMap = {
+  0: '简单关系',
+  1: '复杂关系',
+  2: '常规实体',
 }

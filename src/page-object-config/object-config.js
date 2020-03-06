@@ -43,9 +43,9 @@ export default class ObjectConfig extends Component {
     store.objId = undefined
     store.getObjTree(() => {
       store.objId = store.currentSelectKeys
-      if (store.currentSelectKeys) {
-        store.getObjDetail()
-      }
+      // if (store.currentSelectKeys) {
+      //   store.getObjDetail()
+      // }
     })
   }
 

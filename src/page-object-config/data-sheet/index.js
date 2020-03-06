@@ -2,32 +2,29 @@
  * @description 对象配置 - 数据表
  */
 import {Component, Fragment} from 'react'
-import {action, observable} from 'mobx'
+import {action, observable, toJS} from 'mobx'
 import {observer, inject, Provider} from 'mobx-react'
 import {
-  Drawer, Steps, Popconfirm, Button,
+  Popconfirm, Button,
 } from 'antd'
-import {ListContent, QuestionTooltip, AuthBox} from '../../component'
-import FieldChooseAdd from './field-choose-add'
-import FieldChooseEdit from './field-choose-edit'
-import FieldConfirm from './field-confirm'
-import FieldResult from './field-result'
+import {ListContent, AuthBox} from '../../component'
+
 import ConfigField from './config-field'
+import ModalAddTable from './modal-add-table'
 
 import store from './store'
 import './index.styl'
-
-const {Step} = Steps
 
 @inject('bigStore')
 @observer
 export default class DataSheet extends Component {
   constructor(props) {
     super(props)
-    this.bigStore = props.bigStore
-    store.projectId = props.bigStore.projectId
-    store.objId = props.bigStore.objId
-    store.typeCode = props.bigStore.typeCode
+    const {bigStore} = props
+    this.bigStore = bigStore
+    store.projectId = bigStore.projectId
+    store.objId = bigStore.objId
+    store.typeCode = bigStore.typeCode
   }
 
   @observable tagConfigVisible = false
@@ -61,7 +58,7 @@ export default class DataSheet extends Component {
       key: 'action',
       title: '操作',
       dataIndex: 'action',
-      width: 220,
+      width: 150,
       render: (text, record) => (
         <div>
           <AuthBox
@@ -76,8 +73,6 @@ export default class DataSheet extends Component {
                 </Popconfirm>
               )
             }
-            <span className="table-action-line" />
-            <a href onClick={() => this.editRelField(record)}>编辑关联字段</a>
           </AuthBox>
           <AuthBox
             code="asset_tag_project_field_tag"
@@ -98,8 +93,7 @@ export default class DataSheet extends Component {
 
   componentWillReceiveProps(next) {
     const {objId} = this.props
-
-    if (objId !== next.objId) {
+    if (+objId !== +next.objId) {
       store.objId = next.objId
       // 重置列表默认参数
       store.initParams.objId = next.objId
@@ -135,18 +129,23 @@ export default class DataSheet extends Component {
     })
   }
 
-  @action.bound openDrawer(type) {
-    const {openDrawer} = store
-    store.drawerType = type
-    if (type === 'add') {
-      store.getDataSource()
+  @action.bound openModal() {
+    const {typeCode, objDetail} = this.bigStore
+
+    if (+typeCode === 4) {
+      store.bothTypeCode = 2 // 实体
+      store.modalVisible = true
+    } else if (typeof objDetail.type === 'undefined') {
+      this.bigStore.getObjDetail(res => {
+        store.bothTypeCode = res.type
+        store.modalVisible = true
+      }) // 复杂关系 vs 简单关系
+    } else {
+      store.bothTypeCode = objDetail.type 
+      store.modalVisible = true
     }
-    openDrawer()
-  }
-  
-  @action.bound editRelField(data) {
-    store.editSelectedItem = data
-    this.openDrawer('edit')
+
+    store.getDataSource()
   }
 
   @action.bound openTagConfig(data) {
@@ -166,14 +165,9 @@ export default class DataSheet extends Component {
 
   render() {
     const {
-      drawerVisible,
-      currentStep,
-      closeDrawer,
       objId,
       projectId,
-      drawerType,
       typeCode,
-      list,
     } = store
 
     // typeCode = 3 关系对象；typeCode = 4 实体对象；
@@ -187,12 +181,10 @@ export default class DataSheet extends Component {
           <Button 
             type="primary" 
        
-            onClick={() => this.openDrawer('add')} 
-            disabled={list.length === 1}
+            onClick={() => this.openModal()} 
           >
-        添加关联表
+        添加数据表
           </Button>
-          <QuestionTooltip tip="最多只能添加1张表" />
         </AuthBox>
        
       </Fragment>
@@ -205,12 +197,10 @@ export default class DataSheet extends Component {
         >
           <Button 
             type="primary" 
-            onClick={() => this.openDrawer('add')} 
-            disabled={list.length === 5}
+            onClick={() => this.openModal()} 
           >
-        添加关联表
+        添加数据表
           </Button>
-          <QuestionTooltip tip="最多只能添加5张表" />
         </AuthBox>
       </Fragment>
     )
@@ -225,36 +215,11 @@ export default class DataSheet extends Component {
       store, // 必填属性
     }
 
-    const drawerConfig = {
-      width: 560,
-      title: drawerType === 'edit' ? '编辑关联字段' : '添加关联表',
-      maskClosable: false,
-      destroyOnClose: true,
-      visible: drawerVisible,
-      onClose: () => closeDrawer(),
-    }
-
     return (
       <Provider dataSheetStore={store}>
         <div>
           <ListContent {...listConfig} />
-          {
-            drawerVisible && (
-              <Drawer {...drawerConfig}>
-                <div className="data-sheet-drawer">
-                  <Steps current={currentStep} size="small" className="mb32">
-                    <Step title="选择字段" />
-                    <Step title="确认字段" />
-                    <Step title="添加成功" />
-                  </Steps>
-                  <FieldChooseAdd store={store} show={currentStep === 0 && drawerType === 'add'} />
-                  <FieldChooseEdit store={store} show={currentStep === 0 && drawerType === 'edit'} />
-                  <FieldConfirm store={store} show={currentStep === 1} />
-                  <FieldResult store={store} show={currentStep === 2} />
-                </div>
-              </Drawer>
-            )
-          }
+          <ModalAddTable store={store} />
           {
             this.tagConfigVisible && (
               <ConfigField 

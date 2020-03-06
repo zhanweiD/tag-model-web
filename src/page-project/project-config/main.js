@@ -2,13 +2,16 @@
  * @description 项目列表-项目配置
  */
 import {Component} from 'react'
-import {action} from 'mobx'
+import {action, observable} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {withRouter} from 'react-router'
 import {Popconfirm, Button, Spin} from 'antd'
 import {Time} from '../../common/util'
-import {DetailHeader, ListContent, AuthBox} from '../../component'
+import {
+  DetailHeader, ListContent, AuthBox, TabRoute,
+} from '../../component'
 import ModalProjectConfig from './modal'
+import ParamsConfig from './params-config'
 
 import store from './store'
 
@@ -16,11 +19,12 @@ import store from './store'
 // eslint-disable-next-line no-underscore-dangle
 const {navListMap} = window.__keeper
 const navList = [
-  navListMap.asset,
   navListMap.tagCenter,
   navListMap.project,
   navListMap.projectConfig,
 ]
+
+const tabs = [{name: '人员管理', value: 1}, {name: '参数配置', value: 2}]
 
 @inject('frameChange')
 @observer
@@ -30,6 +34,8 @@ class ProjectConfig extends Component {
     const {match} = props
     store.projectId = match.params.projectId // 项目id
   }
+
+  @observable tabId = 1 // 当前详情tabID 
 
   columns = [
     {
@@ -106,6 +112,10 @@ class ProjectConfig extends Component {
     store.delList(id)
   }
 
+  @action.bound changeTab(id) {
+    this.tabId = id
+  }
+
   render() {
     const {projectDetail, projectId: id, projectDetailLoading} = store
 
@@ -126,6 +136,14 @@ class ProjectConfig extends Component {
       store, // 必填属性
       buttons: [<AuthBox code="asset_tag_project_member_add_edit_del" type="primary" onClick={() => this.openModal('add')}>添加成员</AuthBox>],
     }
+
+    const tabConfig = {
+      tabs,
+      currentTab: this.tabId,
+      changeTab: this.changeTab,
+      changeUrl: false,
+    }
+
     return (
       <div className="project-config">
         <Spin spinning={projectDetailLoading}>
@@ -137,7 +155,12 @@ class ProjectConfig extends Component {
         </Spin>
        
         <div className="list-content">
-          <ListContent {...listConfig} />
+          <TabRoute {...tabConfig} />
+
+          {
+            +this.tabId === 2 ? <ParamsConfig store={store} /> : <ListContent {...listConfig} />
+          }
+         
         </div>
         <ModalProjectConfig store={store} />
       </div>

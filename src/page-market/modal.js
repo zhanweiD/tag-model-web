@@ -76,15 +76,15 @@ export default class TagApply extends Component {
   }
 
   render() {
-    const {form: {getFieldDecorator, getFieldValue}} = this.props
+    const {form: {getFieldDecorator}} = this.props
     const {
       confirmLoading, 
       modalVisible, 
       useProjectList, 
       useProjectId, 
-      useProjectName, 
-      modalType,
-      selectItem,
+      // useProjectName, 
+      // modalType,
+      // selectItem,
     } = this.store
 
     const modalConfig = {
@@ -97,16 +97,18 @@ export default class TagApply extends Component {
       onCancel: () => this.handleCancel(),
     }
 
-    const canUseProject = modalType === 'one' 
-      ? useProjectList.filter(d => d.useProjectId !== selectItem.projectId) 
-      : useProjectList
+    // const canUseProject = modalType === 'one' 
+    //   ? useProjectList.filter(d => d.useProjectId !== selectItem.projectId) 
+    //   : useProjectList
 
+    const {useProjectName} = useProjectList.filter(d => d.useProjectId === useProjectId)[0] || {}
+    console.log(useProjectName)
     return (
       <Modal
         {...modalConfig}
       >
         <Form className="FBV">
-          {
+          {/* {
             useProjectId !== '' ? (
               <FormItem {...formItemLayout} label="使用项目">
                 {useProjectName}
@@ -130,11 +132,14 @@ export default class TagApply extends Component {
                         </Option>
                       ))
                     }
-                  </Select>)
+                     </Select>)
                 }
               </FormItem>
             )
-          }
+          } */}
+          <FormItem {...formItemLayout} label="使用项目">
+            {useProjectName}
+          </FormItem>
           <FormItem
             {...formItemLayout}
             label="申请时长"

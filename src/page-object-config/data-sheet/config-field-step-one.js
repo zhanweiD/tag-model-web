@@ -1,7 +1,7 @@
 import React from 'react'
 import {observer} from 'mobx-react'
-import {action} from 'mobx'
-import {Table, Badge} from 'antd'
+import {action, toJS} from 'mobx'
+import {Table, Badge, Switch} from 'antd'
 import {QuestionTooltip} from '../../component'
 
 const columns = [
@@ -51,6 +51,16 @@ export default class StepOne extends React.Component {
     store.getInitialList()
   }
 
+  @action.bound onSwitchChange(checked) {
+    const {store} = this.props
+    
+    if (checked) {
+      store.tableData = store.initialList.filter(d => d.status === 2)
+    } else {
+      store.tableData = toJS(store.initialList) 
+    }
+  }
+
   render() {
     const {store} = this.props
 
@@ -58,13 +68,17 @@ export default class StepOne extends React.Component {
 
     return (
       <div>
-        <div className="fs16 mb8 ml2" style={{color: 'rgba(0,0,0,0.85)'}}>
+        {/* <div className="fs16 mb8 ml2" style={{color: 'rgba(0,0,0,0.85)'}}>
           字段列表
+        </div> */}
+        <div className="fs14 mb8 ml2">
+          <span className="mr8">展示标签状态为已发布的字段</span> 
+          <Switch checkedChildren="是" unCheckedChildren="否" onChange={this.onSwitchChange} />
         </div>
         <Table
           loading={store.loadings.firstTable}
           columns={columns}
-          dataSource={store.initialList}
+          dataSource={store.tableData}
           rowKey="dataFieldName"
           rowSelection={{
             selectedRowKeys,

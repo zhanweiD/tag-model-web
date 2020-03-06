@@ -68,7 +68,7 @@ export default class ConfigField extends Component {
 
     return (
       <Drawer
-        title="配置标签"
+        title="标签配置"
         visible={visible}
         // width="73%"
         width={1120}

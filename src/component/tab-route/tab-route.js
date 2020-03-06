@@ -23,7 +23,6 @@ class TabRoute extends Component {
     } = this.props
 
     if (changeTab) changeTab(key)
-    
     if (changeUrl) _history.push(`${basePath}/${key}`)
   }
 
