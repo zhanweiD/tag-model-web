@@ -4,12 +4,14 @@
 import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {Spin} from 'antd'
+import {observable, action} from 'mobx'
 import {Time} from '../common/util'
 import {
   DetailHeader, Tag, OverviewCardWrap, TabRoute, AuthBox,
 } from '../component'
 import {typeCodeMap, objStatusMap, objTypeMap} from './util'
 import ObjectView from './object-view'
+import BusinessModel from './business-model'
 
 @observer
 export default class ObjectDetail extends Component {
@@ -17,6 +19,8 @@ export default class ObjectDetail extends Component {
     super(props)
     this.store = props.store
   }
+
+  @observable tabId = 0
 
   componentWillMount() {
     this.getInitData()
@@ -49,6 +53,10 @@ export default class ObjectDetail extends Component {
       this.store.updateTreeKey = Math.random()
       this.store.getObjDetail()
     })
+  }
+
+  @action.bound changeTab(id) {
+    this.tabId = id
   }
 
   render() {
@@ -146,6 +154,23 @@ export default class ObjectDetail extends Component {
       },
     ]
 
+
+    const tabConfig = {
+      tabs: [
+        {name: '对象视图', value: 0},
+        {name: '业务视图', value: 1},
+      ],
+      basePath: `/${typeCode}/${objId}`,
+      currentTab: this.tabId,
+      changeTab: this.changeTab,
+      // eslint-disable-next-line react/destructuring-assignment
+      _history: this.props.history,
+      changeUrl: true,
+    }
+
+    // const Content = [ObjectView][this.tabId]
+    const Content = [ObjectView, BusinessModel][+this.tabId]
+
     return (
       <div className="object-detail">
         <Spin spinning={loading}>
@@ -162,8 +187,8 @@ export default class ObjectDetail extends Component {
           </div>
         </Spin>
         <div className="bgf">
-          <TabRoute tabs={[{name: '对象视图', value: 1}]} />
-          <ObjectView store={this.store} updateDetailKey={this.props.updateDetailKey} objId={objId} />
+          <TabRoute {...tabConfig} />
+          <Content store={this.store} updateDetailKey={this.props.updateDetailKey} objId={objId} />
         </div>
       </div>
     )

@@ -13,6 +13,7 @@ import TimeRange from './time-range'
 import NoData from './no-data'
 import AuthBox from './auth-box'
 import OmitTooltip from './omit-tooltip'
+import StatusImg from './status-img'
 
 export {
   DetailHeader,
@@ -31,4 +32,5 @@ export {
   NoData,
   AuthBox,
   OmitTooltip,
+  StatusImg,
 }

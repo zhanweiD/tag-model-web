@@ -4,9 +4,8 @@ import {observable, action, runInAction} from 'mobx'
 import {
   Modal, Spin, Button, Pagination,
 } from 'antd'
-// import _store from './store'
 
-import io from '../processe-list/io-code'
+import io from '../schema-list/io-code'
 import './flexgrid'
 
 const pageSize = 20
@@ -23,7 +22,7 @@ export default class Page extends Component {
     this.loading = true
     try {
       const data = await io.queryInstanceResult({
-        taskInstance: taskInstanceId,
+        taskInstanceId,
         resultId,
         pageSize,
         currentPage: currentPage || 1,
@@ -47,6 +46,7 @@ export default class Page extends Component {
   }
 
   @action flexTable = () => {
+    console.log($(this.resultDomBox).height())
     $(this.resultDom).flexigrid({
       width: '100%',
       minwidth: 50,
@@ -59,6 +59,7 @@ export default class Page extends Component {
   }
 
   @action setHeight = height => {
+    console.log(height)
     $(this.resultDom).parent('.bDiv').height(height - 88)
   }
 

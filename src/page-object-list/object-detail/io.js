@@ -8,6 +8,7 @@ const api = {
   changeObjStatus: post(`${objectApi}/update_object_status`), // 修改对象发布状态
   getObjView: get(`${objectApi}/object_view`), // 对象视图
   getBusinessModel: get(`${objectApi}/business_model`), // 逻辑模型
+  getBMRelation: get(`${objectApi}/list_relation`), // 对象相关的关系对象列表
 } 
 
 ioContext.create('objectDetail', api) 

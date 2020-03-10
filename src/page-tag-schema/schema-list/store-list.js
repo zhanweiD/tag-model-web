@@ -102,4 +102,37 @@ export default class Store extends ListContentStore(io.getList) {
       errorTip(e.message)
     }
   }
+
+  // 查询提交日志
+  @observable modalLogVisible = false
+  @observable submitLog = ''
+
+  @action async getSubmitLog(params) {
+    try {
+      const res = await io.getSubmitLog(params)
+      runInAction(() => {
+        this.submitLog = res
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  @observable functionCodes = []
+
+  /**
+   * @description 权限code
+   */
+  @action async getAuthCode() {
+    try {
+      const res = await io.getAuthCode({
+        projectId: this.projectId,
+      })
+      runInAction(() => {
+        this.functionCodes = res
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
 }

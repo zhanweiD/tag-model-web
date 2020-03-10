@@ -1,6 +1,8 @@
 import {
-  action, runInAction, observable, toJS,
+  action, runInAction, observable,
 } from 'mobx'
+import {CycleSelect} from '@dtwave/uikit'
+import {cycleSelectMap} from '../util'
 import {
   successTip, failureTip, errorTip, listToTree,
 } from '../../common/util'
@@ -14,10 +16,12 @@ export default class Store {
   }
 
   projectId
-
+  @observable loading = false
   @observable drawerVisible = false
   @observable drawerType
   @observable currentStep = 0
+
+  @observable paramsForm = null
   
   @observable schemeDetail = {}
 
@@ -31,6 +35,14 @@ export default class Store {
     this.currentStep = 0
     this.drawerType = undefined
     this.schemeDetail = {}
+
+    this.codeStore.runStatusMessage = {
+      status: '',
+      message: '',
+      download: false,
+    }
+
+    this.codeStore.tableData = [{title: '运行日志', resultId: 'running_log'}]
   }
 
   // 上一步
@@ -45,25 +57,46 @@ export default class Store {
 
   // ************************* 方案详情 start ************************* //
  
-  @action async getSchemeDetail(params) {
+  @action async getSchemeDetail(params, cb) {
+    this.loading = true
     try {
       const res = await io.getSchemeDetail(params)
       runInAction(() => {
-        this.schemeDetail = {...res, ...this.schemeDetail}
+        const data = res      
+
+        if (res.scheduleType === 1) {
+          const expression = CycleSelect.cronSrialize(res.schedule_expression)
+
+          data.period = cycleSelectMap[expression.cycle]
+          data.periodTime = expression.time
+        }
+
+        this.schemeDetail = {...this.schemeDetail, ...data}
+        if (cb) cb(res)
       })
     } catch (e) {
       errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        this.loading = false
+      })
     }
   }
 
-  @action async getSchemeConfigInfo(params) {
+  @action async getSchemeConfigInfo(params, cb) {
+    this.loading = true
     try {
       const res = await io.getSchemeConfigInfo(params)
       runInAction(() => {
-        this.schemeDetail = {...res, ...this.schemeDetail}
+        this.schemeDetail = {...this.schemeDetail, ...res}
+        if (cb) cb(res)
       })
     } catch (e) {
       errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        this.loading = false
+      })
     }
   }
   // ************************* 方案详情 end ************************* //
@@ -228,12 +261,38 @@ export default class Store {
       })
       runInAction(() => {
         if (res) {
-          successTip('保存成功')
-          this.closeDrawer()
-          this.listStore.getList({
-            currentPage: 1,
-            pageSize: 10,
-          })
+          // 处于第一步
+          if (this.currentStep === 0) {
+            successTip('保存成功')
+            this.closeDrawer()
+            this.listStore.getList({
+              currentPage: 1,
+              pageSize: 10,
+            })
+          }
+
+          // 处于第二步
+          if (this.currentStep === 1) {
+            successTip('保存成功')
+            this.closeDrawer()
+            this.listStore.getList({
+              currentPage: 1,
+              pageSize: 10,
+            })
+          }
+
+          // 处于第三步
+          if (this.currentStep === 2) {
+            successTip('保存成功')
+            this.schemeDetail.id = res
+            this.listStore.getList({
+              currentPage: 1,
+              pageSize: 10,
+            })
+            this.nextStep()
+          }
+        } else {
+          failureTip('保存失败')
         }
       })
     } catch (e) {
@@ -248,13 +307,29 @@ export default class Store {
       objId,
       name,
       descr,
+      source,
+      parameterMappingKeys,
+      fieldInfo,
+      mainTagMappingKeys,
+      isPartitioned,
+      partitionMappingKeys,
+      scheduleType, 
+      scheduleExpression,
     } = this.schemeDetail
-    console.log(toJS(this.schemeDetail))
+
     const params = {
       projectId: this.projectId,
       objId,
       name,
-      descr,
+      descr: descr || undefined,
+      source,
+      parameterMappingKeys: parameterMappingKeys || undefined,
+      fieldInfo,
+      mainTagMappingKeys,
+      isPartitioned,
+      partitionMappingKeys: partitionMappingKeys || undefined,
+      scheduleType, 
+      scheduleExpression: scheduleExpression || undefined,
     }
 
     if (id) {
@@ -262,5 +337,37 @@ export default class Store {
     }
 
     return params
+  }
+
+  @observable submitLoading = false
+
+   // 提交方案
+   @action async submitScheme(params) {
+    this.submitLoading = true
+    try {
+      const res = await io.submitScheme(params)
+      runInAction(() => {
+        if (res === 1) {
+          successTip('提交成功')
+          this.closeDrawer()
+          this.listStore.getList({
+            currentPage: 1,
+            pageSize: 10,
+          })
+        } else {
+          failureTip('提交失败')
+          this.listStore.getList({
+            currentPage: 1,
+            pageSize: 10,
+          })
+        }
+      })
+    } catch (e) {
+      errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        this.submitLoading = false
+      })
+    }
   }
 }

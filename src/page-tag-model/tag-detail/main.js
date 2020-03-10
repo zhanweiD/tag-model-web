@@ -16,9 +16,9 @@ import store from './store'
 const {navListMap} = window.__keeper
 const navList = [
   navListMap.tagCenter,
-  navListMap.space,
   navListMap.tagManagement,
-  {text: navListMap.tagDetail.text},
+  navListMap.tagModel,
+  navListMap.tagDetail,
 ]
 
 @inject('frameChange')

@@ -128,7 +128,7 @@ export default class Market extends Component {
 
   // 跳转到标签模型
   goTagManager = () => {
-    window.location.href = `${window.__onerConfig.pathPrefix || '/'}/tag-management`
+    window.location.href = `${window.__onerConfig.pathPrefix || '/'}/tag-model`
   }
 
   // 是否有进行搜索操作

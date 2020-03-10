@@ -17,29 +17,67 @@ const {Step} = Steps
 export default class DrawerConfig extends Component {
   constructor(props) {
     super(props)
-    const {drawerStore} = props.rootStore
+    const {drawerStore, codeStore} = props.rootStore
 
     this.store = drawerStore
+    this.codeStore = codeStore
     this.store.projectId = props.projectId
   }
 
   @action.bound closeDrawer() {
     const t = this
+    const {schemeDetail, currentStep} = this.store
 
-    Modal.confirm({
-      title: '是否保存方案',
-      okText: '确认',
-      cancelText: '取消',
-      onOk: () => {
-        t.store.oneForm.validateFieldsAndScroll(err => {
-          if (err) {
-            return
-          } 
-          t.store.saveSchema() // 保存
-        })
-      },
-      onCancel: () => t.store.closeDrawer(),
-    })
+    if (+currentStep !== 3) {
+      Modal.confirm({
+        title: '是否保存方案',
+        okText: '确认',
+        cancelText: '取消',
+        onOk: () => {
+          if (+currentStep === 0) {
+            t.store.oneForm.validateFieldsAndScroll((err, values) => {
+              if (err) {
+                return
+              } 
+    
+              t.store.schemeDetail.objId = Array.isArray(values.objId) ? values.objId[0].key : values.objId.key
+              this.store.schemeDetail.objName = Array.isArray(values.objId) ? values.objId[0].label : values.objId.label
+              t.store.schemeDetail.name = values.name
+              t.store.schemeDetail.descr = values.descr
+              t.store.schemeDetail.obj = t.obj || schemeDetail.obj
+    
+              t.store.saveSchema({
+                status: 0,
+              }) // 保存
+            })
+          }
+
+          if (+currentStep === 1) {
+            t.store.paramsForm.validateFieldsAndScroll((err, values) => {
+              if (err) {
+                return
+              } 
+ 
+              const parameterMappingKeys = {}
+              Object.values(values).forEach(d => {
+                parameterMappingKeys[d.key] = d.value
+              })
+
+              t.store.schemeDetail.parameterMappingKeys = JSON.stringify(parameterMappingKeys)
+              const source = this.codeStore.editor.getValue()
+              t.store.schemeDetail.source = source
+  
+              t.store.saveSchema({
+                status: 0,
+              }) // 保存
+            })
+          }
+        },
+        onCancel: () => t.store.closeDrawer(),
+      })
+    } else {
+      t.store.closeDrawer()
+    }
   }
 
   render() {
@@ -81,7 +119,7 @@ export default class DrawerConfig extends Component {
             <DrawerThree show={currentStep === 2} projectId={projectId} />
             <DrawerFour show={currentStep === 3} projectId={projectId} />
           </div>
-        </div>
+        </div>        
       </Drawer>     
     )
   }

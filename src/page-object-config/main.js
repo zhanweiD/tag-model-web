@@ -16,7 +16,7 @@ import './main.styl'
 const {navListMap} = window.__keeper
 const navList = [
   navListMap.tagCenter,
-  navListMap.space,
+  navListMap.tagManagement,
   navListMap.objectConfig,
 ]
 

@@ -7,10 +7,10 @@ import {observer} from 'mobx-react'
 import {toJS, observable} from 'mobx'
 import {Select} from 'antd'
 
-import erClose from '../../icon-svg/er-close.svg'
-import erOpen from '../../icon-svg/er-open.svg'
-import erRelKey from '../../icon-svg/er-rel-key.svg'
-import erMajorKey from '../../icon-svg/er-major-key.svg'
+import erClose from '../icon-svg/er-close.svg'
+import erOpen from '../icon-svg/er-open.svg'
+import erRelKey from '../icon-svg/er-rel-key.svg'
+import erMajorKey from '../icon-svg/er-major-key.svg'
 
 import './business-model.styl'
 
@@ -48,6 +48,13 @@ export default class BusinessModel extends Component {
 
   componentDidMount() {
     this.getData()
+  }
+
+  componentWillReceiveProps(next) {
+    const {updateDetailKey, objId} = this.props
+    if (!_.isEqual(updateDetailKey, next.updateDetailKey) || !_.isEqual(+objId, +next.objId)) {
+      this.getData()
+    }
   }
 
   getData() {

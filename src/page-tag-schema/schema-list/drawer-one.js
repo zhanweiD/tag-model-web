@@ -5,7 +5,7 @@ import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
 import {action, toJS} from 'mobx'
 import {
-  Input, Form, Select, Button, Modal,
+  Input, Form, Select, Button, Modal, Spin,
 } from 'antd'
 
 const FormItem = Form.Item
@@ -24,9 +24,10 @@ export default class DrawerOne extends Component {
   constructor(props) {
     super(props)
     
-    const {drawerStore} = props.rootStore
+    const {drawerStore, codeStore} = props.rootStore
     
     this.store = drawerStore
+    this.codeStore = codeStore
   }
 
   componentWillMount() {
@@ -39,19 +40,30 @@ export default class DrawerOne extends Component {
         validateFieldsAndScroll,
       },
     } = this.props
+
+    const {
+      schemeDetail,
+    } = this.store
+
     validateFieldsAndScroll((err, values) => {
       if (err) {
         return
       } 
-
-      this.store.schemeDetail.objId = values.objId.key
+      
+      this.store.schemeDetail.objId = Array.isArray(values.objId) ? values.objId[0].key : values.objId.key
+      this.store.schemeDetail.objName = Array.isArray(values.objId) ? values.objId[0].label : values.objId.label
       this.store.schemeDetail.name = values.name
       this.store.schemeDetail.descr = values.descr
-      this.store.schemeDetail.obj = this.obj
+      this.store.schemeDetail.obj = this.obj || schemeDetail.obj
       
       // 请求标签树
       this.store.getTagTree()
+      
       this.store.nextStep()
+
+      if (this.codeStore.editor) {
+        this.codeStore.editor.refresh()
+      }
 
       this.store.oneStepSuccess = true
     })
@@ -64,8 +76,11 @@ export default class DrawerOne extends Component {
       },
     } = this.props
 
-    const t = this
+    const {
+      schemeDetail,
+    } = this.store
 
+    const t = this
     Modal.confirm({
       title: '是否保存方案',
       okText: '确认',
@@ -76,11 +91,11 @@ export default class DrawerOne extends Component {
             return
           } 
 
-          t.store.schemeDetail.objId = values.objId.key
           t.store.schemeDetail.objId = Array.isArray(values.objId) ? values.objId[0].key : values.objId.key
+          this.store.schemeDetail.objName = Array.isArray(values.objId) ? values.objId[0].label : values.objId.label
           t.store.schemeDetail.name = values.name
           t.store.schemeDetail.descr = values.descr
-          t.store.schemeDetail.obj = t.obj
+          t.store.schemeDetail.obj = t.obj || schemeDetail.obj
 
           t.store.saveSchema({
             status: 0,
@@ -105,7 +120,7 @@ export default class DrawerOne extends Component {
       name: value,
       objId,
     }
-    
+
     if (schemeDetail.id) {
       params.id = schemeDetail.id
     }
@@ -114,7 +129,6 @@ export default class DrawerOne extends Component {
   }
 
   @action.bound selectObj(v) {
-    // const {form: {resetFields}} = this.props
     const {objList} = this.store
 
     const selectObj = objList.filter(d => +d.objId === +v.key)[0]
@@ -152,59 +166,61 @@ export default class DrawerOne extends Component {
     const {
       objList,
       schemeDetail,
+      loading,
     } = this.store
 
     return (
       <div style={{display: show ? 'block' : 'none'}}>
-        <Form wrappedComponentRef={wrappedComponentRef}>
-          <FormItem {...formItemLayout} label="所属对象">
-            {getFieldDecorator('objId', {
-              initialValue: schemeDetail.objId ? [{key: schemeDetail.objId}] : undefined,
-              rules: [{required: true, message: '请选择所属对象'}],
-            })(
-              <Select 
-                labelInValue 
-                placeholder="请选择所属对象" 
-                style={{width: '100%'}} 
-                onSelect={v => this.selectObj(v)}
-              >
-                {
-                  objList.map(item => (
-                    <Option key={item.objId} value={item.objId}>{item.name}</Option>
-                  ))
-                }
-              </Select>
-            )}
-          </FormItem>
-          <FormItem {...formItemLayout} label="方案名称">
-            {getFieldDecorator('name', {
-              initialValue: schemeDetail.name,
-              rules: [
-                {transform: value => value && value.trim()},
-                {required: true, message: '方案名称不能为空'},  
-                {max: 32, message: '输入不能超过32个字符'},
-                {
-                  validator: this.checkName,
-                }],
-              validateFirst: true,
-            })(
-              <Input autoComplete="off" placeholder="请输入方案名称" disabled={!getFieldValue('objId')} />
-            )}
-          </FormItem>
+        <Spin spinning={loading}>
+          <Form wrappedComponentRef={wrappedComponentRef}>
+            <FormItem {...formItemLayout} label="所属对象">
+              {getFieldDecorator('objId', {
+                initialValue: schemeDetail.objId ? [{key: schemeDetail.objId, label: schemeDetail.objName}] : undefined,
+                rules: [{required: true, message: '请选择所属对象'}],
+              })(
+                <Select 
+                  labelInValue 
+                  placeholder="请选择所属对象" 
+                  style={{width: '100%'}} 
+                  onSelect={v => this.selectObj(v)}
+                >
+                  {
+                    objList.map(item => (
+                      <Option key={item.objId} value={item.objId}>{item.name}</Option>
+                    ))
+                  }
+                </Select>
+              )}
+            </FormItem>
+            <FormItem {...formItemLayout} label="方案名称">
+              {getFieldDecorator('name', {
+                initialValue: schemeDetail.name,
+                rules: [
+                  {transform: value => value && value.trim()},
+                  {required: true, message: '方案名称不能为空'},  
+                  {max: 32, message: '输入不能超过32个字符'},
+                  {
+                    validator: this.checkName,
+                  }],
+                validateFirst: true,
+              })(
+                <Input autoComplete="off" placeholder="请输入方案名称" disabled={!getFieldValue('objId')} />
+              )}
+            </FormItem>
        
-          <FormItem {...formItemLayout} label="方案描述">
-            {getFieldDecorator('descr', {
-              initialValue: schemeDetail.descr,
-              rules: [
-                {transform: value => value && value.trim()},
-                {max: 128, whitespace: true, message: '输入不能超过128个字符'},
-              ],
-            })(
-              <TextArea placeholder="请输入方案描述" />
-            )}
-          </FormItem>
-        </Form>
-        
+            <FormItem {...formItemLayout} label="方案描述">
+              {getFieldDecorator('descr', {
+                initialValue: schemeDetail.descr,
+                rules: [
+                  {transform: value => value && value.trim()},
+                  {max: 128, whitespace: true, message: '输入不能超过128个字符'},
+                ],
+              })(
+                <TextArea placeholder="请输入方案描述" />
+              )}
+            </FormItem>
+          </Form>
+        </Spin>
         <div className="bottom-button">
           <Button style={{marginRight: 8}} onClick={() => this.closeDrawer()}>关闭</Button>
           <Button

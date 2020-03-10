@@ -62,7 +62,7 @@ module.exports = {
         '//cdn.dtwave.com/public/lodash/4.17.4/lodash.min.js',
       ],
       // 标签模型
-      'tag-management': {
+      'tag-model': {
         js: [
           '//cdn.dtwave.com/public/ide/d3.v3.js',
           '//cdn.dtwave.com/public/ide/data-manage-dagre.js',
@@ -75,7 +75,7 @@ module.exports = {
         ],
       },
 
-      'tag-processe': {
+      'tag-schema': {
         css: [
           '//cdn.dtwave.com/public/ide/codemirror-theme.css',
           '//cdn.dtwave.com/public/ide/lint.css',

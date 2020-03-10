@@ -3,7 +3,7 @@
  */
 import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
-import {action, observable} from 'mobx'
+import {action, observable, toJS} from 'mobx'
 import {Button, Tabs} from 'antd'
 
 import 'codemirror/addon/hint/show-hint'
@@ -27,22 +27,22 @@ export default class DrawerTwo extends Component {
   }
 
   @action.bound operationCode(code) {
-    this.paramsForm.validateFieldsAndScroll((err, values) => {
+    this.store.paramsForm.validateFieldsAndScroll((err, values) => {
       if (err) {
         return
       } 
-
-      const parameterMappingKeys = Object.values(values).map(d => ({
-        partitionFieldName: d.key,
-        partitionFieldValue: d.value,
-      }))
-      console.log({
-        source: code,
-        parameterMappingKeys,
+      console.log(values)
+      const parameterMappingKeys = {}
+      Object.values(values).forEach(d => {
+        parameterMappingKeys[d.key] = d.value
       })
+
+      this.store.schemeDetail.source = code
+      this.store.schemeDetail.parameterMappingKeys = JSON.stringify(parameterMappingKeys) 
+
       this.codeStore.runTask({
         source: code,
-        parameterMappingKeys,
+        parameterMappingKeys: JSON.stringify(parameterMappingKeys),
       }, data => {
         this.store.schemeDetail.fieldInfo = data.fieldInfo
       })
@@ -52,13 +52,17 @@ export default class DrawerTwo extends Component {
   render() {
     const {show, projectId} = this.props
     const {runStatusMessage} = this.codeStore
+    const {schemeDetail} = this.store
 
     return (
       <div style={{display: show ? 'block' : 'none'}} className="logic-config">
         <div className="FBH">
           <DrawerTwoTree />
           <DrawerTwoCode operationCode={this.operationCode} projectId={projectId} />
-          <DrawerTwoParams wrappedComponentRef={form => this.paramsForm = form ? form.props.form : form} />
+          <DrawerTwoParams 
+            data={toJS(schemeDetail.parameterMappingKeys)}
+            wrappedComponentRef={form => this.store.paramsForm = form ? form.props.form : form}
+          />
         </div>
         <div className="bottom-button">
           <Button style={{marginRight: 8}} onClick={() => this.store.lastStep()}>上一步</Button>

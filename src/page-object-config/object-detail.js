@@ -146,7 +146,6 @@ export default class ObjectDetail extends Component {
 
     const {tag} = tagMap[objDetail.isUsed === undefined ? 'noData' : objDetail.isUsed]
     const Content = [ObjectView, DataSheet, FieldList, BusinessModel][tabId]
-    // const Content = [ObjectView, DataSheet, FieldList][tabId]
 
     return (
       <div className="object-detail">

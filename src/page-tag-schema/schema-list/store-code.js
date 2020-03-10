@@ -1,9 +1,8 @@
 import {
-  action, runInAction, observable, toJS,
+  action, runInAction, observable,
 } from 'mobx'
 import {ErrorEater} from '@dtwave/uikit'
 import {errorTip} from '../../common/util'
-import {ListContentStore} from '../../component/list-content'
 import io from './io-code'
 
 export default class Store {
@@ -20,6 +19,8 @@ export default class Store {
   // ************************* 代码编辑 & 日志 start *********************** //
 
   @observable taskInstanceId // 实例ID
+  @observable usedTagIds // 提交需要
+  
   // 是否显示日志，是否运行过
   @observable isRuned = false
 
@@ -62,8 +63,10 @@ export default class Store {
     this.logBoxToAllFlag = !this.logBoxToAllFlag
     if (this.logBoxToAllFlag) {
       this.changeResultHeight(totalHeight - 30)
+      this.logBoxDom.width($('body').width())
     } else {
       this.changeResultHeight(this.logBoxHeight)
+      this.logBoxDom.width(640)
     }
   }
 
@@ -116,6 +119,7 @@ export default class Store {
 
     this.logBoxHeight = totalHeight - height
     this.setHeight()
+    this.changeResultHeight(totalHeight - height)
   }
 
   // 当日志框，resize时， 活着全屏的时候，去改变table的高度
@@ -196,7 +200,8 @@ export default class Store {
         // })
 
         this.fieldInfo = data.fieldInfo
-        this.taskInstanceId = data.taskInstanceId
+        this.taskInstanceId = data.instanceId
+        this.usedTagIds = data.usedTagIds
         this.runLog = '正在提交...\nwaiting...\n'
         this.runStatusMessage.message = ''
         this.runStatusMessage.download = false
@@ -208,6 +213,7 @@ export default class Store {
         }
         this.isRuned = true
       })
+
       this.getLog(this.taskInstanceId)
 
       if (cb) cb(data)
@@ -238,20 +244,20 @@ export default class Store {
       let LogScrollFlag2 = false
 
       runInAction(() => {
-        if (dataLog.log) {
+        if (dataLog.logContent) {
           const logLimit = window.__keeper.logLimit || 1e4
           // readType 日志读取策略 0:覆盖1:追加
           if (dataLog.readType && dataLog.currentLine > this.logIndex) {
             // this.runLog = (dataLog.log && this.runLog.length > 5e5) ? dataLog.log : (this.runLog + dataLog.log)
             // this.runLog += dataLog.log
-            let newLog = this.runLog + dataLog.log
+            let newLog = this.runLog + dataLog.logContent
             if (newLog.length > logLimit) {
               newLog = newLog.slice(-logLimit)
               this.runStatusMessage.download = true
             }
             this.runLog = newLog
           } else {
-            let newLog = `正在提交...\nwaiting...\n${dataLog.log}`
+            let newLog = `正在提交...\nwaiting...\n${dataLog.logContent}`
             if (newLog.length > logLimit) {
               newLog = newLog.slice(-logLimit)
               this.runStatusMessage.download = true
@@ -260,11 +266,11 @@ export default class Store {
           }
           this.logIndex = dataLog.currentLine
         }
-        if (dataLog.resultIdList.length > this.currentResultIndex) {
-          const uniqResultList = _.uniqBy(this.tableData.concat(dataLog.resultIdList),
+        if (dataLog.resultList.length > this.currentResultIndex) {
+          const uniqResultList = _.uniqBy(this.tableData.concat(dataLog.resultList),
             item => `${item.resultId}$$${item.taskInstance}`)
           this.tableData = uniqResultList
-          this.currentResultIndex = dataLog.resultIdList.length
+          this.currentResultIndex = dataLog.resultList.length
         }
         if (dataLog.isEnd) {
           // 运行终止

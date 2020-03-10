@@ -1,10 +1,10 @@
 /**
  * @description 对象管理
  */
-import {Component} from 'react'
+import {Component, Fragment} from 'react'
 import {action} from 'mobx'
 import {observer, Provider} from 'mobx-react'
-import {TabRoute, NoData} from '../component'
+import {TabRoute, NoData, StatusImg} from '../component'
 import {changeToOptions} from '../common/util'
 import Tree from './tree'
 import ObjectDetail from './detail'
@@ -12,12 +12,12 @@ import ObjectDetail from './detail'
 import store from './store'
 import './main.styl'
 
-// 面包屑设置
-// eslint-disable-next-line no-underscore-dangle
-const {navListMap} = window.__keeper
-
 // tab
 const tabs = changeToOptions(window.njkData.typeCodes)('objTypeName', 'objTypeCode')
+
+const NotFount = () => <StatusImg status="authError" title="暂无权限" tip="您尚无相关系统权限，请联系管理员授权后即可使用" imgWidth="250" />
+
+const {functionCodes = []} = window.__userConfig
 
 @observer
 export default class ObjectModel extends Component {
@@ -69,31 +69,49 @@ export default class ObjectModel extends Component {
 
     return (
       <Provider bigStore={store}>
-        <div className="page-object-modal">
-          {/* <div className="content-header">{navListMap.object.text}</div> */}
-          <div className="content-header">对象模型</div>
-          <TabRoute {...tabConfig} />
-          <div className="object-modal-content">
-            <Tree 
-              history={history}
-              updateTreeKey={updateTreeKey} 
-              addObjectUpdateKey={addObjectUpdateKey}
-            />
-            {
-              objId ? (
-                <ObjectDetail 
-                  updateDetailKey={updateDetailKey} 
-                  objId={objId} 
-                  store={store}
+        {
+          functionCodes.includes('asset_tag_obj_model') ? (
+            <div className="page-object-modal">
+              <div className="content-header">对象模型</div>
+           
+              <TabRoute {...tabConfig} />
+              <div className="object-modal-content">
+                <Tree 
+                  history={history}
+                  updateTreeKey={updateTreeKey} 
+                  addObjectUpdateKey={addObjectUpdateKey}
                 />
-              ) : (
-                <NoData
-                  {...noDataConfig}
-                />
-              )
-            }
-          </div>
-        </div>
+                {
+                  objId ? (
+                    <ObjectDetail 
+                      updateDetailKey={updateDetailKey} 
+                      objId={objId} 
+                      store={store}
+                      history={history}
+                    />
+                  ) : (
+                    <NoData
+                      {...noDataConfig}
+                    />
+                  )
+                }
+              </div>
+           
+            </div>
+          ) : (
+            <div style={{
+              background: '#fff',
+              height: '100%',
+            }}
+            >
+              <div style={{paddingTop: '200px'}}>
+                <NotFount />
+              </div>
+            </div>
+          
+          )
+        }
+       
       </Provider>
     )
   }

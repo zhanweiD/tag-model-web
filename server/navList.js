@@ -3,14 +3,8 @@
  * @description 面包屑设置
 */
 
-
 // 标签中心
 const tagCenter = {
-  // 资产管理
-  asset: {
-    url: '/',
-    text: '资产管理',
-  },
   tagCenter: {
     url: '/overview',
     text: '标签中心',
@@ -20,7 +14,6 @@ const tagCenter = {
 // 总览
 const overview = {
   overview: {
-    // url: '/overview',
     text: '总览',
   },
 }
@@ -28,18 +21,77 @@ const overview = {
 // 标签集市
 const market = {
   market: {
-    // url: '/marker',
-    text: '标签集市',
+    text: '集市',
   },
 }
 
 // 对象管理
 const object = {
   object: {
-    // url: '/object',
+    url: '/object-list',
     text: '对象管理',
   },
+  objectList: {
+    url: '/object-list',
+    text: '对象列表',
+  },
+  objectDetail: {
+    text: '对象详情',
+  },
+  objectModel: {
+    text: '对象模型',
+  },
 }
+
+// 标签管理
+const tagManagement = {
+  tagManagement: {
+    url: '/tag-warehouse',
+    text: '标签管理',
+  },
+  objectConfig: {
+    text: '对象配置',
+  },
+  tagWarehouse: {
+    text: '标签仓库',
+  },
+  tagModel: {
+    url: '/tag-model',
+    text: '标签模型',
+  },
+  tagDetail: {
+    text: '标签详情',
+  },
+}
+
+// 标签加工
+const tagSchema = {
+  tagSchema: {
+    url: '/tag-schema',
+    text: '标签加工',
+  },
+  schemaList: {
+    url: '/tag-schema',
+    text: '加工方案',
+  },
+  schemaDetail: {
+    text: '加工方案详情',
+  },
+}
+
+const application = {
+  scene: {
+    url: '/scene',
+    text: '场景管理',
+  }, 
+  sceneDetail: {
+    text: '场景详情',
+  },
+  sceneTags: {
+    text: '标签列表',
+  },
+}
+
 
 // 项目列表
 const project = {
@@ -49,41 +101,6 @@ const project = {
   },
   projectConfig: {
     text: '项目配置',
-  },
-}
-
-// 项目空间
-const space = {
-  space: {
-    url: '/object-config',
-    text: '项目空间',
-  },
-  objectConfig: {
-    url: '/object-config',
-    text: '对象配置',
-  },
-  tagManagement: {
-    url: '/tag-management',
-    text: '标签模型',
-  },
-  tagDetail: {
-    text: '标签详情',
-  },
-  scene: {
-    url: '/scene',
-    text: '场景管理',
-  }, 
-  sceneDetail: {
-    // url: '/scene',
-    text: '场景详情',
-  },
-  sceneTags: {
-    // url: '/scene',
-    text: '标签列表',
-  },
-  tagWarehouse: {
-    url: '/tag-search',
-    text: '标签仓库',
   },
 }
 
@@ -110,8 +127,10 @@ const navListMap = {
   ...market,
   ...object,
   ...project,
-  ...space,
+  ...tagManagement,
   ...approval,
+  ...application,
+  ...tagSchema,
 }
 
 module.exports = navListMap

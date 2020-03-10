@@ -19,7 +19,7 @@ export default class LogPanel extends Component {
       store,
       taskId,
     } = this.props
-
+    console.log(toJS(store.runStatusMessage))
     return (
       <Fragment>
         <div
@@ -30,6 +30,7 @@ export default class LogPanel extends Component {
             'all-window': store.logBoxToAllFlag,
           })}
           id={`log_${taskId}`}
+          style={{width: '640px'}}
         >
           <Button
             key="allwindow"
@@ -94,16 +95,21 @@ export default class LogPanel extends Component {
                             store.runLog
                           }
                         </span>
-                        <p
-                          className={cls({
-                            error: store.runStatusMessage.status === 'error',
-                            success: store.runStatusMessage.status === 'success',
-                          })}
-                        >
-                          {
-                            store.runStatusMessage.message
-                          }
-                        </p>
+                        {
+                          store.runStatusMessage.message ? (
+                            <p
+                              className={cls({
+                                error: store.runStatusMessage.status === 'error',
+                                success: store.runStatusMessage.status === 'success',
+                              })}
+                            >
+                              {
+                                store.runStatusMessage.message
+                              }
+                            </p>
+                          ) : null
+                        }
+                       
                         {/* {
                           store.runStatusMessage.download ? (
                             <p className="success">

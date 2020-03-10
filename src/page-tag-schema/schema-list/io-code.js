@@ -12,11 +12,11 @@ const api = {
     mockUrl: 'page-tag-processe/runTql',
   }), // 启动运行任务
   stopInstance: get(`${derivativeApi}/schema/scheme_pag`), // 停止运行
-  searchLog: post(`${baseApi}/task/instance/query_log`, {
+  searchLog: get(`${baseApi}/task/instance/log`, {
     mock: isMock,
     mockUrl: 'page-tag-processe/searchLog',
   }), // 查询任务实例运行日志
-  queryInstanceResult: get(`${baseApi}/task/instance/query_result `, {
+  queryInstanceResult: get(`${baseApi}/task/instance/result`, {
     mock: isMock,
     mockUrl: 'page-tag-processe/runResult',
   }), // 查询运行结果

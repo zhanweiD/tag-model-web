@@ -18,10 +18,14 @@ const api = {
   submitScheme: post(`${derivativeApi}/schema/submit`), // 提交衍生标签方案
   manualRunScheme: post(`${derivativeApi}/schema/manual_run`), // 方案手动执行
   deleteScheme: post(`${derivativeApi}/schema/delete_scheme`), // 删除方案
-  cloneScheme: post(`${derivativeApi}/schema/delete_scheme`), // 克隆方案
+  cloneScheme: post(`${derivativeApi}/schema/clone_scheme`), // 克隆方案
 
   saveSchema: post(`${derivativeApi}/schema/schemaSaveOrUpdate`), // 方案整体保存/更新
-} 
+  getSubmitLog: get(`${derivativeApi}/schema/submit_log`), // 查询提交日志
+
+  // 权限code
+  getAuthCode: get(`${baseApi}/project/getFunctionCodes`),
+}
 
 ioContext.create('tagSchema', api) 
 

@@ -21,14 +21,30 @@ export default class DrawerTwoParams extends Component {
   constructor(props) {
     super(props)
 
-    const {codeStore} = props.rootStore
+    const {drawerStore, codeStore} = props.rootStore
+
+    this.drawerStore = drawerStore
 
     this.store = codeStore
   }
 
   @observable renderList = []
-  @observable successList = []
 
+  @action componentDidMount() {
+    const {schemeDetail} = this.drawerStore
+    console.log(schemeDetail.parameterMappingKeys)
+    if (schemeDetail.parameterMappingKeys && typeof schemeDetail.parameterMappingKeys === 'object') {
+      const keys = Object.keys(schemeDetail.parameterMappingKeys)
+      console.log(keys)
+      this.renderList = keys.map((d, i) => ({
+        id: `${i}paramItem`,
+        init: {
+          key: d,
+          value: schemeDetail.parameterMappingKeys[d],
+        },
+      }))
+    }
+  }
 
   @action.bound addParam() {
     const len = this.renderList.length
@@ -50,7 +66,9 @@ export default class DrawerTwoParams extends Component {
   }
 
   // 运行参数相关
-  paramItem = (id, initialValue = '') => {
+  paramItem = (id, initialValue) => {
+    console.log(id)
+    console.log(initialValue)
     const {form} = this.props
     const {getFieldDecorator} = form
 
@@ -64,6 +82,7 @@ export default class DrawerTwoParams extends Component {
         sm: {span: 24},
       },
     }
+
     return (
       <div className="FBH param-item-box" key={`${id}_FormItem`}>
         <FormItem
@@ -81,9 +100,13 @@ export default class DrawerTwoParams extends Component {
                 }
               },
             }],
-            initialValue,
+            initialValue,  
           })(
-            <ParamItemInput disabled={this.props.disabled} form={form} paramsChange={this.paramsChange} />
+            <ParamItemInput 
+              disabled={this.props.disabled} 
+              form={form} 
+              paramsChange={this.paramsChange}
+            />
           )}
         </FormItem>
         <Icon
@@ -110,7 +133,7 @@ export default class DrawerTwoParams extends Component {
         <div>
           <Form wrappedComponentRef={wrappedComponentRef}>
             {
-              this.renderList.map(d => this.paramItem(d.id))
+              this.renderList.map(d => this.paramItem(d.id, toJS(d.init)))
             }
             <div className="fac mt16"> 
               <Button type="dashed" onClick={this.addParam} style={{width: '196px'}}>

@@ -2,8 +2,9 @@
  * @description 对象管理 - 对象详情信息
  */
 import {Component} from 'react'
-import {observer} from 'mobx-react'
+import {observer, inject} from 'mobx-react'
 import {Spin} from 'antd'
+import {observable, action} from 'mobx'
 import {Time} from '../../common/util'
 import {
   Tag,
@@ -13,10 +14,21 @@ import {
 } from '../../component'
 import {typeCodeMap, objTypeMap} from '../util'
 import ObjectView from './object-view'
-// import BusinessModel from './business-model'
+import BusinessModel from './business-model'
 
 import store from './store'
 
+// 面包屑设置
+// eslint-disable-next-line no-underscore-dangle
+const {navListMap} = window.__keeper
+const navList = [
+  navListMap.tagCenter,
+  navListMap.object,
+  navListMap.objectList,
+  navListMap.objectDetail,
+]
+
+@inject('frameChange')
 @observer
 export default class ObjectDetail extends Component {
   constructor(props) {
@@ -25,7 +37,12 @@ export default class ObjectDetail extends Component {
     store.typeCode = props.match.params && props.match.params.typeCode
   }
 
+  @observable tabId = 0
+
   componentWillMount() {
+    // 面包屑设置
+    const {frameChange} = this.props
+    frameChange('nav', navList)
     this.getInitData()
   }
 
@@ -35,6 +52,10 @@ export default class ObjectDetail extends Component {
     
     store.getObjDetail()
     store.getObjCard()
+  }
+
+  @action.bound changeTab(id) {
+    this.tabId = id
   }
 
   render() {
@@ -112,6 +133,19 @@ export default class ObjectDetail extends Component {
       },
     ]
 
+    const tabConfig = {
+      tabs: [
+        {name: '对象视图', value: 0},
+        {name: '业务视图', value: 1},
+      ],
+      currentTab: this.tabId,
+      changeTab: this.changeTab,
+      changeUrl: false,
+    }
+
+    // const Content = [ObjectView][+this.tabId]
+    const Content = [ObjectView, BusinessModel][+this.tabId]
+
     return (
       <div className="object-detail">
         <Spin spinning={loading}>
@@ -127,9 +161,8 @@ export default class ObjectDetail extends Component {
           </div>
         </Spin>
         <div className="bgf">
-          <TabRoute tabs={[{name: '对象视图', value: 1}]} />
-          <ObjectView store={store} />
-          {/* <BusinessModel store={store} /> */}
+          <TabRoute {...tabConfig} />
+          <Content store={store} />
         </div>
       </div>
     )

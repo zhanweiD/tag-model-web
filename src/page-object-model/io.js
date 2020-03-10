@@ -27,6 +27,9 @@ const api = {
     mockUrl: 'page-overview/object-view',
   }), // 对象视图
 
+  getBusinessModel: get(`${objectApi}/business_model`), // 逻辑模型
+  getBMRelation: get(`${objectApi}/list_relation`), // 对象相关的关系对象列表
+
   //* ------------------------------ 标签类目 ------------------------------*//
   getTagCateTree: get(`${tagClassApi}/cate_tree`, {overrideSelfConcurrent: true}), // 标签类目树
   checkTagCateName: post(`${tagClassApi}/name_check`, {overrideSelfConcurrent: true}), // 标签类目-重名校验

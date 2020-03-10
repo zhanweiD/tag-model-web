@@ -65,6 +65,53 @@ class Store {
     }
   }
 
+  /**
+   * @description 业务模型
+   */
+
+  @observable modelLoading = false
+  @observable businessModel = []
+  
+  @action async getBusinessModel(cb, params) {
+    this.modelLoading = true
+    try {
+      const res = await io.getBusinessModel({
+        id: this.objId,
+        ...params,
+      })
+
+      runInAction(() => {
+        const data = this.getLinksObj(res.links, res.obj)
+        this.businessModel = data
+        if (cb) cb()
+      })
+    } catch (e) {
+      errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        this.modelLoading = false
+      })
+    }
+  }
+
+  @observable relList = [] // 项目下与对象相关的关系对象列表
+
+  /**
+   * @description 项目下与对象相关的关系对象列表
+   */
+  @action async getBMRelation(cb) {
+    try {
+      const res = await io.getBMRelation({
+        id: this.objId,
+      })
+      runInAction(() => {
+        this.relList = res
+        if (cb) cb(res)
+      })
+    } catch (e) {
+      errorTip(e.message)
+    } 
+  }
 
   getLinksObj = (links, obj) => {
     if (!links.length) return {links: [], obj}
@@ -82,7 +129,7 @@ class Store {
     }
 
     const resObj = obj
-
+    
     if (relObjInx === 0) {
       resObj.push(resObj.shift())
     }
@@ -98,36 +145,6 @@ class Store {
     return {
       links: resLinks,
       obj: resObj,
-    }
-  }
-
-  /**
-   * @description 业务模型
-   */
-
-  @observable modelLoading = false
-  @observable businessModel = []
-  
-  @action async getBusinessModel(cb, params) {
-    this.modelLoading = true
-    try {
-      const res = await io.getBusinessModel({
-        id: this.objId,
-        projectId: this.projectId,
-        ...params,
-      })
-
-      runInAction(() => {
-        const data = this.getLinksObj(res.links, res.obj)
-        // this.businessModel = data
-        // if (cb) cb()
-      })
-    } catch (e) {
-      errorTip(e.message)
-    } finally {
-      runInAction(() => {
-        this.modelLoading = false
-      })
     }
   }
 }

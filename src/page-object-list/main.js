@@ -15,6 +15,7 @@ const {navListMap} = window.__keeper
 const navList = [
   navListMap.tagCenter,
   navListMap.object,
+  {text: navListMap.objectList.text},
 ]
 
 export default class Page extends Component {

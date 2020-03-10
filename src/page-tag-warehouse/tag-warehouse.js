@@ -22,7 +22,7 @@ import Search from './search'
 const {navListMap} = window.__keeper
 const navList = [
   navListMap.tagCenter,
-  navListMap.space,
+  navListMap.tagManagement,
   navListMap.tagWarehouse,
 ]
 
@@ -121,7 +121,7 @@ export default class TagWarehouse extends Component {
       render: (text, record) => (
         <div className="FBH FBAC">
           {/* eslint-disable-next-line no-underscore-dangle */}
-          <a href={`${window.__onerConfig.pathPrefix}/tag-management#/${record.id}`}>标签详情</a>
+          <a href={`${window.__onerConfig.pathPrefix}/tag-model#/${record.id}`}>标签详情</a>
           <AuthBox 
             code="asset_tag_project_tag_search_add_occ" 
             myFunctionCodes={store.functionCodes}
@@ -205,7 +205,7 @@ export default class TagWarehouse extends Component {
 
   // 跳转到标签管理
   goTagManager = () => {
-    window.location.href = `${window.__onerConfig.pathPrefix || '/'}/tag-management`
+    window.location.href = `${window.__onerConfig.pathPrefix || '/'}/tag-model`
   }
 
   renderNodata = () => {

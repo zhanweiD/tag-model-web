@@ -121,9 +121,18 @@ class ModalSelectTag extends Component {
      
     _.forEach(checkedNodes, ({props}) => {
       if (!props.children && props.tags) {
-        console.log('props.tags', props.tags)
         const tagInfo = props.tags.map(item => item.tag)
-        list = list.concat(tagInfo)
+        const tagMainInfo = tagInfo.map(d => {
+          if (d.configType === 2) {
+            return {
+              ...d,
+              used: 1,
+            }
+          }
+          return d
+        })
+        console.log(tagMainInfo)
+        list = list.concat(tagMainInfo)
       }
     })
 
@@ -255,12 +264,12 @@ class ModalSelectTag extends Component {
     } = this.store
 
     const treeData = toJS(selectTagTreeData)
-
+    console.log(treeData)
     const rowSelection = {
       selectedRowKeys: this.rowKeys.slice(),
       onChange: this.onTableCheck,
       getCheckboxProps: record => ({
-        disabled: record.used, // 已选择标签 禁止再次被选
+        disabled: record.used || record.configType === 2, // 已选择标签 / 主标签禁止再次被选
       }),
     }
 

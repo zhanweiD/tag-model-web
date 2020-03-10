@@ -3,27 +3,28 @@
  */
 import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
-import {action, observable} from 'mobx'
+import {action, observable, toJS} from 'mobx'
 import cls from 'classnames'
 import {Button, Icon, message} from 'antd'
 
-import {SvgIcon} from '@dtwave/uikit'
+// import {SvgIcon} from '@dtwave/uikit'
 import CodeMirror from 'codemirror'
 
-// import sqlFormatter from 'sql-formatter'
+import sqlFormatter from 'sql-formatter'
 import LogPanel from '../code-component/log-panel'
 
 import yunxing from '../../icon-svg/yunxing.svg'
-import zanting from '../../icon-svg/zanting.svg'
+// import zanting from '../../icon-svg/zanting.svg'
 
 
+import 'codemirror/mode/sql/sql'
 import 'codemirror/addon/hint/show-hint'
 import 'codemirror/addon/hint/sql-hint'
-import 'codemirror/mode/sql/sql'
+
+import 'codemirror/addon/selection/active-line'
 import 'codemirror/keymap/sublime'
 // 引入keymap
 import 'codemirror/addon/comment/comment'
-import 'codemirror/addon/selection/active-line'
 
 
 @inject('rootStore')
@@ -39,10 +40,6 @@ export default class DrawerTwoCode extends Component {
     this.store = codeStore
 
     this.store.projectId = props.projectId
-  }
-
-  componentWillMount() {
-
   }
 
   componentDidMount() {
@@ -63,15 +60,19 @@ export default class DrawerTwoCode extends Component {
         readOnly: false,
         keyMap: 'sublime',
         theme: 'default',
+        autofocus: true,
       })
-      // this.editor.setValue(sqlFormatter.format('SELECT * FROM table1'))
-      // this.editor.setValue(sqlFormatter.format(toJS(this.props.store.sqlInfo), {language: 'n1ql', indent: '    '}))
+
+      const {schemeDetail} = this.drawerStore
+      if (this.drawerStore.drawerType === 'edit' && schemeDetail.source) {
+        this.store.editor.setValue(sqlFormatter.format(toJS(schemeDetail.source)), {language: 'n1ql', indent: '    '})
+      }
     }
+    
     this.store.editor.on('change', (instance, change) => this.checkIsCanHint(instance, change, 'sql'))
   }
 
   @action checkIsCanHint = (instance, change, type) => {
-    console.log(instance, change, type)
     const {text} = change
     const {origin} = change
     let flag = false
@@ -102,7 +103,7 @@ export default class DrawerTwoCode extends Component {
 
   // 停止
   @action stopOperation() {
-    console.log(this.store.editor.getValue())
+    console.log(this.editor.getValue())
   }
 
   render() {
@@ -113,35 +114,20 @@ export default class DrawerTwoCode extends Component {
       store: this.store,
     }
 
-    console.log(this.store.isRuned)
+    const {schemeDetail} = this.drawerStore
+
     return (
       <div className="code-content">
         
         <div className="code-menu">
-          {/* <span
-            className={cls('FBH FBAC', {
-              // noAllow: disabled,
-            })}
-          >
-            <i className="iconfont dtwave icon-group15" />
-            运行
-          </span>
-          <span
-            className={cls('FBH FBAC', {
-              // noAllow: disabled,
-            })}
-          >
-            <i className="iconfont dtwave icon-tingzhi1" />
-            运行
-          </span> */}
           <span className="code-menu-item mr16" onClick={() => this.operationCode()}>
             <img src={yunxing} alt="img" />
             <span>运行</span>
           </span>
-          <span className="code-menu-item" onClick={() => this.stopOperation()}>
+          {/* <span className="code-menu-item" onClick={() => this.stopOperation()}>
             <img src={zanting} alt="img" />
             <span>停止</span>
-          </span>
+          </span> */}
         </div>
         <form
           id="code_area"
@@ -155,21 +141,12 @@ export default class DrawerTwoCode extends Component {
             id="codeArea"
             ref={t => this.codeArea = t}
             placeholder="code goes here..."
-          />
+          >
+            {
+              toJS(schemeDetail.source)
+            }
+          </textarea>
         </form>
-        {/* <div
-          id="log_area"
-          className={
-            cls({running_log: true})
-          }
-        >
-          {
-            this.store.isShowLog
-              ? <div className="drag-bottom" onMouseDown={this.store.onDraggableLogMouseDown} />
-              : null
-          }
-        </div> */}
-
         <LogPanel {...logPanelConfig} />
       </div>
     )

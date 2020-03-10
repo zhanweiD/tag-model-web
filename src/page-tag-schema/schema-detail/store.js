@@ -3,13 +3,8 @@ import {
 } from 'mobx'
 import {CycleSelect} from '@dtwave/uikit'
 import {successTip, failureTip, errorTip} from '../../common/util'
+import {cycleSelectMap} from '../util'
 import io from './io'
-
-const cycleSelectMap = {
-  day: '每天',
-  week: '每周',
-  month: '每月',
-}
 
 class Store {
   processeId
@@ -22,12 +17,14 @@ class Store {
         id: this.processeId,
       })
       runInAction(() => {
-        const data = {...res}        
-        const expression = CycleSelect.cronSrialize(res.schedule_expression)
+        const data = res
+        if (res.scheduleType === 1) {
+          const expression = CycleSelect.cronSrialize(res.schedule_expression)
 
-        data.period = cycleSelectMap[expression.cycle]
-        data.periodTime = expression.time
-      
+          data.period = cycleSelectMap[expression.cycle]
+          data.periodTime = expression.time
+        }
+
         this.detail = data
       })
     } catch (e) {
@@ -40,7 +37,8 @@ class Store {
    */
 
   @observable tagConfigList = [] // 标签配置
-  @observable majorTagList = []
+  @observable mainTagObj = []
+  @observable obj = []
   @observable tql = ''
 
   @action async getConfigInfo() {
@@ -49,8 +47,16 @@ class Store {
         id: this.processeId,
       })
       runInAction(() => {
+        const mainTagObj = {}
         this.tql = res.source
-        this.majorTagList = res.main_tag_mapping_keys
+        if (res.mainTagMappingKeys) {
+          res.mainTagMappingKeys.forEach(d => {
+            mainTagObj[d.objId] = d.columnName
+          })
+        }
+
+        this.mainTagObj = mainTagObj
+        this.obj = res.obj
         this.tagConfigList = res.filedTagRspList
       })
     } catch (e) {

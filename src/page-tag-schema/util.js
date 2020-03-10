@@ -9,32 +9,38 @@ export const schemeTypeMap = [{
 export const schemeStatusMap = [{
   name: '未完成',
   value: 0,
-}, {
-  name: '待提交',
+},
+//  {
+//   name: '待提交',
+//   value: 1,
+// }, 
+{
+  name: '提交成功',
   value: 1,
 }, {
-  name: '提交成功',
-  value: 2,
-}, {
   name: '提交失败',
-  value: 3,
+  value: 2,
 }]
 
-export const getSchemeStatus = ({status}) => {
+export const getSchemeStatus = ({status}, fn) => {
   let color 
   let text
   switch (+status) {
     case 0: color = '#d9d9d9'; text = '未完成'; break
-    case 1: color = '#108ee9'; text = '待提交'; break
-    case 2: color = '#87d068'; text = '提交成功'; break
-    case 3: color = '#f50'; text = '提交失败'; break
+    // case 1: color = '#108ee9'; text = '待提交'; break
+    case 1: color = '#87d068'; text = '提交成功'; break
+    case 2: color = '#f50'; text = '提交失败'; break
     default: color = '#d9d9d9'; text = '未完成'; break
+  }
+
+  if (+status === 1 || +status === 2) {
+    return <a href onClick={() => fn()}><Badge color={color} text={text} /></a> 
   }
 
   return <Badge color={color} text={text} />
 }
 
-export const getSchemeRunStatus = ({status}) => {
+export const getSchemeRunStatus = ({status}, fn) => {
   let color 
   let text
   switch (+status) {
@@ -42,6 +48,10 @@ export const getSchemeRunStatus = ({status}) => {
     case 1: color = '#87d068'; text = '运行成功'; break
     case 2: color = '#f50'; text = '运行失败'; break
     default: color = '#108ee9'; text = '运行中'; break
+  }
+
+  if (+status === 1 || +status === 1) {
+    return <a href onClick={() => fn()}><Badge color={color} text={text} /></a> 
   }
 
   return <Badge color={color} text={text} />
@@ -66,3 +76,10 @@ export const scheduleTypeObj = {
 export const schemeTypeObj = {
   1: 'TQL',
 } 
+
+
+export const cycleSelectMap = {
+  day: '每天',
+  week: '每周',
+  month: '每月',
+}

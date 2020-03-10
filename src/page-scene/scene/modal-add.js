@@ -119,13 +119,16 @@ class ModalAdd extends Component {
           <FormItem {...formItemLayout} label="描述">
             {getFieldDecorator('descr', {
               initialValue: data.descr,
-              rules: [{
-                transform: value => value.trim(),
-              }, {
-                required: true, message: '描述不能为空',
-              }, {
-                max: 128, message: '描述不超过128个字符',
-              }],
+              rules: [
+              //   {
+              //   transform: value => value.trim(),
+              // }, 
+                {
+                  required: true, message: '描述不能为空',
+                }, {
+                  max: 128, message: '描述不超过128个字符',
+                }],
+              validateFirst: true,
             })(
               <TextArea autoComplete="off" placeholder="不超过128个字" />
             )}

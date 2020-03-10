@@ -19,7 +19,6 @@ const {confirm} = Modal
 const {navListMap} = window.__keeper
 const navList = [
   navListMap.tagCenter,
-  navListMap.space,
   {text: navListMap.scene.text},
 ]
 

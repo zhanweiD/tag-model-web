@@ -221,7 +221,7 @@ export default class SelectTag extends Component {
                                         descr={descr}
                                         baseInfo={baseInfo}
                                         // 点击“标签详情”按钮，进入标签池中的标签详情
-                                        actions={[<Button href={`${window.__onerConfig.pathPrefix}/tag-management#/${id}`} type="primary"><a href>标签详情</a></Button>]}
+                                        actions={[<Button href={`${window.__onerConfig.pathPrefix}/tag-model#/${id}`} type="primary"><a href>标签详情</a></Button>]}
                                         // actions={
                                         //   <Button type="primary">
                                         //     <a

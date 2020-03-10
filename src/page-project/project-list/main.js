@@ -27,37 +27,37 @@ const navList = [
   {text: navListMap.project.text},
 ]
 
-const menu = (
-  <Menu>
-    <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="">
-      标签管理
-      </a>
-    </Menu.Item>
-    <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="">
-      标签加工
-      </a>
-    </Menu.Item>
-    <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="">
-      标签应用
-      </a>
-    </Menu.Item>
-  </Menu>
-)
-
 @inject('frameChange')
 @observer
 export default class ProjectList extends Component {
+  menu = data => (
+    <Menu>
+      <Menu.Item>
+        <a href onClick={() => this.goTagManage(data.id)}>
+          标签管理
+        </a>
+      </Menu.Item>
+      <Menu.Item>
+        <a href onClick={() => this.goTagProcess(data.id)}>
+          标签加工
+        </a>
+      </Menu.Item>
+      <Menu.Item>
+        <a href onClick={() => this.goTagApplication(data.id)}>
+          标签应用
+        </a>
+      </Menu.Item>
+    </Menu>
+  )
+
   columns = [
     {
       key: 'name',
       title: '项目名称',
       dataIndex: 'name',
-      render: (text, record) => (record.config === 1 
+      render: (text, record) => (record.config === 1
         ? (
-          <Link to={`/${record.id}`}> 
+          <Link to={`/${record.id}`}>
             <OmitTooltip maxWidth={100} text={text} />
           </Link>
         ) : <OmitTooltip maxWidth={100} text={text} />)
@@ -104,19 +104,19 @@ export default class ProjectList extends Component {
               if (record.status === 1) {
                 return (
                   <Fragment>
-                    
-                    <span className="disabled">编辑</span> 
+
+                    <span className="disabled">编辑</span>
                     <span className="table-action-line" />
                   </Fragment>
                 )
-              } 
+              }
               return (
                 <Fragment>
                   <a href onClick={() => this.openModal('edit', record)}>编辑</a>
                   <span className="table-action-line" />
                 </Fragment>
-              ) 
-            } 
+              )
+            }
             return null
           })()}
 
@@ -125,11 +125,11 @@ export default class ProjectList extends Component {
               if (record.status === 1) {
                 return (
                   <Fragment>
-                    <span className="disabled">删除</span> 
+                    <span className="disabled">删除</span>
                     <span className="table-action-line" />
                   </Fragment>
                 )
-              } 
+              }
               return (
                 <Fragment>
                   <Popconfirm placement="topRight" title="项目被删除后不可恢复，确认删除？" onConfirm={() => this.delItem(record.id)}>
@@ -138,13 +138,13 @@ export default class ProjectList extends Component {
                   <span className="table-action-line" />
                 </Fragment>
               )
-            } 
+            }
             return null
           })()}
 
-          <Dropdown overlay={menu}>
+          <Dropdown overlay={() => this.menu(record)}>
             <a href>
-更多
+              更多
               <Icon type="down" />
             </a>
           </Dropdown>
@@ -190,9 +190,33 @@ export default class ProjectList extends Component {
   /**
    * @description 跳转到项目空间
    */
-  toSpace = data => {
-    storage.set('tag_projectId', data.id)
-    window.location.href = `${pathPrefix}/object-config`
+  // toSpace = data => {
+  //   storage.set('tag_projectId', data.id)
+  //   window.location.href = `${pathPrefix}/object-config`
+  // }
+
+  /**
+   * @description 跳转到标签管理
+   */
+  goTagManage = id => {
+    storage.set('tag_projectId', id)
+    window.location.href = `${pathPrefix}/tag-warehouse`
+  }
+
+  /**
+   * @description 跳转到标签加工
+   */
+  goTagProcess = id => {
+    storage.set('tag_projectId', id)
+    window.location.href = `${pathPrefix}/tag-schema`
+  }
+
+  /**
+   * @description 跳转到标签应用
+   */
+  goTagApplication = id => {
+    storage.set('tag_projectId', id)
+    window.location.href = `${pathPrefix}/scene`
   }
 
   /**

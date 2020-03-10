@@ -4,7 +4,7 @@
 import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
 import {action, observable} from 'mobx'
-import {Button, Tabs} from 'antd'
+import {Tabs} from 'antd'
 import {DtTree} from '@dtwave/uikit'
 import {Loading} from '../../component'
 import Action from './tree-action'
@@ -44,9 +44,9 @@ export default class DrawerTwoTree extends Component {
     return data.map(node => (
       <DtTreeNode
         key={node.id}
-        itemKey={node.aId}
+        itemKey={node.id}
         // title={<TreeNodeTitle node={node} />}
-        title={node.name}
+        title={node.enName ? `${node.name}(${node.enName})` : node.name}
         selectable={node.parentId}
         showIcon={node.parentId === 0}
         // 对象类目只有一级

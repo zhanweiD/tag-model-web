@@ -3,12 +3,13 @@
  */
 import {Component, Fragment} from 'react'
 import {action, toJS} from 'mobx'
-import {observer, Provider} from 'mobx-react'
+import {observer, Provider, inject} from 'mobx-react'
 import {Button, Popconfirm} from 'antd'
 import {Link} from 'react-router-dom'
-import {ListContent} from '../../component'
+import {ListContent, AuthBox} from '../../component'
 import seach from './search'
 import DrawerConfig from './drawer' 
+import ModalSubmitLog from './modal-submit-log'
 import {
   getSchemeStatus, 
   getSchemeRunStatus,
@@ -18,6 +19,16 @@ import {
 
 import Store from './store'
 
+// 面包屑设置
+// eslint-disable-next-line no-underscore-dangle
+const {navListMap} = window.__keeper
+const navList = [
+  navListMap.tagCenter,
+  navListMap.tagSchema,
+  {text: navListMap.schemaList.text},
+]
+
+@inject('frameChange')
 @observer
 export default class SchemaList extends Component {
   constructor(props) {
@@ -35,6 +46,11 @@ export default class SchemaList extends Component {
     this.drawerStore = drawerStore
     this.store = listStore
     this.store.projectId = spaceInfo && spaceInfo.projectId
+
+
+    if (spaceInfo && spaceInfo.projectId) {
+      listStore.getAuthCode()
+    }
   }
 
   columns = [
@@ -60,71 +76,96 @@ export default class SchemaList extends Component {
     }, {
       title: '方案状态',
       dataIndex: 'status',
-      render: v => getSchemeStatus({status: v}),
+      render: (v, r) => getSchemeStatus({status: v}, () => this.getSubmitLog({
+        id: r.id,
+      })),
     }, {
       title: '最近运行状态',
       dataIndex: 'lastStatus',
-      render: v => (v === null ? '' : getSchemeRunStatus({status: v})),
+      render: (v, r) => (v === null ? '' : getSchemeRunStatus({status: v}, () => this.getSubmitLog({
+        id: r.id,
+      }))),
     }, {
       title: '操作',
       dataIndex: 'action',
+      width: 200,
       render: (text, record) => (
-        <div>
-          {/* 方案状态: 提交成功/提交失败  操作: 查看 */}
-          {
-            (record.status === 2 || record.status === 3) && (
-              <Fragment>
-                <Link to={`/detail/${record.id}}`}> 查看</Link>
-                <span className="table-action-line" />
-              </Fragment>
-            )
-          }
-         
-          {/* 方案状态: 待提交/提交失败  操作: 提交 */}
-          {
-            (record.status === 1 || record.status === 3) && (
-              <Fragment>
-                <Popconfirm placement="topRight" title="你确定要提交吗？" onConfirm={() => this.submit(record)}>
-                  <a href>提交</a>
-                </Popconfirm>
-                <span className="table-action-line" />
-              </Fragment>
-            )
-          }
+        <AuthBox
+          code="asset_tag_project_obj_select" 
+          myFunctionCodes={this.store.functionCodes}
+          isButton={false}
+        >
+          <div>
+            {/* 方案状态: 提交成功  操作: 查看 */}
+            {
+              (record.status === 1) && (
+                <Fragment>
+                  <Link to={`/detail/${record.id}`}> 查看</Link>
+                  <span className="table-action-line" />
+                </Fragment>
+              )
+            }
 
-          {/* 方案状态: 未完成  操作: 编辑 */}
-          {
-            record.status === 0 && (
-              <Fragment>
-                <a href onClick={() => this.edit(record)}>编辑</a>
-                <span className="table-action-line" />
-              </Fragment>
-            )
-          }
-          {/* 方案状态: 提交成功 调度类型: 手动执行  操作: 执行 */}
-          {
-            (record.status === 2 && record.scheduleType === 2) && (
-              <Fragment>
-                <Popconfirm placement="topRight" title="你确定要执行吗？" onConfirm={() => this.operation(record)}>
-                  <a href>执行</a>
-                </Popconfirm>
-                <span className="table-action-line" />
-              </Fragment>
+            {/* 方案状态: 未完成/提交失败  操作: 编辑 */} 
+
+            {/* notice */}
+            {
+              (record.status === 0 || record.status === 2) && (
+                <Fragment>
+                  <a href onClick={() => this.edit(record)}>编辑</a>
+                  <span className="table-action-line" />
+                </Fragment>
+              )
+            }
+            
+            {/* 方案状态: 提交成功 调度类型: 周期调度  操作: 禁止执行 */}
+            {
+              (record.status === 1 && record.scheduleType === 1) && (
+                <Fragment>
+                  <span className="disabled">执行</span>
+                  <span className="table-action-line" />
+                </Fragment>
              
-            )
-          }
+              )
+            }
+
+            {/* 方案状态: 提交成功 调度类型:手动执行   操作: 执行 */}
+            {
+              (record.status === 1 && record.scheduleType === 2) && (
+                <Fragment>
+                  <Popconfirm placement="topRight" title="你确定要执行吗？" onConfirm={() => this.operation(record)}>
+                    <a href>执行</a>
+                  </Popconfirm>
+                  <span className="table-action-line" />
+                </Fragment>
+             
+              )
+            }
+            {/* 方案状态: 提交成功 调度类型:周期执行   操作: 删除 */}
+            {
+              (record.status === 1 && record.tagCount) ? <span className="disabled">删除</span> : (
+                <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.remove(record)}>
+                  <a href>删除</a>
+                </Popconfirm>
+              )
+            }
           
-          <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.remove(record)}>
-            <a href>删除</a>
-          </Popconfirm>
-          <span className="table-action-line" />
-          <a href onClick={() => this.clone(record)}>克隆</a>
-        </div>
+           
+            <span className="table-action-line" />
+            <Popconfirm placement="topRight" title="你确定要克隆吗？" onConfirm={() => this.clone(record)}>
+              <a href>克隆</a>
+            </Popconfirm>
+          </div>
+        </AuthBox>
+        
       ),
     },
   ]
 
   componentWillMount() {
+    // 面包屑设置
+    const {frameChange} = this.props
+    frameChange('nav', navList)
     this.store.getObjList()
   }
 
@@ -132,16 +173,11 @@ export default class SchemaList extends Component {
     const params = {
       id: data.id,
     }
-    this.drawerStore.getSchemeDetail(params)
-    this.drawerStore.getSchemeConfigInfo(params)
-    this.drawerStore.drawerType = 'edit'
-    this.drawerStore.drawerVisible = true
-  }
-
-  @action.bound submit(data) {
-    this.store.submitScheme({
-      id: data.id,
+    this.drawerStore.getSchemeDetail(params) 
+    this.drawerStore.getSchemeConfigInfo(params, () => {
+      this.drawerStore.drawerVisible = true
     })
+    this.drawerStore.drawerType = 'edit'
   }
 
   @action.bound operation(data) {
@@ -166,6 +202,14 @@ export default class SchemaList extends Component {
     this.drawerStore.drawerVisible = true
   }
 
+  @action.bound getSubmitLog(data) {
+    this.store.modalLogVisible = true
+
+    this.store.getSubmitLog({
+      id: data.id,
+    })
+  }
+
   render() {
     const {objList} = this.store
 
@@ -185,6 +229,7 @@ export default class SchemaList extends Component {
             <ListContent {...listConfig} />
           </div>
           <DrawerConfig projectId={this.projectId} />
+          <ModalSubmitLog store={this.store} />
         </div>
       </Provider>
     
