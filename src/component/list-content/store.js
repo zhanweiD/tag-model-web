@@ -3,7 +3,7 @@
  * @author  mahua
  */
 import {
-  observable, action, runInAction,
+  observable, action, runInAction, toJS,
 } from 'mobx'
 
 /**
@@ -13,8 +13,7 @@ import {
 const filterUndefinedValues = values => {
   const filterKeys = Object.keys(values).filter(d => values[d] !== undefined && values[d] !== '')
   const filterObj = {}
-  _.forEach(filterKeys, key => filterObj[key] = values[key])
-
+  _.forEach(filterKeys, key => filterObj[key] = toJS(values[key]))
   return filterObj
 }
 
@@ -79,7 +78,14 @@ const ListContentStore = apiFunc => class _Store {
       this.tableLoading = true
 
       const {pageSize = 10, currentPage = 1} = this.pagination
-
+      console.log(filterUndefinedValues({
+        ...this.initParams,
+        ...this.tableSorter,
+        ...this.searchParams,
+        pageSize,
+        currentPage: currentPage || 1,
+        ...params,
+      }))
       const res = await apiFunc(filterUndefinedValues({
         ...this.initParams,
         ...this.tableSorter,

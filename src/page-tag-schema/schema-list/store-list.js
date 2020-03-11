@@ -1,5 +1,5 @@
 import {
-  action, runInAction, observable, toJS,
+  action, runInAction, observable,
 } from 'mobx'
 import {
   successTip, failureTip, errorTip, changeToOptions,
@@ -89,7 +89,10 @@ export default class Store extends ListContentStore(io.getList) {
   // 删除方案
   @action async deleteScheme(params) {
     try {
-      const res = await io.deleteScheme(params)
+      const res = await io.deleteScheme({
+        projectId: this.projectId,
+        ...params,
+      })
       runInAction(() => {
         if (res.success) {
           successTip('删除成功')

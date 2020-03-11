@@ -20,11 +20,10 @@ export default class Market extends Component {
   constructor(props) {
     super(props)
     const {spaceInfo} = window
-
     store.useProjectId = spaceInfo && spaceInfo.projectId
   }
 
-  componentWillMount() {
+  componentDidMount() {
     // 请求列表，放在父组件进行请求是因为需要在外层做空数据判断。
     // 若返回数据为空[]。则渲染 NoData 组件。
     // 要是请求放在列表组件ListContent中的话, 就必须渲染表格的dom 影响体验
@@ -33,7 +32,26 @@ export default class Market extends Component {
       type: 1,
     })
 
-    store.initParams.useProjectId = store.useProjectId
+    store.initParams = {
+      useProjectId: store.useProjectId,
+    } 
+  }
+
+  componentWillUnmount() {
+    store.tagIds.clear()
+    store.selectedRows.clear()
+    store.rowKeys.clear()
+    store.selectItem = {}
+    
+    store.objectId = ''
+    store.ownProjectId = ''
+    store.projectPermission = 1
+   
+    store.searchParams = {}
+    store.pagination = {
+      pageSize: 10,
+      currentPage: 1,
+    }
   }
 
   columns = [
@@ -44,9 +62,16 @@ export default class Market extends Component {
       render: (text, record) => (
         <div className="FBH">
           <OmitTooltip maxWidth={120} text={text} />
-          {
-            record.status === 1 ? <Tag status="success" className="ml8" text="审批中" /> : null
-          }
+          {(() => {
+            if (record.status === 1) {
+              return <Tag status="process" className="ml8" text="审批中" />
+            }
+
+            if (record.status === 0) {
+              return <Tag status="success" className="ml8" text="有权限" />
+            } 
+            return null
+          })()}
         </div>
       ),
     }, {
@@ -172,7 +197,6 @@ export default class Market extends Component {
   
     const listConfig = {
       columns: this.columns,
-      // initParams: {useProjectId},
       buttons: useProjectId ? [
         <Button type="primary" disabled={!store.rowKeys.length} onClick={this.batchApply}>批量申请</Button>,
         <span className="ml8">
@@ -188,11 +212,8 @@ export default class Market extends Component {
     }
 
     const noDataConfig = {
-      // btnText: '去上架标签',
-      // onClick: this.goTagManager,
       text: '没有任何公开标签!',
     }
-
 
     return (
  

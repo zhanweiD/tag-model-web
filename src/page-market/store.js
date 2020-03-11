@@ -30,7 +30,7 @@ class Store extends ListContentStore(io.getList) {
 
 
   @action.bound initData() {
-    this.projectPermission = 0
+    this.projectPermission = 1
     this.ownProjectId = ''
     this.objectId = ''
     this.useProjectId = ''

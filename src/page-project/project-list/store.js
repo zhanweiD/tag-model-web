@@ -19,7 +19,16 @@ class Store extends ListContentStore(io.getList) {
   @observable modalType = 'add' // 弹窗类型
   // loading
   @observable selectLoading = false
+  @observable selectEnginesLoading = false
+  @observable selectGroupsLoading = false
   @observable confirmLoading = false
+
+  @action.bound closeModal() {
+    this.dataSource.clear()
+    this.dataEnginesSource.clear()
+    this.dataGroupData.clear()
+    this.detail = {}
+  }
 
   @action async getCuser() {
     try {
@@ -51,6 +60,7 @@ class Store extends ListContentStore(io.getList) {
   }
 
   @action async getEnginesSource(dataStorageId) {
+    this.selectEnginesLoading = true
     try {
       const res = await io.getEnginesSource({
         dataStorageId,
@@ -62,10 +72,15 @@ class Store extends ListContentStore(io.getList) {
       })
     } catch (e) {
       errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        this.selectEnginesLoading = false
+      })
     }
   }
 
   @action async getGroups() {
+    this.selectGroupsLoading = true
     try {
       const res = await io.getGroups()
       runInAction(() => {
@@ -75,6 +90,8 @@ class Store extends ListContentStore(io.getList) {
       })
     } catch (e) {
       errorTip(e.message)
+    } finally {
+      this.selectGroupsLoading = false
     }
   }
   

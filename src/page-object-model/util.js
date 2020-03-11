@@ -70,5 +70,5 @@ export const objStatusMap = {
 export const objTypeMap = {
   0: '简单关系',
   1: '复杂关系',
-  2: '常规实体',
+  2: '实体',
 }

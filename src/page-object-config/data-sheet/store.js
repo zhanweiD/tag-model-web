@@ -132,7 +132,7 @@ class Store extends ListContentStore(io.getList) {
   /**
    * @description 字段列表
    */
-  @action async getFieldList() {
+  @action async getFieldList(cb) {
     try {
       const res = await io.getFieldList({
         tableName: this.tableName,
@@ -141,6 +141,7 @@ class Store extends ListContentStore(io.getList) {
       })
       runInAction(() => {
         this.fieldList = res || []
+        if (cb) cb(res)
       })
     } catch (e) {
       errorTip(e.message)
@@ -220,14 +221,13 @@ class Store extends ListContentStore(io.getList) {
 
     const dataDbInfo = this.dataSourceList.filter(d => d.storageId === this.storageId)[0]
 
-    // const majorKeyInfo = this.fieldList.filter(d => d.field === this.majorKeyField)[0] || {}
-    console.log(toJS(this.entity1Key), toJS(this.entity2Key))
+
     const mappingKeys = this.fieldList
       .filter(d => d.field === this.entity1Key || d.field === this.entity2Key)
       .map(d => ({
         obj_id: `${d.objId}`,
-        filed_name: d.field,
-        file_type: d.type,
+        field_name: d.field,
+        field_type: d.type,
       }))
 
     const selectFields = this.fieldList.filter(d => (d.field !== this.entity1Key) && (d.field !== this.entity2Key))
@@ -240,8 +240,6 @@ class Store extends ListContentStore(io.getList) {
       dataFieldName: d.field,
       dataFieldType: d.type,
       mappingKeys: JSON.stringify(mappingKeys),
-      // mappingKey: majorKeyInfo.field,
-      // mappingKeyType: majorKeyInfo.type,
       ...fieldParams,
     }))
 

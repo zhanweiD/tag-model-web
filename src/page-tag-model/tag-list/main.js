@@ -355,7 +355,7 @@ export default class TagList extends Component {
         className="mr8"
       >
         创建标签
-      </AuthBox>, 
+                </AuthBox>, 
       // <AuthBox
       //     code="asset_tag_project_tag_operator"
       //     myFunctionCodes={store.functionCodes}
@@ -374,7 +374,7 @@ export default class TagList extends Component {
 
     return (
       <div className="page-tag-list">
-        <div className="content-header">{navListMap.tagManagement.text}</div>
+        <div className="content-header">{navListMap.tagModel.text}</div>
         {
           spaceInfo && spaceInfo.projectId && spaceInfo.projectList && spaceInfo.projectList.length
             ? (

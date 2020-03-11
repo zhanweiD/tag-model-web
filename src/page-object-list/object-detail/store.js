@@ -66,7 +66,7 @@ class Store {
   }
 
   /**
-   * @description 业务模型
+   * @description 业务视图
    */
 
   @observable modelLoading = false

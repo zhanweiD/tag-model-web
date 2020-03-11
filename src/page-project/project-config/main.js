@@ -20,6 +20,7 @@ import store from './store'
 const {navListMap} = window.__keeper
 const navList = [
   navListMap.tagCenter,
+  navListMap.common,
   navListMap.project,
   navListMap.projectConfig,
 ]

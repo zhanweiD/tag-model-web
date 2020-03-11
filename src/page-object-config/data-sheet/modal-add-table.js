@@ -77,29 +77,32 @@ class ModalAddTable extends Component {
    * @param {*} tableName 数据表名
    */
   @action.bound selectDataSheet(tableName) {
+    const t = this
     const {form: {resetFields}} = this.props
     if (tableName !== this.store.tableName) {
       this.store.tableName = tableName
 
-      resetFields(['majorKey'])
-      this.store.getFieldList()
-      if (this.chooseEntity) {
-        this.store.getMappingKey(this.chooseEntity, field => {
-          this.chooseEntityMaJorKey = field
+      resetFields(['mappingKey'])
 
-          this.store.fieldList = this.store.fieldList.map(d => {
-            if (d.field === field) {
-              return {
-                ...d,
-                objId: this.chooseEntity,
-                disabled: true,
+      this.store.getFieldList(fieldList => {
+        if (t.chooseEntity) {
+          t.store.getMappingKey(t.chooseEntity, field => {
+            t.chooseEntityMaJorKey = field
+            t.store.fieldList = fieldList.map(d => {
+              if (d.field === field) {
+                return {
+                  ...d,
+                  objId: t.chooseEntity,
+                  disabled: true,
+                }
               }
-            }
-
-            return d
+  
+              return d
+            })
           })
-        })
-      }
+        }
+      })
+      
       this.initData()
     }
   }

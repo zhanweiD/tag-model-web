@@ -46,7 +46,7 @@ export const post = createRequestFn('POST')
  * @param1 labelName 返回数据label 字段名
  * @param2 valueName 返回数据value 字段名
  */
-export const changeToOptions = list => (labelName, valueName) => list.map((obj={}) => ({ name: obj[labelName], value: obj[valueName] }))
+export const changeToOptions = (list=[]) => (labelName, valueName) => list.map((obj={}) => ({ name: obj && obj[labelName], value: obj && obj[valueName] }))
 
 /**
  * @description 遍历数组根据"id"值查找对应的"name"

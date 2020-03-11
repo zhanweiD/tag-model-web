@@ -68,7 +68,7 @@ export const objStatusMap = {
 export const objTypeMap = {
   0: '简单关系',
   1: '复杂关系',
-  2: '常规实体',
+  2: '实体',
 }
 
 export const objTypeList = [{
@@ -78,6 +78,6 @@ export const objTypeList = [{
   name: '复杂关系',
   value: 1,
 }, {
-  name: '常规实体',
+  name: '实体',
   value: 2,
 }]

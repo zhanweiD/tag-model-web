@@ -3,10 +3,9 @@
  */
 import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
-// import {action} from 'mobx'
+import {toJS, action} from 'mobx'
 import {Button} from 'antd'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
-import {action} from 'mobx'
 import {scheduleTypeObj} from '../util'
 
 @inject('rootStore')
@@ -53,8 +52,13 @@ export default class DrawerFour extends Component {
   render() {
     const {show} = this.props
     const {schemeDetail, submitLoading} = this.store
-    const {mainTagMappingKeys, objName} = schemeDetail
-
+    const {
+      mainTagMappingKeys,
+      objName, 
+      isPartitioned,
+      partitionMappingKeys,
+    } = schemeDetail
+    console.log(toJS(schemeDetail))
     const majorTag = mainTagMappingKeys && mainTagMappingKeys.length > 1 
       ? this.getMajorTag()
       : [{
@@ -101,9 +105,18 @@ export default class DrawerFour extends Component {
           />
           <div className="form-title">分区配置</div>
           <NemoBaseInfo 
-            dataSource={[{
+            dataSource={isPartitioned ? [{
               title: '设置分区',
-              value: schemeDetail.isPartitioned ? '是' : '否',
+              value: isPartitioned ? '是' : '否',
+            }, {
+              title: '分区字段名',
+              value: partitionMappingKeys[0].partitionFieldName,
+            }, {
+              title: '分区字段值',
+              value: partitionMappingKeys[0].partitionFieldValue,
+            }] : [{
+              title: '设置分区',
+              value: isPartitioned ? '是' : '否',
             }]} 
             className="ml32 mb24"
           />

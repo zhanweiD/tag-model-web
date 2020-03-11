@@ -39,7 +39,7 @@ export default class ObjectList extends Component {
   }, {
     title: '操作',
     key: 'action',
-    width: 80,
+    width: 120,
     dataIndex: 'action',
     render: (text, record) => (
       <div>

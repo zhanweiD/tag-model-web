@@ -28,7 +28,6 @@ export default class Page extends Component {
         currentPage: currentPage || 1,
       })
       runInAction(() => {
-        console.log(data)
         this.tableData = data.result.data
         this.tableTitle = data.result.title
         this.totalSize = data.totalSize
@@ -46,11 +45,10 @@ export default class Page extends Component {
   }
 
   @action flexTable = () => {
-    console.log($(this.resultDomBox).height())
     $(this.resultDom).flexigrid({
       width: '100%',
       minwidth: 50,
-      height: $(this.resultDomBox).height() - 88,
+      height: $(this.resultDomBox).height() - 50,
     })
   }
 
@@ -59,8 +57,7 @@ export default class Page extends Component {
   }
 
   @action setHeight = height => {
-    console.log(height)
-    $(this.resultDom).parent('.bDiv').height(height - 88)
+    $(this.resultDom).parent('.bDiv').height(height - 50)
   }
 
   render() {

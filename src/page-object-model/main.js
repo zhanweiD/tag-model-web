@@ -23,7 +23,7 @@ export default class Page extends Component {
       <Router>
         <Frame navList={navList}>
           <Switch>
-            <Route path="/" component={ObjectModel} />
+            <Route path="/:typeCode?/:objId?/:tabId?" component={ObjectModel} />
             <Route
               render={() => {
                 window.location.href = '/404'

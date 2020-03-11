@@ -311,7 +311,7 @@ class Store {
   @observable businessModel = {}
 
   /**
-   * @description 业务模型
+   * @description 业务视图
    */
   @action async getBusinessModel(cb, params) {
     this.modelLoading = true

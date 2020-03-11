@@ -5,10 +5,12 @@ import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
 import {action} from 'mobx'
 import {Drawer, Steps, Modal} from 'antd'
+import {CycleSelect} from '@dtwave/uikit'
 import DrawerOne from './drawer-one'
 import DrawerTwo from './drawer-two'
 import DrawerThree from './drawer-three'
 import DrawerFour from './drawer-four'
+import {cycleSelectMap} from '../util'
 
 const {Step} = Steps
 
@@ -34,6 +36,7 @@ export default class DrawerConfig extends Component {
         okText: '确认',
         cancelText: '取消',
         onOk: () => {
+          // 第一步退出保存
           if (+currentStep === 0) {
             t.store.oneForm.validateFieldsAndScroll((err, values) => {
               if (err) {
@@ -52,6 +55,7 @@ export default class DrawerConfig extends Component {
             })
           }
 
+          // 第二步退出保存
           if (+currentStep === 1) {
             t.store.paramsForm.validateFieldsAndScroll((err, values) => {
               if (err) {
@@ -70,6 +74,52 @@ export default class DrawerConfig extends Component {
               t.store.saveSchema({
                 status: 0,
               }) // 保存
+            })
+          }
+
+          // 第二步退出保存
+          if (+currentStep === 2) {
+            t.store.drawerThreeForm.validateFieldsAndScroll((err, values) => {
+              if (err) {
+                return
+              } 
+ 
+              
+              if (values.zoneParams) {
+                const {
+                  isPartitioned, key, value,
+                } = values.zoneParams
+                this.store.schemeDetail.isPartitioned = isPartitioned ? 1 : 0
+
+                if (isPartitioned) {
+                  this.store.schemeDetail.partitionMappingKeys = [{partitionFieldName: key, partitionFieldValue: value}]
+                } else {
+                  this.store.schemeDetail.partitionMappingKeys = []
+                }
+              } else {
+                this.store.schemeDetail.isPartitioned = 0
+                this.store.schemeDetail.partitionMappingKeys = []
+              }
+ 
+              if (values.scheduleExpression) {
+                this.store.schemeDetail.scheduleExpression = values.scheduleExpression
+
+                const expression = CycleSelect.cronSrialize(values.scheduleExpression)
+                this.store.schemeDetail.period = cycleSelectMap[expression.cycle]
+                this.store.schemeDetail.periodTime = expression.time
+              }
+
+              const mainTagMappingKeys = schemeDetail.obj && schemeDetail.obj.map((d, i) => ({
+                objId: d.id,
+                columnName: values[`majorTag${i}`],
+              }))
+      
+              this.store.schemeDetail.mainTagMappingKeys = mainTagMappingKeys
+              this.store.schemeDetail.scheduleType = values.scheduleType
+
+              t.store.saveSchema({
+                status: 0,
+              }, 'close') // 保存
             })
           }
         },
@@ -116,7 +166,11 @@ export default class DrawerConfig extends Component {
               wrappedComponentRef={form => this.store.oneForm = form ? form.props.form : form}
             />
             <DrawerTwo show={currentStep === 1} projectId={projectId} />
-            <DrawerThree show={currentStep === 2} projectId={projectId} />
+            <DrawerThree 
+              show={currentStep === 2} 
+              projectId={projectId}
+              wrappedComponentRef={form => this.store.drawerThreeForm = form ? form.props.form : form}
+            />
             <DrawerFour show={currentStep === 3} projectId={projectId} />
           </div>
         </div>        

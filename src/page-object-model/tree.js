@@ -191,7 +191,7 @@ export default class Tree extends Component {
     const {history} = this.props
     // 刷新对象详情
     this.bigStore.updateDetailKey = Math.random()
-    history.push(`/${store.typeCode}/${selectedKeys[0]}`)
+    history.push(`/${store.typeCode}/${selectedKeys[0]}/${this.bigStore.tabId}`)
   }
 
   /**

@@ -22,6 +22,7 @@ export default class Store {
   @observable currentStep = 0
 
   @observable paramsForm = null
+  @observable drawerThreeForm = null
   
   @observable schemeDetail = {}
 
@@ -35,6 +36,7 @@ export default class Store {
     this.currentStep = 0
     this.drawerType = undefined
     this.schemeDetail = {}
+    this.submitLoading = false
 
     this.codeStore.runStatusMessage = {
       status: '',
@@ -65,7 +67,7 @@ export default class Store {
         const data = res      
 
         if (res.scheduleType === 1) {
-          const expression = CycleSelect.cronSrialize(res.schedule_expression)
+          const expression = CycleSelect.cronSrialize(res.scheduleExpression)
 
           data.period = cycleSelectMap[expression.cycle]
           data.periodTime = expression.time
@@ -251,7 +253,7 @@ export default class Store {
   /**
    * @description 方案保存
    */
-  @action async saveSchema(p) {
+  @action async saveSchema(p, type, cb) {
     const params = this.getSaveParams()
 
     try {
@@ -281,8 +283,18 @@ export default class Store {
             })
           }
 
-          // 处于第三步
-          if (this.currentStep === 2) {
+          // 处于第二步 点❌保存
+          if (this.currentStep === 2 && type === 'close') {
+            successTip('保存成功')
+            this.closeDrawer()
+            this.listStore.getList({
+              currentPage: 1,
+              pageSize: 10,
+            })
+          }
+
+          // 处于第三步 点击下一步保存
+          if (this.currentStep === 2 && type === 'next') {
             successTip('保存成功')
             this.schemeDetail.id = res
             this.listStore.getList({
@@ -291,6 +303,8 @@ export default class Store {
             })
             this.nextStep()
           }
+
+          if (cb)cb()
         } else {
           failureTip('保存失败')
         }

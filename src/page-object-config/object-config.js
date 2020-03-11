@@ -41,11 +41,9 @@ export default class ObjectConfig extends Component {
   @action changeTab = code => {
     store.typeCode = code
     store.objId = undefined
+    store.tabId = '0'
     store.getObjTree(() => {
       store.objId = store.currentSelectKeys
-      // if (store.currentSelectKeys) {
-      //   store.getObjDetail()
-      // }
     })
   }
 

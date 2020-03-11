@@ -60,6 +60,7 @@ export default class ListContent extends Component {
   }
 
   handleSearch = (value = {}) => {
+    console.log(value)
     this.remoteSearch(value)
   }
 
@@ -81,6 +82,7 @@ export default class ListContent extends Component {
     if (onSearch) {
       onSearch() 
     } else {
+      console.log(newVal)
       this.store.searchParams = newVal
 
       this.store.getList({

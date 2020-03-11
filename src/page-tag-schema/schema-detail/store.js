@@ -19,7 +19,7 @@ class Store {
       runInAction(() => {
         const data = res
         if (res.scheduleType === 1) {
-          const expression = CycleSelect.cronSrialize(res.schedule_expression)
+          const expression = CycleSelect.cronSrialize(res.scheduleExpression)
 
           data.period = cycleSelectMap[expression.cycle]
           data.periodTime = expression.time

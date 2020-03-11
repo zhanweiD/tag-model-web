@@ -6,10 +6,6 @@ import {observer, inject} from 'mobx-react'
 import {action, observable, toJS} from 'mobx'
 import {Button, Tabs} from 'antd'
 
-import 'codemirror/addon/hint/show-hint'
-import 'codemirror/addon/hint/sql-hint'
-import 'codemirror/mode/sql/sql'
-
 import DrawerTwoTree from './drawer-two-tree'
 import DrawerTwoCode from './drawer-two-code'
 import DrawerTwoParams from './drawer-two-params'
@@ -60,7 +56,6 @@ export default class DrawerTwo extends Component {
           <DrawerTwoTree />
           <DrawerTwoCode operationCode={this.operationCode} projectId={projectId} />
           <DrawerTwoParams 
-            data={toJS(schemeDetail.parameterMappingKeys)}
             wrappedComponentRef={form => this.store.paramsForm = form ? form.props.form : form}
           />
         </div>

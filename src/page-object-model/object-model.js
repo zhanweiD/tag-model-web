@@ -26,11 +26,13 @@ export default class ObjectModel extends Component {
     const {match} = props
     store.typeCode = match.params.typeCode || '3'
     store.objId = match.params.objId
+    store.tabId = match.params.tabId || '0' // 当前详情tabID；默认数据视图
   }
 
   @action changeTab = code => {
     store.typeCode = code
     store.objId = undefined
+    store.tabId = '0'
 
     // 更新类目树
     store.updateTreeKey = Math.random()

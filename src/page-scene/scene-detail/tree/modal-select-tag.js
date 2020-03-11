@@ -118,21 +118,11 @@ class ModalSelectTag extends Component {
   @action.bound onTreeCheck(keys, {checkedNodes}) {
     let list = []
     let rowKeys = []
-     
     _.forEach(checkedNodes, ({props}) => {
       if (!props.children && props.tags) {
         const tagInfo = props.tags.map(item => item.tag)
-        const tagMainInfo = tagInfo.map(d => {
-          if (d.configType === 2) {
-            return {
-              ...d,
-              used: 1,
-            }
-          }
-          return d
-        })
-        console.log(tagMainInfo)
-        list = list.concat(tagMainInfo)
+
+        list = list.concat(tagInfo)
       }
     })
 
@@ -264,7 +254,7 @@ class ModalSelectTag extends Component {
     } = this.store
 
     const treeData = toJS(selectTagTreeData)
-    console.log(treeData)
+
     const rowSelection = {
       selectedRowKeys: this.rowKeys.slice(),
       onChange: this.onTableCheck,

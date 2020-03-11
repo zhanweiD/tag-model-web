@@ -6,7 +6,9 @@ import {action, toJS} from 'mobx'
 import {observer, Provider, inject} from 'mobx-react'
 import {Button, Popconfirm} from 'antd'
 import {Link} from 'react-router-dom'
-import {ListContent, AuthBox} from '../../component'
+import {
+  ListContent, AuthBox, NoData, Loading,
+} from '../../component'
 import seach from './search'
 import DrawerConfig from './drawer' 
 import ModalSubmitLog from './modal-submit-log'
@@ -30,17 +32,16 @@ const navList = [
 
 @inject('frameChange')
 @observer
-export default class SchemaList extends Component {
+class SchemaList extends Component {
   constructor(props) {
     super(props)
     const {spaceInfo} = window
+    this.projectId = spaceInfo && spaceInfo.projectId
 
     this.rootStore = new Store()
-    this.projectId = spaceInfo && spaceInfo.projectId
     const {
       listStore,
       drawerStore, 
-      // prodectId,
     } = this.rootStore
 
     this.drawerStore = drawerStore
@@ -141,9 +142,9 @@ export default class SchemaList extends Component {
              
               )
             }
-            {/* 方案状态: 提交成功 调度类型:周期执行   操作: 删除 */}
+            {/* 方案状态: 提交成功 调度类型:周期执行 运行状态  操作: 删除 */}
             {
-              (record.status === 1 && record.tagCount) ? <span className="disabled">删除</span> : (
+              (record.status === 1 && (record.tagCount || record.lastStatus === 1)) ? <span className="disabled">删除</span> : (
                 <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.remove(record)}>
                   <a href>删除</a>
                 </Popconfirm>
@@ -166,7 +167,10 @@ export default class SchemaList extends Component {
     // 面包屑设置
     const {frameChange} = this.props
     frameChange('nav', navList)
-    this.store.getObjList()
+    
+    if (this.projectId) {
+      this.store.getObjList()
+    }
   }
 
   @action.bound edit(data) {
@@ -210,9 +214,30 @@ export default class SchemaList extends Component {
     })
   }
 
+  renderNodata = () => {
+    const {spaceInfo} = window
+
+    const noProjectDataConfig = {
+      btnText: '去创建项目',
+      onClick: this.goProjectList,
+      text: '没有任何项目，去项目列表页创建项目吧！',
+      code: 'asset_tag_project_add',
+      noAuthText: '没有任何项目',
+    }
+
+    if (spaceInfo && spaceInfo.finish && !spaceInfo.projectList.length) {
+      return (
+        <NoData
+          {...noProjectDataConfig}
+        />
+      )
+    }
+
+    return <Loading mode="block" height={200} />
+  }
+
   render() {
     const {objList} = this.store
-
     const listConfig = {
       columns: this.columns,
       initParams: {projectId: this.projectId},
@@ -225,14 +250,22 @@ export default class SchemaList extends Component {
       <Provider rootStore={this.rootStore}>
         <div className="page-tag-processe">
           <div className="content-header">加工方案</div>
-          <div className="list-content">
-            <ListContent {...listConfig} />
-          </div>
-          <DrawerConfig projectId={this.projectId} />
-          <ModalSubmitLog store={this.store} />
+          {
+            this.projectId ? (
+              <Fragment>
+                <div className="list-content">
+                  <ListContent {...listConfig} />
+                </div>
+                <DrawerConfig projectId={this.projectId} />
+                <ModalSubmitLog store={this.store} />
+              </Fragment>
+            ) : this.renderNodata()
+          }
+         
         </div>
       </Provider>
     
     )
   }
 }
+export default SchemaList

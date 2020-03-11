@@ -43,6 +43,7 @@ activeColor = #5182e4;
     display flex
     border 1px solid #d9d9d9
     border-right 0
+    font-size 12px
 
     .code-menu-item
       // padding 8px 8px 8px 16px
@@ -74,23 +75,6 @@ activeColor = #5182e4;
       .CodeMirror-gutters
         border-right 0
         border-left 1px solid #d9d9d9
-
-  // .running_log
-  //   height 150px
-  //   position relative
-  //   overflow hidden
-  //   // display none
-  //   border-top 1px solid #d9d9d9
-  //   border-left 1px solid #d9d9d9
-
-  //   .drag-bottom 
-  //     position absolute
-  //     width 100%
-  //     height 5px
-  //     top 0
-  //     left 0
-  //     z-index 12
-  //     cursor ns-resize
 
   .max_height{
     max-height: calc(100% - 68px)
@@ -226,6 +210,28 @@ activeColor = #5182e4;
       }
     }
 
+    .result-box{
+      height: 100%;
+      font-size: 12px;
+      .ant-spin-container{
+        padding: 0 8px;
+        width: 100%;
+      }
+      table {
+        border-collapse: collapse;
+      }
+    }
+    .flexigrid{
+      margin: 8px 0;
+    }
+
+    .flexigrid div.bDiv table{
+      margin-bottom: 0;
+    }
+    // .flexigrid div.vGrip {
+    //   display: none;
+    // }
+
     .log-tab {
       height: 100%;
     }
@@ -300,4 +306,7 @@ activeColor = #5182e4;
     cursor not-allowed
     opacity 0.5
     color rgba(0,0,0,.65)
-  
+
+  .ant-tabs-no-animation > .ant-tabs-content > .ant-tabs-tabpane-inactive
+    display: none
+    

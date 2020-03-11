@@ -35,6 +35,23 @@ export default class DrawerThree extends Component {
     value: '',
   }
 
+  @action componentDidMount() {
+    const {schemeDetail} = this.store
+
+    if (schemeDetail.isPartitioned
+       && schemeDetail.partitionMappingKeys 
+       && Array.isArray(toJS(schemeDetail.partitionMappingKeys))
+    ) {
+      const obj = schemeDetail.partitionMappingKeys[0] || {}
+
+      this.zoneParams = {
+        isPartitioned: Boolean(schemeDetail.isPartitioned),
+        key: obj.partitionFieldName,
+        value: obj.partitionFieldValue,
+      }
+    }
+  }
+
   @action.bound nextStep() {
     const {
       form: {
@@ -59,15 +76,21 @@ export default class DrawerThree extends Component {
 
         if (isPartitioned) {
           this.store.schemeDetail.partitionMappingKeys = [{partitionFieldName: key, partitionFieldValue: value}]
+        } else {
+          this.store.schemeDetail.partitionMappingKeys = []
         }
       } else {
         this.store.schemeDetail.isPartitioned = 0
+        this.store.schemeDetail.partitionMappingKeys = []
       }
- 
+
       if (values.scheduleExpression) {
+        console.log(values.scheduleExpression)
+
         this.store.schemeDetail.scheduleExpression = values.scheduleExpression
 
-        const expression = CycleSelect.cronSrialize(values.schedule_expression)
+        const expression = CycleSelect.cronSrialize(values.scheduleExpression)
+        console.log(expression)
         this.store.schemeDetail.period = cycleSelectMap[expression.cycle]
         this.store.schemeDetail.periodTime = expression.time
       }
@@ -82,12 +105,7 @@ export default class DrawerThree extends Component {
       
       this.store.saveSchema({
         status: 0, // 未完成
-      }, () => {
-        this.listStore.getList({
-          currentPage: 1,
-          pageSize: 10,
-        })
-      }) // 保存
+      }, 'next') // 保存
     })
   }
 
@@ -156,6 +174,7 @@ export default class DrawerThree extends Component {
         getFieldValue,
       },
       show,
+      wrappedComponentRef,
     } = this.props
 
     const {
@@ -168,7 +187,7 @@ export default class DrawerThree extends Component {
 
     return (
       <div style={{display: show ? 'block' : 'none'}} className="task-config">
-        <Form>
+        <Form wrappedComponentRef={wrappedComponentRef}>
           <div className="form-title">主标签配置</div>
           {
             show && schemeDetail.obj && schemeDetail.obj.map((d, i) => (
@@ -225,7 +244,7 @@ export default class DrawerThree extends Component {
                       unCheckedChildren="否"
                       onChange={e => this.zoneSwitchChange(e)} 
                       style={{marginTop: '8px'}}
-                      value={this.zoneParams.isPartitioned}
+                      checked={this.zoneParams.isPartitioned}
                     />
                     {
                       this.zoneParams.isPartitioned ? (
@@ -274,7 +293,7 @@ export default class DrawerThree extends Component {
                 style={{marginBottom: 0}}
               >
                 {getFieldDecorator('scheduleExpression', {
-                  initialValue: CycleSelect.formatCron({
+                  initialValue: schemeDetail.scheduleExpression || CycleSelect.formatCron({
                     cycle: 'day',
                   }),
                   rules: [

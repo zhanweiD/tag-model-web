@@ -1,7 +1,7 @@
 import {Component} from 'react'
-import {action} from 'mobx'
+import {action, toJS} from 'mobx'
 import {observer} from 'mobx-react'
-import {Modal} from 'antd'
+import {Modal, Spin} from 'antd'
 import {ModalForm} from '../../component'
 
 @observer
@@ -23,7 +23,13 @@ export default class ModalProject extends Component {
 
   selectContent= () => {
     const {
-      detail, selectLoading, dataSource = [], dataEnginesSource = [], dataGroupData = [],
+      detail, 
+      selectLoading, 
+      selectEnginesLoading,
+      selectGroupsLoading,
+      dataSource = [], 
+      dataEnginesSource = [], 
+      dataGroupData = [],
     } = this.store
     return [{
       label: '项目名称',
@@ -61,13 +67,14 @@ export default class ModalProject extends Component {
       control: {
         options: dataSource,
         onSelect: v => this.selectDataSource(v),
+        notFoundContent: selectLoading ? <Spin size="small" /> : null, 
       },
       selectLoading, // 下拉框loading效果
       component: 'select',
       extra: <span>
-若无可用的数据源，请先
+        若无可用的数据源，请先
         <a className="ml4" target="_blank" rel="noopener noreferrer" href="/ent/datasource#/">添加数据源或授权</a>
-             </span>,
+      </span>,
     }, {
       label: '计算引擎',
       key: 'engineId',
@@ -77,24 +84,26 @@ export default class ModalProject extends Component {
       ],
       control: {
         options: dataEnginesSource,
+        notFoundContent: selectEnginesLoading ? <Spin size="small" /> : null, 
       },
       component: 'select',
     }, {
       label: '资源组',
       key: 'groupIdList',
-      initialValue: detail.groupIdList || undefined,
+      initialValue: toJS(detail.groupIdList) || undefined,
       rules: [
         '@requiredSelect',
       ],
       control: {
         mode: 'multiple',
         options: dataGroupData,
+        notFoundContent: selectGroupsLoading ? <Spin size="small" /> : null, 
       },
       component: 'select',
       extra: <span>
-若无可用的数据源，请先
+        若无可用的数据源，请先
         <a className="ml4" target="_blank" rel="noopener noreferrer" href="/ent/resource#/">添加资源组或授权</a>
-             </span>,
+      </span>,
     }, {
       label: '调度队列',
       key: 'queueName',
@@ -118,7 +127,7 @@ export default class ModalProject extends Component {
 
   @action handleCancel = () => {
     this.store.visible = false
-    // this.store.resetModal()
+    this.store.closeModal()
   }
 
   submit = () => {
@@ -127,7 +136,7 @@ export default class ModalProject extends Component {
     this.form.validateFields((err, values) => {
       if (!err) {
         // 编辑 
-        if (store.type === 'edit') {
+        if (store.modalType === 'edit') {
           const params = {id: store.detail.id, ...values}
           store.editList(params, () => {
             t.handleCancel()

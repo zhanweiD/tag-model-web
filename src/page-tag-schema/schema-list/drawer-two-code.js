@@ -3,29 +3,15 @@
  */
 import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
-import {action, observable, toJS} from 'mobx'
+import {action, toJS} from 'mobx'
 import cls from 'classnames'
-import {Button, Icon, message} from 'antd'
-
-// import {SvgIcon} from '@dtwave/uikit'
-import CodeMirror from 'codemirror'
+import {message} from 'antd'
 
 import sqlFormatter from 'sql-formatter'
 import LogPanel from '../code-component/log-panel'
 
 import yunxing from '../../icon-svg/yunxing.svg'
-// import zanting from '../../icon-svg/zanting.svg'
-
-
-import 'codemirror/mode/sql/sql'
-import 'codemirror/addon/hint/show-hint'
-import 'codemirror/addon/hint/sql-hint'
-
-import 'codemirror/addon/selection/active-line'
-import 'codemirror/keymap/sublime'
-// 引入keymap
-import 'codemirror/addon/comment/comment'
-
+import geshihua from '../../icon-svg/geshihua.svg'
 
 @inject('rootStore')
 @observer
@@ -36,7 +22,7 @@ export default class DrawerTwoCode extends Component {
     const {drawerStore, codeStore} = props.rootStore
 
     this.drawerStore = drawerStore
-    
+
     this.store = codeStore
 
     this.store.projectId = props.projectId
@@ -46,7 +32,7 @@ export default class DrawerTwoCode extends Component {
     this.store.getHeight()
 
     if (document.getElementById('codeArea')) {
-      this.store.editor = CodeMirror.fromTextArea(document.getElementById('codeArea'), {
+      this.store.editor = window.CodeMirror.fromTextArea(document.getElementById('codeArea'), {
         mode: 'text/x-mysql',
         autoCloseBrackets: true,
         matchBrackets: true,
@@ -58,9 +44,8 @@ export default class DrawerTwoCode extends Component {
         tabSize: 4,
         styleActiveLine: true,
         readOnly: false,
-        keyMap: 'sublime',
+        // keyMap: 'sublime',
         theme: 'default',
-        autofocus: true,
       })
 
       const {schemeDetail} = this.drawerStore
@@ -68,20 +53,18 @@ export default class DrawerTwoCode extends Component {
         this.store.editor.setValue(sqlFormatter.format(toJS(schemeDetail.source)), {language: 'n1ql', indent: '    '})
       }
     }
-    
-    this.store.editor.on('change', (instance, change) => this.checkIsCanHint(instance, change, 'sql'))
+
+    this.store.editor.on('change', (instance, change) => this.checkIsCanHint(instance, change))
   }
 
-  @action checkIsCanHint = (instance, change, type) => {
+  @action checkIsCanHint = (instance, change) => {
     const {text} = change
     const {origin} = change
     let flag = false
     if (origin === '+input' && /\w|\./g.test(text[0]) && change.text[0].length === 1) {
       flag = true
-    }
-    
-    if (flag && type) {
-      this.store.editor.showHint(instance, {hint: CodeMirror.hint[type]}, true)
+
+      this.store.editor.showHint(instance, {hint: window.CodeMirror.hint.sql}, true)
     }
 
     if (flag && this.store.runStatusMessage.status === 'success') {
@@ -105,6 +88,16 @@ export default class DrawerTwoCode extends Component {
   @action stopOperation() {
     console.log(this.editor.getValue())
   }
+  
+  // 停止
+  @action codeFormat() {
+    const code = this.store.editor.getValue()
+    if (!code) {
+      message.error('请输入运行代码')
+    } else {
+      this.store.editor.setValue(sqlFormatter.format(code), {language: 'n1ql', indent: '    '})
+    }
+  }
 
   render() {
     const {taskId} = this.store
@@ -118,15 +111,27 @@ export default class DrawerTwoCode extends Component {
 
     return (
       <div className="code-content">
-        
+
         <div className="code-menu">
           <span className="code-menu-item mr16" onClick={() => this.operationCode()}>
             <img src={yunxing} alt="img" />
             <span>运行</span>
           </span>
+          <span className="code-menu-item mr16" onClick={() => this.codeFormat()}>
+            <img src={geshihua} alt="img" />
+            <span>格式化</span>
+          </span>
           {/* <span className="code-menu-item" onClick={() => this.stopOperation()}>
             <img src={zanting} alt="img" />
             <span>停止</span>
+          </span> */}
+          {/* <span className="code-menu-item" onClick={() => this.operationCode()}>
+            <i className="iconfont dtwave icon-group15" />
+            <span className="code-top-menu-text">运行</span>
+          </span>
+          <span className="code-menu-item" onClick={() => this.codeFormat()}>
+            <i className="iconfont dtwave icon-geshihua" />
+            <span className="code-top-menu-text">格式化</span>
           </span> */}
         </div>
         <form

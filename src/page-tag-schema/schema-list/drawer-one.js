@@ -133,7 +133,7 @@ export default class DrawerOne extends Component {
 
     const selectObj = objList.filter(d => +d.objId === +v.key)[0]
 
-    // 1 复杂关系 2 常规实体
+    // 1 复杂关系 2 实体
     if (selectObj.type === 1) {
       this.store.getObjDetail({
         id: v.key,

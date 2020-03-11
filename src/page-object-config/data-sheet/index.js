@@ -43,7 +43,7 @@ export default class DataSheet extends Component {
       key: 'storageTypeName',
       dataIndex: 'storageTypeName',
     }, {
-      title: '已配置/已关联',
+      title: '已配置/字段数',
       key: 'configuredField',
       dataIndex: 'configuredField',
       render: (text, record) => (
@@ -183,7 +183,7 @@ export default class DataSheet extends Component {
        
             onClick={() => this.openModal()} 
           >
-        添加数据表
+            添加数据表
           </Button>
         </AuthBox>
        
@@ -199,7 +199,7 @@ export default class DataSheet extends Component {
             type="primary" 
             onClick={() => this.openModal()} 
           >
-        添加数据表
+            添加数据表
           </Button>
         </AuthBox>
       </Fragment>

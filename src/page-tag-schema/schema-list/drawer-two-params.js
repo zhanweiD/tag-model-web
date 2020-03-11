@@ -32,10 +32,10 @@ export default class DrawerTwoParams extends Component {
 
   @action componentDidMount() {
     const {schemeDetail} = this.drawerStore
-    console.log(schemeDetail.parameterMappingKeys)
+
     if (schemeDetail.parameterMappingKeys && typeof schemeDetail.parameterMappingKeys === 'object') {
       const keys = Object.keys(schemeDetail.parameterMappingKeys)
-      console.log(keys)
+
       this.renderList = keys.map((d, i) => ({
         id: `${i}paramItem`,
         init: {
@@ -67,8 +67,6 @@ export default class DrawerTwoParams extends Component {
 
   // 运行参数相关
   paramItem = (id, initialValue) => {
-    console.log(id)
-    console.log(initialValue)
     const {form} = this.props
     const {getFieldDecorator} = form
 
@@ -127,7 +125,7 @@ export default class DrawerTwoParams extends Component {
     return (
       <div className="params-box">
         <div className="params-box-title">
-           运行参数 
+          运行参数 
           <QuestionTooltip tip="用于配置运行时代码中的变量和替换该变量的值" />
         </div>
         <div>
@@ -138,7 +136,7 @@ export default class DrawerTwoParams extends Component {
             <div className="fac mt16"> 
               <Button type="dashed" onClick={this.addParam} style={{width: '196px'}}>
                 <Icon type="plus" />
-              添加参数
+                添加参数
               </Button>
             </div>
           

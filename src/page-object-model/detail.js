@@ -4,7 +4,7 @@
 import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {Spin} from 'antd'
-import {observable, action} from 'mobx'
+import {action} from 'mobx'
 import {Time} from '../common/util'
 import {
   DetailHeader, Tag, OverviewCardWrap, TabRoute, AuthBox,
@@ -19,8 +19,6 @@ export default class ObjectDetail extends Component {
     super(props)
     this.store = props.store
   }
-
-  @observable tabId = 0
 
   componentWillMount() {
     this.getInitData()
@@ -56,7 +54,7 @@ export default class ObjectDetail extends Component {
   }
 
   @action.bound changeTab(id) {
-    this.tabId = id
+    this.store.tabId = id
   }
 
   render() {
@@ -68,12 +66,7 @@ export default class ObjectDetail extends Component {
     const baseInfo = [{
       title: '对象标识',
       value: objDetail.enName,
-    }, 
-    // {
-    //   title: '创建者',
-    //   value: objDetail.creator,
-    // },
-    {
+    }, {
       title: '对象类型',
       value: objTypeMap[objDetail.type],
     }, {
@@ -82,12 +75,7 @@ export default class ObjectDetail extends Component {
     }, {
       title: '创建时间',
       value: <Time timestamp={objDetail.createTime} />,
-    },
-    //  {
-    //   title: '对象主键',
-    //   value: objDetail.objPk,
-    // }
-    ]
+    }]
 
     // 不同状态的相应map
     const tagMap = {
@@ -107,8 +95,8 @@ export default class ObjectDetail extends Component {
           onClick={() => this.handleRelease('release')}
           code="asset_tag_obj_add_edit_del_publish"
         >
-        发布
-                </AuthBox>,
+          发布
+        </AuthBox>,
       },
       1: {
         tag: <Tag status="success" text="已发布" />,
@@ -118,8 +106,8 @@ export default class ObjectDetail extends Component {
           onClick={() => this.handleRelease('cancel')}
           code="asset_tag_obj_add_edit_del_publish"
         >
-        取消发布
-                </AuthBox>,
+          取消发布
+        </AuthBox>,
       },
       2: {
         tag: <Tag status="process" text="使用中" />,
@@ -149,7 +137,6 @@ export default class ObjectDetail extends Component {
         values: [objCard.tagCount],
       }, {
         title: '上架标签总数',
-        // tooltipText: '该对象下公开的标签总数',
         values: [objCard.publicTagCount],
       },
     ]
@@ -161,15 +148,14 @@ export default class ObjectDetail extends Component {
         {name: '业务视图', value: 1},
       ],
       basePath: `/${typeCode}/${objId}`,
-      currentTab: this.tabId,
+      currentTab: this.store.tabId,
       changeTab: this.changeTab,
       // eslint-disable-next-line react/destructuring-assignment
       _history: this.props.history,
       changeUrl: true,
     }
 
-    // const Content = [ObjectView][this.tabId]
-    const Content = [ObjectView, BusinessModel][+this.tabId]
+    const Content = [ObjectView, BusinessModel][+this.store.tabId]
 
     return (
       <div className="object-detail">

@@ -97,12 +97,7 @@ export default class TagApply extends Component {
       onCancel: () => this.handleCancel(),
     }
 
-    // const canUseProject = modalType === 'one' 
-    //   ? useProjectList.filter(d => d.useProjectId !== selectItem.projectId) 
-    //   : useProjectList
-
     const {useProjectName} = useProjectList.filter(d => d.useProjectId === useProjectId)[0] || {}
-    console.log(useProjectName)
     return (
       <Modal
         {...modalConfig}

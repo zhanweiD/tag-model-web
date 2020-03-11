@@ -11,6 +11,7 @@ import Approval from './approval'
 const {navListMap} = window.__keeper
 const navList = [
   navListMap.tagCenter,
+  navListMap.common,
   {text: navListMap.approval.text},
 ]
 

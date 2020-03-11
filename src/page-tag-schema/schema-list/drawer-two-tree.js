@@ -8,6 +8,7 @@ import {Tabs} from 'antd'
 import {DtTree} from '@dtwave/uikit'
 import {Loading} from '../../component'
 import Action from './tree-action'
+import functionIcon from '../../icon-svg/function-icon.svg'
 
 const {TabPane} = Tabs
 const {DtTreeNode, DtTreeBox} = DtTree
@@ -46,11 +47,11 @@ export default class DrawerTwoTree extends Component {
         key={node.id}
         itemKey={node.id}
         // title={<TreeNodeTitle node={node} />}
-        title={node.enName ? `${node.name}(${node.enName})` : node.name}
+        title={+this.current === 0 && node.enName ? `${node.name}(${node.enName})` : node.name}
         selectable={node.parentId}
         showIcon={node.parentId === 0}
         // 对象类目只有一级
-        // iconNodeSrc={e => getIconNodeSrc(e)}
+        iconNodeSrc={+this.current === 1 ? functionIcon : null}
         nodeData={node}
       >
         {

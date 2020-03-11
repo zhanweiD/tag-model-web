@@ -24,6 +24,7 @@ import store from './store'
 const {navListMap} = window.__keeper
 const navList = [
   navListMap.tagCenter,
+  navListMap.common,
   {text: navListMap.project.text},
 ]
 
@@ -176,6 +177,9 @@ export default class ProjectList extends Component {
     store.visible = true
     store.modalType = type
     store.getDataSource()
+    if (type === 'edit') {
+      store.getEnginesSource(data.dataStorageId)
+    }
     store.getGroups()
   }
 

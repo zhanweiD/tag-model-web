@@ -2,7 +2,7 @@ import {
   action, runInAction, observable,
 } from 'mobx'
 import {ErrorEater} from '@dtwave/uikit'
-import {errorTip} from '../../common/util'
+// import {errorTip} from '../../common/util'
 import io from './io-code'
 
 export default class Store {
@@ -115,9 +115,9 @@ export default class Store {
   // 日志拖拽
   @action changeHeight = (height, totalHeight) => {
     if (height < 400) return
-    if (totalHeight - height < 200) return
+    if (totalHeight - 168 < 200) return
 
-    this.logBoxHeight = totalHeight - height
+    this.logBoxHeight = totalHeight - height - 50
     this.setHeight()
     this.changeResultHeight(totalHeight - height)
   }
@@ -198,7 +198,6 @@ export default class Store {
         // _store.setCodeareaItemAttr(this.taskItemInfo.taskId, {
         //   isRunning: true,
         // })
-
         this.fieldInfo = data.fieldInfo
         this.taskInstanceId = data.instanceId
         this.usedTagIds = data.usedTagIds
@@ -218,7 +217,10 @@ export default class Store {
 
       if (cb) cb(data)
     } catch (e) {
-      ErrorEater(e, '启动')
+      ErrorEater({
+        code: 0,
+        message: e.message,
+      }, '运行TQL失败')
     }
   }
 
@@ -275,7 +277,7 @@ export default class Store {
         if (dataLog.isEnd) {
           // 运行终止
           let status = ''
-          if (dataLog.status === 0) {
+          if (dataLog.resultList.length || dataLog.status === 0) {
             // 运行成功
             status = 'success'
             // if (this.taskItemInfo.type === 'task') {
@@ -291,7 +293,9 @@ export default class Store {
           // })
           this.runStatusMessage.status = status
 
-          if ((dataLog.status < 0 && dataLog.status !== -4) || dataLog.status === 0) {
+          if (dataLog.resultList.length) {
+            this.runStatusMessage.message = '作业运行成功(Finished)\n\n\n'
+          } else if ((dataLog.status < 0 && dataLog.status !== -4) || dataLog.status === 0) {
             // 当任务终止时，但是dataLog.status 不在这几个状态中 就显示 系统异常！
             this.runStatusMessage.message = `${dataLog.statusMessage}\n\n\n`
           } else {

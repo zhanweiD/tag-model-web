@@ -26,7 +26,7 @@ export const objDetailTabMap = [{
   value: 2,
 },
 {
-  name: '业务模型',
+  name: '业务视图',
   value: 3,
 },
 ]
@@ -89,5 +89,5 @@ export const tagStatusMap = status => {
 export const objTypeMap = {
   0: '简单关系',
   1: '复杂关系',
-  2: '常规实体',
+  2: '实体',
 }

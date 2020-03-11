@@ -6,7 +6,7 @@
 // 标签中心
 const tagCenter = {
   tagCenter: {
-    url: '/overview',
+    url: '/',
     text: '标签中心',
   },
 }
@@ -92,6 +92,13 @@ const application = {
   },
 }
 
+const common = {
+  common: {
+    url: '/project',
+    text: '公共模块',
+  },
+}
+
 
 // 项目列表
 const project = {
@@ -131,6 +138,7 @@ const navListMap = {
   ...approval,
   ...application,
   ...tagSchema,
+  ...common,
 }
 
 module.exports = navListMap

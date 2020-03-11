@@ -1,5 +1,5 @@
 /**
- * @description 业务模型
+ * @description 业务视图
  */
 import * as d3 from 'd3'
 import {Component} from 'react'
@@ -97,7 +97,7 @@ export default class BusinessModel extends Component {
       this.container = this.svg.append('g')
   
       const zoom = d3.zoom().on('zoom', () => {
-        this.container.attr('transform', d3.event.transform)
+        // this.container.attr('transform', d3.event.transform)
       })
   
       this.svg.call(zoom).on('dblclick.zoom', null).on('wheel.zoom', null)
@@ -189,14 +189,13 @@ export default class BusinessModel extends Component {
       .attr('fill', 'rgba(0, 0, 0, .06)')
       .style('cursor', 'pointer')
 
-    tTitle.append('text')
-      .text(d => d.name)
-    // .attr('dx', () => colsWidth/2)
+    tTitle.append('foreignObject')
       .attr('dx', 48)
       .attr('dy', option.tableTitleHeight / 2)
-      .attr('class', 'svg-text')
-      .attr('text-anchor', 'middle')
-      .attr('dominant-baseline', 'middle')
+      .attr('width', option.colsWidth)
+      .attr('height', option.colsHeight)
+      .append('xhtml:div')
+      .html(d => `<p title="${d.name}"style="line-height: 50px;padding:0px 16px;">${d.name}</p>`)
   }
 
   // 当前选择对象是实体对象，关联多个关系对象，关系对象可下拉框选择
@@ -221,19 +220,13 @@ export default class BusinessModel extends Component {
       .style('cursor', 'pointer')
       .attr('class', 'entity-title')
 
-    tTitle.append('text')
-      .text(d => {
-        if (+typeCode === 4 && d.objTypeCode === 3) {
-          return ''
-        }
-        return d.name
-      })
-      // .attr('dx', () => option.colsWidth / 2)
+    tTitle.append('foreignObject')
       .attr('dx', 48)
       .attr('dy', option.tableTitleHeight / 2)
-      .attr('class', 'svg-text')
-      .attr('text-anchor', 'middle')
-      .attr('dominant-baseline', 'middle')
+      .attr('width', option.colsWidth)
+      .attr('height', option.colsHeight)
+      .append('xhtml:div')
+      .html(d => `<p title="${d.name}"style="line-height: 50px;padding:0px 16px;">${+typeCode === 4 && d.objTypeCode === 3 ? '' : d.name}</p>`)
   }
 
   // 创建单元格g

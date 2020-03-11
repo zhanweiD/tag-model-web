@@ -9,6 +9,8 @@ class Store {
   @observable updateTreeKey = undefined
 
   @observable addObjectUpdateKey = undefined
+
+  @observable tabId = 0
   // 基本详情
   @observable objId // 对象id
   @observable typeCode // 对象类型
@@ -91,7 +93,7 @@ class Store {
 
 
   /**
-   * @description 业务模型
+   * @description 业务视图
    */
 
   @observable modelLoading = false

@@ -19,13 +19,6 @@ export default class TagClass extends Component {
     this.store = props.store
   }
 
-  // componentWillReceiveProps(next) {
-  //   const {objId} = this.props
-  //   if (!_.isEqual(objId, next.objId)) {
-  //     this.store.objId = next.objId
-  //   }
-  // }
-
   // 关闭抽屉
  closeDrawer = () => {
    const {onClose} = this.props
@@ -111,7 +104,7 @@ export default class TagClass extends Component {
                    className="mr4"
                    onClick={this.openSelectTag}
                  >
-                选择标签
+                   选择标签
                  </AuthBox>
                ) : null,
              ]}
@@ -132,7 +125,7 @@ export default class TagClass extends Component {
            }}
          >
            <Button onClick={this.closeDrawer} type="primary">
-              关闭
+             关闭
            </Button>
          </div>
          <ModalSelectTag store={this.store} />
