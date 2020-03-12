@@ -92,7 +92,7 @@ class SchemaList extends Component {
       width: 200,
       render: (text, record) => (
         <AuthBox
-          code="asset_tag_project_obj_select" 
+          code="asset_tag_project_scheme_operator" 
           myFunctionCodes={this.store.functionCodes}
           isButton={false}
         >
@@ -108,8 +108,6 @@ class SchemaList extends Component {
             }
 
             {/* 方案状态: 未完成/提交失败  操作: 编辑 */} 
-
-            {/* notice */}
             {
               (record.status === 0 || record.status === 2) && (
                 <Fragment>
