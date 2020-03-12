@@ -85,12 +85,9 @@ export default class DrawerThree extends Component {
       }
 
       if (values.scheduleExpression) {
-        console.log(values.scheduleExpression)
-
         this.store.schemeDetail.scheduleExpression = values.scheduleExpression
 
         const expression = CycleSelect.cronSrialize(values.scheduleExpression)
-        console.log(expression)
         this.store.schemeDetail.period = cycleSelectMap[expression.cycle]
         this.store.schemeDetail.periodTime = expression.time
       }

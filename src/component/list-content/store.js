@@ -78,14 +78,7 @@ const ListContentStore = apiFunc => class _Store {
       this.tableLoading = true
 
       const {pageSize = 10, currentPage = 1} = this.pagination
-      console.log(filterUndefinedValues({
-        ...this.initParams,
-        ...this.tableSorter,
-        ...this.searchParams,
-        pageSize,
-        currentPage: currentPage || 1,
-        ...params,
-      }))
+     
       const res = await apiFunc(filterUndefinedValues({
         ...this.initParams,
         ...this.tableSorter,

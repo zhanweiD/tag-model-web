@@ -34,6 +34,7 @@ export default class Market extends Component {
 
     store.initParams = {
       useProjectId: store.useProjectId,
+      type: 1,
     } 
   }
 

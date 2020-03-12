@@ -19,7 +19,7 @@ export default class LogPanel extends Component {
       store,
       taskId,
     } = this.props
-    console.log(toJS(store.runStatusMessage))
+
     return (
       <Fragment>
         <div

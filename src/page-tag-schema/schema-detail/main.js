@@ -50,7 +50,7 @@ export default class SchemaDetail extends Component {
 
   render() {
     const {loading, detail} = store
-    console.log(toJS(detail))
+
     // 详情信息
     const baseInfo = [{
       title: '方案类型',

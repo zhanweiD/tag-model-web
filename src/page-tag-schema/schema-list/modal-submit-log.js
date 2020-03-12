@@ -5,7 +5,7 @@ import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {action} from 'mobx'
 import {
-  Modal, Button,
+  Modal, Button, Spin,
 } from 'antd'
 
 @observer
@@ -21,7 +21,8 @@ export default class ModalSubmitLog extends Component {
   }
 
   render() {
-    const {modalLogVisible, submitLog} = this.store
+    const {modalLogVisible, submitLog, submitLogLoading} = this.store
+  
     return (
       <Modal
         visible={modalLogVisible}
@@ -31,13 +32,15 @@ export default class ModalSubmitLog extends Component {
         onOk={this.handleSubmit}
         onCancel={this.handleCancel}
         footer={[
-          <Button key="back" onClick={this.handleCancel}>
+          <Button key="back" onClick={this.handleCancel} type="primary">
             关闭
           </Button>,
         ]}
       >
         <div style={{minHeight: '200px', maxHeight: '500px', overflow: 'auto'}}>
-          {submitLog}
+          <Spin spinning={submitLogLoading}>
+            {submitLog}
+          </Spin>
         </div>
       </Modal>
     )

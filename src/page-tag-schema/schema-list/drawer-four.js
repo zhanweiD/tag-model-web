@@ -58,7 +58,7 @@ export default class DrawerFour extends Component {
       isPartitioned,
       partitionMappingKeys,
     } = schemeDetail
-    console.log(toJS(schemeDetail))
+
     const majorTag = mainTagMappingKeys && mainTagMappingKeys.length > 1 
       ? this.getMajorTag()
       : [{

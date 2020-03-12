@@ -109,8 +109,10 @@ export default class Store extends ListContentStore(io.getList) {
   // 查询提交日志
   @observable modalLogVisible = false
   @observable submitLog = ''
+  @observable submitLogLoading = false
 
   @action async getSubmitLog(params) {
+    this.submitLogLoading = true
     try {
       const res = await io.getSubmitLog(params)
       runInAction(() => {
@@ -118,6 +120,10 @@ export default class Store extends ListContentStore(io.getList) {
       })
     } catch (e) {
       errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        this.submitLogLoading = false
+      })
     }
   }
 
