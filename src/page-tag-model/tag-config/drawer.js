@@ -167,7 +167,7 @@ export default class DrawerTagConfig extends Component {
                   targetSearchKey={record => record.dataFieldName}
                   targetColumns={[
                     {
-                      title: '字段名',
+                      title: '字段名称',
                       dataIndex: 'dataFieldName',
                       width: 80,
                     },

@@ -44,13 +44,13 @@ export default class StepTwo extends React.Component {
     // 表格列
     const columns = [
       {
-        title: '名称',
+        title: '标签名称',
         key: 'name',
         dataIndex: 'name',
         render: name => <OmitTooltip text={name} maxWidth={150} />,
       },
       {
-        title: '英文名',
+        title: '唯一标识',
         key: 'enName',
         dataIndex: 'enName',
         render: name => <OmitTooltip text={name} maxWidth={150} />,

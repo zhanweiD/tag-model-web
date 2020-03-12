@@ -43,20 +43,14 @@ export default class ModalScene extends Component {
       '@requiredSelect',
     ],
     control: {
-      // disabled: !this.sceneId,
       options: toJS(this.store.sceneCate),
       fieldNames: {
         label: 'name',
         value: 'id',
       },
     },
-  }, 
-  // {
-  //   label: '描述',
-  //   key: 'descr',
-  //   component: 'textArea',
-  // }
-  ]
+    extra: <a href={`${window.__onerConfig.pathPrefix}/scene#/${this.sceneId}`} className="noCate">没有类目？ 去场景中创建类目</a>,
+  }]
 
   @action handleCancel = () => {
     this.store.modalSceneVisible = false
@@ -123,9 +117,9 @@ export default class ModalScene extends Component {
     return (
       <Modal {...modalConfig}>
         <ModalForm {...formConfig} />
-        {
+        {/* {
           this.sceneId ? <a href={`${window.__onerConfig.pathPrefix}/scene#/${this.sceneId}`} className="noCate">没有类目？ 去场景中创建类目</a> : null
-        }
+        } */}
         {/* <a href={`${window.__onerConfig.pathPrefix}/scene#/${this.sceneId}`} className="noCate">没有类目？ 去场景中创建类目</a> */}
       </Modal>
     )

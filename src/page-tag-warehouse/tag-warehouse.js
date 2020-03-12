@@ -252,7 +252,7 @@ export default class TagWarehouse extends Component {
         disabled={!store.rowKeys.length} 
         onClick={this.batchAction}
       >
-批量添加到业务场景
+        批量添加到业务场景
 
       </AuthBox>,
       <AuthBox 
@@ -261,9 +261,9 @@ export default class TagWarehouse extends Component {
         isButton={false}
       >
         <span className="ml8">
-        已选择
+          已选择
           <span style={{color: '#0078FF'}} className="mr4 ml4">{store.rowKeys.length}</span>
-        项
+          项
         </span>
       </AuthBox>,    
     ] : null

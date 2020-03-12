@@ -36,7 +36,7 @@ export default class ModalSubmitLog extends Component {
           </Button>,
         ]}
       >
-        <div style={{minHeight: '200px'}}>
+        <div style={{minHeight: '200px', maxHeight: '500px', overflow: 'auto'}}>
           {submitLog}
         </div>
       </Modal>
