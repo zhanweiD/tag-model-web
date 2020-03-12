@@ -63,7 +63,7 @@ const createTreeNode = (data = [], valueName, titleName, selectCon) => {
  * @description 根据type返回相应antd控件
  */ 
 export default ({
-  type, label, placeholder, options, ...rest
+  type, label, placeholder, options = [], ...rest
 }) => {
   const map = {
     text: <span>{options}</span>,
@@ -72,19 +72,27 @@ export default ({
     select: <SelectTypes label={label} placeholder={placeholder || createSelectPlaceholder(label)} options={options} {...rest} />,
     rangePicker: <antd.DatePicker.RangePicker {...rest} />,
     selectTree: () => (
-      <antd.TreeSelect
-        placeholder={placeholder || createSelectPlaceholder(label)}
-        dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
-        allowClear
-        // multiple
-        treeDefaultExpandAll
-        treeNodeFilterProp="title"
-        {...rest}
-      >
-        {
-          createTreeNode(options, rest.valueName, rest.titleName, rest.selectCon)
-        }
-      </antd.TreeSelect>
+      options.length 
+        ? (
+          <antd.TreeSelect
+            placeholder={placeholder || createSelectPlaceholder(label)}
+            dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
+            allowClear
+            // multiple
+            treeDefaultExpandAll
+            treeNodeFilterProp="title"
+            {...rest}
+          >
+            {
+              createTreeNode(options, rest.valueName, rest.titleName, rest.selectCon)
+            }
+          </antd.TreeSelect>
+        ) : (
+          <antd.TreeSelect
+            placeholder={placeholder || createSelectPlaceholder(label)}
+            dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
+          />
+        )
     ), 
     switch: <antd.Switch 
       checkedChildren={rest.checkedText || '是'} 
