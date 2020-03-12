@@ -5,7 +5,8 @@ services:
 variables:
   DOCKER_DRIVER: overlay
   PROJECT_NAME: asset-tag-web
-  VERSION: -web-v${CI_COMMIT_TAG}
+  # VERSION: -web-v${CI_COMMIT_TAG}
+  VERSION: ${CI_COMMIT_TAG}
   # DOCKER_HOST: "tcp://localhost:2375"
 
 cache:
@@ -22,11 +23,10 @@ build:
   image: docker.dtwave-inc.com/library/nodejs-web:8.12.0-alpine
   stage: build
   script:
-    - rm -rf tgz default
+    - rm -rf tgz/*
     - npm install
-    - npm run down
-    - npm run build
-    - suffix=${VERSION} npm run tar -p
+    - sh ./deploy.sh ${VERSION}
+    - cd tgz
     - ls
   only:
     - tags
@@ -40,8 +40,11 @@ upload:
   dependencies:
     - build
   script:
+    - ls
     - mc mb dtwave-inc/shuxi-dev/frontend/${PROJECT_NAME}/${CI_COMMIT_TAG}/
     - mc cp tgz/*${VERSION}.tgz dtwave-inc/shuxi-dev/frontend/${PROJECT_NAME}/${CI_COMMIT_TAG}/
+    - cd tgz 
+    - ls
 
   only:
     - tags
