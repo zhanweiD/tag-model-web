@@ -68,9 +68,9 @@ export default class Market extends Component {
               return <Tag status="process" className="ml8" text="审批中" />
             }
 
-            if (record.status === 0) {
-              return <Tag status="success" className="ml8" text="有权限" />
-            } 
+            // if (record.status === 0) {
+            //   return <Tag status="success" className="ml8" text="有权限" />
+            // } 
             return null
           })()}
         </div>

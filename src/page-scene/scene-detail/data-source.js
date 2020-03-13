@@ -165,19 +165,21 @@ export default class DataSource extends Component {
                       批量移除数据源
                     </AuthBox>
                     {/* 点击“配置数据服务”按钮，跳转至服务管理页面 */}
-                    <AuthBox 
-                      myFunctionCodes={functionCodes}
-                      code="asset_tag_project_occ_data_source" 
-                      type="primary"
+                    <a 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      href="/service/api"
                     >
-                      <a 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        href="/service/api"
+                      <AuthBox 
+                        myFunctionCodes={functionCodes}
+                        code="asset_tag_project_occ_data_source" 
+                        type="primary"
                       >
+                     
                       配置数据服务
-                      </a>
-                    </AuthBox>
+                     
+                      </AuthBox>
+                    </a>
                   </div>
                 </div>
                 {
