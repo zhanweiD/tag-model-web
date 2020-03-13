@@ -101,7 +101,7 @@ export default class FieldList extends Component {
       dataIndex: 'action',
       render: (text, record) => (
         <div className="FBH FBAC">
-          <AuthBox
+          {/* <AuthBox
             code="asset_tag_project_obj_table_field"
             myFunctionCodes={this.bigStore.functionCodes}
             isButton={false}
@@ -113,13 +113,13 @@ export default class FieldList extends Component {
                 </Popconfirm>
               )
             }
-          </AuthBox>
+          </AuthBox> */}
           <AuthBox
             code="asset_tag_project_field_tag"
             myFunctionCodes={this.bigStore.functionCodes}
             isButton={false}
           >
-            <span className="table-action-line" />
+            {/* <span className="table-action-line" /> */}
             {
               record.status === 2 
                 ? <span className="disabled">标签配置</span> 

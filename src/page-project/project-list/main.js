@@ -89,7 +89,7 @@ export default class ProjectList extends Component {
     }, {
       key: 'action',
       title: '操作',
-      // width: 210,
+      width: 250,
       dataIndex: 'action',
       render: (text, record) => (
         <div className="FBH FBAC">

@@ -1,6 +1,6 @@
 // import {observable, action, runInAction} from 'mobx'
 import io from './io'
-import {successTip, errorTip} from '../../common/util'
+import {successTip, errorTip, failureTip} from '../../common/util'
 
 class DrawerStore {
   constructor({
@@ -101,7 +101,9 @@ class DrawerStore {
       }
      
       if (res === true) {
-        successTip('保存成功')
+        successTip('绑定成功')
+      } else {
+        failureTip('绑定成功')
       }
     } catch (e) {
       errorTip(e.message)

@@ -50,9 +50,9 @@ export const getSchemeRunStatus = ({status}, fn) => {
     default: color = '#108ee9'; text = '运行中'; break
   }
 
-  if (+status === 1 || +status === 1) {
-    return <a href onClick={() => fn()}><Badge color={color} text={text} /></a> 
-  }
+  // if (+status === 1 || +status === 1) {
+  //   return <a href onClick={() => fn()}><Badge color={color} text={text} /></a> 
+  // }
 
   return <Badge color={color} text={text} />
 }
