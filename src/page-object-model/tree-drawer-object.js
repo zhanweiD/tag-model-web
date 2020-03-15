@@ -80,14 +80,18 @@ class ModalObject extends Component {
     }
 
     if (editType === 'edit') {
+      // // 对象编辑状态;判断所属类目objCatId不为0; 则为对象
+      // if (detail.id && detail.objCatId) {
+      //   params.id = detail.id
+      // } 
+
+      if (rule.field === 'name' || rule.field === 'enName') {
+        params.id = detail.id
+      }
+
       if (rule.field === 'tagName' || rule.field === 'tagEnName') {
         params.id = detail.tagId
       }
-
-      // 对象编辑状态;判断所属类目objCatId不为0; 则为对象
-      if (detail.id && detail.objCatId) {
-        params.id = detail.id
-      } 
     }
    
     this.store.checkName(params, callback)
