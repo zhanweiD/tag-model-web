@@ -9,7 +9,7 @@ const storageProjectId = storage.get('tag_projectId')
 
 class Store {
   @observable projectList = []
-  @observable projectId = storageProjectId ? +storageProjectId : undefined
+  @observable projectId = undefined
 
   @action async getProjectList() {
     try {
@@ -21,24 +21,30 @@ class Store {
       // const res = {
       //   data: [],
       // }
+      const projectId = storageProjectId ? +storageProjectId : undefined
 
-      let {projectId} = this
-      if (!projectId && res.data.length) {
-        projectId = res.data[0].id
-        storage.set('tag_projectId', res.data[0].id)
+      // 项目列表无数据 
+      if (!res.data.length) {
         const spaceInfo = {
-          projectId,
+          projectId: undefined,
           projectList: res.data,
         }
         window.spaceInfo = spaceInfo
-      } 
+      }
 
+      // 缓存中有项目id && 项目列表有数据 
       if (projectId && res.data.length) {
         const filter = res.data.filter(d => +d.id === +projectId)
         // 项目不存在项目列表中
         if (!filter.length) {
-          projectId = res.data[0].id
           storage.set('tag_projectId', res.data[0].id)
+          const spaceInfo = {
+            projectId: res.data[0].id,
+            projectList: res.data,
+          }
+          window.spaceInfo = spaceInfo
+        } else {
+          // 项目存在项目列表中
           const spaceInfo = {
             projectId,
             projectList: res.data,
@@ -46,6 +52,18 @@ class Store {
           window.spaceInfo = spaceInfo
         }
       }
+
+
+      // 缓存中没有项目id && 项目列表有数据 默认项目列表中第一个项目
+      if (!projectId && res.data.length) {
+        storage.set('tag_projectId', res.data[0].id)
+
+        const spaceInfo = {
+          projectId: res.data[0].id,
+          projectList: res.data,
+        }
+        window.spaceInfo = spaceInfo
+      } 
      
       runInAction(() => {
         if (res.data.length === 0) {
@@ -56,8 +74,7 @@ class Store {
           window.spaceInfo.projectList = res.data
           window.spaceInfo.finish = true
         }
-      
-        this.projectId = projectId
+        this.projectId = window.spaceInfo && window.spaceInfo.projectId
         this.projectList = res.data
       })
     } catch (e) {
@@ -65,17 +82,6 @@ class Store {
       errorTip(e.message)
     } 
   }
-
-  // // 点击项目空间
-  // @action selectProject = value => {
-  //   if (this.projectId !== value) {
-  //     storage.set('tag_projectId', value)
-  //     this.projectId = value
-  //     if (window.spaceInfo) {
-  //       window.spaceInfo.projectId = +value
-  //     }
-  //   }
-  // }
 }
 
 export default new Store()

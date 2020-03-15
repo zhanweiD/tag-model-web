@@ -212,6 +212,11 @@ class SchemaList extends Component {
     })
   }
 
+   // 跳转到项目列表
+   goProjectList = () => {
+     window.location.href = `${window.__onerConfig.pathPrefix || '/'}/project`
+   }
+
   renderNodata = () => {
     const {spaceInfo} = window
 

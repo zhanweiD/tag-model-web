@@ -35,7 +35,7 @@ class Action extends Component {
   }
 
   @action.bound handleRefresh() {
-    return this.store.getCategoryList()
+    this.store.getCategoryList()
   }
 
   @action.bound handleSearch(e) {

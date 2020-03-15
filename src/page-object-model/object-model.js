@@ -1,7 +1,7 @@
 /**
  * @description 对象管理
  */
-import {Component, Fragment} from 'react'
+import {Component} from 'react'
 import {action} from 'mobx'
 import {observer, Provider} from 'mobx-react'
 import {TabRoute, NoData, StatusImg} from '../component'
@@ -24,7 +24,7 @@ export default class ObjectModel extends Component {
   constructor(props) {
     super(props)
     const {match} = props
-    store.typeCode = match.params.typeCode || '3'
+    store.typeCode = match.params.typeCode || '4'
     store.objId = match.params.objId
     store.tabId = match.params.tabId || '0' // 当前详情tabID；默认数据视图
   }
