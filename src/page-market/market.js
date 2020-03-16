@@ -29,12 +29,10 @@ export default class Market extends Component {
     // 要是请求放在列表组件ListContent中的话, 就必须渲染表格的dom 影响体验
     store.getList({
       useProjectId: store.useProjectId,
-      type: 1,
     })
 
     store.initParams = {
       useProjectId: store.useProjectId,
-      type: 1,
     } 
   }
 
@@ -46,7 +44,7 @@ export default class Market extends Component {
     
     store.objectId = ''
     store.ownProjectId = ''
-    store.projectPermission = 1
+    store.projectPermission = ''
    
     store.searchParams = {}
     store.pagination = {

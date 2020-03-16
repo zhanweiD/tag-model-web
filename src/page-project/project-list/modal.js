@@ -74,7 +74,7 @@ export default class ModalProject extends Component {
       extra: <span>
         若无可用的数据源，请先
         <a className="ml4" target="_blank" rel="noopener noreferrer" href="/ent/datasource#/">添加数据源或授权</a>
-      </span>,
+             </span>,
     }, {
       label: '计算引擎',
       key: 'engineId',
@@ -95,7 +95,7 @@ export default class ModalProject extends Component {
         '@requiredSelect',
       ],
       control: {
-        mode: 'multiple',
+        // mode: 'multiple',
         options: dataGroupData,
         notFoundContent: selectGroupsLoading ? <Spin size="small" /> : null, 
       },
@@ -103,7 +103,7 @@ export default class ModalProject extends Component {
       extra: <span>
         若无可用的数据源，请先
         <a className="ml4" target="_blank" rel="noopener noreferrer" href="/ent/resource#/">添加资源组或授权</a>
-      </span>,
+             </span>,
     }, {
       label: '调度队列',
       key: 'queueName',
