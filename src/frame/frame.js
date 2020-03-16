@@ -24,11 +24,11 @@ class Frame extends Component {
     const {page} = this.props
     // 项目空间
     if (page === 'space') {
-      const projectId = storage.get('tag_projectId')
       window.spaceInfo = {}
-      if (projectId) {
-        window.spaceInfo.projectId = +projectId
-      }
+      // const projectId = storage.get('tag_projectId')
+      // if (projectId) {
+      //   window.spaceInfo.projectId = +projectId
+      // }
       
       store.getProjectList()
     }

@@ -272,6 +272,7 @@ export default class DrawerTagConfig extends Component {
                       dataFieldName,
                       dataFieldType,
                       isUsed,
+                      schemeId,
                     }
                   ) => ({
                     tagId,
@@ -286,6 +287,7 @@ export default class DrawerTagConfig extends Component {
                     dataFieldName,
                     dataFieldType,
                     isUsed,
+                    tagDerivativeSchemeId: schemeId,
                   })}
                   nameMappingField={['enName', 'dataFieldName']}
                   onChange={value => this.value = value}

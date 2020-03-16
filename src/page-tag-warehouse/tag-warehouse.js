@@ -53,16 +53,19 @@ export default class TagWarehouse extends Component {
   }
 
   componentDidMount() {
-    // 请求列表，放在父组件进行请求是因为需要在外层做空数据判断。
+    if (store.useProjectId) {
+      // 请求列表，放在父组件进行请求是因为需要在外层做空数据判断。
     // 若返回数据为空[]。则渲染 NoData 组件。
     // 要是请求放在列表组件ListContent中的话, 就必须渲染表格的dom 影响体验
-    store.getList({
-      useProjectId: store.useProjectId,
-    })
-    // 设置列表默认参数；因为列表请求放在列表组件外部，所以 设置默认参数也在列表组件外部
-    store.initParams = {
-      useProjectId: store.useProjectId,
+      store.getList({
+        useProjectId: store.useProjectId,
+      })
+      // 设置列表默认参数；因为列表请求放在列表组件外部，所以 设置默认参数也在列表组件外部
+      store.initParams = {
+        useProjectId: store.useProjectId,
+      }
     }
+    store.tableLoading = true
   }
 
   componentWillUnmount() {
@@ -288,7 +291,7 @@ export default class TagWarehouse extends Component {
     }
 
     const {spaceInfo} = window
-
+    
     return (
       <div>
         <div className="content-header">{navListMap.tagWarehouse.text}</div>

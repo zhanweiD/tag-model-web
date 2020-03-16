@@ -44,17 +44,17 @@ export default class SelectObject extends Component {
     }
   }
 
-  @action.bound changeType(e) {
-    const {selectedObjList} = this.store
-    const {value} = e.target
-    this.selTypeCode = value
-    this.store.getObjCate({
-      type: value,
-    })
-    this.filteredData = selectedObjList.filter(d => +d.objTypeCode === +this.selTypeCode)
-    this.selectNodes.clear()
-    this.removeListItem = undefined
-  }
+  // @action.bound changeType(e) {
+  //   const {selectedObjList} = this.store
+  //   const {value} = e.target
+  //   this.selTypeCode = value
+  //   this.store.getObjCate({
+  //     type: value,
+  //   })
+  //   this.filteredData = selectedObjList.filter(d => +d.objTypeCode === +this.selTypeCode)
+  //   this.selectNodes.clear()
+  //   this.removeListItem = undefined
+  // }
 
   @action destroy() {
     this.selectNodes.clear()
@@ -163,11 +163,11 @@ export default class SelectObject extends Component {
       >
         <div style={{overflow: 'hidden'}}>
           {/* 实体: 4, 关系: 3 */}
-          <Radio.Group onChange={this.changeType} value={+this.selTypeCode} style={{marginBottom: 8}}>
+          {/* <Radio.Group onChange={this.changeType} value={+this.selTypeCode} style={{marginBottom: 8}}>
             {
               tabs.map(({name, value}) => <Radio.Button value={value}>{name}</Radio.Button>)
             }
-          </Radio.Group>
+          </Radio.Group> */}
      
           <div className="FBH select-object">
             <Tree {...treeConfig} />

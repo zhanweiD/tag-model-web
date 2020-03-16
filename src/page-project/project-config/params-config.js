@@ -4,6 +4,7 @@
 import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {Alert, Table} from 'antd'
+// import {getDataTypeName} from '../../common/util'
 
 @observer
 export default class ParamsConfig extends Component {
@@ -22,6 +23,8 @@ export default class ParamsConfig extends Component {
   }, {
     title: '类型',
     dataIndex: 'parameterType',
+    // render: text => getDataTypeName(+text),
+    render: () => '日期型',
   }, {
     title: '时间格式',
     dataIndex: 'parameterValue',

@@ -11,7 +11,7 @@ import {NoData, DetailHeader} from '../../component'
 import TrendTag from './trend-tag'
 import TrendApi from './trend-api'
 
-import sceneDetail from './store-scene-detail'
+// import sceneDetail from './store-scene-detail'
 import Store from './store-select-tag'
 
 import TagCategory, {TagCategoryStore} from './tree'
@@ -88,7 +88,11 @@ export default class SelectTag extends Component {
     if (dataSourceLen !== nextProps.dataSourceLen) {
       // dataSourceLen === 0 无数据源 至 有数据源;需刷新标签树
       // nextProps.dataSourceLen 有数据源 至 无数据源;需刷新标签树
-      if (dataSourceLen === 0 || nextProps.dataSourceLen === 0) {
+      if (nextProps.dataSourceLen === 0) {
+        this.store.categoryStore.getCategoryList()
+      }
+
+      if (dataSourceLen === 0 && nextProps.sceneDetailStore.currentKey === '2') {
         this.store.categoryStore.getCategoryList()
       }
     }
@@ -198,7 +202,7 @@ export default class SelectTag extends Component {
     }
 
     return (
-      <Provider bigStore={this.store} sceneDetail={sceneDetail}>
+      <Provider bigStore={this.store} sceneDetail={this.props.sceneDetailStore}>
         <div className="select-tag FBH">
           <TagCategory {...tagCategoryOpt} />
 

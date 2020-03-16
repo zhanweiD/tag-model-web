@@ -88,7 +88,7 @@ export default class DrawerTwoTree extends Component {
           <TabPane tab="基础标签" key="0" />
           <TabPane tab="函数" key="1" />
         </Tabs>
-        <div style={{marginTop: '-24px'}}>
+        <div style={{marginTop: '-24px', height: 'calc(100% - 38px)', overflow: 'auto'}}>
           <DtTreeBox {...treeBoxConfig}>
             {treeLoading
               ? <Loading mode="block" height={100} />

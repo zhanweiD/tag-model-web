@@ -22,6 +22,7 @@ const {TabPane} = Tabs
 const {navListMap} = window.__keeper
 const navList = [
   navListMap.tagCenter,
+  navListMap.application,
   navListMap.scene,
   {text: navListMap.sceneDetail.text},
 ]
@@ -42,10 +43,10 @@ export default class SceneDetail extends Component {
     // 面包屑设置
     const {frameChange} = this.props
     frameChange('nav', navList)
-
-    store.getDetail()
-    store.getSourceList()
+   
     if (store.projectId) {
+      store.getDetail()
+      store.getSourceList()
       store.getAuthCode()
     }
   }
@@ -139,7 +140,7 @@ export default class SceneDetail extends Component {
     ]
 
     return (
-      <div className="scene-detail">
+      <div className="scene-detail">    
         {
           store.sourceData.data.length ? (
             <Alert
@@ -171,21 +172,28 @@ export default class SceneDetail extends Component {
             actions={actions}
           />
         </Spin>
-
-        <Tabs defaultActiveKey="1" animated={false} onChange={this.onTabChange}>
-          <TabPane tab="标签选择" key="1">
-            <SelectTag 
-              sceneId={store.sceneId} 
-              projectId={store.projectId}
-              dataSourceLen={store.sourceData.data.length} 
-            />
-          </TabPane>
-          <TabPane tab="目的数据源列表" key="2">
-            <DataSource store={store} onClick={this.dbSourceVisible} />
-          </TabPane>
-        </Tabs>
-        <ModalEditScene store={store} />
-        <ModalDataSource store={store} />
+        {
+          store.projectId ? (
+            <Fragment>
+              <Tabs defaultActiveKey="1" animated={false} onChange={this.onTabChange}>
+                <TabPane tab="标签选择" key="1">
+                  <SelectTag 
+                    sceneId={store.sceneId} 
+                    projectId={store.projectId}
+                    dataSourceLen={store.sourceData.data.length}
+                    sceneDetailStore={store}
+                  />
+                </TabPane>
+                <TabPane tab="目的数据源列表" key="2">
+                  <DataSource store={store} onClick={this.dbSourceVisible} />
+                </TabPane>
+              </Tabs>
+              <ModalEditScene store={store} />
+              <ModalDataSource store={store} />
+            </Fragment>
+          ) : null
+        }
+       
       </div>
     )
   }

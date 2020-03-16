@@ -80,14 +80,18 @@ class ModalObject extends Component {
     }
 
     if (editType === 'edit') {
+      // // 对象编辑状态;判断所属类目objCatId不为0; 则为对象
+      // if (detail.id && detail.objCatId) {
+      //   params.id = detail.id
+      // } 
+
+      if (rule.field === 'name' || rule.field === 'enName') {
+        params.id = detail.id
+      }
+
       if (rule.field === 'tagName' || rule.field === 'tagEnName') {
         params.id = detail.tagId
       }
-
-      // 对象编辑状态;判断所属类目objCatId不为0; 则为对象
-      if (detail.id && detail.objCatId) {
-        params.id = detail.id
-      } 
     }
    
     this.store.checkName(params, callback)
@@ -156,7 +160,10 @@ class ModalObject extends Component {
       },
     } = this.props
 
-    const {typeCode} = this.store
+    const {
+      typeCode,
+      relToEntityData,
+    } = this.store
 
     const data = editType === 'edit' ? detail : {objCatId: detail.aId, objCatName: detail.name}
 
@@ -170,7 +177,7 @@ class ModalObject extends Component {
       onClose: this.handleCancel,
       className: 'object-drawer',
     }
-
+    
     return (
       <Drawer
         {...drawerConfig}
@@ -335,19 +342,28 @@ class ModalObject extends Component {
                     {validator: this.checkEntityNum},
                   ],
                 })(
-                  <TreeSelect
-                    placeholder="请选择关联实体"
-                    dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
-                    allowClear
-                    multiple
-                    treeDefaultExpandAll
-                    treeNodeFilterProp="title"
-
-                  >
-                    {
-                      createTreeNode(toJS(this.store.relToEntityData), ['type', 2])
-                    }
-                  </TreeSelect>
+                  // antd 3.x TreeSelect 无节点情况bug
+                  relToEntityData.length 
+                    ? (
+                      <TreeSelect
+                        placeholder="请选择关联实体"
+                        dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
+                        allowClear
+                        multiple
+                        treeDefaultExpandAll
+                        treeNodeFilterProp="title"
+                      >
+                        {
+                          createTreeNode(toJS(relToEntityData), ['type', 2])
+                        }
+                      </TreeSelect>
+                    )
+                    : (
+                      <TreeSelect
+                        placeholder="请选择关联实体"
+                        dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
+                      />
+                    )
                 )}
               </FormItem>
             )

@@ -22,7 +22,7 @@ export default class ModalMove extends Component {
     const t = this
     const {store} = t
     const {modalMove: {selectKeys}} = store
-
+   
     t.form.validateFields((err, values) => {
       if (!err) {
         const params = {
@@ -41,7 +41,11 @@ export default class ModalMove extends Component {
     const {
       modalMove,
       confirmLoading,
+      categoryData = [],
+      currentSelectKeys,
     } = this.store
+
+    const categData = categoryData.length ? categoryData.filter(d => +d.id !== +currentSelectKeys) : []
 
     const content = [{
       label: '类目名称',
@@ -51,7 +55,7 @@ export default class ModalMove extends Component {
         '@requiredSelect',
       ],
       control: {
-        options: changeToOptions(this.store.categoryData)('name', 'id'),
+        options: changeToOptions(categData)('name', 'id'),
       },
     }]
 

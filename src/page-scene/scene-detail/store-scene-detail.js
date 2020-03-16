@@ -6,8 +6,8 @@ import io from './io'
 
 
 class SceneDetailStore {
-  projectId // 项目id
   currentKey = '1'
+  @observable projectId // 项目id
   // 场景id
   @observable sceneId = undefined
 
