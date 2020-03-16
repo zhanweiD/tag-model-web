@@ -50,7 +50,7 @@ export default class DrawerTwoParams extends Component {
     const len = this.renderList.length
     this.renderList.push({
       type: 'add',
-      id: `${len ? len + 1 : 0}paramItem`,
+      id: `${len ? Math.random() : 0}paramItem`,
     })
   }
 
@@ -128,7 +128,7 @@ export default class DrawerTwoParams extends Component {
           运行参数 
           <QuestionTooltip tip="用于配置运行时代码中的变量和替换该变量的值" />
         </div>
-        <div>
+        <div style={{height: 'calc(100% - 38px)', overflow: 'auto'}}>
           <Form wrappedComponentRef={wrappedComponentRef}>
             {
               this.renderList.map(d => this.paramItem(d.id, toJS(d.init)))
