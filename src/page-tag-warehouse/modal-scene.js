@@ -49,7 +49,7 @@ export default class ModalScene extends Component {
         value: 'id',
       },
     },
-    extra: <a href={`${window.__onerConfig.pathPrefix}/scene#/${this.sceneId}`} className="noCate">没有类目？ 去场景中创建类目</a>,
+    extra: this.sceneId ? <a href={`${window.__onerConfig.pathPrefix}/scene#/${this.sceneId}`} className="noCate">没有类目？ 去场景中创建类目</a> : null,
   }]
 
   @action handleCancel = () => {

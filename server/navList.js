@@ -80,6 +80,10 @@ const tagSchema = {
 }
 
 const application = {
+  application: {
+    url: '/scene',
+    text: '标签应用',
+  }, 
   scene: {
     url: '/scene',
     text: '场景管理',

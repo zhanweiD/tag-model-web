@@ -22,6 +22,7 @@ const {TabPane} = Tabs
 const {navListMap} = window.__keeper
 const navList = [
   navListMap.tagCenter,
+  navListMap.application,
   navListMap.scene,
   {text: navListMap.sceneDetail.text},
 ]
