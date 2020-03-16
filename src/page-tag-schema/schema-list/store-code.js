@@ -247,23 +247,23 @@ export default class Store {
 
       runInAction(() => {
         if (dataLog.logContent) {
-          const logLimit = window.__keeper.logLimit || 1e4
+          // const logLimit = window.__keeper.logLimit || 1e4
           // readType 日志读取策略 0:覆盖1:追加
           if (dataLog.readType && dataLog.currentLine > this.logIndex) {
             // this.runLog = (dataLog.log && this.runLog.length > 5e5) ? dataLog.log : (this.runLog + dataLog.log)
             // this.runLog += dataLog.log
-            let newLog = this.runLog + dataLog.logContent
-            if (newLog.length > logLimit) {
-              newLog = newLog.slice(-logLimit)
-              this.runStatusMessage.download = true
-            }
+            const newLog = this.runLog + dataLog.logContent
+            // if (newLog.length > logLimit) {
+            //   newLog = newLog.slice(-logLimit)
+            //   this.runStatusMessage.download = true
+            // }
             this.runLog = newLog
           } else {
-            let newLog = `正在提交...\nwaiting...\n${dataLog.logContent}`
-            if (newLog.length > logLimit) {
-              newLog = newLog.slice(-logLimit)
-              this.runStatusMessage.download = true
-            }
+            const newLog = `正在提交...\nwaiting...\n${dataLog.logContent}`
+            // if (newLog.length > logLimit) {
+            //   newLog = newLog.slice(-logLimit)
+            //   this.runStatusMessage.download = true
+            // }
             this.runLog = newLog
           }
           this.logIndex = dataLog.currentLine
