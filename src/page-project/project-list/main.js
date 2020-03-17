@@ -8,7 +8,8 @@ import {
   Popconfirm, Badge, Icon, Dropdown, Menu,
 } from 'antd'
 import {Link} from 'react-router-dom'
-import {Time, pathPrefix} from '../../common/util'
+import * as navListMap from '../../common/navList'
+import {Time, baseApi} from '../../common/util'
 import {
   ListContent, NoData, OmitTooltip, AuthBox,
 } from '../../component'
@@ -21,7 +22,7 @@ import store from './store'
 
 // 面包屑设置
 // eslint-disable-next-line no-underscore-dangle
-const {navListMap} = window.__keeper
+
 const navList = [
   navListMap.tagCenter,
   navListMap.common,
@@ -192,19 +193,11 @@ export default class ProjectList extends Component {
   }
 
   /**
-   * @description 跳转到项目空间
-   */
-  // toSpace = data => {
-  //   storage.set('tag_projectId', data.id)
-  //   window.location.href = `${pathPrefix}/object-config`
-  // }
-
-  /**
    * @description 跳转到标签管理
    */
   goTagManage = id => {
     storage.set('tag_projectId', id)
-    window.location.href = `${pathPrefix}/tag-warehouse`
+    window.location.href = `${baseApi}/tag-warehouse`
   }
 
   /**
@@ -212,7 +205,7 @@ export default class ProjectList extends Component {
    */
   goTagProcess = id => {
     storage.set('tag_projectId', id)
-    window.location.href = `${pathPrefix}/tag-schema`
+    window.location.href = `${baseApi}/tag-schema`
   }
 
   /**
@@ -220,7 +213,7 @@ export default class ProjectList extends Component {
    */
   goTagApplication = id => {
     storage.set('tag_projectId', id)
-    window.location.href = `${pathPrefix}/scene`
+    window.location.href = `${baseApi}/scene`
   }
 
   /**

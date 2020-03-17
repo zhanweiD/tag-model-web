@@ -4,20 +4,16 @@
 import {Component} from 'react'
 import {action} from 'mobx'
 import {observer, Provider} from 'mobx-react'
+
 import {TabRoute, NoData, StatusImg} from '../component'
-import {changeToOptions} from '../common/util'
+import {changeToOptions, codeInProduct} from '../common/util'
 import Tree from './tree'
 import ObjectDetail from './detail'
 
 import store from './store'
 import './main.styl'
 
-// tab
-const tabs = changeToOptions(window.njkData.typeCodes)('objTypeName', 'objTypeCode')
-
 const NotFount = () => <StatusImg status="authError" title="暂无权限" tip="您尚无相关系统权限，请联系管理员授权后即可使用" imgWidth="250" />
-
-const {functionCodes = []} = window.__userConfig
 
 @observer
 export default class ObjectModel extends Component {
@@ -53,7 +49,7 @@ export default class ObjectModel extends Component {
     } = store
 
     const tabConfig = {
-      tabs,
+      tabs: changeToOptions(window.njkData.dict.typeCodes)('objTypeName', 'objTypeCode'),
       basePath: '',
       currentTab: typeCode,
       changeTab: this.changeTab,
@@ -72,7 +68,7 @@ export default class ObjectModel extends Component {
     return (
       <Provider bigStore={store}>
         {
-          functionCodes.includes('asset_tag_obj_model') ? (
+          codeInProduct.includes('asset_tag_obj_model') ? (
             <div className="page-object-modal">
               <div className="content-header">对象模型</div>
            

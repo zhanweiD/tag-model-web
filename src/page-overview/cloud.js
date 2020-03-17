@@ -2,11 +2,12 @@
  * @description 对象云图
  */
 import * as d3 from 'd3'
+
 import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {Empty, Spin} from 'antd'
 
-const cloud = require('../third/d3.layout.cloud')
+const cloud = require('d3-cloud')
 
 @observer
 export default class Cloud extends Component {

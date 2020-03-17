@@ -18,8 +18,6 @@ const formItemLayout = {
   wrapperCol: {span: 20},
 }
 
-const dataTypeData = (window.njkData.dict || {}).dataType
-
 const createTreeNode = (data = [], selectCon) => {
   if (!data.length) return null
 
@@ -105,6 +103,7 @@ class ModalObject extends Component {
   submit = () => {
     const t = this
     const {store} = t
+
     const {
       objModal: {
         editType,
@@ -314,7 +313,7 @@ class ModalObject extends Component {
                   })(
                     <Select placeholder="请选择数据类型">
                       {
-                        dataTypeData.map(item => (
+                        window.njkData.dict.dataType.map(item => (
                           <Option key={item.key} value={item.key}>{item.value}</Option>
                         ))
                       }

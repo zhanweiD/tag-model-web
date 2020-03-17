@@ -17,7 +17,8 @@
   "devDependencies": {
     "@dtwave/nemo-base-info": "1.0.9",
     "@dtwave/oner-flexbox": "2.0.1",
-    "@dtwave/uikit": "2.0.85",
+    "@dtwave/uikit": "2.0.87",
+    "@dtwave/oner-mapping": "2.0.5",
     "antd": "3.18.2",
     "autoprefixer": "9.4.7",
     "babel-core": "6.26.3",
@@ -35,6 +36,7 @@
     "concurrently": "4.1.0",
     "cross-env": "5.2.0",
     "css-loader": "2.1.0",
+    "d3": "^5.15.0",
     "d3-cloud": "^1.2.5",
     "d3-dispatch": "^1.0.6",
     "d3-drag": "^1.2.5",

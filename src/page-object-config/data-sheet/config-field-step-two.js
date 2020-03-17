@@ -7,6 +7,7 @@ import {
 import {QuestionTooltip, OmitTooltip} from '../../component'
 import ModalTagEdit from './config-field-modal-edit'
 import ModalCateSelect from './config-field-modal-cate'
+import {getDataTypeName} from '../../common/util'
 
 // 标签配置 - 填写配置信息
 @observer
@@ -59,13 +60,7 @@ export default class StepTwo extends React.Component {
         title: '数据类型',
         key: 'valueType',
         dataIndex: 'valueType',
-        render: text => (
-          <span>
-            {
-              ((window.njkData.dict || {}).dataType || []).find(item => item.key === text).value
-            }
-          </span>
-        ),
+        render: v => getDataTypeName(+v),
       },
       {
         title: '是否枚举',

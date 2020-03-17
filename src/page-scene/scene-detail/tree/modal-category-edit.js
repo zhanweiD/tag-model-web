@@ -7,7 +7,6 @@ import {
 } from 'antd'
 import {action} from 'mobx'
 import {observer, inject} from 'mobx-react'
-import {IS_EXIT_MSG} from '../../../common/constants'
 import {getNamePattern, trimFormValues} from '../../../common/util'
 
 const FormItem = Form.Item
@@ -75,7 +74,7 @@ class ModalEditCategory extends Component {
 
       this.store.checkIsExist(params, res => {
         if (!res) {
-          return callback(IS_EXIT_MSG)
+          return callback('名称已经存在')
         }
         callback()
       }) 

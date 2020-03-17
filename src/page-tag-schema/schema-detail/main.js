@@ -3,8 +3,9 @@
  */
 import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
-import {action, toJS} from 'mobx'
+import {action} from 'mobx'
 import {Spin} from 'antd'
+import * as navListMap from '../../common/navList'
 import {
   Tag,
   TabRoute,
@@ -18,7 +19,7 @@ import store from './store'
 
 // 面包屑设置
 // eslint-disable-next-line no-underscore-dangle
-const {navListMap} = window.__keeper
+
 const navList = [
   navListMap.tagCenter,
   navListMap.tagSchema,

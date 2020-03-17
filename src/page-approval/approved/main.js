@@ -90,7 +90,6 @@ export default class Approved extends Component {
     const {
       projectList, applicant, detail, detailLoading,
     } = store
-
     const listConfig = {
       columns: this.columns,
       searchParams: seach({projectList, applicant}),

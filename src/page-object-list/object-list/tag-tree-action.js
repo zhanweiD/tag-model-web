@@ -6,11 +6,10 @@ import {action} from 'mobx'
 import {observer} from 'mobx-react'
 import {Dropdown, Menu} from 'antd'
 import {NoBorderInput} from '../../component'
+import {codeInProduct} from '../../common/util'
 import {
   IconRefresh, IconTreeAdd, IconUnExtend, IconExtend,
 } from '../../icon-comp'
-
-const {functionCodes} = window.__userConfig
 
 @observer
 export default class Action extends Component {
@@ -69,7 +68,7 @@ export default class Action extends Component {
         </Menu.Item>
       </Menu>
     )
-    return functionCodes.includes('asset_tag_tag_cat_add_edit_del') ? (
+    return codeInProduct.includes('asset_tag_tag_cat_add_edit_del') ? (
       <Dropdown overlay={menu}>
         <IconTreeAdd size="14" className="mr8 hand" />
       </Dropdown>

@@ -4,19 +4,14 @@
 import {Component, Fragment} from 'react'
 import {action} from 'mobx'
 import {observer, Provider} from 'mobx-react'
+import * as navListMap from '../common/navList'
+
 import {TabRoute, Loading, NoData} from '../component'
 import {changeToOptions} from '../common/util'
 import Tree from './tree'
 import ObjectDetail from './object-detail'
 
 import store from './store'
-
-// 面包屑设置
-// eslint-disable-next-line no-underscore-dangle
-const {navListMap} = window.__keeper
-
-// tab
-const tabs = changeToOptions(window.njkData.typeCodes)('objTypeName', 'objTypeCode')
 
 @observer
 export default class ObjectConfig extends Component {
@@ -53,7 +48,7 @@ export default class ObjectConfig extends Component {
 
   // 跳转到项目列表
   goProjectList = () => {
-    window.location.href = `${window.__onerConfig.pathPrefix || '/'}/project`
+    window.location.href = `${window.__keeper.pathPrefix || '/'}/project`
   }
 
   renderNodata =() => {
@@ -87,7 +82,7 @@ export default class ObjectConfig extends Component {
     } = store
 
     const tabConfig = {
-      tabs,
+      tabs: changeToOptions(window.njkData.dict.typeCodes)('value', 'key'),
       basePath: '',
       currentTab: typeCode,
       changeTab: this.changeTab,

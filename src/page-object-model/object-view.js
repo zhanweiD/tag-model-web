@@ -6,7 +6,7 @@ import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {Spin} from 'antd'
 
-const dagreD3 = require('../third/dagre-d3')
+const dagreD3 = require('d3-drag')
 
 const chartOption = {
   svgW: '100%',

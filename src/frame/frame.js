@@ -79,6 +79,7 @@ class Frame extends Component {
       <LocaleProvider locale={zhCN}>
         <DtFrame
           {...this.props}
+          removeNode
           ref={frame => this.dtFrame = frame}
           navExtra={this.renderNav()}
           system="asset_tag"

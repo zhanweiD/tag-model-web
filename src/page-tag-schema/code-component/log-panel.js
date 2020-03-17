@@ -8,7 +8,7 @@ import cls from 'classnames'
 import ResultTable from './result-table'
 
 const {TabPane} = Tabs
-const pathPrefix = window.__onerConfig.pathPrefix || ''
+const pathPrefix = window.__keeper.pathPrefix || ''
 
 @observer
 export default class LogPanel extends Component {

@@ -1,4 +1,3 @@
-import {DATE_FORMAT} from '../../common/constants'
 
 const colors = [
   'rgba(0,197,122, 0.6)', 
@@ -55,7 +54,7 @@ export function getTagTrendOpt(data, legend = []) {
     tooltip: {
       trigger: 'axis',
       formatter: params => {
-        const domArr = [`日期: ${moment(+params[0].axisValue).format(DATE_FORMAT)} <br/>总调用次数: ${data[+params[0].dataIndex].totalCount}<br/>`]
+        const domArr = [`日期: ${moment(+params[0].axisValue).format('YYYY-MM-DD')} <br/>总调用次数: ${data[+params[0].dataIndex].totalCount}<br/>`]
         if (legend.length) {
           params.map((
             item, idx
@@ -132,7 +131,7 @@ export function getApiTrendOpt(data) {
     
     tooltip: {
       trigger: 'axis',
-      formatter: params => `日期: ${moment(+params[0].axisValue).format(DATE_FORMAT)} <br/>API调用数: ${params[0].value}`,   
+      formatter: params => `日期: ${moment(+params[0].axisValue).format('YYYY-MM-DD')} <br/>API调用数: ${params[0].value}`,   
     },
 
     xAxis: {

@@ -5,6 +5,7 @@ import {
   Tabs, Button, Icon, Spin, Tooltip, Alert,
 } from 'antd'
 
+import * as navListMap from '../../common/navList'
 import {Time} from '../../common/util'
 import {AuthBox, Tag, DetailHeader} from '../../component'
 import ModalEditScene from '../scene/modal-add'
@@ -19,7 +20,7 @@ const {TabPane} = Tabs
 
 // 面包屑设置
 // eslint-disable-next-line no-underscore-dangle
-const {navListMap} = window.__keeper
+
 const navList = [
   navListMap.tagCenter,
   navListMap.application,
@@ -106,7 +107,7 @@ export default class SceneDetail extends Component {
     }
 
     const actions = [
-      <Button className="mr8" href={`${window.__onerConfig.pathPrefix}/scene#/${store.sceneId}/tags`}>标签列表</Button>,
+      <Button className="mr8" href={`${window.__keeper.pathPrefix}/scene#/${store.sceneId}/tags`}>标签列表</Button>,
       <AuthBox 
         code="asset_tag_project_occ_data_source"
         myFunctionCodes={store.functionCodes} 

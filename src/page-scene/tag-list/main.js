@@ -2,12 +2,12 @@ import {Component} from 'react'
 import {action} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {Table, Badge} from 'antd'
+import * as navListMap from '../../common/navList'
 
 import {SearchForm} from './search-form'
 
 import store from './store-scene-tags'
 
-const {navListMap} = window.__keeper
 
 @inject('frameChange')
 @observer

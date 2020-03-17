@@ -3,6 +3,8 @@ import {action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {Spin, Modal, Button} from 'antd'
 import {DtGrid, DtNewCard} from '@dtwave/uikit'
+import * as navListMap from '../../common/navList'
+
 import {
   Tag, NoData, AuthBox, Loading,
 } from '../../component'
@@ -16,7 +18,7 @@ const {confirm} = Modal
 
 // 面包屑设置
 // eslint-disable-next-line no-underscore-dangle
-const {navListMap} = window.__keeper
+
 const navList = [
   navListMap.tagCenter,
   navListMap.application,
@@ -62,7 +64,7 @@ export default class Scene extends Component {
 
   // 跳转到项目列表
   goProjectList = () => {
-    window.location.href = `${window.__onerConfig.pathPrefix || '/'}/project`
+    window.location.href = `${window.__keeper.pathPrefix || '/'}/project`
   }
 
   renderNodata =() => {
@@ -135,7 +137,7 @@ export default class Scene extends Component {
                                 className="card"
                                 title={name}
                                 // eslint-disable-next-line no-underscore-dangle
-                                link={`${window.__onerConfig.pathPrefix}/scene#/${id}`}
+                                link={`${window.__keeper.pathPrefix}/scene#/${id}`}
                                 tag={[<Tag status={used ? 'process' : 'wait'} text={used ? '使用中' : '未使用'} className="mr8" />]}
                                 labelList={[{
                                   label: '创建者',

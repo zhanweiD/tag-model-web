@@ -1,6 +1,6 @@
 import ioContext from '../../../common/io-context'
 import {
-  sceneApi, tagApi, get, post,
+  sceneApi, get, post,
 } from '../../../common/util'
 
 const api = {

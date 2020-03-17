@@ -11,6 +11,7 @@ import Action from './tree-action'
 import ModalCategory from './tree-modal-category'
 import ModalObject from './tree-drawer-object'
 import ModalMove from './tree-modal-move'
+import {codeInProduct} from '../common/util'
 import {
   getIconNodeSrc,
   deleteTipsMap,
@@ -18,15 +19,12 @@ import {
   TARGET_CATEGORY,
   TARGET_OBJECT,
   REL_CODE,
-  // ENTITY_CODE,
 } from './util'
 
 import store from './store-tree'
 
 const {DtTreeNode, DtTreeBox} = DtTree
 const {confirm} = Modal
-
-const {functionCodes} = window.__userConfig
 
 @inject('bigStore')
 @observer
@@ -204,11 +202,11 @@ export default class Tree extends Component {
     // }
 
     // 对象管理类目权限code 对象类目（添加、编辑、删除） ```asset_tag_obj_cat_add_edit_del``` --管理员
-    if (+node.type === 3 && !functionCodes.includes('asset_tag_obj_cat_add_edit_del')) {
+    if (+node.type === 3 && !codeInProduct.includes('asset_tag_obj_cat_add_edit_del')) {
       return [{key: 'view', value: '查看对象类目', onClick: (key, data) => this.openModal(key, data, TARGET_CATEGORY)}] // 只有查看详情权限
     }
     // 对象管理对象权限code对象（添加、编辑、删除、发布、取消发布）```asset_tag_obj_add_edit_del_publish``` --管理员
-    if (+node.type === 2 && !functionCodes.includes('asset_tag_obj_add_edit_del_publish')) {
+    if (+node.type === 2 && !codeInProduct.includes('asset_tag_obj_add_edit_del_publish')) {
       return [] 
     }
 

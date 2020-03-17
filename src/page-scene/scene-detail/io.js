@@ -1,6 +1,6 @@
 import ioContext from '../../common/io-context'
 import {
-  sceneApi, tagApi, get, post, baseApi,
+  sceneApi, get, post, baseApi,
 } from '../../common/util'
 
 const api = {
@@ -19,7 +19,7 @@ const api = {
   saveStorage: post(`${sceneApi}/saveStorage`), // 添加数据源 - 保存
   getSourceList: get(`${sceneApi}/alreadyDBSourceList`), // 目的数据源 - 列表
   dbSourceDel: post(`${sceneApi}/dbSourceDel`), // 目的数据源 - 列表删除
-  isObjExist: get(`${tagApi}/be_tag/tag/pool/obj_exist`), // 判断标签池是否有对象
+  isObjExist: get(`${baseApi}/tag/pool/obj_exist`), // 判断标签池是否有对象
 
   // 权限code
   getAuthCode: get(`${baseApi}/project/getFunctionCodes`),

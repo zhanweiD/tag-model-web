@@ -6,6 +6,8 @@ import {observer} from 'mobx-react'
 import {
   HashRouter as Router,
 } from 'react-router-dom'
+
+import * as navListMap from '../common/navList'
 import Frame from '../frame'
 import {OverviewCardWrap} from '../component'
 import Cloud from './cloud'
@@ -15,7 +17,7 @@ import store from './store'
 
 // 面包屑设置
 // eslint-disable-next-line no-underscore-dangle
-const {navListMap} = window.__keeper
+
 const navList = [
   navListMap.tagCenter,
   navListMap.overview,
@@ -49,7 +51,6 @@ export default class Overview extends Component {
         values: [cardInfo.projectCount || 0],
       },
     ]
-
     return (
       <Router>
         <Frame navList={navList}>

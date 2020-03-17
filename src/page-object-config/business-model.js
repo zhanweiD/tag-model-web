@@ -5,7 +5,7 @@ import * as d3 from 'd3'
 import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {toJS, observable} from 'mobx'
-import {Select, Button} from 'antd'
+import {Select} from 'antd'
 
 import erClose from '../icon-svg/er-close.svg'
 import erOpen from '../icon-svg/er-open.svg'

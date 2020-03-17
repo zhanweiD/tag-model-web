@@ -2,10 +2,11 @@
  * @description 标签加工列表
  */
 import {Component, Fragment} from 'react'
-import {action, toJS} from 'mobx'
+import {action} from 'mobx'
 import {observer, Provider, inject} from 'mobx-react'
 import {Button, Popconfirm} from 'antd'
 import {Link} from 'react-router-dom'
+import * as navListMap from '../../common/navList'
 import {
   ListContent, AuthBox, NoData, Loading,
 } from '../../component'
@@ -23,7 +24,7 @@ import Store from './store'
 
 // 面包屑设置
 // eslint-disable-next-line no-underscore-dangle
-const {navListMap} = window.__keeper
+
 const navList = [
   navListMap.tagCenter,
   navListMap.tagSchema,
@@ -214,7 +215,7 @@ class SchemaList extends Component {
 
    // 跳转到项目列表
    goProjectList = () => {
-     window.location.href = `${window.__onerConfig.pathPrefix || '/'}/project`
+     window.location.href = `${window.__keeper.pathPrefix || '/'}/project`
    }
 
   renderNodata = () => {

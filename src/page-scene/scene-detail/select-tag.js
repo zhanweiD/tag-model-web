@@ -120,7 +120,7 @@ export default class SelectTag extends Component {
 
   goToAddObj = () => {
     // 跳转至标签池添加标签
-    window.location.href = `${window.__onerConfig.pathPrefix}/pool#/1`
+    window.location.href = `${window.__keeper.pathPrefix}/pool#/1`
   }
 
   // 选择对象
@@ -225,13 +225,13 @@ export default class SelectTag extends Component {
                                         descr={descr}
                                         baseInfo={baseInfo}
                                         // 点击“标签详情”按钮，进入标签池中的标签详情
-                                        actions={[<Button href={`${window.__onerConfig.pathPrefix}/tag-model#/${id}`} type="primary"><a href>标签详情</a></Button>]}
+                                        actions={[<Button href={`${window.__keeper.pathPrefix}/tag-model#/${id}`} type="primary"><a href>标签详情</a></Button>]}
                                         // actions={
                                         //   <Button type="primary">
                                         //     <a
                                         //       // target="_blank"
                                         //       // rel="noopener noreferrer"
-                                        //       // href={`${window.__onerConfig.pathPrefix}/pool#/${objTypeCode}/${treeId}`}
+                                        //       // href={`${window.__keeper.pathPrefix}/pool#/${objTypeCode}/${treeId}`}
                                         //       href
                                         //     >
                                         //       标签详情

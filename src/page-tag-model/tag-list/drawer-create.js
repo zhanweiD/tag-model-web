@@ -6,8 +6,6 @@ import {ModalForm} from '../../component'
 import {changeToOptions, enNameReg, isJsonFormat} from '../../common/util'
 import {tagConfigMethodMap, nameTypeMap} from './util'
 
-const dataTypeData = changeToOptions((window.njkData.dict || {}).dataType || [])('value', 'key')
-
 @observer
 export default class DrawerCreate extends Component {
   constructor(props) {
@@ -108,7 +106,7 @@ export default class DrawerCreate extends Component {
         '@requiredSelect',
       ],
       control: {
-        options: dataTypeData,
+        options: changeToOptions(window.njkData.dict.dataType)('value', 'key'),
       },
     }, {
       label: '是否枚举',

@@ -2,7 +2,7 @@ import {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import {Button} from 'antd'
 
-const {functionCodes} = window.__userConfig
+const functionCodes = window.productFunctionCode || []
 
 class AuthBox extends Component {
   static propTypes = {

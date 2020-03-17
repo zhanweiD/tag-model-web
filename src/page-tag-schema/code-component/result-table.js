@@ -152,7 +152,7 @@ export default class Page extends Component {
 
   // @action downloadResult = () => {
   //   if (_store.isDownload) {
-  //     const urlPre = `${window.__onerConfig.pathPrefix || ''}/api/download`
+  //     const urlPre = `${window.__keeper.pathPrefix || ''}/api/download`
   //     const param = `resultId=${this.props.resultId}&taskId=${this.props.taskInstanceId}&wsId=${this.props.wsId}`
   //     const url = `${urlPre}?${param}`
   //     window.open(url)

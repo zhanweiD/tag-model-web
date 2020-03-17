@@ -6,6 +6,7 @@ import {action} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {Popconfirm} from 'antd'
 import {Link} from 'react-router-dom'
+import * as navListMap from '../../common/navList'
 import {
   ListContent, Loading, NoData, OmitTooltip, AuthBox,
 } from '../../component'
@@ -24,7 +25,7 @@ import store from './store'
 
 // 面包屑设置
 // eslint-disable-next-line no-underscore-dangle
-const {navListMap} = window.__keeper
+
 const navList = [
   navListMap.tagCenter,
   navListMap.tagManagement,
@@ -287,7 +288,7 @@ export default class TagList extends Component {
 
   // 跳转到项目列表
   goProjectList = () => {
-    window.location.href = `${window.__onerConfig.pathPrefix || '/'}/project`
+    window.location.href = `${window.__keeper.pathPrefix || '/'}/project`
   }
 
   renderNodata =() => {
@@ -356,7 +357,7 @@ export default class TagList extends Component {
         className="mr8"
       >
         创建标签
-                </AuthBox>, 
+      </AuthBox>, 
       // <AuthBox
       //     code="asset_tag_project_tag_operator"
       //     myFunctionCodes={store.functionCodes}

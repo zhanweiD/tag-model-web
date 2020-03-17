@@ -5,6 +5,7 @@ import {Component} from 'react'
 import {
   HashRouter as Router, Route, Switch,
 } from 'react-router-dom'
+import * as navListMap from '../common/navList'
 
 import Frame from '../frame'
 import ObjectConfig from './object-config'
@@ -13,7 +14,6 @@ import './main.styl'
 
 // 面包屑设置
 // eslint-disable-next-line no-underscore-dangle
-const {navListMap} = window.__keeper
 const navList = [
   navListMap.tagCenter,
   navListMap.tagManagement,

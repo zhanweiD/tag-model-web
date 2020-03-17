@@ -5,15 +5,12 @@ import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
 import {observable, action, toJS} from 'mobx'
 import {
-  Drawer, Radio, Button,
+  Drawer, Button,
 } from 'antd'
-import {changeToOptions} from '../../common/util'
 import Tree from './select-object-tree'
 import List from './select-object-list'
 
 import './select-object.styl'
-
-const tabs = changeToOptions(window.njkData.typeCodes)('objTypeName', 'objTypeCode')
 
 @inject('bigStore')
 @observer
@@ -43,18 +40,6 @@ export default class SelectObject extends Component {
       this.selTypeCode = this.store.typeCode
     }
   }
-
-  // @action.bound changeType(e) {
-  //   const {selectedObjList} = this.store
-  //   const {value} = e.target
-  //   this.selTypeCode = value
-  //   this.store.getObjCate({
-  //     type: value,
-  //   })
-  //   this.filteredData = selectedObjList.filter(d => +d.objTypeCode === +this.selTypeCode)
-  //   this.selectNodes.clear()
-  //   this.removeListItem = undefined
-  // }
 
   @action destroy() {
     this.selectNodes.clear()
@@ -203,7 +188,7 @@ export default class SelectObject extends Component {
                 loading={selectObjConfirmLoading} 
                 // disabled={!this.filteredData.length}
               >
-                  确定
+                确定
               </Button>
             </div>
           </div>

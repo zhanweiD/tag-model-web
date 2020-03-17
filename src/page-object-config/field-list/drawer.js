@@ -5,8 +5,6 @@ import {Drawer, Button} from 'antd'
 import {ModalForm} from '../../component'
 import {changeToOptions, enNameReg, isJsonFormat} from '../../common/util'
 
-const dataTypeData = changeToOptions((window.njkData.dict || {}).dataType || [])('value', 'key')
-
 // 名称类型映射: 1 中文名 2 英文名
 const nameTypeMap = {
   name: 1,
@@ -59,7 +57,7 @@ export default class DrawerTagConfig extends Component {
         '@requiredSelect',
       ],
       control: {
-        options: dataTypeData,
+        options: changeToOptions(window.njkData.dict.dataType)('value', 'key'),
       },
     }, {
       label: '是否枚举',

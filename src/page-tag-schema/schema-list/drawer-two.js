@@ -27,7 +27,7 @@ export default class DrawerTwo extends Component {
       if (err) {
         return
       } 
-      console.log(values)
+
       const parameterMappingKeys = {}
       Object.values(values).forEach(d => {
         parameterMappingKeys[d.key] = d.value
@@ -48,7 +48,6 @@ export default class DrawerTwo extends Component {
   render() {
     const {show, projectId} = this.props
     const {runStatusMessage} = this.codeStore
-    const {schemeDetail} = this.store
 
     return (
       <div style={{display: show ? 'block' : 'none'}} className="logic-config">

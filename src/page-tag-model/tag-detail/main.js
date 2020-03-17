@@ -4,6 +4,7 @@
 import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
 import {Spin} from 'antd'
+import * as navListMap from '../../common/navList'
 import {DetailHeader, TabRoute, Tag} from '../../component'
 import {Time} from '../../common/util'
 import TagRelate from './tag-relate'
@@ -13,7 +14,7 @@ import store from './store'
 
 // 面包屑设置
 // eslint-disable-next-line no-underscore-dangle
-const {navListMap} = window.__keeper
+
 const navList = [
   navListMap.tagCenter,
   navListMap.tagManagement,

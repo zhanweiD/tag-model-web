@@ -5,7 +5,8 @@ import {Component} from 'react'
 import {action, observable} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {withRouter} from 'react-router'
-import {Popconfirm, Button, Spin} from 'antd'
+import {Popconfirm, Spin} from 'antd'
+import * as navListMap from '../../common/navList'
 import {Time} from '../../common/util'
 import {
   DetailHeader, ListContent, AuthBox, TabRoute,
@@ -17,7 +18,7 @@ import store from './store'
 
 // 面包屑设置
 // eslint-disable-next-line no-underscore-dangle
-const {navListMap} = window.__keeper
+
 const navList = [
   navListMap.tagCenter,
   navListMap.common,

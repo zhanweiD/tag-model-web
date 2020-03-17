@@ -4,7 +4,7 @@
 import {Component, Fragment} from 'react'
 import {observer, inject} from 'mobx-react'
 import {action} from 'mobx'
-// import {Button} from 'antd'
+import * as navListMap from '../common/navList'
 import {
   ListContent, Loading, NoData, OmitTooltip, AuthBox,
 } from '../component'
@@ -19,7 +19,7 @@ import Search from './search'
 
 // 面包屑设置
 // eslint-disable-next-line no-underscore-dangle
-const {navListMap} = window.__keeper
+
 const navList = [
   navListMap.tagCenter,
   navListMap.tagManagement,
@@ -124,7 +124,7 @@ export default class TagWarehouse extends Component {
       render: (text, record) => (
         <div className="FBH FBAC">
           {/* eslint-disable-next-line no-underscore-dangle */}
-          <a href={`${window.__onerConfig.pathPrefix}/tag-model#/${record.id}`}>标签详情</a>
+          <a href={`${window.__keeper.pathPrefix}/tag-model#/${record.id}`}>标签详情</a>
           <AuthBox 
             code="asset_tag_project_tag_search_add_occ" 
             myFunctionCodes={store.functionCodes}
@@ -203,12 +203,12 @@ export default class TagWarehouse extends Component {
 
   // 跳转到项目列表
   goProjectList = () => {
-    window.location.href = `${window.__onerConfig.pathPrefix || '/'}/project`
+    window.location.href = `${window.__keeper.pathPrefix || '/'}/project`
   }
 
   // 跳转到标签管理
   goTagManager = () => {
-    window.location.href = `${window.__onerConfig.pathPrefix || '/'}/tag-model`
+    window.location.href = `${window.__keeper.pathPrefix || '/'}/tag-model`
   }
 
   renderNodata = () => {
@@ -236,7 +236,7 @@ export default class TagWarehouse extends Component {
 
   render() {
     const {
-      useProjectId, list, objectId, functionCodes, tableLoading, expand,
+      useProjectId, list, objectId, functionCodes, tableLoading,
     } = store
 
     const rowSelection = objectId && functionCodes.includes('asset_tag_project_tag_search_add_occ') ? {

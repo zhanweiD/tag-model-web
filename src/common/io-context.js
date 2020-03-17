@@ -1,9 +1,8 @@
 import nattyFetch from 'natty-fetch/dist/natty-fetch'
 import {Modal} from 'antd'
 
-const {pathPrefix} = window.__onerConfig
+
 const context = nattyFetch.context({
-  // urlPrefix: `${pathPrefix}/api/v1/`,
   mock: false,
   rest: true,
   header: {

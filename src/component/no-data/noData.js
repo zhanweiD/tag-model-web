@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {Button} from 'antd'
 import nodata from '../../icon-svg/noData.svg'
 
-const {functionCodes} = window.__userConfig
+const functionCodes = window.productFunctionCode || []
 
 export default class NoData extends Component {
   static propTypes = {
@@ -31,7 +31,9 @@ export default class NoData extends Component {
   constructor(props) {
     super(props)
     const {code} = props
-    if (code) this.auth = functionCodes.includes(code)
+    if (code) {
+      this.auth = functionCodes.includes(code)
+    }
   }
 
   onClick = () => {

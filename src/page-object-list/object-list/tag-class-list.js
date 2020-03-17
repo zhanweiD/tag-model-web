@@ -2,11 +2,11 @@ import {Component, Fragment} from 'react'
 import {action, observable} from 'mobx'
 import {observer} from 'mobx-react'
 import {Table, Input} from 'antd'
+import {codeInProduct} from '../../common/util'
 import {NoData, OmitTooltip, AuthBox} from '../../component'
 import ModalMove from './modal-move'
 
 const {Search} = Input
-const {functionCodes} = window.__userConfig
 
 @observer
 export default class TagList extends Component {
@@ -40,7 +40,7 @@ export default class TagList extends Component {
       title: '操作',
       dataIndex: 'action',
       width: 90,
-      render: (text, record) => (functionCodes.includes('asset_tag_tag_tag_select_move') ? <a href onClick={() => this.moveTo(record)}>移动至</a> : null),
+      render: (text, record) => (codeInProduct('asset_tag_tag_tag_select_move') ? <a href onClick={() => this.moveTo(record)}>移动至</a> : null),
     },
   ]
 
@@ -111,7 +111,7 @@ export default class TagList extends Component {
   render() {
     const {tagList, keyword} = this.store
 
-    const rowSelection = functionCodes.includes('asset_tag_tag_tag_select_move') && {
+    const rowSelection = codeInProduct.includes('asset_tag_tag_tag_select_move') && {
       selectedRowKeys: this.selectedRowKeys,
       onChange: this.changeRow,
     }

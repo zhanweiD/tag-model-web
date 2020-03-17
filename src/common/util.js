@@ -7,26 +7,26 @@ import {ErrorEater} from '@dtwave/uikit'
 /**
  * @description 接口路径处理
  */
-const {apiV} = window.__keeper
-export const pathPrefix = window.__onerConfig.pathPrefix || ''
+const {pathPrefix} = window.__keeper
+
 // 接口前缀
-export const tagApi = `${pathPrefix}/api/v${apiV}` // 标签中心
-export const baseApi = `${pathPrefix}/api/v${apiV}/be_tag` 
-export const overviewApi = `${pathPrefix}/api/v${apiV}/be_tag/overview`// 总览
-export const projectApi = `${pathPrefix}/api/v${apiV}/be_tag/project` // 项目列表
-export const approvalApi = `${pathPrefix}/api/v${apiV}/be_tag/apply` // 审批管理
 
-export const tagClassApi = `${pathPrefix}/api/v${apiV}/be_tag/cate` // 标签类目
-export const projectSpaceApi = `${pathPrefix}/api/v${apiV}/be_tag/project` // 项目空间
-export const marketApi = `${pathPrefix}/api/v${apiV}/be_tag/tagMarket` // 标签集市
+export const baseApi = pathPrefix // 标签中心
+export const overviewApi = `${pathPrefix}/overview`// 总览
+export const projectApi = `${pathPrefix}/project` // 项目列表
+export const approvalApi = `${pathPrefix}/apply` // 审批管理
 
-export const tagModalApi = `${pathPrefix}/api/v${apiV}/be_tag/tag` // 标签模型
-export const sceneApi = `${pathPrefix}/api/v${apiV}/be_tag/occasion` // 场景管理
+export const tagClassApi = `${pathPrefix}/cate` // 标签类目
+export const projectSpaceApi = `${pathPrefix}/project` // 项目空间
+export const marketApi = `${pathPrefix}/tagMarket` // 标签集市
+
+export const tagModalApi = `${pathPrefix}/tag` // 标签模型
+export const sceneApi = `${pathPrefix}/occasion` // 场景管理
 
 // 4.9.0
-export const objectApi = `${pathPrefix}/api/v${apiV}/be_tag/object` // 对象管理
-export const derivativeApi = `${pathPrefix}/api/v${apiV}/be_tag/derivative` // 衍生标签
-export const tagWarehouseApi = `${pathPrefix}/api/v${apiV}/be_tag/map` // 标签仓库
+export const objectApi = `${pathPrefix}/object` // 对象管理
+export const derivativeApi = `${pathPrefix}/derivative` // 衍生标签
+export const tagWarehouseApi = `${pathPrefix}/map` // 标签仓库
 
 const createRequestFn = method => (url, config) => ({
   url,
@@ -161,12 +161,18 @@ export const enNameReg = /^[a-zA-Z][a-zA-Z0-9_]{0,31}$/
  * @description 根据数据类型code 返回 数据类型name; 常用数据类型 整数型/小数型/文本型/日期型
  * @param {*} code 
  */
-const dataType = window.njkData.dict && window.njkData.dict.dataType || []
+
 
 export const getDataTypeName = (code) => {
-
+  const dataType = window.njkData.dict.dataType || []
   const filterItem = dataType.filter(d => +d.key === +code)[0] || {}
   return filterItem.value
+}
+
+
+export const codeInProduct = code => {
+  const functionCodes = window.productFunctionCode || []
+  return functionCodes.indexOf(code) > -1
 }
 
 //*------------------------------ 组件类 (返回组件) ------------------------------*//
