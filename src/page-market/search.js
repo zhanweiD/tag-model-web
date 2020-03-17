@@ -30,9 +30,11 @@ export default class Search extends Component {
   }
 
   componentWillMount() {
-    this.store.getUseProject()
-    this.store.getOwnProject()
-    this.store.getObject()
+    if (this.store.useProjectId) {
+      this.store.getUseProject()
+      this.store.getOwnProject()
+      this.store.getObject()
+    }
   }
 
   @action.bound onSearch(v) {
@@ -116,7 +118,7 @@ export default class Search extends Component {
                   <Fragment>
                     <span className="advanced-search-label">权限状态</span>
                     <Select value={projectPermission} className="mr8" style={{width: 240}} onChange={this.permissionSelect}>
-                      <Option value="">全部</Option>
+                      <Option value={2}>全部</Option>
                       {
                         typeMap.map(
                           ({name, value}) => (

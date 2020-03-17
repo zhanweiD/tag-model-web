@@ -189,31 +189,34 @@ export default class Store {
         projectId: this.projectId,
         ...params,
       })
-      // sendDpm('taskRun', {
-      //   taskId: this.taskItemInfo.taskId,
-      //   wsId: _store.wsId,
-      //   taskInstance: data.taskInstance,
-      // })
-      runInAction(() => {
-        // _store.setCodeareaItemAttr(this.taskItemInfo.taskId, {
-        //   isRunning: true,
-        // })
-        this.fieldInfo = data.fieldInfo
-        this.taskInstanceId = data.instanceId
-        this.usedTagIds = data.usedTagIds
-        this.runLog = '正在提交...\nwaiting...\n'
-        this.runStatusMessage.message = ''
-        this.runStatusMessage.download = false
-        this.logIndex = 0
-        this.currentResultIndex = 0
-        if (!this.isRuned) {
-          this.logBoxHeight = 200
-          this.setHeight()
-        }
-        this.isRuned = true
-      })
 
-      this.getLog(this.taskInstanceId)
+      runInAction(() => {
+        if (data.type === 1) {
+          this.runLog = 'TQL语法校验...\nwaiting...TQL语法校验成功\n 正在提交...\nwaiting...\n'
+          this.fieldInfo = data.fieldInfo
+          this.taskInstanceId = data.instanceId
+          this.usedTagIds = data.usedTagIds
+          this.runStatusMessage.message = ''
+          this.logIndex = 0
+          this.currentResultIndex = 0
+          if (!this.isRuned) {
+            this.logBoxHeight = 200
+            this.setHeight()
+          }
+          this.isRuned = true
+          this.getLog(this.taskInstanceId)
+        } else {
+          if (!this.isRuned) {
+            this.logBoxHeight = 200
+            this.setHeight()
+          }
+          this.isRuned = true
+          this.runLog = `TQL语法校验...\nwaiting...\n \n错误信息：\n${data.log}`
+          this.runStatusMessage.status = 'error'
+          this.runStatusMessage.message = 'TQL语法校验失败'
+        }
+      })
+     
 
       if (cb) cb(data)
     } catch (e) {

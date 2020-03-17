@@ -20,7 +20,7 @@ class Store extends ListContentStore(io.getList) {
   @observable useProjectId = '' // 使用项目id; 只有选择了使用项目;标签列表才会出现checkbox框 进行批量操作
   @observable useProjectName = '' // 使用项目id; 只有选择了使用项目;标签列表才会出现checkbox框 进行批量操作
 
-  @observable projectPermission = '' // 项目使用权限
+  @observable projectPermission = 2 // 项目使用权限
   @observable ownProjectId = '' // 所属项目id
   @observable objectId = '' // 对象id
   @observable hotWord = undefined // 关键词
@@ -30,7 +30,7 @@ class Store extends ListContentStore(io.getList) {
 
 
   @action.bound initData() {
-    this.projectPermission = ''
+    this.projectPermission = 2
     this.ownProjectId = ''
     this.objectId = ''
     this.useProjectId = ''
