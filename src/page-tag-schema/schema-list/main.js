@@ -2,9 +2,11 @@
  * @description 标签加工列表
  */
 import {Component, Fragment} from 'react'
-import {action, toJS} from 'mobx'
+import {action} from 'mobx'
 import {observer, Provider, inject} from 'mobx-react'
-import {Button, Popconfirm} from 'antd'
+import {
+  Button, Popconfirm, Dropdown, Icon, Menu,
+} from 'antd'
 import {Link} from 'react-router-dom'
 import {
   ListContent, AuthBox, NoData, Loading,
@@ -54,6 +56,21 @@ class SchemaList extends Component {
     }
   }
 
+  menu = data => (
+    <Menu>
+      <Menu.Item>
+        <a
+          href
+          onClick={() => this.getSubmitLog({
+            id: data.id,
+          })}
+        >
+          提交日志
+        </a>
+      </Menu.Item>
+    </Menu>
+  )
+
   columns = [
     {
       title: '加工方案',
@@ -77,15 +94,11 @@ class SchemaList extends Component {
     }, {
       title: '方案状态',
       dataIndex: 'status',
-      render: (v, r) => getSchemeStatus({status: v}, () => this.getSubmitLog({
-        id: r.id,
-      })),
+      render: v => getSchemeStatus({status: v}),
     }, {
       title: '最近运行状态',
       dataIndex: 'lastStatus',
-      render: (v, r) => (v === null ? '' : getSchemeRunStatus({status: v}, () => this.getSubmitLog({
-        id: r.id,
-      }))),
+      render: v => (v === null ? '' : getSchemeRunStatus({status: v})),
     }, {
       title: '操作',
       dataIndex: 'action',
@@ -154,6 +167,21 @@ class SchemaList extends Component {
             <Popconfirm placement="topRight" title="你确定要克隆吗？" onConfirm={() => this.clone(record)}>
               <a href>克隆</a>
             </Popconfirm>
+            {/* 方案状态: 提交成功 提交失败  操作: 提交日志 */}
+            {
+              record.status === 2 ? (
+                <Fragment>
+                  <span className="table-action-line" />
+                  <Dropdown overlay={() => this.menu(record)}>
+                    <a href>
+              更多
+                      <Icon type="down" />
+                    </a>
+                  </Dropdown>
+                </Fragment>
+              ) : null
+            }
+           
           </div>
         </AuthBox>
         

@@ -89,7 +89,9 @@ export default class DrawerTwoParams extends Component {
           {getFieldDecorator(id, {
             rules: [{
               validator: (rule, param, callback) => {
-                if ((param.value && param.key) || (!param.value && !param.key)) {
+                if (!param) {
+                  callback('请输入运行参数')
+                } else if ((param.value && param.key) || (!param.value && !param.key)) {
                   callback()
                 } else if (!param.key) {
                   callback('key值不能为空')

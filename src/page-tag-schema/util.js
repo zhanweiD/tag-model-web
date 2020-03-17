@@ -33,9 +33,9 @@ export const getSchemeStatus = ({status}, fn) => {
     default: color = '#d9d9d9'; text = '未完成'; break
   }
 
-  if (+status === 1 || +status === 2) {
-    return <a href onClick={() => fn()}><Badge color={color} text={text} /></a> 
-  }
+  // if (+status === 1 || +status === 2) {
+  //   return <a href onClick={() => fn()}><Badge color={color} text={text} /></a> 
+  // }
 
   return <Badge color={color} text={text} />
 }

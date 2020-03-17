@@ -75,6 +75,7 @@ export default class BusinessModel extends Component {
   }
 
   initSvg() {
+    d3.select('#wrap').style('height', '464px')
     this.svg = d3.select('#box')
       .attr('width', option.svgW)
       .attr('height', option.svgH)
@@ -291,7 +292,7 @@ export default class BusinessModel extends Component {
       .attr('class', 'table-foot')
       .append('foreignObject')
       .attr('width', option.colsWidth)
-      .attr('height', 20)
+      .attr('height', 30)
       .append('xhtml:div')
       .html(`<div class="pull-down"><img src=${option.footerImgSrc.open} class="pull-down-click"/></div>`)
       .on('click', this.addCols)
@@ -311,7 +312,7 @@ export default class BusinessModel extends Component {
       this.allFooter.attr('transform', 
         d => {
           const marjorTag = d.tag.filter(item => item.configType === 2)
-          return `translate(${0},${option.tableTitleHeight + option.colsHeight * marjorTag.length - 10})`
+          return `translate(${0},${option.tableTitleHeight + option.colsHeight * marjorTag.length - 15})`
         }) 
     }
     
@@ -322,14 +323,14 @@ export default class BusinessModel extends Component {
           .html(`<img src=${option.footerImgSrc.close} class="pull-down-click" />`)
 
         this.allTables.selectAll(`#${data.name}${data.id} .table-foot`).attr('transform',
-          d => `translate(${0},${option.tableTitleHeight + option.colsHeight * d.tag.length - 10})`)
+          d => `translate(${0},${option.tableTitleHeight + option.colsHeight * d.tag.length - 15})`)
       } else {
         this.allFooter
           .selectAll(`#${data.name}${data.id} .pull-down`)
           .html(`<img src=${option.footerImgSrc.open} class="pull-down-click" />`)
 
         this.allTables.selectAll(`#${data.name}${data.id} .table-foot`).attr('transform',
-          d => `translate(${0},${option.tableTitleHeight + option.colsHeight * d.tag.filter(item => item.configType === 2).length - 10})`)
+          d => `translate(${0},${option.tableTitleHeight + option.colsHeight * d.tag.filter(item => item.configType === 2).length - 15})`)
       }
     }
   }
@@ -422,9 +423,8 @@ export default class BusinessModel extends Component {
       // 展开
       data.isAddCols = true
       data.footerSrc = option.footerImgSrc.close
-
+      
       data.linkCols = data.tag.concat()
-      // data.tag = data.tag.concat([]) 
       this.addExtColsGs(data)
     }
     this.updateFoot({
@@ -450,11 +450,18 @@ export default class BusinessModel extends Component {
 
     if (data) {
       if (data.isAddCols) {
+        const height = option.colsHeight * data.tag.length + option.tableTitleHeight
         this.addTablesData.selectAll(`#${data.name}${data.id} .table-border`)
-          .attr('height', option.colsHeight * data.tag.length + option.tableTitleHeight)
+          .attr('height', height)
+
+        if (height + 300 > 464) {
+          d3.select('#wrap').style('height', `${height + 300}px`)
+        }
       } else {
         this.addTablesData.selectAll(`#${data.name}${data.id} .table-border`)
           .attr('height', option.colsHeight * data.tag.filter(item => item.configType === 2).length + option.tableTitleHeight)
+        
+        d3.select('#wrap').style('height', '464px')
       }
     }
   }
@@ -477,7 +484,7 @@ export default class BusinessModel extends Component {
     const {relList} = this.store
 
     return (
-      <div className="business-model">
+      <div className="business-model" id="wrap">
         <svg id="box" />
         <div id="entity_select" style={{position: 'absolute'}}>
           <div id="entity_select_box" style={{display: 'none'}}> 

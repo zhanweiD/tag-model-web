@@ -61,7 +61,7 @@ export default class DrawerConfig extends Component {
               if (err) {
                 return
               } 
- 
+              
               const parameterMappingKeys = {}
               Object.values(values).forEach(d => {
                 parameterMappingKeys[d.key] = d.value
@@ -77,7 +77,7 @@ export default class DrawerConfig extends Component {
             })
           }
 
-          // 第二步退出保存
+          // 第3步退出保存
           if (+currentStep === 2) {
             t.store.drawerThreeForm.validateFieldsAndScroll((err, values) => {
               if (err) {
