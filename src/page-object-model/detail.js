@@ -175,7 +175,10 @@ export default class ObjectDetail extends Component {
         </Spin>
         <div className="bgf">
           <TabRoute {...tabConfig} />
-          <Content store={this.store} updateDetailKey={this.props.updateDetailKey} objId={objId} />
+          <div className="object-tab-content">
+            <Content store={this.store} updateDetailKey={this.props.updateDetailKey} objId={objId} />
+
+          </div>
         </div>
       </div>
     )
