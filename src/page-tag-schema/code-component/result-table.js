@@ -17,11 +17,12 @@ export default class Page extends Component {
   @observable currentPage = 1
   @observable loading = false
   @action getTableResult = async currentPage => {
-    const {taskInstanceId, resultId} = this.props
+    const {taskInstanceId, resultId, fieldInfo} = this.props
 
     this.loading = true
     try {
       const data = await io.queryInstanceResult({
+        fieldInfo: JSON.stringify(fieldInfo),
         taskInstanceId,
         resultId,
         pageSize,

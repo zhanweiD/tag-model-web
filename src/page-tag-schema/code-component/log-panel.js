@@ -1,6 +1,6 @@
 import {Component, Fragment} from 'react'
 import {observer} from 'mobx-react'
-import {toJS, action, observable} from 'mobx'
+import {toJS} from 'mobx'
 import {
   Button, Tabs, Spin, Icon, Tooltip,
 } from 'antd'
@@ -14,12 +14,9 @@ const pathPrefix = window.__onerConfig.pathPrefix || ''
 export default class LogPanel extends Component {
   render() {
     const {
-      // type,
-      // _store,
       store,
       taskId,
     } = this.props
-
     return (
       <Fragment>
         <div
@@ -138,6 +135,7 @@ export default class LogPanel extends Component {
                   >
                     <ResultTable
                       // wsId={_store.wsId}
+                      fieldInfo={toJS(store.fieldInfo)}
                       taskId={taskId}
                       resultId={item.resultId}
                       taskInstanceId={item.taskInstance}
