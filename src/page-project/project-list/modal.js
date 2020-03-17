@@ -74,7 +74,7 @@ export default class ModalProject extends Component {
       extra: <span>
         若无可用的数据源，请先
         <a className="ml4" target="_blank" rel="noopener noreferrer" href="/ent/datasource#/">添加数据源或授权</a>
-             </span>,
+      </span>,
     }, {
       label: '计算引擎',
       key: 'engineId',
@@ -90,7 +90,7 @@ export default class ModalProject extends Component {
     }, {
       label: '资源组',
       key: 'groupIdList',
-      initialValue: toJS(detail.groupIdList) || undefined,
+      initialValue: toJS(detail.groupIdList) && detail.groupIdList.length ? detail.groupIdList[0] : undefined,
       rules: [
         '@requiredSelect',
       ],
@@ -103,7 +103,7 @@ export default class ModalProject extends Component {
       extra: <span>
         若无可用的数据源，请先
         <a className="ml4" target="_blank" rel="noopener noreferrer" href="/ent/resource#/">添加资源组或授权</a>
-             </span>,
+      </span>,
     }, {
       label: '调度队列',
       key: 'queueName',
@@ -135,15 +135,20 @@ export default class ModalProject extends Component {
     const {store} = t
     this.form.validateFields((err, values) => {
       if (!err) {
+        const data = {
+          ...values,
+          groupIdList: [values.groupIdList],
+        }
+
         // 编辑 
         if (store.modalType === 'edit') {
-          const params = {id: store.detail.id, ...values}
+          const params = {id: store.detail.id, ...data}
           store.editList(params, () => {
             t.handleCancel()
           })
         } else {
           // 新增
-          store.addList(values, () => {
+          store.addList(data, () => {
             t.handleCancel()
           })
         }
