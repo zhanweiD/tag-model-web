@@ -1,5 +1,5 @@
 /**
- * @description 项目空间-标签模型
+ * @description 标签模型
  */
 import {Component} from 'react'
 import {

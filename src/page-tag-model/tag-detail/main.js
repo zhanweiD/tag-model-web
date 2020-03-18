@@ -1,5 +1,5 @@
 /**
- * @description 项目空间-标签模型-标签详情
+ * @description 标签模型-标签详情
  */
 import {Component} from 'react'
 import {observer, inject} from 'mobx-react'

@@ -17,19 +17,29 @@ export const judgeEditType = (data, editType) => (editType === 'edit' ? data : u
 
 export const objDetailTabMap = [{
   name: '对象视图',
-  value: 0,
+  value: 'view',
 }, {
   name: '数据表',
-  value: 1,
+  value: 'table',
 }, {
   name: '字段列表',
-  value: 2,
+  value: 'field',
 },
 {
   name: '业务视图',
-  value: 3,
-},
-]
+  value: 'business',
+}]
+
+export const objRelTabMap = [{
+  name: '对象视图',
+  value: 'view',
+}, {
+  name: '数据表',
+  value: 'table',
+}, {
+  name: '业务视图',
+  value: 'business',
+}]
 
 // 使用状态
 export const usedStatusMap = status => {

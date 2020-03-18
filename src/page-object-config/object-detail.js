@@ -1,5 +1,5 @@
 /**
- * @description 项目空间 - 对象配置 - 对象详情
+ * @description  对象配置 - 对象详情
  */
 import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
@@ -9,7 +9,7 @@ import {Time} from '../common/util'
 import {
   TabRoute, DetailHeader, OverviewCardWrap, Tag, AuthBox,
 } from '../component'
-import {objDetailTabMap, objTypeMap} from './util'
+import {objDetailTabMap, objRelTabMap, objTypeMap} from './util'
 
 import ObjectView from './object-view'
 import DataSheet from './data-sheet'
@@ -55,6 +55,7 @@ export default class ObjectDetail extends Component {
         history.push(`/${t.store.typeCode}`)
         t.store.removeObj(() => {
           t.store.getObjTree(() => {
+            t.store.tabId = 'view'
             t.store.objId = t.store.currentSelectKeys
           })
         })
@@ -134,8 +135,10 @@ export default class ObjectDetail extends Component {
       },
     }
 
+    const tabMap = objDetail.type === 0 ? objRelTabMap : objDetailTabMap
+
     const tabConfig = {
-      tabs: objDetailTabMap,
+      tabs: tabMap,
       basePath: `/${typeCode}/${objId}`,
       currentTab: tabId,
       changeTab: this.changeTab,
@@ -145,7 +148,16 @@ export default class ObjectDetail extends Component {
     }
 
     const {tag} = tagMap[objDetail.isUsed === undefined ? 'noData' : objDetail.isUsed]
-    const Content = [ObjectView, DataSheet, FieldList, BusinessModel][tabId]
+
+
+    const objCompMap = {
+      view: ObjectView, 
+      table: DataSheet,
+      field: FieldList,
+      business: BusinessModel,
+    }
+
+    const Content = objCompMap[tabId]
 
     return (
       <div className="object-detail">
