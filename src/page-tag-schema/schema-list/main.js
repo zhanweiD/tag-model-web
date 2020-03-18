@@ -8,6 +8,8 @@ import {
   Button, Popconfirm, Dropdown, Icon, Menu,
 } from 'antd'
 import {Link} from 'react-router-dom'
+
+import {Time} from '../../common/util'
 import {
   ListContent, AuthBox, NoData, Loading,
 } from '../../component'
@@ -99,6 +101,10 @@ class SchemaList extends Component {
       title: '最近运行状态',
       dataIndex: 'lastStatus',
       render: v => (v === null ? '' : getSchemeRunStatus({status: v})),
+    }, {
+      title: '创建时间',
+      dataIndex: 'createTime',
+      render: text => <Time timestamp={text} />,
     }, {
       title: '操作',
       dataIndex: 'action',
