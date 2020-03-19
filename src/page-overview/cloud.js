@@ -2,12 +2,10 @@
  * @description 对象云图
  */
 import * as d3 from 'd3'
-
+import cloud from 'd3-cloud'
 import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {Empty, Spin} from 'antd'
-
-const cloud = require('d3-cloud')
 
 @observer
 export default class Cloud extends Component {
@@ -28,7 +26,6 @@ export default class Cloud extends Component {
     this.box.selectAll('*').remove()
 
     const scaleSize = d3.scaleLinear().domain([0, max]).range([14, 60])
-
     this.fill = d3.scaleOrdinal(d3.schemeCategory20)
     this.layout = cloud()
       .size([parseFloat(this.box.style('width')), 500])

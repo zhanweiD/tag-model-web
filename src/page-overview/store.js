@@ -29,12 +29,12 @@ class Store {
   @action async getObjCloud(cb) {
     this.loading = true
     try {
-      const res = await io.getObjCloud(cb)
+      const res = await io.getObjCloud()
       runInAction(() => {
         this.cloudData = res.objList || []
         this.entityCount = res.entityObj || 0
         this.relCount = res.relObj || 0
-
+        
         if (cb && res.objList && res.objList.length) cb(res.objList, this.getRanKMax(res.objList, 'relCount'))
       })
     } catch (e) {

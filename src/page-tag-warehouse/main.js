@@ -15,7 +15,7 @@ export default class Page extends Component {
       <Router>
         <Frame page="space">
           <Switch>
-            <Route exact path="/" component={TagWarehouse} />
+            <Route exact path="/tag-warehouse" component={TagWarehouse} />
             <Route
               render={() => {
                 window.location.href = '/404'

@@ -3,6 +3,7 @@
  * @description 面包屑设置
 */
 
+const pathPrefix = '/asset_tag/index.html#'
 // 标签中心
 const tagCenter = {
   tagCenter: {
@@ -28,15 +29,15 @@ const market = {
 // 对象管理
 const object = {
   object: {
-    url: '/object-list',
+    url: `${pathPrefix}/object-list`,
     text: '对象管理',
   },
   objectList: {
-    url: '/object-list',
+    url: `${pathPrefix}/object-list`,
     text: '对象列表',
   },
   objectDetail: {
-    text: '对象详情',
+    text: `${pathPrefix}/对象详情`,
   },
   objectModel: {
     text: '对象模型',
@@ -46,7 +47,7 @@ const object = {
 // 标签管理
 const tagManagement = {
   tagManagement: {
-    url: '/tag-warehouse',
+    url: `${pathPrefix}/tag-warehouse`,
     text: '标签管理',
   },
   objectConfig: {
@@ -56,7 +57,7 @@ const tagManagement = {
     text: '标签仓库',
   },
   tagModel: {
-    url: '/tag-model',
+    url: `${pathPrefix}/tag-model`,
     text: '标签模型',
   },
   tagDetail: {
@@ -67,11 +68,11 @@ const tagManagement = {
 // 标签加工
 const tagSchema = {
   tagSchema: {
-    url: '/tag-schema',
+    url: `${pathPrefix}/tag-schema`,
     text: '标签加工',
   },
   schemaList: {
-    url: '/tag-schema',
+    url: `${pathPrefix}/tag-schema`,
     text: '加工方案',
   },
   schemaDetail: {
@@ -81,11 +82,11 @@ const tagSchema = {
 
 const application = {
   application: {
-    url: '/scene',
+    url: `${pathPrefix}/scene`,
     text: '标签应用',
   }, 
   scene: {
-    url: '/scene',
+    url: `${pathPrefix}/scene`,
     text: '场景管理',
   }, 
   sceneDetail: {
@@ -98,7 +99,7 @@ const application = {
 
 const common = {
   common: {
-    url: '/project',
+    url: `${pathPrefix}/project`,
     text: '公共模块',
   },
 }
@@ -107,7 +108,7 @@ const common = {
 // 项目列表
 const project = {
   project: {
-    url: '/project',
+    url: `${pathPrefix}/project`,
     text: '项目列表',
   },
   projectConfig: {
@@ -118,7 +119,7 @@ const project = {
 // 审批管理
 const approval = {
   approval: {
-    url: '/approval',
+    url: `${pathPrefix}/approval`,
     text: '审批管理',
   },
   myRequests: {

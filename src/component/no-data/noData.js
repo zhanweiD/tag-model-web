@@ -1,7 +1,7 @@
 import {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Button} from 'antd'
-import nodata from '../../icon-svg/noData.svg'
+import nodata from '../../icon/noData.svg'
 
 const functionCodes = window.productFunctionCode || []
 

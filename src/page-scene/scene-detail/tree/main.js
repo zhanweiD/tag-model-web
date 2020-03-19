@@ -7,9 +7,9 @@ import {
 import {Modal, Spin} from 'antd'
 import {DtTree} from '@dtwave/uikit'
 
-import treeUnfold from '../../../icon-svg/tree-unfold.svg'
-import treeFold from '../../../icon-svg/tree-fold.svg'
-import tag from '../../../icon-svg/tag.svg'
+import treeUnfold from '../../../icon/tree-unfold.svg'
+import treeFold from '../../../icon/tree-fold.svg'
+import tag from '../../../icon/tag.svg'
 
 import Action from './action'
 import ModalCategoryEdit from './modal-category-edit'

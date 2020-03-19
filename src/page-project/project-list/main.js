@@ -96,7 +96,7 @@ export default class ProjectList extends Component {
         <div className="FBH FBAC">
           {record.config === 1 && (
             <Fragment>
-              <Link to={`/${record.id}`}>项目配置</Link>
+              <Link to={`/project/${record.id}`}>项目配置</Link>
               <span className="table-action-line" />
             </Fragment>
           )}

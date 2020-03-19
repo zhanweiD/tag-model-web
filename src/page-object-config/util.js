@@ -1,6 +1,6 @@
 import {Badge} from 'antd'
-import treeUnfold from '../icon-svg/tree-unfold.svg'
-import treeFold from '../icon-svg/tree-fold.svg'
+import treeUnfold from '../icon/tree-unfold.svg'
+import treeFold from '../icon/tree-fold.svg'
 
 export const getIconNodeSrc = e => (e ? treeUnfold : treeFold)
 

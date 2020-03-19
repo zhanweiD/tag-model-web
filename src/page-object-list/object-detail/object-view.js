@@ -1,10 +1,11 @@
 /**
  * @description 对象视图
  */
-import * as d3 from 'd3'
 import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {Spin} from 'antd'
+
+import * as d3 from 'd3'
 
 const dagreD3 = require('d3-drag')
 

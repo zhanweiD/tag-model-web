@@ -1,8 +1,12 @@
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
-
-import Project from './main'
-
+import {asyncComponent} from '../common/util'
 import './main.styl'
 
-ReactDOM.render(<Project />, document.getElementById('root'))
+export default asyncComponent(async () => {
+  try {
+    const module = await import('./main')
+    return module.default
+  } catch (error) {
+    console.log(error)
+  }
+  return null
+})

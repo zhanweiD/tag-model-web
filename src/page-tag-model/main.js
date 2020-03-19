@@ -15,8 +15,8 @@ export default class Page extends Component {
       <Router>
         <Frame page="space" pageUrl="/">
           <Switch>
-            <Route exact path="/:tagId" component={TagDetail} />
-            <Route exact path="/" component={TagList} />
+            <Route exact path="/tag-model/:tagId" component={TagDetail} />
+            <Route exact path="/tag-model" component={TagList} />
             <Route
               render={() => {
                 window.location.href = '/404'

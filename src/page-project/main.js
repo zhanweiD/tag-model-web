@@ -15,8 +15,8 @@ export default class Project extends Component {
       <Router>
         <Frame>
           <Switch>
-            <Route exact path="/:projectId" component={ProjectConfig} />
-            <Route exact path="/" component={ProjectList} />
+            <Route exact path="/project/:projectId" component={ProjectConfig} />
+            <Route exact path="/project" component={ProjectList} />
             <Route
               render={() => {
                 window.location.href = '/404'

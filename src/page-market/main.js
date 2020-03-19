@@ -1,10 +1,11 @@
 /**
- * @description 项目空间 - 对象配置
+ * @description 对象配置
  */
 import {Component} from 'react'
 import {
   HashRouter as Router, Route, Switch,
 } from 'react-router-dom'
+
 import * as navListMap from '../common/navList'
 
 import Frame from '../frame'
@@ -25,7 +26,7 @@ export default class Page extends Component {
       <Router>
         <Frame page="space" navList={navList}>
           <Switch>
-            <Route exact path="/" component={Market} />
+            <Route exact path="/market" component={Market} />
             <Route
               render={() => {
                 window.location.href = '/404'

@@ -1,10 +1,11 @@
 /**
  * @description 总览-标签排名  标签昨日调用次数TOP5 / 冷门标签TOP5 / 标签累计调用次数TOP5
  */
-import * as d3 from 'd3'
 import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {Row, Col, Empty} from 'antd'
+
+import * as d3 from 'd3'
 
 const chartOption = {
   svgW: '100%',

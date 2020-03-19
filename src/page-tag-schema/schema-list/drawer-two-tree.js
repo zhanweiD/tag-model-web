@@ -8,7 +8,7 @@ import {Tabs} from 'antd'
 import {DtTree} from '@dtwave/uikit'
 import {Loading} from '../../component'
 import Action from './tree-action'
-import functionIcon from '../../icon-svg/function-icon.svg'
+import functionIcon from '../../icon/function-icon.svg'
 
 const {TabPane} = Tabs
 const {DtTreeNode, DtTreeBox} = DtTree

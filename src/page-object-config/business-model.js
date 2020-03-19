@@ -1,18 +1,19 @@
 /**
  * @description 业务视图
  */
-import * as d3 from 'd3'
 import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {toJS, observable} from 'mobx'
 import {Select} from 'antd'
 
-import erClose from '../icon-svg/er-close.svg'
-import erOpen from '../icon-svg/er-open.svg'
-import erRelKey from '../icon-svg/er-rel-key.svg'
-import erMajorKey from '../icon-svg/er-major-key.svg'
+import erClose from '../icon/er-close.svg'
+import erOpen from '../icon/er-open.svg'
+import erRelKey from '../icon/er-rel-key.svg'
+import erMajorKey from '../icon/er-major-key.svg'
 
 import './business-model.styl'
+
+import * as d3 from 'd3'
 
 const {Option} = Select
 

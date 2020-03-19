@@ -1,10 +1,10 @@
 import {Component} from 'react'
 
-const empty = require('../../icon-svg/status-empty.svg')
-const success = require('../../icon-svg/status-success.svg')
-const waiting = require('../../icon-svg/status-waiting.svg')
-const error = require('../../icon-svg/status-fail.svg')
-const authError = require('../../icon-svg/status-auth-fail.svg')
+const empty = require('../../icon/status-empty.svg')
+const success = require('../../icon/status-success.svg')
+const waiting = require('../../icon/status-waiting.svg')
+const error = require('../../icon/status-fail.svg')
+const authError = require('../../icon/status-auth-fail.svg')
 
 
 const getImgSource = (status = 'empty') => {

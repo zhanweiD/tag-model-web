@@ -10,8 +10,8 @@ import {message} from 'antd'
 import sqlFormatter from 'sql-formatter'
 import LogPanel from '../code-component/log-panel'
 
-import yunxing from '../../icon-svg/yunxing.svg'
-import geshihua from '../../icon-svg/geshihua.svg'
+import yunxing from '../../icon/yunxing.svg'
+import geshihua from '../../icon/geshihua.svg'
 
 @inject('rootStore')
 @observer

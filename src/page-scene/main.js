@@ -16,9 +16,9 @@ export default class Scene extends Component {
       <Router>
         <Frame page="space" pageUrl="/">
           <Switch>
-            <Route exact path="/" component={SceneList} />
-            <Route exact path="/:sceneId" component={SceneDetail} /> 
-            <Route exact strict path="/:sceneId/tags" component={TagList} />
+            <Route exact path="/scene" component={SceneList} />
+            <Route exact path="/scene/:sceneId" component={SceneDetail} /> 
+            <Route exact strict path="/scene/:sceneId/tags" component={TagList} />
             <Route
               render={() => {
                 window.location.href = '/404'

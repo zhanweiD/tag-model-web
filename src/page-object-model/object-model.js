@@ -11,7 +11,6 @@ import Tree from './tree'
 import ObjectDetail from './detail'
 
 import store from './store'
-import './main.styl'
 
 const NotFount = () => <StatusImg status="authError" title="暂无权限" tip="您尚无相关系统权限，请联系管理员授权后即可使用" imgWidth="250" />
 
@@ -68,7 +67,7 @@ export default class ObjectModel extends Component {
     return (
       <Provider bigStore={store}>
         {
-          codeInProduct.includes('asset_tag_obj_model') ? (
+          codeInProduct('asset_tag_obj_model') ? (
             <div className="page-object-modal">
               <div className="content-header">对象模型</div>
            

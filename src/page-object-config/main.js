@@ -1,5 +1,5 @@
 /**
- * @description 项目空间 - 对象配置
+ * @description 对象配置
  */
 import {Component} from 'react'
 import {

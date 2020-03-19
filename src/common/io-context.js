@@ -16,7 +16,7 @@ const context = nattyFetch.context({
   urlStamp: false, // 添加额外参数后端会报错，如：_stamp，略坑
   fit(response) {
     if (response) {
-      if ((response.code && response.code === 403) || response.status === 403) {
+      if (response.code === '300001005' || response.code === '300001006' || response.status === 403) {
         const errorMsg = response.message || response.errorMsg || '登录超时，请重新登录'
         if (!document.getElementById('login_timeout')) {
           Modal.confirm({
