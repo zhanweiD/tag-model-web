@@ -46,7 +46,7 @@ export default class Tree extends Component {
    * @param {*} selectedKeys @typedef Array 所选ID集合
    * @param {*} info 所选节点信息
    */
-  @action.bound onselect(selectedKeys) {
+  @action.bound onselect(selectedKeys, node) {
     // 1. 选中节点为当前所选节点；不进行操作
     if (this.store.objId === selectedKeys[0]) return
 
@@ -56,7 +56,20 @@ export default class Tree extends Component {
 
     // 3. 跳转到指定路由
     const {history} = this.props
-    history.push(`/${this.store.typeCode}/${selectedKeys[0]}/${this.store.tabId}`);
+
+    const {nodeData} = node.node.props
+
+    let {tabId} = this.store
+
+    if (nodeData && (nodeData.objType === 0)) { // 简单关系
+      if (tabId === 'field') {
+        this.store.tabId = 'view'
+        tabId = 'view'
+      }
+    }
+
+    history.push(`/${this.store.typeCode}/${selectedKeys[0]}/${tabId}`);
+    
     [this.store.objId] = selectedKeys
   }
 

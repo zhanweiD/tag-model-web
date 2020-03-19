@@ -92,7 +92,7 @@ class Store {
         }
 
         if (res.length) {
-          if (!this.objId || !res.filter(d => d.id === this.objId).length) {
+          if (!this.objId || !res.filter(d => +d.aId === +this.objId).length) {
             const firstObject = res.filter(item => item.parentId !== 0)[0]
             // 默认展开第一个对象
             this.currentSelectKeys = firstObject && firstObject.aId

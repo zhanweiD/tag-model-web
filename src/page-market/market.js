@@ -27,15 +27,17 @@ export default class Market extends Component {
     // 请求列表，放在父组件进行请求是因为需要在外层做空数据判断。
     // 若返回数据为空[]。则渲染 NoData 组件。
     // 要是请求放在列表组件ListContent中的话, 就必须渲染表格的dom 影响体验
-    store.getList({
-      useProjectId: store.useProjectId,
-      type: 1,
-    })
-
-    store.initParams = {
-      useProjectId: store.useProjectId,
-      type: 1,
-    } 
+    if (store.useProjectId) {
+      store.getList({
+        useProjectId: store.useProjectId,
+        type: 2,
+      })
+  
+      store.initParams = {
+        useProjectId: store.useProjectId,
+        type: 2,
+      } 
+    }
   }
 
   componentWillUnmount() {
@@ -46,7 +48,7 @@ export default class Market extends Component {
     
     store.objectId = ''
     store.ownProjectId = ''
-    store.projectPermission = 1
+    store.projectPermission = 2
    
     store.searchParams = {}
     store.pagination = {
@@ -67,10 +69,10 @@ export default class Market extends Component {
             if (record.status === 1) {
               return <Tag status="process" className="ml8" text="审批中" />
             }
-
-            // if (record.status === 0) {
-            //   return <Tag status="success" className="ml8" text="有权限" />
-            // } 
+            //    "status":0, //状态 0：可以申请 1 审批中 2 不可以申请
+            if (record.status === 2) {
+              return <Tag status="success" className="ml8" text="有权限" />
+            } 
             return null
           })()}
         </div>
@@ -157,34 +159,33 @@ export default class Market extends Component {
     window.location.href = `${window.__keeper.pathPrefix || '/'}/tag-model`
   }
 
-  // 是否有进行搜索操作
-  isSearch = () => {
-    const {
-      hotWord, 
-      objectId,
-      useProjectId, 
-      ownProjectId,
-      projectPermission,
-    } = store
+  // // 是否有进行搜索操作
+  // isSearch = () => {
+  //   const {
+  //     // hotWord, 
+  //     objectId,
+  //     useProjectId, 
+  //     ownProjectId,
+  //     projectPermission,
+  //   } = store
 
-    if (
-      typeof hotWord === 'undefined'
-    && useProjectId === ''
-    && objectId === ''
-    && typeof projectPermission === 'undefined'
-    && ownProjectId === ''
-    ) {
-      return false
-    }
+  //   if (
+  //     useProjectId === ''
+  //   && objectId === ''
+  //   && +projectPermission === 2
+  //   && ownProjectId === ''
+  //   ) {
+  //     return false
+  //   }
 
-    return true
-  }
+  //   return true
+  // }
 
   render() {
     const {
       useProjectId, 
-      tableLoading, 
-      list,
+      // tableLoading, 
+      // list,
       // expand, 
     } = store
 
@@ -212,15 +213,20 @@ export default class Market extends Component {
       store, // 必填属性
     }
 
-    const noDataConfig = {
-      text: '没有任何公开标签!',
-    }
+    // const noDataConfig = {
+    //   text: '没有任何公开标签!',
+    // }
 
     return (
  
       <div>
         <div className="content-header">集市</div>
-        {
+        <Search store={store} />
+        <div className="search-list open-height">
+          <ListContent {...listConfig} />
+          <Modal store={store} />
+        </div>
+        {/* {
           !list.length && !this.isSearch() ? (
             <NoData
               isLoading={tableLoading}
@@ -236,7 +242,7 @@ export default class Market extends Component {
               </div>
             </Fragment>
           )
-        }
+        } */}
       </div>
     )
   }

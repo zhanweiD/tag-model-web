@@ -1,5 +1,5 @@
 /**
- * @description 项目空间 - 对象配置
+ * @description  对象配置
  */
 import {Component, Fragment} from 'react'
 import {action} from 'mobx'
@@ -23,7 +23,7 @@ export default class ObjectConfig extends Component {
     store.projectId = spaceInfo && spaceInfo.projectId
     store.typeCode = match.params.typeCode || '4'
     store.objId = match.params.objId
-    store.tabId = match.params.tabId || '0' // 当前详情tabID；默认数据视图
+    store.tabId = match.params.tabId || 'view' // 当前详情tabID；默认数据视图
   }
 
   componentWillMount() {
@@ -36,7 +36,7 @@ export default class ObjectConfig extends Component {
   @action changeTab = code => {
     store.typeCode = code
     store.objId = undefined
-    store.tabId = '0'
+    store.tabId = 'view'
     store.getObjTree(() => {
       store.objId = store.currentSelectKeys
     })

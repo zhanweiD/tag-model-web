@@ -187,7 +187,7 @@ export default class Store {
   /**
    * @description 获取 逻辑配置-标签树
    */
-  @action async getTagTree() {
+  @action async getTagTree(cb) {
     this.treeLoading = true
     try {
       const res = await io.getTagTree({
@@ -212,6 +212,8 @@ export default class Store {
         }
 
         this.treeData = listToTree(data)
+
+        if (cb)cb()
       })
     } catch (e) {
       errorTip(e.message)
@@ -370,6 +372,7 @@ export default class Store {
           })
         } else {
           failureTip('提交失败')
+          this.closeDrawer()
           this.listStore.getList({
             currentPage: 1,
             pageSize: 10,

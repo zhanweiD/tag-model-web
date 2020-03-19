@@ -3,7 +3,7 @@
  */
 import {Component} from 'react'
 import {observer} from 'mobx-react'
-import {action} from 'mobx'
+import {action, toJS} from 'mobx'
 import {
   Modal, Button, Spin,
 } from 'antd'
@@ -22,7 +22,7 @@ export default class ModalSubmitLog extends Component {
 
   render() {
     const {modalLogVisible, submitLog, submitLogLoading} = this.store
-  
+
     return (
       <Modal
         visible={modalLogVisible}
@@ -37,11 +37,14 @@ export default class ModalSubmitLog extends Component {
           </Button>,
         ]}
       >
-        <div style={{minHeight: '200px', maxHeight: '500px', overflow: 'auto'}}>
-          <Spin spinning={submitLogLoading}>
-            {submitLog}
-          </Spin>
-        </div>
+        <Spin spinning={submitLogLoading}>
+          <div style={{
+            minHeight: '200px', maxHeight: '500px', overflow: 'auto', whiteSpace: 'pre-wrap',
+          }}
+          >
+            {toJS(submitLog)}
+          </div>
+        </Spin>
       </Modal>
     )
   }

@@ -9,6 +9,18 @@ import {
 import {action} from 'mobx'
 
 const {Option} = Select
+
+// -1 未申请 0 申请中 1 有权限
+const typeMap = [{
+  name: '未申请',
+  value: -1,
+}, {
+  name: '审批中',
+  value: 0,
+}, {
+  name: '有权限',
+  value: 1,
+}]
  
 @observer
 export default class Search extends Component {
@@ -18,32 +30,18 @@ export default class Search extends Component {
   }
 
   componentWillMount() {
-    this.store.getUseProject()
-    this.store.getOwnProject()
-    this.store.getObject()
+    if (this.store.useProjectId) {
+      this.store.getUseProject()
+      this.store.getOwnProject()
+      this.store.getObject()
+    }
   }
 
   @action.bound onSearch(v) {
     this.store.hotWord = v.trim()
     this.store.updateList()
   }
-
-  // @action.bound useProjectSelect(v, arr) {
-  //   if (v === '') {
-  //     this.store.projectPermission = undefined
-  //   }
-
-  //   if (typeof this.projectPermission === 'undefined') {
-  //     this.store.projectPermission = 0
-  //   }
-
-  //   this.store.useProjectName = arr.props.children
-  //   this.store.useProjectId = v
-  //   this.store.updateList()
-  //   this.store.selectedRows.clear()
-  //   this.store.rowKeys.clear()
-  // }
-
+  
   @action.bound ownProjectSelect(v) {
     this.store.ownProjectId = v
     this.store.updateList()
@@ -54,8 +52,8 @@ export default class Search extends Component {
     this.store.updateList()
   }
 
-  @action.bound projectPermissionSelect(e) {
-    this.store.projectPermission = e.target.value
+  @action.bound permissionSelect(v) {
+    this.store.projectPermission = v
     this.store.updateList()
   } 
 
@@ -114,14 +112,26 @@ export default class Search extends Component {
                   )
                 }
               </Select>
+
               {
                 useProjectId ? (
                   <Fragment>
-                    <span className="advanced-search-radio ml8">是否展示有使用权限</span>
-                    <Radio.Group onChange={this.projectPermissionSelect} value={projectPermission}>
-                      <Radio value={1} disabled={!this.store.useProjectId} className="fs12">是</Radio>
-                      <Radio value={0} disabled={!this.store.useProjectId} className="fs12">否</Radio>
-                    </Radio.Group>
+                    <span className="advanced-search-label">权限状态</span>
+                    <Select value={projectPermission} className="mr8" style={{width: 240}} onChange={this.permissionSelect}>
+                      <Option value={2}>全部</Option>
+                      {
+                        typeMap.map(
+                          ({name, value}) => (
+                            <Option 
+                              key={value} 
+                              value={value}
+                            >
+                              {name}
+                            </Option>
+                          )
+                        )
+                      }
+                    </Select>
                   </Fragment>
                 ) : null
               }

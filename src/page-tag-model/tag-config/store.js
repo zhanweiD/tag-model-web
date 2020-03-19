@@ -103,7 +103,7 @@ class DrawerStore {
       if (res === true) {
         successTip('绑定成功')
       } else {
-        failureTip('绑定成功')
+        failureTip('绑定失败')
       }
     } catch (e) {
       errorTip(e.message)

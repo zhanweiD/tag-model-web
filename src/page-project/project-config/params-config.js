@@ -18,7 +18,7 @@ export default class ParamsConfig extends Component {
   }
 
   columns = [{
-    title: '姓名',
+    title: '名称',
     dataIndex: 'parameterName',
   }, {
     title: '类型',

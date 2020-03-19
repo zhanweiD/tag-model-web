@@ -1,5 +1,5 @@
 /**
- * @description 对象配置
+ * @description 集市
  */
 import {Component} from 'react'
 import {

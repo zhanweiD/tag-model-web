@@ -90,12 +90,12 @@ export default class ModalProject extends Component {
     }, {
       label: '资源组',
       key: 'groupIdList',
-      initialValue: toJS(detail.groupIdList) || undefined,
+      initialValue: toJS(detail.groupIdList) && detail.groupIdList.length ? detail.groupIdList[0] : undefined,
       rules: [
         '@requiredSelect',
       ],
       control: {
-        mode: 'multiple',
+        // mode: 'multiple',
         options: dataGroupData,
         notFoundContent: selectGroupsLoading ? <Spin size="small" /> : null, 
       },
@@ -135,15 +135,20 @@ export default class ModalProject extends Component {
     const {store} = t
     this.form.validateFields((err, values) => {
       if (!err) {
+        const data = {
+          ...values,
+          groupIdList: [values.groupIdList],
+        }
+
         // 编辑 
         if (store.modalType === 'edit') {
-          const params = {id: store.detail.id, ...values}
+          const params = {id: store.detail.id, ...data}
           store.editList(params, () => {
             t.handleCancel()
           })
         } else {
           // 新增
-          store.addList(values, () => {
+          store.addList(data, () => {
             t.handleCancel()
           })
         }

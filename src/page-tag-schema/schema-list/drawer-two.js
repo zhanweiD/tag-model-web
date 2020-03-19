@@ -3,8 +3,8 @@
  */
 import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
-import {action, observable, toJS} from 'mobx'
-import {Button, Tabs} from 'antd'
+import {action} from 'mobx'
+import {Button} from 'antd'
 
 import DrawerTwoTree from './drawer-two-tree'
 import DrawerTwoCode from './drawer-two-code'
@@ -27,7 +27,6 @@ export default class DrawerTwo extends Component {
       if (err) {
         return
       } 
-
       const parameterMappingKeys = {}
       Object.values(values).forEach(d => {
         parameterMappingKeys[d.key] = d.value

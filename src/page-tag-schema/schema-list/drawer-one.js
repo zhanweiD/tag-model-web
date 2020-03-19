@@ -57,13 +57,14 @@ export default class DrawerOne extends Component {
       this.store.schemeDetail.obj = this.obj || schemeDetail.obj
       
       // 请求标签树
-      this.store.getTagTree()
+      this.store.getTagTree(() => {
+        if (this.codeStore.editor) {
+          this.codeStore.editor.refresh()
+        }
+      })
       
       this.store.nextStep()
-
-      if (this.codeStore.editor) {
-        this.codeStore.editor.refresh()
-      }
+     
 
       this.store.oneStepSuccess = true
     })
