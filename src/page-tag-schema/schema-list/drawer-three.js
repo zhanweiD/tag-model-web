@@ -8,6 +8,7 @@ import {
   Input, Form, Select, Button, Switch,
 } from 'antd'
 import {CycleSelect} from '@dtwave/uikit'
+import {QuestionTooltip} from '../../component'
 
 import {scheduleTypeMap, cycleSelectMap} from '../util'
 
@@ -212,7 +213,15 @@ export default class DrawerThree extends Component {
           }
       
           <div className="form-title">设置分区</div>
-          <FormItem {...formItemLayout} label="设置分区">
+          <FormItem
+            {...formItemLayout}
+            label={(
+              <span>
+                设置分区
+                <QuestionTooltip tip="分区字段值暂且只支持输入系统参数（cyctime、bizDate、bizMonth）" />
+              </span>
+            )}
+          >
          
             <div className="FBH">
               {
