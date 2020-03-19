@@ -372,6 +372,7 @@ export default class Store {
           })
         } else {
           failureTip('提交失败')
+          this.closeDrawer()
           this.listStore.getList({
             currentPage: 1,
             pageSize: 10,
