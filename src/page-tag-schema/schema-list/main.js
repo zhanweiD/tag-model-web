@@ -144,13 +144,22 @@ class SchemaList extends Component {
                   <span className="disabled">执行</span>
                   <span className="table-action-line" />
                 </Fragment>
-             
+              )
+            }
+            
+            {/* 方案状态: 提交成功 调度类型:手动执行 运行状态: 运行中   操作: 禁止执行 */}
+            {
+              (record.status === 1 && record.scheduleType === 2 && record.lastStatus === 0) && (
+                <Fragment>
+                  <span className="disabled">执行</span>
+                  <span className="table-action-line" />
+                </Fragment>
               )
             }
 
             {/* 方案状态: 提交成功 调度类型:手动执行   操作: 执行 */}
             {
-              (record.status === 1 && record.scheduleType === 2) && (
+              (record.status === 1 && record.scheduleType === 2 && record.lastStatus !== 0) && (
                 <Fragment>
                   <Popconfirm placement="topRight" title="你确定要执行吗？" onConfirm={() => this.operation(record)}>
                     <a href>执行</a>
