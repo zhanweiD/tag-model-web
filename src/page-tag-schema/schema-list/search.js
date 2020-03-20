@@ -31,7 +31,7 @@ const serach = ({objList}) => [
     component: 'select',
   }, {
     label: '方案名称',
-    key: 'keyWord',
+    key: 'keyword',
     component: 'input',
   },
 ]

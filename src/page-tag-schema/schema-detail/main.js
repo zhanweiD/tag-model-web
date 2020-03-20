@@ -24,7 +24,7 @@ const navList = [
   navListMap.tagCenter,
   navListMap.tagSchema,
   navListMap.schemaList,
-  {text: navListMap.schemaList.text},
+  {text: navListMap.schemaDetail.text},
 ]
 
 @inject('frameChange')
