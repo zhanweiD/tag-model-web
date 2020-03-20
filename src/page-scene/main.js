@@ -14,7 +14,7 @@ export default class Scene extends Component {
   render() {
     return (
       <Router>
-        <Frame page="space" pageUrl="/">
+        <Frame page="space" pageUrl="/scene">
           <Switch>
             <Route exact path="/scene" component={SceneList} />
             <Route exact path="/scene/:sceneId" component={SceneDetail} /> 

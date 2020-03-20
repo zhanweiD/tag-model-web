@@ -225,7 +225,7 @@ export default class SelectTag extends Component {
                                         descr={descr}
                                         baseInfo={baseInfo}
                                         // 点击“标签详情”按钮，进入标签详情
-                                        actions={[<Button href={`${window.__keeper.pathHrefPrefix}/tag-model#/${id}`} type="primary"><a href>标签详情</a></Button>]}
+                                        actions={[<Button href={`${window.__keeper.pathHrefPrefix}/tag-model/${id}`} type="primary"><a href>标签详情</a></Button>]}
                                       />
                                     </Spin>
                                     <TrendTag store={this.store} tagId={this.store.tagId} />

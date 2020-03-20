@@ -137,7 +137,7 @@ export default class Scene extends Component {
                                 className="card"
                                 title={name}
                                 // eslint-disable-next-line no-underscore-dangle
-                                link={`${window.__keeper.pathHrefPrefix}/scene#/${id}`}
+                                link={`${window.__keeper.pathHrefPrefix}/scene/${id}`}
                                 tag={[<Tag status={used ? 'process' : 'wait'} text={used ? '使用中' : '未使用'} className="mr8" />]}
                                 labelList={[{
                                   label: '创建者',

@@ -168,7 +168,7 @@ export default class DataSource extends Component {
                     <a 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      href="/service/api"
+                      href="/service/index.html#/api"
                     >
                       <AuthBox 
                         myFunctionCodes={functionCodes}

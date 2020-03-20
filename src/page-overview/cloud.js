@@ -26,7 +26,8 @@ export default class Cloud extends Component {
     this.box.selectAll('*').remove()
 
     const scaleSize = d3.scaleLinear().domain([0, max]).range([14, 60])
-    this.fill = d3.scaleOrdinal(d3.schemeCategory20)
+
+    this.fill = d3.scaleOrdinal(d3.schemeCategory10)
     this.layout = cloud()
       .size([parseFloat(this.box.style('width')), 500])
       .words(data.map(d => ({text: d.objName, size: scaleSize(d.relCount)})))

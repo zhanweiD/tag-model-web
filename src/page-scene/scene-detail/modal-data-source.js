@@ -201,7 +201,7 @@ class ModalDataSource extends Component {
               </Select>
               <Tooltip title="可以去“数据源管理”模块，添加并授权想要的数据源">
                 {/* 点击“没有要选择的数据源”，页面跳转至“数据源管理” */}
-                <a target="_blank" rel="noopener noreferrer" href="/ent/datasource#/" className="ml16">没有要选择的数据源？</a>
+                <a target="_blank" rel="noopener noreferrer" href="/ent/index.html#/datasource/" className="ml16">没有要选择的数据源？</a>
               </Tooltip>
             </div>
             <div className="FB1">
@@ -228,7 +228,7 @@ class ModalDataSource extends Component {
                 <a 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  href="/ide/#/list" 
+                  href="/ide/index.html#/list"
                   className="ml16"
                 >
                   没有要选择的数据表？

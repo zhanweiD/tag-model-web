@@ -69,7 +69,7 @@ export default class BusinessModel extends Component {
   }
 
   initSvg() {
-    d3.select('#wrap').style('height', '464px')
+    d3.select('#wrap').style('height', '570px')
     this.svg = d3.select('#box')
       .attr('width', option.svgW)
       .attr('height', option.svgH)
@@ -450,14 +450,14 @@ export default class BusinessModel extends Component {
         this.addTablesData.selectAll(`#${data.name}${data.id} .table-border`)
           .attr('height', height)
         
-        if (height + 300 > 464) {
+        if (height + 300 > 570) {
           d3.select('#wrap').style('height', `${height + 300}px`)
         }
       } else {
         this.addTablesData.selectAll(`#${data.name}${data.id} .table-border`)
           .attr('height', option.colsHeight * data.tag.filter(item => item.configType === 2).length + option.tableTitleHeight)
         
-        d3.select('#wrap').style('height', '464px')
+        d3.select('#wrap').style('height', '570px')
       }
     }
   }

@@ -22,14 +22,10 @@ const {Option} = Select
 class Frame extends Component {
   componentWillMount() {
     const {page} = this.props
-    // 项目空间
+    // 项目纬度
     if (page === 'space') {
       window.spaceInfo = {}
-      // const projectId = storage.get('tag_projectId')
-      // if (projectId) {
-      //   window.spaceInfo.projectId = +projectId
-      // }
-      
+
       store.getProjectList()
     }
   }
@@ -98,26 +94,6 @@ class Frame extends Component {
       </LocaleProvider>
     )
   }
-
-  // // url中hash值可能不只1个，兼容
-  // getSelectedKey() {
-  //   const me = this
-  //   const hashItem = me.props.leftMenu.find(item => location.hash.indexOf(item.key) > -1)
-  //   return [hashItem ? hashItem.key : me.props.leftMenu[0].key]
-  // }
-
-  // clickLeftMenu(key) {
-  //   const me = this
-  //   if (me.props.clickLeftMenu) {
-  //     // 如果父级需要自己控制点击导航
-  //     me.props.clickLeftMenu({
-  //       prevKey: me.getSelectedKey()[0],
-  //       nextKey: key,
-  //     })
-  //   } else {
-  //     location.hash = `/${key}`
-  //   }
-  // }
 }
 
 export default withRouter(Frame)

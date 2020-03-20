@@ -1,13 +1,11 @@
 /**
  * @description 对象视图
  */
+import * as d3 from 'd3'
+import * as dagreD3 from 'dagre-d3'
 import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {Spin} from 'antd'
-
-import * as d3 from 'd3'
-
-const dagreD3 = require('d3-drag')
 
 const chartOption = {
   svgW: '100%',
@@ -26,13 +24,6 @@ export default class ObjectView extends Component {
   componentDidMount() {
     this.store.getObjView(() => this.initSvg())
   }
-
-  // componentWillReceiveProps(next) {
-  //   const {updateDetailKey, objId} = this.props
-  //   if (!_.isEqual(updateDetailKey, next.updateDetailKey) || !_.isEqual(objId, next.objId)) {
-  //     this.store.getObjView(() => this.initSvg())
-  //   }
-  // }
 
   initSvg() {
     this.svg = d3.select('#box')

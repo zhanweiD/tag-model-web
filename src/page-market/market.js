@@ -104,7 +104,7 @@ export default class Market extends Component {
       render: (text, record) => (
         <div className="FBH FBAC">
           {/* eslint-disable-next-line no-underscore-dangle */}
-          <a href={`${window.__keeper.pathHrefPrefix}/tag-model#/${record.id}`}>查看详情</a> 
+          <a href={`${window.__keeper.pathHrefPrefix}/tag-model/${record.id}`}>查看详情</a> 
           
           {(() => {
             if (store.useProjectId) {

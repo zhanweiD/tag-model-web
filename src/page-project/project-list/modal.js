@@ -73,7 +73,7 @@ export default class ModalProject extends Component {
       component: 'select',
       extra: <span>
         若无可用的数据源，请先
-        <a className="ml4" target="_blank" rel="noopener noreferrer" href="/ent/datasource#/">添加数据源或授权</a>
+        <a className="ml4" target="_blank" rel="noopener noreferrer" href="/ent/index.html#/datasource#/">添加数据源或授权</a>
       </span>,
     }, {
       label: '计算引擎',
@@ -102,7 +102,7 @@ export default class ModalProject extends Component {
       component: 'select',
       extra: <span>
         若无可用的数据源，请先
-        <a className="ml4" target="_blank" rel="noopener noreferrer" href="/ent/resource#/">添加资源组或授权</a>
+        <a className="ml4" target="_blank" rel="noopener noreferrer" href="/ent/index.html#/resource/">添加资源组或授权</a>
       </span>,
     }, {
       label: '调度队列',

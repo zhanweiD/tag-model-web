@@ -7,7 +7,7 @@ const pathPrefix = '/asset_tag/index.html#'
 // 标签中心
 const tagCenter = {
   tagCenter: {
-    url: '/',
+    url: `${pathPrefix}/overview`,
     text: '标签中心',
   },
 }
@@ -37,7 +37,7 @@ const object = {
     text: '对象列表',
   },
   objectDetail: {
-    text: `${pathPrefix}/对象详情`,
+    text: '对象详情',
   },
   objectModel: {
     text: '对象模型',

@@ -1,12 +1,12 @@
 /**
  * @description 对象视图
  */
-import * as dagreD3 from 'd3-drag'
+import * as d3 from 'd3'
+import * as dagreD3 from 'dagre-d3'
 import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {Spin} from 'antd'
 
-import * as d3 from 'd3'
 
 const chartOption = {
   svgW: '100%',

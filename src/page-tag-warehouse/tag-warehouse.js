@@ -124,7 +124,7 @@ export default class TagWarehouse extends Component {
       render: (text, record) => (
         <div className="FBH FBAC">
           {/* eslint-disable-next-line no-underscore-dangle */}
-          <a href={`${window.__keeper.pathHrefPrefix}/tag-model#/${record.id}`}>标签详情</a>
+          <a href={`${window.__keeper.pathHrefPrefix}/tag-model/${record.id}`}>标签详情</a>
           <AuthBox 
             code="asset_tag_project_tag_search_add_occ" 
             myFunctionCodes={store.functionCodes}

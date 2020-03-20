@@ -28,7 +28,7 @@ export default class Page extends Component {
       <Router>
         <Frame navList={navList}>
           <Switch>
-            <Route exact strict path={`/${selfUrl}/detail/:typeCode/:objId`} component={ObjectDetail} />
+            <Route exact path={`/${selfUrl}/detail/:typeCode/:objId`} component={ObjectDetail} />
             <Route exact path={`/${selfUrl}`} component={ObjectList} />
             <Route
               render={() => {
