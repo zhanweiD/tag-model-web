@@ -6,7 +6,6 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const safeParser = require('postcss-safe-parser')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-// const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer')
 const pkg = require('./package.json')
 
 const themeConfig = require(pkg.theme)
@@ -16,13 +15,6 @@ let commonPlugins = []
 
 const env = process.env.NODE_ENV || 'dev'
 const isDev = env === 'dev'
-
-// const HOST = '0.0.0.0'
-// const PORT = config('client.port')
-// const clientIsDev = config('client.isDevelopment')
-
-// const publicPath = clientIsDev ? `//${config.get('server.ip')}:${PORT}/static/` : `//cdn.dtwave.com/${config('client.name')}/${config('client.version')}/`
-
 
 module.exports = {
   mode: isDev ? 'development' : 'production',
@@ -41,10 +33,10 @@ module.exports = {
       context: ['/config', '/api'],
       target: 'http://192.168.90.112',
       changeOrigin: true,
-      // }, {
-      //   context: ['/api'],
-      //   target: 'http://192.168.115.8:9001',
-      //   changeOrigin: true,
+    // }, {
+    //   context: ['/api'],
+    //   target: 'http://192.168.115.8:9001',
+    //   changeOrigin: true,
     }],
   },
   entry: './src/index',
@@ -92,18 +84,12 @@ module.exports = {
     ],
   },
   resolve: {
-    alias: {
-      uikit: '@dtwave/uikit',
-      '@rules': path.resolve('src/common/common-rules'),
-      '@util': path.resolve('src/common/util'),
-      '@io': path.resolve('src/common/io-context'),
-    },
     extensions: ['.js', '.jsx', '.json'],
   },
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.js$/,
         use: ['babel-loader?cacheDirectory'],
         include: path.join(__dirname, 'src'),
       },
@@ -128,24 +114,21 @@ module.exports = {
         ],
       },
       {
-        test: /\.(woff|woff2|eot|ttf)(\?[a-z0-9=.]+)?$/,
-        loader: 'url-loader?limit=100000',
-      },
-      {
-        test: /\.(jpg|jpeg|png|gif|svg)$/,
-        exclude: [path.resolve(__dirname, './src/icon')],
+        test: /\.(jpg|jpeg|png|gif|svg|ico)$/,
+        exclude: [path.resolve(__dirname, '/src/icon')],
+        // exclude: ['/src/icon'],
         use: [{
           loader: 'url-loader',
           query: {
-            nname: `${pkg.version}/[name].[hash:8].[ext]`,
-            limit: 1024 * 10,
+            name: `${pkg.version}/[name].[hash:8].[ext]`,
+            limit: 1024 * 50,
           },
         }],
       },
       {
         test: /^((?!\.color).)*((?!\.color).)\.svg$/,
         include: [
-          path.resolve(__dirname, './src/icon'),
+          path.resolve(__dirname, '/src/icon'),
         ],
         use: [
           {loader: 'svg-sprite-loader'},
@@ -173,32 +156,9 @@ module.exports = {
         ],
       },
       {
-        test: /[A-Za-z0-9-.]+\.color\.svg$/,
-        include: [
-          path.resolve(__dirname, './src/icon'),
-        ],
+        test: /\.md$/,
         use: [
-          {loader: 'svg-sprite-loader'},
-          {
-            loader: 'svgo-loader',
-            options: {
-              plugins: [
-                {removeTitle: true},
-                {convertColors: {shorthex: true}},
-                {convertPathData: true},
-                {removeComments: true},
-                {removeDesc: true},
-                {removeUselessDefs: true},
-                {removeEmptyAttrs: true},
-                {removeHiddenElems: true},
-                {removeEmptyText: true},
-                {removeUselessStrokeAndFill: true},
-                {moveElemsAttrsToGroup: true},
-                {removeStyleElement: true},
-                {cleanupEnableBackground: true},
-              ],
-            },
-          },
+          'html-loader', 'markdown-loader',
         ],
       },
     ],

@@ -107,7 +107,7 @@ export default class SceneDetail extends Component {
     }
 
     const actions = [
-      <Button className="mr8" href={`${window.__keeper.pathPrefix}/scene#/${store.sceneId}/tags`}>标签列表</Button>,
+      <Button className="mr8" href={`${window.__keeper.pathHrefPrefix}/scene#/${store.sceneId}/tags`}>标签列表</Button>,
       <AuthBox 
         code="asset_tag_project_occ_data_source"
         myFunctionCodes={store.functionCodes} 

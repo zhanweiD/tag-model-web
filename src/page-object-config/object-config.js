@@ -48,7 +48,7 @@ export default class ObjectConfig extends Component {
 
   // 跳转到项目列表
   goProjectList = () => {
-    window.location.href = `${window.__keeper.pathPrefix || '/'}/project`
+    window.location.href = `${window.__keeper.pathHrefPrefix || '/'}/project`
   }
 
   renderNodata =() => {
@@ -83,7 +83,7 @@ export default class ObjectConfig extends Component {
 
     const tabConfig = {
       tabs: changeToOptions(window.njkData.dict.typeCodes)('value', 'key'),
-      basePath: '',
+      basePath: '/object-config',
       currentTab: typeCode,
       changeTab: this.changeTab,
       _history: history,

@@ -26,7 +26,7 @@ export default class Page extends Component {
       <Router>
         <Frame page="space" navList={navList}>
           <Switch>
-            <Route exact path="/:typeCode?/:objId?/:tabId?" component={ObjectConfig} />
+            <Route exact path="/object-config/:typeCode?/:objId?/:tabId?" component={ObjectConfig} />
             <Route
               render={() => {
                 window.location.href = '/404'

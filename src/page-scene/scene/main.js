@@ -64,7 +64,7 @@ export default class Scene extends Component {
 
   // 跳转到项目列表
   goProjectList = () => {
-    window.location.href = `${window.__keeper.pathPrefix || '/'}/project`
+    window.location.href = `${window.__keeper.pathHrefPrefix || '/'}/project`
   }
 
   renderNodata =() => {
@@ -137,7 +137,7 @@ export default class Scene extends Component {
                                 className="card"
                                 title={name}
                                 // eslint-disable-next-line no-underscore-dangle
-                                link={`${window.__keeper.pathPrefix}/scene#/${id}`}
+                                link={`${window.__keeper.pathHrefPrefix}/scene#/${id}`}
                                 tag={[<Tag status={used ? 'process' : 'wait'} text={used ? '使用中' : '未使用'} className="mr8" />]}
                                 labelList={[{
                                   label: '创建者',

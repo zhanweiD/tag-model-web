@@ -45,7 +45,7 @@ export default class TagList extends Component {
     key: 'name',
     title: '标签名称',
     dataIndex: 'name',
-    render: (text, record) => <Link to={`/${record.id}`}><OmitTooltip maxWidth={120} text={text} /></Link>,
+    render: (text, record) => <Link to={`/tag-model/${record.id}`}><OmitTooltip maxWidth={120} text={text} /></Link>,
   }, {
     key: 'configType',
     title: '绑定方式',
@@ -288,7 +288,7 @@ export default class TagList extends Component {
 
   // 跳转到项目列表
   goProjectList = () => {
-    window.location.href = `${window.__keeper.pathPrefix || '/'}/project`
+    window.location.href = `${window.__keeper.pathHrefPrefix || '/'}/project`
   }
 
   renderNodata =() => {

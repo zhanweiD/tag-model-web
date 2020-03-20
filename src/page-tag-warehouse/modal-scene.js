@@ -49,7 +49,7 @@ export default class ModalScene extends Component {
         value: 'id',
       },
     },
-    extra: this.sceneId ? <a href={`${window.__keeper.pathPrefix}/scene#/${this.sceneId}`} className="noCate">没有类目？ 去场景中创建类目</a> : null,
+    extra: this.sceneId ? <a href={`${window.__keeper.pathHrefPrefix}/scene#/${this.sceneId}`} className="noCate">没有类目？ 去场景中创建类目</a> : null,
   }]
 
   @action handleCancel = () => {
@@ -117,10 +117,6 @@ export default class ModalScene extends Component {
     return (
       <Modal {...modalConfig}>
         <ModalForm {...formConfig} />
-        {/* {
-          this.sceneId ? <a href={`${window.__keeper.pathPrefix}/scene#/${this.sceneId}`} className="noCate">没有类目？ 去场景中创建类目</a> : null
-        } */}
-        {/* <a href={`${window.__keeper.pathPrefix}/scene#/${this.sceneId}`} className="noCate">没有类目？ 去场景中创建类目</a> */}
       </Modal>
     )
   }

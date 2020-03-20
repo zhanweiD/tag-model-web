@@ -68,7 +68,7 @@ export default class Tree extends Component {
       }
     }
 
-    history.push(`/${this.store.typeCode}/${selectedKeys[0]}/${tabId}`);
+    history.push(`/object-config/${this.store.typeCode}/${selectedKeys[0]}/${tabId}`);
     
     [this.store.objId] = selectedKeys
   }

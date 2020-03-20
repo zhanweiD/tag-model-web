@@ -26,7 +26,7 @@ const ContentMap = {
 export default class Approval extends Component {
   onMenuClick = e => {
     const {history} = this.props
-    history.push(`/${e.key}`)
+    history.push(`/approval/${e.key}`)
   }
 
   render() {

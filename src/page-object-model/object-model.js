@@ -48,8 +48,8 @@ export default class ObjectModel extends Component {
     } = store
 
     const tabConfig = {
-      tabs: changeToOptions(window.njkData.dict.typeCodes)('objTypeName', 'objTypeCode'),
-      basePath: '',
+      tabs: changeToOptions(window.njkData.dict.typeCodes)('value', 'key'),
+      basePath: '/object-model',
       currentTab: typeCode,
       changeTab: this.changeTab,
       _history: history,

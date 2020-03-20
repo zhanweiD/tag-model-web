@@ -111,7 +111,7 @@ export default class TagList extends Component {
   render() {
     const {tagList, keyword} = this.store
 
-    const rowSelection = codeInProduct.includes('asset_tag_tag_tag_select_move') && {
+    const rowSelection = codeInProduct('asset_tag_tag_tag_select_move') && {
       selectedRowKeys: this.selectedRowKeys,
       onChange: this.changeRow,
     }
@@ -150,7 +150,6 @@ export default class TagList extends Component {
               isLoading={tagList.loading}
               {...noDataConfig}
             />
-          
           ) : (
             <Fragment>
               <div className="FBH FBJB mb16">

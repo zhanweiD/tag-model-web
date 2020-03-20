@@ -52,7 +52,7 @@ export default class ObjectDetail extends Component {
       title: '确定移除对象？',
       onOk() {
         t.store.objId = undefined
-        history.push(`/${t.store.typeCode}`)
+        history.push(`/object-config/${t.store.typeCode}`)
         t.store.removeObj(() => {
           t.store.getObjTree(() => {
             t.store.tabId = 'view'
@@ -139,7 +139,7 @@ export default class ObjectDetail extends Component {
 
     const tabConfig = {
       tabs: tabMap,
-      basePath: `/${typeCode}/${objId}`,
+      basePath: `/object-config/${typeCode}/${objId}`,
       currentTab: tabId,
       changeTab: this.changeTab,
       // eslint-disable-next-line react/destructuring-assignment

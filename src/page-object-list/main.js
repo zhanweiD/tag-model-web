@@ -20,14 +20,16 @@ const navList = [
   {text: navListMap.objectList.text},
 ]
 
+const selfUrl = 'object-list'
+
 export default class Page extends Component {
   render() {
     return (
       <Router>
         <Frame navList={navList}>
           <Switch>
-            <Route exact strict path="/detail/:typeCode/:objId" component={ObjectDetail} />
-            <Route path="/" component={ObjectList} />
+            <Route exact strict path={`/${selfUrl}/detail/:typeCode/:objId`} component={ObjectDetail} />
+            <Route exact path={`/${selfUrl}`} component={ObjectList} />
             <Route
               render={() => {
                 window.location.href = '/404'

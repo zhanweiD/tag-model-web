@@ -120,7 +120,7 @@ export default class SelectTag extends Component {
 
   goToAddObj = () => {
     // 跳转至标签池添加标签
-    window.location.href = `${window.__keeper.pathPrefix}/pool#/1`
+    window.location.href = `${window.__keeper.pathHrefPrefix}/object-modal/4`
   }
 
   // 选择对象
@@ -153,7 +153,7 @@ export default class SelectTag extends Component {
       isLoading: tagExistFlagLoading,
       code: 'asset_tag_project_occ_operator',
       noAuthText: '暂无数据',
-      text: '没有任何对象，请在对象管理中添加！',
+      text: '没有任何对象，请在对象模型中添加！',
       myFunctionCodes: functionCodes,
     }
 
@@ -224,19 +224,8 @@ export default class SelectTag extends Component {
                                         name={name}
                                         descr={descr}
                                         baseInfo={baseInfo}
-                                        // 点击“标签详情”按钮，进入标签池中的标签详情
-                                        actions={[<Button href={`${window.__keeper.pathPrefix}/tag-model#/${id}`} type="primary"><a href>标签详情</a></Button>]}
-                                        // actions={
-                                        //   <Button type="primary">
-                                        //     <a
-                                        //       // target="_blank"
-                                        //       // rel="noopener noreferrer"
-                                        //       // href={`${window.__keeper.pathPrefix}/pool#/${objTypeCode}/${treeId}`}
-                                        //       href
-                                        //     >
-                                        //       标签详情
-                                        //     </a>
-                                        //  </Button>}
+                                        // 点击“标签详情”按钮，进入标签详情
+                                        actions={[<Button href={`${window.__keeper.pathHrefPrefix}/tag-model#/${id}`} type="primary"><a href>标签详情</a></Button>]}
                                       />
                                     </Spin>
                                     <TrendTag store={this.store} tagId={this.store.tagId} />

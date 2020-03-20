@@ -171,7 +171,6 @@ export const getDataTypeName = (code) => {
 
 
 export const codeInProduct = code => {
-  console.log(code)
   const functionCodes = window.productFunctionCode || []
   return functionCodes.indexOf(code) > -1
 }

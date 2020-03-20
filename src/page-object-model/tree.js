@@ -156,7 +156,7 @@ export default class Tree extends Component {
             // 2. 刷新类目树
             t.getTreeData()
             // 3.改变url
-            history.push(`/${store.typeCode}`)
+            history.push(`/object-model/${store.typeCode}`)
           } else {
             // 删除节点非当前选中节点
             // 1. 刷新类目树
@@ -189,7 +189,7 @@ export default class Tree extends Component {
     const {history} = this.props
     // 刷新对象详情
     this.bigStore.updateDetailKey = Math.random()
-    history.push(`/${store.typeCode}/${selectedKeys[0]}/${this.bigStore.tabId}`)
+    history.push(`/object-model/${store.typeCode}/${selectedKeys[0]}/${this.bigStore.tabId}`)
   }
 
   /**
@@ -202,11 +202,11 @@ export default class Tree extends Component {
     // }
 
     // 对象管理类目权限code 对象类目（添加、编辑、删除） ```asset_tag_obj_cat_add_edit_del``` --管理员
-    if (+node.type === 3 && !codeInProduct.includes('asset_tag_obj_cat_add_edit_del')) {
+    if (+node.type === 3 && !codeInProduct('asset_tag_obj_cat_add_edit_del')) {
       return [{key: 'view', value: '查看对象类目', onClick: (key, data) => this.openModal(key, data, TARGET_CATEGORY)}] // 只有查看详情权限
     }
     // 对象管理对象权限code对象（添加、编辑、删除、发布、取消发布）```asset_tag_obj_add_edit_del_publish``` --管理员
-    if (+node.type === 2 && !codeInProduct.includes('asset_tag_obj_add_edit_del_publish')) {
+    if (+node.type === 2 && !codeInProduct('asset_tag_obj_add_edit_del_publish')) {
       return [] 
     }
 

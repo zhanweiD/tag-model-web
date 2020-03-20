@@ -65,7 +65,7 @@ export default class SelectObject extends Component {
         t.store.objId = t.store.currentSelectKeys
 
         if (!t.store.objId) {
-          t.props.history.push(`/${t.store.typeCode}`)
+          t.props.history.push(`/object-config/${t.store.typeCode}`)
         }
       })
       t.destroy()

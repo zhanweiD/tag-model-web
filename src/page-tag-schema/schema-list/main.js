@@ -10,6 +10,7 @@ import {
 } from 'antd'
 import {Link} from 'react-router-dom'
 
+import * as navListMap from '../../common/navList'
 import {Time} from '../../common/util'
 import {
   ListContent, AuthBox, NoData, Loading,
@@ -258,7 +259,7 @@ class SchemaList extends Component {
 
    // 跳转到项目列表
    goProjectList = () => {
-     window.location.href = `${window.__keeper.pathPrefix || '/'}/project`
+     window.location.href = `${window.__keeper.pathHrefPrefix || '/'}/project`
    }
 
   renderNodata = () => {
