@@ -135,7 +135,7 @@ export default class DrawerTwoParams extends Component {
             {
               this.renderList.map(d => this.paramItem(d.id, toJS(d.init)))
             }
-            <div className="fac mt16"> 
+            <div className="fac mt16" style={{width: '230px'}}> 
               <Button type="dashed" onClick={this.addParam} style={{width: '196px'}}>
                 <Icon type="plus" />
                 添加参数

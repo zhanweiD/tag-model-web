@@ -75,7 +75,7 @@ export default class ConfigInfo extends Component {
           /
           {detail.fieldCount}
         </div>
-        <Table columns={this.columns} dataSource={tagConfigList} />
+        <Table columns={this.columns} dataSource={tagConfigList} pagination={false} />
       </div>
     )
   }

@@ -91,17 +91,18 @@ class Store extends ListContentStore(io.getList) {
   /**
    * @description 数据源列表(从关联实体的数据表中选择)
    */
-  @action async getEntityDataSource(objId) {
+  @action async getEntityDataSource(entityId) {
     try {
-      const res = await io.getList({
-        objId,
-        currentPage: 1,
-        pageSize: 20,
+      const res = await io.getEntityDataSource({
+        entityId,
+        id: this.objId,
+        storageId: this.storageId,
         projectId: this.projectId,
       })
       runInAction(() => {
-        const data = res.data.map(d => ({
+        const data = res && res.map(d => ({
           tableName: d.dataTableName,
+          isUsed: d.isUsed,
         }))
 
         this.dataSheetList.replace(data)

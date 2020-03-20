@@ -8,8 +8,7 @@ const api = {
   getDataSheet: get(`${baseApi}/tag/table/list_uncorrelated`), // 添加关联字段 - 数据表列表 (数据源下所有数据比爱(排除已关联))
   removeList: post(`${baseApi}/tag/pool/remove_tag_field_rel`), // 移除数据表
   getFieldList: get(`${baseApi}/tag/column_info`), // 添加关联字段 - 字段列表（数据表字段信息(数据采集)）
-  // getReledFieldList: get(`${baseApi}/tag/pool/rel_db_field`), // 添加关联字段 - 获取关联对象已选字段列表(编辑字段)
-  // getAssMappingKey: get(`${baseApi}/project/object/obj_ass_mappingKey`), // 获取关联对象下关联主键与实体主键信息
+
 
   // 添加
   saveEntityField: post(`${baseApi}/tag/pool/add_rel_field`), // 添加关联字段(实体)
@@ -17,9 +16,8 @@ const api = {
   // fieldSuccessInfo: get(`${baseApi}/project/object/storage_detail`), // 表添加成功后展示内容
 
   getMappingKey: get(`${baseApi}/project/object/mapping_key`), // 根据实体、数据表获取实体主标签在该表对应的主键
-  // 编辑
-  // updateEntityField: post(`${baseApi}/tag/pool/update_rel_field`), // 更新关联字段(实体)
-  // updateRelField: post(`${baseApi}/tag/pool/update_rel_field_ass`), // 更新关联字段(关系)
+
+  getEntityDataSource: get(`${baseApi}/project/object/obj_table_list`), // 对象配置 - 简单关系从关联实体数据表选择数据表列表
 } 
 
 ioContext.create('objectConfigTable', api) 
