@@ -82,8 +82,6 @@ class ModalCateSelect extends React.Component {
 
     form.validateFields((errs, values) => {
       if (!errs) {
-        // console.log(values)
-
         this.setState({
           confirmLoading: true,
         })

@@ -59,7 +59,7 @@ export default class ProjectList extends Component {
       dataIndex: 'name',
       render: (text, record) => (record.config === 1
         ? (
-          <Link to={`/${record.id}`}>
+          <Link to={`/project/${record.id}`}>
             <OmitTooltip maxWidth={100} text={text} />
           </Link>
         ) : <OmitTooltip maxWidth={100} text={text} />)

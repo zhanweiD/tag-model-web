@@ -12,7 +12,6 @@ class Store {
   @observable projectId = undefined
 
   @action async getProjectList() {
-    console.log(storageProjectId)
     try {
       const res = await io.getProjectList({
         currentPage: 1,

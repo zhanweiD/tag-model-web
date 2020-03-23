@@ -122,7 +122,7 @@ class SchemaList extends Component {
             {
               (record.status === 1) && (
                 <Fragment>
-                  <Link to={`/detail/${record.id}`}> 查看</Link>
+                  <Link to={`/tag-schema/detail/${record.id}`}> 查看</Link>
                   <span className="table-action-line" />
                 </Fragment>
               )

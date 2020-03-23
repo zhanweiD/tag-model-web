@@ -104,16 +104,15 @@ class Store extends ListContentStore(io.getList) {
             return item
           })
         }
-        console.log(data)
+
         if (!this.currentSelectKeys) {
           // 默认类目
           [this.defaultCate] = res.filter(d => d.aId === -1)
-          console.log(this.defaultCate)
-          // this.currentSelectKeys = this.defaultCate.id
+          this.currentSelectKeys = this.defaultCate.id
         }
-        // this.categoryData = res.filter(d => d.isLeaf !== 1) // 叶子类目
+        this.categoryData = res.filter(d => d.isLeaf !== 1) // 叶子类目
 
-        // this.treeData = listToTree(data)
+        this.treeData = listToTree(data)
       })
 
       if (cb) cb()

@@ -8,8 +8,8 @@ const api = {
   editScene: get(`${sceneApi}/edit`), // 场景编辑
   checkName: get(`${sceneApi}/check_name`), // 名称校验
 
-  getTagDetail: get(`${sceneApi}/tree/obj/cat/tag/detail`), // 标签详情
-  getApiTrend: get(`${sceneApi}/tree/obj/cat/tag/apiCount`), // API调用数趋势
+  getTagDetail: get(`${sceneApi}/treeObj/cat/tag/detail`), // 标签详情
+  getApiTrend: get(`${sceneApi}/treeObj/cat/tag/apiCount`), // API调用数趋势
   getTagTrend: get(`${sceneApi}/tree/obj/cat/tag/invoke`), // 标签调用次数趋势
 
   //* ------------------------------ 目的数据源 ------------------------------*//

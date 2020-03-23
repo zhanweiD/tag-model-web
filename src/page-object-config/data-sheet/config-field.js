@@ -192,7 +192,6 @@ export default class ConfigField extends Component {
 
       this.currentStep = 2
     }, () => {
-      console.log('保存失败')
       // 保存失败的话，可能是这期间某些接口不能创建了，重新调用校验接口来更新数据
       store.checkTagList()
     })
