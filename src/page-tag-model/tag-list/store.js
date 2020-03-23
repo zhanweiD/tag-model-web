@@ -109,11 +109,11 @@ class Store extends ListContentStore(io.getList) {
       })
       runInAction(() => {
         if (res.success) {
-          successTip('提交成功')
+          successTip('操作成功')
           this.closeModal()
           this.getList()
         } else {
-          failureTip('提交失败')
+          failureTip('操作失败')
         }
       })
     } catch (e) {
