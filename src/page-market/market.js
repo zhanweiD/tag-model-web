@@ -6,7 +6,7 @@ import {observer} from 'mobx-react'
 import {action} from 'mobx'
 import {Button} from 'antd'
 import {
-  ListContent, Tag, NoData, OmitTooltip,
+  ListContent, Tag, AuthBox, OmitTooltip,
 } from '../component'
 import {getDataTypeName} from '../common/util'
 import Search from './search'
@@ -107,26 +107,27 @@ export default class Market extends Component {
         <div className="FBH FBAC">
           {/* eslint-disable-next-line no-underscore-dangle */}
           <a href={`${window.__onerConfig.pathPrefix}/tag-model#/${record.id}`}>查看详情</a> 
-          
-          {(() => {
-            if (store.useProjectId) {
-              if (record.status) { // 状态 0：可以申请 1 审批中 2 不可以申请
+          <AuthBox code="asset_tag_apply_market" isButton={false}>  
+            {(() => {
+              if (store.useProjectId) {
+                if (record.status) { // 状态 0：可以申请 1 审批中 2 不可以申请
+                  return (                 
+                    <Fragment>
+                      <span className="table-action-line" /> 
+                      <span className="disabled">申请</span>
+                    </Fragment>                
+                  )
+                } 
                 return (
                   <Fragment>
                     <span className="table-action-line" /> 
-                    <span className="disabled">申请</span>
+                    <a href onClick={() => this.openModal(record, 'one')}>申请</a>
                   </Fragment>
                 )
               } 
-              return (
-                <Fragment>
-                  <span className="table-action-line" /> 
-                  <a href onClick={() => this.openModal(record, 'one')}>申请</a>
-                </Fragment>
-              )
-            } 
-            return null
-          })()}
+              return null
+            })()}
+          </AuthBox>
         </div>
       ),
     },

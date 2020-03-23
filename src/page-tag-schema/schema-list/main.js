@@ -284,12 +284,20 @@ class SchemaList extends Component {
   }
 
   render() {
-    const {objList} = this.store
+    const {objList, functionCodes} = this.store
     const listConfig = {
       columns: this.columns,
       initParams: {projectId: this.projectId},
       searchParams: seach({objList}),
-      buttons: [<Button type="primary" onClick={this.create}>创建加工方案</Button>],
+      buttons: [<AuthBox
+        code="asset_tag_project_scheme_operator" 
+        type="primary"
+        myFunctionCodes={functionCodes}
+        onClick={this.create}
+      >
+      创建加工方案      
+      </AuthBox>,
+      ],
       rowKey: 'id',
       store: this.store, // 必填属性
     }
