@@ -37,6 +37,8 @@ export default class Market extends Component {
         useProjectId: store.useProjectId,
         type: 2,
       } 
+    } else {
+      store.getList()
     }
   }
 
