@@ -45,6 +45,7 @@ export default class BusinessModel extends Component {
   allLinks
   addTablesData
   entitySelect
+  maxHeight = {}
 
   componentDidMount() {
     this.getData()
@@ -69,6 +70,7 @@ export default class BusinessModel extends Component {
 
   initSvg() {
     d3.select('#wrap').style('height', '570px')
+    this.maxHeight = {}
     this.svg = d3.select('#box')
       .attr('width', option.svgW)
       .attr('height', option.svgH)
@@ -451,12 +453,22 @@ export default class BusinessModel extends Component {
         
         if (height + 300 > 570) {
           d3.select('#wrap').style('height', `${height + 300}px`)
+
+          this.maxHeight[`${data.name}${data.id}`] = height + 300
+
+          const heightList = Object.values(this.maxHeight) 
+          
+          d3.select('#wrap').style('height', `${_.max(heightList)}px`)
         }
       } else {
         this.addTablesData.selectAll(`#${data.name}${data.id} .table-border`)
           .attr('height', option.colsHeight * data.tag.filter(item => item.configType === 2).length + option.tableTitleHeight)
         
-        d3.select('#wrap').style('height', '570px')
+        this.maxHeight[`${data.name}${data.id}`] = 570
+        
+        const heightList = Object.values(this.maxHeight) 
+       
+        d3.select('#wrap').style('height', `${_.max(heightList)}px`)
       }
     }
   }
