@@ -1,5 +1,5 @@
 {
-  "name": "asset_tag",
+  "name": "asset-tag",
   "version": "2.1.0",
   "description": "标签中心",
   "main": "app.js",
