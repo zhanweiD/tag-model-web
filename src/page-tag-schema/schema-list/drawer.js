@@ -67,7 +67,7 @@ export default class DrawerConfig extends Component {
                 parameterMappingKeys[d.key] = d.value
               })
 
-              t.store.schemeDetail.parameterMappingKeys = JSON.stringify(parameterMappingKeys)
+              t.store.schemeDetail.parameterMappingKeys = parameterMappingKeys
               const source = this.codeStore.editor.getValue()
               t.store.schemeDetail.source = source
   

@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 import {Button} from 'antd'
 import nodata from '../../icon/noData.svg'
 
-const functionCodes = window.productFunctionCode || []
-
 export default class NoData extends Component {
   static propTypes = {
     pt: PropTypes.string, // 距离顶部的距离；默认 12%
@@ -32,6 +30,8 @@ export default class NoData extends Component {
     super(props)
     const {code} = props
     if (code) {
+      const functionCodes = window.productFunctionCode || []
+
       this.auth = functionCodes.includes(code)
     }
   }

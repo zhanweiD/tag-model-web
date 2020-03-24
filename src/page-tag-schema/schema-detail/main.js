@@ -55,7 +55,7 @@ export default class SchemaDetail extends Component {
     // 详情信息
     const baseInfo = [{
       title: '方案类型',
-      value: detail.type,
+      value: 'TQL',
     }, {
       title: '所属对象',
       value: detail.objName,

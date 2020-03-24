@@ -5,8 +5,6 @@ import {errorTip} from '../common/util'
 import storage from '../common/nattyStorage'
 import io from './io'
 
-const storageProjectId = storage.get('tag_projectId')
-
 class Store {
   @observable projectList = []
   @observable projectId = undefined
@@ -21,6 +19,7 @@ class Store {
       // const res = {
       //   data: [],
       // }
+      const storageProjectId = storage.get('tag_projectId')
       const projectId = storageProjectId ? +storageProjectId : undefined
 
       // 项目列表无数据 

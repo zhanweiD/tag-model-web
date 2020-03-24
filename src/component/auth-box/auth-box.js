@@ -2,7 +2,7 @@ import {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import {Button} from 'antd'
 
-const functionCodes = window.productFunctionCode || []
+// const functionCodes = window.productFunctionCode || []
 
 class AuthBox extends Component {
   static propTypes = {
@@ -17,6 +17,8 @@ class AuthBox extends Component {
 
   getAuth = () => {
     const {code, myFunctionCodes} = this.props
+    const functionCodes = window.productFunctionCode || []
+
     if (!code) {
       console.error('需配置权限code')
       return false

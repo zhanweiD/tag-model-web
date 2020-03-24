@@ -33,11 +33,11 @@ export default class DrawerTwo extends Component {
       })
 
       this.store.schemeDetail.source = code
-      this.store.schemeDetail.parameterMappingKeys = JSON.stringify(parameterMappingKeys) 
+      this.store.schemeDetail.parameterMappingKeys = parameterMappingKeys
 
       this.codeStore.runTask({
         source: code,
-        parameterMappingKeys: JSON.stringify(parameterMappingKeys),
+        parameterMappingKeys,
       }, data => {
         this.store.schemeDetail.fieldInfo = data.fieldInfo
       })

@@ -92,7 +92,7 @@ class ModalTagEdit extends Component {
               })(
                 <Select placeholder="请下拉选择">
                   {
-                    window.njkData.dict.dataTypes.map(item => (
+                    window.njkData.dict.dataType.map(item => (
                       <Option key={item.key} value={item.key}>{item.value}</Option>
                     ))
                   }

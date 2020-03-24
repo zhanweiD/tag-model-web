@@ -77,9 +77,8 @@ class Store extends ListContentStore(io.getList) {
       })
       runInAction(() => {
         this.dataSourceList = res ? [res] : []
-        this.storageId = res.storageId
-
         if (res) {
+          this.storageId = res.storageId
           this.getDataSheet()
         }
       })
