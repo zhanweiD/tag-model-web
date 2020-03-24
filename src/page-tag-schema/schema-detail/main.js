@@ -61,7 +61,7 @@ export default class SchemaDetail extends Component {
       value: detail.objName,
     }, {
       title: '创建人',
-      value: detail.cUserName,
+      value: detail.cuserName,
     }, {
       title: '创建时间',
       value: <Time timestamp={detail.createTime} />,

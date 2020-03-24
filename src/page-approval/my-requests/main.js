@@ -38,8 +38,8 @@ export default class MyRequests extends Component {
       render: text => <OmitTooltip maxWidth={120} text={text} />,
     }, {
       title: '申请时间',
-      key: 'cTime',
-      dataIndex: 'cTime',
+      key: 'ctime',
+      dataIndex: 'ctime',
       render: text => <Time timestamp={text} />,
     }, {
       title: '申请状态',

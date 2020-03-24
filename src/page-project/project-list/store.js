@@ -34,7 +34,7 @@ class Store extends ListContentStore(io.getList) {
     try {
       const res = await io.getCuser()
       runInAction(() => {
-        this.cUser = changeToOptions(toJS(res))('cUserName', 'userId')
+        this.cUser = changeToOptions(toJS(res))('cuserName', 'userId')
       })
     } catch (e) {
       errorTip(e.message)
@@ -82,7 +82,9 @@ class Store extends ListContentStore(io.getList) {
   @action async getGroups() {
     this.selectGroupsLoading = true
     try {
-      const res = await io.getGroups()
+      const res = await io.getGroups({
+        productId: window.__keeper.productId,
+      })
       runInAction(() => {
         if (res) {
           this.dataGroupData = changeToOptions(toJS(res || []))('groupName', 'groupId')

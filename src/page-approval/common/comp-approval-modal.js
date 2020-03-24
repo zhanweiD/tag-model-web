@@ -31,7 +31,7 @@ const foreverMap = {
 //   key: 'applyUserName',
 // }, {
 //   label: '申请时间',
-//   key: 'cTime',
+//   key: 'ctime',
 // }, {
 //   label: '申请理由',
 //   key: 'applyDescr',
@@ -42,7 +42,7 @@ const approvalInfo = [{
   key: 'reviewUserName',
 }, {
   label: '操作时间',
-  key: 'mTime',
+  key: 'mtime',
 }, {
   label: '描述',
   key: 'approvalDescr',
@@ -53,7 +53,7 @@ const backoutInfo = [{
   key: 'applyUserName',
 }, {
   label: '操作时间',
-  key: 'mTime',
+  key: 'mtime',
 }, {
   label: '描述',
   key: 'revokeDescr',
@@ -87,7 +87,7 @@ const LableItem = ({
    ：
     </span>
     {
-      (keyName === 'mTime' || keyName === 'cTime') 
+      (keyName === 'mtime' || keyName === 'ctime') 
         ? <Time timestamp={data[keyName]} /> 
         : <span>{map ? map[data[keyName]] : data[keyName]}</span>
     }
@@ -137,7 +137,7 @@ export default class ModalDetail extends Component {
           && <NormalLableItem label="自定义时长" value={`${moment(+data.startTime).format('YYYY-MM-DD')} ~ ${moment(+data.endTime).format('YYYY-MM-DD')}`} />
         } */}
         <NormalLableItem label="申请人" value={data.applyUserName} />
-        <NormalLableItem label="申请时间" value={moment(+data.cTime).format('YYYY-MM-DD HH:mm:ss')} />
+        <NormalLableItem label="申请时间" value={moment(+data.ctime).format('YYYY-MM-DD HH:mm:ss')} />
         <NormalLableItem label="申请理由" value={data.applyDescr} />
       </div>
     )

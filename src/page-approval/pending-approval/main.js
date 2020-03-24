@@ -44,8 +44,8 @@ export default class PendingApproval extends Component {
       dataIndex: 'applyUserName',
     }, {
       title: '申请时间',
-      key: 'cTime',
-      dataIndex: 'cTime',
+      key: 'ctime',
+      dataIndex: 'ctime',
       render: text => <Time timestamp={text} />,
     }, {
       title: '操作',

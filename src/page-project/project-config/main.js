@@ -58,8 +58,8 @@ class ProjectConfig extends Component {
       dataIndex: 'role',
     }, {
       title: '添加时间',
-      key: 'cTime',
-      dataIndex: 'cTime',
+      key: 'ctime',
+      dataIndex: 'ctime',
       render: text => <Time timestamp={text} />,
     }, {
       key: 'action',
@@ -123,13 +123,13 @@ class ProjectConfig extends Component {
 
     const baseInfo = [{
       title: '创建者',
-      value: projectDetail.cUserName,
+      value: projectDetail.cuserName,
     }, {
       title: '创建时间',
-      value: <Time timestamp={projectDetail.cTime} />,
+      value: <Time timestamp={projectDetail.ctime} />,
     }, {
       title: '修改时间',
-      value: <Time timestamp={projectDetail.mTime} />,
+      value: <Time timestamp={projectDetail.mtime} />,
     }]
 
     const listConfig = {

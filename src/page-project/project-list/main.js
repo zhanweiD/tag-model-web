@@ -65,9 +65,9 @@ export default class ProjectList extends Component {
         ) : <OmitTooltip maxWidth={100} text={text} />)
       ,
     }, {
-      key: 'cUserName',
+      key: 'cuserName',
       title: '所有者',
-      dataIndex: 'cUserName',
+      dataIndex: 'cuserName',
     }, {
       key: 'status',
       title: '项目状态',
@@ -83,9 +83,9 @@ export default class ProjectList extends Component {
       dataIndex: 'descr',
       render: text => <OmitTooltip maxWidth={120} text={text} />,
     }, {
-      key: 'cTime',
+      key: 'ctime',
       title: '创建时间',
-      dataIndex: 'cTime',
+      dataIndex: 'ctime',
       render: text => <Time timestamp={text} />,
     }, {
       key: 'action',
@@ -197,7 +197,7 @@ export default class ProjectList extends Component {
    */
   goTagManage = id => {
     storage.set('tag_projectId', id)
-    window.location.href = `${baseApi}/tag-warehouse`
+    window.location.href = `${window.__keeper.pathHrefPrefix}/tag-warehouse`
   }
 
   /**
@@ -205,7 +205,7 @@ export default class ProjectList extends Component {
    */
   goTagProcess = id => {
     storage.set('tag_projectId', id)
-    window.location.href = `${baseApi}/tag-schema`
+    window.location.href = `${window.__keeper.pathHrefPrefix}/tag-schema`
   }
 
   /**
@@ -213,7 +213,7 @@ export default class ProjectList extends Component {
    */
   goTagApplication = id => {
     storage.set('tag_projectId', id)
-    window.location.href = `${baseApi}/scene`
+    window.location.href = `${window.__keeper.pathHrefPrefix}/scene`
   }
 
   /**

@@ -9,7 +9,7 @@ module.exports = {
     scheduleType: 1,
     status: 1,
     createTime: 1582611409321,
-    cUserName: '管理员',
+    cuserName: '管理员',
     descr: '描述',
     schedule_expression: '0 0 0 3 * ? *',
     tagCount: 12,

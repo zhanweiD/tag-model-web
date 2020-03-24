@@ -92,7 +92,7 @@ class Store extends ListContentStore(io.getList) {
     this.confirmLoading = true
     try {
       await io.addList({
-        id: this.projectId,
+        id: +this.projectId,
         ...params,
       })
       runInAction(() => {

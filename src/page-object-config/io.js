@@ -14,7 +14,7 @@ const api = {
   getBMRelation: get(`${projectSpaceApi}/object/list_relation`), // 项目下与对象相关的关系对象列表
   getObjCate: get(`${projectSpaceApi}/object/obj_cate_tree`), // 选择对象-对象类目树
   getObjSelectedList: get(`${projectSpaceApi}/object/list_obj`), // 选择对象- 已选对象列表
-  getObjSelectedDetail: get(`${projectSpaceApi}/object/list_obj_info`), // 选择对象- 获取选择对象列表信息加入选择列表
+  getObjSelectedDetail: post(`${projectSpaceApi}/object/list_obj_info`), // 选择对象- 获取选择对象列表信息加入选择列表
   saveSelectedObj: post(`${projectSpaceApi}/object/save_obj`), // 选择对象- 项目对象选择保存
   
   // 权限code

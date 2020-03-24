@@ -3,7 +3,7 @@
  * @description 面包屑设置
 */
 
-const pathPrefix = '/asset_tag/index.html#'
+const pathPrefix = '/asset-tag/index.html#'
 // 标签中心
 const tagCenter = {
   tagCenter: {

@@ -219,7 +219,7 @@ export default class TagList extends Component {
 
   @action remove(data) {
     store.deleteTag({
-      deleteId: data.id,
+      deleteIds: data.id,
     })
   }
 
@@ -357,7 +357,7 @@ export default class TagList extends Component {
         className="mr8"
       >
         创建标签
-      </AuthBox>, 
+                </AuthBox>, 
       // <AuthBox
       //     code="asset_tag_project_tag_operator"
       //     myFunctionCodes={store.functionCodes}
