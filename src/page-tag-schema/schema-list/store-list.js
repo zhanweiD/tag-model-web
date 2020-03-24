@@ -96,7 +96,7 @@ export default class Store extends ListContentStore(io.getList) {
       runInAction(() => {
         if (res.success) {
           successTip('删除成功')
-          this.getList()
+          this.getList({currentPage: 1})
         } else {
           failureTip('删除失败')
         }

@@ -70,6 +70,7 @@ class ProjectConfig extends Component {
         <div>
           <AuthBox
             code="asset_tag_project_member_add_edit_del"
+            myFunctionCodes={store.functionCodes}
             isButton={false}
           >
             <a href onClick={() => this.openModal('edit', record)}>编辑</a>
@@ -90,6 +91,7 @@ class ProjectConfig extends Component {
     frameChange('nav', navList)
     if (store.projectId) {
       store.getDetail()
+      store.getAuthCode()
     }
   }
 
@@ -119,7 +121,9 @@ class ProjectConfig extends Component {
   }
 
   render() {
-    const {projectDetail, projectId: id, projectDetailLoading} = store
+    const {
+      projectDetail, projectId: id, projectDetailLoading, functionCodes,
+    } = store
 
     const baseInfo = [{
       title: '创建者',
@@ -136,7 +140,14 @@ class ProjectConfig extends Component {
       columns: this.columns,
       initParams: {id},
       store, // 必填属性
-      buttons: [<AuthBox code="asset_tag_project_member_add_edit_del" type="primary" onClick={() => this.openModal('add')}>添加成员</AuthBox>],
+      buttons: [<AuthBox 
+        code="asset_tag_project_member_add_edit_del" 
+        myFunctionCodes={functionCodes}
+        type="primary" 
+        onClick={() => this.openModal('add')}
+      >
+添加成员
+                </AuthBox>],
     }
 
     const tabConfig = {
