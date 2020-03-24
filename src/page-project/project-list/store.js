@@ -100,7 +100,7 @@ class Store extends ListContentStore(io.getList) {
       await io.delList({id})
       runInAction(() => {
         successTip('删除成功')
-        this.getList()
+        this.getList({currentPage: 1})
       })
     } catch (e) {
       errorTip(e.message)

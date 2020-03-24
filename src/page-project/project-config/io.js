@@ -11,6 +11,9 @@ const api = {
   getRole: get(`${projectApi}/role`), // 项目成员角色列表
 
   getParamsList: get(`${projectApi}/sysPa`), // 参数配置列表
+
+  // 权限code
+  getAuthCode: get(`${projectApi}/getFunctionCodes`),
 } 
 
 ioContext.create('projectConfig', api) 

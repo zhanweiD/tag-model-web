@@ -63,7 +63,9 @@ class Store extends ListContentStore(io.getList) {
       await io.delList({id})
       runInAction(() => {
         successTip('删除成功')
-        this.getList()
+        this.getList({
+          currentPage: 1,
+        })
       })
     } catch (e) {
       errorTip(e.message)
@@ -116,6 +118,24 @@ class Store extends ListContentStore(io.getList) {
       const res = await io.getParamsList()
       runInAction(() => {
         this.paramsList = res
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  @observable functionCodes = []
+
+  /**
+   * @description 权限code
+   */
+  @action async getAuthCode() {
+    try {
+      const res = await io.getAuthCode({
+        projectId: this.projectId,
+      })
+      runInAction(() => {
+        this.functionCodes = res
       })
     } catch (e) {
       errorTip(e.message)

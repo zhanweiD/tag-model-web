@@ -257,7 +257,7 @@ class Store extends ListContentStore(io.getList) {
       runInAction(() => {
         if (res) {
           successTip('操作成功')
-          this.getList()
+          this.getList({currentPage: 1})
         } else {
           failureTip('操作失败')
         }

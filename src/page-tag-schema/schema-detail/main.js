@@ -3,7 +3,7 @@
  */
 import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
-import {action, toJS} from 'mobx'
+import {action} from 'mobx'
 import {Spin} from 'antd'
 import {
   Tag,
@@ -54,7 +54,7 @@ export default class SchemaDetail extends Component {
     // 详情信息
     const baseInfo = [{
       title: '方案类型',
-      value: detail.type,
+      value: 'TQL',
     }, {
       title: '所属对象',
       value: detail.objName,
