@@ -172,8 +172,8 @@ export default class SelectTag extends Component {
       // used,
       enName,
       valueTypeName,
-      cUser,
-      cDate,
+      cuser,
+      cdate,
       descr,
       // objTypeCode,
       // treeId,
@@ -189,10 +189,10 @@ export default class SelectTag extends Component {
         value: valueTypeName,
       }, {
         title: '创建者',
-        value: cUser,
+        value: cuser,
       }, {
         title: '创建时间',
-        value: <Time timestamp={cDate} />,
+        value: <Time timestamp={cdate} />,
       },
     ]
 

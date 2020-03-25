@@ -76,8 +76,8 @@ export default class SceneDetail extends Component {
     const info = toJS(store.info)
     const {
       tagCount,
-      cUser,
-      cDate,
+      cuser,
+      cdate,
       invokeList = [],
       descr,
       used,
@@ -87,10 +87,10 @@ export default class SceneDetail extends Component {
     // 详情信息
     const baseInfo = [{
       title: '创建者',
-      value: cUser,
+      value: cuser,
     }, {
       title: '创建时间',
-      value: <Time timestamp={cDate} />,
+      value: <Time timestamp={cdate} />,
     }, {
       title: '调用的API名称',
       value: invokeList.filter(item => item !== null).join('、'),

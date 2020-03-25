@@ -333,6 +333,14 @@ export default class Store {
       scheduleExpression,
     } = this.schemeDetail
 
+
+    const fieldInfoFilter = fieldInfo && fieldInfo.map(d => {
+      const data = {...d}
+      delete data.disabled
+      delete data.objId
+      return data
+    })
+
     const params = {
       projectId: this.projectId,
       objId,
@@ -340,7 +348,7 @@ export default class Store {
       descr: descr || undefined,
       source,
       parameterMappingKeys: parameterMappingKeys || undefined,
-      fieldInfo,
+      fieldInfo: fieldInfoFilter,
       mainTagMappingKeys,
       isPartitioned,
       partitionMappingKeys: partitionMappingKeys || undefined,

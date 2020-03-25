@@ -10,7 +10,7 @@ const api = {
 
   getTagDetail: get(`${sceneApi}/treeObj/cat/tag/detail`), // 标签详情
   getApiTrend: get(`${sceneApi}/treeObj/cat/tag/apiCount`), // API调用数趋势
-  getTagTrend: get(`${sceneApi}/tree/obj/cat/tag/invoke`), // 标签调用次数趋势
+  getTagTrend: get(`${sceneApi}/treeObj/cat/tag/invoke`), // 标签调用次数趋势
 
   //* ------------------------------ 目的数据源 ------------------------------*//
   getDBSource: get(`${sceneApi}/dbSourceList`), // 数据源数据

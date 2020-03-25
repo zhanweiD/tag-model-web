@@ -16,7 +16,7 @@ const api = {
     mock: isMock,
     mockUrl: 'page-tag-processe/searchLog',
   }), // 查询任务实例运行日志
-  queryInstanceResult: get(`${baseApi}/task/instance/result`, {
+  queryInstanceResult: post(`${baseApi}/task/instance/result`, {
     mock: isMock,
     mockUrl: 'page-tag-processe/runResult',
   }), // 查询运行结果

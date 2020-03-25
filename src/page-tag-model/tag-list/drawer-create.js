@@ -203,7 +203,7 @@ export default class DrawerCreate extends Component {
         } else {
           store.createTag(params, () => {
             t.handleCancel()
-            store.getList()
+            store.getList({currentPage: 1})
           })
         }
       }

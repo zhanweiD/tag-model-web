@@ -13,15 +13,15 @@ const api = {
   deleteObject: get(`${sceneApi}/tree/obj/delObj`), // 对象-移除对象
 
   //* ------------------------------ 类目-相关接口 ------------------------------*//
-  getCategoryDetail: get(`${sceneApi}/tree/obj/cat/detail`), // 类目详情
+  getCategoryDetail: get(`${sceneApi}/treeCat/obj/catDetail`), // 类目详情
   addObjCategory: get(`${sceneApi}/tree/obj/addCat`), // 对象-添加类目
-  addCategory: get(`${sceneApi}/tree/obj/cat/addCat`), // 类目-添加类目
-  editCategory: get(`${sceneApi}/tree/obj/cat/edit`), //  类目-编辑类目
-  deleteCategory: get(`${sceneApi}/tree/obj/cat/del`), // 类目-删除类目
+  addCategory: get(`${sceneApi}/treeCat/obj/cat/addCat`), // 类目-添加类目
+  editCategory: get(`${sceneApi}/treeCat/obj/cat/edit`), //  类目-编辑类目
+  deleteCategory: get(`${sceneApi}/treeCat/obj/catDel`), // 类目-删除类目
 
   //* ------------------------------ 标签-相关接口 ------------------------------*//
-  selectTag: get(`${sceneApi}/tree_obj/catSelectTag`), // 选择标签-树
-  saveTag: post(`${sceneApi}/tree/obj/cat/saveTag`), // 选择标签-保存
+  selectTag: get(`${sceneApi}/treeObj/catSelectTag`), // 选择标签-树
+  saveTag: post(`${sceneApi}/treeCat/obj/catSaveTag`), // 选择标签-保存
   deleteTag: get(`${sceneApi}/treeCat/tag/del`), // 标签 - 移除
   checkIsExist: get(`${sceneApi}/check_cat_name`), // 重名校验
 }

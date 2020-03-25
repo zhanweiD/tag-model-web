@@ -126,8 +126,8 @@ export default class Scene extends Component {
                             list.map(({
                               id,
                               name,
-                              cUser,
-                              cDate,
+                              cuser,
+                              cdate,
                               used,
                               tagCount,
                               apiCount,
@@ -141,10 +141,10 @@ export default class Scene extends Component {
                                 tag={[<Tag status={used ? 'process' : 'wait'} text={used ? '使用中' : '未使用'} className="mr8" />]}
                                 labelList={[{
                                   label: '创建者',
-                                  value: cUser,
+                                  value: cuser,
                                 }, {
                                   label: '创建时间',
-                                  value: moment(+cDate).format('YYYY-MM-DD HH-MM-SS'),
+                                  value: moment(+cdate).format('YYYY-MM-DD HH-MM-SS'),
                                 }]}
                                 descr={descr}
                                 countList={[{

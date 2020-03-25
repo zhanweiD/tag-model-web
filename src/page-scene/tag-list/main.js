@@ -47,7 +47,7 @@ export default class Scene extends Component {
     sorter: true,
   }, {
     title: '创建人',
-    dataIndex: 'cUser',
+    dataIndex: 'cuser',
   }, {
     title: '使用状态',
     dataIndex: 'used',

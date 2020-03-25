@@ -6,7 +6,7 @@ import {
 // const isMock = true
 
 const api = {
-  getList: get(`${objectApi}/obj_Page`), // 对象列表
+  getList: post(`${objectApi}/obj_Page`), // 对象列表
   getObjCate: get(`${objectApi}/list_obj_cate`), // 对象类目
 
   //* ------------------------------ 标签类目 ------------------------------*//
