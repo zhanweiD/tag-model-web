@@ -47,7 +47,7 @@ export default class Overview extends Component {
         values: [cardInfo.tagCount || 0],
       }, {
         title: '项目总数',
-        tooltipText: '关于标签中心的项目总数(使用中)',
+        tooltipText: '关于标签中心的项目总数',
         values: [cardInfo.projectCount || 0],
       },
     ]
