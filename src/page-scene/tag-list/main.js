@@ -66,7 +66,7 @@ export default class Scene extends Component {
       navListMap.tagCenter,
       navListMap.application,
       navListMap.scene,
-      {url: `/scene/${store.sceneId}`, text: '场景详情'},
+      {url: `/asset-tag/index.html#/scene/${store.sceneId}`, text: '场景详情'},
       {text: '标签列表'},
     ])
     
