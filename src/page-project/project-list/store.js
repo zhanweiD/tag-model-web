@@ -34,7 +34,7 @@ class Store extends ListContentStore(io.getList) {
     try {
       const res = await io.getCuser()
       runInAction(() => {
-        this.cUser = changeToOptions(toJS(res))('cuserName', 'userId')
+        this.cUser = changeToOptions(toJS(res))('cUserName', 'userId')
       })
     } catch (e) {
       errorTip(e.message)
