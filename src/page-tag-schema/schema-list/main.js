@@ -170,16 +170,28 @@ class SchemaList extends Component {
              
               )
             }
-            {/* 方案状态: 提交成功 调度类型:周期执行 运行状态  操作: 删除 */}
-            {
-              (record.status === 1 && (record.tagCount || record.lastStatus === 1)) ? <span className="disabled">删除</span> : (
+            {/* 方案状态: 提交成功 调度类型:周期执行 运行状态 运行成功 操作: 删除 */}
+            {/* 标签数只要为0 方案均可删除 */}
+            {(() => {
+              if (record.tagCount === 0) {
+                return (
+                  <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.remove(record)}>
+                    <a href>删除</a>
+                  </Popconfirm>
+                )
+              }
+
+              if (record.status === 1) {
+                return <span className="disabled">删除</span>
+              }
+               
+              return (
                 <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.remove(record)}>
                   <a href>删除</a>
                 </Popconfirm>
               )
-            }
-          
-           
+            })()}
+        
             <span className="table-action-line" />
             <Popconfirm placement="topRight" title="你确定要克隆吗？" onConfirm={() => this.clone(record)}>
               <a href>克隆</a>
