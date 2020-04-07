@@ -182,7 +182,7 @@ export default class SelectTag extends Component {
     // 详情信息
     const baseInfo = [
       {
-        title: '英文名',
+        title: '唯一标识',
         value: enName,
       }, {
         title: '数据类型',

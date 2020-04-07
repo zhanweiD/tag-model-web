@@ -1,9 +1,9 @@
 import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {action, toJS} from 'mobx'
-import {
-  Modal, Input, Form,
-} from 'antd'
+import {Modal, Input, Form} from 'antd'
+import {ModalForm} from '../../component'
+
 import {getNamePattern} from '../../common/util'
 
 const FormItem = Form.Item
