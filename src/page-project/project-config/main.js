@@ -139,7 +139,7 @@ class ProjectConfig extends Component {
       value: projectDetail.storageTypeName,
     }, {
       title: '数据源名称',
-      value: projectDetail.dataDbName,
+      value: projectDetail.dataStorageName,
     }, {
       title: '计算引擎',
       value: projectDetail.engineName,
@@ -159,7 +159,7 @@ class ProjectConfig extends Component {
         onClick={() => this.openModal('add')}
       >
 添加成员
-      </AuthBox>],
+                </AuthBox>],
     }
 
     const tabConfig = {
