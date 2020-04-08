@@ -134,6 +134,18 @@ class ProjectConfig extends Component {
     }, {
       title: '修改时间',
       value: <Time timestamp={projectDetail.mtime} />,
+    }, {
+      title: '数据源类型',
+      value: projectDetail.storageTypeName,
+    }, {
+      title: '数据源名称',
+      value: projectDetail.dataDbName,
+    }, {
+      title: '计算引擎',
+      value: projectDetail.engineName,
+    }, {
+      title: '调度队列',
+      value: projectDetail.queueName,
     }]
 
     const listConfig = {
@@ -147,7 +159,7 @@ class ProjectConfig extends Component {
         onClick={() => this.openModal('add')}
       >
 添加成员
-                </AuthBox>],
+      </AuthBox>],
     }
 
     const tabConfig = {
