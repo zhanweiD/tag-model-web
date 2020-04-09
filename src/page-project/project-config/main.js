@@ -5,14 +5,14 @@ import {Component} from 'react'
 import {action, observable} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {withRouter} from 'react-router'
-import {Popconfirm, Spin} from 'antd'
+import {Spin} from 'antd'
 import * as navListMap from '../../common/navList'
 import {Time} from '../../common/util'
-import {
-  DetailHeader, ListContent, AuthBox, TabRoute,
-} from '../../component'
-import ModalProjectConfig from './modal'
+import {DetailHeader, TabRoute} from '../../component'
+import MemberManger from './member-manger'
 import ParamsConfig from './params-config'
+import DataStorage from './data-storage'
+import ResourceGroup from './resource-group'
 
 import store from './store'
 
@@ -26,7 +26,12 @@ const navList = [
   navListMap.projectConfig,
 ]
 
-const tabs = [{name: '人员管理', value: 1}, {name: '参数配置', value: 2}]
+const tabs = [
+  {name: '人员管理', value: 0}, 
+  {name: '参数配置', value: 1},
+  {name: '数据源', value: 2},
+  {name: '资源组', value: 3},
+]
 
 @inject('frameChange')
 @observer
@@ -37,54 +42,8 @@ class ProjectConfig extends Component {
     store.projectId = match.params.projectId // 项目id
   }
 
-  @observable tabId = 1 // 当前详情tabID 
+  @observable tabId = 0 // 当前详情tabID 
 
-  columns = [
-    {
-      title: '姓名',
-      key: 'userName',
-      dataIndex: 'userName',
-    }, {
-      title: '手机号',
-      key: 'mobile',
-      dataIndex: 'mobile',
-    }, {
-      title: '邮箱',
-      key: 'email',
-      dataIndex: 'email',
-    }, {
-      title: '角色',
-      key: 'role',
-      dataIndex: 'role',
-    }, {
-      title: '添加时间',
-      key: 'ctime',
-      dataIndex: 'ctime',
-      render: text => <Time timestamp={text} />,
-    }, {
-      key: 'action',
-      title: '操作',
-      dataIndex: 'action',
-      width: 150,
-      render: (text, record) => (
-        <div>
-          <AuthBox
-            code="asset_tag_project_member_add_edit_del"
-            myFunctionCodes={store.functionCodes}
-            isButton={false}
-          >
-            <a href onClick={() => this.openModal('edit', record)}>编辑</a>
-            <span className="table-action-line" />
-            <Popconfirm placement="topRight" title="确认删除？" onConfirm={() => this.delItem(record.id)}>
-              <a href>删除</a>
-            </Popconfirm>
-          </AuthBox>
-        
-        </div>
-      ),
-    },
-  ];
-  
   componentWillMount() {
     // 面包屑设置
     const {frameChange} = this.props
@@ -93,27 +52,6 @@ class ProjectConfig extends Component {
       store.getDetail()
       store.getAuthCode()
     }
-  }
-
-  @action openModal = (type, data = {}) => {
-    if (type === 'add') {
-    // 请求用户名下拉列表
-      store.getUsers()
-    }
-    // 请求角色下拉列表
-    store.getRole()
-    
-    store.detail = data 
-    store.modalType = type
-    store.visible = true
-  }
-
-  /**
-   * @description 删除项目
-   * @param id 项目ID
-   */
-  delItem = id => {
-    store.delList(id)
   }
 
   @action.bound changeTab(id) {
@@ -148,26 +86,14 @@ class ProjectConfig extends Component {
       value: projectDetail.queueName,
     }]
 
-    const listConfig = {
-      columns: this.columns,
-      initParams: {id},
-      store, // 必填属性
-      buttons: [<AuthBox 
-        code="asset_tag_project_member_add_edit_del" 
-        myFunctionCodes={functionCodes}
-        type="primary" 
-        onClick={() => this.openModal('add')}
-      >
-添加成员
-                </AuthBox>],
-    }
-
     const tabConfig = {
       tabs,
       currentTab: this.tabId,
       changeTab: this.changeTab,
       changeUrl: false,
     }
+
+    const Content = [MemberManger, ParamsConfig, DataStorage, ResourceGroup][+this.tabId]
 
     return (
       <div className="project-config">
@@ -181,13 +107,8 @@ class ProjectConfig extends Component {
        
         <div className="list-content">
           <TabRoute {...tabConfig} />
-
-          {
-            +this.tabId === 2 ? <ParamsConfig store={store} /> : <ListContent {...listConfig} />
-          }
-         
+          <Content projectId={id} functionCodes={functionCodes} store={store} />
         </div>
-        <ModalProjectConfig store={store} />
       </div>
     )
   }

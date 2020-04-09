@@ -5,38 +5,22 @@ import {Modal} from 'antd'
 import {ModalForm} from '../../component'
 
 @observer
-export default class ModalProjectConfig extends Component {
+export default class ModalResource extends Component {
   constructor(props) {
     super(props)
     this.store = props.store
   }
 
   selectContent= () => {
-    const {detail, users, roles} = this.store
-    const userList = detail.userName ? [{name: detail.userName, value: detail.userId}] : users
-    
     return [{
-      label: '用户名',
+      label: '资源组名称',
       key: 'memberId',
-      initialValue: detail.userId,
-      component: 'select',
-      disabled: Boolean(detail.userId),
-      rules: [
-        '@requiredSelect',
-      ],
-      control: {
-        options: userList,
-      },
-    }, {
-      label: '角色',
-      key: 'roleId',
-      initialValue: detail.roleId,
       component: 'select',
       rules: [
         '@requiredSelect',
       ],
       control: {
-        options: roles,
+        options: [],
       },
     }]
   }
@@ -47,32 +31,24 @@ export default class ModalProjectConfig extends Component {
 
   submit = () => {
     const t = this
-    const {store} = t
+    const {store} = this
 
     this.form.validateFields((err, values) => {
       if (!err) {
-        // 编辑 
-        if (store.modalType === 'edit') {
-          const params = {id: store.detail.id, ...values}
-          store.editList(params, () => {
-            t.handleCancel()
-          })
-        } else {
-          // 新增
-          store.addList(values, () => {
-            t.handleCancel()
-          })
-        }
+        // 新增
+        store.addList(values, () => {
+          t.handleCancel()
+        })
       }
     })
   }
 
   render() {
     const {
-      visible, modalType, confirmLoading,
+      visible, confirmLoading,
     } = this.store
     const modalConfig = {
-      title: modalType === 'edit' ? '编辑成员' : '添加成员',
+      title: '添加资源组',
       visible,
       onCancel: this.handleCancel,
       onOk: this.submit,

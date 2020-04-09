@@ -10,10 +10,8 @@ import {
 } from '../component'
 import {getDataTypeName} from '../common/util'
 import ModalApply from './modal-apply'
-import ModalScene from './modal-scene'
 
 import store from './store'
-import './main.styl'
 
 import Search from './search'
 
@@ -70,15 +68,13 @@ export default class TagWarehouse extends Component {
 
   componentWillUnmount() {
     store.tagIds.clear()
-    store.selectedRows.clear()
-    store.rowKeys.clear()
+
     store.expand = false
     store.permissionType = '' // 使用权限状态
     store.ownProjectId = '' // 所属项目id
     store.objectId = '' // 对象id
     store.hotWord = undefined // 关键词
     store.selectItem = {}
-    store.sceneType = undefined
     store.searchParams = {}
     store.pagination = {
       pageSize: 10,
@@ -130,12 +126,15 @@ export default class TagWarehouse extends Component {
             myFunctionCodes={store.functionCodes}
             isButton={false}
           >
-            <span className="table-action-line" />
-
             {
               record.status === 2
-                ? <a href onClick={() => this.openApplyModal(record)}>权限申请</a>
-                : <a href onClick={() => this.openSceneModal(record)}>添加到业务场景</a>
+                ? (
+                  <Fragment>        
+                    <span className="table-action-line" />
+                    <a href onClick={() => this.openApplyModal(record)}>权限申请</a>
+                  </Fragment>
+                )
+                : null
             }
           </AuthBox>
         
@@ -150,35 +149,6 @@ export default class TagWarehouse extends Component {
     }
     store.tagIds.replace([data.id])
     store.modalApplyVisible = true
-  }
-
-  @action.bound openSceneModal(data) {
-    store.selectItem = data
-    store.sceneType = 'one'
-    store.getSceneList({
-      objId: data.objId,
-    })
-    store.tagIds.replace([this.rowKeys])
-    store.modalSceneVisible = true
-  }
-
-
-  @action.bound onTableCheck(selectedRowKeys, selectedRows) {
-    // 表格 - 已选项
-    store.selectedRows = selectedRows
-
-    // 表格 - 已选项key数组
-    store.rowKeys = selectedRowKeys
-  }
-
-  /**
-   * @description 批量添加到业务场景
-   */
-  @action.bound batchAction() {
-    store.getSceneList()
-    store.sceneType = 'batch'
-    store.tagIds.replace(store.rowKeys)
-    store.modalSceneVisible = true
   }
 
   // 是否有进行搜索操作
@@ -236,46 +206,12 @@ export default class TagWarehouse extends Component {
 
   render() {
     const {
-      useProjectId, list, objectId, functionCodes, tableLoading,
+      useProjectId, list, functionCodes, tableLoading,
     } = store
-
-    const rowSelection = objectId && functionCodes.includes('asset_tag_project_tag_search_add_occ') ? {
-      selectedRowKeys: store.rowKeys.slice(),
-      onChange: this.onTableCheck,
-      getCheckboxProps: record => ({
-        disabled: record.status === 2, // 标签权限状态为无效 不可添加到业务场景
-      }),
-    } : null
-
-    const buttons = list.length && objectId ? [
-      <AuthBox 
-        code="asset_tag_project_tag_search_add_occ" 
-        myFunctionCodes={functionCodes}
-        type="primary"
-        disabled={!store.rowKeys.length} 
-        onClick={this.batchAction}
-      >
-        批量添加到业务场景
-
-      </AuthBox>,
-      <AuthBox 
-        code="asset_tag_project_tag_search_add_occ" 
-        myFunctionCodes={functionCodes}
-        isButton={false}
-      >
-        <span className="ml8">
-          已选择
-          <span style={{color: '#0078FF'}} className="mr4 ml4">{store.rowKeys.length}</span>
-          项
-        </span>
-      </AuthBox>,    
-    ] : null
 
     const listConfig = {
       columns: this.columns,
       initParams: {useProjectId},
-      buttons,
-      rowSelection,
       rowKey: 'id',
       initGetDataByParent: true, // 初始请求 在父层组件处理。列表组件componentWillMount内不再进行请求
       store, // 必填属性
@@ -310,7 +246,6 @@ export default class TagWarehouse extends Component {
                     <div className="search-list open-height">
                       <ListContent {...listConfig} />
                       <ModalApply store={store} />
-                      <ModalScene store={store} />
                     </div>
                   </Fragment>
                 ) 

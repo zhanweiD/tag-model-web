@@ -9,7 +9,7 @@ import {
 } from 'antd'
 import {Link} from 'react-router-dom'
 import * as navListMap from '../../common/navList'
-import {Time, baseApi} from '../../common/util'
+import {Time} from '../../common/util'
 import {
   ListContent, NoData, OmitTooltip, AuthBox,
 } from '../../component'

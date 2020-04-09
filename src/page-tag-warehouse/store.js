@@ -2,7 +2,7 @@ import {
   observable, action, runInAction,
 } from 'mobx'
 import {
-  successTip, failureTip, errorTip, changeToOptions, listToTree,
+  successTip, errorTip,
 } from '../common/util'
 import {ListContentStore} from '../component/list-content'
 import io from './io'
@@ -22,19 +22,12 @@ class Store extends ListContentStore(io.getList) {
   
   @observable ownProjectList = []
   @observable objectList = []
-  @observable sceneList = []
-  @observable sceneCate = []
   @observable selectItem = {}
   @observable sceneType = undefined
 
   @observable modalApplyVisible = false
-  @observable modalSceneVisible = false
   @observable confirmLoading = false
   @observable tagIds = []
-  // @observable occTags = []
-
-  @observable selectedRows = []
-  @observable rowKeys = []
 
   @action async getOwnProject() {
     try {
@@ -60,35 +53,6 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  @action async getSceneList(params) {
-    try {
-      const res = await io.getSceneList({
-        objId: this.objectId,
-        projectId: this.useProjectId,
-        ...params,
-      })
-      runInAction(() => {
-        this.sceneList = changeToOptions(res)('name', 'id')
-      })
-    } catch (e) {
-      errorTip(e.message)
-    }
-  }
-
-  @action async getSceneCate(params) {
-    try {
-      const res = await io.getSceneCate({
-        objId: this.objectId || this.selectItem.objId,
-        ...params,
-      })
-      runInAction(() => {
-        this.sceneCate = listToTree(res)
-      })
-    } catch (e) {
-      errorTip(e.message)
-    }
-  }
-
   @action async applyTag(params, cb) {
     this.confirmLoading = true
     try {
@@ -98,33 +62,7 @@ class Store extends ListContentStore(io.getList) {
           successTip('操作成功')
           if (cb) cb()
           this.getList()
-          this.selectedRows.clear()
-          this.rowKeys.clear()
         } 
-      })
-    } catch (e) {
-      errorTip(e.message)
-    } finally {
-      runInAction(() => {
-        this.confirmLoading = false
-      })
-    }
-  }
-
-  @action async addToScene(params, cb) {
-    this.confirmLoading = true
-    try {
-      const res = await io.addToScene({
-        projectId: this.useProjectId,
-        ...params,
-      })
-      runInAction(() => {
-        if (res.success) {
-          successTip('操作成功')
-          if (cb) cb()
-        } else {
-          failureTip('操作失败')
-        }
       })
     } catch (e) {
       errorTip(e.message)

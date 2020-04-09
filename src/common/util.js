@@ -237,3 +237,14 @@ export function getNamePattern(max = 32) {
     pattern: /^(?!数栖)/, message: '名称不允许数栖开头',
   }]
 }
+
+export function calcSize(size, defaultUnit = 'B', isToFixed = true) {
+  const map = {
+    b: 1,
+    kb: 2 ** 10,
+    mb: 2 ** 20,
+    gb: 2 ** 30,
+    tb: 
+    2 ** 40,
+  }
+}
