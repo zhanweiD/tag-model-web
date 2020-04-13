@@ -1,0 +1,97 @@
+import {Component} from 'react'
+import {Spin} from 'antd'
+import {action, observable} from 'mobx'
+import {
+  DetailHeader, ListContent, AuthBox, TabRoute,
+} from '../../component'
+import {Time} from '../../common/util'
+
+import store from './store'
+
+const tabs = [{name: '字段列表', value: 1}]
+
+export default class SourceDetail extends Component {
+  @observable tabId = 1 // 当前详情tabID 
+
+  columns = [{
+    title: '字段名称',
+    dataIndex: 'name',
+  }, {
+    title: '字段类型',
+    dataIndex: 'name',
+  }, {
+    title: '字段描述',
+    dataIndex: 'name',
+  }, {
+    title: '映射状态',
+    dataIndex: 'name',
+  }, {
+    title: '标签状态',
+    dataIndex: 'name',
+  }, {
+    title: '字段名称',
+    dataIndex: 'name',
+  }, {
+    title: '标签名称',
+    dataIndex: 'name',
+  }, {
+    title: '操作',
+    dataIndex: 'action',
+    width: 100,
+    render: (text, record) => (
+      <a href>标签映射</a>
+    ), 
+  }]
+
+  render() {
+    const {infoLoading, detail} = store
+
+    const baseInfo = [{
+      title: '同步对象',
+      value: detail.name,
+    }, {
+      title: '创建人',
+      value: detail.name,
+    }, {
+      title: '修改时间',
+      value: <Time timestamp={detail.mtime} />,
+    }, {
+      title: '数据源类型',
+      value: detail.name,
+    }, {
+      title: '数据源',
+      value: detail.name,
+    }, {
+      title: '目的表',
+      value: detail.name,
+    }]
+
+    const tabConfig = {
+      tabs,
+      currentTab: this.tabId,
+      changeUrl: false,
+    }
+
+    const listConfig = {
+      columns: this.columns,
+      // initParams: {id},
+      store, // 必填属性
+    }
+
+    return (
+      <div className="page-source-detail">
+        <Spin spinning={infoLoading}>
+          <DetailHeader
+            name={detail.name}
+            descr={detail.descr}
+            baseInfo={baseInfo}
+          />
+        </Spin>
+        <div className="list-content">
+          <TabRoute {...tabConfig} />
+          <ListContent {...listConfig} />
+        </div>
+      </div>
+    )
+  }
+}

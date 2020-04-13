@@ -19,6 +19,7 @@ import Scene from './page-scene'
 import TagModel from './page-tag-model'
 import TagSchema from './page-tag-schema'
 import TagWarehouse from './page-tag-warehouse'
+import AimSource from './page-aim-source'
 
 const njkData = {
   dict,
@@ -43,6 +44,7 @@ export default class Entry extends React.Component {
           <Route path="/tag-model" component={TagModel} />
           <Route path="/tag-schema" component={TagSchema} />
           <Route path="/tag-warehouse" component={TagWarehouse} />
+          <Route path="/aim-source" component={AimSource} />
 
           <Redirect to="/overview" />
         </Switch>
