@@ -200,7 +200,7 @@ getSelectedKeys = () => {
 
 render() {
   const treeData = toJS(this.store.treeData)
-  const getIconNodeSrc = e => e ? treeUnfold : treeFold
+  const getIconNodeSrc = e => (e ? treeUnfold : treeFold)
   const loop = tree => {
     const arr = []
     tree.forEach(item => {

@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import {action, toJS} from 'mobx'
+import {action} from 'mobx'
 import {observer} from 'mobx-react'
 import {Modal} from 'antd'
 import {ModalForm} from '../../component'
@@ -49,7 +49,22 @@ export default class ModalAdd extends Component {
       extra: <span>
         若无可用的数据应用，请先
         <a className="ml4" target="_blank" rel="noopener noreferrer" href="/ent/index.html#/resource/">去项目配置中添加数据应用</a>
-      </span>,
+             </span>,
+    }, {
+      label: '对象',
+      key: 'groupIdList',
+      initialValue: info.groupIdList,
+      rules: [
+        '@requiredSelect',
+      ],
+      control: {
+        options: [],
+      },
+      component: 'select',
+      extra: <span>
+        若无可用的对象，请先
+        <a className="ml4" target="_blank" rel="noopener noreferrer" href="/ent/index.html#/resource/">去标签同步中添加同步计划</a>
+             </span>,
     }, {
       label: '描述',
       key: 'descr',
@@ -68,14 +83,13 @@ export default class ModalAdd extends Component {
   }
 
   @action handleReset = () => {
-    const {form: {resetFields}} = this.props
-    resetFields()
+    this.form.resetFields()
   }
 
   @action handleSubmit = e => {
-    const {form: {validateFieldsAndScroll}, store} = this.props
+    const {store} = this.props
 
-    validateFieldsAndScroll((err, values) => {
+    this.form.validateFieldsAndScroll((err, values) => {
       if (err) {
         return
       }
@@ -119,7 +133,7 @@ export default class ModalAdd extends Component {
       title: isEdit ? '编辑场景' : '添加场景',
       visible,
       onCancel: this.handleCancel,
-      onOk: this.submit,
+      onOk: this.handleSubmit,
       maskClosable: false,
       width: 525,
       destroyOnClose: true,

@@ -8,11 +8,9 @@ import {
 import * as navListMap from '../../common/navList'
 import {Time} from '../../common/util'
 import {AuthBox, Tag, DetailHeader} from '../../component'
-import ModalEditScene from '../scene/modal-add'
+import ModalEditScene from '../scene/modal'
 
 import SelectTag from './select-tag'
-import DataSource from './data-source'
-import ModalDataSource from './modal-data-source'
 
 import store from './store-scene-detail'
 
@@ -47,14 +45,8 @@ export default class SceneDetail extends Component {
    
     if (store.projectId) {
       store.getDetail()
-      store.getSourceList()
       store.getAuthCode()
     }
-  }
-
-  @action.bound dbSourceVisible() {
-    store.dbSourceVisible = true
-    store.getDBSource()
   }
 
   @action.bound sceneDetailVisible() {
@@ -67,8 +59,6 @@ export default class SceneDetail extends Component {
   }
 
   componentWillUnmount() {
-    store.isDbSourcEnough = false
-    store.sourceData.data.clear()
     store.info = {}
   }
 
@@ -78,7 +68,6 @@ export default class SceneDetail extends Component {
       tagCount,
       cuser,
       cdate,
-      // invokeList = [],
       descr,
       used,
       name,
@@ -90,25 +79,17 @@ export default class SceneDetail extends Component {
       value: cuser,
     }, 
     {
+      title: '数据源类型',
+      value: tagCount,
+    },
+    {
+      title: '数据源',
+      value: tagCount,
+    },
+    {
       title: '创建时间',
       value: <Time timestamp={cdate} />,
     },
-    {
-      title: '应用类型',
-      value: tagCount,
-    },
-    {
-      title: '数据应用',
-      value: tagCount,
-    },
-    // , {
-    //   title: '调用的API名称',
-    //   value: invokeList.filter(item => item !== null).join('、'),
-    // }
-    //  {
-    //   title: '标签数',
-    //   value: tagCount,
-    // }
     ]
 
 
@@ -120,36 +101,6 @@ export default class SceneDetail extends Component {
 
     const actions = [
       <Button className="mr8" href={`${window.__keeper.pathHrefPrefix}/scene/${store.sceneId}/tags`}>标签列表</Button>,
-      // <AuthBox 
-      //   code="asset_tag_project_occ_data_source"
-      //   myFunctionCodes={store.functionCodes} 
-      //   isButton={false}
-      // >
-      //   {
-      //     store.isDbSourcEnough
-      //       ? (
-      //         <Tooltip title="添加的目的数据源数量超过上限10个">
-      //           <Button
-      //             // className="mr8"
-      //             type="primary"
-      //             onClick={this.dbSourceVisible}
-      //             disabled={store.isDbSourcEnough}
-      //           >
-      //             添加目的数据源
-      //           </Button>
-      //         </Tooltip>
-      //       ) : (
-      //         <Button
-      //           // className="mr8"
-      //           type="primary"
-      //           onClick={this.dbSourceVisible}
-      //           disabled={used}
-      //         >
-      //           添加目的数据源
-      //         </Button>
-      //       )
-      //   }
-      // </AuthBox>,
     ]
 
     return (
@@ -193,16 +144,11 @@ export default class SceneDetail extends Component {
                   <SelectTag 
                     sceneId={store.sceneId} 
                     projectId={store.projectId}
-                    dataSourceLen={store.sourceData.data.length}
                     sceneDetailStore={store}
                   />
                 </TabPane>
-                <TabPane tab="目的数据源列表" key="2">
-                  <DataSource store={store} onClick={this.dbSourceVisible} />
-                </TabPane>
               </Tabs>
               <ModalEditScene store={store} />
-              <ModalDataSource store={store} />
             </Fragment>
           ) : null
         }
