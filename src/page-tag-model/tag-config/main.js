@@ -36,7 +36,7 @@ export default class DrawerTagConfig extends Component {
 
   componentWillReceiveProps(nextProps) {
     const {
-      info,
+      // info,
       visible,
     } = this.props
 
@@ -320,6 +320,7 @@ export default class DrawerTagConfig extends Component {
                   background: '#fff',
                 }}
               >
+                <Button onClick={this.onClose} className="mr8">取消</Button>
                 <Button
                   type="primary"
                   onClick={this.submit}

@@ -28,6 +28,9 @@ class Store extends ListContentStore(io.getList) {
   @observable drawerTagConfigInfo = {}
   @observable drawerTagConfigType = 'one' // 单个绑定
 
+  // 批量绑定
+  @observable batchConfigVisible = false
+
   // 上下架申请操作
   @observable tagApplyVisible = false // 上下架申请弹窗控制
   @observable applyInfo = {} // 标签信息
@@ -87,6 +90,11 @@ class Store extends ListContentStore(io.getList) {
     this.drawerTagConfigInfo = {}
     this.drawerTagConfigVisible = false
     this.drawerTagConfigType = 'one'
+  }
+
+  // 批量创建标签
+  @action.bound openBatchConfig() {
+    this.batchConfigVisible = true
   }
 
   // 更新标签配置

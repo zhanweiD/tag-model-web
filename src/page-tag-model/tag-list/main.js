@@ -3,8 +3,8 @@
  */
 import {Component, Fragment} from 'react'
 import {action} from 'mobx'
-import {observer, inject} from 'mobx-react'
-import {Popconfirm} from 'antd'
+import {observer, inject, Provider} from 'mobx-react'
+import {Popconfirm, Button} from 'antd'
 import {Link} from 'react-router-dom'
 import * as navListMap from '../../common/navList'
 import {
@@ -20,6 +20,7 @@ import seach from './search'
 import ModalTagApply from './modal-tag-apply'
 import DrawerCreate from './drawer-create'
 import DrawerTagConfig from '../tag-config'
+import DrawerBatchConfig from '../tag-config-batch'
 
 import store from './store'
 
@@ -323,7 +324,7 @@ export default class TagList extends Component {
       openDrawer,
       list, 
       tableLoading,
-      rowKeys,
+      // rowKeys,
       drawerTagConfigType,
     } = store
 
@@ -349,23 +350,18 @@ export default class TagList extends Component {
       columns: this.columns,
       initParams: {projectId},
       searchParams: seach({objectSelectList}),
-      buttons: [<AuthBox
-        code="asset_tag_project_tag_operator"
-        myFunctionCodes={store.functionCodes}
-        type="primary"
-        onClick={() => openDrawer('add')}
-        className="mr8"
-      >
+      buttons: [
+        <AuthBox
+          code="asset_tag_project_tag_operator"
+          myFunctionCodes={store.functionCodes}
+          type="primary"
+          onClick={() => openDrawer('add')}
+          className="mr8"
+        >
         创建标签
-      </AuthBox>, 
-      // <AuthBox
-      //     code="asset_tag_project_tag_operator"
-      //     myFunctionCodes={store.functionCodes}
-      //   // type="primary"
-      //     onClick={() => store.openTagConfig('more')}
-      //   >
-      //     {`批量绑定(${rowKeys.length})`}
-      //   </AuthBox>
+        </AuthBox>, 
+        <Button onClick={() => store.openBatchConfig()}>批量绑定</Button>,
+
       ],
       rowKey: 'id',
       initGetDataByParent: true, // 初始请求 在父层组件处理。列表组件componentWillMount内不再进行请求
@@ -375,37 +371,39 @@ export default class TagList extends Component {
     const {spaceInfo} = window
 
     return (
-      <div className="page-tag-list">
-        <div className="content-header">{navListMap.tagModel.text}</div>
-        {
-          spaceInfo && spaceInfo.projectId && spaceInfo.projectList && spaceInfo.projectList.length
-            ? (
-              <Fragment>
-                {
-                  !list.length && !this.isSearch() ? (
-                    <NoData
-                      isLoading={tableLoading}
-                      {...noDataConfig}
-                    />
-                  ) : <div className="list-content"><ListContent {...listConfig} /></div>
-                }
+      <Provider bigStore={store}>
+        <div className="page-tag-list">
+          <div className="content-header">{navListMap.tagModel.text}</div>
+          {
+            spaceInfo && spaceInfo.projectId && spaceInfo.projectList && spaceInfo.projectList.length
+              ? (
+                <Fragment>
+                  {
+                    !list.length && !this.isSearch() ? (
+                      <NoData
+                        isLoading={tableLoading}
+                        {...noDataConfig}
+                      />
+                    ) : <div className="list-content"><ListContent {...listConfig} /></div>
+                  }
 
-                <ModalTagApply store={store} />
-                <DrawerCreate store={store} />
-                <DrawerTagConfig
-                  projectId={projectId}
-                  visible={drawerTagConfigVisible}
-                  info={drawerTagConfigInfo}
-                  onClose={closeTagConfig}
-                  onUpdate={updateTagConfig}
-                  type={drawerTagConfigType}
-                />
-              </Fragment>
-            ) : this.renderNodata()
-        }    
+                  <ModalTagApply store={store} />
+                  <DrawerCreate store={store} />
+                  <DrawerTagConfig
+                    projectId={projectId}
+                    visible={drawerTagConfigVisible}
+                    info={drawerTagConfigInfo}
+                    onClose={closeTagConfig}
+                    onUpdate={updateTagConfig}
+                    type={drawerTagConfigType}
+                  />
+                  <DrawerBatchConfig />
+                </Fragment>
+              ) : this.renderNodata()
+          }    
        
-      </div>
-
+        </div>
+      </Provider>
     )
   }
 }
