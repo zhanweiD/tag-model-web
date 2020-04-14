@@ -103,7 +103,7 @@ export default class SelectTag extends Component {
   }
 
   goToAddObj = () => {
-    // 跳转至标签池添加标签
+    // 跳转至标签模型添加标签
     window.location.href = `${window.__keeper.pathHrefPrefix}/object-modal/4`
   }
 
@@ -172,11 +172,8 @@ export default class SelectTag extends Component {
         title: '数据类型',
         value: valueTypeName,
       }, {
-        title: '创建者',
+        title: '是否枚举',
         value: cuser,
-      }, {
-        title: '创建时间',
-        value: <Time timestamp={cdate} />,
       },
     ]
 

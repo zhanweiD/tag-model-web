@@ -12,7 +12,7 @@ const api = {
   getApiTrend: get(`${sceneApi}/treeObj/cat/tag/apiCount`), // API调用数趋势
   getTagTrend: get(`${sceneApi}/treeObj/cat/tag/invoke`), // 标签调用次数趋势
 
-  isObjExist: get(`${baseApi}/tag/pool/obj_exist`), // 判断标签池是否有对象
+  isObjExist: get(`${baseApi}/tag/pool/obj_exist`), // 判断标签模型是否有对象
 
   // 权限code
   getAuthCode: get(`${baseApi}/project/getFunctionCodes`),

@@ -15,7 +15,7 @@ import Action from './action'
 import ModalCategoryEdit from './modal-category-edit'
 import ModalCategoryDetail from './modal-category-detail'
 import ModalObjectEdit from './modal-object-edit'
-import ModalSelectTag from './modal-select-tag'
+import SelectTag from './drawer-select-tag'
 import ModalTagMove from './modal-tag-move'
 
 const {DtTreeNode} = DtTree
@@ -48,7 +48,6 @@ class TagCategory extends Component {
 
 /**
  * 节点类型 type 0 标签 1 类目 2 对象
- * @memberof TagCategory
  */
 @action getMenuList = item => {
   // const {history} = this.props
@@ -294,7 +293,7 @@ render() {
       </DtTreeBox>
       <ModalCategoryEdit />
       <ModalObjectEdit />
-      <ModalSelectTag />
+      <SelectTag />
       <ModalTagMove />
       <ModalCategoryDetail />
     </div>

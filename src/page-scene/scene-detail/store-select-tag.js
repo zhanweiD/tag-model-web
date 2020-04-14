@@ -37,7 +37,7 @@ class SelectTagStore {
   // 标签详情loading
   @observable tagInfoLoading = false
 
-  // 标签池时候存在对象标识；true 存在对象 false 不存在对象;
+  // 标签模型时候存在对象标识；true 存在对象 false 不存在对象;
   @observable tagExistFlag = false
   @observable tagExistFlagLoading = false
 
@@ -104,7 +104,7 @@ class SelectTagStore {
     }
   }
 
-   // 判断标签池是否有对象
+   // 判断标签模型是否有对象
    @action async isObjExist(cb) {
     this.tagExistFlagLoading = true
     try {
@@ -114,11 +114,11 @@ class SelectTagStore {
         this.tagExistFlagLoading = false
         
         if (cb && res) {
-          // 标签池存在对象·
+          // 标签模型存在对象·
           this.tagExistFlag = true
           cb()
         } else {
-          // 标签池 不存在对象
+          // 标签模型 不存在对象
           this.tagExistFlag = false
         }
       })

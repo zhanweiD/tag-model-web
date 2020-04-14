@@ -43,7 +43,11 @@ export default class Main extends Component {
               {name || '--'}
               <span className="ml10">{ tag }</span>
             </div>
-            <div className="detail-descr">{`描述：${descr}`}</div>
+            
+            {
+              descr ? <div className="detail-descr">{`描述：${descr || ''}`}</div> : null
+            }
+            
           </div>
           <div />
           <div style={btnStyle} className="far">
