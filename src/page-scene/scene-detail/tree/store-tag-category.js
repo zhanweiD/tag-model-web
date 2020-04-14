@@ -312,8 +312,11 @@ class TagCategoryStore {
     }
   }
 
+  @observable selectObjLoading = false
+
   // 标签 - 选择标签树结构
   @action async getSelectTag() {
+    this.selectObjLoading = true
     this.selectTagData.clear()
     this.selectTagTreeData.clear()
 
@@ -333,6 +336,10 @@ class TagCategoryStore {
         this.detailLoading = false
       })
       errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        this.selectObjLoading = false
+      })
     }
   }
 

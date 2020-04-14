@@ -4,32 +4,52 @@
   .dt-tree-container
     background-color #fff
 
-// // 只有对象和标签节点需要图表
-//   .dt-tree-line
-//     .dt-tree-icon
-//       display flex
-//     & .dt-tree-icon
-//       display none
-//     & .node-tag .dt-tree-icon
-//       display flex
-
+.select-tag-box
+  overflow-y auto
+  padding-top 16px
 
 .select-tag-modal
-  min-height 400px
-  max-height 500px
-  overflow-y auto
+  height calc(100vh - 150px)
+  display flex
 
   .all
     padding-left 26px
 
   .select-tree
     width 220px
-    padding 16px 8px
+    // padding 8px 0px
     border 1px solid rgba(0, 0, 0, .1)
     border-radius 4px
+    margin-right 16px
+    height calc(100% - 48px)
+    overflow-y auto
 
-  .table-tree
+  .select-tree-header 
+    display flex
+    background #f0f2f4
+    align-items center
+    margin-bottom 8px
+
+  .select-tag-list
+    height calc(100% - 48px)
+    border-radius 4px
     margin-left 16px
     border 1px solid rgba(0, 0, 0, .1)
-    border-radius 4px
-    // padding 16px
+    position relative
+    
+  .select-tag-search
+    position absolute
+    top -40px
+    right 0
+
+  // .table-tree
+  //   margin-left 16px
+  //   border 1px solid rgba(0, 0, 0, .1)
+  //   border-radius 4px
+
+
+  .select-tag-btn
+    position relative
+    top 50% /*偏移*/
+    margin-top -50px
+    height 30px

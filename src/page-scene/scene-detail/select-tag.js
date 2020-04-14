@@ -11,7 +11,6 @@ import {NoData, DetailHeader} from '../../component'
 import TrendTag from './trend-tag'
 import TrendApi from './trend-api'
 
-// import sceneDetail from './store-scene-detail'
 import Store from './store-select-tag'
 
 import TagCategory, {TagCategoryStore} from './tree'
@@ -83,21 +82,6 @@ export default class SelectTag extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    const {dataSourceLen} = this.props
-    if (dataSourceLen !== nextProps.dataSourceLen) {
-      // dataSourceLen === 0 无数据源 至 有数据源;需刷新标签树
-      // nextProps.dataSourceLen 有数据源 至 无数据源;需刷新标签树
-      if (nextProps.dataSourceLen === 0) {
-        this.store.categoryStore.getCategoryList()
-      }
-
-      if (dataSourceLen === 0 && nextProps.sceneDetailStore.currentKey === '2') {
-        this.store.categoryStore.getCategoryList()
-      }
-    }
-  }
-
   @action tagChange = tagId => {
     if (tagId && tagId !== this.tagId) {
       this.store.getTagDetail()
@@ -119,7 +103,7 @@ export default class SelectTag extends Component {
   }
 
   goToAddObj = () => {
-    // 跳转至标签池添加标签
+    // 跳转至标签模型添加标签
     window.location.href = `${window.__keeper.pathHrefPrefix}/object-modal/4`
   }
 
@@ -182,17 +166,14 @@ export default class SelectTag extends Component {
     // 详情信息
     const baseInfo = [
       {
-        title: '英文名',
+        title: '唯一标识',
         value: enName,
       }, {
         title: '数据类型',
         value: valueTypeName,
       }, {
-        title: '创建者',
+        title: '是否枚举',
         value: cuser,
-      }, {
-        title: '创建时间',
-        value: <Time timestamp={cdate} />,
       },
     ]
 

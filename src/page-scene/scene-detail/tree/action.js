@@ -1,16 +1,13 @@
 import {Component} from 'react'
 import {action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
-import {Menu, Dropdown, Tooltip} from 'antd'
 import _ from 'lodash'
-// import {Link} from 'react-router-dom'
 
 import {NoBorderInput} from '../../../component'
 import {
   IconExtend, 
   IconUnExtend, 
   IconRefresh, 
-  IconTreeAdd,
 } from '../../../icon-comp'
 
 @inject('bigStore')
@@ -52,38 +49,6 @@ class Action extends Component {
   }
 
   render() {
-    const {treeData} = this.store 
-
-    const menu = (
-      <Menu>
-        <Menu.Item disabled={treeData.length}>
-          <div
-            style={{
-              margin: '-5px -12px',
-              padding: '5px 12px',
-            }}
-            onClick={this.handleEditCategory}
-          >
-            {/* 场景为选择对象，标签池为添加对象，注意区分 */}
-            {
-              treeData.length ? (
-                <Tooltip title="场景已添加对象">
-              选择对象
-                </Tooltip>
-              ) : '选择对象'
-            }
-            
-          </div>
-        </Menu.Item>
-      </Menu>
-    )
-    
-    const dropdownDom = (
-      <Dropdown overlay={menu}>
-        <IconTreeAdd size="14" className="mr8 hand" />
-      </Dropdown>
-    )
-
     return (
       <div className="category-manager-action pl8 FBH FBAC">
         <div className="FB1">
@@ -92,7 +57,6 @@ class Action extends Component {
 
         <div className="FBH pr6 pl6" style={{maxWidth: 70}}>
           <IconRefresh size="14" onClick={this.handleRefresh} className="mr8 hand" />
-          {this.bigStore.functionCodes.includes('asset_tag_project_obj_select') && dropdownDom}
           { this.store.expandAll ? (
             <IconUnExtend size="14" className="hand" onClick={this.handleExpandAll} /> 
           ) : (
