@@ -1,10 +1,11 @@
-import {Component} from 'react'
-import {Spin} from 'antd'
+import {Component, Fragment} from 'react'
+import {Spin, Popconfirm} from 'antd'
 import {action, observable} from 'mobx'
 import {
   DetailHeader, ListContent, AuthBox, TabRoute,
 } from '../../component'
 import {Time} from '../../common/util'
+import ModalTagConfig from './modal'
 
 import store from './store'
 
@@ -39,9 +40,19 @@ export default class SourceDetail extends Component {
     dataIndex: 'action',
     width: 100,
     render: (text, record) => (
-      <a href>标签映射</a>
+      <Fragment>
+        <a href>标签映射</a>
+        <Popconfirm placement="topRight" title="你确定要取消该字段的标签映射吗？" onConfirm={() => this.delItem(record.id)}>
+          <a href>取消映射</a>
+        </Popconfirm>
+      </Fragment>
+     
     ), 
   }]
+
+  @action.bound delItem(id) {
+    store.delItem(id)
+  } 
 
   render() {
     const {infoLoading, detail} = store
@@ -91,6 +102,7 @@ export default class SourceDetail extends Component {
           <TabRoute {...tabConfig} />
           <ListContent {...listConfig} />
         </div>
+        <ModalTagConfig store={store} />
       </div>
     )
   }
