@@ -1,7 +1,7 @@
 import {Component} from 'react'
-import {action} from 'mobx'
+import {action, toJS} from 'mobx'
 import {observer} from 'mobx-react'
-import {Modal} from 'antd'
+import {Modal, Spin} from 'antd'
 import {ModalForm} from '../../component'
 
 @observer
@@ -11,26 +11,37 @@ export default class ModalStotage extends Component {
     this.store = props.store
   }
 
+  @action.bound selectStorage(type) {
+    this.form.resetFields(['dataStorageId'])
+    this.store.getStorageSelectList({
+      storageType: type,
+    })
+  }
+
   selectContent= () => {
+    const {storageType, storageSelectList, storageTypeLoading, storageSelectLoading} = this.store
     return [{
       label: '数据源类型',
-      key: 'memberId',
+      key: 'storageType',
       component: 'select',
       rules: [
         '@requiredSelect',
       ],
       control: {
-        options: [],
+        options: toJS(storageType),
+        onSelect: v => this.selectStorage(v),
+        notFoundContent: storageTypeLoading ? <Spin size="small" /> : null, 
       },
     }, {
       label: '数据源',
-      key: 'roleId',
+      key: 'dataStorageId',
       component: 'select',
       rules: [
         '@requiredSelect',
       ],
       control: {
-        options: [],
+        options: toJS(storageSelectList),
+        notFoundContent: storageSelectLoading ? <Spin size="small" /> : null, 
       },
     }]
   }

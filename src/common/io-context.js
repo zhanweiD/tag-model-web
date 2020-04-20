@@ -5,10 +5,10 @@ import {Modal} from 'antd'
 // const {pathPrefix} = window.__onerConfig
 const context = nattyFetch.context({
   urlPrefix: window.__keeper.apiPrefix,
-  data: {
-    tenantId: 512635,
-    userId: 243724,
-  },
+  // data: {
+  //   tenantId: 512635,
+  //   userId: 243724,
+  // },
   mock: false,
   rest: true,
   header: {

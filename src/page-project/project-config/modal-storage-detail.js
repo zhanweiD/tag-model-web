@@ -1,7 +1,7 @@
 import {Component} from 'react'
 import {action} from 'mobx'
 import {observer} from 'mobx-react'
-import {Modal, Button} from 'antd'
+import {Modal, Button, Spin} from 'antd'
 import {ModalDetail} from '../../component'
 
 @observer
@@ -17,27 +17,27 @@ export default class ModalStotage extends Component {
 
   render() {
     const {
-      visibleDetail, detail,
+      visibleDetail, detail, detailLoading,
     } = this.store
 
     const content = [{
       name: '名称',
-      value: detail.name,
+      value: detail.storageName,
     }, {
       name: '资源组',
-      value: detail.name1,
+      value: detail.relGroupName,
     }, {
       name: '类型',
-      value: detail.type,
+      value: detail.storageType,
     }, {
       name: '地址',
-      value: detail.descr,
+      value: detail.connectUrl,
     }, {
       name: '数据库',
-      value: detail.descr,
+      value: detail.dbName,
     }, {
       name: '用户名',
-      value: detail.descr,
+      value: detail.userName,
     }, {
       name: '描述',
       value: detail.descr,
@@ -57,7 +57,9 @@ export default class ModalStotage extends Component {
 
     return (
       <Modal {...modalConfig}>
-        <ModalDetail data={content} />
+        <Spin spinning={detailLoading}>
+          <ModalDetail data={content} />
+        </Spin>
       </Modal>
     )
   }

@@ -12,7 +12,7 @@ import {DetailHeader, TabRoute} from '../../component'
 import MemberManger from './member-manger'
 import ParamsConfig from './params-config'
 import DataStorage from './data-storage'
-import ResourceGroup from './resource-group'
+// import ResourceGroup from './resource-group' // 资源组
 
 import store from './store'
 
@@ -30,7 +30,7 @@ const tabs = [
   {name: '人员管理', value: 0}, 
   {name: '参数配置', value: 1},
   {name: '数据源', value: 2},
-  {name: '资源组', value: 3},
+  // {name: '资源组', value: 3},
 ]
 
 @inject('frameChange')
@@ -93,7 +93,8 @@ class ProjectConfig extends Component {
       changeUrl: false,
     }
 
-    const Content = [MemberManger, ParamsConfig, DataStorage, ResourceGroup][+this.tabId]
+    // const Content = [MemberManger, ParamsConfig, DataStorage, ResourceGroup][+this.tabId]
+    const Content = [MemberManger, ParamsConfig, DataStorage][+this.tabId]
 
     return (
       <div className="project-config">

@@ -12,7 +12,11 @@ const api = {
 
   getParamsList: get(`${projectApi}/sysPa`), // 参数配置列表
 
-  getStorageList: get(`${projectApi}/member`), // 数据源列表
+  getStorageList: get(`${projectApi}/dataStorageList`), // 数据源列表
+  getStorageType: get(`${projectApi}/targetDataStorageType`), // 数据源类型下拉
+  getStorageSelectList: get(`${projectApi}/targetDataStorage`), // 数据源类型下拉
+  addStorageList: post(`${projectApi}/addTargetDataSource`), // 新增项目目的数据源
+  getStorageDetail: get(`${projectApi}/storageDetails`), // 数据源详情
 
   getResourceList: get(`${projectApi}/member`), // 资源组列表
 
