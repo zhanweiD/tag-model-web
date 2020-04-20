@@ -5,7 +5,7 @@ import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
 import {observable, action} from 'mobx'
 import {
-  Drawer, Button, Switch, Spin,
+  Drawer, Button, Spin,
 } from 'antd'
 
 import Tree from './select-tag-tree'
@@ -63,7 +63,7 @@ export default class SelectTag extends Component {
 
   // 树选择
   @action.bound onTreeCheck(selectNodes) {
-    this.selectNodes = selectNodes
+    this.selectNodes = selectNodes.filter(d => +d.type === 0)
   }
 
   // 树 => 列表
@@ -75,6 +75,7 @@ export default class SelectTag extends Component {
   @action.bound removeList(data) {
     this.removeListItem = data
     this.tableData = this.tableData.filter(d => +d.id !== +data.id)
+      
     if (!this.tableData.length) {
       this.selectNodes.clear()
     }
@@ -128,8 +129,8 @@ export default class SelectTag extends Component {
         <Spin spinning={detailLoading}>
           <div className="select-tag-box">
             <div className="mb8">
-              <span className="fs14 mr4">展示不可选择的标签</span>
-              <Switch onChange={this.switchChange} checkedChildren="是" unCheckedChildren="否" />
+              {/* <span className="fs14 mr4">展示不可选择的标签</span>
+              <Switch onChange={this.switchChange} checkedChildren="是" unCheckedChildren="否" /> */}
               <span className="ml4 fs12">
               （若需要的标签不可选择，请先去“标签同步”模块完成
                 <a href>标签数据的同步</a>

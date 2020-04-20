@@ -52,7 +52,6 @@ export default class DataStorage extends Component {
 
   @action.bound addList() {
     store.getStorageType()
-    store.getStorageSelectList()
     store.visible = true
   }
 
@@ -64,7 +63,7 @@ export default class DataStorage extends Component {
       initParams: {id},
       buttons: [<Button type="primary" onClick={this.addList}>
 添加数据源
-                </Button>],
+      </Button>],
       store, // 必填属性
     }
 

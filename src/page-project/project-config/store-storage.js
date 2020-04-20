@@ -61,7 +61,6 @@ class Store extends ListContentStore(io.getStorageList) {
     try {
       await io.addStorageList({
         id: this.projectId,
-        productId: window.__keeper.productId,
         ...params,
       })
       runInAction(() => {
@@ -85,7 +84,6 @@ class Store extends ListContentStore(io.getStorageList) {
     try {
       const res = await io.getStorageDetail({
         id: this.projectId,
-        productId: window.__keeper.productId,
         ...params,
       })
       runInAction(() => {

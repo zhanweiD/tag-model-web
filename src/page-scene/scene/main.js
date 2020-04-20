@@ -42,8 +42,15 @@ export default class Scene extends Component {
   }
 
   @action handleModalVisible(type, data = {}) {
-    store.info = toJS(data)
     store.isEdit = !!type
+
+    store.getStorageType()
+
+    if (type) {
+      store.getDetail({
+        occasionId: data.id,
+      })
+    }
     store.modalVisible = true
   }
 

@@ -4,7 +4,7 @@
 import {Component, Fragment} from 'react'
 import {observer} from 'mobx-react'
 import {
-  observable, action, computed,
+  observable, action, computed, toJS,
 } from 'mobx'
 import {Tree, Checkbox} from 'antd'
 import {NoBorderInput, Loading, OmitTooltip} from '../../../component'
@@ -29,9 +29,11 @@ export default class TagTree extends Component {
   componentWillReceiveProps(next) {
     const {removeListItem} = this.props
     if (!_.isEqual(removeListItem, next.removeListItem) && next.removeListItem) {
+      console.log(next.removeListItem)
       this.checkedKeys = this.checkedKeys.filter(
         id => (+id !== +next.removeListItem.id) && (+id !== +next.removeListItem.objCatId)
       )
+      console.log(toJS(this.checkedKeys))
     }
   }
 
@@ -45,9 +47,12 @@ export default class TagTree extends Component {
   @action onCheck = (checkedKeys, e) => {
     const {onCheck} = this.props
     const {checkedNodes} = e
-    this.checkedKeys = checkedKeys
+   
     const selectNodes = checkedNodes.filter(d => d.props.tagData).map(d => d.props.tagData)
 
+    this.checkedKeys = selectNodes.map(d => d.id)
+    console.log(toJS(this.checkedKeys))
+    
     if (checkedKeys.length === this.getTagList.rowKeys.length) {
       this.allChecked = true
       this.indeterminate = false
@@ -57,7 +62,7 @@ export default class TagTree extends Component {
       this.allChecked = false
       this.indeterminate = false
     }
-
+    console.log(selectNodes)
     onCheck(selectNodes)
   }
 
@@ -107,7 +112,7 @@ export default class TagTree extends Component {
   renderTreeNodes = data => data.map(item => {
     const {listDataIds} = this.props
 
-    if (item.children) {
+    if (item.type) {
       return (
         <TreeNode
           title={<OmitTooltip maxWidth={120} text={item.name} />}
@@ -134,11 +139,11 @@ export default class TagTree extends Component {
   render() {
     const {selectObjLoading, selectTagTreeData} = this.store
     const {listDataIds} = this.props
-
+  
     const checkedKeys = this.checkedKeys.length
       ? this.checkedKeys.slice()
       : listDataIds
-
+    console.log(toJS(checkedKeys))
     return (
       <div className="select-tree">
         <div className="select-tree-header">
@@ -162,7 +167,8 @@ export default class TagTree extends Component {
                   全选
                 </Checkbox>
                 <Tree
-                  checkable
+                  checkable 
+                  checkStrictly={false}
                   defaultExpandAll
                   onCheck={this.onCheck}
                   checkedKeys={checkedKeys}

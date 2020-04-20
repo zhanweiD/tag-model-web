@@ -332,12 +332,10 @@ class TagCategoryStore {
         this.detailLoading = false
       })
     } catch (e) {
-      runInAction(() => {
-        this.detailLoading = false
-      })
       errorTip(e.message)
     } finally {
       runInAction(() => {
+        this.detailLoading = false
         this.selectObjLoading = false
       })
     }
@@ -361,10 +359,11 @@ class TagCategoryStore {
         this.getCategoryList()
       })
     } catch (e) {
+      errorTip(e.message)
+    } finally {
       runInAction(() => {
         this.confirmLoading = false
       })
-      errorTip(e.message)
     }
   }
 }

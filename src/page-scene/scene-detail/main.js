@@ -65,7 +65,8 @@ export default class SceneDetail extends Component {
   render() {
     const info = toJS(store.info)
     const {
-      tagCount,
+      storageType,
+      dataStorageName,
       cuser,
       cdate,
       descr,
@@ -80,11 +81,11 @@ export default class SceneDetail extends Component {
     }, 
     {
       title: '数据源类型',
-      value: tagCount,
+      value: storageType,
     },
     {
       title: '数据源',
-      value: tagCount,
+      value: dataStorageName,
     },
     {
       title: '创建时间',

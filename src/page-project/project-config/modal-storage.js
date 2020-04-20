@@ -11,7 +11,7 @@ export default class ModalStotage extends Component {
     this.store = props.store
   }
 
-  @action.bound selectStorage(type) {
+  @action.bound selectStorageType(type) {
     this.form.resetFields(['dataStorageId'])
     this.store.getStorageSelectList({
       storageType: type,
@@ -29,7 +29,7 @@ export default class ModalStotage extends Component {
       ],
       control: {
         options: toJS(storageType),
-        onSelect: v => this.selectStorage(v),
+        onSelect: v => this.selectStorageType(v),
         notFoundContent: storageTypeLoading ? <Spin size="small" /> : null, 
       },
     }, {

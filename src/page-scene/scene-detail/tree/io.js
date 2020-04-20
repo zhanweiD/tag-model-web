@@ -1,6 +1,6 @@
 import ioContext from '../../../common/io-context'
 import {
-  sceneApi, get, post, baseApi,
+  sceneApi, get, post,
 } from '../../../common/util'
 
 const api = {
@@ -20,7 +20,7 @@ const api = {
   deleteCategory: get(`${sceneApi}/treeCat/obj/catDel`), // 类目-删除类目
 
   //* ------------------------------ 标签-相关接口 ------------------------------*//
-  selectTag: get(`${sceneApi}/treeObj/catSelectTag`), // 选择标签-树
+  selectTag: get(`${sceneApi}/selectTags`), // 选择标签-树
   saveTag: post(`${sceneApi}/treeCat/obj/catSaveTag`), // 选择标签-保存
   deleteTag: get(`${sceneApi}/treeCat/tag/del`), // 标签 - 移除
   checkIsExist: get(`${sceneApi}/check_cat_name`), // 重名校验
