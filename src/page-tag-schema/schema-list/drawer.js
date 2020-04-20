@@ -165,13 +165,19 @@ export default class DrawerConfig extends Component {
               show={currentStep === 0} 
               wrappedComponentRef={form => this.store.oneForm = form ? form.props.form : form}
             />
-            <DrawerTwo show={currentStep === 1} projectId={projectId} />
+            <DrawerTwo 
+              show={currentStep === 1} 
+              projectId={projectId}
+            />
             <DrawerThree 
               show={currentStep === 2} 
               projectId={projectId}
               wrappedComponentRef={form => this.store.drawerThreeForm = form ? form.props.form : form}
             />
-            <DrawerFour show={currentStep === 3} projectId={projectId} />
+            <DrawerFour 
+              show={currentStep === 3} 
+              projectId={projectId} 
+            />
           </div>
         </div>        
       </Drawer>     

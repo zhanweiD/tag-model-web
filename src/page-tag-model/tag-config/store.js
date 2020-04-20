@@ -3,16 +3,7 @@ import io from './io'
 import {successTip, errorTip, failureTip} from '../../common/util'
 
 class DrawerStore {
-  constructor({
-    projectId,
-    // objId,
-    // tagIds,
-  } = {}) {
-    this.projectId = projectId
-    // this.objId = objId
-    // this.tagIds = tagIds
-  }
-
+  projectId
   result = []
   source = []
   target = []

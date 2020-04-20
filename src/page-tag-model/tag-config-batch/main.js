@@ -4,12 +4,15 @@
 import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
 import {action} from 'mobx'
-
 import {
-  Drawer, Button, Spin,
+  Drawer, Steps,
 } from 'antd'
+import StepOne from './step-one'
+import StepTwo from './step-two'
 
 import store from './store'
+
+const {Step} = Steps
 
 @inject('bigStore')
 @observer
@@ -17,6 +20,7 @@ export default class BatchConfig extends Component {
   constructor(props) {
     super(props)
     this.bigStore = props.bigStore
+    store.projectId = props.bigStore.projectId
   }
   
   @action.bound closeDrawer() {
@@ -26,7 +30,7 @@ export default class BatchConfig extends Component {
 
   render() {
     const {batchConfigVisible: visible} = this.bigStore
-    const {confirmLoading} = store
+    const {currentStep} = store
 
     const drawerConfig = {
       title: '标签配置',
@@ -41,29 +45,29 @@ export default class BatchConfig extends Component {
       <Drawer
         {...drawerConfig}
       >
-        <div>
-          <div
-            style={{
-              position: 'absolute',
-              bottom: 0,
-              width: '100%',
-              borderTop: '1px solid #e8e8e8',
-              padding: '10px 16px',
-              textAlign: 'right',
-              left: 0,
-              background: '#fff',
-            }}
-          >
-            <Button onClick={this.closeDrawer} className="mr8">取消</Button>
-            <Button
-              type="primary"
-              onClick={this.submit}
-              loading={confirmLoading}
-              style={{float: 'right'}}
-            >
-                  确认
-            </Button>
-          </div>
+        <div className="tag-config-batch">
+          <Steps current={currentStep} size="small" className="tag-config-step">
+            <Step title="选择标签" />
+            <Step title="绑定字段" />
+          </Steps>
+          <StepOne 
+            store={store}
+            show={currentStep === 0} 
+            closeDrawer={this.closeDrawer}
+          />
+          {/* <DrawerTagConfig
+            projectId={projectId}
+            visible={drawerTagConfigVisible}
+            info={drawerTagConfigInfo}
+            onClose={closeTagConfig}
+            onUpdate={updateTagConfig}
+            type={drawerTagConfigType}
+          /> */}
+          <StepTwo 
+            store={store}
+            show={currentStep === 1} 
+            closeDrawer={this.closeDrawer}
+          />
         </div>
       </Drawer>
     )

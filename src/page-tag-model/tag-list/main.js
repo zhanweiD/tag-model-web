@@ -15,7 +15,7 @@ import {
   usedStatusBadgeMap,
   publishStatusBadgeMap,
   tagConfigMethodTableMap,
-} from './util'
+} from '../util'
 import seach from './search'
 import ModalTagApply from './modal-tag-apply'
 import DrawerCreate from './drawer-create'

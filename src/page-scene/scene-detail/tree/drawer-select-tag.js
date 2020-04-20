@@ -120,7 +120,6 @@ export default class SelectTag extends Component {
       searchData: this.searchData,
       tableData: this.tableData, 
     }
-    
 
     return (
       <Drawer

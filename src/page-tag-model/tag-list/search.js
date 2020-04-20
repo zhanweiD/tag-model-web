@@ -1,4 +1,4 @@
-import {tagStatusMap, usedStatusMap, publishStatusMap} from './util'
+import {tagStatusMap, usedStatusMap, publishStatusMap} from '../util'
 
 const serach = ({objectSelectList = []}) => [
   {

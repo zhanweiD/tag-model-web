@@ -29,15 +29,15 @@ module.exports = {
       'Access-Control-Allow-Origin': '*',
     },
     noInfo: true,
-    proxy: [{
-      context: ['/config', '/api'],
-      target: 'http://192.168.90.112',
-      changeOrigin: true,
-    // }, {
-    //   context: ['/api'],
-    //   target: 'http://192.168.115.8:9001',
-    //   changeOrigin: true,
-    }],
+    proxy: [
+      {
+        context: ['/config', '/api'],
+        target: 'http://192.168.90.112',
+        changeOrigin: true,
+      },
+    ],
+    quiet: true,
+    overlay: true,
   },
   entry: './src/index',
   output: {

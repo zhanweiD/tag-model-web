@@ -4,7 +4,7 @@ import {observer} from 'mobx-react'
 import {Drawer, Button, Spin} from 'antd'
 import {ModalForm} from '../../component'
 import {changeToOptions, enNameReg, isJsonFormat} from '../../common/util'
-import {tagConfigMethodMap, nameTypeMap} from './util'
+import {tagConfigMethodMap, nameTypeMap} from '../util'
 
 @observer
 export default class DrawerCreate extends Component {

@@ -1,7 +1,6 @@
 import {Component} from 'react'
 import {observer} from 'mobx-react'
-// import {toJS} from 'mobx'
-import {Drawer, Button, Tabs} from 'antd'
+import {Drawer, Button, Tabs, message} from 'antd'
 import {ErrorEater} from '@dtwave/uikit'
 import Mapping from '@dtwave/oner-mapping'
 import {Loading} from '../../component'
@@ -14,7 +13,6 @@ const {TabPane} = Tabs
 export default class DrawerTagConfig extends Component {
   value = []
   state = {
-    // visiable: false,
     submitting: false,
   }
 
@@ -25,7 +23,6 @@ export default class DrawerTagConfig extends Component {
     const {onClose} = this.props
     onClose()
   }
-
 
   componentWillMount() {
     const {projectId} = this.props
@@ -50,16 +47,6 @@ export default class DrawerTagConfig extends Component {
       })
       this.getAllData()
     }
-    
-    // if (!_.isEqual(info.id !== nextProps.info.id) && nextProps.visible) {
-    //   this.store.objId = nextProps.info.objId
-    //   this.store.tagIds = [+nextProps.info.id]
-
-    //   this.setState({
-    //     loading: true,
-    //   })
-    //   this.getAllData()
-    // }
   }
 
   getAllData = async () => {
@@ -301,6 +288,38 @@ export default class DrawerTagConfig extends Component {
                   targetDisableKey={record => record.status === 2}
                   disableKey={record => record.used === 1 || record.isUsed === 1 || record.status === 2}
                   disableMsg={record => (record.status === 2 ? '标签已发布无法删除映射' : '使用中无法删除映射')}
+                  hasSearchSelect
+                  searchSelectList={[{name: '123', value: 123}]}
+                  searchSelectPlaceholder={configType === 1 ? '请选择加工方案' : '请选择数据表'}
+                  searchSelectKey={configType === 1 ? 'schemeName' : 'dataTableName'}
+                  isShowMapping
+                  canMapping
+                  beforeMapping={v => {
+                    const mappingItem = v[0]
+                    if (mappingItem.valueTypeName !== mappingItem.dataFieldType) {   
+                      message.error(`${mappingItem.tagName}(标签)与${mappingItem.dataFieldName}(字段)数据类型不匹配， 绑定失败`)
+                      return new Promise(function (resolve, reject) {
+                        reject([])
+                      })
+                    } 
+                    return new Promise(function (resolve, reject) {
+                      resolve([])
+                    })
+                  }}
+                  beforeNameMapping={v => {
+                    const originalResult = v.filter(d => d.isUsed || d.status === 2)
+        
+                    const successResult = v.filter(d => d.valueTypeName === d.dataFieldType)
+        
+                    const errorResult = v.filter(d => d.valueTypeName !== d.dataFieldType)
+                    message.info(`${successResult.length}个标签映射成功，${errorResult.length}个标签映射失败`)
+        
+                    const mappingResult = originalResult.concat(successResult)
+        
+                    return new Promise(function (resolve, reject) {
+                      resolve(mappingResult)
+                    })
+                  }}
                 />
               )
               
