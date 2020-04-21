@@ -1,6 +1,7 @@
 import {Component, Fragment} from 'react'
 import {Spin, Popconfirm} from 'antd'
 import {action, observable} from 'mobx'
+import {observer} from 'mobx-react'
 import {
   DetailHeader, ListContent, AuthBox, TabRoute,
 } from '../../component'
@@ -11,6 +12,7 @@ import store from './store'
 
 const tabs = [{name: '字段列表', value: 1}]
 
+@observer
 export default class SourceDetail extends Component {
   @observable tabId = 1 // 当前详情tabID 
 
@@ -64,8 +66,8 @@ export default class SourceDetail extends Component {
       title: '创建人',
       value: detail.name,
     }, {
-      title: '修改时间',
-      value: <Time timestamp={detail.mtime} />,
+      title: '创建时间',
+      value: <Time timestamp={detail.ctime} />,
     }, {
       title: '数据源类型',
       value: detail.name,

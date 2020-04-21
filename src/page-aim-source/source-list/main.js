@@ -76,7 +76,6 @@ export default class SourceList extends Component {
     const listConfig = {
       columns: this.columns,
       searchParams: seach(),
-      beforeSearch: this.beforeSearch,
       buttons: [<Button type="primary" onClick={() => this.addSource()}>添加目的源</Button>],
       store, // 必填属性
     }
