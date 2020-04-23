@@ -30,6 +30,10 @@ class Frame extends Component {
     }
   }
 
+  componentWillUnmount() {
+    store.projectId = undefined
+  }
+
   renderNav() {
     const {page, location, pageUrl} = this.props
 
