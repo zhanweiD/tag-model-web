@@ -2,7 +2,7 @@
  * @description 场景-选择对象-对象列表
  */
 import {Component} from 'react'
-import {observer, inject} from 'mobx-react'
+import {observer} from 'mobx-react'
 import {observable, action} from 'mobx'
 import {
   Table, Input, Popconfirm, Tooltip,
@@ -11,12 +11,11 @@ import {OmitTooltip} from '../../../component'
 
 const {Search} = Input
 
-@inject('bigStore')
 @observer
 export default class TagList extends Component {
   constructor(props) {
     super(props)
-    this.store = props.bigStore
+    this.store = props.store
   }
 
   @observable searchKey = undefined
@@ -74,31 +73,26 @@ export default class TagList extends Component {
   ]
 
   @action.bound onChange(e) {
-    const {onSearch} = this.props
     const {value} = e.target
-
     this.searchKey = value
-    onSearch(value)
   }
 
-  @action.bound remove(data) {
+  remove = d => {
     const {remove} = this.props
-    remove(data)
+
+    remove(d)
   }
 
   getFilterData() {
-    const {tableData, searchData} = this.props
-
+    const {selectTagTableData} = this.store
     if (this.searchKey) {
-      return searchData.slice()
+      return selectTagTableData.filter(d => d.name.indexOf(this.searchKey) !== -1)
     } 
-    return tableData.slice()
+    return selectTagTableData.slice()
   }
 
   render() {
-    const {selectedObjLoading: loading} = this.store
     const listConfig = {
-      loading,
       dataSource: this.getFilterData(),
       rowKey: 'id',
       columns: this.columns,
@@ -110,7 +104,6 @@ export default class TagList extends Component {
       <div className="FB1 select-tag-list">
         <Search
           placeholder="请输入标签名称关键字"
-          onSearch={this.onSearch}
           onChange={this.onChange}
           style={{width: 300}}
           className="select-tag-search"

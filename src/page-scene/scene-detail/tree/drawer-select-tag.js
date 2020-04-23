@@ -5,7 +5,7 @@ import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
 import {observable, action} from 'mobx'
 import {
-  Drawer, Button, Spin,
+  Drawer, Button, message,
 } from 'antd'
 
 import Tree from './select-tag-tree'
@@ -22,17 +22,13 @@ export default class SelectTag extends Component {
     this.sceneDetailStore = props.sceneDetail
   }
 
-  @observable selectNodes = [] // 对象树所选对象节点 => 对象列表
-  @observable removeListItem // 对象列表中移除项id
-
-  @observable tableData= [] // 根据typeCode 过滤后的对象列表
-  @observable searchData = [] // 过滤搜索后的对象列表
+  @observable listRemoveItem
 
   @action destroy() {
-    this.selectNodes.clear()
     this.removeListItem = undefined
-    this.tableData.clear()
-    this.searchData.clear()
+    this.store.selectTagData.clear()
+    this.store.selectTagTreeData.clear()
+    this.store.selectTagTableData.clear()
   }
 
   @action.bound closeDrawer() {
@@ -41,61 +37,37 @@ export default class SelectTag extends Component {
     this.destroy()
   }
 
-  // 保存
-  saveObj = () => {
-    // const t = this
-    // const objIds = _.map(this.tableData, 'aId')
-    // const params = {
-    //   objIds,
-    //   objTypeCode: +t.selTypeCode,
-    // }
-    // this.store.saveSelectedObj(params, () => {
-    //   t.store.getObjTree(() => {
-    //     t.store.objId = t.store.currentSelectKeys
-
-    //     if (!t.store.objId) {
-    //       t.props.history.push(`/object-config/${t.store.typeCode}`)
-    //     }
-    //   })
-    //   t.destroy()
-    // })
+  @action.bound rightToTable(tagData) {
+    this.store.selectTagTableData = tagData
   }
 
-  // 树选择
-  @action.bound onTreeCheck(selectNodes) {
-    this.selectNodes = selectNodes.filter(d => +d.type === 0)
+  @action.bound removeList(item) {
+    this.store.selectTagTableData = this.store.selectTagTableData.filter(d => +d.id !== +item.id)
+    this.listRemoveItem = item
   }
 
-  // 树 => 列表
-  @action.bound rightToTable() {
-    this.tableData.replace(this.selectNodes) 
+  @action.bound handleSubmit() {
+    const {selectTagTableData} = this.store
+    if (!selectTagTableData.length) {
+      message.warning('请选择标签')
+      return
+    } 
+
+    const keys = selectTagTableData.map(d => d.id)
+
+    this.store.saveTag(keys, () => {
+      this.destroy()
+      // 为了场景的标签数 大费周折
+      this.sceneDetailStore.getDetail()
+    })
   }
 
-  // 移除已选列表
-  @action.bound removeList(data) {
-    this.removeListItem = data
-    this.tableData = this.tableData.filter(d => +d.id !== +data.id)
-      
-    if (!this.tableData.length) {
-      this.selectNodes.clear()
-    }
-  }
-
-  // 列表搜索；前端处理
-  @action.bound searchList(v) {
-    if (this.tableData.length && v) {
-      this.searchData = this.tableData.filter(d => d.name.indexOf(v) !== -1)
-    } else {
-      this.searchData = this.tableData
-    }
-  }
 
   render() {
     const {
       modalVisible: {
         selectTag,
       },
-      detailLoading,
       confirmLoading,
     } = this.store
 
@@ -109,71 +81,52 @@ export default class SelectTag extends Component {
     }
 
     const treeConfig = {
-      onCheck: this.onTreeCheck,
-      removeListItem: this.removeListItem,
-      listDataIds: _.map(this.tableData, 'id'),
+      listRemoveItem: this.listRemoveItem,
+      rightToTable: this.rightToTable,
       store: this.store, 
     }
 
     const listConfig = {
       remove: this.removeList,
-      onSearch: this.searchList,
-      searchData: this.searchData,
-      tableData: this.tableData, 
+      store: this.store, 
     }
 
     return (
       <Drawer
         {...drawerConfig}
       >
-        <Spin spinning={detailLoading}>
-          <div className="select-tag-box">
-            <div className="mb8">
-              {/* <span className="fs14 mr4">展示不可选择的标签</span>
-              <Switch onChange={this.switchChange} checkedChildren="是" unCheckedChildren="否" /> */}
-              <span className="ml4 fs12">
+        <div className="select-tag-box">
+          <div className="mb8">
+            <span className="ml4 fs12">
               （若需要的标签不可选择，请先去“标签同步”模块完成
-                <a href>标签数据的同步</a>
+              <a href>标签数据的同步</a>
                ）
-              </span>
-            </div>
-            <div className="select-tag-modal">
-              <Tree {...treeConfig} />
-              <div className="select-tag-btn"> 
-                <Button
-                  type="primary"
-                  icon="right"
-                  size="small"
-                  style={{display: 'block'}}
-                  className="mb4"
-                  disabled={!this.selectNodes.length}
-                  onClick={this.rightToTable}
-                />
-              </div>
-          
-              <List {...listConfig} />
-              <div
-                style={{
-                  position: 'absolute',
-                  left: 0,
-                  bottom: 0,
-                  width: '100%',
-                  background: '#fff',
-                  textAlign: 'right',
-                }}
-              > 
-                <Button onClick={this.closeDrawer} className="mr8">取消</Button>
-                <Button 
-                  onClick={this.saveObj} 
-                  type="primary" 
-                  loading={confirmLoading}
-                >
+            </span>
+          </div>
+          <div className="select-tag-modal">
+            <Tree {...treeConfig} />
+            <List {...listConfig} />
+            <div
+              style={{
+                position: 'absolute',
+                left: 0,
+                bottom: 0,
+                width: '100%',
+                background: '#fff',
+                textAlign: 'right',
+              }}
+            > 
+              <Button onClick={this.closeDrawer} className="mr8">取消</Button>
+              <Button 
+                onClick={this.handleSubmit} 
+                type="primary" 
+                loading={confirmLoading}
+              >
                 确定
-                </Button>
-              </div>
+              </Button>
             </div>
           </div>
-        </Spin>
+        </div>
       </Drawer>
     )
   }
