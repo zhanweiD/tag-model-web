@@ -14,7 +14,7 @@ export default class TagSync extends Component {
   render() {
     return (
       <Router>
-        <Frame>
+        <Frame page="space" pageUrl="/tag-sync">
           <Switch>
             <Route exact strict path="/tag-sync" component={SyncList} />
             <Route exact strict path="/tag-sync/result" component={SyncResult} />

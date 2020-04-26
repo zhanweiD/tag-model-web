@@ -15,11 +15,14 @@ const tabs = [
 ]
 
 @observer
-export default class SourceDetail extends Component {
+export default class SyncDetail extends Component {
   constructor(props) {
     super(props)
     const {match} = props
     store.syncId = match.params.id 
+    
+    const {spaceInfo} = window
+    store.projectId = spaceInfo && spaceInfo.projectId
   }
 
   componentWillMount() {
@@ -41,10 +44,10 @@ export default class SourceDetail extends Component {
       value: detail.name,
     }, {
       title: '创建人',
-      value: detail.cUserName,
+      value: detail.cuserName,
     }, {
       title: '创建时间',
-      value: <Time timestamp={detail.ctime} />,
+      value: <Time timestamp={detail.createTime} />,
     }, {
       title: '数据源类型',
       value: detail.storageTypeName,

@@ -23,9 +23,24 @@ export default class AddSource extends Component {
     super(props)
     this.store = props.store
   }
-  
+
   @action.bound closeDrawer() {
     this.store.visible = false
+  }
+
+  // 重名校验
+  checkName = (rule, value, callback) => {
+    const {detail} = this.store
+
+    const params = {
+      name: value,
+    }
+
+    if (detail.id) {
+      params.id = detail.id
+    }
+
+    this.store.checkName(params, callback)
   }
 
 
@@ -58,7 +73,7 @@ export default class AddSource extends Component {
             {getFieldDecorator('name', {
               rules: [
                 {transform: value => value && value.trim()},
-                {required: true, message: '目的源名称不能为空'},  
+                {required: true, message: '目的源名称不能为空'},
                 {max: 32, message: '输入不能超过32个字符'},
                 {
                   validator: this.checkName,
@@ -68,15 +83,15 @@ export default class AddSource extends Component {
               <Input autoComplete="off" placeholder="请输入目的源名称" />
             )}
           </FormItem>
-       
+
           <FormItem {...formItemLayout} label="同步对象">
             {getFieldDecorator('objId', {
               rules: [{required: true, message: '请选择同步对象'}],
             })(
-              <Select 
-                labelInValue 
-                placeholder="请选择所属对象" 
-                style={{width: '100%'}} 
+              <Select
+                labelInValue
+                placeholder="请选择所属对象"
+                style={{width: '100%'}}
                 onSelect={v => this.selectObj(v)}
               >
                 {
@@ -102,10 +117,10 @@ export default class AddSource extends Component {
             {getFieldDecorator('objId', {
               rules: [{required: true, message: '请选择数据源类型'}],
             })(
-              <Select 
-                labelInValue 
-                placeholder="请选择数据源类型" 
-                style={{width: '100%'}} 
+              <Select
+                labelInValue
+                placeholder="请选择数据源类型"
+                style={{width: '100%'}}
                 onSelect={v => this.selectObj(v)}
               >
                 {
@@ -116,13 +131,13 @@ export default class AddSource extends Component {
               </Select>
             )}
           </FormItem>
-          <FormItem 
+          <FormItem
             labelCol={{span: 4}}
             wrapperCol={{span: 16}}
             label="数据源"
             extra={(
               <span>
-              若无可用的数据源，请先
+                若无可用的数据源，请先
                 <a href>去项目配置中添加目的数据源</a>
               </span>
             )}
@@ -131,10 +146,10 @@ export default class AddSource extends Component {
               rules: [{required: true, message: '请选择数据源'}],
             })(
               <div className="select-storage">
-                <Select 
-                  labelInValue 
-                  placeholder="请选择数据源" 
-                  style={{width: '100%'}} 
+                <Select
+                  labelInValue
+                  placeholder="请选择数据源"
+                  style={{width: '100%'}}
                   onSelect={v => this.selectObj(v)}
                 >
                   {
@@ -145,17 +160,17 @@ export default class AddSource extends Component {
                 </Select>
                 <div className="view-storage">查看数据源</div>
               </div>
-              
+
             )}
           </FormItem>
           <FormItem {...formItemLayout} label="目的表">
             {getFieldDecorator('objId', {
               rules: [{required: true, message: '请选择目的表'}],
             })(
-              <Select 
-                labelInValue 
-                placeholder="请选择目的表" 
-                style={{width: '100%'}} 
+              <Select
+                labelInValue
+                placeholder="请选择目的表"
+                style={{width: '100%'}}
                 onSelect={v => this.selectObj(v)}
               >
                 {

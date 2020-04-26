@@ -1,9 +1,22 @@
 import ioContext from '../../common/io-context'
-import {baseApi, get} from '../../common/util'
+import {baseApi, syncApi, get, post} from '../../common/util'
 
 const api = {
-  getList: get(`${baseApi}/transfer/schema/getSchemePage`), // 同步计划列表
-  delList: get(`${baseApi}/transfer/schema/getSchemePage`), // 同步计划列表
+  getList: get(`${syncApi}/schema/getSchemePage`), // 同步计划列表
+  delList: post(`${syncApi}/scheme/schemaDelete`), // 删除同步计划
+  getObjList: get(`${syncApi}/scheme/underObjList`), // 下拉对象列表
+  startSync: get(`${syncApi}/scheme/startScheme`), // 启动
+  pauseSync: get(`${syncApi}/scheme/pauseScheme`), // 暂停
+  runSync: get(`${syncApi}/scheme/manualRunScheme`), // 执行
+  getLog: get(`${syncApi}/scheme/submitLog`), // 提交日志
+
+  // 添加同步
+  getStorageType: get(`${syncApi}/scheme/dataStorageType`), // 下拉数据源类型列表
+  getStorageList: get(`${syncApi}/scheme/storageList`), // 下拉数据源列表
+  getStorageDetail: get(`${baseApi}/project/storageDetails`), // 数据源详情
+  checkName: post(`${syncApi}/scheme/checkName`), // 重名校验
+
+  getTagTree: get(`${syncApi}/scheme/tagTree`), // 标签树
 } 
 
 ioContext.create('syncList', api) 

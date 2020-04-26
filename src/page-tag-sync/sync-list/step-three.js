@@ -1,5 +1,6 @@
 import {Component} from 'react'
 import {observer} from 'mobx-react'
+import {toJS} from 'mobx'
 import {Button, Tag} from 'antd'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
 
@@ -14,6 +15,14 @@ export default class StepThree extends Component {
     const {show} = this.props
     const {previewData} = this.store
 
+    const {
+      name,
+      objId = {},
+      descr,
+      dataDbType = {},
+      dataStorageId = {},
+      tableName,
+    } = previewData
     return (
       <div style={{display: show ? 'block' : 'none'}}>
         <div className="preview-box">
@@ -21,13 +30,13 @@ export default class StepThree extends Component {
           <NemoBaseInfo 
             dataSource={[{
               title: '方案名称',
-              value: previewData.tableName,
+              value: name,
             }, {
               title: '同步对象',
-              value: previewData.tableName,
+              value: objId.label,
             }, {
               title: '方案描述',
-              value: previewData.tableName,
+              value: descr,
             }]}
             className="ml24 mb24"
           />
@@ -35,13 +44,13 @@ export default class StepThree extends Component {
           <NemoBaseInfo 
             dataSource={[{
               title: '数据源类型',
-              value: previewData.tableName,
+              value: dataDbType.label,
             }, {
               title: '数据源',
-              value: previewData.tableName,
+              value: dataStorageId.label,
             }, {
               title: '表',
-              value: previewData.tableName,
+              value: tableName,
             }]}
             className="ml24 mb24"
           />

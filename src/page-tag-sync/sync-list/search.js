@@ -1,20 +1,24 @@
-const serach = () => [
+import {syncStatus} from '../util'
+
+const serach = ({
+  objList,
+}) => [
   {
     label: '对象',
-    key: 'cUserId',
+    key: 'objId',
     initialValue: '',
     control: {
       defaultAll: true,
-      options: [],
+      options: objList,
     },
     component: 'select',
   }, {
     label: '计划状态',
-    key: 'cUserId',
+    key: 'status',
     initialValue: '',
     control: {
       defaultAll: true,
-      options: [],
+      options: syncStatus,
     },
     component: 'select',
   }, {

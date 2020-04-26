@@ -21,10 +21,12 @@ export default class DrawerAddSync extends Component {
   constructor(props) {
     super(props)
     this.bigStore = props.bigStore
+    store.projectId = props.projectId
   }
   
   @action.bound closeDrawer() {
     this.bigStore.visible = false
+    store.currentStep = 0
   }
 
   render() {

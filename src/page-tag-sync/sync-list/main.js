@@ -1,17 +1,28 @@
-import {Component} from 'react'
-import {action} from 'mobx'
+import {Component, Fragment} from 'react'
+import {action, toJS} from 'mobx'
 import {observer, Provider} from 'mobx-react'
-import {Button} from 'antd'
+import {Button, Popconfirm} from 'antd'
 import {Link} from 'react-router-dom'
 import {ListContent} from '../../component'
 import {Time} from '../../common/util'
 import seach from './search'
 import DrawerAddSync from './drawer'
+import {
+  getLastStatus,
+  getSyncStatus,
+  getScheduleType,
+} from '../util'
 
 import store from './store'
 
 @observer
-export default class SourceList extends Component {
+export default class SyncList extends Component {
+  constructor(props) {
+    super(props)
+    const {spaceInfo} = window
+    store.projectId = spaceInfo && spaceInfo.projectId
+  }
+
   columns = [{
     title: '计划名称',
     dataIndex: 'name',
@@ -34,36 +45,184 @@ export default class SourceList extends Component {
     dataIndex: 'lastSubmitTime',
     render: text => <Time timestamp={text} />,
   }, {
-    title: '最近运行状态',
-    dataIndex: 'lastStatus',
+    title: '周期调度',
+    dataIndex: 'scheduleType',
+    render: v => (v === null ? '' : getScheduleType({status: v})),
   }, {
     title: '计划状态',
     dataIndex: 'status',
+    render: v => (v === null ? '' : getSyncStatus({status: v})),
+  }, {
+    title: '最近运行状态',
+    dataIndex: 'lastStatus',
+    render: v => (v === null ? '' : getLastStatus({status: v})),
   }, {
     title: '操作',
     dataIndex: 'action',
     width: 120,
     render: (text, record) => (
       <div>
-        <a href onClick={() => {}}>启动</a>
-        <a href onClick={() => {}}>启动</a>
+        {/* 方案状态 0 未完成、1 提交成功 2 提交失败 3提交中 4更新成功 5更新失败 6更新中 */}
+        {/* 最后一次运行状态 0 运行中  1 成功  2 失败 */}
+        {/* 提交中 & 暂停 */}
+        {(() => {
+          if (record.status === 3 && record.scheduleType === 0) {
+            return (
+              <Fragment>
+                <span className="disabled">启动</span>
+                <span className="table-action-line" />
+                <span className="disabled">编辑</span>
+                <span className="table-action-line" />
+                <span className="disabled">删除</span>
+                <span className="table-action-line" />
+                <span className="disabled">提交日志</span>
+              </Fragment>
+             
+            )
+          }
+
+          /* 更新中 & 暂停 & 运行成功、运行失败 */
+          if (record.status === 6 && record.scheduleType === 0 && (record.lastStatus === 1 || record.lastStatus === 2)) {
+            return (
+              <Fragment>
+                <span className="disabled">启动</span>
+                <span className="table-action-line" />
+                <span className="disabled">编辑</span>
+                <span className="table-action-line" />
+                <span className="disabled">删除</span>
+                <span className="table-action-line" />
+                <span className="disabled">提交日志</span>
+              </Fragment>
+             
+            )
+          }
+
+          /* 提交失败 & 暂停 */
+          if (record.status === 2 && record.scheduleType === 0) {
+            return (
+              <Fragment>
+                <span className="disabled">启动</span>
+                <span className="table-action-line" />
+                <a href onClick={() => { }}>编辑</a>
+                <span className="table-action-line" />
+                <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
+                  <a href>删除</a>
+                </Popconfirm>
+                <span className="table-action-line" />
+                <a href onClick={() => { }}>提交日志</a>
+              </Fragment>
+             
+            )
+          }
+
+          /* 提交成功 & 暂停 &  运行成功 */
+          if (record.status === 1 && record.scheduleType === 0 && record.lastStatus === 1) {
+            return (
+              <Fragment>
+                <Popconfirm placement="topRight" title="你确定要启动吗？" onConfirm={() => this.startSync(record.id)}>
+                  <a href>启动</a>
+                </Popconfirm>
+                <span className="table-action-line" />
+                <Popconfirm placement="topRight" title="你确定要执行吗？" onConfirm={() => this.runSync(record.id)}>
+                  <a href>执行</a>
+                </Popconfirm>
+                <span className="table-action-line" />
+                <a href onClick={() => { }}>编辑</a>
+                <span className="table-action-line" />
+                <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
+                  <a href>删除</a>
+                </Popconfirm>
+                <span className="table-action-line" />
+                <a href onClick={() => { }}>提交日志</a>
+              </Fragment>
+             
+            )
+          }
+
+          /* 更新失败 & 暂停 & 运行成功、运行失败 */
+          if (record.status === 5 && record.scheduleType === 0 && (record.lastStatus === 1 || record.lastStatus === 2)) {
+            return (
+              <Fragment>
+                <Popconfirm placement="topRight" title="你确定要启动吗？" onConfirm={() => this.startSync(record.id)}>
+                  <a href>启动</a>
+                </Popconfirm>
+                <span className="table-action-line" />
+                <Popconfirm placement="topRight" title="你确定要执行吗？" onConfirm={() => this.runSync(record.id)}>
+                  <a href>执行</a>
+                </Popconfirm>
+                <span className="table-action-line" />
+                <a href onClick={() => { }}>编辑</a>
+                <span className="table-action-line" />
+                <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
+                  <a href>删除</a>
+                </Popconfirm>
+                <span className="table-action-line" />
+                <a href onClick={() => { }}>提交日志</a>
+              </Fragment>
+            )
+          }
+
+          /* 更新成功 & 启动 & 运行成功、运行失败 */
+          if (record.status === 4 && record.scheduleType === 1 && (record.lastStatus === 1 || record.lastStatus === 2)) {
+            return (
+              <Fragment>
+                <Popconfirm placement="topRight" title="你确定要启动吗？" onConfirm={() => this.startSync(record.id)}>
+                  <a href>启动</a>
+                </Popconfirm>
+                <span className="table-action-line" />
+                <span className="disabled">编辑</span>
+                <span className="table-action-line" />
+                <span className="disabled">删除</span>
+                <span className="table-action-line" />
+                <a href onClick={() => { }}>提交日志</a>
+              </Fragment>
+            )
+          }
+        })()}
       </div>
     ),
   }]
+
+  componentWillMount() {
+    if (store.projectId) {
+      store.getObjList()
+    }
+  }
 
   @action.bound addSync() {
     store.visible = true
   }
 
+
+  // 启动
+  startSync = id => {
+    store.startSync(id)
+  }
+
+  // 暂停
+  pauseSync = id => {
+    store.pauseSync(id)
+  }
+
+  // 执行
+  runSync = id => {
+    store.runSync(id)
+  }
+
   // 删除同步计划
-  delItem = id => {
+  delList = id => {
     store.delList(id)
   }
 
   render() {
+    const {objList, projectId} = store
+
     const listConfig = {
       columns: this.columns,
-      searchParams: seach(),
+      initParams: {projectId},
+      searchParams: seach({
+        objList: toJS(objList),
+      }),
       buttons: [<Button type="primary" onClick={() => this.addSync()}>添加同步计划</Button>],
       store, // 必填属性
     }
@@ -75,7 +234,7 @@ export default class SourceList extends Component {
           <div className="list-content">
             <ListContent {...listConfig} />
           </div>
-          <DrawerAddSync />
+          <DrawerAddSync projectId={projectId} />
         </div>
       </Provider>
     )

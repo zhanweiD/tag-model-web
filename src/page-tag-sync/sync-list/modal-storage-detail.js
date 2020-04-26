@@ -5,19 +5,19 @@ import {Modal, Button, Spin} from 'antd'
 import {ModalDetail} from '../../component'
 
 @observer
-export default class ModalStotageDetail extends Component {
+export default class ModalStotage extends Component {
   constructor(props) {
     super(props)
     this.store = props.store
   }
 
   @action handleCancel = () => {
-    this.store.visibleDetail = false
+    this.store.storageVisible = false
   }
 
   render() {
     const {
-      visibleDetail, detail, detailLoading,
+      storageVisible: visible, storageDetail: detail, detailLoading,
     } = this.store
 
     const content = [{
@@ -46,7 +46,7 @@ export default class ModalStotageDetail extends Component {
 
     const modalConfig = {
       title: '查看数据源',
-      visible: visibleDetail,
+      visible,
       onCancel: this.handleCancel,
       onOk: this.submit,
       maskClosable: false,

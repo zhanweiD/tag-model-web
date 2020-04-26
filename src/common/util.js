@@ -28,6 +28,8 @@ export const objectApi = `${pathPrefix}/object` // 对象管理
 export const derivativeApi = `${pathPrefix}/derivative` // 衍生标签
 export const tagWarehouseApi = `${pathPrefix}/map` // 标签仓库
 
+export const syncApi =  `${pathPrefix}/transfer` // 标签同步
+
 const createRequestFn = method => (url, config) => ({
   url,
   method,

@@ -7,6 +7,7 @@ import {action, toJS} from 'mobx'
 import {
   Input, Form, Select, Button, Switch,
 } from 'antd'
+import ModalStotageDetail from './modal-storage-detail'
 
 const FormItem = Form.Item
 const Option = {Select}
@@ -25,7 +26,98 @@ export default class StepOne extends Component {
     this.store = props.store
   }
 
+
+  componentWillMount() {
+    this.store.getObjList()
+    this.store.getStorageType()
+  }
+
+  @action.bound selectObj(obj) {
+    const {form: {resetFields}} = this.props
+    
+    this.store.objId = obj.key
+    this.store.storageId = undefined
+    
+    resetFields(['dataStorageId'])
+
+    if (this.store.storageType) {
+      this.store.getStorageList({
+        storageType: this.store.storageType,
+        objId: obj.key,
+      })
+    }
+  } 
+
+  @action.bound selecStorageType(obj) {
+    const {form: {resetFields}} = this.props
+    this.store.storageType = obj.key
+    
+    this.store.storageId = undefined
+    resetFields(['dataStorageId'])
+
+    this.store.getStorageList({
+      storageType: obj.key,
+      objId: this.store.objId,
+    })
+  } 
+
+  @action.bound selecStorage(obj) {
+    this.store.storageId = obj.key
+    this.store.storageName = this.getStoragName(obj.key)
+  } 
+
+  getStoragName = storageId => {
+    const {storageList} = this.store
+    const obj = storageList.filter(d => d.storageId === storageId)[0] || {}
+    return obj.storageName
+  }
+
+  @action.bound changeSwitch(v) {
+    console.log(v)
+  } 
+
+  @action handleSubmit = e => {
+    const {
+      form: {
+        validateFieldsAndScroll,
+      },
+    } = this.props
+    
+    const t = this
+
+    validateFieldsAndScroll((err, values) => {
+      if (err) {
+        return
+      } 
+      t.store.previewData = values
+      t.nextStep()
+      // console.log(values)
+    })
+  }
+
+  // 查看数据源
+  @action.bound viewStorage() {
+    this.store.getStorageDetail({
+      dataStorageId: this.store.storageId,
+    })
+    this.store.storageVisible = true
+  }
+
+  // 重名校验
+  checkName = (rule, value, callback) => {
+    const params = {
+      name: value,
+    }
+
+    this.store.checkName(params, callback)
+  }
+
   @action.bound nextStep() {
+    const tagTreeParams = {
+      objId: this.store.objId,
+      storageId: this.store.storageId,
+    }
+    this.store.getTagTree(tagTreeParams)
     this.store.nextStep()
   }
 
@@ -38,6 +130,11 @@ export default class StepOne extends Component {
       show,
       closeDrawer,
     } = this.props
+
+    const {
+      objList,
+      storageTypeList,
+    } = this.store
 
     return (
       <div style={{display: show ? 'block' : 'none'}}>
@@ -68,8 +165,8 @@ export default class StepOne extends Component {
                 onSelect={v => this.selectObj(v)}
               >
                 {
-                  [].map(item => (
-                    <Option key={item.objId} value={item.objId}>{item.name}</Option>
+                  objList.map(item => (
+                    <Option key={item.value} value={item.value}>{item.name}</Option>
                   ))
                 }
               </Select>
@@ -87,18 +184,18 @@ export default class StepOne extends Component {
           </FormItem>
           <h3 className="mb24" style={{marginLeft: '200px'}}>目的源信息</h3>
           <FormItem {...formItemLayout} label="数据源类型">
-            {getFieldDecorator('objId', {
+            {getFieldDecorator('dataDbType', {
               rules: [{required: true, message: '请选择数据源类型'}],
             })(
               <Select 
                 labelInValue 
                 placeholder="请选择数据源类型" 
                 style={{width: '100%'}} 
-                onSelect={v => this.selectObj(v)}
+                onSelect={v => this.selecStorageType(v)}
               >
                 {
-                  [].map(item => (
-                    <Option key={item.objId} value={item.objId}>{item.name}</Option>
+                  storageTypeList.map(item => (
+                    <Option key={item.value} value={item.value}>{item.name}</Option>
                   ))
                 }
               </Select>
@@ -114,55 +211,64 @@ export default class StepOne extends Component {
               </span>
             )}
           >
-            {getFieldDecorator('objId', {
-              rules: [{required: true, message: '请选择数据源'}],
+            {getFieldDecorator('dataStorageId', {
+              // rules: [{required: true, message: '请选择目的源'}],
             })(
               <div className="select-storage">
                 <Select 
                   labelInValue 
-                  placeholder="请选择数据源" 
+                  placeholder="请选择目的源" 
                   style={{width: '100%'}} 
-                  onSelect={v => this.selectObj(v)}
+                  onSelect={v => this.selecStorage(v)}
                 >
                   {
                     [].map(item => (
-                      <Option key={item.objId} value={item.objId}>{item.name}</Option>
+                      <Option key={item.value} value={item.value}>{item.name}</Option>
                     ))
                   }
                 </Select>
-                <div className="view-storage">查看数据源</div>
+                {
+                  getFieldValue('dataStorageId') ? <a href className="view-storage" onClick={() => this.viewStorage()}>查看数据源</a> : null
+                }
+             
               </div>
               
             )}
           </FormItem>
           <FormItem {...formItemLayout} label="自定义目的表">
-            {getFieldDecorator('isEnum', {
+            {getFieldDecorator('isDefineTable', {
               valuePropName: 'checked',
-            })(<Switch checkedChildren="是" unCheckedChildren="否" onChange={v => this.changeIsEnum(v)} />)}
+            })(<Switch checkedChildren="是" unCheckedChildren="否" onChange={v => this.changeSwitch(v)} />)}
           </FormItem>
-          <FormItem {...formItemLayout} label="表名">
-            {getFieldDecorator('objId', {
-              rules: [
-                {transform: value => value && value.trim()},
-                {required: true, message: '表名不能为空'},  
-              ]})(
-              <div className="FBH"> 
-                  <span className="ml16 mr16">tbjh_</span>
-                  <Input autoComplete="off" placeholder="请输入表名称" />
-                </div>
-            )}
-          </FormItem>
+          {
+            getFieldValue('isDefineTable') ? (
+              <FormItem {...formItemLayout} label="表名">
+                {getFieldDecorator('tableName', {
+                  rules: [
+                    {transform: value => value && value.trim()},
+                    {required: true, message: '表名不能为空'},  
+                  ]})(
+                  <div className="FBH"> 
+                      <span className="ml16 mr16">tbjh_</span>
+                      <Input autoComplete="off" placeholder="请输入表名称" />
+                    </div>
+                )}
+              </FormItem>
+            ) : null
+          }
+         
         </Form>
         <div className="bottom-button">
           <Button style={{marginRight: 8}} onClick={() => closeDrawer()}>关闭</Button>
           <Button
             type="primary"
             style={{marginRight: 8}}
-            onClick={this.nextStep}
+            onClick={this.handleSubmit}
           >
             下一步
           </Button>
         </div>
+        <ModalStotageDetail store={this.store} />
       </div>
     )
   }

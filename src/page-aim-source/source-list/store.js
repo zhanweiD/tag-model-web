@@ -59,6 +59,23 @@ class Store extends ListContentStore(io.getList) {
       errorTip(e.message)
     }
   }
+
+  @action async checkName(params, cb) {
+    try {
+      const res = await io.checkName({
+        projectId: this.projectId,
+        // objId: this.objId,
+        ...params,
+      })
+      if (res.success) {
+        cb('名称已存在')
+      } else {
+        cb()
+      }
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
 }
 
 export default new Store()
