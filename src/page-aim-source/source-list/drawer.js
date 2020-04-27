@@ -3,8 +3,9 @@
  */
 import {Component} from 'react'
 import {observer} from 'mobx-react'
-import {action} from 'mobx'
+import {action, observable, toJS} from 'mobx'
 import {Drawer, Input, Form, Select, Button} from 'antd'
+import {ModalStotageDetail} from '../../component'
 
 
 const FormItem = Form.Item
@@ -24,25 +25,171 @@ export default class AddSource extends Component {
     this.store = props.store
   }
 
+  @observable objId
+  @observable storageId
+  @observable entity0Key
+  @observable entity1Key
+
+  @action.bound resetSelect() {
+    const {form: {resetFields}} = this.props
+    this.storageId = undefined
+    this.entity0Key = undefined
+    this.entity1Key = undefined
+
+    resetFields(['dataTableName', 'entity0Key', 'entity1Key'])
+  }
+
+  @action.bound selectObj(v) {
+    const {form: {getFieldValue}} = this.props
+
+    this.objId = v
+
+    this.resetSelect()
+
+    this.store.getRelObj({
+      objId: v,
+    })
+
+    this.store.getStorageList({
+      storageType: 1,
+      objId: v,
+    })
+
+    const storageType = getFieldValue('dataStorageType')
+    if (typeof storageType !== 'undefined') {
+      this.store.getStorageList({
+        storageType,
+        objId: v,
+      })
+    }
+  } 
+
+  @action.bound selecStorageType(v) {
+    const {form: {getFieldValue}} = this.props
+
+    this.resetSelect()
+
+    const objId = getFieldValue('objId')
+    if (typeof objId !== 'undefined') {
+      this.store.getStorageList({
+        storageType: v,
+        objId,
+      })
+    }
+  } 
+
+  @action.bound selecStorage(v) {
+    const {form: {resetFields, setFieldsValue}} = this.props
+
+    this.storageId = v
+    resetFields(['dataTableName'])
+
+    setFieldsValue({
+      dataStorageId: v,
+    })
+
+    this.store.getStorageTable({
+      dataStorageId: v,
+    })
+  } 
+
+  @action.bound selectTable(v) {
+    this.store.getFieldList({
+      dataStorageId: this.storageId,
+      dataTableName: v,
+    })
+  }
+
+  @action.bound selectField(field, index, objId, tagId) {
+    this.store.fieldList = this.store.fieldList.map(d => {
+      if (d.fieldName === field) {
+        return {
+          ...d,
+          disabled: true,
+          objId,
+          tagId,
+        }
+      }
+
+      if (d.objId === objId) {
+        return {
+          ...d,
+          field: d.field,
+          disabled: false,
+        }
+      }
+      return d
+    })
+    this[`entity${index}Key`] = field
+  }
+
+  @action.bound handleSubmit() {
+    const {
+      form: {
+        validateFieldsAndScroll,
+      },
+    } = this.props
+
+    const t = this
+
+    validateFieldsAndScroll((err, values) => {
+      if (err) {
+        return
+      } 
+
+      const majorKeyList = t.store.fieldList.filter(d => d.fieldName === t.entity0Key || d.fieldName === t.entity1Key)
+
+      const tableRelMainTagMapping = majorKeyList.map(d => ({
+        objId: d.objId,
+        tagId: d.tagId,
+        fieldName: d.fieldName,
+        fieldType: d.fieldType,
+      }))
+
+
+      const params = {
+        name: values.name,
+        objId: values.objId,
+        descr: values.descr,
+        dataStorageType: values.dataStorageType,
+        dataStorageId: values.dataStorageId,
+        dataTableName: values.dataTableName,
+        tableRelMainTagMapping,
+      }
+
+      t.store.addList(params, () => t.closeDrawer())
+    })
+  }
+
   @action.bound closeDrawer() {
+    this.objId = undefined
+    this.storageId = undefined
+
+    this.store.storageList.clear()
+    this.store.storageTable.clear()
+    this.store.fieldList.clear()
+
     this.store.visible = false
+  }
+
+  @action.bound viewDetail() {
+    this.store.getStorageDetail({
+      dataStorageId: this.storageId,
+    })
+    this.store.storageDetailVisible = true
+  }
+
+  @action closeStorageDetail = () => {
+    this.store.storageDetailVisible = false
   }
 
   // 重名校验
   checkName = (rule, value, callback) => {
-    const {detail} = this.store
-
     const params = {
       name: value,
     }
-
-    if (detail.id) {
-      params.id = detail.id
-    }
-
     this.store.checkName(params, callback)
   }
-
 
   render() {
     const {
@@ -52,6 +199,16 @@ export default class AddSource extends Component {
     const {
       visible,
       confirmLoading,
+      objList,
+      storageTypeList,
+      storageList,
+      storageTable,
+      fieldList,
+      objRelList,
+
+      storageLoading,
+      storageDetail,
+      storageDetailVisible,
     } = this.store
 
     const drawerConfig = {
@@ -89,19 +246,19 @@ export default class AddSource extends Component {
               rules: [{required: true, message: '请选择同步对象'}],
             })(
               <Select
-                labelInValue
                 placeholder="请选择所属对象"
                 style={{width: '100%'}}
                 onSelect={v => this.selectObj(v)}
               >
                 {
-                  [].map(item => (
-                    <Option key={item.objId} value={item.objId}>{item.name}</Option>
+                  objList.map(item => (
+                    <Option key={item.value} value={item.value}>{item.name}</Option>
                   ))
                 }
               </Select>
             )}
           </FormItem>
+          
           <FormItem {...formItemLayout} label="方案描述">
             {getFieldDecorator('descr', {
               rules: [
@@ -114,18 +271,17 @@ export default class AddSource extends Component {
           </FormItem>
           <h3 className="mb24">目的源信息</h3>
           <FormItem {...formItemLayout} label="数据源类型">
-            {getFieldDecorator('objId', {
+            {getFieldDecorator('dataStorageType', {
               rules: [{required: true, message: '请选择数据源类型'}],
             })(
               <Select
-                labelInValue
                 placeholder="请选择数据源类型"
                 style={{width: '100%'}}
-                onSelect={v => this.selectObj(v)}
+                onSelect={v => this.selecStorageType(v)}
               >
                 {
-                  [].map(item => (
-                    <Option key={item.objId} value={item.objId}>{item.name}</Option>
+                  storageTypeList.map(item => (
+                    <Option key={item.value} value={item.value}>{item.name}</Option>
                   ))
                 }
               </Select>
@@ -142,50 +298,80 @@ export default class AddSource extends Component {
               </span>
             )}
           >
-            {getFieldDecorator('objId', {
+            {getFieldDecorator('dataStorageId', {
               rules: [{required: true, message: '请选择数据源'}],
             })(
               <div className="select-storage">
                 <Select
-                  labelInValue
+                  value={this.storageId}
                   placeholder="请选择数据源"
                   style={{width: '100%'}}
-                  onSelect={v => this.selectObj(v)}
+                  onSelect={v => this.selecStorage(v)}
                 >
                   {
-                    [].map(item => (
-                      <Option key={item.objId} value={item.objId}>{item.name}</Option>
+                    storageList.map(item => (
+                      <Option key={item.dataStorageId} value={item.dataStorageId} disabled={item.used}>{item.storageName}</Option>
                     ))
                   }
                 </Select>
-                <div className="view-storage">查看数据源</div>
+                {
+                  this.storageId ? <a href className="view-storage" onClick={this.viewDetail}>查看数据源</a> : <span className="view-storage disabled">查看数据源</span> 
+                }
               </div>
 
             )}
           </FormItem>
           <FormItem {...formItemLayout} label="目的表">
-            {getFieldDecorator('objId', {
+            {getFieldDecorator('dataTableName', {
               rules: [{required: true, message: '请选择目的表'}],
             })(
               <Select
-                labelInValue
                 placeholder="请选择目的表"
                 style={{width: '100%'}}
-                onSelect={v => this.selectObj(v)}
+                onSelect={v => this.selectTable(v)}
               >
                 {
-                  [].map(item => (
-                    <Option key={item.objId} value={item.objId}>{item.name}</Option>
+                  storageTable.map(item => (
+                    <Option key={item} value={item}>{item}</Option>
                   ))
                 }
               </Select>
             )}
           </FormItem>
+          {
+            this.objId ? (
+              objRelList.map((d, i) => (
+                <FormItem {...formItemLayout} label={d.objName}>
+                  {getFieldDecorator(`entity${i}Key`, {
+                    rules: [{required: true, message: '请选择主标签绑定的字段'}],
+                  })(
+                    <Select
+                      placeholder="请选择主标签绑定的字段"
+                      style={{width: '100%'}}
+                      onSelect={v => this.selectField(v, i, d.objId, d.tagId)}
+                    >
+                      {
+                        fieldList.map(d => (
+                          <Option key={d.fieldName} value={d.fieldName} disabled={d.disabled}>{d.fieldName}</Option>
+                        ))
+                      }
+                    </Select>
+                  )}
+                </FormItem>
+              )) 
+            ) : null
+          }
         </Form>
         <div className="bottom-button">
           <Button style={{marginRight: 8}} onClick={() => this.store.closeDrawer()}>取消</Button>
-          <Button type="primary" loading={confirmLoading} onClick={this.submit}>确定</Button>
+          <Button type="primary" loading={confirmLoading} onClick={this.handleSubmit}>确定</Button>
         </div>
+        <ModalStotageDetail 
+          visible={storageDetailVisible}
+          detail={storageDetail}
+          loading={storageLoading}
+          handleCancel={this.closeStorageDetail}
+        />
       </Drawer>
     )
   }

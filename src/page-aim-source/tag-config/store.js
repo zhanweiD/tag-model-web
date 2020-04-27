@@ -1,32 +1,36 @@
-// import {observable, action, runInAction} from 'mobx'
 import io from './io'
-import {successTip, errorTip, failureTip} from '../../common/util'
+import {successTip, errorTip, failureTip, changeToOptions} from '../../common/util'
 
 class DrawerStore {
-  projectId
   result = []
   source = []
   target = []
 
-  objId
-  tagIds = []
-  configType
+  sourceId
+
+
+  objList = [] // 下拉对象数据
+
+  // 下拉对象列表
+  async getObjList() {
+    try {
+      const res = await io.getObjList({
+        id: this.sourceId,
+      })
+      this.objList = changeToOptions(res)('objName', 'objId') || []
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
 
   async getResultData() {
     try {
       const params = {
-        id: this.objId,
-        projectId: this.projectId,
+        id: this.sourceId,
       }
       
-      let res = []
-
-      if (this.configType === 1) {
-        res = await io.getDeriveResultData(params)
-      } else {
-        res = await io.getResultData(params)
-      }
-
+      const res = await io.getResultData(params)
+     
       this.result = res || []
     } catch (e) {
       errorTip(e.message)
@@ -35,18 +39,12 @@ class DrawerStore {
 
   async getFieldData() {
     const params = {
-      id: this.objId,
-      projectId: this.projectId,
+      id: this.sourceId,
     }
     try {
-      let res = []
-      if (this.configType === 1) {
-        res = await io.getDeriveFieldData(params)
-      } else {
-        res = await io.getFieldData(params)
-      }
-     
-      this.target = res || []
+      const res = await io.getFieldData(params)
+    
+      this.source = res || []
     } catch (e) {
       errorTip(e.message)
     }
@@ -55,42 +53,21 @@ class DrawerStore {
   async getTagData() {
     try {
       const params = {
-        id: this.objId,
-        projectId: this.projectId,
-        tagIds: this.tagIds,
-        // tagIds: [],
+        id: this.sourceId,
       }
 
-      let res = []
-
-      if (this.configType === 1) {
-        res = await io.getDeriveTagData(params)
-      } else {
-        res = await io.getTagData(params)
-      }
+      const res = await io.getTagData(params)
       
-      this.source = res || []
+      this.target = res || []
     } catch (e) {
       errorTip(e.message)
     }
   }
 
-  async saveResult(reqList) {
+  async saveResult(params) {
     try {
-      const params = {
-        reqList,
-        objId: this.objId,
-        projectId: this.projectId,
-      }
-
-      let res 
-
-      if (this.configType === 1) {
-        res = await io.saveDeriveMappingResult(params)
-      } else {
-        res = await io.saveMappingResult(params)
-      }
-     
+      const res = await io.saveMappingResult(params)
+      console.log(res)
       if (res === true) {
         successTip('绑定成功')
       } else {
@@ -98,6 +75,7 @@ class DrawerStore {
       }
     } catch (e) {
       errorTip(e.message)
+      failureTip('绑定失败')
     }
   }
 }

@@ -13,10 +13,10 @@ export default class AimSource extends Component {
   render() {
     return (
       <Router>
-        <Frame>
+        <Frame page="space" pageUrl="/aim-source">
           <Switch>
-            <Route exact path="/aim-source" component={SourceList} />
-            <Route exact path="/aim-source/:id" component={SourceDetail} />
+            <Route exact strict path="/aim-source" component={SourceList} />
+            <Route exact strict path="/aim-source/:id" component={SourceDetail} />
             <Route
               render={() => {
                 window.location.href = '/404'

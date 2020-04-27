@@ -2,10 +2,9 @@ import {Component} from 'react'
 import {Button, Badge} from 'antd'
 import {action} from 'mobx'
 import {observer} from 'mobx-react'
-import {ListContent} from '../../component'
+import {ListContent, ModalStotageDetail} from '../../component'
 import {Time} from '../../common/util'
 import ModalStotage from './modal-storage'
-import ModalDetail from './modal-storage-detail'
 
 import store from './store-storage'
 
@@ -50,20 +49,30 @@ export default class DataStorage extends Component {
     store.visibleDetail = true
   }
 
+  @action closeStorageDetail = () => {
+    store.visibleDetail = false
+  }
+
   @action.bound addList() {
     store.getStorageType()
     store.visible = true
   }
 
   render() {
-    const {projectId: id, functionCodes} = this.props
+    const {projectId: id} = this.props
+
+    const {
+      visibleDetail,
+      detail,
+      detailLoading,
+    } = store
     
     const listConfig = {
       columns: this.columns,
       initParams: {id},
       buttons: [<Button type="primary" onClick={this.addList}>
 添加数据源
-      </Button>],
+                </Button>],
       store, // 必填属性
     }
 
@@ -71,7 +80,12 @@ export default class DataStorage extends Component {
       <div> 
         <ListContent {...listConfig} />
         <ModalStotage store={store} />
-        <ModalDetail store={store} />
+        <ModalStotageDetail 
+          visible={visibleDetail}
+          detail={detail}
+          loading={detailLoading}
+          handleCancel={this.closeStorageDetail}
+        />
       </div>
     )
   }

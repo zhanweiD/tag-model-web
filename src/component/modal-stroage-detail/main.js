@@ -1,24 +1,12 @@
 import {Component} from 'react'
-import {action} from 'mobx'
-import {observer} from 'mobx-react'
 import {Modal, Button, Spin} from 'antd'
-import {ModalDetail} from '../../component'
+import ModalDetail from '../modal-detail'
 
-@observer
 export default class ModalStotageDetail extends Component {
-  constructor(props) {
-    super(props)
-    this.store = props.store
-  }
-
-  @action handleCancel = () => {
-    this.store.visibleDetail = false
-  }
-
   render() {
     const {
-      visibleDetail, detail, detailLoading,
-    } = this.store
+      visible, detail, loading = false, handleCancel,
+    } = this.props
 
     const content = [{
       name: '名称',
@@ -46,18 +34,18 @@ export default class ModalStotageDetail extends Component {
 
     const modalConfig = {
       title: '查看数据源',
-      visible: visibleDetail,
-      onCancel: this.handleCancel,
+      visible,
+      onCancel: () => handleCancel(),
       onOk: this.submit,
       maskClosable: false,
       width: 525,
       destroyOnClose: true,
-      footer: [<Button onClick={this.handleCancel}>关闭</Button>],
+      footer: [<Button onClick={() => handleCancel()}>关闭</Button>],
     }
 
     return (
       <Modal {...modalConfig}>
-        <Spin spinning={detailLoading}>
+        <Spin spinning={loading}>
           <ModalDetail data={content} />
         </Spin>
       </Modal>

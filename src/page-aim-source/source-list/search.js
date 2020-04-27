@@ -1,21 +1,18 @@
-const serach = () => [
+const serach = ({
+  objList,
+}) => [
   {
     label: '对象',
-    key: 'cUserId',
+    key: 'objId',
     initialValue: '',
     control: {
       defaultAll: true,
-      options: [],
+      options: objList,
     },
     component: 'select',
   }, {
-    label: '创建时间',
-    key: 'time',
-    component: 'rangePicker',
-  }, 
-  {
     label: '目的源名称',
-    key: 'name',
+    key: 'keyword',
     control: {
       placeholder: '请输入目的源名称关键字',
     },

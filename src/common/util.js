@@ -29,6 +29,7 @@ export const derivativeApi = `${pathPrefix}/derivative` // 衍生标签
 export const tagWarehouseApi = `${pathPrefix}/map` // 标签仓库
 
 export const syncApi =  `${pathPrefix}/transfer` // 标签同步
+export const targetSourceApi =  `${pathPrefix}/targetSource` // 目的数据源
 
 const createRequestFn = method => (url, config) => ({
   url,

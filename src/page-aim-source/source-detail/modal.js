@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import {action} from 'mobx'
+import {action, toJS} from 'mobx'
 import {observer} from 'mobx-react'
 import {Modal} from 'antd'
 import {ModalForm} from '../../component'
@@ -12,28 +12,37 @@ export default class ModalTagConfig extends Component {
   }
 
   selectContent= () => {
+    const {objList, tagList} = this.store
     return [{
       label: '对象',
-      key: 'memberId',
+      key: 'objId',
       component: 'select',
       rules: [
         '@requiredSelect',
       ],
       control: {
-        options: [],
+        options: toJS(objList),
+        onSelect: v => this.selectObj(v),
       },
     }, {
       label: '标签名称',
-      key: 'roleId',
+      key: 'tagId',
       component: 'select',
       rules: [
         '@requiredSelect',
       ],
       control: {
-        options: [],
+        options: toJS(tagList),
       },
     }]
   }
+
+  @action.bound selectObj(v) {
+    this.form.resetFields(['tagId'])
+    this.store.getTagList({
+      objId: v,
+    })
+  } 
 
   @action handleCancel = () => {
     this.store.visible = false
@@ -41,11 +50,14 @@ export default class ModalTagConfig extends Component {
 
   submit = () => {
     const t = this
-    const {store} = t
 
     this.form.validateFields((err, values) => {
       if (!err) {
-        store.addList(values, () => {
+        const params = {
+          tagId: values.tagId,
+          id: t.store.fieldDetail.id,
+        }
+        t.store.configTag(params, () => {
           t.handleCancel()
         })
       }
