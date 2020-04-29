@@ -45,25 +45,27 @@ export const getScheduleType = ({status}, fn) => {
   return <Badge color={color} text={text} />
 }
 
-export const syncStatus = [{
-  name: '未完成',
-  value: 0,
-}, {
-  name: '提交成功',
-  value: 1,
-}, {
-  name: '提交失败',
-  value: 2,
-}, {
-  name: '提交中',
-  value: 3,
-}, {
-  name: '更新成功',
-  value: 4,
-}, {
-  name: '更新失败',
-  value: 5,
-}, {
-  name: '更新中',
-  value: 6,
-}]
+export const syncStatus = [
+  // {
+  //   name: '未完成',
+  //   value: 0,
+  // }, 
+  {
+    name: '提交成功',
+    value: 1,
+  }, {
+    name: '提交失败',
+    value: 2,
+  }, {
+    name: '提交中',
+    value: 3,
+  }, {
+    name: '更新成功',
+    value: 4,
+  }, {
+    name: '更新失败',
+    value: 5,
+  }, {
+    name: '更新中',
+    value: 6,
+  }]

@@ -36,7 +36,6 @@ export default class ModalStotageDetail extends Component {
       title: '查看数据源',
       visible,
       onCancel: () => handleCancel(),
-      onOk: this.submit,
       maskClosable: false,
       width: 525,
       destroyOnClose: true,

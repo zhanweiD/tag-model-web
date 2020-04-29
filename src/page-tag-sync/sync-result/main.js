@@ -1,5 +1,6 @@
 import {Component} from 'react'
 import {observer} from 'mobx-react'
+import {Badge} from 'antd'
 import {ListContent} from '../../component'
 import {Time} from '../../common/util'
 import seach from './search'
@@ -10,19 +11,22 @@ import store from './store'
 export default class SyncResult extends Component {
   columns = [{
     title: '标签名称',
-    dataIndex: 'name',
+    dataIndex: 'tagName',
   }, {
     title: '标签标识',
-    dataIndex: 'objName',
+    dataIndex: 'enName',
   }, {
     title: '数据类型',
+    dataIndex: 'tagType',
+  }, {
+    title: '对象名称',
+    dataIndex: 'objName',
+  }, {
+    title: '数据源名称',
     dataIndex: 'storageName',
   }, {
-    title: '数据应用',
-    dataIndex: 'storageType',
-  }, {
     title: '同步计划',
-    dataIndex: 'tagUsedCount',
+    dataIndex: 'tagTransferSchemeName',
   }, {
     title: '最近一次更新时间',
     dataIndex: 'lastSubmitTime',
@@ -30,6 +34,7 @@ export default class SyncResult extends Component {
   }, {
     title: '使用状态',
     dataIndex: 'lastStatus',
+    render: text => (text ? <Badge color="#87d068" text="使用中" /> : <Badge color="#d9d9d9" text="未使用" />),
   }]
 
 

@@ -13,6 +13,8 @@ const api = {
   getDeriveFieldData: get(`${baseApi}/tagConfig/scheme_field`), // 获取字段列表
   getDeriveTagData: get(`${baseApi}/tagConfig/produce_tag`), // 获取标签列表
   saveDeriveMappingResult: post(`${baseApi}/tagConfig/addTagRel`), // 保存映射结果
+
+  getConfigTagList: get(`${baseApi}/tag/listTagByObjAndType`),
 } 
 
 ioContext.create('tagConfigBatch', api) 

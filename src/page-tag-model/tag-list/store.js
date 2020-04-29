@@ -92,14 +92,26 @@ class Store extends ListContentStore(io.getList) {
     this.drawerTagConfigType = 'one'
   }
 
+  // 更新标签配置
+  @action.bound updateTagConfig() {
+    this.closeTagConfig()
+    this.getList()
+  }
+
+
   // 批量创建标签
   @action.bound openBatchConfig() {
     this.batchConfigVisible = true
   }
 
+  @action.bound closeBatchConfig() {
+    this.batchConfigVisible = false
+  }
+
+
   // 更新标签配置
-  @action.bound updateTagConfig() {
-    this.closeTagConfig()
+  @action.bound updateBatchConfig() {
+    this.closeBatchConfig()
     this.getList()
   }
 

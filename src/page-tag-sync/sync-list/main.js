@@ -7,10 +7,14 @@ import {ListContent} from '../../component'
 import {Time} from '../../common/util'
 import seach from './search'
 import DrawerAddSync from './drawer'
+import DrawerEditSync from './drawer-edit'
+import ModalLog from './modal-log'
+import ModalStart from './modal-start'
+
 import {
   getLastStatus,
   getSyncStatus,
-  getScheduleType,
+  // getScheduleType,
 } from '../util'
 
 import store from './store'
@@ -35,7 +39,7 @@ export default class SyncList extends Component {
     dataIndex: 'storageName',
   }, {
     title: '数据源类型',
-    dataIndex: 'storageType',
+    dataIndex: 'storageTypeName',
   }, {
     title: '使用中/标签数',
     dataIndex: 'tagUsedCount',
@@ -47,7 +51,8 @@ export default class SyncList extends Component {
   }, {
     title: '周期调度',
     dataIndex: 'scheduleType',
-    render: v => (v === null ? '' : getScheduleType({status: v})),
+    // render: v => (v === null ? '' : getScheduleType({status: v})),
+    render: v => (v ? '启动' : '暂停'),
   }, {
     title: '计划状态',
     dataIndex: 'status',
@@ -103,13 +108,13 @@ export default class SyncList extends Component {
               <Fragment>
                 <span className="disabled">启动</span>
                 <span className="table-action-line" />
-                <a href onClick={() => { }}>编辑</a>
+                <a href onClick={() => this.editSync(record)}>编辑</a>
                 <span className="table-action-line" />
                 <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
                   <a href>删除</a>
                 </Popconfirm>
                 <span className="table-action-line" />
-                <a href onClick={() => { }}>提交日志</a>
+                <a href onClick={() => this.getLog(record.id)}>提交日志</a>
               </Fragment>
              
             )
@@ -119,21 +124,19 @@ export default class SyncList extends Component {
           if (record.status === 1 && record.scheduleType === 0 && record.lastStatus === 1) {
             return (
               <Fragment>
-                <Popconfirm placement="topRight" title="你确定要启动吗？" onConfirm={() => this.startSync(record.id)}>
-                  <a href>启动</a>
-                </Popconfirm>
+                <a href onClick={() => this.startSync(record)}>启动</a>
                 <span className="table-action-line" />
                 <Popconfirm placement="topRight" title="你确定要执行吗？" onConfirm={() => this.runSync(record.id)}>
                   <a href>执行</a>
                 </Popconfirm>
                 <span className="table-action-line" />
-                <a href onClick={() => { }}>编辑</a>
+                <a href onClick={() => this.editSync(record)}>编辑</a>
                 <span className="table-action-line" />
                 <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
                   <a href>删除</a>
                 </Popconfirm>
                 <span className="table-action-line" />
-                <a href onClick={() => { }}>提交日志</a>
+                <a href onClick={() => this.getLog(record.id)}>提交日志</a>
               </Fragment>
              
             )
@@ -143,21 +146,19 @@ export default class SyncList extends Component {
           if (record.status === 5 && record.scheduleType === 0 && (record.lastStatus === 1 || record.lastStatus === 2)) {
             return (
               <Fragment>
-                <Popconfirm placement="topRight" title="你确定要启动吗？" onConfirm={() => this.startSync(record.id)}>
-                  <a href>启动</a>
-                </Popconfirm>
+                <a href onClick={() => this.startSync(record)}>启动</a>
                 <span className="table-action-line" />
                 <Popconfirm placement="topRight" title="你确定要执行吗？" onConfirm={() => this.runSync(record.id)}>
                   <a href>执行</a>
                 </Popconfirm>
                 <span className="table-action-line" />
-                <a href onClick={() => { }}>编辑</a>
+                <a href onClick={() => this.editSync(record)}>编辑</a>
                 <span className="table-action-line" />
                 <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
                   <a href>删除</a>
                 </Popconfirm>
                 <span className="table-action-line" />
-                <a href onClick={() => { }}>提交日志</a>
+                <a href onClick={() => this.getLog(record.id)}>提交日志</a>
               </Fragment>
             )
           }
@@ -166,18 +167,28 @@ export default class SyncList extends Component {
           if (record.status === 4 && record.scheduleType === 1 && (record.lastStatus === 1 || record.lastStatus === 2)) {
             return (
               <Fragment>
-                <Popconfirm placement="topRight" title="你确定要启动吗？" onConfirm={() => this.startSync(record.id)}>
-                  <a href>启动</a>
-                </Popconfirm>
+                <a href onClick={() => this.startSync(record)}>启动</a>
                 <span className="table-action-line" />
                 <span className="disabled">编辑</span>
                 <span className="table-action-line" />
                 <span className="disabled">删除</span>
                 <span className="table-action-line" />
-                <a href onClick={() => { }}>提交日志</a>
+                <a href onClick={() => this.getLog(record.id)}>提交日志</a>
               </Fragment>
             )
           }
+
+          return (
+            <Fragment>
+              <span className="disabled">启动</span>
+              <span className="table-action-line" />
+              <span className="disabled">编辑</span>
+              <span className="table-action-line" />
+              <span className="disabled">删除</span>
+              <span className="table-action-line" />
+              <span className="disabled">提交日志</span>
+            </Fragment>
+          )
         })()}
       </div>
     ),
@@ -193,29 +204,39 @@ export default class SyncList extends Component {
     store.visible = true
   }
 
+  @action.bound editSync(data) {
+    store.selectItem = data
+    store.visibleEdit = true
+  }
 
   // 启动
-  startSync = id => {
-    store.startSync(id)
+  @action.bound startSync(data) {
+    store.selectItem = data
+    store.visibleStart = true
   }
 
   // 暂停
-  pauseSync = id => {
+  @action.bound pauseSync(id) {
     store.pauseSync(id)
   }
 
   // 执行
-  runSync = id => {
+  @action.bound runSync(id) {
     store.runSync(id)
   }
 
   // 删除同步计划
-  delList = id => {
+  @action.bound delList(id) {
     store.delList(id)
   }
 
+  @action.bound getLog(id) {
+    store.visibleLog = true
+    store.getLog(id)
+  }
+
   render() {
-    const {objList, projectId} = store
+    const {objList, projectId, visibleEdit} = store
 
     const listConfig = {
       columns: this.columns,
@@ -235,6 +256,9 @@ export default class SyncList extends Component {
             <ListContent {...listConfig} />
           </div>
           <DrawerAddSync projectId={projectId} />
+          <DrawerEditSync projectId={projectId} visible={visibleEdit} />
+          <ModalLog />
+          <ModalStart />
         </div>
       </Provider>
     )

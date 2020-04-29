@@ -15,6 +15,14 @@ class Store {
   @observable storageId = undefined
   @observable storageName = undefined
 
+  @action.bound destroy() {
+    this.currentStep = 0
+    this.storageType = undefined
+    this.storageType = undefined
+    this.storageName = undefined
+    this.confirmLoading = false
+  }
+
   // 上一步
   @action.bound lastStep() {
     this.currentStep = this.currentStep - 1
@@ -109,52 +117,11 @@ class Store {
   @action async getTagTree(params) {
     this.treeLoading = true
     try {
-      const res = await io.getTagTree(params)
-      // const res = [
-      //   {
-      //     id: 69521331111,
-      //     aId: 13123,
-      //     type: 0, // 0 标签 1 类目 2 对象
-      //     name: '标签名称1',
-      //     parentId: 6952133304359872,
-      //     isUsed: 0, // 0标签未选择 1标签已选择
-      //     columnType: 'varchar',
-      //     enName: 'enName',
-      //     valueType: 1,
-      //     valueTypeName: '文本型',
-      //     isMajor: 1, // 是否主标签
-      //   },
-      //   {
-      //     id: 69521598722,
-      //     aId: 1311223,
-      //     type: 0, // 0 标签 1 类目 2 对象
-      //     name: '标签名称2',
-      //     parentId: 6952133304359872,
-      //     isUsed: 0, // 0标签未选择 1标签已选择
-      //     columnType: 'varchar',
-      //     enName: 'enName',
-      //     valueType: 1,
-      //     valueTypeName: '文本型',
-      //   }, {
-      //     id: 69523598721,
-      //     aId: 13123123,
-      //     type: 0, // 0 标签 1 类目 2 对象
-      //     name: '标签名称3',
-      //     parentId: 6952133304359872,
-      //     isUsed: 0, // 0标签未选择 1标签已选择
-      //     columnType: 'varchar',
-      //     enName: 'enName',
-      //     valueType: 1,
-      //     valueTypeName: '文本型',
-      //   }, 
-      //   {
-      //     id: 6952133304359872,
-      //     aId: 6952133304359872,
-      //     type: 1, // 0 标签 1 类目 2 对象
-      //     name: '类目名称',
-      //     parentId: 0,
-      //   },
-      // ]
+      const res = await io.getTagTree({
+        projectId: this.projectId,
+        ...params,
+      })
+    
       runInAction(() => {
         this.originTreeData = res
         this.treeData = listToTree(res)
@@ -186,6 +153,30 @@ class Store {
       }
     } catch (e) {
       errorTip(e.message)
+    }
+  }
+
+  @observable confirmLoading = false
+   // 新增同步计划
+   @action async addSync(params, cb) {
+    this.confirmLoading = true
+
+    try {
+      await io.addSync({
+        projectId: this.projectId,
+        ...params,
+      })
+      runInAction(() => {
+        if (cb) {
+          cb()
+        }
+      })
+    } catch (e) {
+      errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        this.confirmLoading = false
+      })
     }
   }
 }

@@ -25,40 +25,42 @@ export default class TagList extends Component {
       title: '标签名称',
       dataIndex: 'name',
       key: 'name',
-      render: text => <OmitTooltip maxWidth={80} text={text} />,
+      render: text => <OmitTooltip maxWidth={50} text={text} />,
     },
     {
       title: '唯一标识',
       dataIndex: 'enName',
       key: 'enName',
-      render: text => <OmitTooltip maxWidth={80} text={text} />,
+      render: text => <OmitTooltip maxWidth={50} text={text} />,
     },
     {
       title: '数据类型',
       dataIndex: 'valueTypeName',
       key: 'valueTypeName',
-      render: text => <OmitTooltip maxWidth={80} text={text} />,
+      render: text => <OmitTooltip maxWidth={50} text={text} />,
     },
     {
       title: '是否枚举',
-      dataIndex: 'is_enum',
-      key: 'is_enum',
+      dataIndex: 'isEnum',
+      key: 'isEnum',
+      render: text => <OmitTooltip maxWidth={50} text={text ? '是' : '否'} />,
     },
     {
       title: '枚举显示值',
       dataIndex: 'enumValue',
       key: 'enumValue',
+      render: text => <OmitTooltip maxWidth={80} text={text} />,
     },
     {
       title: '业务逻辑',
       dataIndex: 'descr',
       key: 'descr',
-      render: text => <OmitTooltip maxWidth={100} text={text} />,
+      // render: text => <OmitTooltip maxWidth={100} text={text} />,
     },
     {
       title: '操作',
       dataIndex: 'action',
-      width: 150,
+      width: 80,
       render: (text, record) => {
         if (record.isUsed) {
           return <Tooltip title="标签使用中, 不可移除"><span className="disabled">移除</span></Tooltip>
@@ -92,6 +94,7 @@ export default class TagList extends Component {
   }
 
   render() {
+    console.log(this.getFilterData())
     const listConfig = {
       dataSource: this.getFilterData(),
       rowKey: 'id',

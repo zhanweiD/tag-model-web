@@ -2,7 +2,7 @@ import ioContext from '../../common/io-context'
 import {baseApi, get} from '../../common/util'
 
 const api = {
-  getList: get(`${baseApi}/transfer/schema/getSchemePage`), // 同步计划列表
+  getList: get(`${baseApi}/transfer/scheme/listTagTransferResult`), // 标签同步结果列表
 
 } 
 

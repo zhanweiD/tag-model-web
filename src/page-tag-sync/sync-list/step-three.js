@@ -1,19 +1,58 @@
 import {Component} from 'react'
-import {observer} from 'mobx-react'
-import {toJS} from 'mobx'
+import {observer, inject} from 'mobx-react'
+import {action, toJS} from 'mobx'
 import {Button, Tag} from 'antd'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
 
+@inject('bigStore')
 @observer
 export default class StepThree extends Component {
   constructor(props) {
     super(props)
     this.store = props.store
+    this.bigStore = props.bigStore
+  }
+
+  @action.bound submit() {
+    const {previewData, tableData} = this.store
+    const {closeDrawer} = this.props
+    const t = this
+
+    const mainTagMappingKeys = tableData.filter(d => d.isMajor).map(s => ({
+      tagId: s.aId,
+      columnName: s.columnName || s.enName, 
+      columnType: s.columnType,
+    }))
+
+    const source = tableData.filter(d => !d.isMajor).map(s => ({
+      tagId: s.aId,
+      columnName: s.columnName || s.enName, 
+      columnType: s.columnType,
+    }))
+    const params = {
+      name: previewData.name,
+      objId: previewData.objId && previewData.objId.key,
+      descr: previewData.descr,
+      dataDbType: previewData.dataDbType && previewData.dataDbType.key,
+      dataStorageId: previewData.dataStorageId && previewData.dataStorageId.key,
+      isDefineTable: previewData.isDefineTable ? 1 : 0,
+      source,
+      mainTagMappingKeys,
+    }
+
+    if (previewData.isDefineTable) {
+      params.tableName = previewData.tableName
+    }
+
+    this.store.addSync(params, () => {
+      closeDrawer()
+      t.bigStore.getList({currentPage: 1})
+    })
   }
 
   render() {
     const {show} = this.props
-    const {previewData} = this.store
+    const {previewData, tableData, confirmLoading} = this.store
 
     const {
       name,
@@ -23,6 +62,7 @@ export default class StepThree extends Component {
       dataStorageId = {},
       tableName,
     } = previewData
+
     return (
       <div style={{display: show ? 'block' : 'none'}}>
         <div className="preview-box">
@@ -64,20 +104,23 @@ export default class StepThree extends Component {
           />
           <div className="info-title ">配置同步标签</div>
           <div className="FBH ml24 mb24">
-            <div style={{color: ' rgba(0, 0, 0, 0.45)'}}>同步标签总数：</div>
+            <div style={{color: ' rgba(0, 0, 0, 0.45)'}}>
+              <span>同步标签总数：</span>
+              {tableData.length}
+            </div>
             <div>{previewData.tagTotalCount}</div>
           </div>
           <div className="FBH ml24 mb24">
             <div style={{color: ' rgba(0, 0, 0, 0.45)'}}>同步标签：</div>
-            <div>{[].map(d => <Tag>{d}</Tag>)}</div>
+            <div>{tableData.map(d => <Tag>{d.name}</Tag>)}</div>
           </div>
         </div>
        
         <div className="bottom-button">
           <Button
             type="primary"
-            // style={{marginRight: 8}}
-            // onClick={this.nextStep}
+            onClick={this.submit}
+            loading={confirmLoading}
           >
             提交
           </Button>

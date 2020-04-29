@@ -2,7 +2,7 @@
  * @description 标签管理 - 标签模型
  */
 import {Component, Fragment} from 'react'
-import {action} from 'mobx'
+import {action, toJS} from 'mobx'
 import {observer, inject, Provider} from 'mobx-react'
 import {Popconfirm, Button} from 'antd'
 import {Link} from 'react-router-dom'
@@ -13,7 +13,7 @@ import {
 import {
   tagStatusBadgeMap,
   usedStatusBadgeMap,
-  publishStatusBadgeMap,
+  // publishStatusBadgeMap,
   tagConfigMethodTableMap,
 } from '../util'
 import seach from './search'
@@ -70,12 +70,14 @@ export default class TagList extends Component {
     title: '使用状态',
     dataIndex: 'isUsed',
     render: v => usedStatusBadgeMap(+v),
-  }, {
-    key: 'publish',
-    title: '公开状态',
-    dataIndex: 'publish',
-    render: v => publishStatusBadgeMap(+v),
-  }, {
+  }, 
+  // {
+  //   key: 'publish',
+  //   title: '公开状态',
+  //   dataIndex: 'publish',
+  //   render: v => publishStatusBadgeMap(+v),
+  // }, 
+  {
     key: 'action',
     title: '操作',
     width: 150,
@@ -324,8 +326,8 @@ export default class TagList extends Component {
       openDrawer,
       list, 
       tableLoading,
-      // rowKeys,
       drawerTagConfigType,
+      batchConfigVisible,
     } = store
 
     const noDataConfig = {
@@ -337,19 +339,11 @@ export default class TagList extends Component {
       noAuthText: '没有任何标签',
     }
 
-    // const rowSelection = {
-    //   selectedRowKeys: rowKeys.slice(),
-    //   onChange: this.onTableCheck,
-    //   getCheckboxProps: record => ({
-    //     disabled: record.status !== 0, 
-    //   }),
-    // }
-
     const listConfig = {
       // rowSelection,
       columns: this.columns,
       initParams: {projectId},
-      searchParams: seach({objectSelectList}),
+      searchParams: seach({objectSelectList: toJS(objectSelectList)}),
       buttons: [
         <AuthBox
           code="asset_tag_project_tag_operator"
@@ -397,7 +391,11 @@ export default class TagList extends Component {
                     onUpdate={updateTagConfig}
                     type={drawerTagConfigType}
                   />
-                  <DrawerBatchConfig />
+                  <DrawerBatchConfig 
+                    projectId={projectId}
+                    visible={batchConfigVisible}
+                    objectSelectList={objectSelectList}
+                  />
                 </Fragment>
               ) : this.renderNodata()
           }    

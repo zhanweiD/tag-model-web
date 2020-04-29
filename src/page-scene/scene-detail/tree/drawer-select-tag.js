@@ -114,6 +114,7 @@ export default class SelectTag extends Component {
                 width: '100%',
                 background: '#fff',
                 textAlign: 'right',
+                padding: '10px 16px',
               }}
             > 
               <Button onClick={this.closeDrawer} className="mr8">取消</Button>

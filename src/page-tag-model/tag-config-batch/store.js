@@ -1,29 +1,33 @@
 import {
-  action, observable,
+  action, observable, runInAction, toJS,
 } from 'mobx'
-import {toJS} from 'mobx-react'
 import {successTip, errorTip, failureTip} from '../../common/util'
 import io from './io'
 
-class Store {
+class DrawerStore {
   constructor({
     projectId,
   } = {}) {
     this.projectId = projectId
   }
 
+  result = []
+  source = []
+  target = []
+
   @observable confirmLoading = false
   @observable currentStep = 0
   
   // 选择标签 - 搜索相关
   @observable objId = '' // 选择的对象id
-  @observable objList = [] // 对象下拉列表数据
+  // @observable objList = [] // 对象下拉列表数据
   @observable boundMethodId = 0 // 绑定方式
   @observable isShowPublished = false // 是否展示标签状态为已发布的标签
 
   // 选择标签 - 标签列表
   @observable selectTagList = []
   @observable rowKeys = []
+  @observable selectedRowKeys = []
 
   // 上一步
   @action.bound lastStep() {
@@ -33,6 +37,25 @@ class Store {
   // 下一步
   @action.bound nextStep() {
     this.currentStep = this.currentStep + 1
+  }
+
+
+  @observable configTagList = []
+
+  @action async getConfigTagList() {
+    try {
+      const res = await io.getConfigTagList({
+        objId: this.objId,
+        configType: this.boundMethodId,
+      })
+
+      runInAction(() => {
+        this.configTagList = res
+        this.selectedRowKeys = res.filter(d => d.deployStatus === 2).map(d => d.id)
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
   }
 
   async getResultData() {
@@ -80,7 +103,7 @@ class Store {
       const params = {
         id: this.objId,
         projectId: this.projectId,
-        tagIds: toJS(this.rowKeys),
+        tagIds: toJS(this.selectedRowKeys),
       }
 
       let res = []
@@ -124,4 +147,4 @@ class Store {
   }
 }
 
-export default new Store()
+export default DrawerStore

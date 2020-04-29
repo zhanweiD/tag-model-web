@@ -7,7 +7,7 @@ import {action, toJS} from 'mobx'
 import {
   Input, Form, Select, Button, Switch,
 } from 'antd'
-import ModalStotageDetail from './modal-storage-detail'
+import {ModalStotageDetail} from '../../component'
 
 const FormItem = Form.Item
 const Option = {Select}
@@ -49,19 +49,26 @@ export default class StepOne extends Component {
   } 
 
   @action.bound selecStorageType(obj) {
-    const {form: {resetFields}} = this.props
+    const {form: {resetFields, getFieldValue}} = this.props
     this.store.storageType = obj.key
     
     this.store.storageId = undefined
     resetFields(['dataStorageId'])
 
-    this.store.getStorageList({
-      storageType: obj.key,
-      objId: this.store.objId,
-    })
+    if (getFieldValue('objId')) {
+      this.store.getStorageList({
+        storageType: obj.key,
+        objId: this.store.objId,
+      })
+    }
   } 
 
   @action.bound selecStorage(obj) {
+    const {form: {setFieldsValue}} = this.props
+
+    setFieldsValue({
+      dataStorageId: obj,
+    })
     this.store.storageId = obj.key
     this.store.storageName = this.getStoragName(obj.key)
   } 
@@ -89,9 +96,9 @@ export default class StepOne extends Component {
       if (err) {
         return
       } 
+
       t.store.previewData = values
       t.nextStep()
-      // console.log(values)
     })
   }
 
@@ -101,6 +108,10 @@ export default class StepOne extends Component {
       dataStorageId: this.store.storageId,
     })
     this.store.storageVisible = true
+  }
+
+  @action.bound closeStorageDetail() {
+    this.store.storageVisible = false
   }
 
   // 重名校验
@@ -135,6 +146,9 @@ export default class StepOne extends Component {
       objList,
       storageTypeList,
       storageList,
+      storageDetailLoading,
+      storageDetail,
+      storageVisible,
     } = this.store
 
     return (
@@ -213,7 +227,7 @@ export default class StepOne extends Component {
             )}
           >
             {getFieldDecorator('dataStorageId', {
-              // rules: [{required: true, message: '请选择目的源'}],
+              rules: [{required: true, message: '请选择目的源'}],
             })(
               <div className="select-storage">
                 <Select 
@@ -224,7 +238,7 @@ export default class StepOne extends Component {
                 >
                   {
                     storageList.map(item => (
-                      <Option key={item.dataStorageId} value={item.dataStorageId} disabled={item.used}>{item.storageName}</Option>
+                      <Option key={item.storageId} value={item.storageId} disabled={item.isUsed}>{item.storageName}</Option>
                     ))
                   }
                 </Select>
@@ -249,10 +263,10 @@ export default class StepOne extends Component {
                     {transform: value => value && value.trim()},
                     {required: true, message: '表名不能为空'},  
                   ]})(
-                    <div className="FBH"> 
-                    <span className="ml16 mr16">tbjh_</span>
-                    <Input autoComplete="off" placeholder="请输入表名称" />
-                  </div>
+                  <div className="FBH"> 
+                      <span className="ml16 mr16">tbjh_</span>
+                      <Input autoComplete="off" placeholder="请输入表名称" />
+                    </div>
                 )}
               </FormItem>
             ) : null
@@ -269,7 +283,13 @@ export default class StepOne extends Component {
             下一步
           </Button>
         </div>
-        <ModalStotageDetail store={this.store} />
+
+        <ModalStotageDetail 
+          visible={storageVisible}
+          detail={storageDetail}
+          loading={storageDetailLoading}
+          handleCancel={this.closeStorageDetail}
+        />
       </div>
     )
   }

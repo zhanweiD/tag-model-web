@@ -1,8 +1,9 @@
 import {Component} from 'react'
 import {observer} from 'mobx-react'
-import {Button, Select, Switch, Table} from 'antd'
+import {Button, Select, Switch, Table, Badge} from 'antd'
 import {action} from 'mobx'
 import {tagConfigMethodMap} from '../util'
+import {getDataTypeName} from '../../common/util'
 
 const {Option} = Select
 
@@ -18,16 +19,29 @@ export default class StepOne extends Component {
     dataIndex: 'name',
   }, {
     title: '唯一标识',
-    dataIndex: 'name',
+    dataIndex: 'enName',
   }, {
     title: '数据类型',
-    dataIndex: 'name',
+    dataIndex: 'valueType',
+    render: text => getDataTypeName(text),
   }, {
     title: '配置状态',
-    dataIndex: 'name',
+    dataIndex: 'configStatus',
+    render: text => (text ? <Badge color="#87d068" text="已配置" /> : <Badge color="#d9d9d9" text="待配置" />),
   }, {
     title: '标签状态',
-    dataIndex: 'name',
+    dataIndex: 'deployStatus',
+    render: text => (
+      <div>
+        {
+          text === 1 && <Badge color="#d9d9d9" text="待发布" />
+        }
+
+        {
+          text === 2 && <Badge color="#87d068" text="已发布" />
+        }
+      </div>
+    ),
   }]
 
   @action.bound nextStep() {
@@ -36,10 +50,12 @@ export default class StepOne extends Component {
 
   @action.bound objectSelect(v) {
     this.store.objId = v
+    this.store.getConfigTagList()
   }
 
   @action.bound boundMethodSelect(v) {
     this.store.boundMethodId = v
+    this.store.getConfigTagList()
   }
   
   @action.bound switchChange(v) {
@@ -55,22 +71,25 @@ export default class StepOne extends Component {
   }
 
   render() {
-    const {show, closeDrawer} = this.props
-    const {objId, objList, boundMethodId, selectedRowKeys} = this.store
+    const {show, closeDrawer, objectSelectList} = this.props
+    const {objId, boundMethodId, selectedRowKeys, configTagList, isShowPublished} = this.store
+
+    const dataSource = isShowPublished ? configTagList.filter(d => d.deployStatus === 2) : configTagList.filter(d => d.deployStatus === 1)
 
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onTableCheck,
-      // getCheckboxProps: record => ({
-      //   disabled: record.name === 'Disabled User', // Column configuration not to be checked
-      //   name: record.name,
-      // }),
+      getCheckboxProps: record => ({
+        disabled: record.deployStatus === 2,
+      }),
     }
 
     const tableConfig = {
       rowSelection,
       columns: this.columns,
-      dataSource: [],
+      dataSource,
+      pagination: false,
+      rowKey: 'id',
     }
 
     return (
@@ -78,15 +97,14 @@ export default class StepOne extends Component {
         <div className="mb24">
           <span className="search-label">对象</span>
           <Select value={objId} style={{width: 240}} onChange={this.objectSelect}>
-            <Option value="">全部</Option>
             {
-              objList.map(
-                ({projectId, projectName}) => (
+              objectSelectList.map(
+                ({value, name}) => (
                   <Option 
-                    key={projectId} 
-                    value={projectId}
+                    key={value} 
+                    value={value}
                   >
-                    {projectName}
+                    {name}
                   </Option>
                 )
               )
@@ -126,6 +144,7 @@ export default class StepOne extends Component {
             type="primary"
             style={{marginRight: 8}}
             onClick={this.nextStep}
+            disabled={!selectedRowKeys.length}
           >
             下一步
           </Button>

@@ -37,7 +37,7 @@ const context = nattyFetch.context({
       }
       return {
         success: response.success,
-        content: response.content || {},
+        content: response.content,
         error: {
           message: response.message || response.errorMsg,
           code: response.code || response.errorCode,

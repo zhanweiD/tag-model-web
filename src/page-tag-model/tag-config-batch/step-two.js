@@ -20,37 +20,12 @@ export default class StepTwo extends Component {
   block = false
   id = ''
 
-  // componentWillMount() {
-  //   const {projectId} = this.props
-  //   this.store = new Store({
-  //     projectId,
-  //   })
-  // }
-
-  // componentWillReceiveProps(nextProps) {
-  //   const {
-  //     show,
-  //   } = this.props
-
-  //   if (!_.isEqual(visible !== nextProps.visible) && nextProps.visible) {
-  //     this.store.objId = nextProps.info.objId
-  //     this.store.tagIds = [+nextProps.info.id]
-  //     this.store.boundMethodId = nextProps.info.boundMethodId
-
-  //     this.setState({
-  //       loading: true,
-  //     })
-  //     this.getAllData()
-  //   }
-  // }
-
-  // componentDidMount() {
-  //   this.getAllData()
-  // }
-
   componentWillReceiveProps(nextProps) {
-    const {show} = this.prop
+    const {show} = this.props
     if (nextProps.show && show !== nextProps.show) {
+      this.setState({
+        loading: true,
+      })
       this.getAllData()
     }
   }
@@ -97,6 +72,7 @@ export default class StepTwo extends Component {
           const {
             onUpdate,
           } = this.props
+          console.log(onUpdate)
           if (onUpdate) {
             onUpdate()
           }
@@ -104,7 +80,6 @@ export default class StepTwo extends Component {
       })
     })
   }
-
 
   render() {
     const {
@@ -123,7 +98,6 @@ export default class StepTwo extends Component {
       boundMethodId,
     } = this.store
 
-    console.log()
     return (
       <div style={{display: show ? 'block' : 'none'}}>
         {
@@ -157,13 +131,6 @@ export default class StepTwo extends Component {
                     dataIndex: boundMethodId === 1 ? 'schemeName' : 'dataTableName',
                     width: 90,
                   },
-                  /*
-                    {
-                      title: '',
-                      width: 10,
-                      render: () => <span></span>,
-                    },
-                    */
                 ]}
                 sourceColumns={[
                   {
@@ -226,8 +193,8 @@ export default class StepTwo extends Component {
                     width: 60,
                   },
                   {
-                    title: '数据表',
-                    dataIndex: 'dataTableName',
+                    title: boundMethodId === 1 ? '加工方案' : '数据表',
+                    dataIndex: boundMethodId === 1 ? 'schemeName' : 'dataTableName',
                     width: 130,
                   },
                 ]}
@@ -340,16 +307,17 @@ export default class StepTwo extends Component {
               </div>
             )
         }
-        <div className="bottom-button">
+        {/* <div className="bottom-button">
           <Button style={{marginRight: 8}} onClick={() => this.store.lastStep()}>上一步</Button>
           <Button
             type="primary"
             style={{marginRight: 8}}
-            onClick={this.nextStep}
+            onClick={this.submit}
+            loading={submitting}
           >
             确定
           </Button>
-        </div>
+        </div> */}
       </div>
     )
   }

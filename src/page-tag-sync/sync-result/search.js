@@ -1,7 +1,7 @@
 const serach = () => [
   {
     label: '数据源',
-    key: 'cUserId',
+    key: 'storageId',
     initialValue: '',
     control: {
       defaultAll: true,
@@ -10,7 +10,7 @@ const serach = () => [
     component: 'select',
   }, {
     label: '对象名称',
-    key: 'cUserId',
+    key: 'objId',
     initialValue: '',
     control: {
       defaultAll: true,
@@ -19,7 +19,7 @@ const serach = () => [
     component: 'select',
   }, {
     label: '使用状态',
-    key: 'cUserId',
+    key: 'lastStatus',
     initialValue: '',
     control: {
       defaultAll: true,
@@ -28,14 +28,14 @@ const serach = () => [
     component: 'select',
   }, {
     label: '同步计划',
-    key: 'name',
+    key: 'transferSchemeName',
     control: {
       placeholder: '请输入计划名称关键字',
     },
     component: 'input',
   }, {
     label: '标签名称',
-    key: 'name',
+    key: 'tagName',
     control: {
       placeholder: '请输入标签名称关键字',
     },

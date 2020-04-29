@@ -25,8 +25,8 @@ export default class DrawerAddSync extends Component {
   }
   
   @action.bound closeDrawer() {
+    store.destroy()
     this.bigStore.visible = false
-    store.currentStep = 0
   }
 
   render() {
@@ -65,6 +65,7 @@ export default class DrawerAddSync extends Component {
           <StepThree
             store={store}
             show={currentStep === 2} 
+            closeDrawer={this.closeDrawer}
           />
         </div>
       </Drawer>
