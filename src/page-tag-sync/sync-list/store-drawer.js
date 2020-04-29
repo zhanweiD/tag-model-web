@@ -128,7 +128,10 @@ class Store {
         if (res.length) {
           const majorTag = res.filter(d => d.isMajor)
           this.majorTagList = majorTag
-          this.tableData = majorTag
+          this.tableData = majorTag.filter(d => d.isUsed).map(d => ({
+            ...d,
+            columnName: d.enName,
+          }))
         }
       })
     } catch (e) {

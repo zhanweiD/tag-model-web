@@ -72,7 +72,7 @@ class Store extends ListContentStore(io.getList) {
         this.storageTypeList = changeToOptions(res)('name', 'type')
       })
     } catch (e) {
-      errorTip(e.message)
+      errorTip(e.message)       
     }
   }
 

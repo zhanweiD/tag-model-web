@@ -63,7 +63,6 @@ export default class StepOne extends Component {
   }
 
   @action.bound onTableCheck(keys, rows) {
-    console.log()
     // 表格 - 已选项
     // this.store.selectedRowKeys = rows
 
@@ -97,7 +96,7 @@ export default class StepOne extends Component {
       <div style={{display: show ? 'block' : 'none'}}>
         <div className="mb24">
           <span className="search-label">对象</span>
-          <Select value={objId} style={{width: 240}} onChange={this.objectSelect}>
+          <Select value={objId} style={{width: 240}} onChange={this.objectSelect} placeholder="请选择">
             {
               objectSelectList.map(
                 ({value, name}) => (

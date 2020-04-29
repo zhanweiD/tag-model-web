@@ -302,32 +302,32 @@ export default class DrawerTagConfig extends Component {
                   searchSelectKey={configType === 1 ? 'schemeName' : 'dataTableName'}
                   isShowMapping
                   canMapping
-                  beforeMapping={v => {
-                    const mappingItem = v[0]
-                    if (mappingItem.valueTypeName !== mappingItem.dataFieldType) {   
-                      message.error(`${mappingItem.tagName}(标签)与${mappingItem.dataFieldName}(字段)数据类型不匹配， 绑定失败`)
-                      return new Promise(function (resolve, reject) {
-                        reject([])
-                      })
-                    } 
-                    return new Promise(function (resolve, reject) {
-                      resolve([])
-                    })
-                  }}
-                  beforeNameMapping={v => {
-                    const originalResult = v.filter(d => d.isUsed || d.status === 2)
+                  // beforeMapping={v => {
+                  //   const mappingItem = v[0]
+                  //   if (mappingItem.valueType !== mappingItem.dataFieldType) {   
+                  //     message.error(`${mappingItem.tagName}(标签)与${mappingItem.dataFieldName}(字段)数据类型不匹配， 绑定失败`)
+                  //     return new Promise(function (resolve, reject) {
+                  //       reject([])
+                  //     })
+                  //   } 
+                  //   return new Promise(function (resolve, reject) {
+                  //     resolve([])
+                  //   })
+                  // }}
+                  // beforeNameMapping={v => {
+                  //   const originalResult = v.filter(d => d.isUsed || d.status === 2)
         
-                    const successResult = v.filter(d => d.valueTypeName === d.dataFieldType)
+                  //   const successResult = v.filter(d => d.valueType === d.dataFieldType)
         
-                    const errorResult = v.filter(d => d.valueTypeName !== d.dataFieldType)
-                    message.info(`${successResult.length}个标签映射成功，${errorResult.length}个标签映射失败`)
+                  //   const errorResult = v.filter(d => d.valueType !== d.dataFieldType)
+                  //   message.info(`${successResult.length}个标签映射成功，${errorResult.length}个标签映射失败`)
         
-                    const mappingResult = originalResult.concat(successResult)
+                  //   const mappingResult = originalResult.concat(successResult)
         
-                    return new Promise(function (resolve, reject) {
-                      resolve(mappingResult)
-                    })
-                  }}
+                  //   return new Promise(function (resolve, reject) {
+                  //     resolve(mappingResult)
+                  //   })
+                  // }}
                 />
               )
               

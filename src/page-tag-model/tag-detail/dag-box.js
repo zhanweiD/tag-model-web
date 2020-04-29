@@ -26,6 +26,17 @@ const fieldHoverInfo = [{
   key: 'storageName',
 }]
 
+const deriveTagHoverInfo = [{
+  label: '唯一标识',
+  key: 'uniqueIdentification',
+}, {
+  label: '数据类型',
+  key: 'fieldType',
+}, {
+  label: '衍生方案',
+  key: 'derivativeSchemeName',
+}]
+
 @observer
 export default class DagBox extends Component {
   @observable clickBoxData = {}
@@ -201,6 +212,9 @@ export default class DagBox extends Component {
         break
       case 3:
         html = me.renderItem('应用名称', data.entityName)
+        break
+      case 4:
+        html = deriveTagHoverInfo.map(({label, key}) => me.renderItem(label, data[key]))
         break
       default:
         break

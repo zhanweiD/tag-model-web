@@ -82,9 +82,7 @@ class Store extends ListContentStore(io.getList) {
   @action async getGroups() {
     this.selectGroupsLoading = true
     try {
-      const res = await io.getGroups({
-        productId: window.__keeper.productId,
-      })
+      const res = await io.getGroups()
       runInAction(() => {
         if (res) {
           this.dataGroupData = changeToOptions(toJS(res || []))('groupName', 'groupId')

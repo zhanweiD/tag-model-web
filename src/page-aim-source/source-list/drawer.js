@@ -5,7 +5,7 @@ import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {action, observable, toJS} from 'mobx'
 import {Drawer, Input, Form, Select, Button} from 'antd'
-import {ModalStotageDetail} from '../../component'
+import {ModalStotageDetail, OmitTooltip} from '../../component'
 
 
 const FormItem = Form.Item
@@ -13,8 +13,8 @@ const Option = {Select}
 const {TextArea} = Input
 
 const formItemLayout = {
-  labelCol: {span: 4},
-  wrapperCol: {span: 20},
+  labelCol: {span: 5},
+  wrapperCol: {span: 19},
 }
 
 @Form.create()
@@ -35,23 +35,18 @@ export default class AddSource extends Component {
 
     this.entity0Key = undefined
     this.entity1Key = undefined
+    this.store.fieldList.clear()
+    this.store.storageTable.clear()
 
     resetFields(['dataTableName', 'entity0Key', 'entity1Key'])
   }
 
   @action.bound selectObj(v) {
-    const {form: {getFieldValue}} = this.props
+    const {form: {getFieldValue, resetFields}} = this.props
 
     this.objId = v
 
-    this.resetSelect()
-
     this.store.getRelObj({
-      objId: v,
-    })
-
-    this.store.getStorageList({
-      storageType: 1,
       objId: v,
     })
 
@@ -62,12 +57,17 @@ export default class AddSource extends Component {
         objId: v,
       })
     }
+     
+    this.storageId = undefined
+    resetFields(['dataStorageId'])
+    this.resetSelect()
   } 
 
   @action.bound selecStorageType(v) {
-    const {form: {getFieldValue}} = this.props
+    const {form: {getFieldValue, resetFields}} = this.props
 
     this.storageId = undefined
+    resetFields(['dataStorageId'])
     this.resetSelect()
 
     const objId = getFieldValue('objId')
@@ -99,6 +99,7 @@ export default class AddSource extends Component {
 
     this.entity0Key = undefined
     this.entity1Key = undefined
+    this.store.fieldList.clear()
 
     resetFields(['entity0Key', 'entity1Key'])
     
@@ -283,6 +284,8 @@ export default class AddSource extends Component {
               rules: [{required: true, message: '请选择数据源类型'}],
             })(
               <Select
+                showSearch
+                optionFilterProp="children"
                 placeholder="请选择数据源类型"
                 style={{width: '100%'}}
                 onSelect={v => this.selecStorageType(v)}
@@ -296,7 +299,7 @@ export default class AddSource extends Component {
             )}
           </FormItem>
           <FormItem
-            labelCol={{span: 4}}
+            labelCol={{span: 5}}
             wrapperCol={{span: 16}}
             label="数据源"
             extra={(
@@ -311,6 +314,8 @@ export default class AddSource extends Component {
             })(
               <div className="select-storage">
                 <Select
+                  showSearch
+                  optionFilterProp="children"
                   value={this.storageId}
                   placeholder="请选择数据源"
                   style={{width: '100%'}}
@@ -334,6 +339,8 @@ export default class AddSource extends Component {
               rules: [{required: true, message: '请选择目的表'}],
             })(
               <Select
+                showSearch
+                optionFilterProp="children"
                 placeholder="请选择目的表"
                 style={{width: '100%'}}
                 onSelect={v => this.selectTable(v)}
@@ -349,11 +356,13 @@ export default class AddSource extends Component {
           {
             this.objId ? (
               objRelList.map((d, i) => (
-                <FormItem {...formItemLayout} label={d.objName}>
+                <FormItem {...formItemLayout} label={<OmitTooltip text={d.objName} maxWidth={100} className="rel-entity-name" />}>
                   {getFieldDecorator(`entity${i}Key`, {
                     rules: [{required: true, message: '请选择主标签绑定的字段'}],
                   })(
                     <Select
+                      showSearch
+                      optionFilterProp="children"
                       placeholder="请选择主标签绑定的字段"
                       style={{width: '100%'}}
                       onSelect={v => this.selectField(v, i, d.objId, d.tagId)}

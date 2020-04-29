@@ -19,7 +19,7 @@ class DrawerStore {
   @observable currentStep = 0
   
   // 选择标签 - 搜索相关
-  @observable objId = '' // 选择的对象id
+  @observable objId = undefined // 选择的对象id
   // @observable objList = [] // 对象下拉列表数据
   @observable boundMethodId = 0 // 绑定方式
   @observable isShowPublished = false // 是否展示标签状态为已发布的标签

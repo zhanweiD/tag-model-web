@@ -32,8 +32,10 @@ export default class BatchConfig extends Component {
   componentWillReceiveProps(next) {
     const {visible} = this.props
     if (visible !== next.visible && next.visible) {
-      this.store.objId = next.objectSelectList && next.objectSelectList.length && next.objectSelectList[0].value
-      this.store.getConfigTagList()
+      if (next.objectSelectList.length) {
+        this.store.objId = next.objectSelectList[0].value
+        this.store.getConfigTagList()
+      }
     }
   }
   

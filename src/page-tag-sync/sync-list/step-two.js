@@ -22,7 +22,7 @@ export default class StepTwo extends Component {
   @action.bound rightToTable(tagData) {
     const nextKeys = tagData.map(d => d.id)
     const keys = this.store.tableData.map(d => d.id)
-    console.log(keys, nextKeys)
+  
     if (!_.isEqual(nextKeys, keys)) {
       const addArr = []
 

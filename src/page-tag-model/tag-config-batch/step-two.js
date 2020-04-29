@@ -102,6 +102,8 @@ export default class StepTwo extends Component {
       target,
       result,
       boundMethodId,
+      schemeList,
+      tableList,
     } = this.store
 
     return (

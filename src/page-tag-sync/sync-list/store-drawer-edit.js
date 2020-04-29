@@ -40,7 +40,10 @@ class Store {
         if (res.length) {
           const majorTag = res.filter(d => d.isMajor || d.isUsed)
           this.majorTagList.replace(majorTag)
-          this.tableData = res.filter(d => d.isUsed)
+          this.tableData = res.filter(d => d.isUsed).map(d => ({
+            ...d,
+            columnName: d.enName,
+          }))
         }
       })
     } catch (e) {

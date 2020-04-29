@@ -32,7 +32,7 @@ class EditableCell extends Component {
     
     return (
       <td {...restProps}>
-        {editing ? (
+        {editing && !record.isUsed ? (
           <Form.Item style={{margin: 0}} key={record.id}>
             {form.getFieldDecorator(record.id, {
               rules: [
@@ -109,25 +109,38 @@ export default class SyncTagList extends Component {
     render: (text, record) => {
       return (
         <div>
-          {
-            this.isEditing(record) ? (
-              <EditableContext.Consumer>
-                {form => (
-                  <a
-                    onClick={() => this.handleSave(form, record)}
-                    style={{marginRight: 8}}
-                  >
-                    保存
-                  </a>
-                )}
-              </EditableContext.Consumer>
-            ) : <a href disabled={this.state.editKey !== ''} onClick={() => this.edit(record)}>编辑</a>  
-          }
-     
-          <span className="table-action-line" />
-          {
-            record.isMajor || record.isUsed ? <span className="disabled">移除</span> : <a href onClick={() => this.remove(record)}>移除</a>
-          }
+          {(() => {
+            if (record.isUsed) {
+              return <span className="disabled">移除</span>
+            }
+
+            if (record.isMajor) {
+              return <span className="disabled">移除</span>
+            }
+
+            return (
+              <div>
+                {
+                  this.isEditing(record) ? (
+                    <EditableContext.Consumer>
+                      {form => (
+                        <a
+                          onClick={() => this.handleSave(form, record)}
+                          style={{marginRight: 8}}
+                        >
+                          保存
+                        </a>
+                      )}
+                    </EditableContext.Consumer>
+                  ) : <a href disabled={this.state.editKey !== ''} onClick={() => this.edit(record)}>编辑</a>  
+                }
+           
+                <span className="table-action-line" />
+                <a href onClick={() => this.remove(record)}>移除</a>
+              </div>
+            )
+          })()}
+        
         </div>
       )
     }, 
@@ -141,11 +154,20 @@ export default class SyncTagList extends Component {
   remove = d => {
     const {remove} = this.props
 
+    if (d.id === this.state.editKey) {
+      this.setState({
+        editKey: '',
+      })
+    }
     remove(d)
   }
 
   removeAll = () => {
     const {removeAll} = this.props
+
+    this.setState({
+      editKey: '',
+    })
 
     removeAll(Math.random())
   }
@@ -179,8 +201,8 @@ export default class SyncTagList extends Component {
       const arr = toJS(tableData).map(d => {
         if (d.id === data.id) {
           return {
-            columnName: data.columnName,
             ...d,
+            columnName: data.columnName,
           }
         }
         return d

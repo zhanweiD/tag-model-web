@@ -1,4 +1,5 @@
 import {Component} from 'react'
+import {toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {Badge} from 'antd'
 import * as navListMap from '../common/navList'
@@ -43,7 +44,7 @@ export default class SyncResult extends Component {
     dataIndex: 'tagTransferSchemeName',
   }, {
     title: '最近一次更新时间',
-    dataIndex: 'lastSubmitTime',
+    dataIndex: 'lastUpdateTime',
     render: text => <Time timestamp={text} />,
   }, {
     title: '使用状态',
@@ -67,7 +68,7 @@ export default class SyncResult extends Component {
     const listConfig = {
       columns: this.columns,
       initParams: {projectId},
-      searchParams: seach({objList, storageList}),
+      searchParams: seach({objList: toJS(objList), storageList: toJS(storageList)}),
       store, // 必填属性
     }
 

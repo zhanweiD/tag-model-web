@@ -178,7 +178,24 @@ export default class SyncList extends Component {
           if (record.status === 4 && record.scheduleType === 1 && (record.lastStatus === 1 || record.lastStatus === 2)) {
             return (
               <Fragment>
-                <a href onClick={() => this.startSync(record)}>启动</a>
+                <Popconfirm placement="topRight" title="你确定要暂停吗？" onConfirm={() => this.pauseSync(record.id)}>
+                  <a href>暂停</a>
+                </Popconfirm>
+                <span className="table-action-line" />
+                <span className="disabled">编辑</span>
+                <span className="table-action-line" />
+                <span className="disabled">删除</span>
+                <span className="table-action-line" />
+                <a href onClick={() => this.getLog(record.id)}>提交日志</a>
+              </Fragment>
+            )
+          }
+
+          /* 提交成功 & 启动  */
+          if (record.status === 1 && record.scheduleType === 1) {
+            return (
+              <Fragment>
+                <a href onClick={() => this.pauseSync(record.id)}>暂停</a>
                 <span className="table-action-line" />
                 <span className="disabled">编辑</span>
                 <span className="table-action-line" />

@@ -52,6 +52,17 @@ export default class DrawerEditSync extends Component {
     } 
   }
 
+  @action.bound removeList(item) {
+    store.tableData = store.tableData.filter(d => +d.id !== +item.id)
+    this.listRemoveItem = item
+  }
+
+  @action.bound removeListAll(d) {
+    const {majorTagList} = this.store
+    this.listRemoveAll = d
+    store.tableData.replace(majorTagList)
+  }
+
   @action.bound handleSubmit() {
     const {selectItem} = this.bigStore
     const {tableData} = store

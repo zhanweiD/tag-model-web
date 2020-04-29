@@ -141,11 +141,21 @@ export default class SyncTagList extends Component {
   remove = d => {
     const {remove} = this.props
 
+    if (d.id === this.state.editKey) {
+      this.setState({
+        editKey: '',
+      })
+    }
+
     remove(d)
   }
 
   removeAll = () => {
     const {removeAll} = this.props
+
+    this.setState({
+      editKey: '',
+    })
 
     removeAll(Math.random())
   }
