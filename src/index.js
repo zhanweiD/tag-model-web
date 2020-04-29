@@ -21,6 +21,7 @@ import TagSchema from './page-tag-schema'
 import TagWarehouse from './page-tag-warehouse'
 import AimSource from './page-aim-source'
 import TagSync from './page-tag-sync'
+import SyncResult from './page-sync-result'
 
 const njkData = {
   dict,
@@ -47,6 +48,7 @@ export default class Entry extends React.Component {
           <Route path="/tag-warehouse" component={TagWarehouse} />
           <Route path="/aim-source" component={AimSource} />
           <Route path="/tag-sync" component={TagSync} />
+          <Route path="/sync-result" component={SyncResult} />
 
           <Redirect to="/overview" />
         </Switch>

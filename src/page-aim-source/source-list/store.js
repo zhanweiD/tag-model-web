@@ -7,7 +7,6 @@ import io from './io'
 
 class Store extends ListContentStore(io.getList) {
   projectId
-  @observable list = []
 
   @observable visible = false
   @observable drawerVisible = false
@@ -82,7 +81,7 @@ class Store extends ListContentStore(io.getList) {
   @action async getStorageList(params) {
     try {
       const res = await io.getStorageList({
-        projectId: this.projectId,
+        id: this.projectId,
         ...params,
       })
       runInAction(() => {
@@ -94,7 +93,7 @@ class Store extends ListContentStore(io.getList) {
   }
 
   @observable storageTable = []
-  // 数据表列表
+  // 数据源列表
   @action async getStorageTable(params) {
     try {
       const res = await io.getStorageTable({

@@ -63,11 +63,12 @@ export default class StepOne extends Component {
   }
 
   @action.bound onTableCheck(keys, rows) {
+    console.log()
     // 表格 - 已选项
-    this.store.selectedRows = rows
+    // this.store.selectedRowKeys = rows
 
     // 表格 - 已选项key数组
-    this.store.rowKeys = keys
+    this.store.selectedRowKeys = keys
   }
 
   render() {

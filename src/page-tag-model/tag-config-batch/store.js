@@ -1,7 +1,7 @@
 import {
   action, observable, runInAction, toJS,
 } from 'mobx'
-import {successTip, errorTip, failureTip} from '../../common/util'
+import {successTip, errorTip, failureTip, changeToOptions} from '../../common/util'
 import io from './io'
 
 class DrawerStore {
@@ -39,7 +39,6 @@ class DrawerStore {
     this.currentStep = this.currentStep + 1
   }
 
-
   @observable configTagList = []
 
   @action async getConfigTagList() {
@@ -52,6 +51,39 @@ class DrawerStore {
       runInAction(() => {
         this.configTagList = res
         this.selectedRowKeys = res.filter(d => d.deployStatus === 2).map(d => d.id)
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+
+  @observable tableList = []
+
+  @action async getTableList() {
+    try {
+      const res = await io.getTableList({
+        id: this.objId,
+      })
+
+      runInAction(() => {
+        this.tableList = changeToOptions(res)('dataTableName', 'dataTableName')
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  @observable schemeList = []
+
+  @action async getSchemeList() {
+    try {
+      const res = await io.getSchemeList({
+        objId: this.objId,
+      })
+
+      runInAction(() => {
+        this.schemeList = changeToOptions(res)('name', 'name')
       })
     } catch (e) {
       errorTip(e.message)

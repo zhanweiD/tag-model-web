@@ -20,6 +20,7 @@ export default class ModalStotage extends Component {
 
   selectContent= () => {
     const {storageType, storageSelectList, storageTypeLoading, storageSelectLoading} = this.store
+
     return [{
       label: '数据源类型',
       key: 'storageType',
@@ -48,6 +49,8 @@ export default class ModalStotage extends Component {
 
   @action handleCancel = () => {
     this.store.visible = false
+    this.store.storageTypeLoading = false
+    this.store.storageSelectLoading = false
   }
 
   submit = () => {

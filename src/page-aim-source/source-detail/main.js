@@ -1,17 +1,29 @@
 import {Component, Fragment} from 'react'
 import {Spin, Popconfirm, Badge} from 'antd'
 import {action, observable} from 'mobx'
-import {observer} from 'mobx-react'
+import {observer, inject} from 'mobx-react'
 import {
   DetailHeader, ListContent, AuthBox, TabRoute,
 } from '../../component'
 import {Time} from '../../common/util'
+import * as navListMap from '../../common/navList'
 import ModalTagConfig from './modal'
 
 import store from './store'
 
 const tabs = [{name: '字段列表', value: 1}]
 
+// 面包屑设置
+// eslint-disable-next-line no-underscore-dangle
+
+const navList = [
+  navListMap.tagCenter,
+  navListMap.tagSync,
+  navListMap.aimSource,
+  {text: navListMap.aimSourceDetail.text},
+]
+
+@inject('frameChange')
 @observer
 export default class SourceDetail extends Component {
   constructor(props) {
@@ -76,6 +88,9 @@ export default class SourceDetail extends Component {
   }]
 
   componentWillMount() {
+    // 面包屑设置
+    const {frameChange} = this.props
+    frameChange('nav', navList)
     store.getDetail()
   }
 

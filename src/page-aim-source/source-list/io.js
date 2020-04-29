@@ -6,7 +6,7 @@ const api = {
   delList: get(`${targetSourceApi}/del`), // 删除数据源列表
   getObjList: get(`${targetSourceApi}/objs`), // 目的数据源-对象下拉列表
   getStorageType: get(`${targetSourceApi}/dataStorageType`), // 下拉数据源类型列表
-  getStorageList: get(`${targetSourceApi}/dataStorageList`), // 下拉数据源列表
+  getStorageList: get(`${baseApi}/project/projectDataStorageListByStorageType`), // 下拉数据源列表
   getStorageTable: get(`${targetSourceApi}/dataStorageTables`), // 下拉数据表列表
   getFieldList: get(`${targetSourceApi}/fields`), // 下拉数据表下字段列表
   addStorage: post(`${targetSourceApi}/add`), // 添加目的数据源

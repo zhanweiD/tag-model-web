@@ -19,9 +19,9 @@ export default class TagTree extends Component {
     this.store = props.store
   }
   @observable searchKey = undefined
-  @observable checkedKeys = []
-  @observable checkedTagData = []
-  @observable disabledKeys = []
+  // @observable checkedKeys = []
+  // @observable checkedTagData = []
+  // @observable disabledKeys = []
 
   // 全选操作
   @observable allChecked = false
@@ -31,13 +31,13 @@ export default class TagTree extends Component {
     const {listRemoveItem} = this.props
 
     if (!_.isEqual(listRemoveItem, next.listRemoveItem)) {
-      this.checkedKeys = this.checkedKeys.filter(d => +d !== +next.listRemoveItem.id)
-      this.disabledKeys = this.disabledKeys.filter(d => +d !== +next.listRemoveItem.id)
+      this.store.checkedKeys = this.store.checkedKeys.filter(d => +d !== +next.listRemoveItem.id)
+      this.store.disabledKeys = this.store.disabledKeys.filter(d => +d !== +next.listRemoveItem.id)
 
-      this.checkedTagData = this.checkedTagData.filter(d => +d.id !== +next.listRemoveItem.id)
+      this.store.checkedTagData = this.store.checkedTagData.filter(d => +d.id !== +next.listRemoveItem.id)
 
       this.allChecked = false
-      if (this.checkedKeys.length) {
+      if (this.store.checkedKeys.length) {
         this.indeterminate = true
       } else {
         this.indeterminate = false
@@ -46,9 +46,10 @@ export default class TagTree extends Component {
   }
 
   @action destroy() {
-    this.checkedKeys.clear()
-    this.checkedTagData.clear()
-    this.disabledKeys.clear()
+    this.store.checkedKeys.clear()
+    this.store.checkedTagData.clear()
+    this.store.disabledKeys.clear()
+
     this.searchKey = undefined
     this.allChecked = false
     this.indeterminate = false
@@ -61,12 +62,12 @@ export default class TagTree extends Component {
     if (e.target.checked) {
       this.indeterminate = false
       this.allChecked = true
-      this.checkedKeys.replace(this.getTagList.allKeys)
-      this.checkedTagData.replace(this.getTagList.allTags)
-    } else if (this.disabledKeys.length) {
+      this.store.checkedKeys.replace(this.getTagList.allKeys)
+      this.store.checkedTagData.replace(this.getTagList.allTags)
+    } else if (this.store.disabledKeys.length) {
       this.indeterminate = true
       this.allChecked = false
-      this.checkedKeys.replace(this.disabledKeys)
+      this.store.checkedKeys.replace(this.store.disabledKeys)
     } else {
       this.destroy()
     }
@@ -87,23 +88,23 @@ export default class TagTree extends Component {
     }
 
     // 选择的标签数据
-    this.checkedTagData = checkedNodes.filter(d => d.props.tagData).map(d => d.props.tagData)
-    this.checkedKeys.replace(checkedKeys)
+    this.store.checkedTagData = checkedNodes.filter(d => d.props.tagData).map(d => d.props.tagData)
+    this.store.checkedKeys.replace(checkedKeys)
   }
 
   @action.bound rightToTable() {
     const {rightToTable} = this.props
-    const disabledKeys = this.checkedTagData.map(d => d.id)
+    const disabledKeys = this.store.checkedTagData.map(d => d.id)
 
-    this.disabledKeys.replace(disabledKeys)
-    this.checkedKeys.replace(disabledKeys)
+    this.store.disabledKeys.replace(disabledKeys)
+    this.store.checkedKeys.replace(disabledKeys)
 
     if (disabledKeys.length) {
       this.allChecked = false
       this.indeterminate = true
     }
 
-    rightToTable(toJS(this.checkedTagData))
+    rightToTable(toJS(this.store.checkedTagData))
   }
 
   // 查询树节点
@@ -121,7 +122,7 @@ export default class TagTree extends Component {
     const allKeys = selectTagData.map(d => d.id) || []
 
     // all tags
-    const allTags = selectTagData.filter(item => !item.type) || []
+    const allTags = selectTagData.filter(item => !item.type).map(d => d && d.tag)
 
     return {
       allTags,
@@ -164,13 +165,13 @@ export default class TagTree extends Component {
           parentId: item.parentId,
           ...item.tag,
         }}
-        disableCheckbox={this.disabledKeys.includes(item.id)}
+        disableCheckbox={this.store.disabledKeys.includes(item.id)}
       />
     )
   })
 
   render() {
-    const {selectTagLoading, selectTagTreeData} = this.store
+    const {selectTagLoading, selectTagTreeData, checkedKeys, checkedTagData} = this.store
 
     return (
       <div className="FBH">
@@ -200,7 +201,7 @@ export default class TagTree extends Component {
                     checkStrictly={false}
                     defaultExpandAll
                     onCheck={this.onCheck}
-                    checkedKeys={toJS(this.checkedKeys)}
+                    checkedKeys={toJS(checkedKeys)}
                   >
                     {this.renderTreeNodes(selectTagTreeData)}
                   </Tree>
@@ -216,7 +217,7 @@ export default class TagTree extends Component {
             size="small"
             style={{display: 'block'}}
             className="mb4"
-            disabled={!this.checkedTagData.length}
+            disabled={!checkedTagData.length}
             onClick={this.rightToTable}
           />
         </div>

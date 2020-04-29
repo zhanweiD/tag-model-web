@@ -50,7 +50,7 @@ export const post = createRequestFn('POST')
  * @param2 valueName 返回数据value 字段名
  */
 export const changeToOptions = (list=[]) => (labelName, valueName) => list.map((obj={}) => ({ name: obj && obj[labelName], value: obj && obj[valueName] }))
-
+export const changeToOptionsWithDisabled = (list=[]) => (labelName, valueName, disabledKey) => list.map((obj={}) => ({ name: obj && obj[labelName], value: obj && obj[valueName], disabled: obj && Number(obj[disabledKey])}))
 /**
  * @description 遍历数组根据"id"值查找对应的"name"
  * @param {*} list 数组

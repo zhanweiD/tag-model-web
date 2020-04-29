@@ -1,11 +1,11 @@
-const serach = () => [
+const serach = ({objList, storageList}) => [
   {
     label: '数据源',
     key: 'storageId',
     initialValue: '',
     control: {
       defaultAll: true,
-      options: [],
+      options: storageList,
     },
     component: 'select',
   }, {
@@ -14,7 +14,7 @@ const serach = () => [
     initialValue: '',
     control: {
       defaultAll: true,
-      options: [],
+      options: objList,
     },
     component: 'select',
   }, {
@@ -23,7 +23,7 @@ const serach = () => [
     initialValue: '',
     control: {
       defaultAll: true,
-      options: [],
+      options: [{name: '使用中', value: 1}, {name: '未使用', value: 0}],
     },
     component: 'select',
   }, {

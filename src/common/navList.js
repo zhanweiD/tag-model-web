@@ -97,13 +97,37 @@ const application = {
   },
 }
 
+const sync = {
+  tagSync: {
+    url: `${pathPrefix}/tag-sync`,
+    text: '标签同步',
+  }, 
+  syncPlan: {
+    url: `${pathPrefix}/tag-sync`,
+    text: '同步计划',
+  }, 
+  syncDetail: {
+    text: '同步详情',
+  },
+  syncResult: {
+    url: `${pathPrefix}/tag-sync/result`,
+    text: '同步结果',
+  },
+  aimSource: {
+    url: `${pathPrefix}/aim-source`,
+    text: '目的源管理',
+  }, 
+  aimSourceDetail: {
+    text: '目的源详情',
+  },
+}
+
 const common = {
   common: {
     url: `${pathPrefix}/project`,
     text: '公共模块',
   },
 }
-
 
 // 项目列表
 const project = {
@@ -144,6 +168,7 @@ const navListMap = {
   ...application,
   ...tagSchema,
   ...common,
+  ...sync,
 }
 
 module.exports = navListMap

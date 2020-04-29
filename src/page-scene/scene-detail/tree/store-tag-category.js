@@ -312,6 +312,9 @@ class TagCategoryStore {
   @observable selectTagLoading = false
   // 标签列表
   @observable selectTagTableData = []
+  @observable checkedKeys = []
+  @observable checkedTagData = []
+  @observable disabledKeys = []
 
   // 标签 - 选择标签树结构
   @action async getSelectTag() {
@@ -325,6 +328,13 @@ class TagCategoryStore {
       runInAction(() => {
         this.selectTagData.replace(res)
         this.selectTagTreeData.replace(listToTree(res))
+        const usedList = res.filter(d => d.type === 0 && d.used).map(d => d && d.tag)
+        const usedKeys = usedList.map(d => d.id)
+        this.checkedTagData.replace(usedList)
+        this.selectTagTableData.replace(usedList)
+        this.checkedKeys.replace(usedKeys)
+        
+        this.disabledKeys = res.filter(d => (d.type === 0) && (!d.status || d.used)).map(d => d.id)
       })
     } catch (e) {
       errorTip(e.message)

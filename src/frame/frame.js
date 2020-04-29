@@ -69,6 +69,10 @@ class Frame extends Component {
     }
   }
 
+  componentWillUnmount() {
+    store.projectId = undefined
+  }
+
   render() {
     const {children} = this.props
     return (

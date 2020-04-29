@@ -25,36 +25,43 @@ export default class TagList extends Component {
       title: '标签名称',
       dataIndex: 'name',
       key: 'name',
-      render: text => <OmitTooltip maxWidth={50} text={text} />,
+      width: 80,
+      // render: text => <OmitTooltip maxWidth={50} text={text} />,
     },
     {
       title: '唯一标识',
       dataIndex: 'enName',
       key: 'enName',
-      render: text => <OmitTooltip maxWidth={50} text={text} />,
+      width: 80,
+      // render: text => <OmitTooltip maxWidth={50} text={text} />,
     },
     {
       title: '数据类型',
       dataIndex: 'valueTypeName',
       key: 'valueTypeName',
-      render: text => <OmitTooltip maxWidth={50} text={text} />,
+      width: 80,
+      // render: text => <OmitTooltip maxWidth={50} text={text} />,
     },
     {
       title: '是否枚举',
       dataIndex: 'isEnum',
       key: 'isEnum',
-      render: text => <OmitTooltip maxWidth={50} text={text ? '是' : '否'} />,
+      width: 50,
+      render: text => (text ? '是' : '否'),
+      // render: text => <OmitTooltip maxWidth={50} text={text ? '是' : '否'} />,
     },
     {
       title: '枚举显示值',
       dataIndex: 'enumValue',
       key: 'enumValue',
-      render: text => <OmitTooltip maxWidth={80} text={text} />,
+      width: 80,
+      // render: text => <OmitTooltip maxWidth={80} text={text} />,
     },
     {
       title: '业务逻辑',
       dataIndex: 'descr',
       key: 'descr',
+      width: 80,
       // render: text => <OmitTooltip maxWidth={100} text={text} />,
     },
     {
@@ -94,7 +101,6 @@ export default class TagList extends Component {
   }
 
   render() {
-    console.log(this.getFilterData())
     const listConfig = {
       dataSource: this.getFilterData(),
       rowKey: 'id',

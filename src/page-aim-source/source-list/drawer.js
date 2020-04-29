@@ -32,7 +32,7 @@ export default class AddSource extends Component {
 
   @action.bound resetSelect() {
     const {form: {resetFields}} = this.props
-    this.storageId = undefined
+
     this.entity0Key = undefined
     this.entity1Key = undefined
 
@@ -67,6 +67,7 @@ export default class AddSource extends Component {
   @action.bound selecStorageType(v) {
     const {form: {getFieldValue}} = this.props
 
+    this.storageId = undefined
     this.resetSelect()
 
     const objId = getFieldValue('objId')
@@ -79,10 +80,10 @@ export default class AddSource extends Component {
   } 
 
   @action.bound selecStorage(v) {
-    const {form: {resetFields, setFieldsValue}} = this.props
+    const {form: {setFieldsValue}} = this.props
 
     this.storageId = v
-    resetFields(['dataTableName'])
+    this.resetSelect()
 
     setFieldsValue({
       dataStorageId: v,
@@ -94,6 +95,13 @@ export default class AddSource extends Component {
   } 
 
   @action.bound selectTable(v) {
+    const {form: {resetFields}} = this.props
+
+    this.entity0Key = undefined
+    this.entity1Key = undefined
+
+    resetFields(['entity0Key', 'entity1Key'])
+    
     this.store.getFieldList({
       dataStorageId: this.storageId,
       dataTableName: v,
@@ -294,7 +302,7 @@ export default class AddSource extends Component {
             extra={(
               <span>
                 若无可用的数据源，请先
-                <a href>去项目配置中添加目的数据源</a>
+                <a target="_blank" rel="noopener noreferrer" href={`/asset-tag/index.html#/project/${this.store.projectId}`}>去项目配置中添加目的数据源</a>
               </span>
             )}
           >
@@ -310,7 +318,7 @@ export default class AddSource extends Component {
                 >
                   {
                     storageList.map(item => (
-                      <Option key={item.dataStorageId} value={item.dataStorageId} disabled={item.used}>{item.storageName}</Option>
+                      <Option key={item.dataStorageId} value={item.dataStorageId} disabled={item.used}>{item.dataDbName}</Option>
                     ))
                   }
                 </Select>

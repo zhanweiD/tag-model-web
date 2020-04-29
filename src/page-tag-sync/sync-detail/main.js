@@ -1,7 +1,8 @@
 import {Component} from 'react'
 import {Spin} from 'antd'
 import {action, observable} from 'mobx'
-import {observer} from 'mobx-react'
+import {observer, inject} from 'mobx-react'
+import * as navListMap from '../../common/navList'
 import {DetailHeader, TabRoute} from '../../component'
 import {Time} from '../../common/util'
 import ConfigInfo from './config-info'
@@ -14,6 +15,14 @@ const tabs = [
   // {name: '运行记录', value: 1},
 ]
 
+const navList = [
+  navListMap.tagCenter,
+  navListMap.tagSync,
+  navListMap.syncPlan,
+  {text: navListMap.syncDetail.text},
+]
+
+@inject('frameChange')
 @observer
 export default class SyncDetail extends Component {
   constructor(props) {
@@ -26,6 +35,9 @@ export default class SyncDetail extends Component {
   }
 
   componentWillMount() {
+    // 面包屑设置
+    const {frameChange} = this.props
+    frameChange('nav', navList)
     store.getDetail()
     store.getConfigInfo()
   }

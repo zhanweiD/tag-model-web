@@ -1,8 +1,14 @@
-// import {observable, action, runInAction} from 'mobx'
+import {observable, action, runInAction} from 'mobx'
 import io from './io'
-import {successTip, errorTip, failureTip} from '../../common/util'
+import {successTip, errorTip, failureTip, changeToOptions} from '../../common/util'
 
 class DrawerStore {
+  constructor({
+    projectId,
+  } = {}) {
+    this.projectId = projectId
+  }
+
   projectId
   result = []
   source = []
@@ -11,6 +17,38 @@ class DrawerStore {
   objId
   tagIds = []
   configType
+
+  @observable tableList = []
+
+  @action async getTableList() {
+    try {
+      const res = await io.getTableList({
+        id: this.objId,
+      })
+
+      runInAction(() => {
+        this.tableList = changeToOptions(res)('dataTableName', 'dataTableName')
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  @observable schemeList = []
+
+  @action async getSchemeList() {
+    try {
+      const res = await io.getSchemeList({
+        objId: this.objId,
+      })
+
+      runInAction(() => {
+        this.schemeList = changeToOptions(res)('name', 'name')
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
 
   async getResultData() {
     try {

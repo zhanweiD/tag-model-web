@@ -41,6 +41,12 @@ export default class DrawerTagConfig extends Component {
       this.store.objId = nextProps.info.objId
       this.store.tagIds = [+nextProps.info.id]
       this.store.configType = nextProps.info.configType
+      
+      if (+nextProps.info.configType === 1) {
+        this.store.getSchemeList()
+      } else {
+        this.store.getTableList()
+      }
 
       this.setState({
         loading: true,
@@ -115,6 +121,8 @@ export default class DrawerTagConfig extends Component {
       target,
       result,
       configType,
+      tableList,
+      schemeList,
     } = this.store
 
     return (
@@ -289,7 +297,7 @@ export default class DrawerTagConfig extends Component {
                   disableKey={record => record.used === 1 || record.isUsed === 1 || record.status === 2}
                   disableMsg={record => (record.status === 2 ? '标签已发布无法删除映射' : '使用中无法删除映射')}
                   hasSearchSelect
-                  searchSelectList={[{name: '123', value: 123}]}
+                  searchSelectList={configType === 1 ? schemeList : tableList}
                   searchSelectPlaceholder={configType === 1 ? '请选择加工方案' : '请选择数据表'}
                   searchSelectKey={configType === 1 ? 'schemeName' : 'dataTableName'}
                   isShowMapping

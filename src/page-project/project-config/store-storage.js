@@ -1,5 +1,5 @@
 import {action, runInAction, observable} from 'mobx'
-import {successTip, errorTip, changeToOptions} from '../../common/util'
+import {successTip, errorTip, changeToOptions, changeToOptionsWithDisabled} from '../../common/util'
 import {ListContentStore} from '../../component/list-content'
 import io from './io'
 
@@ -14,8 +14,8 @@ class Store extends ListContentStore(io.getStorageList) {
 
   @observable storageType = [] // 数据源类型下拉
   @observable storageSelectList = [] // 数据源下拉列
-  @observable storageTypeLoading = []  
-  @observable storageSelectLoading = []
+  @observable storageTypeLoading = false
+  @observable storageSelectLoading = false
 
   // 数据源类型下拉
   @action async getStorageType() {
@@ -44,7 +44,7 @@ class Store extends ListContentStore(io.getStorageList) {
         ...params,
       })
       runInAction(() => {
-        this.storageSelectList = changeToOptions(res)('dataDbName', 'dataStorageId')
+        this.storageSelectList = changeToOptionsWithDisabled(res)('dataDbName', 'dataStorageId', 'stat')
       })
     } catch (e) {
       errorTip(e.message)

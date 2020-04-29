@@ -10,8 +10,6 @@ class Store extends ListContentStore(io.getList) {
   @observable visible = false
   @observable visibleEdit = false
 
-  @observable list = []
-
   @observable selectItem = {}
 
   @action.bound closeDrawer() {

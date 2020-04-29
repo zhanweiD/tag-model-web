@@ -1,10 +1,11 @@
 import {Component, Fragment} from 'react'
 import {action, toJS} from 'mobx'
-import {observer, Provider} from 'mobx-react'
+import {observer, Provider, inject} from 'mobx-react'
 import {Button, Popconfirm} from 'antd'
 import {Link} from 'react-router-dom'
 import {ListContent} from '../../component'
 import {Time} from '../../common/util'
+import * as navListMap from '../../common/navList'
 import seach from './search'
 import DrawerAddSync from './drawer'
 import DrawerEditSync from './drawer-edit'
@@ -19,6 +20,16 @@ import {
 
 import store from './store'
 
+// 面包屑设置
+// eslint-disable-next-line no-underscore-dangle
+
+const navList = [
+  navListMap.tagCenter,
+  navListMap.tagSync,
+  {text: navListMap.syncPlan.text},
+]
+
+@inject('frameChange')
 @observer
 export default class SyncList extends Component {
   constructor(props) {
@@ -195,6 +206,10 @@ export default class SyncList extends Component {
   }]
 
   componentWillMount() {
+    // 面包屑设置
+    const {frameChange} = this.props
+    frameChange('nav', navList)
+    
     if (store.projectId) {
       store.getObjList()
     }

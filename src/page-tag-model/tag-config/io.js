@@ -14,6 +14,8 @@ const api = {
   getDeriveTagData: get(`${baseApi}/tagConfig/produce_tag`), // 获取标签列表
   saveDeriveMappingResult: post(`${baseApi}/tagConfig/addTagRel`), // 保存映射结果
 
+  getTableList: get(`${baseApi}/object/table_obj`), // 获取对象下数据表
+  getSchemeList: get(`${baseApi}/derivative/schema/derivative_scheme`), // 获取衍生方案名称列表
 }
 
 ioContext.create('tagConfig', api) 

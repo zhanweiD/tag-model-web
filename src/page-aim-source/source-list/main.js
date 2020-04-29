@@ -1,21 +1,33 @@
 import {Component} from 'react'
 import {action, toJS} from 'mobx'
-import {observer} from 'mobx-react'
+import {observer, inject} from 'mobx-react'
 import {Button, Popconfirm} from 'antd'
 import {Link} from 'react-router-dom'
 import {ListContent} from '../../component'
 import {Time} from '../../common/util'
+import * as navListMap from '../../common/navList'
 import seach from './search'
 import AddSource from './drawer'
 import DrawerTagConfig from '../tag-config'
 
 import store from './store'
 
+// 面包屑设置
+// eslint-disable-next-line no-underscore-dangle
+
+const navList = [
+  navListMap.tagCenter,
+  navListMap.tagSync,
+  {text: navListMap.aimSource.text},
+]
+
+@inject('frameChange')
 @observer
 export default class SourceList extends Component {
   constructor(props) {
     super(props)
     const {spaceInfo} = window
+
     store.projectId = spaceInfo && spaceInfo.projectId
   }
 
@@ -67,6 +79,9 @@ export default class SourceList extends Component {
   }]
 
   componentWillMount() {
+    // 面包屑设置
+    const {frameChange} = this.props
+    frameChange('nav', navList)
     if (store.projectId) {
       store.getObjList()
     }

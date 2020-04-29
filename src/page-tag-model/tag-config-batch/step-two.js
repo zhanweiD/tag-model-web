@@ -23,6 +23,12 @@ export default class StepTwo extends Component {
   componentWillReceiveProps(nextProps) {
     const {show} = this.props
     if (nextProps.show && show !== nextProps.show) {
+      if (+this.store.boundMethodId === 1) {
+        this.store.getSchemeList()
+      } else {
+        this.store.getTableList()
+      }
+      
       this.setState({
         loading: true,
       })
@@ -245,7 +251,7 @@ export default class StepTwo extends Component {
                 disableKey={record => record.used === 1 || record.isUsed === 1 || record.status === 2}
                 disableMsg={record => (record.status === 2 ? '标签已发布无法删除映射' : '使用中无法删除映射')}
                 hasSearchSelect
-                searchSelectList={[{name: '123', value: 123}]}
+                searchSelectList={boundMethodId === 1 ? schemeList : tableList}
                 searchSelectPlaceholder={boundMethodId === 1 ? '请选择加工方案' : '请选择数据表'}
                 searchSelectKey={boundMethodId === 1 ? 'schemeName' : 'dataTableName'}
                 isShowMapping
@@ -295,7 +301,7 @@ export default class StepTwo extends Component {
                   background: '#fff',
                 }}
               >
-                <Button onClick={this.onClose} className="mr8">取消</Button>
+                <Button onClick={() => this.store.lastStep()} className="mr8">上一步</Button>
                 <Button
                   type="primary"
                   onClick={this.submit}
@@ -307,17 +313,6 @@ export default class StepTwo extends Component {
               </div>
             )
         }
-        {/* <div className="bottom-button">
-          <Button style={{marginRight: 8}} onClick={() => this.store.lastStep()}>上一步</Button>
-          <Button
-            type="primary"
-            style={{marginRight: 8}}
-            onClick={this.submit}
-            loading={submitting}
-          >
-            确定
-          </Button>
-        </div> */}
       </div>
     )
   }
