@@ -50,7 +50,7 @@ class DrawerStore {
 
       runInAction(() => {
         this.configTagList = res
-        this.selectedRowKeys = res.filter(d => d.deployStatus === 2).map(d => d.id)
+        this.selectedRowKeys = res.filter(d => d.deployStatus === 2 || d.configStatus === 1).map(d => d.id)
       })
     } catch (e) {
       errorTip(e.message)

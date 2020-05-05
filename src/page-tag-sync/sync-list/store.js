@@ -36,7 +36,10 @@ class Store extends ListContentStore(io.getList) {
   // 删除
   @action async delList(id) {
     try {
-      await io.delList({id})
+      await io.delList({
+        projectId: this.projectId,
+        deleteId: id,
+      })
       runInAction(() => {
         successTip('删除成功')
         this.getList({currentPage: 1})

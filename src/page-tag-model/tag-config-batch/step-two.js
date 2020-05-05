@@ -78,7 +78,6 @@ export default class StepTwo extends Component {
           const {
             onUpdate,
           } = this.props
-          console.log(onUpdate)
           if (onUpdate) {
             onUpdate()
           }
@@ -191,7 +190,7 @@ export default class StepTwo extends Component {
                 ]}
                 resultTargetFullColumns={[
                   {
-                    title: '英文名',
+                    title: '字段类型',
                     dataIndex: 'dataFieldName',
                     width: 60,
                   },
@@ -221,9 +220,10 @@ export default class StepTwo extends Component {
                     dataDbType,
                     dataTableName,
                     dataFieldName,
-                    dataFieldType,
+                    // dataFieldType,
                     isUsed,
                     schemeId,
+                    tagType: dataFieldType,
                   }
                 ) => ({
                   tagId,
@@ -260,7 +260,7 @@ export default class StepTwo extends Component {
                 canMapping
                 beforeMapping={v => {
                   const mappingItem = v[0]
-                  if (mappingItem.valueTypeName !== mappingItem.dataFieldType) {   
+                  if (mappingItem.tagValueType !== mappingItem.dataFieldType) {   
                     message.error(`${mappingItem.tagName}(标签)与${mappingItem.dataFieldName}(字段)数据类型不匹配， 绑定失败`)
                     return new Promise(function (resolve, reject) {
                       reject([])
@@ -271,17 +271,13 @@ export default class StepTwo extends Component {
                   })
                 }}
                 beforeNameMapping={v => {
-                  const originalResult = v.filter(d => d.isUsed || d.status === 2)
-        
-                  const successResult = v.filter(d => d.valueTypeName === d.dataFieldType)
-        
-                  const errorResult = v.filter(d => d.valueTypeName !== d.dataFieldType)
+                  const successResult = v.filter(d => (d.tagValueType === d.dataFieldType) || d.status === 2 || d.isUsed)
+                    
+                  const errorResult = v.filter(d => (d.tagValueType !== d.dataFieldType) && !d.isUsed && d.status !== 2)
                   message.info(`${successResult.length}个标签映射成功，${errorResult.length}个标签映射失败`)
         
-                  const mappingResult = originalResult.concat(successResult)
-        
                   return new Promise(function (resolve, reject) {
-                    resolve(mappingResult)
+                    resolve(successResult)
                   })
                 }}
               />

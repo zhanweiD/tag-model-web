@@ -176,13 +176,6 @@ export default class DrawerTagConfig extends Component {
                       dataIndex: configType === 1 ? 'schemeName' : 'dataTableName',
                       width: 90,
                     },
-                  /*
-                    {
-                      title: '',
-                      width: 10,
-                      render: () => <span></span>,
-                    },
-                    */
                   ]}
                   sourceColumns={[
                     {
@@ -198,7 +191,7 @@ export default class DrawerTagConfig extends Component {
                     {
                       title: '数据类型',
                       dataIndex: 'valueTypeName',
-                      width: 90,
+                      width: 100,
                     },
                   ]}
                   result={result}
@@ -235,7 +228,7 @@ export default class DrawerTagConfig extends Component {
                   ]}
                   resultTargetFullColumns={[
                     {
-                      title: '英文名',
+                      title: '字段名称',
                       dataIndex: 'dataFieldName',
                       width: 60,
                     },
@@ -245,8 +238,8 @@ export default class DrawerTagConfig extends Component {
                       width: 60,
                     },
                     {
-                      title: '数据表',
-                      dataIndex: 'dataTableName',
+                      title: configType === 1 ? '加工方案' : '数据表',
+                      dataIndex: configType === 1 ? 'schemeName' : 'dataTableName',
                       width: 130,
                     },
                   ]}
@@ -265,9 +258,9 @@ export default class DrawerTagConfig extends Component {
                       dataDbType,
                       dataTableName,
                       dataFieldName,
-                      dataFieldType,
                       isUsed,
                       schemeId,
+                      tagType: dataFieldType,
                     }
                   ) => ({
                     tagId,
@@ -294,7 +287,7 @@ export default class DrawerTagConfig extends Component {
                   targetSearchPlaceholder="请输入名称搜索"
                   sourceDisableKey={record => record.status === 2}
                   targetDisableKey={record => record.status === 2}
-                  disableKey={record => record.used === 1 || record.isUsed === 1 || record.status === 2}
+                  disableKey={record => record.isUsed === 1 || record.status === 2}
                   disableMsg={record => (record.status === 2 ? '标签已发布无法删除映射' : '使用中无法删除映射')}
                   hasSearchSelect
                   searchSelectList={configType === 1 ? schemeList : tableList}
@@ -302,32 +295,28 @@ export default class DrawerTagConfig extends Component {
                   searchSelectKey={configType === 1 ? 'schemeName' : 'dataTableName'}
                   isShowMapping
                   canMapping
-                  // beforeMapping={v => {
-                  //   const mappingItem = v[0]
-                  //   if (mappingItem.valueType !== mappingItem.dataFieldType) {   
-                  //     message.error(`${mappingItem.tagName}(标签)与${mappingItem.dataFieldName}(字段)数据类型不匹配， 绑定失败`)
-                  //     return new Promise(function (resolve, reject) {
-                  //       reject([])
-                  //     })
-                  //   } 
-                  //   return new Promise(function (resolve, reject) {
-                  //     resolve([])
-                  //   })
-                  // }}
-                  // beforeNameMapping={v => {
-                  //   const originalResult = v.filter(d => d.isUsed || d.status === 2)
-        
-                  //   const successResult = v.filter(d => d.valueType === d.dataFieldType)
-        
-                  //   const errorResult = v.filter(d => d.valueType !== d.dataFieldType)
-                  //   message.info(`${successResult.length}个标签映射成功，${errorResult.length}个标签映射失败`)
-        
-                  //   const mappingResult = originalResult.concat(successResult)
-        
-                  //   return new Promise(function (resolve, reject) {
-                  //     resolve(mappingResult)
-                  //   })
-                  // }}
+                  beforeMapping={v => {
+                    const mappingItem = v[0]
+                    if (mappingItem.tagValueType !== mappingItem.dataFieldType) {   
+                      message.error(`${mappingItem.tagName}(标签)与${mappingItem.dataFieldName}(字段)数据类型不匹配， 绑定失败`)
+                      return new Promise(function (resolve, reject) {
+                        reject([])
+                      })
+                    } 
+                    return new Promise(function (resolve, reject) {
+                      resolve([])
+                    })
+                  }}
+                  beforeNameMapping={v => {
+                    const successResult = v.filter(d => (d.tagValueType === d.dataFieldType) || d.status === 2 || d.isUsed)
+                      
+                    const errorResult = v.filter(d => (d.tagValueType !== d.dataFieldType) && !d.isUsed && d.status !== 2)
+                    message.info(`${successResult.length}个标签映射成功，${errorResult.length}个标签映射失败`)
+          
+                    return new Promise(function (resolve, reject) {
+                      resolve(successResult)
+                    })
+                  }}
                 />
               )
               

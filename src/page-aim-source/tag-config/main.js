@@ -141,15 +141,19 @@ export default class DrawerTagConfig extends Component {
                   }}
                   source={source}
                   target={target}
-                  sourceRowKey={record => record.dataFieldName}
-                  targetRowKey={record => record.tagId}
-                  sourceSearchKey={record => record.dataFieldName}
-                  targetSearchKey={record => record.tagName}
+                  sourceRowKey={record => record.tagId || record.id}
+                  targetRowKey={record => `${record.dataStorageId}${record.dataTableName}${record.dataFieldName}`}
+                  sourceSearchKey={record => record.name || record.tagName}
+                  targetSearchKey={record => record.dataFieldName}
+                  // sourceRowKey={record => record.dataFieldName}
+                  // targetRowKey={record => record.tagId}
+                  // sourceSearchKey={record => record.dataFieldName}
+                  // targetSearchKey={record => record.tagName}
                   targetColumns={[
                     {
                       title: '唯一标识',
                       dataIndex: 'tagEnName',
-                      width: 80,
+                      width: 70,
                     },
                     {
                       title: '标签名称',
@@ -164,19 +168,19 @@ export default class DrawerTagConfig extends Component {
                     {
                       title: '数据类型',
                       dataIndex: 'tagType',
-                      width: 80,
+                      width: 70,
                     },
                   ]}
                   sourceColumns={[
                     {
                       title: '字段名',
                       dataIndex: 'dataFieldName',
-                      width: 90,
+                      width: 140,
                     },
                     {
                       title: '数据类型',
                       dataIndex: 'dataFieldType',
-                      width: 90,
+                      width: 150,
                     },
                   ]}
                   result={result}
@@ -193,11 +197,11 @@ export default class DrawerTagConfig extends Component {
                       dataIndex: 'tagName',
                       width: 69,
                     },
-                    {
-                      title: '所属对象',
-                      dataIndex: 'objName',
-                      width: 69,
-                    },
+                    // {
+                    //   title: '所属对象',
+                    //   dataIndex: 'objName',
+                    //   width: 69,
+                    // },
                   ]}
                   resultSourceFullColumns={[
                     {
@@ -213,7 +217,7 @@ export default class DrawerTagConfig extends Component {
                   ]}
                   resultTargetFullColumns={[
                     {
-                      title: '标签唯一标识',
+                      title: '唯一标识',
                       dataIndex: 'tagEnName',
                       width: 69,
                     },
@@ -263,8 +267,8 @@ export default class DrawerTagConfig extends Component {
                   targetTipTitle="标签："
                   sourceSearchPlaceholder="请输入名称搜索"
                   targetSearchPlaceholder="请输入名称搜索"
-                  sourceDisableKey={record => record.status === 2}
-                  targetDisableKey={record => record.status === 2}
+                  sourceDisableKey={record => record.tagStatus === 1}
+                  targetDisableKey={record => record.tagStatus === 1}
                   disableKey={record => record.tagStatus === 1}
                   // disableMsg="使用中无法删除映射"
                   hasSearchSelect

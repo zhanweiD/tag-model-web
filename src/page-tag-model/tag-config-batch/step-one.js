@@ -74,13 +74,13 @@ export default class StepOne extends Component {
     const {show, closeDrawer, objectSelectList} = this.props
     const {objId, boundMethodId, selectedRowKeys, configTagList, isShowPublished} = this.store
 
-    const dataSource = isShowPublished ? configTagList.filter(d => d.deployStatus === 2) : configTagList.filter(d => d.deployStatus === 1)
+    const dataSource = isShowPublished ? configTagList.filter(d => d.deployStatus === 2) : configTagList.filter(d => d.deployStatus < 2)
 
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onTableCheck,
       getCheckboxProps: record => ({
-        disabled: record.deployStatus === 2,
+        disabled: record.deployStatus === 2 || record.configStatus === 1,
       }),
     }
 
