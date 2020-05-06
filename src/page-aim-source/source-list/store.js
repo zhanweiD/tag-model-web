@@ -81,7 +81,7 @@ class Store extends ListContentStore(io.getList) {
   @action async getStorageList(params) {
     try {
       const res = await io.getStorageList({
-        id: this.projectId,
+        projectId: this.projectId,
         ...params,
       })
       runInAction(() => {

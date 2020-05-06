@@ -3,7 +3,7 @@ import {action, toJS} from 'mobx'
 import {observer, Provider, inject} from 'mobx-react'
 import {Button, Popconfirm} from 'antd'
 import {Link} from 'react-router-dom'
-import {ListContent} from '../../component'
+import {ListContent, Loading, NoData} from '../../component'
 import {Time} from '../../common/util'
 import * as navListMap from '../../common/navList'
 import seach from './search'
@@ -93,7 +93,7 @@ export default class SyncList extends Component {
                 <span className="table-action-line" />
                 <span className="disabled">提交日志</span>
               </Fragment>
-             
+
             )
           }
 
@@ -109,7 +109,7 @@ export default class SyncList extends Component {
                 <span className="table-action-line" />
                 <span className="disabled">提交日志</span>
               </Fragment>
-             
+
             )
           }
 
@@ -127,7 +127,7 @@ export default class SyncList extends Component {
                 <span className="table-action-line" />
                 <a href onClick={() => this.getLog(record.id)}>提交日志</a>
               </Fragment>
-             
+
             )
           }
 
@@ -149,7 +149,7 @@ export default class SyncList extends Component {
                 <span className="table-action-line" />
                 <a href onClick={() => this.getLog(record.id)}>提交日志</a>
               </Fragment>
-             
+
             )
           }
 
@@ -226,9 +226,19 @@ export default class SyncList extends Component {
     // 面包屑设置
     const {frameChange} = this.props
     frameChange('nav', navList)
-    
+
     if (store.projectId) {
       store.getObjList()
+      this.initData()
+    }
+  }
+
+  // 初始化数据，一般情况不需要，此项目存在项目空间中项目的切换，全局性更新，较为特殊
+  @action initData() {
+    store.searchParams = {}
+    store.pagination = {
+      pageSize: 10,
+      currentPage: 1,
     }
   }
 
@@ -267,6 +277,32 @@ export default class SyncList extends Component {
     store.getLog(id)
   }
 
+  // 跳转到项目列表
+  goProjectList = () => {
+    window.location.href = `${window.__keeper.pathHrefPrefix || '/'}/project`
+  }
+
+  renderNodata = () => {
+    const {spaceInfo} = window
+
+    const noProjectDataConfig = {
+      btnText: '去创建项目',
+      onClick: this.goProjectList,
+      text: '没有任何项目，去项目列表页创建项目吧！',
+      code: 'asset_tag_project_add',
+      noAuthText: '没有任何项目',
+    }
+
+    if (spaceInfo && spaceInfo.finish && !spaceInfo.projectList.length) {
+      return (
+        <NoData
+          {...noProjectDataConfig}
+        />
+      )
+    }
+    return <Loading mode="block" height={200} />
+  }
+
   render() {
     const {objList, projectId, visibleEdit} = store
 
@@ -280,17 +316,27 @@ export default class SyncList extends Component {
       store, // 必填属性
     }
 
+    const {spaceInfo} = window
+
     return (
       <Provider bigStore={store}>
         <div className="page-sync-list">
           <div className="content-header">标签同步</div>
-          <div className="list-content">
-            <ListContent {...listConfig} />
-          </div>
-          <DrawerAddSync projectId={projectId} />
-          <DrawerEditSync projectId={projectId} visible={visibleEdit} />
-          <ModalLog />
-          <ModalStart />
+          {
+            spaceInfo && spaceInfo.projectId && spaceInfo.projectList && spaceInfo.projectList.length
+              ? (
+                <Fragment>
+                  <div className="list-content">
+                    <ListContent {...listConfig} />
+                  </div>
+                  <DrawerAddSync projectId={projectId} />
+                  <DrawerEditSync projectId={projectId} visible={visibleEdit} />
+                  <ModalLog />
+                  <ModalStart />
+                </Fragment>
+              ) : this.renderNodata()
+          }
+         
         </div>
       </Provider>
     )

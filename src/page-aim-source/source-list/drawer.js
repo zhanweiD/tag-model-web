@@ -323,7 +323,7 @@ export default class AddSource extends Component {
                 >
                   {
                     storageList.map(item => (
-                      <Option key={item.dataStorageId} value={item.dataStorageId} disabled={item.used}>{item.dataDbName}</Option>
+                      <Option key={item.dataStorageId} value={item.dataStorageId} disabled={item.used}>{item.storageName}</Option>
                     ))
                   }
                 </Select>

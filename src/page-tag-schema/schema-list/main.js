@@ -16,10 +16,10 @@ import {
   ListContent, AuthBox, NoData, Loading,
 } from '../../component'
 import seach from './search'
-import DrawerConfig from './drawer' 
+import DrawerConfig from './drawer'
 import ModalSubmitLog from './modal-submit-log'
 import {
-  getSchemeStatus, 
+  getSchemeStatus,
   getSchemeRunStatus,
   scheduleTypeObj,
   schemeTypeObj,
@@ -47,7 +47,7 @@ class SchemaList extends Component {
     this.rootStore = new Store()
     const {
       listStore,
-      drawerStore, 
+      drawerStore,
     } = this.rootStore
 
     this.drawerStore = drawerStore
@@ -85,11 +85,11 @@ class SchemaList extends Component {
     }, {
       title: '方案类型',
       dataIndex: 'type',
-      render: text => <span>{schemeTypeObj[text]}</span>, 
+      render: text => <span>{schemeTypeObj[text]}</span>,
     }, {
       title: '调度类型',
       dataIndex: 'scheduleType',
-      render: text => <span>{scheduleTypeObj[text]}</span>, 
+      render: text => <span>{scheduleTypeObj[text]}</span>,
 
     }, {
       title: '标签数/字段数',
@@ -113,7 +113,7 @@ class SchemaList extends Component {
       width: 200,
       render: (text, record) => (
         <AuthBox
-          code="asset_tag_project_scheme_operator" 
+          code="asset_tag_project_scheme_operator"
           myFunctionCodes={this.store.functionCodes}
           isButton={false}
         >
@@ -128,7 +128,7 @@ class SchemaList extends Component {
               )
             }
 
-            {/* 方案状态: 未完成/提交失败  操作: 编辑 */} 
+            {/* 方案状态: 未完成/提交失败  操作: 编辑 */}
             {
               (record.status === 0 || record.status === 2) && (
                 <Fragment>
@@ -137,7 +137,7 @@ class SchemaList extends Component {
                 </Fragment>
               )
             }
-            
+
             {/* 方案状态: 提交成功 调度类型: 周期调度  操作: 禁止执行 */}
             {
               (record.status === 1 && record.scheduleType === 1) && (
@@ -147,7 +147,7 @@ class SchemaList extends Component {
                 </Fragment>
               )
             }
-            
+
             {/* 方案状态: 提交成功 调度类型:手动执行 运行状态: 运行中   操作: 禁止执行 */}
             {
               (record.status === 1 && record.scheduleType === 2 && record.lastStatus === 0) && (
@@ -167,7 +167,7 @@ class SchemaList extends Component {
                   </Popconfirm>
                   <span className="table-action-line" />
                 </Fragment>
-             
+
               )
             }
             {/* 方案状态: 提交成功 调度类型:周期执行 运行状态 运行成功 操作: 删除 */}
@@ -184,14 +184,14 @@ class SchemaList extends Component {
               if (record.status === 1) {
                 return <span className="disabled">删除</span>
               }
-               
+
               return (
                 <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.remove(record)}>
                   <a href>删除</a>
                 </Popconfirm>
               )
             })()}
-        
+
             <span className="table-action-line" />
             <Popconfirm placement="topRight" title="你确定要克隆吗？" onConfirm={() => this.clone(record)}>
               <a href>克隆</a>
@@ -203,17 +203,17 @@ class SchemaList extends Component {
                   <span className="table-action-line" />
                   <Dropdown overlay={() => this.menu(record)}>
                     <a href>
-              更多
+                      更多
                       <Icon type="down" />
                     </a>
                   </Dropdown>
                 </Fragment>
               ) : null
             }
-           
+
           </div>
         </AuthBox>
-        
+
       ),
     },
   ]
@@ -222,9 +222,19 @@ class SchemaList extends Component {
     // 面包屑设置
     const {frameChange} = this.props
     frameChange('nav', navList)
-    
+
     if (this.projectId) {
       this.store.getObjList()
+      this.initData()
+    }
+  }
+
+  // 初始化数据，一般情况不需要，此项目存在项目空间中项目的切换，全局性更新，较为特殊
+  @action initData() {
+    this.store.searchParams = {}
+    this.store.pagination = {
+      pageSize: 10,
+      currentPage: 1,
     }
   }
 
@@ -232,7 +242,7 @@ class SchemaList extends Component {
     const params = {
       id: data.id,
     }
-    this.drawerStore.getSchemeDetail(params) 
+    this.drawerStore.getSchemeDetail(params)
     this.drawerStore.getSchemeConfigInfo(params, () => {
       this.drawerStore.drawerVisible = true
     })
@@ -269,10 +279,10 @@ class SchemaList extends Component {
     })
   }
 
-   // 跳转到项目列表
-   goProjectList = () => {
-     window.location.href = `${window.__keeper.pathHrefPrefix || '/'}/project`
-   }
+  // 跳转到项目列表
+  goProjectList = () => {
+    window.location.href = `${window.__keeper.pathHrefPrefix || '/'}/project`
+  }
 
   renderNodata = () => {
     const {spaceInfo} = window
@@ -303,12 +313,12 @@ class SchemaList extends Component {
       initParams: {projectId: this.projectId},
       searchParams: seach({objList}),
       buttons: [<AuthBox
-        code="asset_tag_project_scheme_operator" 
+        code="asset_tag_project_scheme_operator"
         type="primary"
         myFunctionCodes={functionCodes}
         onClick={this.create}
       >
-      创建加工方案      
+        创建加工方案
       </AuthBox>,
       ],
       rowKey: 'id',
@@ -329,10 +339,10 @@ class SchemaList extends Component {
               </Fragment>
             ) : this.renderNodata()
           }
-         
+
         </div>
       </Provider>
-    
+
     )
   }
 }

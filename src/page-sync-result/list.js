@@ -1,9 +1,9 @@
 import {Component} from 'react'
-import {toJS} from 'mobx'
+import {toJS, action} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {Badge} from 'antd'
 import * as navListMap from '../common/navList'
-import {ListContent} from '../component'
+import {ListContent, NoData, Loading} from '../component'
 import {Time} from '../common/util'
 import seach from './search'
 
@@ -60,7 +60,43 @@ export default class SyncResult extends Component {
     if (store.projectId) {
       store.getObjList()
       store.getStorageList()
+      this.initData()
     }
+  }
+
+  // 初始化数据，一般情况不需要，此项目存在项目空间中项目的切换，全局性更新，较为特殊
+  @action initData() {
+    store.searchParams = {}
+    store.pagination = {
+      pageSize: 10,
+      currentPage: 1,
+    }
+  }
+
+  // 跳转到项目列表
+  goProjectList = () => {
+    window.location.href = `${window.__keeper.pathHrefPrefix || '/'}/project`
+  }
+
+  renderNodata =() => {
+    const {spaceInfo} = window
+
+    const noProjectDataConfig = {
+      btnText: '去创建项目',
+      onClick: this.goProjectList,
+      text: '没有任何项目，去项目列表页创建项目吧！',
+      code: 'asset_tag_project_add',
+      noAuthText: '没有任何项目',
+    }
+
+    if (spaceInfo && spaceInfo.finish && !spaceInfo.projectList.length) {
+      return (
+        <NoData
+          {...noProjectDataConfig}
+        />
+      )
+    } 
+    return <Loading mode="block" height={200} />
   }
 
   render() {
@@ -72,12 +108,19 @@ export default class SyncResult extends Component {
       store, // 必填属性
     }
 
+    const {spaceInfo} = window
+
     return (
       <div className="page-sync-result">
         <div className="content-header">标签同步结果</div>
-        <div className="list-content">
-          <ListContent {...listConfig} />
-        </div>
+        {
+          spaceInfo && spaceInfo.projectId && spaceInfo.projectList && spaceInfo.projectList.length
+            ? (
+              <div className="list-content">
+                <ListContent {...listConfig} />
+              </div>
+            ) : this.renderNodata()
+        }
       </div>
      
     )

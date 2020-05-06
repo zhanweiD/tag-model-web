@@ -1,9 +1,9 @@
-import {Component} from 'react'
+import {Component, Fragment} from 'react'
 import {action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {Button, Popconfirm} from 'antd'
 import {Link} from 'react-router-dom'
-import {ListContent} from '../../component'
+import {ListContent, NoData, Loading} from '../../component'
 import {Time} from '../../common/util'
 import * as navListMap from '../../common/navList'
 import seach from './search'
@@ -84,6 +84,16 @@ export default class SourceList extends Component {
     frameChange('nav', navList)
     if (store.projectId) {
       store.getObjList()
+      this.initData()
+    }
+  }
+
+  // 初始化数据，一般情况不需要，此项目存在项目空间中项目的切换，全局性更新，较为特殊
+  @action initData() {
+    store.searchParams = {}
+    store.pagination = {
+      pageSize: 10,
+      currentPage: 1,
     }
   }
 
@@ -100,6 +110,32 @@ export default class SourceList extends Component {
   // 删除目的源
   delItem = id => {
     store.delList(id)
+  }
+
+  // 跳转到项目列表
+  goProjectList = () => {
+    window.location.href = `${window.__keeper.pathHrefPrefix || '/'}/project`
+  }
+
+  renderNodata = () => {
+    const {spaceInfo} = window
+
+    const noProjectDataConfig = {
+      btnText: '去创建项目',
+      onClick: this.goProjectList,
+      text: '没有任何项目，去项目列表页创建项目吧！',
+      code: 'asset_tag_project_add',
+      noAuthText: '没有任何项目',
+    }
+
+    if (spaceInfo && spaceInfo.finish && !spaceInfo.projectList.length) {
+      return (
+        <NoData
+          {...noProjectDataConfig}
+        />
+      )
+    }
+    return <Loading mode="block" height={200} />
   }
 
   render() {
@@ -122,21 +158,30 @@ export default class SourceList extends Component {
       store, // 必填属性
     }
 
+    const {spaceInfo} = window
+
     return (
       <div className="page-aim-source">
         <div className="content-header">目的源管理</div>
-        <div className="list-content">
-          <ListContent {...listConfig} />
-        </div>
-        <AddSource store={store} />
-        <DrawerTagConfig
-          visible={drawerVisible}
-          info={drawerTagConfigInfo}
-          onClose={closeTagConfig}
-          onUpdate={updateTagConfig}
-        />
+        {
+          spaceInfo && spaceInfo.projectId && spaceInfo.projectList && spaceInfo.projectList.length
+            ? (
+              <Fragment>
+                <div className="list-content">
+                  <ListContent {...listConfig} />
+                </div>
+                <AddSource store={store} />
+                <DrawerTagConfig
+                  visible={drawerVisible}
+                  info={drawerTagConfigInfo}
+                  onClose={closeTagConfig}
+                  onUpdate={updateTagConfig}
+                />
+              </Fragment>
+            ) : this.renderNodata()
+        }
       </div>
-     
+
     )
   }
 }

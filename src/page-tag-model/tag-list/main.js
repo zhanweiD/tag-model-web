@@ -296,8 +296,7 @@ export default class TagList extends Component {
     }
     return true
   }
-
-
+  
   // 跳转到项目列表
   goProjectList = () => {
     window.location.href = `${window.__keeper.pathHrefPrefix || '/'}/project`
@@ -332,7 +331,7 @@ export default class TagList extends Component {
       closeTagConfig,
       updateTagConfig,
       objectSelectList,
-      openDrawer,
+      // openDrawer, 
       list, 
       tableLoading,
       drawerTagConfigType,
@@ -341,7 +340,7 @@ export default class TagList extends Component {
 
     const noDataConfig = {
       btnText: '创建标签',
-      onClick: () => openDrawer('add'),
+      onClick: () => store.openDrawer('add'),
       text: '没有任何标签，去创建标签吧',
       code: 'asset_tag_project_tag_operator',
       myFunctionCodes: store.functionCodes,
@@ -358,7 +357,7 @@ export default class TagList extends Component {
           code="asset_tag_project_tag_operator"
           myFunctionCodes={store.functionCodes}
           type="primary"
-          onClick={() => openDrawer('add')}
+          onClick={() => store.openDrawer('add')}
           className="mr8"
         >
         创建标签
