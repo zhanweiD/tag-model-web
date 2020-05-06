@@ -106,6 +106,7 @@ export default class DrawerCreate extends Component {
         '@requiredSelect',
       ],
       control: {
+        disabled: drawerTagInfo.status,
         options: changeToOptions(window.njkData.dict.dataType)('value', 'key'),
       },
     }, {
