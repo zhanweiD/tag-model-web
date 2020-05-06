@@ -1,7 +1,7 @@
 import {
   observable, action, runInAction,
 } from 'mobx'
-import {successTip, errorTip} from '../../common/util'
+import {successTip, errorTip, changeToOptions} from '../../common/util'
 import io from './io'
 
 
@@ -25,6 +25,22 @@ class Store {
   // 确认loading
   @observable confirmLoading = false
 
+  // 场景详情
+  @action async getDetail(params) {
+    try {
+      const res = await io.getDetail({
+        ...params,
+      })
+
+      runInAction(() => {
+        this.info = res
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+
   // 场景列表
   @action async getList() {
     this.loading = true
@@ -41,6 +57,65 @@ class Store {
       runInAction(() => {
         this.loading = false
       })
+      errorTip(e.message)
+    }
+  }
+
+  @observable storageTypeLoading = false
+  @observable storageSelectLoading = false
+  @observable storageType = [] // 数据源类型下拉
+  @observable storageSelectList = [] // 数据源下拉
+  @observable objList = [] // 对象下拉
+
+  // 数据源类型下拉
+  @action async getStorageType() {
+    this.storageTypeLoading = true
+
+    try {
+      const res = await io.getStorageType()
+      runInAction(() => {
+        this.storageType = changeToOptions(res)('name', 'type')
+      })
+    } catch (e) {
+      errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        this.storageTypeLoading = false
+      })
+    }
+  }
+
+  // 数据源下拉
+  @action async getStorageList(params) {
+    this.storageSelectLoading = true
+    try {
+      const res = await io.getStorageList({
+        id: this.projectId,
+        ...params,
+      })
+      runInAction(() => {
+        this.storageSelectList = changeToOptions(res)('dataDbName', 'dataStorageId')
+      })
+    } catch (e) {
+      errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        this.storageSelectLoading = false
+      })
+    }
+  }
+
+  // 对象下拉
+  @action async getObjList(params) {
+    try {
+      const res = await io.getObjList({
+        projectId: this.projectId,
+        ...params,
+      })
+      runInAction(() => {
+        this.objList = changeToOptions(res)('objName', 'objId')
+      })
+    } catch (e) {
       errorTip(e.message)
     }
   }
@@ -95,13 +170,12 @@ class Store {
       })
 
       runInAction(() => {
-        this.confirmLoading = false
-        this.modalVisible = false
         this.getList()
         successTip('编辑成功')
       })
     } catch (e) {
       errorTip(e.message)
+    } finally {
       runInAction(() => {
         this.confirmLoading = false
         this.modalVisible = false
@@ -113,9 +187,12 @@ class Store {
   @action async checkName(params, cb) {
     try {
       const res = await io.checkName(params)
-
       runInAction(() => {
-        if (cb) cb(res)
+        if (typeof res === 'boolean' && res) {
+          cb()
+        } else {
+          cb('名称已存在')
+        }
       })
     } catch (e) {
       errorTip(e.message)

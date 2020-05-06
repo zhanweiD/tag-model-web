@@ -1,7 +1,6 @@
 import {Component} from 'react'
 import PropTypes from 'prop-types'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
-// import {Tag} from 'antd'
 
 export default class Main extends Component {
   static propTypes = {
@@ -43,7 +42,11 @@ export default class Main extends Component {
               {name || '--'}
               <span className="ml10">{ tag }</span>
             </div>
-            <div className="detail-descr">{descr}</div>
+            
+            {
+              descr ? <div className="detail-descr">{`描述：${descr}`}</div> : null
+            }
+           
           </div>
           <div />
           <div style={btnStyle} className="far">

@@ -22,7 +22,7 @@ export const usedStatusBadgeMap = status => {
 
 // 标签状态
 export const tagStatusMap = [{
-  name: '待配置',
+  name: '待绑定',
   value: 0,
 }, {
   name: '待发布',
@@ -36,10 +36,10 @@ export const tagStatusBadgeMap = status => {
   let color 
   let text
   switch (status) {
-    case 0: color = '#d9d9d9'; text = '待配置'; break
+    case 0: color = '#d9d9d9'; text = '待绑定'; break
     case 1: color = '#FEBB00'; text = '待发布'; break
     case 2: color = '#52C41A'; text = '已发布'; break
-    default: color = '#d9d9d9'; text = '待配置'; break
+    default: color = '#d9d9d9'; text = '待绑定'; break
   }
 
   return <Badge color={color} text={text} />

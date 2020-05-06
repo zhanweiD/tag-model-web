@@ -303,7 +303,7 @@ export default class DrawerThree extends Component {
                     cycle: 'day',
                   }),
                   rules: [
-                    {required: true, message: '采集周期不能为空'},
+                    {required: true, message: '调度周期不能为空'},
                   ],
                 })(
                   <CycleSelect

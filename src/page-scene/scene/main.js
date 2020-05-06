@@ -4,20 +4,16 @@ import {observer, inject} from 'mobx-react'
 import {Spin, Modal, Button} from 'antd'
 import {DtGrid, DtNewCard} from '@dtwave/uikit'
 import * as navListMap from '../../common/navList'
-
 import {
   Tag, NoData, AuthBox, Loading,
 } from '../../component'
 import {IconDel, IconEdit} from '../../icon-comp'
 
-import ModalAdd from './modal-add'
+import ModalAdd from './modal'
 
 import store from './store'
 
 const {confirm} = Modal
-
-// 面包屑设置
-// eslint-disable-next-line no-underscore-dangle
 
 const navList = [
   navListMap.tagCenter,
@@ -46,8 +42,15 @@ export default class Scene extends Component {
   }
 
   @action handleModalVisible(type, data = {}) {
-    store.info = toJS(data)
     store.isEdit = !!type
+
+    store.getStorageType()
+
+    if (type) {
+      store.getDetail({
+        occasionId: data.id,
+      })
+    }
     store.modalVisible = true
   }
 
@@ -159,8 +162,6 @@ export default class Scene extends Component {
                                     type="link" // antd@Button 属性
                                     disabled={used}
                                     className="p0"
-                                    // code="asset_tag_project_occ_operator" 
-                                    // myFunctionCodes={functionCodes}
                                     onClick={() => this.handleModalVisible('edit', list[d])}
                                   >
                                     <IconEdit size="14" className={used ? 'i-used' : ''} />
@@ -169,8 +170,6 @@ export default class Scene extends Component {
                                     type="link" // antd@Button 属性
                                     disabled={used} 
                                     className="p0"
-                                    // code="asset_tag_project_occ_operator" 
-                                    // myFunctionCodes={functionCodes}
                                     onClick={() => this.handleDel(id)}
                                   >
                                     <IconDel size="14" className={used ? 'i-used' : ''} />

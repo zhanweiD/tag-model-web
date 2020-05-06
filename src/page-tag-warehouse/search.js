@@ -4,7 +4,7 @@
 import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {
-  Input, Icon, Select,
+  Input, Select,
 } from 'antd'
 import {action} from 'mobx'
 
@@ -46,19 +46,14 @@ export default class Search extends Component {
       hotWord: this.store.hotWord,
     }
 
-    this.store.selectedRows.clear()
-    this.store.rowKeys.clear()
     this.store.tagIds.clear()
     
     const params = {
       currentPage: 1,
     }
+
     this.store.getList(params)
   }
-
-  // @action.bound expandToggle() {
-  //   this.store.expand = !this.store.expand 
-  // }
 
   @action.bound onSearch(v) {
     this.store.hotWord = v.trim()
@@ -77,8 +72,6 @@ export default class Search extends Component {
 
   @action.bound ownObjectSelect(v) {
     this.store.objectId = v
-    this.store.selectedRows.clear()
-    this.store.rowKeys.clear()
     this.store.tagIds.clear()
     this.updateList()
   }
@@ -106,17 +99,19 @@ export default class Search extends Component {
             size="large"
             onSearch={this.onSearch}
           />
-          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-          {/* <div className="advanced-search-btn" onClick={this.expandToggle}>
-            <span>高级检索</span>
-            <Icon type={expand ? 'up' : 'down'} style={{marginLeft: '4px'}} />
-          </div> */}
         </div>
         <div className="advanced-search">
           <div className="FBH">
             <div>
               <span className="mr8">所属项目</span>
-              <Select value={ownProjectId} className="mr16" style={{width: 240}} onChange={this.ownProjectSelect}>
+              <Select 
+                value={ownProjectId} 
+                className="mr16" 
+                style={{width: 240}} 
+                onChange={this.ownProjectSelect}
+                showSearch
+                optionFilterProp="children"
+              >
                 <Option value="">全部</Option>
                 {
                   ownProjectList.map(
@@ -132,7 +127,14 @@ export default class Search extends Component {
                 }
               </Select>
               <span className="mr8">对象</span>
-              <Select value={objectId} className="mr16" style={{width: 240}} onChange={this.ownObjectSelect}>
+              <Select 
+                value={objectId} 
+                className="mr16" 
+                style={{width: 240}} 
+                onChange={this.ownObjectSelect}
+                showSearch
+                optionFilterProp="children"
+              >
                 <Option value="">全部</Option>
                 {
                   objectList.map(

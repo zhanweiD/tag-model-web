@@ -50,16 +50,7 @@ class TagCategoryStore {
   // 选择对象
   @observable selectObj = []
 
-  // 选择标签 - 树结构 
-
-  // 所有标签
-  @observable selectTagData = []
-
-  // 树结构数据
-  @observable selectTagTreeData = []
-
   // 对象详情
-  // @observable objectDetail = false
   @observable objName = []
 
   // 类目详情
@@ -74,8 +65,6 @@ class TagCategoryStore {
   // 可移动的标签类目树
   @observable moveTreeData = []
 
-  // 获取关联的对象
-  // @observable relObjectList = []
 
   // 当前选中的类目 用于添加类目展开
   currSelectCategory = undefined
@@ -113,7 +102,7 @@ class TagCategoryStore {
           occasionId: this.sceneId,
         })
       }
-      
+
 
       runInAction(() => {
         this.treeLoading = false
@@ -138,8 +127,8 @@ class TagCategoryStore {
               this.findParentId(item.id, res, this.searchExpandedKeys)
             }
             return item
-          }) 
-          
+          })
+
           // 获取对象名字
           this.objName = res.filter(item => item.type === 2).map(item => item.name)
         }
@@ -273,7 +262,7 @@ class TagCategoryStore {
         successTip('删除成功')
         // 删除对象
         if (type === 2) this.destory()
- 
+
         this.getCategoryList(() => {
           // 删除标签重新请求 场景详情 因为场景详情里面有 标签数这个扑街
           if (cb) cb()
@@ -312,13 +301,26 @@ class TagCategoryStore {
     }
   }
 
+  @observable selectObjLoading = false
+
+
+  // 选择标签 - 树结构 
+  // 所有标签
+  @observable selectTagData = []
+  // 树结构数据
+  @observable selectTagTreeData = []
+  @observable selectTagLoading = false
+  // 标签列表
+  @observable selectTagTableData = []
+  @observable checkedKeys = []
+  @observable checkedTagData = []
+  @observable disabledKeys = []
+
   // 标签 - 选择标签树结构
   @action async getSelectTag() {
-    this.selectTagData.clear()
-    this.selectTagTreeData.clear()
+    this.selectTagLoading = true
 
     try {
-      this.detailLoading = true
       const res = await io.selectTag({
         occasionId: this.sceneId,
         catId: this.currentTreeItemKey,
@@ -326,13 +328,20 @@ class TagCategoryStore {
       runInAction(() => {
         this.selectTagData.replace(res)
         this.selectTagTreeData.replace(listToTree(res))
-        this.detailLoading = false
+        const usedList = res.filter(d => d.type === 0 && d.used).map(d => d && d.tag)
+        const usedKeys = usedList.map(d => d.id)
+        this.checkedTagData.replace(usedList)
+        this.selectTagTableData.replace(usedList)
+        this.checkedKeys.replace(usedKeys)
+        
+        this.disabledKeys = res.filter(d => (d.type === 0) && (!d.status || d.used)).map(d => d.id)
       })
     } catch (e) {
-      runInAction(() => {
-        this.detailLoading = false
-      })
       errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        this.selectTagLoading = false
+      })
     }
   }
 
@@ -340,7 +349,6 @@ class TagCategoryStore {
   @action async saveTag(param, cb) {
     this.confirmLoading = true
     try {
-      this.confirmLoading = true
       await io.saveTag({
         occasionId: this.sceneId,
         catId: this.currentTreeItemKey,
@@ -349,15 +357,15 @@ class TagCategoryStore {
       runInAction(() => {
         if (cb) cb()
         successTip('操作成功')
-        this.confirmLoading = false
         this.modalVisible.selectTag = false
         this.getCategoryList()
       })
     } catch (e) {
+      errorTip(e.message)
+    } finally {
       runInAction(() => {
         this.confirmLoading = false
       })
-      errorTip(e.message)
     }
   }
 }

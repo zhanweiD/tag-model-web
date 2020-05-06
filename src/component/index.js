@@ -14,6 +14,7 @@ import NoData from './no-data'
 import AuthBox from './auth-box'
 import OmitTooltip from './omit-tooltip'
 import StatusImg from './status-img'
+import ModalStotageDetail from './modal-stroage-detail'
 
 export {
   DetailHeader,
@@ -33,4 +34,5 @@ export {
   AuthBox,
   OmitTooltip,
   StatusImg,
+  ModalStotageDetail,
 }

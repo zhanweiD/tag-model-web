@@ -30,6 +30,10 @@ class Frame extends Component {
     }
   }
 
+  componentWillUnmount() {
+    store.projectId = undefined
+  }
+
   renderNav() {
     const {page, location, pageUrl} = this.props
 
@@ -67,6 +71,10 @@ class Frame extends Component {
         history.push(`/${url[1]}`)
       }
     }
+  }
+
+  componentWillUnmount() {
+    store.projectId = undefined
   }
 
   render() {

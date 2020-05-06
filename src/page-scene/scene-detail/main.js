@@ -2,17 +2,15 @@ import {Component, Fragment} from 'react'
 import {action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {
-  Tabs, Button, Icon, Spin, Tooltip, Alert,
+  Tabs, Button, Icon, Spin, Alert,
 } from 'antd'
 
 import * as navListMap from '../../common/navList'
 import {Time} from '../../common/util'
 import {AuthBox, Tag, DetailHeader} from '../../component'
-import ModalEditScene from '../scene/modal-add'
+import ModalEditScene from '../scene/modal'
 
 import SelectTag from './select-tag'
-import DataSource from './data-source'
-import ModalDataSource from './modal-data-source'
 
 import store from './store-scene-detail'
 
@@ -47,14 +45,8 @@ export default class SceneDetail extends Component {
    
     if (store.projectId) {
       store.getDetail()
-      store.getSourceList()
       store.getAuthCode()
     }
-  }
-
-  @action.bound dbSourceVisible() {
-    store.dbSourceVisible = true
-    store.getDBSource()
   }
 
   @action.bound sceneDetailVisible() {
@@ -67,18 +59,16 @@ export default class SceneDetail extends Component {
   }
 
   componentWillUnmount() {
-    store.isDbSourcEnough = false
-    store.sourceData.data.clear()
     store.info = {}
   }
 
   render() {
     const info = toJS(store.info)
     const {
-      tagCount,
+      storageType,
+      dataStorageName,
       cuser,
       cdate,
-      invokeList = [],
       descr,
       used,
       name,
@@ -88,16 +78,20 @@ export default class SceneDetail extends Component {
     const baseInfo = [{
       title: '创建者',
       value: cuser,
-    }, {
+    }, 
+    {
+      title: '数据源类型',
+      value: storageType,
+    },
+    {
+      title: '数据源',
+      value: dataStorageName,
+    },
+    {
       title: '创建时间',
       value: <Time timestamp={cdate} />,
-    }, {
-      title: '调用的API名称',
-      value: invokeList.filter(item => item !== null).join('、'),
-    }, {
-      title: '标签数',
-      value: tagCount,
-    }]
+    },
+    ]
 
 
     // 不同状态的相应map
@@ -108,48 +102,18 @@ export default class SceneDetail extends Component {
 
     const actions = [
       <Button className="mr8" href={`${window.__keeper.pathHrefPrefix}/scene/${store.sceneId}/tags`}>标签列表</Button>,
-      <AuthBox 
-        code="asset_tag_project_occ_data_source"
-        myFunctionCodes={store.functionCodes} 
-        isButton={false}
-      >
-        {
-          store.isDbSourcEnough
-            ? (
-              <Tooltip title="添加的目的数据源数量超过上限10个">
-                <Button
-                  // className="mr8"
-                  type="primary"
-                  onClick={this.dbSourceVisible}
-                  disabled={store.isDbSourcEnough}
-                >
-                  添加目的数据源
-                </Button>
-              </Tooltip>
-            ) : (
-              <Button
-                // className="mr8"
-                type="primary"
-                onClick={this.dbSourceVisible}
-                disabled={used}
-              >
-                添加目的数据源
-              </Button>
-            )
-        }
-      </AuthBox>,
     ]
 
     return (
       <div className="scene-detail">    
         {
-          store.sourceData.data.length ? (
+          used ? (
             <Alert
               showIcon
               closable
               type="warning"
               className="fs12"
-              message="已添加目的数据源或场景使用中，无法在场景中继续选择或移除对象，添加、编辑或删除类目，选择或移除标签，只能查看类目与标签详情。"
+              message="场景使用中，无法在场景中继续选择或移除对象，添加、编辑或删除类目，选择或移除标签，只能查看类目与标签详情。"
             />
           ) : null
         }
@@ -181,16 +145,11 @@ export default class SceneDetail extends Component {
                   <SelectTag 
                     sceneId={store.sceneId} 
                     projectId={store.projectId}
-                    dataSourceLen={store.sourceData.data.length}
                     sceneDetailStore={store}
                   />
                 </TabPane>
-                <TabPane tab="目的数据源列表" key="2">
-                  <DataSource store={store} onClick={this.dbSourceVisible} />
-                </TabPane>
               </Tabs>
               <ModalEditScene store={store} />
-              <ModalDataSource store={store} />
             </Fragment>
           ) : null
         }

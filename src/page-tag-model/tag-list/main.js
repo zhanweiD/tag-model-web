@@ -2,9 +2,9 @@
  * @description 标签管理 - 标签模型
  */
 import {Component, Fragment} from 'react'
-import {action} from 'mobx'
-import {observer, inject} from 'mobx-react'
-import {Popconfirm} from 'antd'
+import {action, toJS} from 'mobx'
+import {observer, inject, Provider} from 'mobx-react'
+import {Popconfirm, Button} from 'antd'
 import {Link} from 'react-router-dom'
 import * as navListMap from '../../common/navList'
 import {
@@ -13,13 +13,14 @@ import {
 import {
   tagStatusBadgeMap,
   usedStatusBadgeMap,
-  publishStatusBadgeMap,
+  // publishStatusBadgeMap,
   tagConfigMethodTableMap,
-} from './util'
+} from '../util'
 import seach from './search'
 import ModalTagApply from './modal-tag-apply'
 import DrawerCreate from './drawer-create'
 import DrawerTagConfig from '../tag-config'
+import DrawerBatchConfig from '../tag-config-batch'
 
 import store from './store'
 
@@ -69,12 +70,14 @@ export default class TagList extends Component {
     title: '使用状态',
     dataIndex: 'isUsed',
     render: v => usedStatusBadgeMap(+v),
-  }, {
-    key: 'publish',
-    title: '公开状态',
-    dataIndex: 'publish',
-    render: v => publishStatusBadgeMap(+v),
-  }, {
+  }, 
+  // {
+  //   key: 'publish',
+  //   title: '公开状态',
+  //   dataIndex: 'publish',
+  //   render: v => publishStatusBadgeMap(+v),
+  // }, 
+  {
     key: 'action',
     title: '操作',
     width: 150,
@@ -123,7 +126,8 @@ export default class TagList extends Component {
           )}
 
           {/* 标签状态: 已发布 未使用 下架  操作: 取消发布/上架申请 */}
-          {record.status === 2 && record.isUsed === 0 && record.publish === 0 && (
+          {/* {record.status === 2 && record.isUsed === 0 && record.publish === 0 && ( */}
+          {record.status === 2 && record.isUsed === 0 && (
             <Fragment>
               <Popconfirm
                 placement="topRight"
@@ -135,13 +139,20 @@ export default class TagList extends Component {
               >
                 <a href>取消发布</a>
               </Popconfirm>
-              <span className="table-action-line" />
-              <a href onClick={() => store.openModal({type: 1, id: record.id})}>上架申请</a>
+              {/* <span className="table-action-line" />
+              <a href onClick={() => store.openModal({type: 1, id: record.id})}>上架申请</a> */}
             </Fragment>
           )}
 
+          {/* 标签状态: 已发布 已使用 */}
+          {record.status === 2
+          && record.isUsed === 1
+          && <span className="disabled">取消发布</span>}
+
+
           {/* 标签状态: 已发布 未使用 上架审批中 操作: 取消申请 */}
-          {record.status === 2 && record.isUsed === 0 && record.publish === 2 && (
+          {/* {record.status === 2 && record.isUsed === 0 && record.publish === 2 && ( */}
+          {/* {record.status === 2 && record.isUsed === 0 && (
             <Popconfirm
               placement="topRight"
               title="确认取消申请？"
@@ -152,15 +163,16 @@ export default class TagList extends Component {
             >
               <a href>取消申请</a>
             </Popconfirm>
-          )}
+          )} */}
           {/* 标签状态: 已发布 未使用 上架 操作: 下架申请 */}
-          {record.status === 2
+          {/* {record.status === 2
           && record.isUsed === 0
           && record.publish === 1
-          && <a href onClick={() => store.openModal({type: 0, id: record.id})}>下架申请</a>}
+          && <a href onClick={() => store.openModal({type: 0, id: record.id})}>下架申请</a>} */}
 
           {/* 标签状态: 已发布 未使用 下架审批中 操作: 取消申请 */}
-          {record.status === 2 && record.isUsed === 0 && record.publish === 3 && (
+          {/* {record.status === 2 && record.isUsed === 0 && record.publish === 3 && ( */}
+          {/* {record.status === 2 && record.isUsed === 0 && (
             <Popconfirm
               placement="topRight"
               title="确认取消申请？"
@@ -171,16 +183,16 @@ export default class TagList extends Component {
             >
               <a href>取消申请</a>
             </Popconfirm>
-          )}
+          )} */}
 
           {/* 标签状态: 已发布 已使用 下架 操作: 上架申请 */}
-          {record.status === 2
+          {/* {record.status === 2
           && record.isUsed === 1
           && record.publish === 0
-          && <a href onClick={() => store.openModal({type: 1, id: record.id})}>上架申请</a>}
+          && <a href onClick={() => store.openModal({type: 1, id: record.id})}>上架申请</a>} */}
 
           {/* 标签状态: 已发布 已使用 上架审批中 操作: 取消申请 */}
-          {record.status === 2 && record.isUsed === 1 && record.publish === 2 && (
+          {/* {record.status === 2 && record.isUsed === 1 && record.publish === 2 && (
             <Popconfirm
               placement="topRight"
               title="确认取消申请？"
@@ -191,16 +203,16 @@ export default class TagList extends Component {
             >
               <a href>取消申请</a>
             </Popconfirm>
-          )}
+          )} */}
 
           {/* 标签状态: 已发布 已使用 上架 操作: 下架申请 */}
-          {record.status === 2
+          {/* {record.status === 2
           && record.isUsed === 1
           && record.publish === 1
-          && <a href onClick={() => store.openModal({type: 0, id: record.id})}>下架申请</a>}
+          && <a href onClick={() => store.openModal({type: 0, id: record.id})}>下架申请</a>} */}
 
           {/* 标签状态: 已发布 已使用 下架审批中 操作: 取消申请 */}
-          {record.status === 2 && record.isUsed === 1 && record.publish === 3 && (
+          {/* {record.status === 2 && record.isUsed === 1 && record.publish === 3 && (
             <Popconfirm
               placement="topRight"
               title="确认取消申请？"
@@ -211,7 +223,7 @@ export default class TagList extends Component {
             >
               <a href>取消申请</a>
             </Popconfirm>
-          )}
+          )} */}
         </AuthBox>
       </div>
     ),
@@ -284,8 +296,7 @@ export default class TagList extends Component {
     }
     return true
   }
-
-
+  
   // 跳转到项目列表
   goProjectList = () => {
     window.location.href = `${window.__keeper.pathHrefPrefix || '/'}/project`
@@ -320,52 +331,39 @@ export default class TagList extends Component {
       closeTagConfig,
       updateTagConfig,
       objectSelectList,
-      openDrawer,
+      // openDrawer, 
       list, 
       tableLoading,
-      rowKeys,
       drawerTagConfigType,
+      batchConfigVisible,
     } = store
 
     const noDataConfig = {
       btnText: '创建标签',
-      onClick: () => openDrawer('add'),
+      onClick: () => store.openDrawer('add'),
       text: '没有任何标签，去创建标签吧',
       code: 'asset_tag_project_tag_operator',
       myFunctionCodes: store.functionCodes,
       noAuthText: '没有任何标签',
     }
 
-    // const rowSelection = {
-    //   selectedRowKeys: rowKeys.slice(),
-    //   onChange: this.onTableCheck,
-    //   getCheckboxProps: record => ({
-    //     disabled: record.status !== 0, 
-    //   }),
-    // }
-
     const listConfig = {
       // rowSelection,
       columns: this.columns,
       initParams: {projectId},
-      searchParams: seach({objectSelectList}),
-      buttons: [<AuthBox
-        code="asset_tag_project_tag_operator"
-        myFunctionCodes={store.functionCodes}
-        type="primary"
-        onClick={() => openDrawer('add')}
-        className="mr8"
-      >
+      searchParams: seach({objectSelectList: toJS(objectSelectList)}),
+      buttons: [
+        <AuthBox
+          code="asset_tag_project_tag_operator"
+          myFunctionCodes={store.functionCodes}
+          type="primary"
+          onClick={() => store.openDrawer('add')}
+          className="mr8"
+        >
         创建标签
-      </AuthBox>, 
-      // <AuthBox
-      //     code="asset_tag_project_tag_operator"
-      //     myFunctionCodes={store.functionCodes}
-      //   // type="primary"
-      //     onClick={() => store.openTagConfig('more')}
-      //   >
-      //     {`批量绑定(${rowKeys.length})`}
-      //   </AuthBox>
+        </AuthBox>, 
+        <Button onClick={() => store.openBatchConfig()}>批量绑定</Button>,
+
       ],
       rowKey: 'id',
       initGetDataByParent: true, // 初始请求 在父层组件处理。列表组件componentWillMount内不再进行请求
@@ -375,37 +373,43 @@ export default class TagList extends Component {
     const {spaceInfo} = window
 
     return (
-      <div className="page-tag-list">
-        <div className="content-header">{navListMap.tagModel.text}</div>
-        {
-          spaceInfo && spaceInfo.projectId && spaceInfo.projectList && spaceInfo.projectList.length
-            ? (
-              <Fragment>
-                {
-                  !list.length && !this.isSearch() ? (
-                    <NoData
-                      isLoading={tableLoading}
-                      {...noDataConfig}
-                    />
-                  ) : <div className="list-content"><ListContent {...listConfig} /></div>
-                }
+      <Provider bigStore={store}>
+        <div className="page-tag-list">
+          <div className="content-header">{navListMap.tagModel.text}</div>
+          {
+            spaceInfo && spaceInfo.projectId && spaceInfo.projectList && spaceInfo.projectList.length
+              ? (
+                <Fragment>
+                  {
+                    !list.length && !this.isSearch() ? (
+                      <NoData
+                        isLoading={tableLoading}
+                        {...noDataConfig}
+                      />
+                    ) : <div className="list-content"><ListContent {...listConfig} /></div>
+                  }
 
-                <ModalTagApply store={store} />
-                <DrawerCreate store={store} />
-                <DrawerTagConfig
-                  projectId={projectId}
-                  visible={drawerTagConfigVisible}
-                  info={drawerTagConfigInfo}
-                  onClose={closeTagConfig}
-                  onUpdate={updateTagConfig}
-                  type={drawerTagConfigType}
-                />
-              </Fragment>
-            ) : this.renderNodata()
-        }    
+                  <ModalTagApply store={store} />
+                  <DrawerCreate store={store} />
+                  <DrawerTagConfig
+                    projectId={projectId}
+                    visible={drawerTagConfigVisible}
+                    info={drawerTagConfigInfo}
+                    onClose={closeTagConfig}
+                    onUpdate={updateTagConfig}
+                    type={drawerTagConfigType}
+                  />
+                  <DrawerBatchConfig 
+                    projectId={projectId}
+                    visible={batchConfigVisible}
+                    objectSelectList={objectSelectList}
+                  />
+                </Fragment>
+              ) : this.renderNodata()
+          }    
        
-      </div>
-
+        </div>
+      </Provider>
     )
   }
 }

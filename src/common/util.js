@@ -28,6 +28,9 @@ export const objectApi = `${pathPrefix}/object` // 对象管理
 export const derivativeApi = `${pathPrefix}/derivative` // 衍生标签
 export const tagWarehouseApi = `${pathPrefix}/map` // 标签仓库
 
+export const syncApi =  `${pathPrefix}/transfer` // 标签同步
+export const targetSourceApi =  `${pathPrefix}/targetSource` // 目的数据源
+
 const createRequestFn = method => (url, config) => ({
   url,
   method,
@@ -47,7 +50,7 @@ export const post = createRequestFn('POST')
  * @param2 valueName 返回数据value 字段名
  */
 export const changeToOptions = (list=[]) => (labelName, valueName) => list.map((obj={}) => ({ name: obj && obj[labelName], value: obj && obj[valueName] }))
-
+export const changeToOptionsWithDisabled = (list=[]) => (labelName, valueName, disabledKey) => list.map((obj={}) => ({ name: obj && obj[labelName], value: obj && obj[valueName], disabled: obj && Number(obj[disabledKey])}))
 /**
  * @description 遍历数组根据"id"值查找对应的"name"
  * @param {*} list 数组
@@ -236,4 +239,15 @@ export function getNamePattern(max = 32) {
   }, {
     pattern: /^(?!数栖)/, message: '名称不允许数栖开头',
   }]
+}
+
+export function calcSize(size, defaultUnit = 'B', isToFixed = true) {
+  const map = {
+    b: 1,
+    kb: 2 ** 10,
+    mb: 2 ** 20,
+    gb: 2 ** 30,
+    tb: 
+    2 ** 40,
+  }
 }

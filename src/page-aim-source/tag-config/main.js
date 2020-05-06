@@ -1,20 +1,17 @@
 import {Component} from 'react'
 import {observer} from 'mobx-react'
-// import {toJS} from 'mobx'
-import {Drawer, Button, Tabs} from 'antd'
+import {toJS} from 'mobx'
+import {Drawer, Button} from 'antd'
 import {ErrorEater} from '@dtwave/uikit'
 import Mapping from '@dtwave/oner-mapping'
 import {Loading} from '../../component'
 
 import Store from './store'
 
-const {TabPane} = Tabs
-
 @observer
 export default class DrawerTagConfig extends Component {
   value = []
   state = {
-    // visiable: false,
     submitting: false,
   }
 
@@ -26,44 +23,28 @@ export default class DrawerTagConfig extends Component {
     onClose()
   }
 
-
   componentWillMount() {
-    const {projectId} = this.props
-    this.store = new Store({
-      projectId,
-    })
+    this.store = new Store()
   }
 
   componentWillReceiveProps(nextProps) {
     const {
-      info,
       visible,
     } = this.props
 
     if (!_.isEqual(visible !== nextProps.visible) && nextProps.visible) {
-      this.store.objId = nextProps.info.objId
-      this.store.tagIds = [+nextProps.info.id]
-      this.store.configType = nextProps.info.configType
+      this.store.sourceId = nextProps.info.id
 
       this.setState({
         loading: true,
       })
       this.getAllData()
     }
-    
-    // if (!_.isEqual(info.id !== nextProps.info.id) && nextProps.visible) {
-    //   this.store.objId = nextProps.info.objId
-    //   this.store.tagIds = [+nextProps.info.id]
-
-    //   this.setState({
-    //     loading: true,
-    //   })
-    //   this.getAllData()
-    // }
   }
 
   getAllData = async () => {
     try {
+      await this.store.getObjList()
       await this.store.getResultData()
       await this.store.getFieldData()
       await this.store.getTagData()
@@ -92,10 +73,19 @@ export default class DrawerTagConfig extends Component {
 
     this.block = true
 
+    const params = {
+      id: this.store.sourceId,
+      fieldTagMappings: this.value.map(d => ({
+        id: d.id,
+        tagId: d.tagId,
+        fieldName: d.dataFieldName,
+      })),
+    }
+
     this.setState({
       submitting: true,
     }, () => {
-      this.store.saveResult(this.value).then(() => {
+      this.store.saveResult(params).then(res => {
         this.setState({
           submitting: false,
         })
@@ -115,7 +105,6 @@ export default class DrawerTagConfig extends Component {
   render() {
     const {
       visible,
-      type,
     } = this.props
 
     const {
@@ -127,13 +116,13 @@ export default class DrawerTagConfig extends Component {
       source,
       target,
       result,
-      configType,
+      objList,
     } = this.store
 
     return (
       <div className="tag-detail-drawer">
         <Drawer
-          title="绑定字段"
+          title="标签映射"
           placement="right"
           closable
           onClose={this.onClose}
@@ -141,15 +130,6 @@ export default class DrawerTagConfig extends Component {
           width={1120}
           maskClosable={false}
         >
-          {
-            type === 'more' ? (
-              <Tabs onChange={null} type="card" size="small">  
-                <TabPane tab="基础标签绑定" key="1" />
-                <TabPane tab="衍生标签绑定" key="2" />
-              </Tabs>
-            ) : null
-          }
-         
           {
             loading
               ? <Loading mode="block" height={200} /> 
@@ -165,142 +145,164 @@ export default class DrawerTagConfig extends Component {
                   targetRowKey={record => `${record.dataStorageId}${record.dataTableName}${record.dataFieldName}`}
                   sourceSearchKey={record => record.name || record.tagName}
                   targetSearchKey={record => record.dataFieldName}
+                  // sourceRowKey={record => record.dataFieldName}
+                  // targetRowKey={record => record.tagId}
+                  // sourceSearchKey={record => record.dataFieldName}
+                  // targetSearchKey={record => record.tagName}
                   targetColumns={[
                     {
-                      title: '字段名称',
-                      dataIndex: 'dataFieldName',
+                      title: '唯一标识',
+                      dataIndex: 'tagEnName',
+                      width: 70,
+                    },
+                    {
+                      title: '标签名称',
+                      dataIndex: 'tagName',
                       width: 80,
+                    },
+                    {
+                      title: '所属对象',
+                      dataIndex: 'objName',
+                      width: 80,
+                    },
+                    {
+                      title: '数据类型',
+                      dataIndex: 'tagType',
+                      width: 70,
+                    },
+                  ]}
+                  sourceColumns={[
+                    {
+                      title: '字段名',
+                      dataIndex: 'dataFieldName',
+                      width: 140,
                     },
                     {
                       title: '数据类型',
                       dataIndex: 'dataFieldType',
-                      width: 80,
-                    },
-                    {
-                      title: configType === 1 ? '加工方案' : '数据表',
-                      dataIndex: configType === 1 ? 'schemeName' : 'dataTableName',
-                      width: 90,
-                    },
-                  /*
-                    {
-                      title: '',
-                      width: 10,
-                      render: () => <span></span>,
-                    },
-                    */
-                  ]}
-                  sourceColumns={[
-                    {
-                      title: '唯一标识',
-                      dataIndex: 'enName',
-                      width: 90,
-                    },
-                    {
-                      title: '标签名称',
-                      dataIndex: 'name',
-                      width: 90,
-                    },
-                    {
-                      title: '数据类型',
-                      dataIndex: 'valueTypeName',
-                      width: 90,
+                      width: 150,
                     },
                   ]}
                   result={result}
                   resultSourceColumns={[
                     {
-                      title: '标签名称',
-                      dataIndex: 'tagName',
+                      title: '字段标识',
+                      dataIndex: 'dataFieldName',
                       width: 96,
                     },
                   ]}
                   resultTargetColumns={[
                     {
-                      title: '字段标识',
-                      dataIndex: 'dataFieldName',
+                      title: '标签名称',
+                      dataIndex: 'tagName',
                       width: 69,
                     },
+                    // {
+                    //   title: '所属对象',
+                    //   dataIndex: 'objName',
+                    //   width: 69,
+                    // },
                   ]}
                   resultSourceFullColumns={[
                     {
-                      title: '标签英文名',
-                      dataIndex: 'tagEnName',
+                      title: '字段名',
+                      dataIndex: 'dataFieldName',
                       width: 100,
                     },
                     {
-                      title: '标签中文名',
-                      dataIndex: 'tagName',
-                      width: 80,
-                    },
-                    {
                       title: '数据类型',
-                      dataIndex: 'tagValueTypeName',
+                      dataIndex: 'dataFieldType',
                       width: 80,
                     },
                   ]}
                   resultTargetFullColumns={[
                     {
-                      title: '英文名',
-                      dataIndex: 'dataFieldName',
-                      width: 60,
+                      title: '唯一标识',
+                      dataIndex: 'tagEnName',
+                      width: 69,
                     },
                     {
-                      title: '字段类型',
-                      dataIndex: 'dataFieldType',
-                      width: 60,
+                      title: '标签名称',
+                      dataIndex: 'tagName',
+                      width: 69,
                     },
                     {
-                      title: '数据表',
-                      dataIndex: 'dataTableName',
-                      width: 130,
+                      title: '所属对象',
+                      dataIndex: 'objName',
+                      width: 69,
+                    },
+                    {
+                      title: '数据类型',
+                      dataIndex: 'tagType',
+                      width: 69,
                     },
                   ]}
                   resultRowKey={record => record.tagId}
                   mappingField={(
                     {
-                      id: tagId,
-                      name: tagName,
-                      enName: tagEnName,
-                      valueType: tagValueType,
-                      valueTypeName: tagValueTypeName,
-                    },
-                    {
-                      dataStorageId,
-                      dataDbName,
-                      dataDbType,
-                      dataTableName,
                       dataFieldName,
                       dataFieldType,
-                      isUsed,
-                      schemeId,
+                    },
+                    {
+                      tagId,
+                      tagName,
+                      tagEnName,
+                      objName,
+                      tagType,
                     }
                   ) => ({
                     tagId,
                     tagName,
                     tagEnName,
-                    tagValueType,
-                    tagValueTypeName,
-                    dataStorageId,
-                    dataDbName,
-                    dataDbType,
-                    dataTableName,
+                    objName,
+                    tagType,
                     dataFieldName,
                     dataFieldType,
-                    isUsed,
-                    tagDerivativeSchemeId: schemeId,
                   })}
-                  nameMappingField={['enName', 'dataFieldName']}
+                  nameMappingField={['tagName', 'dataFieldName']}
                   onChange={value => this.value = value}
-                  sourceTitle="标签列表"
-                  targetTitle="字段列表"
+                  sourceTitle="字段列表"
+                  targetTitle="标签列表"
                   sourceTipTitle="字段："
                   targetTipTitle="标签："
                   sourceSearchPlaceholder="请输入名称搜索"
                   targetSearchPlaceholder="请输入名称搜索"
-                  sourceDisableKey={record => record.status === 2}
-                  targetDisableKey={record => record.status === 2}
-                  disableKey={record => record.used === 1 || record.isUsed === 1 || record.status === 2}
-                  disableMsg={record => (record.status === 2 ? '标签已发布无法删除映射' : '使用中无法删除映射')}
+                  sourceDisableKey={record => record.tagStatus === 1}
+                  targetDisableKey={record => record.tagStatus === 1}
+                  disableKey={record => record.tagStatus === 1}
+                  // disableMsg="使用中无法删除映射"
+                  hasSearchSelect
+                  searchSelectList={toJS(objList)}
+                  searchSelectPlaceholder="请选择对象"
+                  searchSelectKey="objName"
+                  isShowMapping
+                  canMapping
+                  // beforeMapping={v => {
+                  //   const mappingItem = v[0]
+                  //   if (mappingItem.tagType !== mappingItem.dataFieldType) {   
+                  //     message.error(`${mappingItem.dataFieldName}(字段)与${mappingItem.tagName}(标签)数据类型不匹配， 绑定失败`)
+                  //     return new Promise(function (resolve, reject) {
+                  //       reject([])
+                  //     })
+                  //   } 
+                  //   return new Promise(function (resolve, reject) {
+                  //     resolve([])
+                  //   })
+                  // }}
+                  // beforeNameMapping={v => {
+                  //   const originalResult = v.filter(d => d.isUsed || d.status === 2)
+        
+                  //   const successResult = v.filter(d => d.valueTypeName === d.dataFieldType)
+        
+                  //   const errorResult = v.filter(d => d.valueTypeName !== d.dataFieldType)
+                  //   message.info(`${successResult.length}个标签映射成功，${errorResult.length}个标签映射失败`)
+        
+                  //   const mappingResult = originalResult.concat(successResult)
+        
+                  //   return new Promise(function (resolve, reject) {
+                  //     resolve(mappingResult)
+                  //   })
+                  // }}
                 />
               )
               
@@ -320,6 +322,7 @@ export default class DrawerTagConfig extends Component {
                   background: '#fff',
                 }}
               >
+                <Button onClick={this.onClose} className="mr8">取消</Button>
                 <Button
                   type="primary"
                   onClick={this.submit}
