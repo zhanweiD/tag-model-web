@@ -67,7 +67,7 @@ class DrawerStore {
   async saveResult(params) {
     try {
       const res = await io.saveMappingResult(params)
-      console.log(res)
+
       if (res === true) {
         successTip('绑定成功')
       } else {
