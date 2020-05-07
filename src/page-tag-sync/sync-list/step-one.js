@@ -1,9 +1,9 @@
 /**
  * @description 添加同步计划 - 基础信息配置
  */
-import {Component, Fragment} from 'react'
+import {Component} from 'react'
 import {observer} from 'mobx-react'
-import {action, toJS} from 'mobx'
+import {action} from 'mobx'
 import {
   Input, Form, Select, Button, Switch,
 } from 'antd'
@@ -53,6 +53,10 @@ export default class StepOne extends Component {
     this.store.storageType = obj.key
     
     this.store.storageId = undefined
+
+    // setFieldsValue({
+    //   dataStorageId: {},
+    // })
     resetFields(['dataStorageId'])
 
     if (getFieldValue('objId')) {
@@ -232,6 +236,7 @@ export default class StepOne extends Component {
               <div className="select-storage">
                 <Select 
                   labelInValue 
+                  value={this.store.storageId ? {key: this.store.storageId} : undefined}
                   placeholder="请选择目的源" 
                   style={{width: '100%'}} 
                   onSelect={v => this.selecStorage(v)}
@@ -263,10 +268,10 @@ export default class StepOne extends Component {
                     {transform: value => value && value.trim()},
                     {required: true, message: '表名不能为空'},  
                   ]})(
-                    <div className="FBH"> 
-                    <span className="ml16 mr16">tbjh_</span>
-                    <Input autoComplete="off" placeholder="请输入表名称" />
-                  </div>
+                  <div className="FBH"> 
+                      <span className="ml16 mr16">tbjh_</span>
+                      <Input autoComplete="off" placeholder="请输入表名称" />
+                    </div>
                 )}
               </FormItem>
             ) : null

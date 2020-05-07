@@ -91,7 +91,7 @@ export default class SyncTagTree extends Component {
       this.allChecked = false
       this.indeterminate = false
     }
-    console.log(checkedNodes)
+
     // 选择的标签数据
     this.checkedTagData = checkedNodes.filter(d => d.props.tagData).map(d => d.props.tagData)
     this.checkedKeys.replace(checkedKeys)
@@ -109,7 +109,6 @@ export default class SyncTagTree extends Component {
       this.allChecked = false
       this.indeterminate = true
     }
-    console.log(toJS(this.checkedTagData))
 
     rightToTable(toJS(this.checkedTagData))
   }
@@ -174,7 +173,7 @@ export default class SyncTagTree extends Component {
         />
       )
     }
-    console.log(item)
+
     return (
       <TreeNode
         key={item.id}
