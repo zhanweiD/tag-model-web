@@ -3,6 +3,8 @@ import {Component} from 'react'
 import {
   Input, Form, Select, Button,
 } from 'antd'
+import {action} from 'mobx'
+import {observer} from 'mobx-react'
 
 const FormItem = Form.Item
 const Option = {Select}
@@ -10,25 +12,84 @@ const {TextArea} = Input
 
 const formItemLayout = {
   labelCol: {span: 7},
-  wrapperCol: {span: 12},
+  wrapperCol: {span: 10},
 }
 
 @Form.create()
+@observer
 export default class BaseInfo extends Component {
+  constructor(props) {
+    super(props)
+    this.store = props.store
+  }
+
+  @action.bound selectObj(e) {
+    const {form: {resetFields}} = this.props
+    this.store.objId = e
+    resetFields(['relObjIds'])
+    this.store.getAssObj({
+      id: e,
+    })
+  }
+
+  @action.bound selectAssObj(e) {
+    this.store.assObjId = e
+  }
+
+  @action.bound next() {
+    const {form: {validateFields}} = this.props
+    const {detailBaseInfo} = this.store
+    const t = this
+
+    validateFields((err, params) => {
+      if (err) {
+        return
+      }
+
+      if (detailBaseInfo.id) {
+        params.id = detailBaseInfo.id
+        t.store.updateBaseInfo(params)
+      } else {
+        t.store.saveBaseInfo(params)
+      }
+    })
+  }
+
+  checkName = (rule, value, callback) => {
+    const {detailBaseInfo, objId} = this.store
+
+    const params = {
+      name: value,
+      objId,
+    }
+
+    if (detailBaseInfo.id) {
+      params.id = detailBaseInfo.id
+    }
+
+    this.store.checkName(params, callback)
+  }
+
   render() {
     const {
       form: {
         getFieldDecorator,
-        // getFieldValue,
       },
       show,
     } = this.props
+
+    const {
+      objList,
+      assObjList,
+      detailBaseInfo,
+    } = this.store
 
     return (
       <div style={{display: show ? 'block' : 'none', height: '100%'}}>
         <Form>
           <FormItem {...formItemLayout} label="方案名称">
             {getFieldDecorator('name', {
+              initialValue: detailBaseInfo.name,
               rules: [
                 {transform: value => value && value.trim()},
                 {required: true, message: '方案名称不能为空'},  
@@ -44,17 +105,17 @@ export default class BaseInfo extends Component {
 
           <FormItem {...formItemLayout} label="所属对象">
             {getFieldDecorator('objId', {
+              initialValue: detailBaseInfo.objId,
               rules: [{required: true, message: '请选择所属对象'}],
             })(
               <Select 
-                labelInValue 
                 placeholder="请选择所属对象" 
                 style={{width: '100%'}} 
-                // onSelect={v => this.selectObj(v)}
+                onSelect={v => this.selectObj(v)}
               >
                 {
-                  [].map(item => (
-                    <Option key={item.value} value={item.value}>{item.name}</Option>
+                  objList.map(item => (
+                    <Option key={item.objId} value={item.objId}>{item.name}</Option>
                   ))
                 }
               </Select>
@@ -62,18 +123,18 @@ export default class BaseInfo extends Component {
           </FormItem>
 
           <FormItem {...formItemLayout} label="源标签对象限制">
-            {getFieldDecorator('objId', {
-              rules: [{required: false, message: '请选择源标签对象限制'}],
+            {getFieldDecorator('relObjIds', {
+              initialValue: detailBaseInfo.relObjIds,
+              // rules: [{required: true, message: '请选择源标签对象限制'}],
             })(
               <Select 
-                labelInValue 
                 placeholder="请选择源标签对象限制" 
                 style={{width: '100%'}} 
-                // onSelect={v => this.selectObj(v)}
+                onSelect={v => this.selectAssObj(v)}
               >
                 {
-                  [].map(item => (
-                    <Option key={item.value} value={item.value}>{item.name}</Option>
+                  assObjList.map(item => (
+                    <Option key={item.assObjId} value={item.assObjId}>{item.assObjName}</Option>
                   ))
                 }
               </Select>
@@ -82,6 +143,7 @@ export default class BaseInfo extends Component {
 
           <FormItem {...formItemLayout} label="方案描述">
             {getFieldDecorator('descr', {
+              initialValue: detailBaseInfo.descr,
               rules: [
                 {transform: value => value && value.trim()},
                 {max: 128, whitespace: true, message: '输入不能超过128个字符'},
@@ -91,6 +153,15 @@ export default class BaseInfo extends Component {
             )}
           </FormItem>
         </Form>
+        <div className="bottom-button">
+          {/* <Button style={{marginRight: 16}} onClick={() => {}}>关闭</Button> */}
+          <Button
+            type="primary"
+            onClick={this.next}
+          >
+            下一步
+          </Button>
+        </div>
       </div>
     )
   }

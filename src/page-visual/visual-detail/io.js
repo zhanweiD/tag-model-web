@@ -1,10 +1,10 @@
 import ioContext from '../../common/io-context'
-import {syncApi, get} from '../../common/util'
+import {derivativeApi, get} from '../../common/util'
 
 const api = {
-  getDetail: get(`${syncApi}/scheme/basScheme`), // 同步计划详情-基础信息
-  getRunRecord: get(`${syncApi}/scheme/getSchemePage`), // 运行记录列表
-  getConfigInfo: get(`${syncApi}/scheme/schemeConfig`), // 同步计划详情-配置信息
+  getDetail: get(`${derivativeApi}/scheme/visual_basic_info`), // 可视化方案基础信息
+  getConfigInfo: get(`${derivativeApi}/scheme/visual_config_info`), // 可视化方案配置信息
+  getRuleInfo: get(`${derivativeApi}/scheme/where_info`), // 数据过滤规则查看
 } 
 
 ioContext.create('visualDetail', api) 

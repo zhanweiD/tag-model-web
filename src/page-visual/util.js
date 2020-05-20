@@ -22,10 +22,6 @@ export const geVisualStatus = ({status}) => {
     case 0: color = '#d9d9d9'; text = '未完成'; break
     case 1: color = '#87d068'; text = '提交成功'; break
     case 2: color = '#f50'; text = '提交失败'; break
-    case 3: color = '#108ee9'; text = '提交中'; break
-    case 4: color = '#87d068'; text = '更新成功'; break
-    case 5: color = '#f50'; text = '更新失败'; break
-    case 6: color = '#108ee9'; text = '更新中'; break
     default: color = '#d9d9d9'; text = '未完成'; break
   }
 
@@ -46,26 +42,35 @@ export const getScheduleType = ({status}, fn) => {
 }
 
 export const status = [
-  // {
-  //   name: '未完成',
-  //   value: 0,
-  // }, 
+  {
+    name: '未完成',
+    value: 0,
+  }, 
   {
     name: '提交成功',
     value: 1,
   }, {
     name: '提交失败',
     value: 2,
-  }, {
-    name: '提交中',
-    value: 3,
-  }, {
-    name: '更新成功',
-    value: 4,
-  }, {
-    name: '更新失败',
-    value: 5,
-  }, {
-    name: '更新中',
-    value: 6,
   }]
+  
+// 调度类型 0暂停 1启动
+export const getTagStatus = ({status}, fn) => {
+  let color 
+  let text
+  switch (+status) {
+    case 0: color = '#d9d9d9'; text = '未使用'; break
+    case 1: color = '#87d068'; text = '使用中'; break
+    default: color = '#d9d9d9'; text = '未使用'; break
+  }
+
+  return <Badge color={color} text={text} />
+}
+
+export const tagStatusMap = [{
+  name: '未使用',
+  value: 0,
+}, {
+  name: '使用中',
+  value: 1,
+}]

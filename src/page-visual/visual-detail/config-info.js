@@ -1,7 +1,8 @@
 import {Component} from 'react'
+import {action, toJS} from 'mobx'
 import {observer} from 'mobx-react'
-import NemoBaseInfo from '@dtwave/nemo-base-info'
 import {Spin} from 'antd'
+import DrawerConfig from './drawer'
 
 @observer
 export default class ConfigInfo extends Component {
@@ -10,22 +11,55 @@ export default class ConfigInfo extends Component {
     this.store = props.store
   }
 
+  @action.bound viewRule() {
+    this.store.getRuleInfo()
+    this.store.drawerVisible = true
+  }
+
+  @action.bound closeDrawer() {
+    this.store.drawerVisible = false
+  }
+
   render() {
-    const {configInfo, configInfoLoading} = this.store
+    const {
+      ruleInfo,
+      configInfo, 
+      posInfoList,
+      drawerVisible, 
+      ruleInfoLoading,
+      configInfoLoading, 
+    } = this.store
 
     return (
       <Spin spinning={configInfoLoading}>
         <div className="config-info">
-          <div className="info-title">数据过滤规则</div>
-          <NemoBaseInfo 
-            dataSource={[{
-              title: '表',
-              value: configInfo.tableName,
-            }]}
-            className="ml24 mb24"
-          />
-          <div className="info-title">衍生标签</div>  
+          <div className="info-title">
+            <span className="mr8">数据过滤规则</span>
+            <a href onClick={this.viewRule}>查看</a>
+          </div>
+          <div className="FBH ml32 mb24">
+            <div>{configInfo.where}</div>
+          </div>
+          <div className="info-title">
+            <span className="mr8">衍生标签</span>
+            <a href={`/asset-tag/index.html#/visual/tags/${this.store.visualId}`}>查看</a>
+          </div>  
+          {
+            configInfo.tagContents && configInfo.tagContents.map(d => (
+              <div className="FBH ml32 mb24">
+                <div style={{color: ' rgba(0, 0, 0, 0.45)'}}>{`${d.tagName}：`}</div>
+                <div>{d.content}</div>
+              </div>
+            ))
+          }
         </div>
+        <DrawerConfig 
+          drawerVisible={drawerVisible}
+          closeDrawer={this.closeDrawer}
+          loading={ruleInfoLoading}
+          ruleInfo={ruleInfo}
+          posInfoList={toJS(posInfoList)}
+        />
       </Spin> 
     )
   }

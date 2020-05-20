@@ -157,6 +157,24 @@ const approval = {
   },
 }
 
+// 可视化
+const visual = {
+  visual: {
+    url: `${pathPrefix}/visual`,
+    text: '可视化方案',
+  }, 
+  visualConfig: {
+    text: '方案配置',
+  }, 
+  visualDetail: {
+    text: '方案详情',
+  },
+  visualTagList: {
+    text: '衍生标签列表',
+  },
+}
+
+
 const navListMap = { 
   ...tagCenter,
   ...overview,
@@ -169,6 +187,7 @@ const navListMap = {
   ...tagSchema,
   ...common,
   ...sync,
+  ...visual,
 }
 
 module.exports = navListMap

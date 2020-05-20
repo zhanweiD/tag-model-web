@@ -135,6 +135,7 @@ export default class DrawerTagConfig extends Component {
           visible={visible}
           width={1120}
           maskClosable={false}
+          destroyOnClose
         >
           {
             type === 'more' ? (

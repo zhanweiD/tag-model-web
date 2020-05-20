@@ -1,16 +1,12 @@
 import {Component, Fragment} from 'react'
 import {action, toJS} from 'mobx'
 import {observer, Provider, inject} from 'mobx-react'
-import {Button, Popconfirm} from 'antd'
-// import {Link} from 'react-router-dom'
+import {Button, Popconfirm, Dropdown, Icon, Menu} from 'antd'
 import {ListContent, Loading, NoData} from '../../component'
 import {Time} from '../../common/util'
 import * as navListMap from '../../common/navList'
 import seach from './search'
-// import DrawerAddSync from './drawer'
-// import DrawerEditSync from './drawer-edit'
-// import ModalLog from './modal-log'
-// import ModalStart from './modal-start'
+import ModalSubmitLog from './modal-submit-log'
 
 import {
   geVisualStatus,
@@ -24,8 +20,7 @@ import store from './store'
 
 const navList = [
   navListMap.tagCenter,
-  navListMap.tagSync,
-  {text: navListMap.syncPlan.text},
+  {text: navListMap.visual.text},
 ]
 
 @inject('frameChange')
@@ -37,6 +32,35 @@ export default class VisualList extends Component {
     store.projectId = spaceInfo && spaceInfo.projectId
   }
 
+  menu = data => (
+    <Menu>
+      <Menu.Item>
+        <a
+          href
+          onClick={() => this.getLog({
+            id: data.id,
+          })}
+        >
+          提交日志
+        </a>
+      </Menu.Item>
+
+      <Menu.Item>
+
+        {
+          data.tagUsedCount
+            ? (
+              <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(data.id)}>
+                <a href>删除</a>
+              </Popconfirm>
+            ) : <span className="disabled">删除</span>
+        }
+        
+      </Menu.Item>
+     
+    </Menu>
+  )
+
   columns = [{
     title: '衍生标签方案',
     dataIndex: 'name',
@@ -47,10 +71,10 @@ export default class VisualList extends Component {
   }, {
     title: '使用中/标签数',
     dataIndex: 'tagUsedCount',
-    render: (text, record) => `${record.tagUsedCount}/${record.tagTotalCount}`,
+    render: (text, record) => `${record.tagUsedCount}/${record.tagCount}`,
   }, {
     title: '创建时间',
-    dataIndex: 'ctime',
+    dataIndex: 'createTime',
     render: text => <Time timestamp={text} />,
   }, {
     title: '方案状态',
@@ -63,10 +87,72 @@ export default class VisualList extends Component {
   }, {
     title: '操作',
     dataIndex: 'action',
-    width: 120,
+    width: 180,
     render: (text, record) => (
       <div>
-        <a>11</a>
+        {(() => {
+          // 方案状态 未完成 0
+          if (record.status === 0) {
+            return (
+              <Fragment>
+                <a href onClick={() => this.editScheme(record)}>编辑</a>
+                <span className="table-action-line" />
+                <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
+                  <a href>删除</a>
+                </Popconfirm>
+                {/* <span className="table-action-line" />
+                <a href onClick={() => this.clone(record.id)}>克隆</a> */}
+              </Fragment>
+            )
+          }
+
+          // 方案状态 提交失败  2
+          if (record.status === 2) {
+            return (
+              <Fragment>
+                <a href onClick={() => this.editScheme(record)}>编辑</a>
+                <span className="table-action-line" />
+                <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
+                  <a href>删除</a>
+                </Popconfirm>
+                {/* <span className="table-action-line" />
+                <a href onClick={() => this.clone(record.id)}>克隆</a> */}
+                <span className="table-action-line" />
+                <a href onClick={() => this.getLog(record.id)}>提交日志</a>
+              </Fragment>
+            )
+          }
+
+          // 方案状态 提交成功  1
+          if (record.status === 1) {
+            return (
+              <Fragment>
+                <a href onClick={() => this.viewVisual(record)}>查看</a>
+                <span className="table-action-line" />
+                <a href onClick={() => this.runVisual(record)}>执行</a>
+                {/* <span className="table-action-line" />
+                <a href onClick={() => this.clone(record.id)}>克隆</a> */}
+                <span className="table-action-line" />
+                <a href onClick={() => this.getLog(record.id)}>提交日志</a>
+                <span className="table-action-line" />
+                {
+                  record.tagUsedCount
+                    ? (
+                      <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(data.id)}>
+                        <a href>删除</a>
+                      </Popconfirm>
+                    ) : <span className="disabled">删除</span>
+                }
+                {/* <Dropdown overlay={() => this.menu(record)}>
+                  <a href>
+                      更多
+                    <Icon type="down" />
+                  </a>
+                </Dropdown> */}
+              </Fragment>
+            )
+          }
+        })()}
       </div>
     ),
   }]
@@ -91,18 +177,19 @@ export default class VisualList extends Component {
     }
   }
 
+  // 新增
   @action.bound addScheme() {
-    store.visible = true
+    window.location.href = `${window.__keeper.pathHrefPrefix || '/'}/visual/config`
   }
 
+  // 编辑
   @action.bound editScheme(data) {
-    store.selectItem = data
-    store.visibleEdit = true
+    window.location.href = `${window.__keeper.pathHrefPrefix || '/'}/visual/config/${data.id}`
   }
 
   // 查看
   @action.bound viewVisual(data) {
-
+    window.location.href = `${window.__keeper.pathHrefPrefix || '/'}/visual/detail/${data.id}`
   }
 
   // 克隆
@@ -153,7 +240,7 @@ export default class VisualList extends Component {
   }
 
   render() {
-    const {objList, projectId, visibleEdit} = store
+    const {objList, projectId} = store
 
     const listConfig = {
       columns: this.columns,
@@ -178,14 +265,10 @@ export default class VisualList extends Component {
                   <div className="list-content">
                     <ListContent {...listConfig} />
                   </div>
-                  {/* <DrawerAddSync projectId={projectId} />
-                  <DrawerEditSync projectId={projectId} visible={visibleEdit} />
-                  <ModalLog />
-                  <ModalStart /> */}
                 </Fragment>
               ) : this.renderNodata()
           }
-         
+          <ModalSubmitLog store={store} />
         </div>
       </Provider>
     )

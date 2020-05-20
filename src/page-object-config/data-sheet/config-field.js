@@ -74,6 +74,7 @@ export default class ConfigField extends Component {
         width={1120}
         onClose={this.onClose}
         maskClosable={false}
+        destroyOnClose
       >
         {/* 步骤条 */}
         <Steps current={this.currentStep} style={{padding: '0 100px', marginBottom: '32px'}}>

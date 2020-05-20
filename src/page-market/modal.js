@@ -90,6 +90,7 @@ export default class TagApply extends Component {
     const modalConfig = {
       width: 525,
       maskClosable: false,
+      destroyOnClose: true,
       title: '标签申请',
       confirmLoading,
       visible: modalVisible,

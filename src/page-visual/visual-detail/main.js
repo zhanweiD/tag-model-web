@@ -1,6 +1,6 @@
 import {Component} from 'react'
 import {Spin} from 'antd'
-import {action, observable} from 'mobx'
+import {action, observable, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import * as navListMap from '../../common/navList'
 import {DetailHeader, TabRoute} from '../../component'
@@ -15,9 +15,8 @@ const tabs = [
 
 const navList = [
   navListMap.tagCenter,
-  navListMap.tagSync,
-  navListMap.syncPlan,
-  {text: navListMap.syncDetail.text},
+  navListMap.visual,
+  {text: navListMap.visualDetail.text},
 ]
 
 @inject('frameChange')
@@ -51,9 +50,12 @@ export default class VisualDetail extends Component {
 
     const baseInfo = [{
       title: '所属对象',
-      value: detail.name,
+      value: detail.objName,
     }, {
       title: '源标签对象限制',
+      value: detail.sourceObjName,
+    }, {
+      title: '创建人',
       value: detail.cuserName,
     }, {
       title: '创建时间',

@@ -7,15 +7,6 @@ import io from './io'
 
 class Store extends ListContentStore(io.getList) {
   projectId
-  @observable visible = false
-  @observable visibleEdit = false
-
-  @observable selectItem = {}
-
-  @action.bound closeDrawer() {
-    this.visible = false
-    this.selectItem = {}
-  }
 
   @observable objList = [] // 下拉对象数据
 
@@ -38,7 +29,7 @@ class Store extends ListContentStore(io.getList) {
     try {
       await io.delList({
         projectId: this.projectId,
-        deleteId: id,
+        deleteIds: [id],
       })
       runInAction(() => {
         successTip('删除成功')
@@ -47,25 +38,6 @@ class Store extends ListContentStore(io.getList) {
     } catch (e) {
       errorTip(e.message)
     }
-  }
-
-  @observable visibleStart = false
-  // 启动
-  @action async startSync(params) {
-    try {
-      const res = await io.startSync(params)
-      runInAction(() => {
-        if (res) {
-          successTip('启动成功')
-          this.getList()
-        } else {
-          failureTip('启动失败')
-        }
-        this.visibleStart = false
-      })
-    } catch (e) {
-      errorTip(e.message)
-    } 
   }
 
   // 克隆
@@ -106,8 +78,11 @@ class Store extends ListContentStore(io.getList) {
 
   @observable submitLog = ''
   @observable visibleLog = false
+  @observable submitLogLoading = false
   // 获取提交日志
   @action async getLog(id) {
+    this.submitLogLoading = true
+    
     try {
       const res = await io.getLog({id})
       runInAction(() => {
@@ -115,6 +90,10 @@ class Store extends ListContentStore(io.getList) {
       })
     } catch (e) {
       errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        this.submitLogLoading = false
+      })
     }
   }
 }

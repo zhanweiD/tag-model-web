@@ -23,7 +23,7 @@ const serach = ({
     component: 'select',
   }, {
     label: '方案名称',
-    key: 'name',
+    key: 'keyword',
     control: {
       placeholder: '请输入方案名称关键字',
     },
