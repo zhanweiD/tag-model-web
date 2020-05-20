@@ -50,10 +50,10 @@ export default class AddSource extends Component {
       objId: v,
     })
 
-    const storageType = getFieldValue('dataStorageType')
+    const dataStorageType = getFieldValue('dataStorageType')
     if (typeof storageType !== 'undefined') {
       this.store.getStorageList({
-        storageType,
+        dataStorageType,
         objId: v,
       })
     }
@@ -73,7 +73,7 @@ export default class AddSource extends Component {
     const objId = getFieldValue('objId')
     if (typeof objId !== 'undefined') {
       this.store.getStorageList({
-        storageType: v,
+        dataStorageType: v,
         objId,
       })
     }
