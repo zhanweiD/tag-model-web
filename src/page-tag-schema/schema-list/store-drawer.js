@@ -114,9 +114,6 @@ export default class Store {
   @observable oneForm = {}
   @observable oneStepSuccess = false
 
-  /**
-   * @description 获取 逻辑配置-函数树
-   */
   @action async getObjList() {
     try {
       const res = await io.getObjList({

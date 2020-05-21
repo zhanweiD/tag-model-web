@@ -268,10 +268,10 @@ export default class StepOne extends Component {
                     {transform: value => value && value.trim()},
                     {required: true, message: '表名不能为空'},  
                   ]})(
-                  <div className="FBH"> 
-                      <span className="ml16 mr16">tbjh_</span>
-                      <Input autoComplete="off" placeholder="请输入表名称" />
-                    </div>
+                    <div className="FBH"> 
+                    <span className="ml16 mr16">tbjh_</span>
+                    <Input autoComplete="off" placeholder="请输入表名称" />
+                  </div>
                 )}
               </FormItem>
             ) : null
