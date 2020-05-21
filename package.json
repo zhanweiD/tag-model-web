@@ -17,7 +17,7 @@
   "devDependencies": {
     "@dtwave/nemo-base-info": "1.0.9",
     "@dtwave/oner-flexbox": "2.0.1",
-    "@dtwave/oner-mapping": "2.1.0-alpha3",
+    "@dtwave/oner-mapping": "2.1.0-alpha6",
     "@dtwave/uikit": "2.0.87",
     "antd": "3.18.2",
     "autoprefixer": "9.4.7",

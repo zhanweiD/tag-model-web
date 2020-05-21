@@ -17,10 +17,14 @@ class Store {
 
   @action.bound destroy() {
     this.currentStep = 0
-    this.storageType = undefined
+    this.previewData = {}
+    this.storageId = undefined
     this.storageType = undefined
     this.storageName = undefined
     this.confirmLoading = false
+    this.objList.clear()
+    this.storageList.clear()
+    this.storageTypeList.clear()
   }
 
   // 上一步
@@ -119,6 +123,8 @@ class Store {
     try {
       const res = await io.getTagTree({
         projectId: this.projectId,
+        storageId: this.storageId,
+        objId: this.objId,
         ...params,
       })
     

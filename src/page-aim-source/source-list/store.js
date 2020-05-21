@@ -14,6 +14,11 @@ class Store extends ListContentStore(io.getList) {
   @observable drawerTagConfigInfo = {}
 
   @action.bound closeDrawer() {
+    this.storageList.clear()
+    this.storageTable.clear()
+    this.fieldList.clear()
+    this.objRelList.clear()
+    this.storageTypeList.clear()
     this.visible = false
   }
 

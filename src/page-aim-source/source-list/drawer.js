@@ -173,12 +173,10 @@ export default class AddSource extends Component {
   @action.bound closeDrawer() {
     this.objId = undefined
     this.storageId = undefined
+    this.entity0Key = undefined
+    this.entity1Key = undefined
 
-    this.store.storageList.clear()
-    this.store.storageTable.clear()
-    this.store.fieldList.clear()
-
-    this.store.visible = false
+    this.store.closeDrawer()
   }
 
   @action.bound viewDetail() {
@@ -380,7 +378,7 @@ export default class AddSource extends Component {
           }
         </Form>
         <div className="bottom-button">
-          <Button style={{marginRight: 8}} onClick={() => this.store.closeDrawer()}>取消</Button>
+          <Button style={{marginRight: 8}} onClick={() => this.closeDrawer()}>取消</Button>
           <Button type="primary" loading={confirmLoading} onClick={this.handleSubmit}>确定</Button>
         </div>
         <ModalStotageDetail 

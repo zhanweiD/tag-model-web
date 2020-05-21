@@ -69,3 +69,9 @@ export const syncStatus = [
     name: '更新中',
     value: 6,
   }]
+
+// 调度类型 1周期调度 2手动执行
+export const scheduleTypeObj = {
+  1: '周期调度',
+  2: '手动执行',
+} 

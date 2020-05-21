@@ -2,6 +2,7 @@ import {Component, Fragment} from 'react'
 import {observer} from 'mobx-react'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
 import {Tag, Spin} from 'antd'
+import {scheduleTypeObj} from '../util'
 
 @observer
 export default class ConfigInfo extends Component {
@@ -48,7 +49,7 @@ export default class ConfigInfo extends Component {
                 <NemoBaseInfo 
                   dataSource={configInfo.scheduleType === 1 ? [{
                     title: '调度类型',
-                    value: configInfo[configInfo.scheduleType],
+                    value: scheduleTypeObj[configInfo.scheduleType],
                   }, {
                     title: '调度周期',
                     value: configInfo.period,
@@ -57,7 +58,7 @@ export default class ConfigInfo extends Component {
                     value: configInfo.periodTime,
                   }] : [{
                     title: '调度类型',
-                    value: configInfo[configInfo.scheduleType],
+                    value: scheduleTypeObj[configInfo.scheduleType],
                   }]} 
                   className="ml24 mb24"
                 />

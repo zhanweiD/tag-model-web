@@ -32,6 +32,10 @@ export default class DrawerEditSync extends Component {
         storageId: selectItem.objId, 
         schemeId: selectItem.id,
       }
+      store.objId = selectItem.objId
+      store.storageId = selectItem.storageId
+      store.schemeId = selectItem.id
+
       store.getTagTree(params)
     }
   }

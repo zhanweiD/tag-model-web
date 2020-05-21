@@ -6,6 +6,10 @@ import io from './io'
 
 class Store {
   projectId
+  objId
+  schemeId
+  storageId
+  
   // 标签树
   @observable treeData = []
   @observable originTreeData = []
@@ -20,6 +24,9 @@ class Store {
   @observable disabledKeys = []
 
   @action.bound destroy() {
+    this.treeData.clear()
+    this.tableData.clear()
+    this.majorTagList.clear()
     this.disabledKeys.clear()
     this.checkedTagData.clear()
     this.checkedKeys.clear()
@@ -31,6 +38,9 @@ class Store {
     try {
       const res = await io.getTagTree({
         projectId: this.projectId,
+        objId: this.objId,
+        storageId: this.storageId,
+        schemeId: this.schemeId,
         ...params,
       })
 

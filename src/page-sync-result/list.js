@@ -48,8 +48,8 @@ export default class SyncResult extends Component {
     render: text => <Time timestamp={text} />,
   }, {
     title: '使用状态',
-    dataIndex: 'lastStatus',
-    render: text => (text ? <Badge color="#87d068" text="使用中" /> : <Badge color="#d9d9d9" text="未使用" />),
+    dataIndex: 'tagUsed',
+    render: text => (text === '使用中' ? <Badge color="#87d068" text="使用中" /> : <Badge color="#d9d9d9" text="未使用" />),
   }]
 
   componentWillMount() {
