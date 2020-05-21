@@ -220,10 +220,10 @@ export default class StepTwo extends Component {
                     dataDbType,
                     dataTableName,
                     dataFieldName,
-                    // dataFieldType,
+                    dataFieldType,
                     isUsed,
                     schemeId,
-                    tagType: dataFieldType,
+                    tagType,
                   }
                 ) => ({
                   tagId,
@@ -237,6 +237,7 @@ export default class StepTwo extends Component {
                   dataTableName,
                   dataFieldName,
                   dataFieldType,
+                  tagType,
                   isUsed,
                   tagDerivativeSchemeId: schemeId,
                 })}
@@ -260,7 +261,7 @@ export default class StepTwo extends Component {
                 canMapping
                 beforeMapping={v => {
                   const mappingItem = v[0]
-                  if (mappingItem.tagValueType !== mappingItem.dataFieldType) {   
+                  if (mappingItem.tagValueType !== mappingItem.tagType) {   
                     message.error(`${mappingItem.tagName}(标签)与${mappingItem.dataFieldName}(字段)数据类型不匹配， 绑定失败`)
                     return new Promise(function (resolve, reject) {
                       reject([])
@@ -271,9 +272,9 @@ export default class StepTwo extends Component {
                   })
                 }}
                 beforeNameMapping={v => {
-                  const successResult = v.filter(d => (d.tagValueType === d.dataFieldType) || d.status === 2 || d.isUsed)
+                  const successResult = v.filter(d => (d.tagValueType === d.tagType) || d.status === 2 || d.isUsed)
                     
-                  const errorResult = v.filter(d => (d.tagValueType !== d.dataFieldType) && !d.isUsed && d.status !== 2)
+                  const errorResult = v.filter(d => (d.tagValueType !== d.tagType) && !d.isUsed && d.status !== 2)
                   message.info(`${successResult.length}个标签映射成功，${errorResult.length}个标签映射失败`)
         
                   return new Promise(function (resolve, reject) {

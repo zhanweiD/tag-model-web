@@ -142,14 +142,10 @@ export default class DrawerTagConfig extends Component {
                   }}
                   source={source}
                   target={target}
-                  sourceRowKey={record => record.tagId || record.id}
-                  targetRowKey={record => `${record.dataStorageId}${record.dataTableName}${record.dataFieldName}`}
-                  sourceSearchKey={record => record.name || record.tagName}
-                  targetSearchKey={record => record.dataFieldName}
-                  // sourceRowKey={record => record.dataFieldName}
-                  // targetRowKey={record => record.tagId}
-                  // sourceSearchKey={record => record.dataFieldName}
-                  // targetSearchKey={record => record.tagName}
+                  sourceRowKey={record => record.dataFieldName}
+                  targetRowKey={record => record.tagId || record.id}
+                  sourceSearchKey={record => record.dataFieldName}
+                  targetSearchKey={record => record.name || record.tagName}
                   targetColumns={[
                     {
                       title: '唯一标识',
@@ -238,11 +234,13 @@ export default class DrawerTagConfig extends Component {
                       width: 69,
                     },
                   ]}
-                  resultRowKey={record => record.tagId}
+                  resultRowKey={record => record.dataFieldName}
                   mappingField={(
                     {
                       dataFieldName,
                       dataFieldType,
+                      dataStorageId,
+                      dataTableName,
                     },
                     {
                       tagId,
@@ -252,15 +250,17 @@ export default class DrawerTagConfig extends Component {
                       tagType,
                     }
                   ) => ({
+                    dataFieldName,
+                    dataFieldType,
+                    dataStorageId,
+                    dataTableName,
                     tagId,
                     tagName,
                     tagEnName,
                     objName,
                     tagType,
-                    dataFieldName,
-                    dataFieldType,
                   })}
-                  nameMappingField={['tagName', 'dataFieldName']}
+                  nameMappingField={['dataFieldName', 'tagEnName']}
                   onChange={value => this.value = value}
                   sourceTitle="字段列表"
                   targetTitle="标签列表"
