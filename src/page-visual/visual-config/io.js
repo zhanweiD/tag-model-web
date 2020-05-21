@@ -30,6 +30,9 @@ const api = {
   updateVisualExt: post(`${derivativeApi}/schema/update_visual_ext`), // 修改可视化条件表达式（条件页面）
   submitVisual: post(`${derivativeApi}/scheme/submit_visual`), // 保存可视化条件表达式（条件页面）
 
+  saveVisualRule: post(`${derivativeApi}/schema/save_visual_filter_condition`), // 保存可视化过滤条件
+  updateVisualRule: post(`${derivativeApi}/schema/update_visual_filter_condition`), // 修改可视化过滤条件
+  getVisualRuleDetail: get(`${derivativeApi}/scheme/where_info`), // 数据过滤规则查看
 } 
 
 ioContext.create('visualConfig', api) 

@@ -119,12 +119,8 @@ class Store {
   }
   //* ****************** 标签树 end ********************* //
 
-  //* ****************** 设置数据过滤规则 start ********************* //
-  @observable drawerRuleVisible = false
-  relVisualExtRspList = {}
-  configIdInfo = {}
+  //* ****************** 逻辑配置 start *********************** //
 
-  // 保存可视化条件表达式（条件页面）设置数据规则
   @action async saveVisualExt(data, cb) {
     try {
       let res
@@ -172,6 +168,36 @@ class Store {
       errorTip(e.message)
     }
   }
+  //* ****************** 逻辑配置 end *********************** //
+
+  //* ****************** 设置数据过滤规则 start ********************* //
+  @observable drawerRuleVisible = false
+  relVisualExtRspList = {}
+  configIdInfo = {}
+
+  // 保存可视化条件表达式（条件页面）设置数据规则
+  @action async saveVisualRule(data, cb) {
+    try {
+      const res = await io.saveVisualRule({
+        projectId: this.projectId,
+        derivativeSchemeId: this.visualId,
+        type: 1,
+        ...data,
+      })
+
+      runInAction(() => {
+        if (res) {
+          successTip('操作成功')
+        } else {
+          // fa
+        }
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+  
+  //* ****************** 设置数据过滤规则 end *********************** //
 
   // 更新可视化方案（第一个页面
   @action async updateBaseInfo() {
@@ -195,7 +221,6 @@ class Store {
   @action.bound clearAll() {
     this.ruleList.clear()
   }
-  //* ****************** 设置数据过滤规则 end *********************** //
 }
 
 export default new Store()
