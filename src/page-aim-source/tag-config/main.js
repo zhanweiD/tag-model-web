@@ -272,10 +272,10 @@ export default class DrawerTagConfig extends Component {
                   targetDisableKey={record => record.tagStatus === 1}
                   disableKey={record => record.tagStatus === 1}
                   // disableMsg="使用中无法删除映射"
-                  hasSearchSelect
-                  searchSelectList={toJS(objList)}
-                  searchSelectPlaceholder="请选择对象"
-                  searchSelectKey="objName"
+                  // hasSearchSelect
+                  // searchSelectList={toJS(objList)}
+                  // searchSelectPlaceholder="请选择对象"
+                  // searchSelectKey="objName"
                   isShowMapping
                   canMapping
                   // beforeMapping={v => {

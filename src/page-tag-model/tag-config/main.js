@@ -292,10 +292,10 @@ export default class DrawerTagConfig extends Component {
                   targetDisableKey={record => record.status === 2}
                   disableKey={record => record.isUsed === 1 || record.status === 2}
                   disableMsg={record => (record.status === 2 ? '标签已发布无法删除映射' : '使用中无法删除映射')}
-                  hasSearchSelect
-                  searchSelectList={configType === 1 ? schemeList : tableList}
-                  searchSelectPlaceholder={configType === 1 ? '请选择加工方案' : '请选择数据表'}
-                  searchSelectKey={configType === 1 ? 'schemeName' : 'dataTableName'}
+                  // hasSearchSelect
+                  // searchSelectList={configType === 1 ? schemeList : tableList}
+                  // searchSelectPlaceholder={configType === 1 ? '请选择加工方案' : '请选择数据表'}
+                  // searchSelectKey={configType === 1 ? 'schemeName' : 'dataTableName'}
                   isShowMapping
                   canMapping
                   beforeMapping={v => {

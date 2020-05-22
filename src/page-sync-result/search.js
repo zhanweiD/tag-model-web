@@ -19,7 +19,7 @@ const serach = ({objList, storageList}) => [
     component: 'select',
   }, {
     label: '使用状态',
-    key: 'lastStatus',
+    key: 'tagUsed',
     initialValue: '',
     control: {
       defaultAll: true,

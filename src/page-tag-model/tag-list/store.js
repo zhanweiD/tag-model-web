@@ -298,11 +298,13 @@ class Store extends ListContentStore(io.getList) {
         objId: this.ownObject,
         ...params,
       })
-      if (res.success) {
-        cb('名称已存在')
-      } else {
-        cb()
-      }
+     runInAction(() => {
+        if (res.success) {
+          cb('名称已存在')
+        } else {
+          cb()
+        }
+      })
     } catch (e) {
       errorTip(e.message)
     }
