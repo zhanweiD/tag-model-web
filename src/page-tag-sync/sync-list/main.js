@@ -131,6 +131,27 @@ export default class SyncList extends Component {
             )
           }
 
+           /* 提交失败 & 启动 */
+          if (record.status === 2 && record.scheduleType === 1) {
+            return (
+              <Fragment>
+                <a href onClick={() => this.startSync(record)}>启动</a>
+                <span className="table-action-line" />
+                <Popconfirm placement="topRight" title="你确定要执行吗？" onConfirm={() => this.runSync(record.id)}>
+                  <a href>执行</a>
+                </Popconfirm>
+                <span className="table-action-line" />
+                <a href onClick={() => this.editSync(record)}>编辑</a>
+                <span className="table-action-line" />
+                <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
+                  <a href>删除</a>
+                </Popconfirm>
+                <span className="table-action-line" />
+                <a href onClick={() => this.getLog(record.id)}>提交日志</a>
+              </Fragment>
+            )
+          }
+
           /* 提交成功 & 暂停 &  运行成功 */
           if (record.status === 1 && record.scheduleType === 0 && record.lastStatus === 1) {
             return (
