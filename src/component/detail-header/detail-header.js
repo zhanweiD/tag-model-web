@@ -20,7 +20,7 @@ export default class Main extends Component {
   renderAction = actions => {
     if (!actions.length) return null
 
-    return actions.map(item => item)
+    return actions.filter(item => item)
   }
 
   renderBaseInfo = baseInfo => <NemoBaseInfo dataSource={baseInfo} key={Math.random()} />
