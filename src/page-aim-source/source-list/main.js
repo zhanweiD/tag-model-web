@@ -1,9 +1,9 @@
-import {Component, Fragment} from 'react'
+import {Component} from 'react'
 import {action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {Button, Popconfirm} from 'antd'
 import {Link} from 'react-router-dom'
-import {ListContent, NoData, Loading} from '../../component'
+import {ListContent, projectProvider} from '../../component'
 import {Time} from '../../common/util'
 import * as navListMap from '../../common/navList'
 import seach from './search'
@@ -23,7 +23,7 @@ const navList = [
 
 @inject('frameChange')
 @observer
-export default class SourceList extends Component {
+class SourceList extends Component {
   constructor(props) {
     super(props)
     const {spaceInfo} = window
@@ -112,32 +112,6 @@ export default class SourceList extends Component {
     store.delList(id)
   }
 
-  // 跳转到项目列表
-  goProjectList = () => {
-    window.location.href = `${window.__keeper.pathHrefPrefix || '/'}/project`
-  }
-
-  renderNodata = () => {
-    const {spaceInfo} = window
-
-    const noProjectDataConfig = {
-      btnText: '去创建项目',
-      onClick: this.goProjectList,
-      text: '没有任何项目，去项目列表页创建项目吧！',
-      code: 'asset_tag_project_add',
-      noAuthText: '没有任何项目',
-    }
-
-    if (spaceInfo && spaceInfo.finish && !spaceInfo.projectList.length) {
-      return (
-        <NoData
-          {...noProjectDataConfig}
-        />
-      )
-    }
-    return <Loading mode="block" height={200} />
-  }
-
   render() {
     const {
       projectId,
@@ -157,31 +131,23 @@ export default class SourceList extends Component {
       buttons: [<Button type="primary" onClick={() => this.addSource()}>添加目的源</Button>],
       store, // 必填属性
     }
-
-    const {spaceInfo} = window
-
+    
     return (
       <div className="page-aim-source">
         <div className="content-header">目的源管理</div>
-        {
-          spaceInfo && spaceInfo.projectId && spaceInfo.projectList && spaceInfo.projectList.length
-            ? (
-              <Fragment>
-                <div className="list-content">
-                  <ListContent {...listConfig} />
-                </div>
-                <AddSource store={store} />
-                <DrawerTagConfig
-                  visible={drawerVisible}
-                  info={drawerTagConfigInfo}
-                  onClose={closeTagConfig}
-                  onUpdate={updateTagConfig}
-                />
-              </Fragment>
-            ) : this.renderNodata()
-        }
+        <div className="list-content">
+          <ListContent {...listConfig} />
+        </div>
+        <AddSource store={store} />
+        <DrawerTagConfig
+          visible={drawerVisible}
+          info={drawerTagConfigInfo}
+          onClose={closeTagConfig}
+          onUpdate={updateTagConfig}
+        />
       </div>
-
     )
   }
 }
+
+export default projectProvider(SourceList)

@@ -1,12 +1,12 @@
 /**
  * @description  对象配置
  */
-import {Component, Fragment} from 'react'
+import {Component} from 'react'
 import {action} from 'mobx'
 import {observer, Provider} from 'mobx-react'
 import * as navListMap from '../common/navList'
 
-import {TabRoute, Loading, NoData} from '../component'
+import {TabRoute, projectProvider, NoData} from '../component'
 import {changeToOptions} from '../common/util'
 import Tree from './tree'
 import ObjectDetail from './object-detail'
@@ -14,7 +14,7 @@ import ObjectDetail from './object-detail'
 import store from './store'
 
 @observer
-export default class ObjectConfig extends Component {
+class ObjectConfig extends Component {
   constructor(props) {
     super(props)
     const {match} = props
@@ -46,39 +46,13 @@ export default class ObjectConfig extends Component {
     store.selectObjUpdateKey = Math.random()
   }
 
-  // 跳转到项目列表
-  goProjectList = () => {
-    window.location.href = `${window.__keeper.pathHrefPrefix || '/'}/project`
-  }
-
-  renderNodata =() => {
-    const {spaceInfo} = window
-
-    const noProjectDataConfig = {
-      btnText: '去创建项目',
-      onClick: this.goProjectList,
-      text: '没有任何项目，去项目列表页创建项目吧！',
-      code: 'asset_tag_project_add',
-      noAuthText: '没有任何项目',
-    }
-
-    if (spaceInfo && spaceInfo.finish && !spaceInfo.projectList.length) {
-      return (
-        <NoData
-          {...noProjectDataConfig}
-        />
-      )
-    } 
-    return <Loading mode="block" height={200} />
-  }
-
   render() {
     const {history} = this.props
     const {
-      typeCode, 
-      objId, 
+      typeCode,
+      objId,
       treeLoading,
-      selectObjUpdateKey, 
+      selectObjUpdateKey,
     } = store
 
     const tabConfig = {
@@ -89,7 +63,6 @@ export default class ObjectConfig extends Component {
       _history: history,
       changeUrl: true,
     }
-    const {spaceInfo} = window
 
     // warning here
     const noObjDataConfig = {
@@ -103,32 +76,24 @@ export default class ObjectConfig extends Component {
     }
 
     return (
-      <div>
-        <Provider bigStore={store}>
-          <div className="page-object">
-            <div className="content-header">{navListMap.objectConfig.text}</div>
+      <Provider bigStore={store}>
+        <div className="page-object">
+          <div className="content-header">{navListMap.objectConfig.text}</div>
+          <TabRoute {...tabConfig} />
+          <div className="object-content">
+            <Tree history={history} selectObjUpdateKey={selectObjUpdateKey} />
             {
-              spaceInfo && spaceInfo.projectId && spaceInfo.projectList && spaceInfo.projectList.length
-                ? (
-                  <Fragment>
-                    <TabRoute {...tabConfig} />
-                    <div className="object-content">
-                      <Tree history={history} selectObjUpdateKey={selectObjUpdateKey} />
-                      {
-                        objId ? <ObjectDetail objId={objId} history={history} /> : (
-                          <NoData
-                            {...noObjDataConfig}
-                          />
-                        )
-                      }
-                    </div>
-                  </Fragment>
-                ) 
-                : this.renderNodata()
-            }      
+              objId ? <ObjectDetail objId={objId} history={history} /> : (
+                <NoData
+                  {...noObjDataConfig}
+                />
+              )
+            }
           </div>
-        </Provider>
-      </div>
+        </div>
+      </Provider>
     )
   }
 }
+
+export default projectProvider(ObjectConfig)

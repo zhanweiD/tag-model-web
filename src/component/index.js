@@ -15,6 +15,7 @@ import AuthBox from './auth-box'
 import OmitTooltip from './omit-tooltip'
 import StatusImg from './status-img'
 import ModalStotageDetail from './modal-stroage-detail'
+import projectProvider from './project-provider'
 
 export {
   DetailHeader,
@@ -35,4 +36,5 @@ export {
   OmitTooltip,
   StatusImg,
   ModalStotageDetail,
+  projectProvider,
 }

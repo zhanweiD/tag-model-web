@@ -1,19 +1,18 @@
 /**
  * @description 标签加工列表
- * 
  */
 import {Component, Fragment} from 'react'
 import {action} from 'mobx'
 import {observer, Provider, inject} from 'mobx-react'
 import {
-  Button, Popconfirm, Dropdown, Icon, Menu,
+  Popconfirm, Dropdown, Icon, Menu,
 } from 'antd'
 import {Link} from 'react-router-dom'
 
 import * as navListMap from '../../common/navList'
 import {Time} from '../../common/util'
 import {
-  ListContent, AuthBox, NoData, Loading,
+  ListContent, AuthBox, projectProvider,
 } from '../../component'
 import seach from './search'
 import DrawerConfig from './drawer'
@@ -45,6 +44,7 @@ class SchemaList extends Component {
     this.projectId = spaceInfo && spaceInfo.projectId
 
     this.rootStore = new Store()
+    
     const {
       listStore,
       drawerStore,
@@ -279,33 +279,6 @@ class SchemaList extends Component {
     })
   }
 
-  // 跳转到项目列表
-  goProjectList = () => {
-    window.location.href = `${window.__keeper.pathHrefPrefix || '/'}/project`
-  }
-
-  renderNodata = () => {
-    const {spaceInfo} = window
-
-    const noProjectDataConfig = {
-      btnText: '去创建项目',
-      onClick: this.goProjectList,
-      text: '没有任何项目，去项目列表页创建项目吧！',
-      code: 'asset_tag_project_add',
-      noAuthText: '没有任何项目',
-    }
-
-    if (spaceInfo && spaceInfo.finish && !spaceInfo.projectList.length) {
-      return (
-        <NoData
-          {...noProjectDataConfig}
-        />
-      )
-    }
-
-    return <Loading mode="block" height={200} />
-  }
-
   render() {
     const {objList, functionCodes} = this.store
     const listConfig = {
@@ -319,7 +292,7 @@ class SchemaList extends Component {
         onClick={this.create}
       >
         创建加工方案
-      </AuthBox>,
+                </AuthBox>,
       ],
       rowKey: 'id',
       store: this.store, // 必填属性
@@ -328,22 +301,15 @@ class SchemaList extends Component {
       <Provider rootStore={this.rootStore}>
         <div className="page-tag-processe">
           <div className="content-header">加工方案</div>
-          {
-            this.projectId ? (
-              <Fragment>
-                <div className="list-content">
-                  <ListContent {...listConfig} />
-                </div>
-                <DrawerConfig projectId={this.projectId} />
-                <ModalSubmitLog store={this.store} />
-              </Fragment>
-            ) : this.renderNodata()
-          }
-
+          <div className="list-content">
+            <ListContent {...listConfig} />
+          </div>
+          <DrawerConfig projectId={this.projectId} />
+          <ModalSubmitLog store={this.store} />
         </div>
       </Provider>
 
     )
   }
 }
-export default SchemaList
+export default projectProvider(SchemaList)

@@ -3,7 +3,7 @@ import {toJS, action} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {Badge} from 'antd'
 import * as navListMap from '../common/navList'
-import {ListContent, NoData, Loading} from '../component'
+import {ListContent, projectProvider} from '../component'
 import {Time} from '../common/util'
 import seach from './search'
 
@@ -17,7 +17,7 @@ const navList = [
 
 @inject('frameChange')
 @observer
-export default class SyncResult extends Component {
+class SyncResult extends Component {
   constructor(props) {
     super(props)
     const {spaceInfo} = window
@@ -73,32 +73,6 @@ export default class SyncResult extends Component {
     }
   }
 
-  // 跳转到项目列表
-  goProjectList = () => {
-    window.location.href = `${window.__keeper.pathHrefPrefix || '/'}/project`
-  }
-
-  renderNodata =() => {
-    const {spaceInfo} = window
-
-    const noProjectDataConfig = {
-      btnText: '去创建项目',
-      onClick: this.goProjectList,
-      text: '没有任何项目，去项目列表页创建项目吧！',
-      code: 'asset_tag_project_add',
-      noAuthText: '没有任何项目',
-    }
-
-    if (spaceInfo && spaceInfo.finish && !spaceInfo.projectList.length) {
-      return (
-        <NoData
-          {...noProjectDataConfig}
-        />
-      )
-    } 
-    return <Loading mode="block" height={200} />
-  }
-
   render() {
     const {objList, storageList, projectId} = store
     const listConfig = {
@@ -108,21 +82,15 @@ export default class SyncResult extends Component {
       store, // 必填属性
     }
 
-    const {spaceInfo} = window
-
     return (
       <div className="page-sync-result">
         <div className="content-header">标签同步结果</div>
-        {
-          spaceInfo && spaceInfo.projectId && spaceInfo.projectList && spaceInfo.projectList.length
-            ? (
-              <div className="list-content">
-                <ListContent {...listConfig} />
-              </div>
-            ) : this.renderNodata()
-        }
+        <div className="list-content">
+          <ListContent {...listConfig} />
+        </div>
       </div>
      
     )
   }
 }
+export default projectProvider(SyncResult)
