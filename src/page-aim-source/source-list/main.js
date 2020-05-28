@@ -90,6 +90,7 @@ export default class SourceList extends Component {
 
   // 初始化数据，一般情况不需要，此项目存在项目空间中项目的切换，全局性更新，较为特殊
   @action initData() {
+    store.list.clear()
     store.searchParams = {}
     store.pagination = {
       pageSize: 10,
