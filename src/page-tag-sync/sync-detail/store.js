@@ -58,6 +58,9 @@ class Store extends ListContentStore(io.getList) {
       })
     } catch (e) {
       errorTip(e.message)
+      runInAction(() => {
+        this.configInfo = {}
+      })
     } finally {
       runInAction(() => {
         this.configInfoLoading = false

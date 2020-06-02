@@ -53,7 +53,7 @@ export default class SyncDetail extends Component {
 
     const baseInfo = [{
       title: '同步对象',
-      value: detail.name,
+      value: detail.objName,
     }, {
       title: '创建人',
       value: detail.cuserName,
