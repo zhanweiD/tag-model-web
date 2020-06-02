@@ -315,6 +315,7 @@ class TagCategoryStore {
   @observable checkedKeys = []
   @observable checkedTagData = []
   @observable disabledKeys = []
+  @observable disabledTagKeys = []
 
   // 标签 - 选择标签树结构
   @action async getSelectTag() {
@@ -333,7 +334,7 @@ class TagCategoryStore {
         this.checkedTagData.replace(usedList)
         this.selectTagTableData.replace(usedList)
         this.checkedKeys.replace(usedKeys)
-        
+        this.disabledTagKeys = res.filter(d => (d.type === 0) && !d.status).map(d => d.id)
         this.disabledKeys = res.filter(d => (d.type === 0) && (!d.status || d.used)).map(d => d.id)
       })
     } catch (e) {

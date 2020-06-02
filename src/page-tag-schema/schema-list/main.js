@@ -320,7 +320,7 @@ class SchemaList extends Component {
         onClick={this.create}
       >
         创建加工方案
-                </AuthBox>,
+      </AuthBox>,
       ],
       rowKey: 'id',
       store: this.store, // 必填属性
@@ -328,7 +328,7 @@ class SchemaList extends Component {
     return (
       <Provider rootStore={this.rootStore}>
         <div className="page-tag-processe">
-          <div className="content-header">加工方案</div>
+          <div className="content-header">TQL加工方案</div>
           {
             this.projectId ? (
               <Fragment>
