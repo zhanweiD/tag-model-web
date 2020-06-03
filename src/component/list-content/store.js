@@ -6,6 +6,7 @@ import {
   observable, action, runInAction, toJS,
 } from 'mobx'
 
+import {errorTip} from '../../common/util'
 /**
  * @description 过滤对象中value为undefined的值
  * @param {*} values @typedef object
@@ -107,7 +108,7 @@ const ListContentStore = apiFunc => class _Store {
       runInAction(() => {
         this.tableLoading = false
       })
-      // errorTip(e.message)
+      errorTip(e.message)
     }
   }
 }

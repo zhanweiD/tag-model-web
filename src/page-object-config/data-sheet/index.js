@@ -74,14 +74,19 @@ export default class DataSheet extends Component {
               )
             }
           </AuthBox>
-          <AuthBox
-            code="asset_tag_project_field_tag"
-            myFunctionCodes={this.bigStore.functionCodes}
-            isButton={false}
-          >
-            <span className="table-action-line" />
-            <a href onClick={() => this.openTagConfig(record)}>标签配置</a>
-          </AuthBox>
+          {
+            this.bigStore.objDetail && this.bigStore.objDetail.type !== 0 ? (
+              <AuthBox
+                code="asset_tag_project_field_tag"
+                myFunctionCodes={this.bigStore.functionCodes}
+                isButton={false}
+              >
+                <span className="table-action-line" />
+                <a href onClick={() => this.openTagConfig(record)}>标签配置</a>
+              </AuthBox>
+            ) : null
+          }
+        
         </div>
       ),
     },
@@ -107,6 +112,7 @@ export default class DataSheet extends Component {
 
   // 初始化数据，一般情况不需要，此项目存在项目空间中项目的切换，全局性更新，较为特殊
   @action initData() {
+    store.list.clear()
     store.searchParams = {}
     store.pagination = {
       pageSize: 10,

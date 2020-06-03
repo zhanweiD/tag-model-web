@@ -231,6 +231,7 @@ class SchemaList extends Component {
 
   // 初始化数据，一般情况不需要，此项目存在项目空间中项目的切换，全局性更新，较为特殊
   @action initData() {
+    this.store.list.clear()
     this.store.searchParams = {}
     this.store.pagination = {
       pageSize: 10,
@@ -292,7 +293,7 @@ class SchemaList extends Component {
         onClick={this.create}
       >
         创建加工方案
-                </AuthBox>,
+      </AuthBox>,
       ],
       rowKey: 'id',
       store: this.store, // 必填属性
@@ -300,12 +301,19 @@ class SchemaList extends Component {
     return (
       <Provider rootStore={this.rootStore}>
         <div className="page-tag-processe">
-          <div className="content-header">加工方案</div>
-          <div className="list-content">
-            <ListContent {...listConfig} />
-          </div>
-          <DrawerConfig projectId={this.projectId} />
-          <ModalSubmitLog store={this.store} />
+          <div className="content-header">TQL加工方案</div>
+          {
+            this.projectId ? (
+              <Fragment>
+                <div className="list-content">
+                  <ListContent {...listConfig} />
+                </div>
+                <DrawerConfig projectId={this.projectId} />
+                <ModalSubmitLog store={this.store} />
+              </Fragment>
+            ) : this.renderNodata()
+          }
+
         </div>
       </Provider>
 

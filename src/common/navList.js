@@ -73,7 +73,7 @@ const tagSchema = {
   },
   schemaList: {
     url: `${pathPrefix}/tag-schema`,
-    text: '加工方案',
+    text: 'TQL加工方案',
   },
   schemaDetail: {
     text: '加工方案详情',

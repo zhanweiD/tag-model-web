@@ -86,7 +86,7 @@ export default class Tree extends Component {
     if (!_.isEqual(updateTreeKey, next.updateTreeKey)) {
       store.typeCode = this.bigStore.typeCode
       store.objId = this.bigStore.objId
-
+      store.searchKey = undefined
       this.getTreeData()
     }
 

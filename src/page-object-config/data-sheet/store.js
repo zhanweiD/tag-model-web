@@ -1,5 +1,5 @@
 import {
-  observable, action, runInAction, toJS,
+  observable, action, runInAction,
 } from 'mobx'
 import {
   successTip, failureTip, errorTip,
@@ -52,15 +52,19 @@ class Store extends ListContentStore(io.getList) {
    */
   @action async removeList(params, cb) {
     try {
-      await io.removeList({
+      const res = await io.removeList({
         objId: this.objId,
         projectId: this.projectId,
         ...params,
       })
 
       runInAction(() => {
-        successTip('操作成功')
-        if (cb)cb()
+        if (res) {
+          successTip('操作成功')
+          if (cb)cb()
+        } else {
+          failureTip('操作失败')
+        }
       })
     } catch (e) {
       errorTip(e.message)
