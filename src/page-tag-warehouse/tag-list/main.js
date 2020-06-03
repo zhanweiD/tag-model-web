@@ -1,28 +1,18 @@
 /**
- * @description  标签仓库
+ * @description  标签仓库-标签列表
  */
 import {Component, Fragment} from 'react'
-import {observer, inject} from 'mobx-react'
+import {observer} from 'mobx-react'
 import {action} from 'mobx'
-import * as navListMap from '../common/navList'
+// import * as navListMap from '../../common/navList'
 import {
-  ListContent, projectProvider, NoData, OmitTooltip, AuthBox,
-} from '../component'
-import {getDataTypeName} from '../common/util'
+  ListContent, NoData, OmitTooltip, AuthBox,
+} from '../../component'
+import {getDataTypeName} from '../../common/util'
 import ModalApply from './modal-apply'
-
-import store from './store'
-
 import Search from './search'
 
-// 面包屑设置
-// eslint-disable-next-line no-underscore-dangle
-
-const navList = [
-  navListMap.tagCenter,
-  navListMap.tagManagement,
-  navListMap.tagWarehouse,
-]
+import store from './store'
 
 const statusMap = {
   0: '有效',
@@ -30,9 +20,8 @@ const statusMap = {
   2: '失效',
 }
 
-@inject('frameChange')
 @observer
-class TagWarehouse extends Component {
+export default class TagList extends Component {
   constructor(props) {
     super(props)
     const {spaceInfo} = window
@@ -40,11 +29,7 @@ class TagWarehouse extends Component {
   }
 
   componentWillMount() {
-    // 面包屑设置
-    const {frameChange} = this.props
-    frameChange('nav', navList)
     // 获取所属对象下拉数据
-
     if (store.useProjectId) {
       store.getAuthCode()
     }
@@ -199,28 +184,23 @@ class TagWarehouse extends Component {
     
     return (
       <div>
-        <div className="content-header">{navListMap.tagWarehouse.text}</div>
-        <div>
-          {
-            !list.length && !this.isSearch() ? (
-              <NoData
-                isLoading={tableLoading}
-                {...noDataConfig}
-              />
-            ) : (
-              <Fragment>
-                <Search store={store} />
-                <div className="search-list open-height">
-                  <ListContent {...listConfig} />
-                  <ModalApply store={store} />
-                </div>
-              </Fragment>
-            ) 
-          }  
-        </div>
+        {
+          !list.length && !this.isSearch() ? (
+            <NoData
+              isLoading={tableLoading}
+              {...noDataConfig}
+            />
+          ) : (
+            <Fragment>
+              <Search store={store} />
+              <div className="search-list open-height">
+                <ListContent {...listConfig} />
+                <ModalApply store={store} />
+              </div>
+            </Fragment>
+          ) 
+        }  
       </div>
     )
   }
 }
-
-export default projectProvider(TagWarehouse) 

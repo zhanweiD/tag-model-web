@@ -1,7 +1,7 @@
-import ioContext from '../common/io-context'
+import ioContext from '../../common/io-context'
 import {
   tagWarehouseApi, marketApi, projectApi, baseApi, get, post,
-} from '../common/util'
+} from '../../common/util'
 
 const api = {
   getList: get(`${tagWarehouseApi}/pageTag`), // 标签搜索列表

@@ -2,7 +2,7 @@ import {Component} from 'react'
 import {action, toJS, observable} from 'mobx'
 import {observer} from 'mobx-react'
 import {Modal} from 'antd'
-import {ModalForm} from '../component'
+import {ModalForm} from '../../component'
 
 @observer
 export default class ModalScene extends Component {
