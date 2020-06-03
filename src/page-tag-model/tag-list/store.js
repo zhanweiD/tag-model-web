@@ -37,8 +37,11 @@ class Store extends ListContentStore(io.getList) {
 
   @observable confirmLoading = false // 提交loading
 
-  @observable selectedRows = []
-  @observable rowKeys = []
+  // @observable selectedRows = []
+  // @observable rowKeys = []
+
+  // 批量发布
+  @observable publishRowKeys = []
 
   // 上下架申请modal
   @action.bound openModal(info) {
@@ -298,7 +301,7 @@ class Store extends ListContentStore(io.getList) {
         objId: this.ownObject,
         ...params,
       })
-     runInAction(() => {
+      runInAction(() => {
         if (res.success) {
           cb('名称已存在')
         } else {

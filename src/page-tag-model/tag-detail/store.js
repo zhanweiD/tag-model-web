@@ -1,43 +1,23 @@
 import {
-  observable, action, runInAction,
+  action, runInAction, observable,
 } from 'mobx'
-import {successTip, errorTip} from '../../common/util'
+import {errorTip} from '../../common/util'
 import io from './io'
 
 class Store {
   tagId
-
-  @observable tagDetail = {}
+  @observable tagBaseInfo = {}
   @observable tagDetailLoading = false
+  @observable cardInfo = {}
 
-  id = ''
-  @observable dagData = {}
-
-  // 获取血缘关系数据
-  @action async tagLineage(cb) {
+  @action async getTagBaseDetail() {
+    this.tagDetailLoading = false
     try {
-      const me = this
-      const res = await io.tagLineage({
-        id: this.tagId,
-      })
-
-      runInAction(() => {
-        me.dagData = res || {}
-        if (cb) cb(res || {})
-      })
-    } catch (e) {
-      errorTip(e.message)
-    }
-  }
-
-  @action async getDetail() {
-    this.tagDetailLoading = true
-    try {
-      const res = await io.getTagDetail({
+      const res = await io.getTagBaseDetail({
         id: this.tagId,
       })
       runInAction(() => {
-        this.tagDetail = res
+        this.tagBaseInfo = res
       })
     } catch (e) {
       errorTip(e.message)

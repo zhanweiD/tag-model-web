@@ -196,12 +196,12 @@ class TagList extends Component {
     }
   }
 
-  @action.bound onTableCheck(selectedRowKeys, selectedRows) {
-    // 表格 - 已选项
-    store.selectedRows = selectedRows
+  @action.bound onTableCheck(selectedRowKeys) {
+    // // 表格 - 已选项
+    // store.selectedRows = selectedRows
 
     // 表格 - 已选项key数组
-    store.rowKeys = selectedRowKeys
+    store.publishRowKeys = selectedRowKeys
   }
 
 
@@ -232,7 +232,17 @@ class TagList extends Component {
       tableLoading,
       drawerTagConfigType,
       batchConfigVisible,
+
+      publishRowKeys,
     } = store
+
+    const rowSelection = {
+      selectedRowKeys: publishRowKeys.slice(),
+      onChange: this.onTableCheck,
+      getCheckboxProps: record => ({
+        disabled: record.status !== 1, // 权限审批中的，不可进行申请、批量申请，且显示审批中
+      }),
+    }
 
     const noDataConfig = {
       btnText: '创建标签',
@@ -244,7 +254,7 @@ class TagList extends Component {
     }
 
     const listConfig = {
-      // rowSelection,
+      rowSelection,
       columns: this.columns,
       initParams: {projectId},
       searchParams: seach({objectSelectList: toJS(objectSelectList)}),
@@ -258,6 +268,7 @@ class TagList extends Component {
         >
         创建标签
         </AuthBox>, 
+        <Button className="mr8" onClick={() => store.openBatchConfig()}>批量发布</Button>,
         <Button onClick={() => store.openBatchConfig()}>批量绑定</Button>,
 
       ],

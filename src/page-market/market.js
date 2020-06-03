@@ -14,7 +14,6 @@ import Modal from './modal'
 
 import store from './store'
 
-
 @observer
 export default class Market extends Component {
   constructor(props) {
@@ -163,34 +162,9 @@ export default class Market extends Component {
     window.location.href = `${window.__keeper.pathHrefPrefix || '/'}/tag-model`
   }
 
-  // // 是否有进行搜索操作
-  // isSearch = () => {
-  //   const {
-  //     // hotWord, 
-  //     objectId,
-  //     useProjectId, 
-  //     ownProjectId,
-  //     projectPermission,
-  //   } = store
-
-  //   if (
-  //     useProjectId === ''
-  //   && objectId === ''
-  //   && +projectPermission === 2
-  //   && ownProjectId === ''
-  //   ) {
-  //     return false
-  //   }
-
-  //   return true
-  // }
-
   render() {
     const {
       useProjectId, 
-      // tableLoading, 
-      // list,
-      // expand, 
     } = store
 
     const rowSelection = {
@@ -217,10 +191,6 @@ export default class Market extends Component {
       store, // 必填属性
     }
 
-    // const noDataConfig = {
-    //   text: '没有任何公开标签!',
-    // }
-
     return (
  
       <div>
@@ -230,23 +200,6 @@ export default class Market extends Component {
           <ListContent {...listConfig} />
           <Modal store={store} />
         </div>
-        {/* {
-          !list.length && !this.isSearch() ? (
-            <NoData
-              isLoading={tableLoading}
-              {...noDataConfig}
-            />
-               
-          ) : (
-            <Fragment>
-              <Search store={store} />
-              <div className="search-list open-height">
-                <ListContent {...listConfig} />
-                <Modal store={store} />
-              </div>
-            </Fragment>
-          )
-        } */}
       </div>
     )
   }

@@ -6,13 +6,13 @@ import * as navListMap from '../../common/navList'
 import {DetailHeader, TabRoute} from '../../component'
 import {Time} from '../../common/util'
 import ConfigInfo from './config-info'
-// import RunRecord from './run-record'
+import RunRecord from './run-record'
 
 import store from './store'
 
 const tabs = [
   {name: '配置信息', value: 0}, 
-  // {name: '运行记录', value: 1},
+  {name: '运行记录', value: 1},
 ]
 
 const navList = [
@@ -75,7 +75,7 @@ export default class SyncDetail extends Component {
       changeUrl: false,
     }
 
-    const Content = [ConfigInfo][+this.tabId]
+    const Content = [ConfigInfo, RunRecord][+this.tabId]
 
     return (
       <div className="page-sync-detail">

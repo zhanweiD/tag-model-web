@@ -1,97 +1,128 @@
 /**
- * @description 标签模型-标签详情
+ * @description 标签模型 - 标签详情
  */
 import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
-import {Spin} from 'antd'
+import {Spin, Tabs} from 'antd'
 import * as navListMap from '../../common/navList'
-import {DetailHeader, TabRoute, Tag} from '../../component'
+import {DetailHeader, OverviewCardWrap} from '../../component'
 import {Time} from '../../common/util'
-import TagRelate from './tag-relate'
+import TagAnalyze from '../../business-component/tag-analyze'
+import TagrRelate from '../../business-component/tag-relate'
+import ProjectList from './project-list'
 
 import store from './store'
 
+const {TabPane} = Tabs
 
 // 面包屑设置
 // eslint-disable-next-line no-underscore-dangle
-
 const navList = [
   navListMap.tagCenter,
-  navListMap.tagManagement,
-  navListMap.tagModel,
+  navListMap.tagWarehouse,
   navListMap.tagDetail,
 ]
 
 @inject('frameChange')
 @observer
-export default class TagManagement extends Component {
+export default class TagDetail extends Component {
   constructor(props) {
     super(props)
     const {match} = props
-    store.tagId = match.params.tagId // 标签id
+    store.tagId = match.params.id // 标签id
   }
-
+  
   componentWillMount() {
     // 面包屑设置
     const {frameChange} = this.props
     frameChange('nav', navList)
 
-    store.getDetail()
+    store.getTagBaseDetail()
   }
-
-
+  
   render() {
-    const {tagDetailLoading, tagDetail} = store
+    const {
+      tagId,
+      cardInfo,
+      tagBaseInfo, 
+      tagDetailLoading, 
+    } = store
 
     const baseInfo = [{
       title: '对象',
-      value: tagDetail.objName,
+      value: tagBaseInfo.objName,
     }, {
       title: '唯一标识',
-      value: tagDetail.enName,
+      value: tagBaseInfo.enName,
     }, {
       title: '数据类型',
-      value: tagDetail.valueTypeName,
+      value: tagBaseInfo.valueTypeName,
     }, {
       title: '是否枚举',
-      value: tagDetail.isEnum ? '是' : '否',
+      value: tagBaseInfo.isEnum ? '是' : '否',
     }, {
       title: '创建者',
-      value: tagDetail.creator,
+      value: tagBaseInfo.creator,
     }, {
       title: '创建时间',
-      value: <Time timestamp={tagDetail.createTime} />,
+      value: <Time timestamp={tagBaseInfo.createTime} />,
+    }, {
+      title: '绑定方式',
+      value: tagBaseInfo.dataSource,
     }, {
       title: '数据源',
-      value: tagDetail.dataSource,
+      value: tagBaseInfo.dataSource,
     }, {
       title: '数据表',
-      value: tagDetail.tableName,
+      value: tagBaseInfo.tableName,
     }, {
       title: '字段',
-      value: tagDetail.fieldName,
+      value: tagBaseInfo.fieldName,
     }]
 
-    // 不同状态的相应map
-    const tagMap = {
-      0: <Tag status="wait" text="未使用" />,
-      1: <Tag status="process" text="使用中" />,
-    }
+    const cards = [
+      {
+        title: '使用项目数',
+        tooltipText: '待补充',
+        values: [cardInfo.entityCount || 0],
+      }, {
+        title: '加工方案引用数',
+        tooltipText: '项目内该标签被加工方案的引用数',
+        values: [cardInfo.relCount || 0],
+      }, {
+        title: '标签应用数',
+        tooltipText: '项目内，该标签被多少个数据查询引用+群体管理引用+API引用+业务场景引用',
+        values: [cardInfo.tagCount || 0],
+      },
+    ]
 
     return (
       <div>
         <Spin spinning={tagDetailLoading}>
           <DetailHeader
-            name={tagDetail.name}
-            descr={tagDetail.descr}
+            name={tagBaseInfo.name}
+            descr={tagBaseInfo.descr}
             baseInfo={baseInfo}
-            tag={tagMap[tagDetail.isUsed]}
           />
+          <OverviewCardWrap cards={cards} />
         </Spin>
-        <TabRoute tabs={[{name: '标签血缘', value: 1}]} />
-        <div className="bgf m16" style={{height: 'calc(100vh - 298px)'}}>
-          <TagRelate store={store} />
-        </div>
+        <Tabs defaultActiveKey="1" className="comp-tab">
+          <TabPane tab="标签分析" key="1">
+            <div className="bgf m16" style={{height: 'calc(100vh - 298px)'}}>
+              <TagAnalyze tagId={tagId} />
+            </div>
+          </TabPane>
+          <TabPane tab="血缘分析" key="2">
+            <div className="bgf m16" style={{height: 'calc(100vh - 298px)'}}>
+              <TagrRelate tagId={tagId} />
+            </div>
+          </TabPane>
+          <TabPane tab="项目列表" key="3">
+            <div className="bgf m16" style={{height: 'calc(100vh - 298px)'}}>
+              <ProjectList tagId={tagId} />
+            </div>
+          </TabPane>
+        </Tabs>
       </div>
       
     )
