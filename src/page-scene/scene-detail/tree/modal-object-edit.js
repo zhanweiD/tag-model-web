@@ -2,9 +2,10 @@
  * 场景详情标签树-选择对象弹窗
  */
 import {Component} from 'react'
-import {
-  Modal, Form, Spin, Cascader, Tooltip, Icon,
-} from 'antd'
+import { QuestionCircleOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Modal, Spin, Cascader, Tooltip } from 'antd';
 import {action} from 'mobx'
 import {observer, inject} from 'mobx-react'
 
@@ -75,7 +76,7 @@ class ModalObjectEdit extends Component {
                 <span>
                 对象名称&nbsp;
                   <Tooltip title="选择对象时，只能单选一个实体/关系，以便场景里的标签可合成一张数据表，通过一个API输出">
-                    <Icon type="question-circle" />
+                    <QuestionCircleOutlined />
                   </Tooltip>
                 </span>
               )}
@@ -96,7 +97,7 @@ class ModalObjectEdit extends Component {
           </Spin>
         </Form>
       </Modal>
-    )
+    );
   }
 }
 

@@ -4,9 +4,8 @@
 import {Component, Fragment} from 'react'
 import {action} from 'mobx'
 import {observer, Provider, inject} from 'mobx-react'
-import {
-  Popconfirm, Dropdown, Icon, Menu,
-} from 'antd'
+import { DownOutlined } from '@ant-design/icons';
+import { Popconfirm, Dropdown, Menu } from 'antd';
 import {Link} from 'react-router-dom'
 
 import * as navListMap from '../../common/navList'
@@ -204,7 +203,7 @@ class SchemaList extends Component {
                   <Dropdown overlay={() => this.menu(record)}>
                     <a href>
                       更多
-                      <Icon type="down" />
+                      <DownOutlined />
                     </a>
                   </Dropdown>
                 </Fragment>

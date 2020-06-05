@@ -4,6 +4,7 @@
 import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
 import {observable, action, toJS} from 'mobx'
+import { RightOutlined } from '@ant-design/icons';
 import {
   Drawer, Button,
 } from 'antd'
@@ -159,7 +160,7 @@ export default class SelectObject extends Component {
             <div className="select-object-btn"> 
               <Button
                 type="primary"
-                icon="right"
+                icon={<RightOutlined />}
                 size="small"
                 style={{display: 'block'}}
                 className="mb4"
@@ -194,6 +195,6 @@ export default class SelectObject extends Component {
           </div>
         </div>
       </Drawer>
-    )
+    );
   }
 }

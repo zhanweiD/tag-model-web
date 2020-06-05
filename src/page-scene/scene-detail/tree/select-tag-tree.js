@@ -6,6 +6,7 @@ import {observer} from 'mobx-react'
 import {
   observable, action, computed, toJS,
 } from 'mobx'
+import { RightOutlined } from '@ant-design/icons';
 import {Tree, Checkbox, Button} from 'antd'
 import {NoBorderInput, Loading, OmitTooltip} from '../../../component'
 import {IconChakan} from '../../../icon-comp'
@@ -210,7 +211,7 @@ export default class TagTree extends Component {
         <div className="select-tag-btn">
           <Button
             type="primary"
-            icon="right"
+            icon={<RightOutlined />}
             size="small"
             style={{display: 'block'}}
             className="mb4"
@@ -219,7 +220,6 @@ export default class TagTree extends Component {
           />
         </div>
       </div>
-
-    )
+    );
   }
 }

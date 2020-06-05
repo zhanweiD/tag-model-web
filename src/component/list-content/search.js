@@ -5,9 +5,9 @@
 
 import {Component} from 'react'
 import PropTypes from 'prop-types'
-import {
-  Form, Button, Row, Col,
-} from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Button, Row, Col } from 'antd';
 import ControlComponent, {mergeRules} from '../form-component-config'
 
 

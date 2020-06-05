@@ -2,7 +2,9 @@
  * @description 我的申请-撤销弹窗
  */
 import {Component} from 'react'
-import {Modal, Form, Input} from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Modal, Input } from 'antd';
 
 const {TextArea} = Input
 

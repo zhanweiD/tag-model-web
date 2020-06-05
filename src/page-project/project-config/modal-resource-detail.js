@@ -1,7 +1,8 @@
 import {Component} from 'react'
 import {action} from 'mobx'
 import {observer} from 'mobx-react'
-import {Modal, Button, Collapse, Icon, Panel} from 'antd'
+import { CaretRightOutlined } from '@ant-design/icons';
+import { Modal, Button, Collapse, Panel } from 'antd';
 import {calcSize} from '../../common/util'
 
 @observer
@@ -68,7 +69,7 @@ export default class ModalStotage extends Component {
             style={{display: this.nodeListVisible ? '' : 'none'}}
             bordered={false}
             defaultActiveKey={['1']}
-            expandIcon={({isActive}) => <Icon type="caret-right" rotate={isActive ? 90 : 0} />}
+            expandIcon={({isActive}) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
           >
             {nodeList.map(node => {
               const {hostname, ip, mtime, nodeStatus, remainCpu, remainMemory, runSlot, totalCpu, totalMemory, totalSlot} = node
@@ -146,6 +147,6 @@ export default class ModalStotage extends Component {
           </Collapse>
         </div>
       </Modal>
-    )
+    );
   }
 }

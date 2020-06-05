@@ -4,9 +4,9 @@
 import {Component, Fragment} from 'react'
 import {observer, inject} from 'mobx-react'
 import {action, observable, toJS} from 'mobx'
-import {
-  Input, Form, Select, Button, Switch,
-} from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Input, Select, Button, Switch } from 'antd';
 import {CycleSelect} from '@dtwave/uikit'
 import {QuestionTooltip} from '../../component'
 

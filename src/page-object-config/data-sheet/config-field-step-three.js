@@ -1,6 +1,7 @@
 import React from 'react'
 import {observer} from 'mobx-react'
-import {Icon, Spin} from 'antd'
+import { CheckCircleFilled } from '@ant-design/icons';
+import { Spin } from 'antd';
 
 // 标签配置 - 创建成功
 @observer
@@ -12,7 +13,7 @@ export default class StepThree extends React.Component {
     return (
       <div className="FBV FBJC FBAC" style={{height: '100%'}}>
         <div className="mb24">
-          <Icon type="check-circle" theme="filled" style={{color: '#52C41A', fontSize: 72}} />
+          <CheckCircleFilled style={{color: '#52C41A', fontSize: 72}} />
         </div>
         <div className="fs24 mb48" style={{color: 'rgba(0,0,0,0.85)'}}>创建成功</div>
         <div 
@@ -41,6 +42,6 @@ export default class StepThree extends React.Component {
           </Spin>
         </div>
       </div>
-    )
+    );
   }
 }

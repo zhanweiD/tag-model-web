@@ -2,9 +2,9 @@
  * @description 审批详情-弹窗
  */
 import {Component} from 'react'
-import {
-  Modal, Form, Input, Spin,
-} from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Modal, Input, Spin } from 'antd';
 import {Time} from '../../common/util'
 import {Tag} from '../../component'
 

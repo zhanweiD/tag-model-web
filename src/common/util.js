@@ -1,6 +1,6 @@
 /* eslint-disable */
 import {Component} from 'react'
-import {Icon, message} from 'antd'
+import { message } from 'antd';
 import {ErrorEater} from '@dtwave/uikit'
 
 //*--------------- 方法类 (返回方法) ---------------*//
@@ -238,7 +238,7 @@ export function getNamePattern(max = 32) {
     pattern: /^(?!_)/, message: '名称不允许下划线开头',
   }, {
     pattern: /^(?!数栖)/, message: '名称不允许数栖开头',
-  }]
+  }];
 }
 
 export function calcSize(size, defaultUnit = 'B', isToFixed = true) {

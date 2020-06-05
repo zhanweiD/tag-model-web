@@ -4,9 +4,9 @@
 import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {action} from 'mobx'
-import {
-  Input, Form, Select, Button, Switch,
-} from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Input, Select, Button, Switch } from 'antd';
 import {ModalStotageDetail} from '../../component'
 
 const FormItem = Form.Item

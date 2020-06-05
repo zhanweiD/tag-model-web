@@ -1,9 +1,9 @@
 import {Component, Fragment} from 'react'
 import {observer} from 'mobx-react'
 import {toJS} from 'mobx'
-import {
-  Button, Tabs, Spin, Icon, Tooltip,
-} from 'antd'
+import { Icon as LegacyIcon } from '@ant-design/compatible';
+import { DeleteOutlined } from '@ant-design/icons';
+import { Button, Tabs, Spin, Tooltip } from 'antd';
 import cls from 'classnames'
 import ResultTable from './result-table'
 
@@ -51,13 +51,13 @@ export default class LogPanel extends Component {
             onClick={store.zoomInLogFun}
             disabled={store.logBoxToAllFlag}
           >
-            <Icon type={store.isMinLog ? 'up-square-o' : 'down-square-o'} />
+            <LegacyIcon type={store.isMinLog ? 'up-square-o' : 'down-square-o'} />
           </Button>
           {store.resultActiveKey === 'running_log'
             ? (
               <Tooltip placement="topRight" title="点击可以清空已有的日志">
                 <Button className="clear-log " title="清空日志" onClick={store.clearLog}>
-                  <Icon type="delete" />
+                  <DeleteOutlined />
                 </Button>
               </Tooltip>
             )
@@ -149,6 +149,6 @@ export default class LogPanel extends Component {
         </div>
   
       </Fragment>
-    )
+    );
   }
 }

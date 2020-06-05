@@ -1,8 +1,8 @@
 import {Component} from 'react'
 import PropTypes from 'prop-types'
-import {
-  Modal, Form, Input, Spin, Select, Switch, Cascader,
-} from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Modal, Input, Spin, Select, Switch, Cascader } from 'antd';
 import {isJsonFormat, enNameReg, getNamePattern} from '../../common/util'
 
 const FormItem = Form.Item

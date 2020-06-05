@@ -1,8 +1,7 @@
 import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {observable} from 'mobx'
-// import classnames from 'classnames'
-import {Icon} from 'antd'
+import { RedoOutlined, ZoomInOutlined, ZoomOutOutlined } from '@ant-design/icons';
 
 import './dag-box.styl'
 
@@ -74,14 +73,14 @@ export default class DagBox extends Component {
             {
               props.refreshNodes ? (
                 <span>
-                  <Icon type="redo" onClick={() => { props.refreshNodes() }} />
+                  <RedoOutlined onClick={() => { props.refreshNodes() }} />
                   <span className="hen">|</span>
                 </span>
               ) : null
             }
-            <Icon type="zoom-in" onClick={() => { me.zoomClick(1) }} />
+            <ZoomInOutlined onClick={() => { me.zoomClick(1) }} />
             <span className="hen">|</span>
-            <Icon type="zoom-out" onClick={() => { me.zoomClick(-1) }} />
+            <ZoomOutOutlined onClick={() => { me.zoomClick(-1) }} />
           </span>
         </div>
         <svg id="dag_svg" className="dag-svg" />
@@ -94,7 +93,7 @@ export default class DagBox extends Component {
           props.infoBox ? props.infoBox : null
         }
       </div>
-    )
+    );
   }
 
   componentDidMount() {

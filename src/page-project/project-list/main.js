@@ -4,9 +4,8 @@
 import {Component, Fragment} from 'react'
 import {action} from 'mobx'
 import {observer, inject} from 'mobx-react'
-import {
-  Popconfirm, Badge, Icon, Dropdown, Menu,
-} from 'antd'
+import { DownOutlined } from '@ant-design/icons';
+import { Popconfirm, Badge, Dropdown, Menu } from 'antd';
 import {Link} from 'react-router-dom'
 import * as navListMap from '../../common/navList'
 import {Time} from '../../common/util'
@@ -147,7 +146,7 @@ export default class ProjectList extends Component {
           <Dropdown overlay={() => this.menu(record)}>
             <a href>
               更多
-              <Icon type="down" />
+              <DownOutlined />
             </a>
           </Dropdown>
         </div>

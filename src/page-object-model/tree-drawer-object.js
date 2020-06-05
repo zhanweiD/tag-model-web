@@ -1,9 +1,9 @@
 import {Component, Fragment} from 'react'
 import {observer, inject} from 'mobx-react'
 import {action, toJS} from 'mobx'
-import {
-  Button, Drawer, Input, Form, Select, Radio, TreeSelect,
-} from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Button, Drawer, Input, Select, Radio, TreeSelect } from 'antd';
 import {enNameReg} from '../common/util'
 import {
   targetTypeMap, nameTypeMap, typeCodeMap,

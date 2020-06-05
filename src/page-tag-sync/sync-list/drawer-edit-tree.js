@@ -1,5 +1,6 @@
 import {Component, Fragment} from 'react'
 import {observer} from 'mobx-react'
+import { RightOutlined } from '@ant-design/icons';
 import {Tree, Checkbox, Button} from 'antd'
 import {
   observable, toJS, action, computed,
@@ -240,7 +241,7 @@ export default class SyncTagTree extends Component {
         <div className="select-tag-btn">
           <Button
             type="primary"
-            icon="right"
+            icon={<RightOutlined />}
             size="small"
             style={{display: 'block'}}
             className="mb4"
@@ -249,6 +250,6 @@ export default class SyncTagTree extends Component {
           />
         </div>
       </div>
-    )
+    );
   }
 }

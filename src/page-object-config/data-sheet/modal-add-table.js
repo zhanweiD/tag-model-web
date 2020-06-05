@@ -1,9 +1,9 @@
 import {Component, Fragment} from 'react'
 import {observer, inject} from 'mobx-react'
 import {action, observable, toJS} from 'mobx'
-import {
-  Modal, Form, Select, Switch, Radio,
-} from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Modal, Select, Switch, Radio } from 'antd';
 import {OmitTooltip} from '../../component'
 
 const FormItem = Form.Item

@@ -4,7 +4,9 @@
 import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {action, observable, toJS} from 'mobx'
-import {Drawer, Input, Form, Select, Button} from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Drawer, Input, Select, Button } from 'antd';
 import {ModalStotageDetail, OmitTooltip} from '../../component'
 
 

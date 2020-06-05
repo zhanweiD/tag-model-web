@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
 import {observer} from 'mobx-react'
 import {observable, action, toJS} from 'mobx'
-import {Table, Input, Button, Form} from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Table, Input, Button } from 'antd';
 
 const EditableContext = React.createContext()
 const {Search} = Input

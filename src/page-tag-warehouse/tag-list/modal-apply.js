@@ -4,9 +4,9 @@
 import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {action, toJS} from 'mobx'
-import {
-  Modal, Input, Form, Radio,
-} from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Modal, Input, Radio } from 'antd';
 
 const FormItem = Form.Item
 const {TextArea} = Input

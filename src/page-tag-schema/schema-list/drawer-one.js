@@ -4,9 +4,9 @@
 import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
 import {action, toJS} from 'mobx'
-import {
-  Input, Form, Select, Button, Modal, Spin,
-} from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Input, Select, Button, Modal, Spin } from 'antd';
 
 const FormItem = Form.Item
 const Option = {Select}

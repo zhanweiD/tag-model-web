@@ -3,9 +3,7 @@
  */
 import {Component, Fragment} from 'react'
 import {observer} from 'mobx-react'
-import {
-  Input, Icon, Select, Radio,
-} from 'antd'
+import { Input, Select, Radio } from 'antd';
 import {action} from 'mobx'
 
 const {Option} = Select

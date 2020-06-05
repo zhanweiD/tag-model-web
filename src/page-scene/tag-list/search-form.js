@@ -1,6 +1,6 @@
-import {
-  Input, Form, Row, Col, Button, InputNumber,
-} from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Input, Row, Col, Button, InputNumber } from 'antd';
 
 const FormItem = Form.Item
 

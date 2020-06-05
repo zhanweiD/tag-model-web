@@ -1,7 +1,7 @@
 import {Component} from 'react'
-import {
-  Modal, Form, Spin, Cascader,
-} from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Modal, Spin, Cascader } from 'antd';
 import {action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
 

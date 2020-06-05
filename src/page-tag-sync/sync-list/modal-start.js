@@ -1,7 +1,9 @@
 import {Component} from 'react'
 import {action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
-import {Modal, Button, Form} from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Modal, Button } from 'antd';
 import {CycleSelect} from '@dtwave/uikit'
 
 const FormItem = Form.Item
