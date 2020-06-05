@@ -23,13 +23,15 @@ export const getTableStatus = ({status}) => {
 export const APPLY_TYPE = [{
   name: '授权使用',
   value: 0,
-}, {
-  name: '上架',
-  value: 1,
-}, {
-  name: '下架',
-  value: 2,
-}]
+}, 
+// {
+//   name: '上架',
+//   value: 1,
+// }, {
+//   name: '下架',
+//   value: 2,
+// }
+]
 
 // 审批管理 - 申请状态
 export const APPLY_STATUS = [{

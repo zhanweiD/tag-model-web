@@ -255,7 +255,7 @@ export default class Tree extends Component {
 
     const treeBoxConfig = {
       titleHeight: 34,
-      title: <Action store={store} key={store.typeCode} />,
+      title: <Action store={store} key={store.typeCode} getTreeData={this.getTreeData} />,
       defaultWidth: 200,
       style: {minWidth: '200px'},
     }

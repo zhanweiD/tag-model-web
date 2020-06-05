@@ -5,7 +5,7 @@ import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
 import {Spin, Tabs} from 'antd'
 import * as navListMap from '../../common/navList'
-import {DetailHeader, OverviewCardWrap} from '../../component'
+import {DetailHeader, OverviewCardWrap, Tag} from '../../component'
 import {Time} from '../../common/util'
 import TagAnalyze from '../../business-component/tag-analyze'
 import TagrRelate from '../../business-component/tag-relate'
@@ -95,6 +95,31 @@ export default class TagDetail extends Component {
         values: [cardInfo.tagCount || 0],
       },
     ]
+    const baseDeriveInfo = [{
+      title: '对象',
+      value: tagBaseInfo.objName,
+    }, {
+      title: '唯一标识',
+      value: tagBaseInfo.enName,
+    }, {
+      title: '数据类型',
+      value: tagBaseInfo.valueTypeName,
+    }, {
+      title: '是否枚举',
+      value: tagBaseInfo.isEnum ? '是' : '否',
+    }, {
+      title: '创建者',
+      value: tagBaseInfo.creator,
+    }, {
+      title: '创建时间',
+      value: <Time timestamp={tagBaseInfo.createTime} />,
+    }]
+
+    // 不同状态的相应map
+    const tagMap = {
+      0: <Tag status="wait" text="未使用" />,
+      1: <Tag status="process" text="使用中" />,
+    }
 
     return (
       <div>
@@ -102,7 +127,8 @@ export default class TagDetail extends Component {
           <DetailHeader
             name={tagBaseInfo.name}
             descr={tagBaseInfo.descr}
-            baseInfo={baseInfo}
+            baseInfo={tagBaseInfo.configType === 1 ? baseDeriveInfo : baseInfo}
+            tag={tagMap[tagBaseInfo.isUsed]}
           />
           <OverviewCardWrap cards={cards} />
         </Spin>

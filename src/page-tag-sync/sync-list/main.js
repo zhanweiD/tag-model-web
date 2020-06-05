@@ -164,13 +164,16 @@ class SyncList extends Component {
                 <span className="table-action-line" />
                 <a href onClick={() => this.editSync(record)}>编辑</a>
                 <span className="table-action-line" />
-                <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
-                  <a href>删除</a>
-                </Popconfirm>
+                {
+                  !record.tagUsedCount ? (
+                    <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
+                      <a href>删除</a>
+                    </Popconfirm>
+                  ) : <span className="disabled">删除</span>
+                }
                 <span className="table-action-line" />
                 <a href onClick={() => this.getLog(record.id)}>提交日志</a>
               </Fragment>
-
             )
           }
 
@@ -186,9 +189,13 @@ class SyncList extends Component {
                 <span className="table-action-line" />
                 <a href onClick={() => this.editSync(record)}>编辑</a>
                 <span className="table-action-line" />
-                <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
-                  <a href>删除</a>
-                </Popconfirm>
+                {
+                  !record.tagUsedCount ? (
+                    <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
+                      <a href>删除</a>
+                    </Popconfirm>
+                  ) : <span className="disabled">删除</span>
+                }
                 <span className="table-action-line" />
                 <a href onClick={() => this.getLog(record.id)}>提交日志</a>
               </Fragment>
@@ -205,7 +212,13 @@ class SyncList extends Component {
                 <span className="table-action-line" />
                 <span className="disabled">编辑</span>
                 <span className="table-action-line" />
-                <span className="disabled">删除</span>
+                {
+                  !record.tagUsedCount ? (
+                    <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
+                      <a href>删除</a>
+                    </Popconfirm>
+                  ) : <span className="disabled">删除</span>
+                }
                 <span className="table-action-line" />
                 <a href onClick={() => this.getLog(record.id)}>提交日志</a>
               </Fragment>
@@ -224,9 +237,13 @@ class SyncList extends Component {
                 <span className="table-action-line" />
                 <a href onClick={() => this.editSync(record)}>编辑</a>
                 <span className="table-action-line" />
-                <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
-                  <a href>删除</a>
-                </Popconfirm>
+                {
+                  !record.tagUsedCount ? (
+                    <Popconfiram placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
+                      <a href>删除</a>
+                    </Popconfiram>
+                  ) : <span className="disabled">删除</span>
+                }
                 <span className="table-action-line" />
                 <a href onClick={() => this.getLog(record.id)}>提交日志</a>
               </Fragment>
@@ -242,7 +259,13 @@ class SyncList extends Component {
                 <span className="table-action-line" />
                 <span className="disabled">编辑</span>
                 <span className="table-action-line" />
-                <span className="disabled">删除</span>
+                {
+                  !record.tagUsedCount ? (
+                    <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
+                      <a href>删除</a>
+                    </Popconfirm>
+                  ) : <span className="disabled">删除</span>
+                }
                 <span className="table-action-line" />
                 <a href onClick={() => this.getLog(record.id)}>提交日志</a>
               </Fragment>

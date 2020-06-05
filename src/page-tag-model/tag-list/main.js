@@ -89,7 +89,7 @@ class TagList extends Component {
           isButton={false}
         >
           {/* 标签状态: 待绑定 未使用  操作: 绑定/编辑/删除 */}
-          {record.status === 0 && (
+          {record.status === 0 && record.isVisual === 0 && (
             <Fragment>
               <a href onClick={() => store.openTagConfig('one', record)}>绑定</a>
               <span className="table-action-line" />
@@ -102,7 +102,7 @@ class TagList extends Component {
           )}
 
           {/* 标签状态: 待发布 未使用  操作: 发布/绑定/编辑/删除 */}
-          {record.status === 1 && (
+          {record.status === 1 && record.isVisual === 0 && (
             <Fragment>
               <Popconfirm
                 placement="topRight"
@@ -126,7 +126,8 @@ class TagList extends Component {
           )}
 
           {/* 标签状态: 已发布 未使用 下架  操作: 取消发布/上架申请 */}
-          {record.status === 2 && record.isUsed === 0 && (
+          {/* {record.status === 2 && record.isUsed === 0 && record.publish === 0 && ( */}
+          {record.status === 2 && record.isUsed === 0 && record.isVisual === 0 && (
             <Fragment>
               <Popconfirm
                 placement="topRight"
@@ -144,7 +145,47 @@ class TagList extends Component {
           {/* 标签状态: 已发布 已使用 */}
           {record.status === 2
           && record.isUsed === 1
+          && record.isVisual === 0 
           && <span className="disabled">取消发布</span>}
+
+          {/* 可视化加工标签 待发布 */}
+          {record.isVisual === 1 && record.status === 1 && (
+            <Popconfirm
+              placement="topRight"
+              title="确认发布？"
+              onConfirm={() => store.updateTagStatus({
+                status: 2,
+                id: record.id,
+              })}
+            >
+              <a href>发布</a>
+            </Popconfirm>
+          )}
+
+          {/* 可视化加工标签 发布 */}
+          {record.isVisual === 1 
+          && record.status === 2 
+          && record.isUsed === 0
+          && (
+            <Popconfirm
+              placement="topRight"
+              title="确认取消发布？"
+              onConfirm={() => store.updateTagStatus({
+                status: 1,
+                id: record.id,
+              })}
+            >
+              <a href>取消发布</a>
+
+            </Popconfirm>
+          )}
+
+          {/* 可视化加工标签 发布 已使用 */}
+          {record.status === 2
+          && record.isUsed === 1
+          && record.isVisual === 1
+          && <span className="disabled">取消发布</span>}
+
         </AuthBox>
       </div>
     ),

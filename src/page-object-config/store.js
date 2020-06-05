@@ -102,13 +102,12 @@ class Store {
         } else {
           this.currentSelectKeys = undefined
         }
-
         // 获取所有类目的数据；用于编辑对象时选择所属类目
         // this.categoryData = res.filter(item => item.parentId === 0)
         this.treeData = listToTree(data)
-      })
 
-      if (cb) cb()
+        if (cb) cb()
+      })
     } catch (e) {
       runInAction(() => {
         this.treeLoading = false
