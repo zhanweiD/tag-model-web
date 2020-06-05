@@ -41,6 +41,7 @@
 
 module.exports = () => {
   return {
+    'font-size-base': '12px',
     'blue-6': '#0078ff',
     'purple-6': '#8A7FEA',
     'cyan-6': '#73B2FF',
