@@ -72,6 +72,26 @@ export default class TagManagement extends Component {
       value: tagDetail.fieldName,
     }]
 
+    const baseDeriveInfo = [{
+      title: '对象',
+      value: tagDetail.objName,
+    }, {
+      title: '唯一标识',
+      value: tagDetail.enName,
+    }, {
+      title: '数据类型',
+      value: tagDetail.valueTypeName,
+    }, {
+      title: '是否枚举',
+      value: tagDetail.isEnum ? '是' : '否',
+    }, {
+      title: '创建者',
+      value: tagDetail.creator,
+    }, {
+      title: '创建时间',
+      value: <Time timestamp={tagDetail.createTime} />,
+    }]
+
     // 不同状态的相应map
     const tagMap = {
       0: <Tag status="wait" text="未使用" />,
@@ -84,12 +104,12 @@ export default class TagManagement extends Component {
           <DetailHeader
             name={tagDetail.name}
             descr={tagDetail.descr}
-            baseInfo={baseInfo}
+            baseInfo={tagDetail.configType === 1 ? baseDeriveInfo : baseInfo}
             tag={tagMap[tagDetail.isUsed]}
           />
         </Spin>
         <TabRoute tabs={[{name: '标签血缘', value: 1}]} />
-        <div className="bgf m16" style={{height: 'calc(100vh - 298px)'}}>
+        <div className="bgf m16" style={{height: 'calc(100vh - 275px)'}}>
           <TagRelate store={store} />
         </div>
       </div>
