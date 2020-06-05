@@ -37,6 +37,7 @@ export default class ObjectConfig extends Component {
     store.typeCode = code
     store.objId = undefined
     store.tabId = 'view'
+    store.searchKey = undefined
     store.getObjTree(() => {
       store.objId = store.currentSelectKeys
     })

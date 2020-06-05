@@ -67,7 +67,7 @@ export default class DataSheet extends Component {
             isButton={false}
           >
             {
-              (record.isUsed || record.status === 2) ? <span className="disabled">移除</span> : (
+              (record.isUsed || record.status === 1 || record.configuredField) ? <span className="disabled">移除</span> : (
                 <Popconfirm placement="topRight" title="你确定要移除该数据表吗？" onConfirm={() => this.removeList(record)}>
                   <a href>移除</a>
                 </Popconfirm>

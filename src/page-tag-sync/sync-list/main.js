@@ -1,10 +1,10 @@
-import { Component, Fragment } from 'react'
-import { action, toJS } from 'mobx'
-import { observer, Provider, inject } from 'mobx-react'
-import { Button, Popconfirm } from 'antd'
-import { Link } from 'react-router-dom'
-import { ListContent, Loading, NoData } from '../../component'
-import { Time } from '../../common/util'
+import {Component, Fragment} from 'react'
+import {action, toJS} from 'mobx'
+import {observer, Provider, inject} from 'mobx-react'
+import {Button, Popconfirm} from 'antd'
+import {Link} from 'react-router-dom'
+import {ListContent, Loading, NoData} from '../../component'
+import {Time} from '../../common/util'
 import * as navListMap from '../../common/navList'
 import seach from './search'
 import DrawerAddSync from './drawer'
@@ -26,7 +26,7 @@ import store from './store'
 const navList = [
   navListMap.tagCenter,
   navListMap.tagSync, 
-  { text: navListMap.syncPlan.text },
+  {text: navListMap.syncPlan.text},
 ]
 
 @inject('frameChange')
@@ -34,7 +34,7 @@ const navList = [
 export default class SyncList extends Component {
   constructor(props) {
     super(props)
-    const { spaceInfo } = window
+    const {spaceInfo} = window
     store.projectId = spaceInfo && spaceInfo.projectId
   }
 
@@ -67,11 +67,11 @@ export default class SyncList extends Component {
   }, {
     title: '计划状态',
     dataIndex: 'status',
-    render: v => (v === null ? '' : getSyncStatus({ status: v })),
+    render: v => (v === null ? '' : getSyncStatus({status: v})),
   }, {
     title: '最近运行状态',
     dataIndex: 'lastStatus',
-    render: v => (v === null ? '' : getLastStatus({ status: v })),
+    render: v => (v === null ? '' : getLastStatus({status: v})),
   }, {
     title: '操作',
     dataIndex: 'action',
@@ -131,7 +131,7 @@ export default class SyncList extends Component {
             )
           }
 
-           /* 提交失败 & 启动 */
+          /* 提交失败 & 启动 */
           if (record.status === 2 && record.scheduleType === 1) {
             return (
               <Fragment>
@@ -164,13 +164,16 @@ export default class SyncList extends Component {
                 <span className="table-action-line" />
                 <a href onClick={() => this.editSync(record)}>编辑</a>
                 <span className="table-action-line" />
-                <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
-                  <a href>删除</a>
-                </Popconfirm>
+                {
+                  !record.tagUsedCount ? (
+                    <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
+                      <a href>删除</a>
+                    </Popconfirm>
+                  ) : <span className="disabled">删除</span>
+                }
                 <span className="table-action-line" />
                 <a href onClick={() => this.getLog(record.id)}>提交日志</a>
               </Fragment>
-
             )
           }
 
@@ -186,9 +189,13 @@ export default class SyncList extends Component {
                 <span className="table-action-line" />
                 <a href onClick={() => this.editSync(record)}>编辑</a>
                 <span className="table-action-line" />
-                <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
-                  <a href>删除</a>
-                </Popconfirm>
+                {
+                  !record.tagUsedCount ? (
+                    <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
+                      <a href>删除</a>
+                    </Popconfirm>
+                  ) : <span className="disabled">删除</span>
+                }
                 <span className="table-action-line" />
                 <a href onClick={() => this.getLog(record.id)}>提交日志</a>
               </Fragment>
@@ -205,15 +212,21 @@ export default class SyncList extends Component {
                 <span className="table-action-line" />
                 <span className="disabled">编辑</span>
                 <span className="table-action-line" />
-                <span className="disabled">删除</span>
+                {
+                  !record.tagUsedCount ? (
+                    <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
+                      <a href>删除</a>
+                    </Popconfirm>
+                  ) : <span className="disabled">删除</span>
+                }
                 <span className="table-action-line" />
                 <a href onClick={() => this.getLog(record.id)}>提交日志</a>
               </Fragment>
             )
           }
 
-          /* 更新成功 & 暂停 &  运行成功、运行失败*/
-          if (record.status === 4 && record.scheduleType === 0 && (record.lastStatus === 1|| record.lastStatus === 2)) {
+          /* 更新成功 & 暂停 &  运行成功、运行失败 */
+          if (record.status === 4 && record.scheduleType === 0 && (record.lastStatus === 1 || record.lastStatus === 2)) {
             return (
               <Fragment>
                 <a href onClick={() => this.startSync(record)}>启动</a>
@@ -224,9 +237,13 @@ export default class SyncList extends Component {
                 <span className="table-action-line" />
                 <a href onClick={() => this.editSync(record)}>编辑</a>
                 <span className="table-action-line" />
-                <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
-                  <a href>删除</a>
-                </Popconfirm>
+                {
+                  !record.tagUsedCount ? (
+                    <Popconfiram placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
+                      <a href>删除</a>
+                    </Popconfiram>
+                  ) : <span className="disabled">删除</span>
+                }
                 <span className="table-action-line" />
                 <a href onClick={() => this.getLog(record.id)}>提交日志</a>
               </Fragment>
@@ -242,7 +259,13 @@ export default class SyncList extends Component {
                 <span className="table-action-line" />
                 <span className="disabled">编辑</span>
                 <span className="table-action-line" />
-                <span className="disabled">删除</span>
+                {
+                  !record.tagUsedCount ? (
+                    <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
+                      <a href>删除</a>
+                    </Popconfirm>
+                  ) : <span className="disabled">删除</span>
+                }
                 <span className="table-action-line" />
                 <a href onClick={() => this.getLog(record.id)}>提交日志</a>
               </Fragment>
@@ -265,9 +288,9 @@ export default class SyncList extends Component {
     ),
   }]
 
-  componentWillMount () {
+  componentWillMount() {
     // 面包屑设置
-    const { frameChange } = this.props
+    const {frameChange} = this.props
     frameChange('nav', navList)
 
     if (store.projectId) {
@@ -277,7 +300,7 @@ export default class SyncList extends Component {
   }
 
   // 初始化数据，一般情况不需要，此项目存在项目空间中项目的切换，全局性更新，较为特殊
-  @action initData () {
+  @action initData() {
     store.searchParams = {}
     store.pagination = {
       pageSize: 10,
@@ -285,37 +308,37 @@ export default class SyncList extends Component {
     }
   }
 
-  @action.bound addSync () {
+  @action.bound addSync() {
     store.visible = true
   }
 
-  @action.bound editSync (data) {
+  @action.bound editSync(data) {
     store.selectItem = data
     store.visibleEdit = true
   }
 
   // 启动
-  @action.bound startSync (data) {
+  @action.bound startSync(data) {
     store.selectItem = data
     store.visibleStart = true
   }
 
   // 暂停
-  @action.bound pauseSync (id) {
+  @action.bound pauseSync(id) {
     store.pauseSync(id)
   }
 
   // 执行
-  @action.bound runSync (id) {
+  @action.bound runSync(id) {
     store.runSync(id)
   }
 
   // 删除同步计划
-  @action.bound delList (id) {
+  @action.bound delList(id) {
     store.delList(id)
   }
 
-  @action.bound getLog (id) {
+  @action.bound getLog(id) {
     store.visibleLog = true
     store.getLog(id)
   }
@@ -326,7 +349,7 @@ export default class SyncList extends Component {
   }
 
   renderNodata = () => {
-    const { spaceInfo } = window
+    const {spaceInfo} = window
 
     const noProjectDataConfig = {
       btnText: '去创建项目',
@@ -346,12 +369,12 @@ export default class SyncList extends Component {
     return <Loading mode="block" height={200} />
   }
 
-  render () {
-    const { objList, projectId, visibleEdit } = store
+  render() {
+    const {objList, projectId, visibleEdit} = store
 
     const listConfig = {
       columns: this.columns,
-      initParams: { projectId },
+      initParams: {projectId},
       searchParams: seach({
         objList: toJS(objList),
       }),
@@ -359,7 +382,7 @@ export default class SyncList extends Component {
       store, // 必填属性
     }
 
-    const { spaceInfo } = window
+    const {spaceInfo} = window
 
     return (
       <Provider bigStore={store}>

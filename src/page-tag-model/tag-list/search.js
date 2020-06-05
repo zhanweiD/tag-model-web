@@ -28,16 +28,18 @@ const serach = ({objectSelectList = []}) => [
       options: usedStatusMap,
     },
     component: 'select',
-  }, {
-    label: '公开状态',
-    key: 'publish',
-    initialValue: '',
-    control: {
-      defaultAll: true,
-      options: publishStatusMap,
-    },
-    component: 'select',
-  }, {
+  },
+  //  {
+  //   label: '公开状态',
+  //   key: 'publish',
+  //   initialValue: '',
+  //   control: {
+  //     defaultAll: true,
+  //     options: publishStatusMap,
+  //   },
+  //   component: 'select',
+  // }, 
+  {
     label: '标签名称',
     key: 'keyword',
     control: {

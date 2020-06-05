@@ -89,7 +89,7 @@ export default class TagList extends Component {
           isButton={false}
         >
           {/* 标签状态: 待绑定 未使用  操作: 绑定/编辑/删除 */}
-          {record.status === 0 && (
+          {record.status === 0 && record.isVisual === 0 && (
             <Fragment>
               <a href onClick={() => store.openTagConfig('one', record)}>绑定</a>
               <span className="table-action-line" />
@@ -102,7 +102,7 @@ export default class TagList extends Component {
           )}
 
           {/* 标签状态: 待发布 未使用  操作: 发布/绑定/编辑/删除 */}
-          {record.status === 1 && (
+          {record.status === 1 && record.isVisual === 0 && (
             <Fragment>
               <Popconfirm
                 placement="topRight"
@@ -127,7 +127,7 @@ export default class TagList extends Component {
 
           {/* 标签状态: 已发布 未使用 下架  操作: 取消发布/上架申请 */}
           {/* {record.status === 2 && record.isUsed === 0 && record.publish === 0 && ( */}
-          {record.status === 2 && record.isUsed === 0 && (
+          {record.status === 2 && record.isUsed === 0 && record.isVisual === 0 && (
             <Fragment>
               <Popconfirm
                 placement="topRight"
@@ -147,83 +147,47 @@ export default class TagList extends Component {
           {/* 标签状态: 已发布 已使用 */}
           {record.status === 2
           && record.isUsed === 1
+          && record.isVisual === 0 
           && <span className="disabled">取消发布</span>}
 
-
-          {/* 标签状态: 已发布 未使用 上架审批中 操作: 取消申请 */}
-          {/* {record.status === 2 && record.isUsed === 0 && record.publish === 2 && ( */}
-          {/* {record.status === 2 && record.isUsed === 0 && (
+          {/* 可视化加工标签 待发布 */}
+          {record.isVisual === 1 && record.status === 1 && (
             <Popconfirm
               placement="topRight"
-              title="确认取消申请？"
-              onConfirm={() => store.tagApply({
-                type: 3,
+              title="确认发布？"
+              onConfirm={() => store.updateTagStatus({
+                status: 2,
                 id: record.id,
               })}
             >
-              <a href>取消申请</a>
+              <a href>发布</a>
             </Popconfirm>
-          )} */}
-          {/* 标签状态: 已发布 未使用 上架 操作: 下架申请 */}
-          {/* {record.status === 2
+          )}
+
+          {/* 可视化加工标签 发布 */}
+          {record.isVisual === 1 
+          && record.status === 2 
           && record.isUsed === 0
-          && record.publish === 1
-          && <a href onClick={() => store.openModal({type: 0, id: record.id})}>下架申请</a>} */}
-
-          {/* 标签状态: 已发布 未使用 下架审批中 操作: 取消申请 */}
-          {/* {record.status === 2 && record.isUsed === 0 && record.publish === 3 && ( */}
-          {/* {record.status === 2 && record.isUsed === 0 && (
+          && (
             <Popconfirm
               placement="topRight"
-              title="确认取消申请？"
-              onConfirm={() => store.tagApply({
-                type: 3,
+              title="确认取消发布？"
+              onConfirm={() => store.updateTagStatus({
+                status: 1,
                 id: record.id,
               })}
             >
-              <a href>取消申请</a>
-            </Popconfirm>
-          )} */}
+              <a href>取消发布</a>
 
-          {/* 标签状态: 已发布 已使用 下架 操作: 上架申请 */}
-          {/* {record.status === 2
+            </Popconfirm>
+          )}
+
+          {/* 可视化加工标签 发布 已使用 */}
+          {record.status === 2
           && record.isUsed === 1
-          && record.publish === 0
-          && <a href onClick={() => store.openModal({type: 1, id: record.id})}>上架申请</a>} */}
+          && record.isVisual === 1
+          && <span className="disabled">取消发布</span>}
 
-          {/* 标签状态: 已发布 已使用 上架审批中 操作: 取消申请 */}
-          {/* {record.status === 2 && record.isUsed === 1 && record.publish === 2 && (
-            <Popconfirm
-              placement="topRight"
-              title="确认取消申请？"
-              onConfirm={() => store.tagApply({
-                type: 3,
-                id: record.id,
-              })}
-            >
-              <a href>取消申请</a>
-            </Popconfirm>
-          )} */}
-
-          {/* 标签状态: 已发布 已使用 上架 操作: 下架申请 */}
-          {/* {record.status === 2
-          && record.isUsed === 1
-          && record.publish === 1
-          && <a href onClick={() => store.openModal({type: 0, id: record.id})}>下架申请</a>} */}
-
-          {/* 标签状态: 已发布 已使用 下架审批中 操作: 取消申请 */}
-          {/* {record.status === 2 && record.isUsed === 1 && record.publish === 3 && (
-            <Popconfirm
-              placement="topRight"
-              title="确认取消申请？"
-              onConfirm={() => store.tagApply({
-                type: 3,
-                id: record.id,
-              })}
-            >
-              <a href>取消申请</a>
-            </Popconfirm>
-          )} */}
         </AuthBox>
       </div>
     ),

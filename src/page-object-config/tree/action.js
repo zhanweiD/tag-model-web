@@ -22,7 +22,7 @@ export default class Action extends Component {
    */
   @action.bound searchTree(data) {
     this.store.searchKey = data
-    this.store.getObjTree()
+    this.props.getTreeData()
   }
 
   /**
