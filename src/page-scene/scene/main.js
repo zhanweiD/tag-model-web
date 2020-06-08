@@ -1,11 +1,11 @@
 import {Component, Fragment} from 'react'
-import {action, toJS} from 'mobx'
+import {action} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {Spin, Modal, Button} from 'antd'
-import {DtGrid, DtNewCard} from '@dtwave/uikit'
+import {DtGrid} from '@dtwave/uikit'
 import * as navListMap from '../../common/navList'
 import {
-  Tag, NoData, AuthBox, Loading,
+  Tag, NoData, AuthBox, Loading, Card,
 } from '../../component'
 import {IconDel, IconEdit} from '../../icon-comp'
 
@@ -136,7 +136,7 @@ export default class Scene extends Component {
                               apiCount,
                               descr,
                             }, d) => (
-                              <DtNewCard 
+                              <Card 
                                 className="card"
                                 title={name}
                                 // eslint-disable-next-line no-underscore-dangle
