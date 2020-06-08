@@ -239,9 +239,9 @@ export default class SyncList extends Component {
                 <span className="table-action-line" />
                 {
                   !record.tagUsedCount ? (
-                    <Popconfiram placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
+                    <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
                       <a href>删除</a>
-                    </Popconfiram>
+                    </Popconfirm>
                   ) : <span className="disabled">删除</span>
                 }
                 <span className="table-action-line" />
