@@ -49,7 +49,7 @@ export default class Page extends Component {
     $(this.resultDom).flexigrid({
       width: '100%',
       minwidth: 50,
-      height: $(this.resultDomBox).height() - 50,
+      height: $(this.resultDomBox).height() - 88,
     })
   }
 
@@ -58,7 +58,7 @@ export default class Page extends Component {
   }
 
   @action setHeight = height => {
-    $(this.resultDom).parent('.bDiv').height(height - 50)
+    $(this.resultDom).parent('.bDiv').height(height - 88)
   }
 
   render() {
@@ -119,12 +119,12 @@ export default class Page extends Component {
           {
             this.loading && <div style={{height: '100%'}} />
           }
-          {/* {!this.loading
+          {!this.loading
             ? (
               <div className="download-area">
-                <div className="left">
+                {/* <div className="left">
                   <Button 
-                    disabled={!_store.isDownload}
+                    // disabled={!_store.isDownload}
                     onClick={this.downloadResult} 
                     className="download-result"
                   >
@@ -133,8 +133,8 @@ export default class Page extends Component {
                   <span className="ml16">
                   下载的文件编码格式为UTF-8
                   </span>
-                </div>
-                <div className="right">
+                </div> */}
+                <div style={{float: 'right', paddingRight: '5px'}}>
                   <Pagination 
                     current={this.currentPage} 
                     pageSize={pageSize} 
@@ -145,7 +145,7 @@ export default class Page extends Component {
               </div>
             )
             : null
-          } */}
+          }
         </Spin>
       </div>
     )

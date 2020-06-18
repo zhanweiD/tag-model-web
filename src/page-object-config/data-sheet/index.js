@@ -82,7 +82,7 @@ export default class DataSheet extends Component {
                 isButton={false}
               >
                 <span className="table-action-line" />
-                <a href onClick={() => this.openTagConfig(record)}>标签配置</a>
+                <a href onClick={() => this.openTagConfig(record)}>生成标签</a>
               </AuthBox>
             ) : null
           }

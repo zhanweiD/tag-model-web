@@ -211,9 +211,15 @@ activeColor = #5182e4;
       }
     }
 
+    .result-box::-webkit-scrollbar {
+      display:none
+    }
+
     .result-box{
       height: 100%;
       font-size: 12px;
+      overflow-y: auto;
+      
       .ant-spin-container{
         padding: 0 8px;
         width: 100%;

@@ -122,8 +122,8 @@ export default class FieldList extends Component {
             {/* <span className="table-action-line" /> */}
             {
               record.status === 2 
-                ? <span className="disabled">标签配置</span> 
-                : <a href onClick={() => this.openModal(record)}>标签配置</a>
+                ? <span className="disabled">生成标签</span> 
+                : <a href onClick={() => this.openModal(record)}>生成标签</a>
             }
           </AuthBox>
         </div>
