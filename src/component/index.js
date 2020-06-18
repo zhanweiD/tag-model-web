@@ -15,6 +15,7 @@ import AuthBox from './auth-box'
 import OmitTooltip from './omit-tooltip'
 import StatusImg from './status-img'
 import ModalStotageDetail from './modal-stroage-detail'
+import Card from './dt-card'
 import projectProvider from './project-provider'
 
 export {
@@ -37,4 +38,5 @@ export {
   StatusImg,
   ModalStotageDetail,
   projectProvider,
+  Card,
 }

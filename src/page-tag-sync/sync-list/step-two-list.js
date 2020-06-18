@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import {observer} from 'mobx-react'
 import {observable, action, toJS} from 'mobx'
-import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
-import { Table, Input, Button } from 'antd';
+import {Form} from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
+import {Table, Input, Button, Tooltip} from 'antd'
 
 const EditableContext = React.createContext()
 const {Search} = Input
@@ -31,7 +31,9 @@ class EditableCell extends Component {
     }
 
     this.form = form
-    
+
+    const text = record.columnName || record.enName
+
     return (
       <td {...restProps}>
         {editing ? (
@@ -55,11 +57,16 @@ class EditableCell extends Component {
                 },
               ],
               validateFirst: true,
-              initialValue: record.columnName || record.enName,
+              initialValue: text,
             })(<Input ref={node => (this.input = node)} />)}
           </Form.Item>
         ) : (
-          <span>{record.columnName || record.enName}</span>
+          <span> 
+            {
+              text.length > 10 
+                ? <Tooltip placement="top" title={text}>{`${text.slice(0, 10)}...`}</Tooltip>
+                : (text)}
+          </span>
         )}
       </td>
     )
@@ -88,10 +95,12 @@ export default class SyncTagList extends Component {
     title: '标签名称',
     dataIndex: 'name',
     width: 150,
+    render: text => (text.length > 8 ? <Tooltip placement="top" title={text}>{`${text.slice(0, 8)}...`}</Tooltip> : text),
   }, {
     title: '唯一标识',
     dataIndex: 'enName',
     width: 150,
+    render: text => (text.length > 10 ? <Tooltip placement="top" title={text}>{`${text.slice(0, 10)}...`}</Tooltip> : text),
   }, {
     title: '数据类型',
     width: 80,
@@ -191,8 +200,8 @@ export default class SyncTagList extends Component {
       const arr = toJS(tableData).map(d => {
         if (d.id === data.id) {
           return {
-            columnName: data.columnName,
             ...d,
+            columnName: data.columnName,
           }
         }
         return d
