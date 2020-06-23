@@ -5,8 +5,10 @@ import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {action} from 'mobx'
 import Trend from './trend'
+import Distribution from './distribution'
 
 import store from './store'
+import './distribution.styl'
 
 @observer
 export default class TagAnalyze extends Component {
@@ -23,8 +25,9 @@ export default class TagAnalyze extends Component {
     const {tagId} = this.props
 
     return (
-      <div className="p16 pt8">
+      <div className="p16 pt8 p-r">
         <h3 className="chart-title">标签分布</h3>
+        <Distribution store={store} />
         <Trend store={store} />
       </div>
     )
