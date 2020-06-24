@@ -4,8 +4,8 @@
 import {Component, Fragment} from 'react'
 import {action} from 'mobx'
 import {observer, inject} from 'mobx-react'
-import { DownOutlined } from '@ant-design/icons';
-import { Popconfirm, Badge, Dropdown, Menu } from 'antd';
+import {DownOutlined} from '@ant-design/icons'
+import {Popconfirm, Badge, Dropdown, Menu} from 'antd'
 import {Link} from 'react-router-dom'
 import * as navListMap from '../../common/navList'
 import {Time} from '../../common/util'
@@ -28,7 +28,7 @@ const navList = [
   {text: navListMap.project.text},
 ]
 
-@inject('frameChange')
+// @inject('frameChange')
 @observer
 export default class ProjectList extends Component {
   menu = data => (
@@ -156,8 +156,8 @@ export default class ProjectList extends Component {
 
   componentWillMount() {
     // 面包屑设置
-    const {frameChange} = this.props
-    frameChange('nav', navList)
+    // const {frameChange} = this.props
+    // frameChange('nav', navList)
 
     // 页面初始化
     store.getCuser() // 获取项目所有者列表

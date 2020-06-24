@@ -22,7 +22,7 @@ const navList = [
   navListMap.tagDetail,
 ]
 
-@inject('frameChange')
+// @inject('frameChange')
 @observer
 export default class TagManagement extends Component {
   constructor(props) {
@@ -33,8 +33,8 @@ export default class TagManagement extends Component {
 
   componentWillMount() {
     // 面包屑设置
-    const {frameChange} = this.props
-    frameChange('nav', navList)
+    // const {frameChange} = this.props
+    // frameChange('nav', navList)
 
     store.getDetail()
   }

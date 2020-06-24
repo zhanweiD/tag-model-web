@@ -33,7 +33,7 @@ const navList = [
   {text: navListMap.tagModel.text},
 ]
 
-@inject('frameChange')
+// @inject('frameChange')
 @observer
 class TagList extends Component {
   constructor(props) {
@@ -198,9 +198,9 @@ class TagList extends Component {
   }
 
   componentWillMount() {
-    // 面包屑设置
-    const {frameChange} = this.props
-    frameChange('nav', navList)
+    // // 面包屑设置
+    // const {frameChange} = this.props
+    // frameChange('nav', navList)
 
     if (store.projectId) {
       store.getAuthCode()

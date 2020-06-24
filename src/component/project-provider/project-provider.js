@@ -41,8 +41,8 @@ export default PageComponent => {
         onClick: () => this.openModal(),
         text: '初始化',
       }
-  
-      if (spaceInfo && spaceInfo.finish && spaceInfo.projectList.length) {
+      // console.log(spaceInfo, spaceInfo.finish, spaceInfo.projectList.length)
+      if (spaceInfo && spaceInfo.finish && !spaceInfo.projectList.length) {
         return (
           // <NoData
           //   {...noProjectDataConfig}

@@ -23,7 +23,7 @@ export default class Page extends Component {
   render() {
     return (
       <Router>
-        <Frame navList={navList}>
+        <Frame navList={navList} roductCode="stream" theme="ocean" logoText="数据开发" showAllProduct showSider showHeaderNav>
           <Switch>
             <Route path="/object-model/:typeCode?/:objId?/:tabId?" component={ObjectModel} />
             <Route

@@ -9,7 +9,7 @@ import {SearchForm} from './search-form'
 import store from './store-scene-tags'
 
 
-@inject('frameChange')
+// @inject('frameChange')
 @observer
 export default class Scene extends Component {
   constructor(props) {
@@ -61,14 +61,14 @@ export default class Scene extends Component {
   }]
 
   componentWillMount() {
-    const {frameChange} = this.props
-    frameChange('nav', [
-      navListMap.tagCenter,
-      navListMap.application,
-      navListMap.scene,
-      {url: `/asset-tag/index.html#/scene/${store.sceneId}`, text: '场景详情'},
-      {text: '标签列表'},
-    ])
+    // const {frameChange} = this.props
+    // frameChange('nav', [
+    //   navListMap.tagCenter,
+    //   navListMap.application,
+    //   navListMap.scene,
+    //   {url: `/asset-tag/index.html#/scene/${store.sceneId}`, text: '场景详情'},
+    //   {text: '标签列表'},
+    // ])
     
     store.getList()
   }

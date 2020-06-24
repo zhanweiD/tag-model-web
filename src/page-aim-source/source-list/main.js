@@ -21,7 +21,7 @@ const navList = [
   {text: navListMap.aimSource.text},
 ]
 
-@inject('frameChange')
+// @inject('frameChange')
 @observer
 class SourceList extends Component {
   constructor(props) {
@@ -80,8 +80,8 @@ class SourceList extends Component {
 
   componentWillMount() {
     // 面包屑设置
-    const {frameChange} = this.props
-    frameChange('nav', navList)
+    // const {frameChange} = this.props
+    // frameChange('nav', navList)
     if (store.projectId) {
       store.getObjList()
       this.initData()

@@ -4,8 +4,8 @@
 import {Component, Fragment} from 'react'
 import {action} from 'mobx'
 import {observer, Provider, inject} from 'mobx-react'
-import { DownOutlined } from '@ant-design/icons';
-import { Popconfirm, Dropdown, Menu } from 'antd';
+import {DownOutlined} from '@ant-design/icons'
+import {Popconfirm, Dropdown, Menu} from 'antd'
 import {Link} from 'react-router-dom'
 
 import * as navListMap from '../../common/navList'
@@ -34,7 +34,7 @@ const navList = [
   {text: navListMap.schemaList.text},
 ]
 
-@inject('frameChange')
+// @inject('frameChange')
 @observer
 class SchemaList extends Component {
   constructor(props) {
@@ -219,8 +219,8 @@ class SchemaList extends Component {
 
   componentWillMount() {
     // 面包屑设置
-    const {frameChange} = this.props
-    frameChange('nav', navList)
+    // const {frameChange} = this.props
+    // frameChange('nav', navList)
 
     if (this.projectId) {
       this.store.getObjList()
