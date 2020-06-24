@@ -30,7 +30,7 @@ const navList = [
   navListMap.objectDetail,
 ]
 
-@inject('frameChange')
+// @inject('frameChange')
 @observer
 export default class ObjectDetail extends Component {
   constructor(props) {
@@ -43,8 +43,8 @@ export default class ObjectDetail extends Component {
 
   componentWillMount() {
     // 面包屑设置
-    const {frameChange} = this.props
-    frameChange('nav', navList)
+    // const {frameChange} = this.props
+    // frameChange('nav', navList)
     this.getInitData()
   }
 

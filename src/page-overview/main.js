@@ -53,7 +53,7 @@ export default class Overview extends Component {
     ]
     return (
       <Router>
-        <Frame navList={navList}>
+        <Frame navList={navList} roductCode="stream" theme="ocean" logoText="数据开发" showAllProduct showSider showHeaderNav>
           <div>
             <div className="content-header">总览</div>
             <div className="page-overview">

@@ -8,6 +8,8 @@ import {
 } from 'react-router-dom'
 import * as dict from './common/dict'
 
+import Frame from './frame'
+
 import Approval from './page-approval'
 import Market from './page-market'
 import ObjectConfig from './page-object-config'
@@ -28,7 +30,6 @@ const njkData = {
 }
 
 window.njkData = njkData
-
 
 export default class Entry extends React.Component {
   render() {
@@ -52,7 +53,7 @@ export default class Entry extends React.Component {
 
           <Redirect to="/overview" />
         </Switch>
-      </Router>
+      </Router>      
     )
   }
 }

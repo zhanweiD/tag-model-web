@@ -24,7 +24,7 @@ const navList = [
   navListMap.tagDetail,
 ]
 
-@inject('frameChange')
+// @inject('frameChange')
 @observer
 export default class TagDetail extends Component {
   constructor(props) {
@@ -34,9 +34,9 @@ export default class TagDetail extends Component {
   }
   
   componentWillMount() {
-    // 面包屑设置
-    const {frameChange} = this.props
-    frameChange('nav', navList)
+    // // 面包屑设置
+    // const {frameChange} = this.props
+    // frameChange('nav', navList)
 
     store.getTagBaseDetail()
   }

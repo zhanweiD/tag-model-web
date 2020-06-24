@@ -21,7 +21,7 @@ const navList = [
   {text: navListMap.scene.text},
 ]
 
-@inject('frameChange')
+// @inject('frameChange')
 @observer
 class Scene extends Component {
   constructor(props) {
@@ -32,8 +32,8 @@ class Scene extends Component {
 
   componentWillMount() {
     // 面包屑设置
-    const {frameChange} = this.props
-    frameChange('nav', navList)
+    // const {frameChange} = this.props
+    // frameChange('nav', navList)
 
     if (store.projectId) {
       store.getList()

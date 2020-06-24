@@ -1,8 +1,8 @@
 import {Component, Fragment} from 'react'
 import {action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
-import { EditOutlined } from '@ant-design/icons';
-import { Tabs, Button, Spin, Alert } from 'antd';
+import {EditOutlined} from '@ant-design/icons'
+import {Tabs, Button, Spin, Alert} from 'antd'
 
 import * as navListMap from '../../common/navList'
 import {Time} from '../../common/util'
@@ -25,7 +25,7 @@ const navList = [
   {text: navListMap.sceneDetail.text},
 ]
 
-@inject('frameChange')
+// @inject('frameChange')
 @observer
 export default class SceneDetail extends Component {
   constructor(props) {
@@ -39,8 +39,8 @@ export default class SceneDetail extends Component {
 
   componentWillMount() {
     // 面包屑设置
-    const {frameChange} = this.props
-    frameChange('nav', navList)
+    // const {frameChange} = this.props
+    // frameChange('nav', navList)
    
     if (store.projectId) {
       store.getDetail()
@@ -124,10 +124,13 @@ export default class SceneDetail extends Component {
                 <span>{name}</span>
                 <AuthBox code="asset_tag_project_occ_operator" myFunctionCodes={store.functionCodes} isButton={false}>
                   {
-                    !used && <EditOutlined
-                      className="ml8"
-                      onClick={this.sceneDetailVisible}
-                      style={{color: 'rgba(0,0,0, .45)'}} />
+                    !used && (
+                      <EditOutlined
+                        className="ml8"
+                        onClick={this.sceneDetailVisible}
+                        style={{color: 'rgba(0,0,0, .45)'}}
+                      />
+                    )
                   }
                 </AuthBox>
               </Fragment>
@@ -157,6 +160,6 @@ export default class SceneDetail extends Component {
         }
        
       </div>
-    );
+    )
   }
 }

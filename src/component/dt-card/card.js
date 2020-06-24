@@ -1,7 +1,7 @@
 import {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-import {Icon} from 'antd'
+import {RightOutlined} from '@ant-design/icons'
 
 export default class Card extends Component {
   static propTypes = {
@@ -138,7 +138,7 @@ export default class Card extends Component {
 
         {/* rightArrow */}
         {
-          link ? <Icon type="right" className="hover-style" /> : null
+          link ? <RightOutlined className="hover-style" /> : null
         }    
       </div>
     )

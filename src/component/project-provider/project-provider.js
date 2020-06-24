@@ -24,7 +24,7 @@ export default PageComponent => {
         code: 'asset_tag_project_add',
         noAuthText: '没有任何项目',
       }
-  
+      // console.log(spaceInfo, spaceInfo.finish, spaceInfo.projectList.length)
       if (spaceInfo && spaceInfo.finish && !spaceInfo.projectList.length) {
         return (
           <NoData

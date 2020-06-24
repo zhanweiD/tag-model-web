@@ -12,7 +12,7 @@ export default class SyncResult extends Component {
   render() {
     return (
       <Router>
-        <Frame page="space" pageUrl="/sync-result">
+        <Frame page="space" pageUrl="/sync-result" roductCode="stream" theme="ocean" logoText="数据开发" showAllProduct showSider showHeaderNav showProject>
           <Switch>
             <Route exact strict path="/sync-result" component={List} />
             <Route
