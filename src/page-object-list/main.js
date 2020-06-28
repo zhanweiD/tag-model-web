@@ -26,7 +26,7 @@ export default class Page extends Component {
   render() {
     return (
       <Router>
-        <Frame navList={navList} roductCode="stream" theme="ocean" logoText="数据开发" showAllProduct showSider showHeaderNav>
+        <Frame navList={navList} productCode="stream" theme="ocean" logoText="数据开发" showAllProduct showSider showHeaderNav>
           <Switch>
             <Route exact path={`/${selfUrl}/detail/:typeCode/:objId`} component={ObjectDetail} />
             <Route exact path={`/${selfUrl}`} component={ObjectList} />

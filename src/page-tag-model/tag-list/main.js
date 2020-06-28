@@ -38,8 +38,9 @@ const navList = [
 class TagList extends Component {
   constructor(props) {
     super(props)
-    const {spaceInfo} = window
-    store.projectId = spaceInfo && spaceInfo.projectId
+    // const {spaceInfo} = window
+    // store.projectId = spaceInfo && spaceInfo.projectId
+    store.projectId = props.projectId
   }
 
   columns = [{
@@ -273,7 +274,6 @@ class TagList extends Component {
       tableLoading,
       drawerTagConfigType,
       batchConfigVisible,
-
       publishRowKeys,
     } = store
 
@@ -309,6 +309,8 @@ class TagList extends Component {
         >
         创建标签
         </AuthBox>, 
+
+        // <Button className="mr8" type="primary" onClick={() => store.openDrawer('add')}>创建标签</Button>,
         <Button className="mr8" onClick={() => store.openBatchConfig()}>批量发布</Button>,
         <Button onClick={() => store.openBatchConfig()}>批量绑定</Button>,
 
@@ -322,14 +324,16 @@ class TagList extends Component {
       <Provider bigStore={store}>
         <div className="page-tag-list">
           <div className="content-header">{navListMap.tagModel.text}</div>
-          {
+
+          <div className="list-content"><ListContent {...listConfig} /></div>
+          {/* {
             !list.length && !this.isSearch() ? (
               <NoData
                 isLoading={tableLoading}
                 {...noDataConfig}
               />
             ) : <div className="list-content"><ListContent {...listConfig} /></div>
-          }
+          } */}
 
           <ModalTagApply store={store} />
           <DrawerCreate store={store} />

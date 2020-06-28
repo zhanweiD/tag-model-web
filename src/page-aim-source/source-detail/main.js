@@ -31,8 +31,9 @@ export default class SourceDetail extends Component {
     const {match} = props
     store.sourceId = match.params.id 
     
-    const {spaceInfo} = window
-    store.projectId = spaceInfo && spaceInfo.projectId
+    // const {spaceInfo} = window
+    // store.projectId = spaceInfo && spaceInfo.projectId
+    store.projectId = props.projectId
   }
 
   @observable tabId = 1 // 当前详情tabID 

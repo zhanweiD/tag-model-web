@@ -14,7 +14,7 @@ export default class Scene extends Component {
   render() {
     return (
       <Router>
-        <Frame page="space" pageUrl="/scene" roductCode="stream" theme="ocean" logoText="数据开发" showAllProduct showSider showHeaderNav showProject>
+        <Frame page="space" pageUrl="/scene" productCode="stream" theme="ocean" logoText="数据开发" showAllProduct showSider showHeaderNav showProject>
           <Switch>
             <Route exact path="/scene" component={SceneList} />
             <Route exact path="/scene/:sceneId" component={SceneDetail} /> 

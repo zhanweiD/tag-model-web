@@ -30,8 +30,9 @@ export default class SyncDetail extends Component {
     const {match} = props
     store.syncId = match.params.id 
     
-    const {spaceInfo} = window
-    store.projectId = spaceInfo && spaceInfo.projectId
+    // const {spaceInfo} = window
+    // store.projectId = spaceInfo && spaceInfo.projectId
+    store.projectId = props.projectId
   }
 
   componentWillMount() {

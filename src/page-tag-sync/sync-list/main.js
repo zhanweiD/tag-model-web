@@ -5,7 +5,6 @@ import {Button, Popconfirm} from 'antd'
 import {Link} from 'react-router-dom'
 import {ListContent, projectProvider} from '../../component'
 import {Time} from '../../common/util'
-import * as navListMap from '../../common/navList'
 import seach from './search'
 import DrawerAddSync from './drawer'
 import DrawerEditSync from './drawer-edit'
@@ -20,22 +19,11 @@ import {
 
 import store from './store'
 
-// 面包屑设置
-// eslint-disable-next-line no-underscore-dangle
-
-const navList = [
-  navListMap.tagCenter,
-  navListMap.tagSync, 
-  {text: navListMap.syncPlan.text},
-]
-
-// @inject('frameChange')
 @observer
 class SyncList extends Component {
   constructor(props) {
     super(props)
-    const {spaceInfo} = window
-    store.projectId = spaceInfo && spaceInfo.projectId
+    store.projectId = props.projectId
   }
 
   columns = [{

@@ -39,8 +39,8 @@ const navList = [
 class SchemaList extends Component {
   constructor(props) {
     super(props)
-    const {spaceInfo} = window
-    this.projectId = spaceInfo && spaceInfo.projectId
+    // const {spaceInfo} = window
+    this.projectId = props.projectId
 
     this.rootStore = new Store()
     
@@ -51,10 +51,10 @@ class SchemaList extends Component {
 
     this.drawerStore = drawerStore
     this.store = listStore
-    this.store.projectId = spaceInfo && spaceInfo.projectId
+    this.store.projectId = props.projectId
 
 
-    if (spaceInfo && spaceInfo.projectId) {
+    if (props.projectId) {
       listStore.getAuthCode()
     }
   }

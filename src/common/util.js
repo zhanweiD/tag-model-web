@@ -174,8 +174,9 @@ export const getDataTypeName = (code) => {
 
 
 export const codeInProduct = code => {
-  const functionCodes = window.productFunctionCode || []
-  return functionCodes.indexOf(code) > -1
+  // const functionCodes = window.productFunctionCode || []
+  // return functionCodes.indexOf(code) > -1
+  return true
 }
 
 //*------------------------------ 组件类 (返回组件) ------------------------------*//

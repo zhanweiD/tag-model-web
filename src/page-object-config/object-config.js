@@ -18,9 +18,10 @@ class ObjectConfig extends Component {
   constructor(props) {
     super(props)
     const {match} = props
-    const {spaceInfo} = window
-
-    store.projectId = spaceInfo && spaceInfo.projectId
+    // const {spaceInfo} = window
+    // store.projectId = spaceInfo && spaceInfo.projectId
+    store.projectId = props.projectId
+    
     store.typeCode = match.params.typeCode || '4'
     store.objId = match.params.objId
     store.tabId = match.params.tabId || 'view' // 当前详情tabID；默认数据视图

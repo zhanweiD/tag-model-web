@@ -13,17 +13,17 @@ import ObjectModel from './object-model'
 // 面包屑设置
 // eslint-disable-next-line no-underscore-dangle
 
-const navList = [
-  navListMap.tagCenter,
-  navListMap.object,
-  navListMap.objectModel,
-]
+// const navList = [
+//   navListMap.tagCenter,
+//   navListMap.object,
+//   navListMap.objectModel,
+// ]
 
 export default class Page extends Component {
   render() {
     return (
       <Router>
-        <Frame navList={navList} roductCode="stream" theme="ocean" logoText="数据开发" showAllProduct showSider showHeaderNav>
+        <Frame productCode="stream" theme="ocean" logoText="数据开发" showAllProduct showSider showHeaderNav>
           <Switch>
             <Route path="/object-model/:typeCode?/:objId?/:tabId?" component={ObjectModel} />
             <Route

@@ -13,7 +13,7 @@ export default class Project extends Component {
   render() {
     return (
       <Router>
-        <Frame roductCode="stream" theme="ocean" logoText="数据开发" showAllProduct showSider showHeaderNav>
+        <Frame productCode="stream" theme="ocean" logoText="数据开发" showAllProduct showSider showHeaderNav>
           <Switch>
             <Route exact path="/project/:projectId" component={ProjectConfig} />
             <Route exact path="/project" component={ProjectList} />
