@@ -8,6 +8,9 @@ import {useEffect, useState, Fragment} from 'react'
 import OnerFrame from '@dtwave/oner-frame'
 import NoData from '../no-data'
 import io from './io'
+import {
+  changeToOptions,
+} from '../../common/util'
 import ConfigModal from './configModal'
 // import Loading from '../loading'
 
@@ -30,11 +33,22 @@ export default PageComponent => {
       changeHasInit(res)
     }
 
-    async function getWorkspace(id) {
-      const res = await io.getWorkspace({
+    // async function getWorkspace(id) {
+    //   const res = await io.getWorkspace({
+    //     projectId: id,
+    //   })
+    //   changeWorkspace(res)
+    // }
+
+    async function getWorkspaceList(id) {
+      const res = await io.getWorkspaceList({
         projectId: id,
       })
-      changeWorkspace(res)
+      let workspaceList
+      if (res) {
+        workspaceList = changeToOptions(res || [])('workspaceName', 'workspaceId')
+      }
+      changeWorkspace(workspaceList)
     }
 
 
@@ -55,7 +69,7 @@ export default PageComponent => {
     const noDataConfig = {
       btnText: '去初始化',
       onClick: () => {
-        getWorkspace(projectId)
+        getWorkspaceList(projectId)
         changeVisible(true)
       },
       text: '初始化',
