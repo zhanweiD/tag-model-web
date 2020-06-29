@@ -206,7 +206,7 @@ export function getPieOpt(chartsCount, data, legendName) {
     tooltip: {
       formatter: params => {
         const info = params.name.split(' ')
-        return `标签名称:${info[0]}<br />标签占比:${info[1]}<br />标签数量:${info[2]}`
+        return `标签名称: ${info[0]}<br />标签占比: ${info[1]}<br />标签数量: ${info[2]}`
       },
     },
     legend: {
