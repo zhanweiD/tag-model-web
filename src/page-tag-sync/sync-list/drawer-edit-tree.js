@@ -1,6 +1,6 @@
 import {Component, Fragment} from 'react'
 import {observer} from 'mobx-react'
-import { RightOutlined } from '@ant-design/icons';
+import {RightOutlined} from '@ant-design/icons'
 import {Tree, Checkbox, Button} from 'antd'
 import {
   observable, toJS, action, computed,
@@ -92,7 +92,7 @@ export default class SyncTagTree extends Component {
     }
 
     // 选择的标签数据
-    this.store.checkedTagData = checkedNodes.filter(d => d.props.tagData).map(d => d.props.tagData)
+    this.store.checkedTagData = checkedNodes.filter(d => d.tagData).map(d => d.tagData)
     this.store.checkedKeys.replace(checkedKeys)
   }
 
@@ -250,6 +250,6 @@ export default class SyncTagTree extends Component {
           />
         </div>
       </div>
-    );
+    )
   }
 }

@@ -6,7 +6,7 @@ import {observer} from 'mobx-react'
 import {
   observable, action, computed, toJS,
 } from 'mobx'
-import { RightOutlined } from '@ant-design/icons';
+import {RightOutlined} from '@ant-design/icons'
 import {Tree, Checkbox, Button} from 'antd'
 import {NoBorderInput, Loading, OmitTooltip} from '../../../component'
 import {IconChakan} from '../../../icon-comp'
@@ -87,7 +87,7 @@ export default class TagTree extends Component {
     }
 
     // 选择的标签数据
-    this.store.checkedTagData = checkedNodes.filter(d => d.props.tagData).map(d => d.props.tagData)
+    this.store.checkedTagData = checkedNodes.filter(d => d.tagData).map(d => d.tagData)
     this.store.checkedKeys.replace(checkedKeys)
   }
 
@@ -220,6 +220,6 @@ export default class TagTree extends Component {
           />
         </div>
       </div>
-    );
+    )
   }
 }

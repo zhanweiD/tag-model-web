@@ -4,7 +4,7 @@
 import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
 import {
-  observable, action,
+  observable, action, toJS,
 } from 'mobx'
 import {Tree} from 'antd'
 import {NoBorderInput, Loading, OmitTooltip} from '../../component'
@@ -44,7 +44,7 @@ export default class CateTree extends Component {
     const {onCheck} = this.props
     const {checkedNodes} = e
     this.checkedKeys = checkedKeys
-    const selectNodes = checkedNodes.filter(d => d.props.objectData).map(d => d.props.objectData)
+    const selectNodes = checkedNodes.filter(d => d.objectData).map(d => d.objectData)
 
     onCheck(selectNodes)
   }
@@ -69,7 +69,7 @@ export default class CateTree extends Component {
         <TreeNode
           title={<OmitTooltip maxWidth={120} text={item.name} />}
           key={item.aId}
-          dataRef={item}
+          dataRef={toJS(item)}
           selectable={false}
         >
           {this.renderTreeNodes(item.children)}
@@ -82,7 +82,7 @@ export default class CateTree extends Component {
         key={item.aId}
         title={<OmitTooltip maxWidth={120} text={item.name} />}
         selectable={false}
-        objectData={item}
+        objectData={toJS(item)}
         disableCheckbox={listDataIds.includes(item.aId)}
       />
     )
