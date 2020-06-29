@@ -53,7 +53,10 @@ export default PageComponent => {
 
 
     async function initProject(params) {
-      const res = await io.initProject(params)
+      const res = await io.initProject({
+        ...params,
+        projectId,
+      })
 
       if (res) {
         changeVisible(false)
