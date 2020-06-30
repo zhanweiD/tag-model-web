@@ -16,8 +16,8 @@ class Frame extends Component {
     return (
       <ConfigProvider locale={zhCn}>
         <OnerFrame {...this.props}>
-          <Layout className="ide-body">
-            <Content className="ide-content">{me.props.children}</Content>
+          <Layout>
+            <Content className="tag-content">{me.props.children}</Content>
           </Layout>
         </OnerFrame>
       </ConfigProvider>
