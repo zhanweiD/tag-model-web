@@ -44,7 +44,7 @@ export default PageComponent => {
       const res = await io.getWorkspaceList({
         projectId: id,
       })
-      let workspaceList
+      let workspaceList = []
       if (res) {
         workspaceList = changeToOptions(res || [])('workspaceName', 'workspaceId')
       }
