@@ -6,6 +6,7 @@ import {
 
 import Frame from '../frame'
 import WorkspaceConfig from './workspace-config'
+// import WorkspaceConfig from './workspace-config/main-1'
 
 @observer
 export default class Page extends Component {

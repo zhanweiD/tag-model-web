@@ -26,6 +26,7 @@ export default PageComponent => {
       text: '没有任何项目，去创建项目吧！',
     }
 
+    // 判断项目是否初始化
     async function judgeInit(id) {
       const res = await io.judgeInit({
         projectId: id,
@@ -33,13 +34,7 @@ export default PageComponent => {
       changeHasInit(res)
     }
 
-    // async function getWorkspace(id) {
-    //   const res = await io.getWorkspace({
-    //     projectId: id,
-    //   })
-    //   changeWorkspace(res)
-    // }
-
+    // 获取环境列表
     async function getWorkspaceList(id) {
       const res = await io.getWorkspaceList({
         projectId: id,
@@ -51,7 +46,7 @@ export default PageComponent => {
       changeWorkspace(workspaceList)
     }
 
-
+    // 初始化项目
     async function initProject(params) {
       const res = await io.initProject({
         ...params,
