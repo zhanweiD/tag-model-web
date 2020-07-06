@@ -156,7 +156,7 @@ export default class Tree extends Component {
             // 2. 刷新类目树
             t.getTreeData()
             // 3.改变url
-            history.push(`/object-model/${store.typeCode}`)
+            history.push(`/manage/object-model/${store.typeCode}`)
           } else {
             // 删除节点非当前选中节点
             // 1. 刷新类目树
@@ -189,7 +189,7 @@ export default class Tree extends Component {
     const {history} = this.props
     // 刷新对象详情
     this.bigStore.updateDetailKey = Math.random()
-    history.push(`/object-model/${store.typeCode}/${selectedKeys[0]}/${this.bigStore.tabId}`)
+    history.push(`/manage/object-model/${store.typeCode}/${selectedKeys[0]}/${this.bigStore.tabId}`)
   }
 
   /**

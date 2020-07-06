@@ -1,29 +1,25 @@
-import {Component} from 'react'
-import {observer} from 'mobx-react'
-import {
-  HashRouter as Router, Route, Switch,
-} from 'react-router-dom'
+/**
+ * @description  后台配置
+ */
+import {useEffect} from 'react'
+import {Route, Switch, Redirect} from 'react-router-dom'
+import OnerFrame from '@dtwave/oner-frame' 
 
-import Frame from '../frame'
 import WorkspaceConfig from './workspace-config'
-// import WorkspaceConfig from './workspace-config/main-1'
 
-@observer
-export default class Page extends Component {
-  render() {
-    return (
-      <Router>
-        <Frame page="space" productCode="stream" theme="ocean" logoText="数据开发" showAllProduct showSider showHeaderNav showProject>
-          <Switch>
-            <Route exact path="/workspace-config" component={WorkspaceConfig} />
-            <Route
-              render={() => {
-                window.location.href = '/404'
-              }}
-            />
-          </Switch>
-        </Frame>
-      </Router>
-    )
-  }
+const prePath = '/config'
+
+export default () => {
+  const ctx = OnerFrame.useFrame()
+  useEffect(() => {
+    ctx.querySiderMenus({
+      productCode: 'tag_config',
+    })
+  }, [])
+  return (
+    <Switch>
+      <Route exact path={`${prePath}/environment`} component={WorkspaceConfig} />
+      <Redirect strict to={`${prePath}/environment`} />
+    </Switch>
+  )
 }

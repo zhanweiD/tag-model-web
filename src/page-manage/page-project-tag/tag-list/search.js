@@ -101,7 +101,7 @@ export default class Search extends Component {
           />
         </div>
         <div className="advanced-search">
-          <div className="FBH">
+          <div className="FBH mb16">
             <div>
               <span className="mr8">所属项目</span>
               <Select 

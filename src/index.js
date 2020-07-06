@@ -13,6 +13,7 @@ import Overview from './page-overview'
 import Manage from './page-manage'
 import Process from './page-process'
 import Common from './page-common'
+import Config from './page-config'
 
 const njkData = {
   dict,
@@ -33,7 +34,7 @@ function Entry() {
     <Frame 
       productCode="be_tag" 
       theme="ocean" 
-      logoText="标签模型" 
+      logoText="标签中心" 
       showAllProduct 
       showSider
       showHeaderNav 
@@ -53,6 +54,9 @@ function Entry() {
 
           {/* 公共模块 */}
           <Route path="/common" component={Common} />
+
+          {/* 公共模块 */}
+          <Route path="/config" component={Config} />
 
           <Redirect to="/overview" />
         </Switch>

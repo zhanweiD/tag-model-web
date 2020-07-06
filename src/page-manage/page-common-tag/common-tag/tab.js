@@ -12,6 +12,7 @@ class CommonTag extends Component {
   render() {
     return (
       <div className="theme-bg">
+        <div className="content-header-noBorder">公共标签</div>
         <Tabs defaultActiveKey="1" className="comp-tab">
           <TabPane tab="标签列表" key="1">
             <TagList {...this.props} />

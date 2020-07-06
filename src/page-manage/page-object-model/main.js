@@ -70,7 +70,7 @@ class ObjectModel extends Component {
         {
           codeInProduct('asset_tag_obj_model') ? (
             <div className="page-object-modal">
-              <div className="content-header">对象模型</div>
+              <div className="content-header-noBorder">对象模型</div>
            
               <TabRoute {...tabConfig} />
               <div className="object-modal-content">

@@ -12,7 +12,8 @@ const {TabPane} = Tabs
 class ProjectTag extends Component {
   render() {
     return (
-      <div>
+      <div className="theme-bg">
+        <div className="content-header-noBorder">项目标签</div>
         <Tabs defaultActiveKey="1" className="comp-tab">
           <TabPane tab="标签列表" key="1">
             <TagList {...this.props} />

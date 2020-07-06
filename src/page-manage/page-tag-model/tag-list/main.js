@@ -69,7 +69,7 @@ class TagList extends Component {
   {
     key: 'action',
     title: '操作',
-    width: 150,
+    width: 180,
     render: (text, record) => (
       <div className="FBH FBAC">
         <AuthBox

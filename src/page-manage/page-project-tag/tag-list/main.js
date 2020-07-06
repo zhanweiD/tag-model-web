@@ -103,7 +103,7 @@ export default class TagList extends Component {
       render: (text, record) => (
         <div className="FBH FBAC">
           {/* eslint-disable-next-line no-underscore-dangle */}
-          <a href={`${window.__keeper.pathHrefPrefix}/tag-model/${record.id}`}>标签详情</a>
+          <a href={`${window.__keeper.pathHrefPrefix}/manage/tag-maintain/${record.id}`}>标签详情</a>
           <AuthBox 
             code="asset_tag_project_tag_search_add_occ" 
             myFunctionCodes={store.functionCodes}
@@ -155,7 +155,7 @@ export default class TagList extends Component {
 
   // 跳转到标签管理
   goTagManager = () => {
-    window.location.href = `${window.__keeper.pathHrefPrefix || '/'}/tag-model`
+    window.location.href = `${window.__keeper.pathHrefPrefix || '/'}/manage/tag-maintain`
   }
 
   render() {

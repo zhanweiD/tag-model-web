@@ -76,7 +76,7 @@ export default class BatchConfig extends Component {
         {...drawerConfig}
       >
         <div className="tag-config-batch">
-          <Steps current={currentStep} size="small" className="tag-config-step">
+          <Steps current={currentStep} className="tag-config-step">
             <Step title="选择标签" />
             <Step title="绑定字段" />
           </Steps>

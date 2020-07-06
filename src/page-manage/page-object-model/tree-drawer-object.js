@@ -181,8 +181,8 @@ class ModalObject extends Component {
       <Drawer
         {...drawerConfig}
       >
-        <Form>
-          <h3 className="mb24">基础信息</h3>
+        <Form style={{paddingBottom: '50px'}}>
+          <h4 className="mb24">基础信息</h4>
           <FormItem {...formItemLayout} label="对象名称">
             {getFieldDecorator('name', {
               initialValue: data.name,
@@ -271,7 +271,7 @@ class ModalObject extends Component {
             )
           }
 
-          <h3 className="mb24">主标签配置</h3>
+          <h4 className="mb24">主标签配置</h4>
           {
             typeCode === '4' ? (
               <Fragment>

@@ -52,7 +52,7 @@ export default class ObjectDetail extends Component {
       title: '确定移除对象？',
       onOk() {
         t.store.objId = undefined
-        history.push(`/object-config/${t.store.typeCode}`)
+        history.push(`/manage/object-config/${t.store.typeCode}`)
         t.store.removeObj(() => {
           t.store.getObjTree(() => {
             t.store.tabId = 'view'
