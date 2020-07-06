@@ -70,7 +70,7 @@ export default ({
     input: <antd.Input placeholder={placeholder || createInputPlaceholder(label)} {...rest} />,
     textArea: <antd.Input.TextArea rows={4} placeholder={placeholder || createInputPlaceholder(label)} {...rest} />,
     select: <SelectTypes label={label} placeholder={placeholder || createSelectPlaceholder(label)} options={options} {...rest} />,
-    rangePicker: <antd.DatePicker.RangePicker {...rest} />,
+    rangePicker: <antd.DatePicker.RangePicker {...rest} style={{width: '100%'}} />,
     selectTree: () => (
       options.length 
         ? (

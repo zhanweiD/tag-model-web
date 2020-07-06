@@ -1,15 +1,47 @@
 @import "./antd-cover.styl"
 
-
 .tag-content
   min-height calc(100vh - 48px)
   background #F4F6F9
+  // background #f0f2f5
 
 .box-border
   border 1px solid #E6EDF8
   border-radius 2px
   background #ffffff
-  
+
+/* header */
+.content-header
+  line-height 56px
+  font-size 16px
+  padding-left 16px
+  background #ffffff
+  color rgba(0,0,0, .85)
+  border-bottom 1px solid #E6EDF8
+
+/* 普通页面 start */
+.header-page
+  min-height calc(100vh - 138px)
+  margin 16px
+  background #ffffff
+  border 1px solid #E6EDF8
+  border-radius 2px
+
+.theme-bg 
+  background #F4F6F9
+  // background #f0f2f5
+
+.bgf
+  background #ffffff
+  // border-radius 2px
+
+.comp-tab
+  // background #ffffff
+  .ant-tabs-bar
+    margin-bottom 0
+    padding-left 16px
+    background #ffffff
+
 #root
   width 100%
   height 100%
@@ -43,6 +75,7 @@
       align-items center
       .info-v
         color: rgba(0, 0, 0, 0.65)
+
 
 
 // 饼图边上的表格样式
@@ -103,17 +136,18 @@
 
 
 //*--------------- mahua ---------------*//
-.bgf
-  background #ffffff
-  // border-radius 2px
+// .bgf
+//   background #ffffff
+//   // border-radius 2px
 
 /* 内容区header */
-.content-header
-  line-height 56px
-  font-size 16px
-  padding-left 16px
-  background #ffffff
-  color rgba(0,0,0, .85)
+// .content-header
+  // line-height 56px
+  // font-size 16px
+  // padding-left 16px
+  // background #ffffff
+  // color rgba(0,0,0, .85)
+  // border-bottom 1px solid #E6EDF8
 
 /* 列表操作项 分割线 样式 */
 .table-action-line{
@@ -143,10 +177,9 @@
       border: 0px
       box-shadow 0 0 0 0
 
-.comp-tab
-  .ant-tabs-nav-wrap
-    background-color #ffffff
-
-  .ant-tabs-bar
-    margin-bottom 0
-    padding-left 8px
+// .comp-tab
+//   background #ffffff
+  
+//   .ant-tabs-bar
+//     margin-bottom 0
+//     padding-left 16px

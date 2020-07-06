@@ -1,6 +1,7 @@
 import {Component} from 'react'
 import PropTypes from 'prop-types'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
+import cls from 'classnames'
 
 export default class Main extends Component {
   static propTypes = {
@@ -27,7 +28,7 @@ export default class Main extends Component {
 
   render() {
     const {
-      name, descr, actions, baseInfo, tag, btnMinWidth,
+      name, descr, actions, baseInfo, tag, btnMinWidth, hasBorder,
     } = this.props
 
     const btnStyle = btnMinWidth ? {
@@ -35,7 +36,7 @@ export default class Main extends Component {
     } : null
 
     return (
-      <div>
+      <div className={cls({'box-border': hasBorder})}>
         <div className="detail-header">
           <div>
             <div className="detail-name">

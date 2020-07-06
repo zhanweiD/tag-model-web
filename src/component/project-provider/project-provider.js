@@ -18,7 +18,7 @@ export default PageComponent => {
   function ProjectProvider(props) {
     const ctx = OnerFrame.useFrame()
     const projectId = ctx.useProjectId()
-    const [hasInit, changeHasInit] = useState(false)
+    const [hasInit, changeHasInit] = useState(true)
     const [visible, changeVisible] = useState(false)
     const [workspace, changeWorkspace] = useState([])
 

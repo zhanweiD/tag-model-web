@@ -9,55 +9,57 @@ import {
 import * as dict from './common/dict'
 
 import Frame from './frame'
-
-import Approval from './page-approval'
-import Market from './page-market'
-import ObjectConfig from './page-object-config'
-import ObjectList from './page-object-list'
-import ObjectModel from './page-object-model'
 import Overview from './page-overview'
-import Project from './page-project'
-import Scene from './page-scene'
-import TagModel from './page-tag-model'
-import TagSchema from './page-tag-schema'
-import TagWarehouse from './page-tag-warehouse'
-import AimSource from './page-aim-source'
-import TagSync from './page-tag-sync'
-import SyncResult from './page-sync-result'
-import Config from './page-config'
+import Manage from './page-manage'
+import Process from './page-process'
+import Common from './page-common'
 
 const njkData = {
   dict,
 }
 
+const quickEntrance = [
+  {
+    tip: '后台配置',
+    icon: 'setting',
+  },
+]
+
+
 window.njkData = njkData
 
-export default class Entry extends React.Component {
-  render() {
-    return (
+function Entry() {
+  return (
+    <Frame 
+      productCode="be_tag" 
+      theme="ocean" 
+      logoText="标签模型" 
+      showAllProduct 
+      showSider
+      showHeaderNav 
+      showProject
+      quickEntrance={quickEntrance}
+    >
       <Router>
         <Switch>
+          {/* 总览 */}
           <Route path="/overview" component={Overview} />
-          <Route path="/approval" component={Approval} />
-          <Route path="/market" component={Market} />
-          <Route path="/object-list" component={ObjectList} />
-          <Route path="/object-config" component={ObjectConfig} />
-          <Route path="/object-model" component={ObjectModel} />
-          <Route path="/project" component={Project} />
-          <Route path="/scene" component={Scene} />
-          <Route path="/tag-model" component={TagModel} />
-          <Route path="/tag-schema" component={TagSchema} />
-          <Route path="/tag-warehouse" component={TagWarehouse} />
-          <Route path="/aim-source" component={AimSource} />
-          <Route path="/tag-sync" component={TagSync} />
-          <Route path="/sync-result" component={SyncResult} />
-          <Route path="/workspace-config" component={Config} />
+
+          {/* 标签管理 */}
+          <Route path="/manage" component={Manage} />
+
+          {/* 标签加工 */}
+          <Route path="/process" component={Process} />
+
+          {/* 公共模块 */}
+          <Route path="/common" component={Common} />
 
           <Redirect to="/overview" />
         </Switch>
-      </Router>      
-    )
-  }
+      </Router>    
+    </Frame>
+      
+  )
 }
 
 ReactDOM.render(<Entry />, document.getElementById('root'))

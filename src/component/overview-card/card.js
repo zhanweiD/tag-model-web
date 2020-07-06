@@ -35,11 +35,11 @@ export default class OverviewCard extends React.Component {
 
   render() {
     const {
-      title, tooltipText, values, valueTexts, fontStyle: {color, active}, className,
+      title, tooltipText, values, valueTexts, fontStyle: {color, active},
     } = this.props
 
     return (
-      <div className={cls('overview-card', className)} style={{color: color || 'inherit'}}>
+      <div className={cls({'overview-card': true})} style={{color: color || 'inherit'}}>
         <div>
           {/* ml4 对齐微调 */}
           <span className="ml4">
