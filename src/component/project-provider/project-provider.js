@@ -60,12 +60,13 @@ export default PageComponent => {
     }
 
     useEffect(() => {
+      ctx.useProject(true)
       judgeInit(projectId)
     }, [projectId])
     
 
     const noDataConfig = {
-      btnText: '去初始化',
+      btnText: '去初始化环境',
       onClick: () => {
         getWorkspaceList(projectId)
         changeVisible(true)

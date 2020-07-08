@@ -8,6 +8,6 @@ const api = {
   getStorageList: get(`${projectApi}/list`), // 项目列表
 } 
 
-ioContext.create('tagWarehouseDetail', api) 
+ioContext.create('tagModelDetail', api) 
 
-export default ioContext.api.tagWarehouseDetail
+export default ioContext.api.tagModelDetail

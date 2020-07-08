@@ -223,12 +223,12 @@ export default class StepOne extends Component {
           <FormItem 
             {...formItemLayout} 
             label="目的源"
-            extra={(
-              <span>
-              若无可用的数据源，请先
-                <a target="_blank" rel="noopener noreferrer" href={`/tag-model/index.html#/project/${this.store.projectId}`}>去项目配置中添加目的数据源</a>
-              </span>
-            )}
+            // extra={(
+            //   <span>
+            //   若无可用的数据源，请先
+            //     <a target="_blank" rel="noopener noreferrer" href={`/tag-model/index.html#/project/${this.store.projectId}`}>去项目配置中添加目的数据源</a>
+            //   </span>
+            // )}
           >
             {getFieldDecorator('dataStorageId', {
               rules: [{required: true, message: '请选择目的源'}],
@@ -268,10 +268,10 @@ export default class StepOne extends Component {
                     {transform: value => value && value.trim()},
                     {required: true, message: '表名不能为空'},  
                   ]})(
-                  <div className="FBH"> 
-                      <span className="ml16 mr16">tbjh_</span>
-                      <Input autoComplete="off" placeholder="请输入表名称" />
-                    </div>
+                    <div className="FBH"> 
+                    <span className="ml16 mr16">tbjh_</span>
+                    <Input autoComplete="off" placeholder="请输入表名称" />
+                  </div>
                 )}
               </FormItem>
             ) : null

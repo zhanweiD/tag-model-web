@@ -1,7 +1,8 @@
-import {Component} from 'react'
+import {Component, useEffect} from 'react'
 import {Spin} from 'antd'
 import {action, observable} from 'mobx'
 import {observer} from 'mobx-react'
+import OnerFrame from '@dtwave/oner-frame'
 import {DetailHeader, TabRoute} from '../../../component'
 import {Time} from '../../../common/util'
 import ConfigInfo from './config-info'
@@ -15,7 +16,7 @@ const tabs = [
 ]
 
 @observer
-export default class SyncDetail extends Component {
+class SyncDetail extends Component {
   constructor(props) {
     super(props)
     const {match} = props
@@ -80,4 +81,18 @@ export default class SyncDetail extends Component {
       </div>
     )
   }
+}
+
+
+export default props => {
+  const ctx = OnerFrame.useFrame()
+  const projectId = ctx.useProjectId()
+
+  useEffect(() => {
+    ctx.useProject(false)
+  }, [])
+
+  return (
+    <SyncDetail {...props} projectId={projectId} />
+  )
 }

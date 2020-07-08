@@ -70,13 +70,9 @@ const WorkspaceConfig = ({projectId}) => {
   const [workspace, changeWorkspace] = useState([])
   
   async function getWorkspace() {
-    // const res = await io.getWorkspace({
-    //   projectId,
-    // })
-
-    const res = {
-      workspaceName: '111111',
-    }
+    const res = await io.getWorkspace({
+      projectId,
+    })
 
     changeConfig(res)
   }
@@ -132,7 +128,7 @@ const WorkspaceConfig = ({projectId}) => {
           <div className="env-config-label">环境：</div>
           <div className="env-config-value">
             <span className="mr16">{config.workspaceName}</span>
-            <FormOutlined className="action" onClick={editClick} />
+            {/* <FormOutlined className="action" onClick={editClick} /> */}
           </div>
         </div>
       </div>

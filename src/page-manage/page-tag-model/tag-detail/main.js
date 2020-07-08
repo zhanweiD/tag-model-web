@@ -1,9 +1,10 @@
 /**
  * @description 标签模型 - 标签详情
  */
-import {Component} from 'react'
+import {Component, useEffect} from 'react'
 import {observer} from 'mobx-react'
 import {Spin, Tabs} from 'antd'
+import OnerFrame from '@dtwave/oner-frame'
 import {DetailHeader, OverviewCardWrap, Tag} from '../../../component'
 import {Time} from '../../../common/util'
 import TagAnalyze from '../../../business-component/tag-analyze'
@@ -15,11 +16,11 @@ import store from './store'
 const {TabPane} = Tabs
 
 @observer
-export default class TagDetail extends Component {
+class TagDetail extends Component {
   constructor(props) {
     super(props)
-    const {match} = props
-    store.tagId = match.params.id // 标签id
+    const {match: {params}} = props
+    store.tagId = params && params.tagId // 标签id
   }
   
   componentWillMount() {
@@ -125,7 +126,7 @@ export default class TagDetail extends Component {
             </div>
           </TabPane>
           <TabPane tab="血缘分析" key="2">
-            <div className="bgf m16  box-border pt24" style={{minHeight: 'calc(100vh - 300px)'}}>
+            <div className="bgf m16  box-border pt24" style={{height: 'calc(100vh - 300px)'}}>
               <TagrRelate tagId={tagId} />
             </div>
           </TabPane>
@@ -139,4 +140,17 @@ export default class TagDetail extends Component {
       
     )
   }
+}
+
+export default props => {
+  const ctx = OnerFrame.useFrame()
+  const projectId = ctx.useProjectId()
+
+  useEffect(() => {
+    ctx.useProject(false)
+  }, [])
+
+  return (
+    <TagDetail {...props} projectId={projectId} />
+  )
 }

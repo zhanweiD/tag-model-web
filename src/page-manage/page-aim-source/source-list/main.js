@@ -49,7 +49,7 @@ class SourceList extends Component {
   }, {
     title: '操作',
     dataIndex: 'action',
-    width: 120,
+    width: 200,
     render: (text, record) => (
       <div>
         <a href onClick={() => this.openTagConfig(record)}>标签映射</a>

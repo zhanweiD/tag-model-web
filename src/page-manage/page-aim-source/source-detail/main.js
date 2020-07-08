@@ -1,7 +1,8 @@
-import {Component} from 'react'
+import {Component, useEffect} from 'react'
 import {Spin, Popconfirm, Badge} from 'antd'
 import {action, observable} from 'mobx'
 import {observer} from 'mobx-react'
+import OnerFrame from '@dtwave/oner-frame'
 import {
   DetailHeader, ListContent, AuthBox, TabRoute,
 } from '../../../component'
@@ -13,7 +14,7 @@ import store from './store'
 const tabs = [{name: '字段列表', value: 1}]
 
 @observer
-export default class SourceDetail extends Component {
+class SourceDetail extends Component {
   constructor(props) {
     super(props)
     const {match} = props
@@ -142,4 +143,17 @@ export default class SourceDetail extends Component {
       </div>
     )
   }
+}
+
+export default props => {
+  const ctx = OnerFrame.useFrame()
+  const projectId = ctx.useProjectId()
+
+  useEffect(() => {
+    ctx.useProject(false)
+  }, [])
+
+  return (
+    <SourceDetail {...props} projectId={projectId} />
+  )
 }

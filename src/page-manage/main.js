@@ -23,6 +23,7 @@ export default () => {
     ctx.querySiderMenus({
       productCode: 'tag_model',
     })
+    ctx.useSider(true)
   }, [])
   return (
     <Switch>

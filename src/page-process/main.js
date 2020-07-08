@@ -16,6 +16,7 @@ export default () => {
     ctx.querySiderMenus({
       productCode: 'tag_derivative',
     })
+    ctx.useSider(true)
   }, [])
   return (
     <Switch>

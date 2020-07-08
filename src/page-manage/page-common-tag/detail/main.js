@@ -1,9 +1,10 @@
 /**
  * @description 公共标签 - 标签详情
  */
-import {Component} from 'react'
+import {Component, useEffect} from 'react'
 import {observer} from 'mobx-react'
 import {Spin} from 'antd'
+import OnerFrame from '@dtwave/oner-frame'
 import {DetailHeader} from '../../../component'
 import {Time} from '../../../common/util'
 import TagAnalyze from '../../../business-component/tag-analyze'
@@ -12,7 +13,7 @@ import store from './store'
 
 
 @observer
-export default class TagDetail extends Component {
+class TagDetail extends Component {
   constructor(props) {
     super(props)
     const {match} = props
@@ -71,4 +72,17 @@ export default class TagDetail extends Component {
       
     )
   }
+}
+
+export default props => {
+  const ctx = OnerFrame.useFrame()
+  const projectId = ctx.useProjectId()
+
+  useEffect(() => {
+    ctx.useProject(false)
+  }, [])
+
+  return (
+    <TagDetail {...props} projectId={projectId} />
+  )
 }

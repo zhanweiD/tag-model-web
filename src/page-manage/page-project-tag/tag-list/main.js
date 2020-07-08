@@ -4,6 +4,7 @@
 import {Component, Fragment} from 'react'
 import {observer} from 'mobx-react'
 import {action} from 'mobx'
+import {Link} from 'react-router-dom'
 import {
   ListContent, NoData, OmitTooltip, AuthBox,
 } from '../../../component'
@@ -103,7 +104,8 @@ export default class TagList extends Component {
       render: (text, record) => (
         <div className="FBH FBAC">
           {/* eslint-disable-next-line no-underscore-dangle */}
-          <a href={`${window.__keeper.pathHrefPrefix}/manage/tag-maintain/${record.id}`}>标签详情</a>
+          {/* <a href={`${window.__keeper.pathHrefPrefix}/manage/tag-maintain/${record.id}`}>标签详情</a> */}
+          <Link to={`/manage/project-tag/${record.id}`}>标签详情</Link>
           <AuthBox 
             code="asset_tag_project_tag_search_add_occ" 
             myFunctionCodes={store.functionCodes}

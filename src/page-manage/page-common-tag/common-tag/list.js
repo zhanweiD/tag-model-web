@@ -5,6 +5,7 @@ import {Component, Fragment} from 'react'
 import {observer} from 'mobx-react'
 import {action} from 'mobx'
 import {Button} from 'antd'
+import {Link} from 'react-router-dom'
 import {
   ListContent, Tag, AuthBox, OmitTooltip,
 } from '../../../component'
@@ -104,8 +105,8 @@ export default class Market extends Component {
       render: (text, record) => (
         <div className="FBH FBAC">
           {/* eslint-disable-next-line no-underscore-dangle */}
-          <a href={`${window.__keeper.pathHrefPrefix}/tag-model/${record.id}`}>查看详情</a> 
-          
+          {/* <a href={`${window.__keeper.pathHrefPrefix}/tag-model/${record.id}`}>查看详情</a>  */}
+          <Link to={`/manage/common-tag/${record.id}`}>标签详情</Link>
           <AuthBox code="asset_tag_apply_market" isButton={false}>  
             {(() => {
               if (store.useProjectId) {

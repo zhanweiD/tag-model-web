@@ -35,7 +35,7 @@ class TagList extends Component {
     key: 'name',
     title: '标签名称',
     dataIndex: 'name',
-    render: (text, record) => <Link to={`/manage/tag-model/${record.id}`}><OmitTooltip maxWidth={120} text={text} /></Link>,
+    render: (text, record) => <Link to={`/manage/tag-maintain/${record.id}`}><OmitTooltip maxWidth={120} text={text} /></Link>,
   }, {
     key: 'configType',
     title: '绑定方式',

@@ -1,9 +1,10 @@
 /**
  * @description 标签仓库 - 标签详情
  */
-import {Component} from 'react'
+import {Component, useEffect} from 'react'
 import {observer} from 'mobx-react'
 import {Spin, Tabs} from 'antd'
+import OnerFrame from '@dtwave/oner-frame'
 import {DetailHeader} from '../../../component'
 import {Time} from '../../../common/util'
 import TagAnalyze from '../../../business-component/tag-analyze'
@@ -16,7 +17,7 @@ import store from './store'
 const {TabPane} = Tabs
 
 @observer
-export default class TagDetail extends Component {
+class TagDetail extends Component {
   constructor(props) {
     super(props)
     const {match} = props
@@ -75,7 +76,7 @@ export default class TagDetail extends Component {
             </div>
           </TabPane>
           <TabPane tab="血缘分析" key="2">
-            <div className="bgf m16 box-border" style={{minHeight: 'calc(100vh - 298px)'}}>
+            <div className="bgf m16 box-border" style={{height: 'calc(100vh - 298px)'}}>
               <TagrRelate tagId={tagId} />
             </div>
           </TabPane>
@@ -95,4 +96,18 @@ export default class TagDetail extends Component {
       
     )
   }
+}
+
+
+export default props => {
+  const ctx = OnerFrame.useFrame()
+  const projectId = ctx.useProjectId()
+
+  useEffect(() => {
+    ctx.useProject(false)
+  }, [])
+
+  return (
+    <TagDetail {...props} projectId={projectId} />
+  )
 }

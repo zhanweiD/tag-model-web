@@ -17,6 +17,7 @@ export default () => {
     ctx.querySiderMenus({
       productCode: 'tag_common',
     })
+    ctx.useSider(true)
   }, [])
   return (
     <Switch>

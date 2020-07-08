@@ -1,10 +1,11 @@
 /**
  * @description 加工方案详情
  */
-import {Component} from 'react'
+import {Component, useEffect} from 'react'
 import {observer} from 'mobx-react'
 import {action} from 'mobx'
 import {Spin, NoData} from 'antd'
+import OnerFrame from '@dtwave/oner-frame'
 import {
   Tag,
   TabRoute,
@@ -17,7 +18,7 @@ import {Time} from '../../common/util'
 import store from './store'
 
 @observer
-export default class SchemaDetail extends Component {
+class SchemaDetail extends Component {
   constructor(props) {
     super(props)
     const {match} = props
@@ -93,4 +94,17 @@ export default class SchemaDetail extends Component {
       </div>
     )
   }
+}
+
+export default props => {
+  const ctx = OnerFrame.useFrame()
+  const projectId = ctx.useProjectId()
+
+  useEffect(() => {
+    ctx.useProject(false)
+  }, [])
+
+  return (
+    <SchemaDetail {...props} projectId={projectId} />
+  )
 }
