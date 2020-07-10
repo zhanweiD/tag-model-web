@@ -12,13 +12,14 @@ import {
   changeToOptions,
 } from '../../common/util'
 import ConfigModal from './configModal'
-// import Loading from '../loading'
+import Loading from '../loading'
 
 export default PageComponent => {
   function ProjectProvider(props) {
     const ctx = OnerFrame.useFrame()
     const projectId = ctx.useProjectId()
     const [hasInit, changeHasInit] = useState(true)
+    const [loading, changeLoading] = useState(true)
     const [visible, changeVisible] = useState(false)
     const [workspace, changeWorkspace] = useState([])
 
@@ -31,6 +32,7 @@ export default PageComponent => {
       const res = await io.judgeInit({
         projectId: id,
       })
+      changeLoading(false)
       changeHasInit(res)
     }
 
@@ -79,6 +81,12 @@ export default PageComponent => {
         <NoData
           {...noProjectDataConfig}
         />
+      )
+    }
+
+    if (loading) {
+      return (
+        <Loading mode="block" height={300} /> 
       )
     }
 

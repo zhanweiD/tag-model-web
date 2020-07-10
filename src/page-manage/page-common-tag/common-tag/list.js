@@ -101,7 +101,7 @@ export default class Market extends Component {
     }, {
       key: 'action',
       title: '操作',
-      width: 120,
+      width: 200,
       render: (text, record) => (
         <div className="FBH FBAC">
           {/* eslint-disable-next-line no-underscore-dangle */}
