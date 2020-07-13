@@ -63,13 +63,14 @@ const createTreeNode = (data = [], valueName, titleName, selectCon) => {
  * @description 根据type返回相应antd控件
  */ 
 export default ({
-  type, label, placeholder, options = [], ...rest
+  type, label, placeholder, options = [], radios, ...rest
 }) => {
   const map = {
     text: <span>{options}</span>,
     input: <antd.Input placeholder={placeholder || createInputPlaceholder(label)} {...rest} />,
     textArea: <antd.Input.TextArea rows={4} placeholder={placeholder || createInputPlaceholder(label)} {...rest} />,
     select: <SelectTypes label={label} placeholder={placeholder || createSelectPlaceholder(label)} options={options} {...rest} />,
+    radioGroup: <antd.Radio.Group {...rest}>{radios}</antd.Radio.Group>, // 单选按钮
     rangePicker: <antd.DatePicker.RangePicker {...rest} style={{width: '100%'}} />,
     selectTree: () => (
       options.length 
@@ -124,6 +125,7 @@ export const mergeRules = (rules, label) => {
     '@transformTrim': {transform: value => value && value.trim()}, // 输入类型为string；校验时进行trim()去掉前后空格
     '@required': {required: true, whitespace: true, message: `请输入${label}`},
     '@requiredSelect': {required: true, message: `请选择${label}`},
+    '@requiredChecked': {required: true, message: `请选择${label}`},
     '@max32': {max: 32, message: '输入不能超过32个字符'},
     '@max128': {max: 128, message: '输入不能超过128个字符'},
   }
