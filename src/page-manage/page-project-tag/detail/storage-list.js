@@ -1,5 +1,6 @@
 import {Component} from 'react'
 import {observer} from 'mobx-react'
+import {Badge} from 'antd'
 import {ListContent} from '../../../component'
 import {Time} from '../../../common/util'
 
@@ -10,20 +11,20 @@ export default class StorageList extends Component {
   columns = [
     {
       title: '目的数据源',
-      key: 'userName',
-      dataIndex: 'userName',
+      key: 'storageName',
+      dataIndex: 'storageName',
     }, {
       title: '数据源类型',
-      key: 'mobile',
-      dataIndex: 'mobile',
+      key: 'storageTypeName',
+      dataIndex: 'storageTypeName',
     }, {
       title: '目的表',
-      key: 'email',
-      dataIndex: 'email',
+      key: 'dataTableName',
+      dataIndex: 'dataTableName',
     }, {
       title: '绑定字段',
-      key: 'role',
-      dataIndex: 'role',
+      key: 'dataFieldName',
+      dataIndex: 'dataFieldName',
     }, {
       title: '创建时间',
       key: 'ctime',
@@ -31,21 +32,22 @@ export default class StorageList extends Component {
       render: text => <Time timestamp={text} />,
     }, {
       title: '创建者',
-      key: 'role',
-      dataIndex: 'role',
+      key: 'cuserName',
+      dataIndex: 'cuserName',
     }, {
       title: '使用状态',
-      key: 'role',
-      dataIndex: 'role',
+      key: 'status',
+      dataIndex: 'status',
+      render: text => (text ? <Badge color="#108ee9" text="使用中" /> : <Badge color="#d9d9d9" text="未使用" />),
     },
   ]
 
   render() {
-    const {tagId: id} = this.props
+    const {tagId} = this.props
     
     const listConfig = {
       columns: this.columns,
-      initParams: {id},
+      initParams: {tagId},
       store, // 必填属性
     }
 

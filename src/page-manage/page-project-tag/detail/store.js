@@ -8,6 +8,7 @@ class Store {
   tagId
   @observable tagBaseInfo = {}
   @observable tagDetailLoading = false
+  @observable cardInfo = {}
 
   @action async getTagBaseDetail() {
     this.tagDetailLoading = false
@@ -25,6 +26,19 @@ class Store {
         this.tagDetailLoading = false
       })
     }
+  }
+
+  @action async getCardInfo() {
+    try {
+      const res = await io.getCardInfo({
+        id: this.tagId,
+      })
+      runInAction(() => {
+        this.cardInfo = res
+      })
+    } catch (e) {
+      errorTip(e.message)
+    } 
   }
 }
 

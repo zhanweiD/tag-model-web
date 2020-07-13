@@ -10,12 +10,12 @@ export default class ProjectList extends Component {
   columns = [
     {
       title: '项目名称',
-      key: 'userName',
-      dataIndex: 'userName',
+      key: 'name',
+      dataIndex: 'name',
     }, {
       title: '项目描述',
-      key: 'mobile',
-      dataIndex: 'mobile',
+      key: 'descr',
+      dataIndex: 'descrs',
     }, {
       title: '申请时间',
       key: 'ctime',
@@ -23,21 +23,21 @@ export default class ProjectList extends Component {
       render: text => <Time timestamp={text} />,
     }, {
       title: '加工方案引用数',
-      key: 'role',
-      dataIndex: 'role',
+      key: 'derivativeCount',
+      dataIndex: 'derivativeCount',
     }, {
       title: '标签应用数',
-      key: 'role',
-      dataIndex: 'role',
+      key: 'tagAppCount',
+      dataIndex: 'tagAppCount',
     },
   ]
 
   render() {
-    const {tagId: id} = this.props
+    const {tagId} = this.props
     
     const listConfig = {
       columns: this.columns,
-      initParams: {id},
+      initParams: {tagId},
       store, // 必填属性
     }
 

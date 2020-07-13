@@ -4,7 +4,7 @@
 import * as d3 from 'd3'
 import * as dagreD3 from 'dagre-d3'
 import {Component} from 'react'
-import {observer} from 'mobx-react'
+import {observer, inject} from 'mobx-react'
 import {Spin} from 'antd'
 
 const chartOption = {
@@ -13,12 +13,12 @@ const chartOption = {
   zoom_min: 0.5, // 缩小的比例
   zoom_max: 2, // 放大的比例
 }
-
+@inject('bigStore')
 @observer
 export default class ObjectView extends Component {
   constructor(props) {
     super(props)
-    this.store = props.store
+    this.store = props.bigStore
   }
 
   componentDidMount() {

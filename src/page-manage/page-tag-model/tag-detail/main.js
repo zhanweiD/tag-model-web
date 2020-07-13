@@ -25,6 +25,7 @@ class TagDetail extends Component {
   
   componentWillMount() {
     store.getTagBaseDetail()
+    store.getCardInfo()
   }
   
   render() {
@@ -55,7 +56,7 @@ class TagDetail extends Component {
       value: <Time timestamp={tagBaseInfo.createTime} />,
     }, {
       title: '绑定方式',
-      value: tagBaseInfo.dataSource,
+      value: tagBaseInfo.configType === 1 ? '衍生标签' : '基础标签',
     }, {
       title: '数据源',
       value: tagBaseInfo.dataSource,
@@ -70,16 +71,16 @@ class TagDetail extends Component {
     const cards = [
       {
         title: '使用项目数',
-        tooltipText: '待补充',
+        tooltipText: '被多少个项目申请使用，包括所属项目',
         values: [cardInfo.entityCount || 0],
       }, {
         title: '加工方案引用数',
-        tooltipText: '项目内该标签被加工方案的引用数',
-        values: [cardInfo.relCount || 0],
+        tooltipText: '该标签租户下被加工方案的引用数',
+        values: [cardInfo.derivativeCount || 0],
       }, {
         title: '标签应用数',
-        tooltipText: '项目内，该标签被多少个数据查询引用+群体管理引用+API引用+业务场景引用',
-        values: [cardInfo.tagCount || 0],
+        tooltipText: '租户下，该标签被多少个数据查询引用+群体管理引用+API引用+业务场景引用',
+        values: [cardInfo.appCount || 0],
       },
     ]
     const baseDeriveInfo = [{
@@ -132,7 +133,7 @@ class TagDetail extends Component {
           </TabPane>
           <TabPane tab="项目列表" key="3">
             <div className="bgf m16 box-border pt24" style={{minHeight: 'calc(100vh - 430px)'}}>
-              <ProjectList tagId={tagId} />
+              <ProjectList tagId={tagId} configType={tagBaseInfo.configType} />
             </div>
           </TabPane>
         </Tabs>

@@ -12,7 +12,7 @@ npm run build
 if [ x$1 != x ]
 then
   #...有参数
-  tar_name="${package_name}-web-v$1.tgz"
+  tar_name="${package_name}-web-$1.tgz"
 else
   #...没有参数
   tar_name="${package_name}.tgz"

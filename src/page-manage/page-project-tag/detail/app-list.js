@@ -3,7 +3,7 @@ import {observer} from 'mobx-react'
 import {ListContent} from '../../../component'
 import {Time} from '../../../common/util'
 
-import store from './store-storage'
+import store from './store-app'
 
 @observer
 export default class AppList extends Component {
@@ -33,11 +33,11 @@ export default class AppList extends Component {
   ]
 
   render() {
-    const {tagId: id} = this.props
+    const {tagId} = this.props
     
     const listConfig = {
       columns: this.columns,
-      initParams: {id},
+      initParams: {tagId},
       store, // 必填属性
     }
 

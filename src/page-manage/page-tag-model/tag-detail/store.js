@@ -27,6 +27,19 @@ class Store {
       })
     }
   }
+
+  @action async getCardInfo() {
+    try {
+      const res = await io.getCardInfo({
+        id: this.tagId,
+      })
+      runInAction(() => {
+        this.cardInfo = res
+      })
+    } catch (e) {
+      errorTip(e.message)
+    } 
+  }
 }
 
 export default new Store()

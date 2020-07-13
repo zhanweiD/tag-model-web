@@ -5,7 +5,9 @@ import {
 
 const api = {
   getTagBaseDetail: get(`${tagModalApi}/tag_detail`), // 标签详情
-  getStorageList: get(`${projectApi}/list`), // 项目列表
+  getCardInfo: get(`${tagModalApi}/tag_card`), // 卡片详情
+  getAppList: get(`${tagModalApi}/list_tag_app`), // 应用列表
+  getSourceList: get(`${tagModalApi}/list_target_source`), // 目的源列表
 } 
 
 ioContext.create('tagWarehouseDetail', api) 

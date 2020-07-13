@@ -5,7 +5,7 @@ import {Component, useEffect} from 'react'
 import {observer} from 'mobx-react'
 import {Spin, Tabs} from 'antd'
 import OnerFrame from '@dtwave/oner-frame'
-import {DetailHeader} from '../../../component'
+import {DetailHeader, OverviewCardWrap} from '../../../component'
 import {Time} from '../../../common/util'
 import TagAnalyze from '../../../business-component/tag-analyze'
 import TagrRelate from '../../../business-component/tag-relate'
@@ -26,10 +26,11 @@ class TagDetail extends Component {
   
   componentWillMount() {
     store.getTagBaseDetail()
+    store.getCardInfo()
   }
 
   render() {
-    const {tagDetailLoading, tagBaseInfo, tagId} = store
+    const {tagDetailLoading, tagBaseInfo, tagId, cardInfo} = store
 
     const baseInfo = [{
       title: '对象',
@@ -60,6 +61,22 @@ class TagDetail extends Component {
       value: tagBaseInfo.fieldName,
     }]
 
+    const cards = [
+      {
+        title: '目的源数',
+        tooltipText: '包括该标签被标签同步或者目的源管理的映射的总数。举个例子，员工.性别这个标签被标签同步到2个数据源，被目的源管理里映射了2个目的源。在目的源数是4',
+        values: [cardInfo.entityCount || 0],
+      }, {
+        title: '加工方案引用数',
+        tooltipText: '项目内该标签被加工方案的引用数',
+        values: [cardInfo.derivativeCount || 0],
+      }, {
+        title: '标签应用数',
+        tooltipText: '项目内，该标签被多少个数据查询引用+群体管理引用+API引用+业务场景引用',
+        values: [cardInfo.appCount || 0],
+      },
+    ]
+
     return (
       <div>
         <Spin spinning={tagDetailLoading}>
@@ -68,6 +85,7 @@ class TagDetail extends Component {
             descr={tagBaseInfo.descr}
             baseInfo={baseInfo}
           />
+          <OverviewCardWrap cards={cards} />
         </Spin>
         <Tabs defaultActiveKey="1" className="comp-tab">
           <TabPane tab="标签分析" key="1">

@@ -6,6 +6,7 @@
 
 import {useEffect, useState, Fragment} from 'react'
 import OnerFrame from '@dtwave/oner-frame'
+import {message} from 'antd'
 import NoData from '../no-data'
 import io from './io'
 import {
@@ -58,6 +59,9 @@ export default PageComponent => {
       if (res) {
         changeVisible(false)
         changeHasInit(true)
+        message.success('初始化环境成功')
+      } else {
+        message.error('初始化环境失败')
       }
     }
 

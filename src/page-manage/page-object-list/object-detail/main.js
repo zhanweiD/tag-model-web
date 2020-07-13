@@ -3,9 +3,10 @@
  */
 import {Component, useEffect} from 'react'
 import OnerFrame from '@dtwave/oner-frame' 
-import {observer} from 'mobx-react'
+import {observer, Provider} from 'mobx-react'
 import {Spin} from 'antd'
 import {observable, action} from 'mobx'
+
 import {Time} from '../../../common/util'
 import {
   Tag,
@@ -16,6 +17,9 @@ import {
 import {typeCodeMap, objTypeMap} from '../util'
 import ObjectView from './object-view'
 import BusinessModel from './business-model'
+import UseProject from './use-project'
+import DataTable from './data-table'
+import TagList from './tag-list'
 
 import store from './store'
 
@@ -23,8 +27,9 @@ import store from './store'
 class ObjectDetail extends Component {
   constructor(props) {
     super(props)
-    store.objId = props.match.params && props.match.params.objId
-    store.typeCode = props.match.params && props.match.params.typeCode
+    const {match: {params}} = props
+    store.objId = params && params.objId
+    store.typeCode = params && params.typeCode
   }
 
   @observable tabId = 0
@@ -47,7 +52,7 @@ class ObjectDetail extends Component {
 
   render() {
     const {
-      objDetail, objCard, loading, typeCode,
+      objDetail, objCard, loading, typeCode, objId,
     } = store
    
     // 详情信息
@@ -69,10 +74,6 @@ class ObjectDetail extends Component {
       title: '创建时间',
       value: <Time timestamp={objDetail.createTime} />,
     },
-    //  {
-    //   title: '对象主键',
-    //   value: objDetail.objPk,
-    // }
     ]
 
     // 不同状态的相应map
@@ -99,59 +100,76 @@ class ObjectDetail extends Component {
     const cards = [
       {
         title: `${typeCodeMap[`${typeCode}～`]}总数`,
-        tooltipText: `跟该${typeCodeMap[typeCode]}相关的${typeCodeMap[`${typeCode}～`]}总数`,
+        tooltipText: `已经发布的关联${typeCodeMap[`${typeCode}～`]}总数`,
         values: [objCard.objectCount],
       }, {
-        title: '相关项目数',
-        tooltipText: '使用该对象的项目总数',
+        title: '使用项目数',
+        tooltipText: '租户下，项目的使用数',
         values: [objCard.projectCount],
       }, {
         title: '数据表数',
-        tooltipText: '该对象绑定的数据表总数',
+        tooltipText: '租户下，项目中添加的数据表数',
         values: [objCard.tableCount],
       }, {
         title: '标签总数',
-        tooltipText: '已发布的标签总数',
+        tooltipText: '租户下，已经发布的标签总数（不包括主标签）',
         values: [objCard.tagCount],
-      }, {
-        title: '上架标签总数',
-        tooltipText: '该对象下公开的标签总数',
+      },
+      // , {
+      //   title: '上架标签总数',
+      //   tooltipText: '该对象下公开的标签总数',
+      //   values: [objCard.publicTagCount],
+      // },
+      {
+        title: '对象总数',
+        tooltipText: '租户下，比如会员实体集，会员总数',
         values: [objCard.publicTagCount],
       },
     ]
 
     const tabConfig = {
-      tabs: [
+      tabs: +objDetail.type ? [
         {name: '对象视图', value: 0},
         {name: '业务视图', value: 1},
+        {name: '使用项目', value: 2},
+        {name: '数据表', value: 3},
+        {name: '标签列表', value: 4},
+      ] : [
+        {name: '对象视图', value: 0},
+        {name: '业务视图', value: 1},
+        {name: '使用项目', value: 2},
+        {name: '数据表', value: 3},
       ],
       currentTab: this.tabId,
       changeTab: this.changeTab,
       changeUrl: false,
     }
 
-    // const Content = [ObjectView][+this.tabId]
-    const Content = [ObjectView, BusinessModel][+this.tabId]
+    const comp = +objDetail.type ? [ObjectView, BusinessModel, UseProject, DataTable, TagList] : [ObjectView, BusinessModel, UseProject, DataTable]
+    const Content = comp[+this.tabId]
 
     return (
-      <div>
-        <Spin spinning={loading}>
-          <div>
-            <DetailHeader 
-              name={objDetail.name}
-              descr={objDetail.descr}
-              btnMinWidth={160}
-              baseInfo={baseInfo}
-              tag={tag}
-            />
-            <OverviewCardWrap cards={cards} />
+      <Provider bigStore={store}>
+        <div className="object-detail">
+          <Spin spinning={loading}>
+            <div className="box-border">
+              <DetailHeader 
+                name={objDetail.name}
+                descr={objDetail.descr}
+                btnMinWidth={160}
+                baseInfo={baseInfo}
+                tag={tag}
+              />
+              <OverviewCardWrap cards={cards} />
+            </div>
+          </Spin>
+          <div className="m16 bgf box-border">
+            <TabRoute {...tabConfig} />
+            <Content objId={+objId} type={+objDetail.type} />
           </div>
-          <TabRoute {...tabConfig} />
-        </Spin>
-        <div className="bgf m16 box-border">
-          <Content store={store} />
         </div>
-      </div>
+      </Provider>
+     
     )
   }
 }

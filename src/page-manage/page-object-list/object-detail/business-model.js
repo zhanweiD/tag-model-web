@@ -2,18 +2,17 @@
  * @description 业务视图
  */
 import {Component} from 'react'
-import {observer} from 'mobx-react'
+import {observer, inject} from 'mobx-react'
 import {toJS, observable} from 'mobx'
 import {Select} from 'antd'
 
+import * as d3 from 'd3'
 import erClose from '../../../icon/er-close.svg'
 import erOpen from '../../../icon/er-open.svg'
 import erRelKey from '../../../icon/er-rel-key.svg'
 import erMajorKey from '../../../icon/er-major-key.svg'
 
 import './business-model.styl'
-
-import * as d3 from 'd3'
 
 const {Option} = Select
 
@@ -32,12 +31,12 @@ const option = {
     close: erClose,
   },
 }
-
+@inject('bigStore')
 @observer
 export default class BusinessModel extends Component {
   constructor(props) {
     super(props)
-    this.store = props.store
+    this.store = props.bigStore
   }
 
   @observable relObjId = undefined
