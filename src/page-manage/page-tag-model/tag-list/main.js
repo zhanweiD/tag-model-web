@@ -8,7 +8,7 @@ import {Popconfirm, Button} from 'antd'
 import {Link} from 'react-router-dom'
 
 import {
-  ListContent, projectProvider, OmitTooltip, AuthBox,
+  ListContent, projectProvider, OmitTooltip, AuthBox, NoData,
 } from '../../../component'
 import {
   tagStatusBadgeMap,
@@ -98,7 +98,7 @@ class TagList extends Component {
                 title="确认发布？"
                 onConfirm={() => store.updateTagStatus({
                   status: 2,
-                  id: record.id,
+                  tagIdList: [record.id],
                 })}
               >
                 <a href>发布</a>
@@ -123,7 +123,7 @@ class TagList extends Component {
                 title="确认取消发布？"
                 onConfirm={() => store.updateTagStatus({
                   status: 1,
-                  id: record.id,
+                  tagIdList: [record.id],
                 })}
               >
                 <a href>取消发布</a>
@@ -144,7 +144,7 @@ class TagList extends Component {
               title="确认发布？"
               onConfirm={() => store.updateTagStatus({
                 status: 2,
-                id: record.id,
+                tagIdList: [record.id],
               })}
             >
               <a href>发布</a>
@@ -161,7 +161,7 @@ class TagList extends Component {
               title="确认取消发布？"
               onConfirm={() => store.updateTagStatus({
                 status: 1,
-                id: record.id,
+                tagIdList: [record.id],
               })}
             >
               <a href>取消发布</a>
@@ -200,16 +200,11 @@ class TagList extends Component {
 
       // 请求列表，放在父组件进行请求是因为需要在外层做空数据判断。
       // 若返回数据为空[]。则渲染 NoData 组件。
-      // 要是请求放在列表组件ListContent中的话, 就必须渲染表格的dom 影响体验
+
       store.getList({
         projectId: store.projectId,
       })
-      // 设置列表默认参数；因为列表请求放在列表组件外部，所以 设置默认参数也在列表组件外部
-      store.initParams = {
-        projectId: store.projectId,
-      }
     }
-    store.tableLoading = true
   }
 
   // 初始化数据，一般情况不需要，此项目存在项目空间中项目的切换，全局性更新，较为特殊
@@ -269,14 +264,14 @@ class TagList extends Component {
       }),
     }
 
-    // const noDataConfig = {
-    //   btnText: '创建标签',
-    //   onClick: () => store.openDrawer('add'),
-    //   text: '没有任何标签，去创建标签吧',
-    //   code: 'asset_tag_project_tag_operator',
-    //   myFunctionCodes: store.functionCodes,
-    //   noAuthText: '没有任何标签',
-    // }
+    const noDataConfig = {
+      btnText: '创建标签',
+      onClick: () => store.openDrawer('add'),
+      text: '没有任何标签，去创建标签吧',
+      // code: 'asset_tag_project_tag_operator',
+      // myFunctionCodes: store.functionCodes,
+      // noAuthText: '没有任何标签',
+    }
 
     const listConfig = {
       rowSelection,
@@ -295,7 +290,7 @@ class TagList extends Component {
         </AuthBox>, 
 
         // <Button className="mr8" type="primary" onClick={() => store.openDrawer('add')}>创建标签</Button>,
-        <Button className="mr8" onClick={() => store.openBatchConfig()}>批量发布</Button>,
+        <Button className="mr8" onClick={() => store.batchPublish()} disabled={!publishRowKeys.length}>批量发布</Button>,
         <Button onClick={() => store.openBatchConfig()}>批量绑定</Button>,
 
       ],
@@ -308,17 +303,14 @@ class TagList extends Component {
       <Provider bigStore={store}>
         <div>
           <div className="content-header">标签维护</div>
-          <div className="header-page box-border">
-            <ListContent {...listConfig} />
-          </div>
-          {/* {
+          {
             !list.length && !this.isSearch() ? (
               <NoData
                 isLoading={tableLoading}
                 {...noDataConfig}
               />
-            ) : <div className="list-content"><ListContent {...listConfig} /></div>
-          } */}
+            ) : <div className="header-page box-border"><ListContent {...listConfig} /></div>
+          }
 
           <ModalTagApply store={store} />
           <DrawerCreate store={store} />

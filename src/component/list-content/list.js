@@ -49,13 +49,12 @@ export default class ListContent extends Component {
   componentWillMount() {
     // 初始请求 在父层组件处理。列表组件componentWillMount内不再进行请求
     const {initGetDataByParent} = this.props
-    if (initGetDataByParent) return 
-
     /*
      *initParams: 列表配置参数值
      */
     const {initParams} = this.props
     this.store.initParams = initParams
+    if (initGetDataByParent) return 
     this.store.getList()
   }
 

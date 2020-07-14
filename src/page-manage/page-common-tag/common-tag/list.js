@@ -157,10 +157,10 @@ export default class Market extends Component {
     store.modalVisible = true
   }
 
-  // 跳转到标签模型
-  goTagManager = () => {
-    window.location.href = `${window.__keeper.pathHrefPrefix || '/'}/tag-model`
-  }
+  // // 跳转到标签模型
+  // goTagManager = () => {
+  //   window.location.href = `${window.__keeper.pathHrefPrefix || '/'}/tag-model`
+  // }
 
   render() {
     const {

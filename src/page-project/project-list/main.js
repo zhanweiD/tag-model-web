@@ -19,16 +19,6 @@ import ModalProject from './modal'
 
 import store from './store'
 
-// 面包屑设置
-// eslint-disable-next-line no-underscore-dangle
-
-const navList = [
-  navListMap.tagCenter,
-  navListMap.common,
-  {text: navListMap.project.text},
-]
-
-// @inject('frameChange')
 @observer
 export default class ProjectList extends Component {
   menu = data => (
@@ -253,9 +243,6 @@ export default class ProjectList extends Component {
     return (
       <div className="page-project">
         <div className="content-header">{navListMap.project.text}</div>
-        {/* <div className="list-content">
-          <ListContent {...listConfig} />
-        </div> */}
         {
           list.length || JSON.stringify(searchParams) !== '{}' ? (
             <div className="list-content">

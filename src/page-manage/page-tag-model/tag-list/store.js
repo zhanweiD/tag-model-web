@@ -1,5 +1,5 @@
 import {
-  observable, action, runInAction,
+  observable, action, runInAction, toJS,
 } from 'mobx'
 import {
   successTip, failureTip, errorTip, changeToOptions, listToTree,
@@ -158,10 +158,10 @@ class Store extends ListContentStore(io.getList) {
       })
       runInAction(() => {
         if (res.success) {
-          successTip('操作成功')
+          successTip('发布成功')
           this.getList()
         } else {
-          failureTip('操作失败')
+          failureTip('发布失败')
         }
       })
     } catch (e) {
@@ -169,6 +169,28 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
+  // 批量发布
+  @action async batchPublish() {
+    try {
+      const res = await io.updateTagStatus({
+        projectId: this.projectId,
+        status: 2,
+        tagIdList: toJS(this.publishRowKeys),
+      })
+      runInAction(() => {
+        if (res.success) {
+          successTip('发布成功')
+          this.getList()
+          this.publishRowKeys.clear()
+        } else {
+          failureTip('发布失败')
+        }
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+  
   /**
    * @description 获取所属对象下拉数据
    */

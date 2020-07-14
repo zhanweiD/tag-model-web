@@ -1,5 +1,5 @@
 /**
- * @description  标签仓库-标签列表
+ * @description  标签仓库(项目标签)-标签列表
  */
 import {Component, Fragment} from 'react'
 import {observer} from 'mobx-react'
@@ -42,12 +42,7 @@ export default class TagList extends Component {
       store.getList({
         useProjectId: store.useProjectId,
       })
-      // 设置列表默认参数；因为列表请求放在列表组件外部，所以 设置默认参数也在列表组件外部
-      store.initParams = {
-        useProjectId: store.useProjectId,
-      }
     }
-    store.tableLoading = true
   }
 
   componentWillUnmount() {
@@ -176,7 +171,7 @@ export default class TagList extends Component {
     const noDataConfig = {
       btnText: '去创建标签',
       onClick: this.goTagManager,
-      text: '没有任何标签，去标签模型创建标签吧!',
+      text: '没有任何标签，去标签维护创建标签吧!',
       // code: 'asset_tag_project_tag_operator',
       // noAuthText: '没有任何标签',
       // myFunctionCodes: functionCodes,
