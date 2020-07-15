@@ -44,7 +44,7 @@ export default class DrawerConfig extends Component {
               } 
     
               t.store.schemeDetail.objId = Array.isArray(values.objId) ? values.objId[0].key : values.objId.key
-              this.store.schemeDetail.objName = Array.isArray(values.objId) ? values.objId[0].label : values.objId.label
+              t.store.schemeDetail.objName = Array.isArray(values.objId) ? values.objId[0].label : values.objId.label
               t.store.schemeDetail.name = values.name
               t.store.schemeDetail.descr = values.descr
               t.store.schemeDetail.obj = t.obj || schemeDetail.obj

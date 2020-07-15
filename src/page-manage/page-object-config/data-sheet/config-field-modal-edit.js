@@ -90,7 +90,7 @@ class ModalTagEdit extends Component {
                 initialValue: +tagDetail.valueType || undefined,
                 rules: [{required: true, message: '请选择数据类型'}],
               })(
-                <Select placeholder="请下拉选择">
+                <Select placeholder="请下拉选择" showSearch optionFilterProp="children">
                   {
                     window.njkData.dict.dataType.map(item => (
                       <Option key={item.key} value={item.key}>{item.value}</Option>

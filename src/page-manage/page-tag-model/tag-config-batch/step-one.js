@@ -96,7 +96,7 @@ export default class StepOne extends Component {
       <div style={{display: show ? 'block' : 'none'}}>
         <div className="mb24">
           <span className="search-label">对象</span>
-          <Select value={objId} style={{width: 240}} onChange={this.objectSelect} placeholder="请选择">
+          <Select value={objId} style={{width: 240}} onChange={this.objectSelect} placeholder="请选择" showSearch optionFilterProp="children">
             {
               objectSelectList.map(
                 ({value, name}) => (
@@ -111,7 +111,7 @@ export default class StepOne extends Component {
             }
           </Select>
           <span className="search-label ml16">绑定方式</span>
-          <Select value={+boundMethodId} style={{width: 240}} onChange={this.boundMethodSelect}>
+          <Select value={+boundMethodId} style={{width: 240}} onChange={this.boundMethodSelect} showSearch optionFilterProp="children">
             {
               tagConfigMethodMap.map(
                 ({name, value}) => (

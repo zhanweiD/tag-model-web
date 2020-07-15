@@ -178,10 +178,12 @@ export default class StepOne extends Component {
               rules: [{required: true, message: '请选择同步对象'}],
             })(
               <Select 
+                showSearch
                 labelInValue 
                 placeholder="请选择所属对象" 
                 style={{width: '100%'}} 
                 onSelect={v => this.selectObj(v)}
+                optionFilterProp="children"
               >
                 {
                   objList.map(item => (
@@ -201,16 +203,18 @@ export default class StepOne extends Component {
               <TextArea placeholder="请输入方案描述" />
             )}
           </FormItem>
-          <h3 className="mb24" style={{marginLeft: '200px'}}>目的源信息</h3>
+          <h3 className="mb24 fs14s" style={{marginLeft: '200px'}}>目的源信息</h3>
           <FormItem {...formItemLayout} label="数据源类型">
             {getFieldDecorator('dataDbType', {
               rules: [{required: true, message: '请选择数据源类型'}],
             })(
               <Select 
+                showSearch
                 labelInValue 
                 placeholder="请选择数据源类型" 
                 style={{width: '100%'}} 
                 onSelect={v => this.selecStorageType(v)}
+                optionFilterProp="children"
               >
                 {
                   storageTypeList.map(item => (
@@ -235,11 +239,13 @@ export default class StepOne extends Component {
             })(
               <div className="select-storage">
                 <Select 
+                  showSearch
                   labelInValue 
                   value={this.store.storageId ? {key: this.store.storageId} : undefined}
                   placeholder="请选择目的源" 
                   style={{width: '100%'}} 
                   onSelect={v => this.selecStorage(v)}
+                  optionFilterProp="children"
                 >
                   {
                     storageList.map(item => (

@@ -4,9 +4,9 @@
 import {Component, Fragment} from 'react'
 import {observer, inject} from 'mobx-react'
 import {action, observable, toJS} from 'mobx'
-import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
-import { Input, Select, Button, Switch } from 'antd';
+import {Form} from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
+import {Input, Select, Button, Switch} from 'antd'
 import {CycleSelect} from '@dtwave/uikit'
 import {QuestionTooltip} from '../../component'
 
@@ -194,7 +194,7 @@ export default class DrawerThree extends Component {
                   initialValue: majorTagInit[d.id],
                   rules: [{required: true, message: '请选择'}],
                 })(
-                  <Select placeholder="请选择" style={{width: '100%'}} onSelect={v => this.majorTagSelect(v, d.id)}>
+                  <Select placeholder="请选择" style={{width: '100%'}} onSelect={v => this.majorTagSelect(v, d.id)} showSearch optionFilterProp="children">
                     {
                       schemeDetail.fieldInfo && schemeDetail.fieldInfo.map(item => (
                         <Option 
@@ -281,7 +281,7 @@ export default class DrawerThree extends Component {
               initialValue: schemeDetail.scheduleType,
               rules: [{required: true, message: '请选择调度类型'}],
             })(
-              <Select placeholder="请选择调度类型" style={{width: '100%'}}>
+              <Select placeholder="请选择调度类型" style={{width: '100%'}} showSearch optionFilterProp="children">
                 {
                   scheduleTypeMap.map(item => (
                     <Option key={item.value} value={item.value}>{item.name}</Option>

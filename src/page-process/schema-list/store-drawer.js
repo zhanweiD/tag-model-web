@@ -44,6 +44,7 @@ export default class Store {
       download: false,
     }
 
+    this.codeStore.runLoading = false
     this.codeStore.tableData = [{title: '运行日志', resultId: 'running_log'}]
   }
 

@@ -17,15 +17,7 @@ class Store {
         id: this.processeId,
       })
       runInAction(() => {
-        const data = res
-        if (res.scheduleType === 1) {
-          const expression = CycleSelect.cronSrialize(res.scheduleExpression)
-
-          data.period = cycleSelectMap[expression.cycle]
-          data.periodTime = expression.time
-        }
-
-        this.detail = data
+        this.detail = res
       })
     } catch (e) {
       errorTip(e.message)
@@ -40,6 +32,7 @@ class Store {
   @observable mainTagObj = []
   @observable obj = []
   @observable tql = ''
+  @observable configDetail = {}
 
   @action async getConfigInfo() {
     try {
@@ -58,6 +51,14 @@ class Store {
         this.mainTagObj = mainTagObj
         this.obj = res.obj
         this.tagConfigList = res.filedTagRspList
+
+        if (res.scheduleType === 1) {
+          const expression = CycleSelect.cronSrialize(res.scheduleExpression)
+
+          res.period = cycleSelectMap[expression.cycle]
+          res.periodTime = expression.time
+        }
+        this.configDetail = res
       })
     } catch (e) {
       errorTip(e.message)

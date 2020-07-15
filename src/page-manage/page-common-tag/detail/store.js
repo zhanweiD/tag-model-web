@@ -16,7 +16,7 @@ class Store {
         id: this.tagId,
       })
       runInAction(() => {
-        this.tagBaseInfo = res
+        this.info = res
       })
     } catch (e) {
       errorTip(e.message)

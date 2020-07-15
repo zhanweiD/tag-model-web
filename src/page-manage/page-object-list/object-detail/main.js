@@ -120,11 +120,11 @@ class ObjectDetail extends Component {
       //   tooltipText: '该对象下公开的标签总数',
       //   values: [objCard.publicTagCount],
       // },
-      {
-        title: '对象总数',
-        tooltipText: '租户下，比如会员实体集，会员总数',
-        values: [objCard.publicTagCount],
-      },
+      // {
+      //   title: '对象总数',
+      //   tooltipText: '租户下，比如会员实体集，会员总数',
+      //   values: [objCard.publicTagCount],
+      // },
     ]
 
     const tabConfig = {

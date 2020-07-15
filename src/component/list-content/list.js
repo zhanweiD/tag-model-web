@@ -150,7 +150,7 @@ export default class ListContent extends Component {
               <Pagination 
                 // @see {@link antd/Pagination}
                 // showQuickJumper, 
-                // showSizeChanger
+                showSizeChanger={false}
                 {...paginationConfig}
                 pageSize={pagination.pageSize}
                 current={pagination.currentPage}

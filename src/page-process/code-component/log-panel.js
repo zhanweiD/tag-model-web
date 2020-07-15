@@ -1,9 +1,9 @@
 import {Component, Fragment} from 'react'
 import {observer} from 'mobx-react'
 import {toJS} from 'mobx'
-import { Icon as LegacyIcon } from '@ant-design/compatible';
-import { DeleteOutlined } from '@ant-design/icons';
-import { Button, Tabs, Spin, Tooltip } from 'antd';
+import {Icon as LegacyIcon} from '@ant-design/compatible'
+import {DeleteOutlined} from '@ant-design/icons'
+import {Button, Tabs, Spin, Tooltip} from 'antd'
 import cls from 'classnames'
 import ResultTable from './result-table'
 
@@ -34,7 +34,7 @@ export default class LogPanel extends Component {
             className="allwindow-button"
             onClick={store.logBoxToAll}
           >
-            <span>
+            <span style={{fontSize: '16px', marginTop: '-8px'}}>
               <i
                 className={cls({
                   iconfont: true,
@@ -42,22 +42,23 @@ export default class LogPanel extends Component {
                   'icon-pingmusuoxiao': store.logBoxToAllFlag,
                   'icon-quanping': !store.logBoxToAllFlag,
                 })}
+               
               />
             </span>
           </Button>
           <Button
             key="min-log"
-            className="zoomIn-log allwindow-button"
+            className="allwindow-button"
             onClick={store.zoomInLogFun}
             disabled={store.logBoxToAllFlag}
           >
-            <LegacyIcon type={store.isMinLog ? 'up-square-o' : 'down-square-o'} />
+            <LegacyIcon type={store.isMinLog ? 'up-square-o' : 'down-square-o'} style={{fontSize: '16px'}} />
           </Button>
           {store.resultActiveKey === 'running_log'
             ? (
               <Tooltip placement="topRight" title="点击可以清空已有的日志">
                 <Button className="clear-log " title="清空日志" onClick={store.clearLog}>
-                  <DeleteOutlined />
+                  <DeleteOutlined style={{fontSize: '16px'}} />
                 </Button>
               </Tooltip>
             )
@@ -149,6 +150,6 @@ export default class LogPanel extends Component {
         </div>
   
       </Fragment>
-    );
+    )
   }
 }

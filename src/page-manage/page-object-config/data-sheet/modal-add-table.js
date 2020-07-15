@@ -280,6 +280,8 @@ class ModalAddTable extends Component {
               <Select 
                 placeholder="请选择数据源" 
                 disabled 
+                showSearch
+                optionFilterProp="children"
               >
                 {
                   dataSourceList.map(item => (
@@ -293,7 +295,7 @@ class ModalAddTable extends Component {
             {getFieldDecorator('dataTableName', {
               rules: [{required: true, message: '请选择数据表'}],
             })(
-              <Select placeholder="请选择数据表" onSelect={v => this.selectDataSheet(v)}>
+              <Select placeholder="请选择数据表" onSelect={v => this.selectDataSheet(v)} showSearch optionFilterProp="children">
                 {
                   dataSheetList.map(item => (
                     <Option key={item.tableName} value={item.tableName} disabled={item.isUsed}>{item.tableName}</Option>
@@ -309,7 +311,7 @@ class ModalAddTable extends Component {
                 {getFieldDecorator('mappingKey', {
                   rules: [{required: true, message: '请选择主标签绑定的字段'}],
                 })(
-                  <Select placeholder="请选择主标签绑定的字段" onSelect={v => this.selectMajorKey(v)}>
+                  <Select placeholder="请选择主标签绑定的字段" onSelect={v => this.selectMajorKey(v)} showSearch optionFilterProp="children">
                     {
                       fieldList.map(item => (
                         <Option key={item.field} value={item.field}>{item.field}</Option>
@@ -318,7 +320,7 @@ class ModalAddTable extends Component {
                   </Select>
                 )}
               </FormItem>
-            ) : <h3 className="mb24">主标签配置</h3>
+            ) : <h3 className="mb24 fs14">主标签配置</h3>
           }
         
           {/* 复杂关系1 */}
@@ -334,6 +336,8 @@ class ModalAddTable extends Component {
                       placeholder={`请选择${entity1Name}绑定的字段`} 
                       onSelect={v => this.selectEntityKey(v, 1, entity1Id)} 
                       disabled={+this.chooseEntity === entity1Id}
+                      showSearch
+                      optionFilterProp="children"
                     >
                       {
                         fieldList.map(item => (
@@ -349,6 +353,8 @@ class ModalAddTable extends Component {
                     rules: [{required: true, message: '请选择主标签绑定的字段'}],
                   })(
                     <Select 
+                      showSearch
+                      optionFilterProp="children"
                       placeholder={`请选择${entity2Name}绑定的字段`} 
                       onSelect={v => this.selectEntityKey(v, 2, entity2Id)} 
                       disabled={+this.chooseEntity === entity2Id}

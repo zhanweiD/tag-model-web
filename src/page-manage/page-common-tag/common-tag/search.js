@@ -79,7 +79,7 @@ export default class Search extends Component {
           <div className="FBH mb16">
             <div>
               <span className="advanced-search-label">所属项目</span>
-              <Select value={ownProjectId} style={{width: 240}} onChange={this.ownProjectSelect}>
+              <Select value={ownProjectId} style={{width: 240}} onChange={this.ownProjectSelect} showSearch optionFilterProp="children">
                 <Option value="">全部</Option>
                 {
                   ownProjectList.map(
@@ -95,7 +95,7 @@ export default class Search extends Component {
                 }
               </Select>
               <span className="advanced-search-label">对象</span>
-              <Select value={objectId} className="mr8" style={{width: 240}} onChange={this.ownObjectSelect}>
+              <Select value={objectId} className="mr8" style={{width: 240}} onChange={this.ownObjectSelect} showSearch optionFilterProp="children">
                 <Option value="">全部</Option>
                 {
                   objectList.map(
@@ -115,7 +115,7 @@ export default class Search extends Component {
                 useProjectId ? (
                   <Fragment>
                     <span className="advanced-search-label">权限状态</span>
-                    <Select value={projectPermission} className="mr8" style={{width: 240}} onChange={this.permissionSelect}>
+                    <Select value={projectPermission} className="mr8" style={{width: 240}} onChange={this.permissionSelect} showSearch optionFilterProp="children">
                       <Option value={2}>全部</Option>
                       {
                         typeMap.map(

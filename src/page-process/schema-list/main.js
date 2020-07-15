@@ -3,12 +3,11 @@
  */
 import {Component, Fragment} from 'react'
 import {action} from 'mobx'
-import {observer, Provider, inject} from 'mobx-react'
+import {observer, Provider} from 'mobx-react'
 import {DownOutlined} from '@ant-design/icons'
 import {Popconfirm, Dropdown, Menu} from 'antd'
 import {Link} from 'react-router-dom'
 
-import * as navListMap from '../../common/navList'
 import {Time} from '../../common/util'
 import {
   ListContent, AuthBox, projectProvider,
@@ -26,21 +25,11 @@ import {
 
 import Store from './store'
 
-// 面包屑设置
-// eslint-disable-next-line no-underscore-dangle
-
-const navList = [
-  navListMap.tagCenter,
-  navListMap.tagSchema,
-  {text: navListMap.schemaList.text},
-]
-
-// @inject('frameChange')
 @observer
 class SchemaList extends Component {
   constructor(props) {
     super(props)
-    // const {spaceInfo} = window
+
     this.projectId = props.projectId
 
     this.rootStore = new Store()
@@ -124,7 +113,7 @@ class SchemaList extends Component {
             {
               (record.status === 1) && (
                 <Fragment>
-                  <Link to={`/process/tag-schema/detail/${record.id}`}> 查看</Link>
+                  <Link to={`/process/tql/${record.id}`}> 查看</Link>
                   <span className="table-action-line" />
                 </Fragment>
               )

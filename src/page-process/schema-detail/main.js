@@ -57,15 +57,9 @@ class SchemaDetail extends Component {
 
     // 不同状态的相应map --方案状态 0 未完成、1 提交成功 2 提交失败
     const tagMap = {
-      0: {
-        tag: <Tag status="default" text="未完成" />,
-      },
-      1: {
-        tag: <Tag status="success" text="提交成功" />,
-      },
-      2: {
-        tag: <Tag status="error" text="提交失败" />,
-      },
+      0: <Tag status="default" text="未完成" />,
+      1: <Tag status="success" text="提交成功" />,
+      2: <Tag status="error" text="提交失败" />,
     }
 
     return (

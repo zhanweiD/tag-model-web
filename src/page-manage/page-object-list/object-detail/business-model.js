@@ -495,7 +495,7 @@ export default class BusinessModel extends Component {
         <svg id="box" />
         <div id="entity_select" style={{position: 'absolute'}}>
           <div id="entity_select_box" style={{display: 'none'}}> 
-            <Select value={this.relObjId} style={{width: 208}} onChange={this.handleChange}>
+            <Select value={this.relObjId} style={{width: 208}} onChange={this.handleChange} showSearch optionFilterProp="children">
               {
                 relList.map(d => <Option value={d.id}>{d.name}</Option>)
               }
