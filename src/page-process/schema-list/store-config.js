@@ -4,9 +4,10 @@ import {
 import {
   successTip, failureTip, errorTip, changeToOptions,
 } from '../../common/util'
+import {ListContentStore} from '../../component/list-content'
 import io from './io'
 
-export default class Store {
+export default class Store extends ListContentStore(io.getFieldList) {
   @observable configDrawerVisible = false // 配置抽屉显示
   @observable release = false // 是否已发布
   @observable isConfig = false // 是否已配置
@@ -17,43 +18,36 @@ export default class Store {
   @observable currentStep = 0 // 抽屉步骤条
   @observable projectId = 0 
   @observable status = -1 // 字段配置状态
-  @observable dataFieldName = '' // 搜索字段名称
+  @observable dataFieldName = ' ' // 搜索字段名称
 
   @observable recordObj = {} // 点击的字段
-  @observable list = [] // 字段列表
   @observable saveList = [] // 暂时保存字段列表
   @observable tagList = [] // 衍生标签列表
   @observable cateList = [] // 类目列表
-
-  @observable pagination = {
-    totalCount: 1,
-    currentPage: 1,
-    pageSize: 10,
-  }
   
   // 获取字段分页列表
-  @action async getFieldList() {
-    this.configNum = 0
-    try {
-      const res = await io.getFieldList({
-        projectId: this.projectId,
-        id: this.sourceId,
-        status: this.status,
-        dataFieldName: this.dataFieldName,
-        currentPage: this.pagination.currentPage,
-        pageSize: this.pagination.pageSize,
-      })
-      runInAction(() => {
-        this.list = res.data || []
-        this.saveList = this.list
-        this.list.forEach(item => {
-          if (item.status) this.configNum++
-        })
-      })
-    } catch (e) {
-      errorTip(e.message)
-    }
-  }
+  // @action async getFieldList() {
+  //   this.configNum = 0
+  //   try {
+  //     const res = await io.getFieldList({
+  //       projectId: this.projectId,
+  //       id: this.sourceId,
+  //       status: this.status,
+  //       dataFieldName: this.dataFieldName,
+  //       currentPage: this.pagination.currentPage,
+  //       pageSize: this.pagination.pageSize,
+  //     })
+  //     runInAction(() => {
+  //       this.list = res.data || []
+  //       this.saveList = this.list
+  //       this.list.forEach(item => {
+  //         if (item.status) this.configNum++
+  //       })
+  //     })
+  //   } catch (e) {
+  //     errorTip(e.message)
+  //   }
+  // }
 
   // 获取配置结果预览分页列表
   @action async getConfigList() {

@@ -4,6 +4,7 @@ import {action} from 'mobx'
 import {inject, observer} from 'mobx-react'
 
 import {ModalForm} from '../../component'
+import {debounce} from '../../common/util'
 
 @inject('store')
 @observer
@@ -14,13 +15,25 @@ export default class ConfigDrawerOne extends Component {
   }
 
   @action newTag = value => {
+    this.form.resetFields(['name'])
     this.store.isNewTag = value
   }
+  
   @action checkName = (rule, value, callback) => {
-    this.store.recheckName(value, callback)
+    if (value) {
+      debounce(() => this.store.checkName(value, callback), 200)
+      // clearTimeout(this.store.timer)
+      // this.store.timer = setTimeout(() => this.store.checkName(value, callback), 200) 
+    } else {
+      callback()
+    }
   }
   @action checkEnName = (rule, value, callback) => {
-    this.store.checkEnName(value, callback)
+    if (value) {
+      debounce(() => this.store.checkEnName(value, callback), 200)
+    } else {
+      callback()
+    }
   }
 
   selectContent= () => {

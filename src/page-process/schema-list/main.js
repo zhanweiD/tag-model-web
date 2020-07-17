@@ -233,7 +233,6 @@ class SchemaList extends Component {
   // 显示标签配置抽屉
   @action configDrawerShow = () => {
     this.configStore.currentStep = 0
-    this.configStore.getFieldList()
     this.configStore.configDrawerVisible = true
   }
 
