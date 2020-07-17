@@ -62,7 +62,7 @@ class Store {
         projectId: this.projectId,
       })
       runInAction(() => {
-        this.storageTypeList = changeToOptions(res)('name', 'type')
+        this.storageTypeList = changeToOptions(res || [])('name', 'type')
       })
     } catch (e) {
       errorTip(e.message)
@@ -78,7 +78,7 @@ class Store {
         ...params,
       })
       runInAction(() => {
-        this.storageList = res
+        this.storageList = res || []
       })
     } catch (e) {
       errorTip(e.message)

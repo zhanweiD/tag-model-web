@@ -213,6 +213,7 @@ export default class StepOne extends Component {
                 style={{width: '100%'}} 
                 onSelect={v => this.selecStorageType(v)}
                 optionFilterProp="children"
+                getPopupContainer={triggerNode => triggerNode.parentElement}
               >
                 {
                   storageTypeList.map(item => (
@@ -244,6 +245,7 @@ export default class StepOne extends Component {
                   style={{width: '100%'}} 
                   onSelect={v => this.selecStorage(v)}
                   optionFilterProp="children"
+                  getPopupContainer={triggerNode => triggerNode.parentElement}
                 >
                   {
                     storageList.map(item => (
