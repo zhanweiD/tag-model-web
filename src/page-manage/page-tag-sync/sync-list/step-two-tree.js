@@ -216,7 +216,7 @@ export default class SyncTagTree extends Component {
                     checkStrictly={false}
                     defaultExpandAll
                     onCheck={this.onCheck}
-                    checkedKeys={checkedKeys}
+                    checkedKeys={checkedKeys.map(String)}
                   >
                     {this.renderTreeNodes(toJS(treeData))}
                   </Tree>

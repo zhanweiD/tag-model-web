@@ -234,7 +234,7 @@ export default class AddSource extends Component {
       <Drawer
         {...drawerConfig}
       >
-        <Form>
+        <Form style={{paddingBottom: '50px'}}>
           <FormItem {...formItemLayout} label="目的源名称">
             {getFieldDecorator('name', {
               rules: [

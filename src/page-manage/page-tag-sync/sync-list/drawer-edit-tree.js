@@ -200,7 +200,7 @@ export default class SyncTagTree extends Component {
     const {treeData, treeLoading, majorTagList, checkedTagData, checkedKeys} = this.store
 
     const keys = checkedKeys.length ? toJS(checkedKeys) : majorTagList.map(d => d.id)
-    
+
     return (
       <div className="FBH">
         <div className="sync-tag-tree">
@@ -229,7 +229,7 @@ export default class SyncTagTree extends Component {
                     checkStrictly={false}
                     defaultExpandAll
                     onCheck={this.onCheck}
-                    checkedKeys={keys}
+                    checkedKeys={keys.map(String)}
                   >
                     {this.renderTreeNodes(toJS(treeData))}
                   </Tree>

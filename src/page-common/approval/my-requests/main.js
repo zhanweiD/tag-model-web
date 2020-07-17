@@ -49,7 +49,7 @@ export default class MyRequests extends Component {
     }, {
       title: '操作',
       key: 'action',
-      width: 120,
+      width: 150,
       dataIndex: 'action',
       render: (text, record) => (
         <div className="FBH FBAC">
@@ -162,8 +162,8 @@ export default class MyRequests extends Component {
         <div className="list-content">
           <ListContent {...listConfig} />
         </div>
-        <ModalBackout {...modalBackoutConfig} />
         <ModalDetail {...modalConfig} />
+        <ModalBackout {...modalBackoutConfig} />
       </div>
     )
   }

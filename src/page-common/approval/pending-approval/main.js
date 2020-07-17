@@ -50,7 +50,7 @@ export default class PendingApproval extends Component {
     }, {
       title: '操作',
       key: 'action',
-      width: 80,
+      width: 150,
       dataIndex: 'action',
       render: (text, record) => (
         <div className="FBH FBAC">

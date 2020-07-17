@@ -114,7 +114,7 @@ export default class CateTree extends Component {
                 checkable
                 defaultExpandAll
                 onCheck={this.onCheck}
-                checkedKeys={checkedKeys}
+                checkedKeys={checkedKeys.map(String)}
               >
                 {this.renderTreeNodes(objCateTree)}
               </Tree>

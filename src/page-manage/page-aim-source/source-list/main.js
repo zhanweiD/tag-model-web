@@ -3,7 +3,7 @@ import {action, toJS} from 'mobx'
 import {observer} from 'mobx-react'
 import {Button, Popconfirm} from 'antd'
 import {Link} from 'react-router-dom'
-import {ListContent, projectProvider} from '../../../component'
+import {ListContent, projectProvider, OmitTooltip} from '../../../component'
 import {Time} from '../../../common/util'
 import seach from './search'
 import AddSource from './drawer'
@@ -25,12 +25,15 @@ class SourceList extends Component {
   }, {
     title: '对象',
     dataIndex: 'objName',
+    render: text => <OmitTooltip maxWidth={100} text={text} />,
   }, {
     title: '数据表',
     dataIndex: 'dataTableName',
+    render: text => <OmitTooltip maxWidth={100} text={text} />,
   }, {
     title: '数据源',
     dataIndex: 'storageName',
+    render: text => <OmitTooltip maxWidth={100} text={text} />,
   }, {
     title: '数据源类型',
     dataIndex: 'storageType',

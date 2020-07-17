@@ -23,6 +23,7 @@ const quickEntrance = [
   {
     tip: '后台配置',
     icon: 'setting',
+    url: '/tag-model/index.html#/config/environment',
   },
 ]
 

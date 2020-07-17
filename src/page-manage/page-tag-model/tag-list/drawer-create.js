@@ -245,6 +245,7 @@ export default class DrawerCreate extends Component {
     const formConfig = {
       selectContent: drawerTagVisible && this.selectContent(),
       wrappedComponentRef: form => { this.form = form ? form.props.form : form },
+      style: {paddingBottom: '50px'},
     }
     return (
       <Drawer {...drawerConfig}>

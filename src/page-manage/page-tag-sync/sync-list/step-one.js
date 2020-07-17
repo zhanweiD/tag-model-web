@@ -54,9 +54,7 @@ export default class StepOne extends Component {
     
     this.store.storageId = undefined
 
-    // setFieldsValue({
-    //   dataStorageId: {},
-    // })
+    this.store.storageList.clear()
     resetFields(['dataStorageId'])
 
     if (getFieldValue('objId')) {
