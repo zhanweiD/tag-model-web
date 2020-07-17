@@ -4,8 +4,8 @@ import {
 } from '../../common/util'
 
 const api = {
-  // getList: get(`${derivativeApi}/schema/scheme_page`), // 加工方案列表
-  getList: get('http://192.168.90.129:3000/mock/16/derivative/scheme/visual_scheme_page'), // 加工方案列表
+  getList: get(`${derivativeApi}/schema/scheme_page`), // 加工方案列表
+  // getList: get('http://192.168.90.129:3000/mock/16/derivative/scheme/visual_scheme_page'), // 加工方案列表
   getObjList: post(`${derivativeApi}/schema/underObjList`), // 基础信息 - 对象下拉列表
   getObjDetail: get(`${baseApi}/project/object/object_basic`), // 对象基本信息
   checkName: post(`${derivativeApi}/schema/checkName`), // 基础信息 - 方案名称查重

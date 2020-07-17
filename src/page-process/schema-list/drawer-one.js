@@ -4,9 +4,9 @@
 import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
 import {action, toJS} from 'mobx'
-import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
-import { Input, Select, Button, Modal, Spin } from 'antd';
+import {Form} from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
+import {Input, Select, Button, Modal, Spin} from 'antd'
 
 const FormItem = Form.Item
 const Option = {Select}
@@ -184,6 +184,8 @@ export default class DrawerOne extends Component {
                   placeholder="请选择所属对象" 
                   style={{width: '100%'}} 
                   onSelect={v => this.selectObj(v)}
+                  showSearch
+                  optionFilterProp="children"
                 >
                   {
                     objList.map(item => (

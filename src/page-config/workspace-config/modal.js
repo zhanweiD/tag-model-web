@@ -50,7 +50,7 @@ const ConfigModal = ({
             },
           ]}
         >
-          <Select placeholder="请选择环境">
+          <Select placeholder="请选择环境" showSearch optionFilterProp="children"> 
             {
               workspace.map(d => <Option value={d.workspaceId}>{d.workspaceName}</Option>)
             }

@@ -20,9 +20,6 @@ export default class Store {
 
   @observable taskInstanceId // 实例ID
   @observable usedTagIds // 提交需要
-  
-  // 是否显示日志，是否运行过
-  @observable isRuned = false
 
   // ************************* 日志相关值 start************************* //
   @observable taskId = 'tag' // 配合组建 离线中存在多个人任务tab
@@ -103,15 +100,6 @@ export default class Store {
     this.logBoxDom.height(this.logBoxHeight)
   }
 
-  // // 获取code_area 的高度
-  // @action getHeight = () => {
-  //   const dom = document.getElementById(`new_codearea${this.taskItemInfo.taskId}`)
-  //   const height = dom.clientHeight
-  //   this.codeContentHeight = height
-  //   this.codeBoxDom = $(`#new_codearea${this.taskItemInfo.taskId}`)
-  //   this.logBoxDom = $(`#log_${this.taskItemInfo.taskId}`)
-  // }
-
   // 日志拖拽
   @action changeHeight = (height, totalHeight) => {
     if (height < 400) return
@@ -181,9 +169,10 @@ export default class Store {
   }
 
   @observable fieldInfo = [] // 运行成功返回标签字段信息
-
+  @observable runLoading = false
   // 启动任务
   @action runTask = async (params, cb) => {
+    this.runLoading = true
     try {
       const data = await io.runInstance({
         projectId: this.projectId,
@@ -214,12 +203,14 @@ export default class Store {
           this.runLog = `TQL语法校验...\nwaiting...\n \n错误信息：\n${data.log}`
           this.runStatusMessage.status = 'error'
           this.runStatusMessage.message = 'TQL语法校验失败'
+          this.runLoading = false
         }
       })
-     
-
       if (cb) cb(data)
     } catch (e) {
+      runInAction(() => {
+        this.runLoading = false
+      })
       ErrorEater({
         code: 0,
         message: e.message,
@@ -250,23 +241,14 @@ export default class Store {
 
       runInAction(() => {
         if (dataLog.logContent) {
-          // const logLimit = window.__keeper.logLimit || 1e4
           // readType 日志读取策略 0:覆盖1:追加
           if (dataLog.readType && dataLog.currentLine > this.logIndex) {
-            // this.runLog = (dataLog.log && this.runLog.length > 5e5) ? dataLog.log : (this.runLog + dataLog.log)
-            // this.runLog += dataLog.log
             const newLog = this.runLog + dataLog.logContent
-            // if (newLog.length > logLimit) {
-            //   newLog = newLog.slice(-logLimit)
-            //   this.runStatusMessage.download = true
-            // }
+ 
             this.runLog = newLog
           } else {
             const newLog = `正在提交...\nwaiting...\n${dataLog.logContent}`
-            // if (newLog.length > logLimit) {
-            //   newLog = newLog.slice(-logLimit)
-            //   this.runStatusMessage.download = true
-            // }
+
             this.runLog = newLog
           }
           this.logIndex = dataLog.currentLine
@@ -283,17 +265,11 @@ export default class Store {
           if (dataLog.resultList.length || dataLog.status === 0) {
             // 运行成功
             status = 'success'
-            // if (this.taskItemInfo.type === 'task') {
-            //   this.updateConfig()
-            // }
           } else {
             // 运行失败
             status = 'error'
           }
-          // _store.setCodeareaItemAttr(this.taskItemInfo.taskId, {
-          //   isRunning: false,
-          //   status,
-          // })
+          this.runLoading = false
           this.runStatusMessage.status = status
 
           if (dataLog.resultList.length) {
@@ -325,10 +301,7 @@ export default class Store {
       }
     } catch (e) {
       runInAction(() => {
-        // _store.setCodeareaItemAttr(this.taskItemInfo.taskId, {
-        //   isRunning: false,
-        //   status: 'error',
-        // })
+        this.runLoading = false
         this.runStatusMessage.status = 'error'
         this.runStatusMessage.message = '网络不稳定，日志获取失败！'
       })

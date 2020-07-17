@@ -31,7 +31,7 @@ export default class ConfigInfo extends Component {
 
   render() {
     const {
-      tql, mainTagObj, obj = [], tagConfigList = [], detail,
+      tql, mainTagObj, obj = [], tagConfigList = [], configDetail,
     } = this.store
 
     const majorTagInfo = obj && obj.map(d => ({
@@ -54,27 +54,27 @@ export default class ConfigInfo extends Component {
         />
         <div className="info-title">调度配置</div>
         <NemoBaseInfo 
-          dataSource={detail.scheduleType === 1 ? [{
+          dataSource={configDetail.scheduleType === 1 ? [{
             title: '调度类型',
-            value: scheduleTypeObj[detail.scheduleType],
+            value: scheduleTypeObj[configDetail.scheduleType],
           }, {
             title: '调度周期',
-            value: detail.period,
+            value: configDetail.period,
           }, {
             title: '调度时间',
-            value: detail.periodTime,
+            value: configDetail.periodTime,
           }] : [{
             title: '调度类型',
-            value: scheduleTypeObj[detail.scheduleType],
+            value: scheduleTypeObj[configDetail.scheduleType],
           }]} 
           className="ml32 mb24"
         />
         <div className="info-title">标签配置</div>
         <div className="mb4">
           标签数/字段数：
-          {detail.tagCount}
+          {configDetail.tagCount}
           /
-          {detail.fieldCount}
+          {configDetail.fieldCount}
         </div>
         <Table columns={this.columns} dataSource={tagConfigList} pagination={false} />
       </div>

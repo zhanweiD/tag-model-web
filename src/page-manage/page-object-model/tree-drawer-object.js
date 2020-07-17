@@ -125,19 +125,18 @@ class ModalObject extends Component {
         if (editType === 'edit') {
           const params = {id: detail.id, ...param}
           store.editNode(params, type, () => {
+            t.handleCancel()
             // 编辑节点为当前选中节点
             if (detail.id === t.bigStore.objId) {
               // 刷新对象详情
               t.bigStore.updateDetailKey = Math.random()
             }
-
-            t.handleCancel()
           })
         } else {
           // 新增
           store.addNode(param, type, () => {
-            t.bigStore.objId = store.objId
             t.handleCancel()
+            t.bigStore.objId = store.objId
           })
         }
       }
@@ -219,7 +218,7 @@ class ModalObject extends Component {
               initialValue: data.objCatId,
               rules: [{required: true, message: '请选择所属类目'}],
             })(
-              <Select placeholder="请选择所属类目">
+              <Select placeholder="请选择所属类目" showSearch optionFilterProp="children">
                 {
                   this.store.categoryData.map(item => (
                     <Option key={item.aId} value={item.aId}>{item.name}</Option>
@@ -311,7 +310,7 @@ class ModalObject extends Component {
                     initialValue: data.tagValueType,
                     rules: [{required: true, message: '请选择数据类型'}],
                   })(
-                    <Select placeholder="请选择数据类型">
+                    <Select placeholder="请选择数据类型" showSearch optionFilterProp="children">
                       {
                         window.njkData.dict.dataType.map(item => (
                           <Option key={item.key} value={item.key}>{item.value}</Option>

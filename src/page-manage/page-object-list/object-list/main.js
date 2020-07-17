@@ -31,10 +31,12 @@ class ObjectList extends Component {
   }, {
     title: '加工方案数',
     dataIndex: 'schemeCount',
-  }, {
-    title: '上架标签数',
-    dataIndex: 'publicTagCount',
-  }, {
+  },
+  //  {
+  //   title: '上架标签数',
+  //   dataIndex: 'publicTagCount',
+  // }, 
+  {
     title: '标签总数',
     dataIndex: 'tagCount',
   }, {

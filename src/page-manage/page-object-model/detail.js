@@ -96,7 +96,7 @@ export default class ObjectDetail extends Component {
           code="asset_tag_obj_add_edit_del_publish"
         >
           发布
-                </AuthBox>,
+        </AuthBox>,
       },
       1: {
         tag: <Tag status="success" text="已发布" />,
@@ -107,7 +107,7 @@ export default class ObjectDetail extends Component {
           code="asset_tag_obj_add_edit_del_publish"
         >
           取消发布
-                </AuthBox>,
+        </AuthBox>,
       },
       2: {
         tag: <Tag status="process" text="使用中" />,
@@ -135,11 +135,12 @@ export default class ObjectDetail extends Component {
         title: '标签总数',
         tooltipText: '已发布的标签总数',
         values: [objCard.tagCount],
-      }, {
-        title: '上架标签总数',
-        tooltipText: '该对象下公开的标签总数',
-        values: [objCard.publicTagCount],
       },
+      //  {
+      //   title: '上架标签总数',
+      //   tooltipText: '该对象下公开的标签总数',
+      //   values: [objCard.publicTagCount],
+      // },
     ]
 
 

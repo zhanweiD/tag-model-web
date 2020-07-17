@@ -278,7 +278,7 @@ export default class AddSource extends Component {
               <TextArea placeholder="请输入方案描述" />
             )}
           </FormItem>
-          <h3 className="mb24">目的源信息</h3>
+          <h3 className="mb24 fs14">目的源信息</h3>
           <FormItem {...formItemLayout} label="数据源类型">
             {getFieldDecorator('dataStorageType', {
               rules: [{required: true, message: '请选择数据源类型'}],
