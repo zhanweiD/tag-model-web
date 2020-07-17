@@ -13,6 +13,14 @@ export default class ConfigDrawerOne extends Component {
     super(props)
     this.store = props.store
   }
+
+  componentDidMount() {
+    this.store.saveList = this.store.list
+    this.store.list.forEach(item => {
+      if (item.status) this.store.configNum++
+    })
+  }
+  
   columns = [
     {
       key: 'dataFieldName',
@@ -38,36 +46,50 @@ export default class ConfigDrawerOne extends Component {
   // tab 切换
   @action handleChange = v => {
     this.store.status = v.target.value
-    this.store.getFieldList()
+    this.store.getList()
   }
 
   // 字段搜索
   @action searchFiled = v => {
     this.store.dataFieldName = v
-    this.store.getFieldList()
+    this.store.getList()
   }
-
+ 
   // 选中字段
   @action selectField = obj => {
     this.store.recordObj = obj
     this.store.release = obj.tagStatus
     this.store.isConfig = obj.status
+    console.log(obj)
+  } 
+
+  // 显示全部，隐藏已发布
+  @action showAll = () => {
+    this.store.getList()
   }
 
   render() {
     const {
-      tableLoading,
       list,
       configNum,
+      projectId,
+      sourceId,
+      status,
+      dataFieldName,
     } = this.store
 
     const listConfig = {
-      tableLoading,
+      initParams: {
+        projectId,
+        id: sourceId,
+        status,
+        dataFieldName,
+      },
       onRow: record => ({
         onClick: () => this.selectField(record),
       }),
       columns: this.columns,
-      initGetDataByParent: true, // 初始请求 在父层组件处理。列表组件componentWillMount内不再进行请求
+      // initGetDataByParent: true, // 初始请求 在父层组件处理。列表组件componentWillMount内不再进行请求
       store: this.store, // 必填属性
     }
     return (
@@ -80,7 +102,7 @@ export default class ConfigDrawerOne extends Component {
         <Card 
           size="small" 
           title="字段列表" 
-          extra={<a href onClick={() => console.log('all')}>显示全部</a>} 
+          extra={<a href onClick={this.showAll}>显示全部</a>} 
           style={{width: 525, height: 600, marginTop: '16px'}}
         >
           <Search

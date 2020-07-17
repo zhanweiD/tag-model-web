@@ -252,3 +252,16 @@ export function calcSize(size, defaultUnit = 'B', isToFixed = true) {
     2 ** 40,
   }
 }
+
+/**
+ * @description 重命名校验防抖
+ * @author 凡书
+ * @param fn 重命名校验函数 
+ * @param delay 间隔时间
+ */
+
+let timer = null 
+export function debounce(fn, delay = 200) {
+  clearTimeout(timer)
+  timer = setTimeout(fn, delay)
+}

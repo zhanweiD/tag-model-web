@@ -72,12 +72,12 @@ export default PageComponent => {
     
 
     const noDataConfig = {
-      btnText: '去初始化环境',
+      btnText: '去初始化',
       onClick: () => {
         getWorkspaceList(projectId)
         changeVisible(true)
       },
-      text: '初始化',
+      // text: '初始化',
     }
 
     if (!projectId) {
