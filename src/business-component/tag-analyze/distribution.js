@@ -64,9 +64,9 @@ export default class Distribution extends Component {
     const {store} = this.props
     return (
       <div className="chartPie-ad">
-        <div ref="chartsPie" style={{height: '500px', width: '100%'}} />
+        <div ref="chartsPie" style={{height: '400px', width: '100%'}} />
         <div className="pie-tips FBH ablt">
-          <ul className="mr-16">
+          <ul className="mr8">
             {
               store.chartPieValues.map((item, index) => (
                 <li className="FBH FBAC mb4">
@@ -76,7 +76,7 @@ export default class Distribution extends Component {
               ))
             }
           </ul>
-          <ul className="mr-16">
+          <ul className="mr8">
             {
               store.chartPieValues.map(item => (
                 <li className="FBH FBAC mb4" style={{width: '150px'}}>
@@ -92,7 +92,7 @@ export default class Distribution extends Component {
               ))
             }
           </ul>
-          <ul className="mr-16">
+          <ul className="mr8">
             {
               store.chartPieValues.map(item => (
                 <li className="FBH FBAC mb4">

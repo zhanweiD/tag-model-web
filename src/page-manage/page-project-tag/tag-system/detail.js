@@ -2,9 +2,12 @@
  * @description 标签仓库-标签体系-标签详情
  */
 import {Component} from 'react'
-import {DetailHeader} from '../../../component'
+import {Button} from 'antd'
+
+import {DetailHeader, Tag} from '../../../component'
 import {Time} from '../../../common/util'
 import TagAnalyze from '../../../business-component/tag-analyze'
+import TagTrend from '../../../business-component/tag-trend'
 
 export default class Detail extends Component {
   constructor(props) {
@@ -38,15 +41,28 @@ export default class Detail extends Component {
       value: tagDetail.tableName,
     }]
 
+    // 不同状态的相应map
+    const status = 1
+    const tagMap = {
+      1: <Tag status="success" text="有权限" />,
+      2: <Tag status="process" text="审核中" />,
+    }
+    const actions = [
+      <Button className="mr8" type="primary" onClick={this.viewRule}>申请权限</Button>,
+    ]
+
     return (
       <div className="detail-content">
         <DetailHeader
           name={tagDetail.name}
           descr={tagDetail.descr}
           baseInfo={baseInfo}
+          tag={tagMap[status]}
+          actions={actions}
         />
         <div className="bgf mt16 ">
           <TagAnalyze />
+          <TagTrend />
         </div>
       </div>
     )

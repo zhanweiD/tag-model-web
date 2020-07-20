@@ -1,7 +1,7 @@
 import {
-  action, runInAction, observable,
+  action, runInAction, observable, toJS,
 } from 'mobx'
-import {errorTip} from '../../../common/util'
+import {errorTip, listToTree} from '../../../common/util'
 import io from './io'
 
 class Store {
@@ -11,15 +11,28 @@ class Store {
   @observable currentKey = undefined
 
   @observable expandAll = false
-  @observable treeData = [] // 类目树数据
+  @observable treeData = [
+    {
+      id: 1,
+      aId: 111,
+      name: '111',
+      parentId: 0,
+    },
+    {
+      id: 2,
+      aId: 211,
+      name: '222',
+      parentId: 1,
+    },
+  ] // 类目树数据
   @observable searchExpandedKeys = [] // 关键字搜索展开的树节点
   @observable currentSelectKeys = undefined// 默认展开的树节点
   //* *********** tree end ******************/
-  @action async get() {
+  @action async getTreeData() {
     try {
-      const res = await io.get()
+      // const res = await io.getTreeData()
       runInAction(() => {
-       
+        this.treeData = listToTree(toJS(this.treeData))
       })
     } catch (e) {
       errorTip(e.message)

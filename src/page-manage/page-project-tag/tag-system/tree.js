@@ -4,6 +4,7 @@
 import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {DtTree} from '@dtwave/uikit'
+import {action} from 'mobx'
 import {Loading} from '../../../component'
 import Action from './tree-action'
 
@@ -14,6 +15,8 @@ export default class Tree extends Component {
   constructor(props) {
     super(props)
     this.store = props.store
+
+    this.store.getTreeData()
   }
 
   // 递归遍历树节点
@@ -37,6 +40,10 @@ export default class Tree extends Component {
         }
       </DtTreeNode>
     ))
+  }
+
+  @action onselect = (selectedKey, e) => {
+    console.log(selectedKey, e)
   }
 
   render() {
