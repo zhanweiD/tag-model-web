@@ -134,7 +134,7 @@ export default class TagApply extends Component {
             )
           } */}
           <FormItem {...formItemLayout} label="使用项目">
-            {useProjectName}
+            <span className="fs12">{useProjectName}</span>
           </FormItem>
           <FormItem
             {...formItemLayout}
