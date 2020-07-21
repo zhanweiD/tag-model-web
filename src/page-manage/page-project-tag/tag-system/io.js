@@ -1,9 +1,10 @@
 import ioContext from '../../../common/io-context'
-import {approvalApi, get, post} from '../../../common/util'
+import {tagModalApi, approvalApi, get, post} from '../../../common/util'
 
 const api = {
   getList: get(`${approvalApi}/myApprovaled`), // 我已审批列表
   getApplicant: post(`${approvalApi}/applicant`), // 申请人下拉列表
+  getTagBaseDetail: get(`${tagModalApi}/tag_detail`), // 标签详情
 } 
 
 ioContext.create('approved', api) 

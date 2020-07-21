@@ -32,7 +32,7 @@ export default class TagTrend extends Component {
       endDate: lte,
     }
 
-    store.getValueTrend(params, res => {
+    store.getRatuoTrend(res => {
       if (res.length) this.drawChart(res)
     })
   }

@@ -1,15 +1,11 @@
 import ioContext from '../../common/io-context'
-import {approvalApi, get, post} from '../../common/util'
+import {baseApi, get, post} from '../../common/util'
 
-const isMock = false
 const api = {
-  getList: get(`${approvalApi}/myApprovaled`, {
-    mock: isMock,
-    mockUrl: 'page-approval/approved',
-  }), // 我已审批列表
-  getApplicant: post(`${approvalApi}/applicant`), // 申请人下拉列表
+  // getRatuoTrend: get(`${baseApi}/score/null_ratio_trend`), // 获取空值率折线图信息
+  getRatuoTrend: get('http://192.168.90.129:3000/mock/119/score/null_ratio_trend'), // 获取空值率折线图信息
 } 
 
-ioContext.create('approved', api) 
+ioContext.create('tagTrend', api) 
 
-export default ioContext.api.approved
+export default ioContext.api.tagTrend

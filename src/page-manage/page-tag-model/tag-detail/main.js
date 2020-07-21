@@ -8,6 +8,7 @@ import OnerFrame from '@dtwave/oner-frame'
 import {DetailHeader, OverviewCardWrap, Tag} from '../../../component'
 import {Time} from '../../../common/util'
 import TagAnalyze from '../../../business-component/tag-analyze'
+import TagTrend from '../../../business-component/tag-trend'
 import TagrRelate from '../../../business-component/tag-relate'
 import ProjectList from './project-list'
 
@@ -124,6 +125,7 @@ class TagDetail extends Component {
           <TabPane tab="标签分析" key="1">
             <div className="bgf m16 box-border" style={{minHeight: 'calc(100vh - 430px)'}}>
               <TagAnalyze tagId={tagId} />
+              <TagTrend tagId={tagId} />
             </div>
           </TabPane>
           <TabPane tab="血缘分析" key="2">
@@ -138,7 +140,6 @@ class TagDetail extends Component {
           </TabPane>
         </Tabs>
       </div>
-      
     )
   }
 }

@@ -7,40 +7,11 @@ import io from './io'
 class Store {
   tagId
   // 空值占比趋势
-   @action async getValueTrend(params, cb) {
+  @action async getRatuoTrend(cb) {
     try {
-      // const res = await io.getValueTrend({
-      //   tagId: this.tagId,
-      //   ...params,
-      // })
-
-      const res = [
-        {
-          date: 1595229795000,
-          count: 1,
-        }, {
-          date: 1595229795000,
-          count: 2,
-        }, {
-          date: 1595229795000,
-          count: 3,
-        }, {
-          date: 1595229795000,
-          count: 4,
-        }, {
-          date: 1595229795000,
-          count: 5,
-        }, {
-          date: 1595229795000,
-          count: 6,
-        }, {
-          date: 1595229795000,
-          count: 7,
-        }, {
-          date: 1595229795000,
-          count: 8,
-        },
-      ]
+      const res = await io.getRatuoTrend({
+        id: this.tagId,
+      })
       runInAction(() => {
         if (cb) cb(toJS(res))
       })

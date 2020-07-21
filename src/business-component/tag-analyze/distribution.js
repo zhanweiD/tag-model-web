@@ -30,29 +30,23 @@ export default class Distribution extends Component {
     this.myChart && this.myChart.resize()
   }
 
-  @action drawSaveTrend() {
-    const {store} = this.props
-    const {chartPieValues} = store
-    for (let i = 0; i < store.chartPieValues.length; i++) {
-      chartsCount += chartPieValues[i].metaCount
+  @action drawSaveTrend(pieData) {
+    for (let i = 0; i < pieData.length; i++) {
+      chartsCount += pieData[i].count
       const c = {
-        value: chartPieValues[i].ratio,
-        name: `${chartPieValues[i].treeName} ${chartPieValues[i].ratio}% ${chartPieValues[i].metaCount}`,
+        value: pieData[i].ratio,
+        name: `${pieData[i].key} ${pieData[i].ratio}% ${pieData[i].count}`,
       }
       data[i] = c 
     }
-    this.myChart.setOption(getPieOpt(chartsCount, data, legendName))
+    this.myChart.setOption(getPieOpt(chartsCount, data))
   }
 
   componentWillMount() {
     const {store} = this.props
-    // store.getPieData(() => {
-    //   this.drawSaveTrend()
-    // })
-    console.log(store.chartPieValues)
-    setTimeout(() => {
-      this.drawSaveTrend()
-    }, 10)
+    store.getValueTrend(pieData => {
+      this.drawSaveTrend(pieData)
+    })
   }
 
   componentDidMount() {
@@ -71,7 +65,7 @@ export default class Distribution extends Component {
               store.chartPieValues.map((item, index) => (
                 <li className="FBH FBAC mb4">
                   <span className="circle mb2 wh8" style={{backgroundColor: colors[index]}} />
-                  <span className="interval">{item.treeName}</span>
+                  <span className="interval">{item.key}</span>
                 </li>
               ))
             }
@@ -96,7 +90,7 @@ export default class Distribution extends Component {
             {
               store.chartPieValues.map(item => (
                 <li className="FBH FBAC mb4">
-                  <span className="interval">{item.metaCount}</span>
+                  <span className="interval">{item.count}</span>
                 </li>
               ))
             }

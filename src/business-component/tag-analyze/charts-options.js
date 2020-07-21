@@ -185,7 +185,7 @@ export function getApiTrendOpt(data) {
 }
 
 // 值域分布趋势图配置
-export function getPieOpt(chartsCount, data, legendName) {
+export function getPieOpt(chartsCount, data) {
   return {
     backgroundColor: '#fff',
     title: {
@@ -220,7 +220,7 @@ export function getPieOpt(chartsCount, data, legendName) {
         fontSize: 12,
         color: '#333',
       },
-      data: legendName,
+      data: [],
     },
     series: [{
       type: 'pie',

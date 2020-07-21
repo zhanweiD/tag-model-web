@@ -1,32 +1,40 @@
 import {
   action, observable, runInAction, toJS,
 } from 'mobx'
-import {errorTip} from '../../common/util'
+import {errorTip, successTip} from '../../common/util'
 import io from './io'
 
 class Store {
   // 值域分布
-  @observable chartPieValues = [
-    {treeId: null, treeName: '530', metaCount: 1229, ratio: 37},
-    {treeId: null, treeName: 'ym一级', metaCount: 863, ratio: 26},
-    {treeId: null, treeName: 'DCA_一级类目', metaCount: 744, ratio: 23},
-    {treeId: null, treeName: 'bb', metaCount: 224, ratio: 7},
-    {treeId: null, treeName: 't1', metaCount: 224, ratio: 7},
-  ]
-  // @observable totalCount = 3284
+  @observable chartPieValues = []
+  @observable valueTrend = {} // 值域分布信息
+  @observable tagId = 0 // 标签id
+  @observable updateStatus = 0 // 标签id
 
-  tagId
-  // 空值占比趋势
-   @action async getValueTrend(params, cb) {
+  // 值域分布信息
+  @action async getValueTrend(cb) {
     try {
-      // const res = await io.getValueTrend({
-      //   tagId: this.tagId,
-      //   ...params,
-      // })
-
-      const res = []
+      const res = await io.getValueTrend({
+        id: this.tagId,
+      })
       runInAction(() => {
-        if (cb) cb(toJS(res))
+        this.chartPieValues = res.pieTemplateDtoList || []
+        this.valueTrend = res || {}
+        if (cb) cb(toJS(this.chartPieValues))
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  // 值域分布更新
+  @action.bound async getValueUpdate() {
+    try {
+      const res = await io.getValueUpdate({
+        id: this.tagId,
+      })
+      runInAction(() => {
+        if (res) successTip('更新成功')
       })
     } catch (e) {
       errorTip(e.message)

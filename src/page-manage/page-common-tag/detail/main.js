@@ -8,6 +8,7 @@ import OnerFrame from '@dtwave/oner-frame'
 import {DetailHeader} from '../../../component'
 import {Time} from '../../../common/util'
 import TagAnalyze from '../../../business-component/tag-analyze'
+import TagTrend from '../../../business-component/tag-trend'
 
 import store from './store'
 
@@ -67,6 +68,7 @@ class TagDetail extends Component {
         </Spin>
         <div className="bgf m16 box-border"> 
           <TagAnalyze tagId={tagId} />
+          <TagTrend tagId={tagId} />
         </div>
       </div>
       

@@ -9,7 +9,6 @@ class Store {
   @observable searchKey // 类目树搜索值
   @observable treeLoading = false
   @observable currentKey = undefined
-
   @observable expandAll = false
   @observable treeData = [
     {
@@ -27,6 +26,7 @@ class Store {
   ] // 类目树数据
   @observable searchExpandedKeys = [] // 关键字搜索展开的树节点
   @observable currentSelectKeys = undefined// 默认展开的树节点
+
   //* *********** tree end ******************/
   @action async getTreeData() {
     try {
@@ -41,6 +41,24 @@ class Store {
 
   //* *********** detail start ****************/
   @observable tagDetail = {}
+
+  @action async getTagBaseDetail() {
+    this.detailLoading = false
+    try {
+      const res = await io.getTagBaseDetail({
+        id: this.tagId,
+      })
+      runInAction(() => {
+        this.tagDetail = res
+      })
+    } catch (e) {
+      errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        this.detailLoading = false
+      })
+    }
+  }
   //* *********** detail end ****************/
 }
 

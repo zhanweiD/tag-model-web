@@ -21,14 +21,16 @@ export default function getApiTrendOpt(data) {
     
     tooltip: {
       trigger: 'axis',
-      formatter: params => `日期: ${moment(+params[0].axisValue).format('YYYY-MM-DD')} <br/>空值数: ${params[0].value}`,   
+      formatter: params => `日期: ${params[0].axisValue} <br/>空值数: ${params[0].value}`,   
+      // formatter: params => `日期: ${moment(+params[0].axisValue).format('YYYY-MM-DD')} <br/>空值数: ${params[0].value}`,   
     },
 
     xAxis: {
       type: 'category',
       data: _.map(data, 'date'),
       axisLabel: {
-        formatter: value => moment(+value).format('MM-DD'),
+        // formatter: value => moment(+value).format('MM-DD'),
+        formatter: '{value}',
         textStyle: {
           color: nameTextStyleColor,
         },
@@ -46,7 +48,7 @@ export default function getApiTrendOpt(data) {
         splitNumber: 5,
         name: '',
         nameTextStyle: {
-          padding: [0, 0, 0, 24],
+          padding: [0, 0, 0, 30],
           color: nameTextStyleColor,
         },
         minInterval: 1,
