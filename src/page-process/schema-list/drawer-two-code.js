@@ -5,7 +5,10 @@ import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
 import {action, toJS} from 'mobx'
 import cls from 'classnames'
-import {message, Spin} from 'antd'
+import {
+  message, 
+  // Spin
+} from 'antd'
 
 import sqlFormatter from 'sql-formatter'
 import LogPanel from '../code-component/log-panel'
@@ -110,41 +113,41 @@ export default class DrawerTwoCode extends Component {
     const {schemeDetail} = this.drawerStore
 
     return (
-      <Spin spinning={runLoading} tip="运行中...">
-        <div className="code-content">
+      // <Spin spinning={runLoading} tip="运行中...">
+      <div className="code-content">
        
-          <div className="code-menu">
-            <span className="code-menu-item mr16" onClick={() => this.operationCode()}>
-              <img src={yunxing} alt="img" />
-              <span>运行</span>
-            </span>
-            <span className="code-menu-item mr16" onClick={() => this.codeFormat()}>
-              <img src={geshihua} alt="img" />
-              <span>格式化</span>
-            </span>
-          </div>
-          <form
-            id="code_area"
-            className={cls({
-              new_codearea: true,
-              new_codearea_nolog: !this.store.isRuned,
-              max_height: this.store.isRuned,
-            })}
-          >
-            <textarea
-              id="codeArea"
-              ref={t => this.codeArea = t}
-              placeholder="code goes here..."
-            >
-              {
-                toJS(schemeDetail.source)
-              }
-            </textarea>
-          </form>   
-          <LogPanel {...logPanelConfig} />
-   
+        <div className="code-menu">
+          <span className="code-menu-item mr16" onClick={() => this.operationCode()}>
+            <img src={yunxing} alt="img" />
+            <span>运行</span>
+          </span>
+          <span className="code-menu-item mr16" onClick={() => this.codeFormat()}>
+            <img src={geshihua} alt="img" />
+            <span>格式化</span>
+          </span>
         </div>
-      </Spin>
+        <form
+          id="code_area"
+          className={cls({
+            new_codearea: true,
+            new_codearea_nolog: !this.store.isRuned,
+            max_height: this.store.isRuned,
+          })}
+        >
+          <textarea
+            id="codeArea"
+            ref={t => this.codeArea = t}
+            placeholder="code goes here..."
+          >
+            {
+              toJS(schemeDetail.source)
+            }
+          </textarea>
+        </form>   
+        <LogPanel {...logPanelConfig} />
+   
+      </div>
+      // </Spin>
     )
   }
 }
