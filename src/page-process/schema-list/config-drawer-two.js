@@ -33,8 +33,9 @@ export default class ConfigDrawerTwo extends Component {
     this.store.configDrawerVisible = false
   }
   @action preStep = () => {
-    this.store.list = this.store.saveList
+    // this.store.list = this.store.allList
     this.store.currentStep = 0
+    this.store.tabChange(1)
   }
   
   render() {

@@ -1,6 +1,6 @@
 import ioContext from '../../common/io-context'
 import {
-  derivativeApi, baseApi, get, post,
+  derivativeApi, tagModalApi, baseApi, get, post,
 } from '../../common/util'
 
 const api = {
@@ -25,8 +25,17 @@ const api = {
   getSubmitLog: get(`${derivativeApi}/schema/submit_log`), // 查询提交日志
 
   // 标签配置
-  // getFieldList: get(`${baseApi}/targetSource/sourceFields`), // 获取标签列表
-  getFieldList: get('http://192.168.90.129:3000/mock/16/targetSource/sourceFields'), // 获取标签列表
+  // getFieldList: get(`${derivativeApi}/scheme/field_list`), // 获取字段列表
+  getFieldList: get('http://192.168.90.129:3000/mock/119/derivative/scheme/field_list'), // 获取字段列表
+  // fieldTagRelation: post(`${baseApi}/tagConfig/save_single_der_filed_tag_relation`), // 绑定衍生标签
+  saveTagRelation: post('http://192.168.90.129:3000/mock/119/tagConfig/save_single_der_filed_tag_relation'), // 绑定衍生标签
+  // fieldTagRelation: post(`${baseApi}/tagConfig/delete_single_der_filed_tag_relation`), // 取消标签绑定
+  delTagRelation: post('http://192.168.90.129:3000/mock/119/tagConfig/delete_single_der_filed_tag_relation'), // 取消标签绑定
+  createTag: post(`${baseApi}/tag/create_derivative_tag`), // 创建衍生标签
+  getTagList: post(`${derivativeApi}/scheme/derivative_tag_list`), // 衍生标签列表
+  tabCheckName: post(`${tagModalApi}/name_check`), // 重名校验
+  getTagCateSelectList: get(`${baseApi}/cate/cate_tree`), // 创建标签 - 所属类目下拉数据
+  getTagBaseDetail: get(`${tagModalApi}/tag_detail`), // 标签详情
 
   // 权限code
   getAuthCode: get(`${baseApi}/project/getFunctionCodes`),

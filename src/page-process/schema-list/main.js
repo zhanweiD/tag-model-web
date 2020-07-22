@@ -121,9 +121,10 @@ class SchemaList extends Component {
 
             {/* 方案状态: 提交成功  操作: 标签配置 */}
             {
-              (record.status === 1) && (
+              // (record.status === 1) && 
+              (
                 <Fragment>
-                  <a onClick={this.configDrawerShow}> 标签配置</a>
+                  <a onClick={() => this.configDrawerShow(record)}> 标签配置</a>
                   <span className="table-action-line" />
                 </Fragment>
               )
@@ -231,8 +232,12 @@ class SchemaList extends Component {
   }
 
   // 显示标签配置抽屉
-  @action configDrawerShow = () => {
+  @action configDrawerShow = record => {
     this.configStore.currentStep = 0
+    this.configStore.tagId = 0
+    this.configStore.tagBaseInfo = {}
+    this.configStore.ownObject = record.objId
+    this.configStore.processId = record.id
     this.configStore.configDrawerVisible = true
   }
 

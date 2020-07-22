@@ -22,11 +22,11 @@ export default class DrawerConfig extends Component {
     this.store = configStore
     this.codeStore = codeStore
     this.store.projectId = props.projectId
+    this.store.resetData()
   }
 
   @action closeDrawer = () => {
     this.store.configDrawerVisible = false
-    console.log(this.store)
   }
 
   render() {

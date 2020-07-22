@@ -1,6 +1,6 @@
 import {Component} from 'react'
 import {Tabs, Button, Radio, Card, Input} from 'antd'
-import {action} from 'mobx'
+import {action, toJS} from 'mobx'
 import {inject, observer} from 'mobx-react'
 
 import {ListContent} from '../../component'
@@ -13,78 +13,104 @@ export default class ConfigDrawerOne extends Component {
     super(props)
     this.store = props.store
   }
-
-  componentDidMount() {
-    this.store.saveList = this.store.list
-    this.store.list.forEach(item => {
-      if (item.status) this.store.configNum++
-    })
-  }
   
   columns = [
     {
-      key: 'dataFieldName',
+      key: 'fieldName',
       title: '字段名称',
-      dataIndex: 'dataFieldName',
+      dataIndex: 'fieldName',
     }, {
-      key: 'dataFieldType',
+      key: 'fieldType',
       title: '字段类型',
-      dataIndex: 'dataFieldType',
+      dataIndex: 'fieldType',
     }, {
-      key: 'status',
+      key: 'tagFieldId',
       title: '配置状态',
-      dataIndex: 'status',
+      dataIndex: 'tagFieldId',
       render: text => (text ? '已配置' : '未配置'),
     }, {
-      key: 'tagStatus',
+      key: 'status',
       title: '发布状态',
-      dataIndex: 'tagStatus',
-      render: text => (text ? '已发布' : '未发布'),
+      dataIndex: 'status',
+      render: text => (text === 2 ? '已发布' : '未发布'),
     }, 
   ]
 
   // tab 切换
-  @action handleChange = v => {
-    this.store.status = v.target.value
-    this.store.getList()
-  }
+  // @action handleChange = v => {
+  //   const {allList, noConList, configList} = this.store
+  //   switch (v.target.value) {
+  //     case 1:
+  //       this.store.list = allList
+  //       break
+  //     case 2:
+  //       this.store.list = configList
+  //       break
+  //     case 0:
+  //       this.store.list = noConList
+  //       break
+  //     default:
+  //       this.store.list = allList
+  //       break
+  //   }
+  //   // this.store.status = v.target.value
+  //   this.store.recordObj = {}
+  // }
 
   // 字段搜索
   @action searchFiled = v => {
     this.store.dataFieldName = v
     this.store.getList()
+    this.store.recordObj = {}
   }
  
   // 选中字段
   @action selectField = obj => {
+    switch (obj.fieldType) {
+      case 'int' || 'tinyint' || 'smallint' || 'bigint':
+        obj.valueType = 2
+        break
+      case 'float' || 'double':
+        obj.valueType = 3
+        break
+      case 'string' || 'varchar' || 'char':
+        obj.valueType = 4
+        break
+      default:
+        obj.valueType = 5 // 日期型
+        break
+    }
     this.store.recordObj = obj
-    this.store.release = obj.tagStatus
-    this.store.isConfig = obj.status
-    console.log(obj)
+    this.store.release = obj.status === 2
+    this.store.isEnum = 0
+    this.store.isNewTag = true
+    this.store.isConfig = obj.tagFieldId
+    this.store.getTagCateSelectList() // 获取标签类目列表
   } 
 
   // 显示全部，隐藏已发布
   @action showAll = () => {
-    this.store.getList()
+    const {list} = this.store
+    this.store.list = list.filter(item => item.status !== 2)
+    this.store.recordObj = {}
   }
 
   render() {
     const {
-      list,
+      allList,
       configNum,
-      projectId,
-      sourceId,
-      status,
-      dataFieldName,
+      processId,
+      fieldName,
+      tableLoading,
+      tabChange,
+      tabValue,
     } = this.store
-
     const listConfig = {
       initParams: {
-        projectId,
-        id: sourceId,
-        status,
-        dataFieldName,
+        id: processId,
+        fieldName,
       },
+      tableLoading,
       onRow: record => ({
         onClick: () => this.selectField(record),
       }),
@@ -94,10 +120,10 @@ export default class ConfigDrawerOne extends Component {
     }
     return (
       <div className="config-table">
-        <Radio.Group defaultValue={-1} onChange={this.handleChange}>
-          <Radio.Button value={-1}>{`全部(${list.length})`}</Radio.Button>
-          <Radio.Button value={1}>{`已配置(${configNum})`}</Radio.Button>
-          <Radio.Button value={0}>{`待配置(${list.length - configNum})`}</Radio.Button>
+        <Radio.Group value={tabValue} onChange={v => tabChange(v.target.value)}>
+          <Radio.Button value={1}>{`全部(${allList.length})`}</Radio.Button>
+          <Radio.Button value={2}>{`已配置(${configNum})`}</Radio.Button>
+          <Radio.Button value={0}>{`待配置(${allList.length - configNum})`}</Radio.Button>
         </Radio.Group>
         <Card 
           size="small" 
