@@ -43,7 +43,9 @@ export default class Tree extends Component {
   }
 
   @action onselect = (selectedKey, e) => {
-    console.log(selectedKey, e)
+    // this.store.selectedKey = selectedKey[0]
+    this.store.selectedKey = 7524073751316160
+    this.store.getTagBaseDetail()
   }
 
   render() {
@@ -51,6 +53,8 @@ export default class Tree extends Component {
       expandAll,
       treeLoading,
       treeData,
+      currentSelectKeys,
+      selectedKey,
     } = this.store
 
     const treeBoxConfig = {
@@ -60,15 +64,16 @@ export default class Tree extends Component {
       style: {minWidth: '200px'},
     }
 
-    // const expandKey = Number(currentSelectKeys)
-
+    const expandKey = Number(currentSelectKeys)
+    console.log(selectedKey)
     const treeConfig = {
       type: 'tree',
       selectExpand: true,
       onSelect: this.onselect,
       defaultExpandAll: expandAll,
-      // selectedKeys: expandKey ? [expandKey] : [],
-      // expandWithParentKeys: expandKey ? [expandKey] : [],
+      // selectedKeys: selectedKey ? [selectedKey] : [],
+      // selectedKeys: [7523923517638336],
+      expandWithParentKeys: expandKey ? [expandKey] : [],
       // defaultExpandedKeys: store.searchExpandedKeys.slice(),
     }
     return (

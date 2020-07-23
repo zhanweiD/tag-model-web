@@ -157,6 +157,21 @@ export function listToTree(data) {
   return newData.filter(item => item.parentId === 0)
 }
 
+/**
+ * @description 用于默认选中第一个类目下的第一个孩子
+ * @param {*} data 处理过的类目树数据
+ */
+export function defaultKey(data) {
+  const newData = _.cloneDeep(data)
+
+  if (newData[0].children) {
+    return defaultKey(newData[0].children)
+  } 
+  else {
+    return newData[0].id
+  }
+}
+
 // 标签、对象英文名校验正则
 export const enNameReg = /^[a-zA-Z][a-zA-Z0-9_]{0,31}$/
 
@@ -253,14 +268,14 @@ export function calcSize(size, defaultUnit = 'B', isToFixed = true) {
   }
 }
 
+
+let timer = null 
 /**
  * @description 重命名校验防抖
  * @author 凡书
  * @param fn 重命名校验函数 
  * @param delay 间隔时间
  */
-
-let timer = null 
 export function debounce(fn, delay = 200) {
   clearTimeout(timer)
   timer = setTimeout(fn, delay)

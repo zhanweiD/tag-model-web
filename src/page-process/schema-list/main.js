@@ -121,8 +121,7 @@ class SchemaList extends Component {
 
             {/* 方案状态: 提交成功  操作: 标签配置 */}
             {
-              // (record.status === 1) && 
-              (
+              (record.status === 1) && (
                 <Fragment>
                   <a onClick={() => this.configDrawerShow(record)}> 标签配置</a>
                   <span className="table-action-line" />
@@ -305,7 +304,7 @@ class SchemaList extends Component {
         onClick={this.create}
       >
         创建加工方案
-                </AuthBox>,
+      </AuthBox>,
       ],
       rowKey: 'id',
       store: this.store, // 必填属性

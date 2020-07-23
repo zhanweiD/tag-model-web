@@ -18,13 +18,14 @@ export default class ConfigDrawerOne extends Component {
     this.store = props.store
   }
 
-  // 是否新建标签
-  @action newTag = v => {
-    this.form.resetFields()
-    this.store.isNewTag = v
-    if (!v) this.store.getTagList()
-  }
-
+  // componentWillReceiveProps(nextProps) {
+  //   console.log(toJS(this.props.store.recordObj), toJS(nextProps.store.recordObj))
+  //   if (this.props.store !== nextProps.store) {
+  //     console.log(this)
+  //     // this.form.resetFields()
+  //   }
+  // }
+  
   selectContent= () => {
     const {
       release, // 是否发布
@@ -36,13 +37,19 @@ export default class ConfigDrawerOne extends Component {
       tagBaseInfo,
       recordObj,
     } = this.store
+
     return [{
       label: '新建标签',
       key: 'newTag',
-      initialValue: true,
-      defaultChecked: true,
+      initialValue: isNewTag,
+      valuePropName: 'checked',
+      // defaultChecked: isNewTag,
       disabled: release || isConfig,
-      onClick: v => this.newTag(v),
+      control: {
+        checkedText: '是',
+        unCheckedText: '否',
+        onChange: v => this.newTag(v),
+      },
       component: 'switch',
     }, {
       label: '标签名称',
@@ -90,7 +97,7 @@ export default class ConfigDrawerOne extends Component {
     }, {
       label: '是否枚举',
       key: 'isEnum',
-      initialValue: tagBaseInfo.isEnum || false,
+      initialValue: isEnum,
       valuePropName: 'checked',
       disabled: release || isConfig || !isNewTag,
       component: 'switch',
@@ -102,7 +109,7 @@ export default class ConfigDrawerOne extends Component {
     }, {
       label: '枚举显示值',
       key: 'enumValue',
-      hide: !isEnum,
+      hide: !isEnum, // 待验证
       disabled: release || isConfig || !isNewTag,
       autoSize: {minRows: 3, maxRows: 5},
       initialValue: tagBaseInfo.enumValue,
@@ -146,6 +153,14 @@ export default class ConfigDrawerOne extends Component {
     }]
   }
 
+  // 是否新建标签
+  @action newTag = v => {
+    this.form.resetFields()
+    this.store.isNewTag = v
+    this.store.isEnum = false
+    if (!v) this.store.getTagList()
+  }
+  
   @action.bound changeIsEnum(e) {
     this.store.isEnum = e
   }
@@ -209,7 +224,7 @@ export default class ConfigDrawerOne extends Component {
     const formConfig = {
       selectContent: this.selectContent(),
       disabled: true,
-      wrappedComponentRef: form => { this.form = form ? form.props.form : form },
+      wrappedComponentRef: form => { this.store.form = this.form = form ? form.props.form : form },
     }
     return (
       <Fragment>

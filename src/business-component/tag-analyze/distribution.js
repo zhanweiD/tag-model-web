@@ -34,8 +34,8 @@ export default class Distribution extends Component {
     for (let i = 0; i < pieData.length; i++) {
       chartsCount += pieData[i].count
       const c = {
-        value: pieData[i].ratio,
-        name: `${pieData[i].key} ${pieData[i].ratio}% ${pieData[i].count}`,
+        value: pieData[i].ratio * 100,
+        name: `${pieData[i].key} ${pieData[i].ratio * 100}% ${pieData[i].count}`,
       }
       data[i] = c 
     }
@@ -79,7 +79,7 @@ export default class Distribution extends Component {
                     showInfo 
                     strokeWidth={4} 
                     strokeColor="#3187ff" 
-                    percent={item.ratio} 
+                    percent={item.ratio * 100} 
                   />
                   <Divider type="vertical" />
                 </li>

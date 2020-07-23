@@ -82,8 +82,8 @@ export default class ConfigDrawerOne extends Component {
     }
     this.store.recordObj = obj
     this.store.release = obj.status === 2
-    this.store.isEnum = 0
-    this.store.isNewTag = true
+    this.store.isEnum = !!obj.isEnum
+    this.store.isNewTag = !obj.tagFieldId
     this.store.isConfig = obj.tagFieldId
     this.store.getTagCateSelectList() // 获取标签类目列表
   } 

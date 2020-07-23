@@ -9,7 +9,8 @@ class Store {
   @observable chartPieValues = []
   @observable valueTrend = {} // 值域分布信息
   @observable tagId = 0 // 标签id
-  @observable updateStatus = 0 // 标签id
+  @observable permission = 0 // 标签权限
+  // @observable updateStatus = 0 // 更新状态
 
   // 值域分布信息
   @action async getValueTrend(cb) {

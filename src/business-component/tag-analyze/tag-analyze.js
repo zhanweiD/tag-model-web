@@ -29,13 +29,14 @@ export default class TagAnalyze extends Component {
         <h3 className="chart-title">标签分布</h3>
         <Button 
           type="primary pa" 
-          style={{display: 'block', top: '16px', right: '16px'}}
+          disabled={this.props.status !== 1}
+          style={{top: '16px', right: '16px'}}
           onClick={store.getValueUpdate}
         >
           更新
         </Button>
         <p>
-          <span className="mr16">{`${nullRatio}%的实体拥有${name}这个标签`}</span>
+          <span className="mr16">{`${nullRatio * 100}%的实体拥有${name}这个标签`}</span>
           <Badge status={status !== 3 ? status !== 2 ? 'warning' : 'success' : 'error'} />
           <span className="mr16">{recordTime}</span>
         </p>

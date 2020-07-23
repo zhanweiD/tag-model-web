@@ -5,7 +5,7 @@ import {errorTip} from '../../common/util'
 import io from './io'
 
 class Store {
-  tagId
+  tagId // 标签id
   // 空值占比趋势
   @action async getRatuoTrend(cb) {
     try {

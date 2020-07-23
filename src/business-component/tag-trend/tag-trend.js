@@ -16,7 +16,10 @@ export default class TagTrend extends Component {
 
   componentDidMount() {
     this.chartLine = echarts.init(this.lineRef)
-    this.getData()
+    // this.getData()
+    store.getRatuoTrend(res => {
+      if (res.length) this.drawChart(res)
+    })
     window.addEventListener('resize', () => this.resize())
   }
 
@@ -26,16 +29,16 @@ export default class TagTrend extends Component {
     ))
   }
 
-  @action getData(gte = this.defStartTime, lte = this.defEndTime) {
-    const params = {
-      startDate: gte,
-      endDate: lte,
-    }
+  // @action getData(gte = this.defStartTime, lte = this.defEndTime) {
+  //   const params = {
+  //     startDate: gte,
+  //     endDate: lte,
+  //   }
 
-    store.getRatuoTrend(res => {
-      if (res.length) this.drawChart(res)
-    })
-  }
+  //   store.getRatuoTrend(res => {
+  //     if (res.length) this.drawChart(res)
+  //   })
+  // }
 
   @action resize() {
     if (this.chartLine) this.chartLine.resize()
@@ -53,7 +56,7 @@ export default class TagTrend extends Component {
     return (
       <div className="p16">
         <h3 className="chart-title">空值占比趋势</h3>
-        <div className="time-range-wrap">
+        {/* <div className="time-range-wrap">
           <TimeRange
             custom
             key={tagId}
@@ -67,7 +70,7 @@ export default class TagTrend extends Component {
             }]}
             exportTimeRange={(gte, lte) => this.getData(gte, lte)}
           />
-        </div>
+        </div> */}
         <div style={{height: '300px'}} ref={ref => this.lineRef = ref} />
       </div>
     )

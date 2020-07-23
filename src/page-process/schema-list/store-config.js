@@ -11,11 +11,12 @@ export default class Store {
   @observable projectId = 0 // 项目id
   @observable tagId = 0 // 要配置的标签id
   @observable tagBaseInfo = {} // 衍生标签详情
+  @observable form = {} // form 表单
   @observable ownObject = undefined // 所属对象id
   @observable configNum = 0 // 已配置个数
   @observable currentStep = 0 // 抽屉步骤条
   @observable tabValue = 1 // tab
-  @observable fieldName = ' ' // 搜索字段名称
+  @observable fieldName = '' // 搜索字段名称
 
   @observable isEnum = 0 // 是否枚举
   @observable configDrawerVisible = false // 配置抽屉显示
@@ -29,6 +30,7 @@ export default class Store {
   @observable allList = [] // 全部字段列表
   @observable configList = [] // 已配置字段列表
   @observable noConList = [] // 未配置字段列表
+  @observable previews = [] // 预览列表
   @observable tagList = [] // 衍生标签列表
   @observable tagCateSelectList = [] // 类目列表
   @observable pagination = {
@@ -57,13 +59,9 @@ export default class Store {
         this.list = configList
         this.pagination.totalCount = configList.length
         break
-      case 0:
+      default:
         this.list = noConList
         this.pagination.totalCount = noConList.length
-        break
-      default:
-        this.list = allList
-        this.pagination.totalCount = allList.length
         break
     }
     this.recordObj = {}
@@ -103,20 +101,27 @@ export default class Store {
   }
 
   // 获取配置结果预览分页列表
-  @action async getConfigList() {
+  @action async getPreviewList() {
     // this.configNum = 0
+    this.tableLoading = true
     try {
-      // const res = await io.getConfigList({
-      //   projectId: this.projectId,
-      //   id: this.sourceId,
-      //   currentPage: this.pagination.currentPage,
-      //   pageSize: this.pagination.pageSize,
-      // })
+      const res = await io.getFieldList({
+        id: this.processId,
+        fieldName: this.fieldName,
+      })
       runInAction(() => {
-        // this.list = res.data || []
-        this.list = []
+        this.previews = res || []
+        for (let i = 0; i < this.allList.length; i++) {
+          this.previews[i].bname = this.allList[i].name
+          this.previews[i].bobjName = this.allList[i].objName
+          this.previews[i].blastCount = this.allList[i].lastCount
+        }
+        console.log(this.previews)
+        this.list = this.previews
+        this.tableLoading = false
       })
     } catch (e) {
+      this.tableLoading = false
       errorTip(e.message)
     }
   }
@@ -156,6 +161,7 @@ export default class Store {
       })
       runInAction(() => {
         this.tagBaseInfo = res
+        this.isEnum = res.isEnum
       })
     } catch (e) {
       errorTip(e.message)

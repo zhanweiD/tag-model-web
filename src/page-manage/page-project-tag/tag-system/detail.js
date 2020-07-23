@@ -3,21 +3,31 @@
  */
 import {Component} from 'react'
 import {Button} from 'antd'
+import {action} from 'mobx'
+import {inject, observer} from 'mobx-react'
 
 import {DetailHeader, Tag} from '../../../component'
 import {Time} from '../../../common/util'
 import TagAnalyze from '../../../business-component/tag-analyze'
 import TagTrend from '../../../business-component/tag-trend'
+import TagApply from './modal-apply'
 
+@inject('store')
+@observer
 export default class Detail extends Component {
   constructor(props) {
     super(props)
     this.store = props.store
   }
 
+  @action viewRule = () => {
+    this.store.getProjectDetail()
+    this.store.visible = true
+  }
+
   render() {
     const {tagDetail} = this.store
-
+    const {status, projectId, id} = tagDetail
     const baseInfo = [{
       title: '对象',
       value: tagDetail.objName,
@@ -42,13 +52,19 @@ export default class Detail extends Component {
     }]
 
     // 不同状态的相应map
-    const status = 1
     const tagMap = {
       1: <Tag status="success" text="有权限" />,
       2: <Tag status="process" text="审核中" />,
     }
     const actions = [
-      <Button className="mr8" type="primary" onClick={this.viewRule}>申请权限</Button>,
+      <Button 
+        className="mr8" 
+        type="primary" 
+        style={{display: !status && projectId ? 'block' : 'none'}}
+        onClick={this.viewRule}
+      >
+        申请权限
+      </Button>,
     ]
 
     return (
@@ -61,9 +77,10 @@ export default class Detail extends Component {
           actions={actions}
         />
         <div className="bgf mt16 ">
-          <TagAnalyze />
-          <TagTrend />
+          <TagAnalyze tagId={id} status={status} />
+          <TagTrend tagId={id} />
         </div>
+        <TagApply store={this.store} />
       </div>
     )
   }

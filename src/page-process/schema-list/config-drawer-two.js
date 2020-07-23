@@ -14,21 +14,41 @@ export default class ConfigDrawerTwo extends Component {
     this.store = props.store
   }
 
-  columns = [
-    {
-      key: 'name',
-      title: '字段',
-      dataIndex: 'name',
-    }, {
-      key: 'objName',
-      title: '唯一标识',
-      dataIndex: 'objName',
-    }, {
-      key: 'lastCount',
-      title: '标签名称',
-      dataIndex: 'lastCount',
-    }, 
-  ]
+  columns = [{
+    title: '更新前',
+    children: [
+      {
+        key: 'name',
+        title: '字段',
+        dataIndex: 'name',
+      }, {
+        key: 'objName',
+        title: '唯一标识',
+        dataIndex: 'objName',
+      }, {
+        key: 'lastCount',
+        title: '标签名称',
+        dataIndex: 'lastCount',
+      }, 
+    ],
+  }, {
+    title: '更新后',
+    children: [
+      {
+        key: 'nameu',
+        title: '字段',
+        dataIndex: 'nameu',
+      }, {
+        key: 'objNameu',
+        title: '唯一标识',
+        dataIndex: 'objNameu',
+      }, {
+        key: 'lastCountu',
+        title: '标签名称',
+        dataIndex: 'lastCountu',
+      }, 
+    ],
+  }]
   @action closeDrawer = () => {
     this.store.configDrawerVisible = false
   }
@@ -46,6 +66,7 @@ export default class ConfigDrawerTwo extends Component {
 
     const listConfig = {
       tableLoading,
+      // bordered: true,
       columns: this.columns,
       initGetDataByParent: true, // 初始请求 在父层组件处理。列表组件componentWillMount内不再进行请求
       store: this.store, // 必填属性
