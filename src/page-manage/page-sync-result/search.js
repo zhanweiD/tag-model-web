@@ -1,5 +1,14 @@
 const serach = ({objList = [], storageList = []}) => [
   {
+    label: '数据源类型',
+    key: 'storageId',
+    initialValue: '',
+    control: {
+      defaultAll: true,
+      options: storageList,
+    },
+    component: 'select',
+  }, {
     label: '数据源',
     key: 'storageId',
     initialValue: '',
@@ -17,16 +26,18 @@ const serach = ({objList = [], storageList = []}) => [
       options: objList,
     },
     component: 'select',
-  }, {
-    label: '使用状态',
-    key: 'tagUsed',
-    initialValue: '',
-    control: {
-      defaultAll: true,
-      options: [{name: '使用中', value: 1}, {name: '未使用', value: 0}],
-    },
-    component: 'select',
-  }, {
+  }, 
+  // {
+  //   label: '使用状态',
+  //   key: 'tagUsed',
+  //   initialValue: '',
+  //   control: {
+  //     defaultAll: true,
+  //     options: [{name: '使用中', value: 1}, {name: '未使用', value: 0}],
+  //   },
+  //   component: 'select',
+  // }, 
+  {
     label: '同步计划',
     key: 'transferSchemeName',
     control: {
