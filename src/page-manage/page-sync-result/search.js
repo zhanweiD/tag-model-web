@@ -1,11 +1,11 @@
 const serach = ({objList = [], storageList = []}) => [
   {
     label: '数据源类型',
-    key: 'storageId',
+    key: 'storageType',
     initialValue: '',
     control: {
       defaultAll: true,
-      options: storageList,
+      options: [{name: 'MySQL',value: 1}, {name: 'Greenplum',value: 10}],
     },
     component: 'select',
   }, {
