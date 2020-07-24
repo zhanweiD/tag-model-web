@@ -34,6 +34,9 @@ export const pieOpt = data => {
         labelLine: {
           show: true,
         },
+        label: {
+          formatter:'{b}: {c}' 
+        },
         data: data,
       },
     ],
