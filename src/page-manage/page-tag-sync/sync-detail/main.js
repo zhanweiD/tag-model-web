@@ -37,7 +37,7 @@ class SyncDetail extends Component {
   }
 
   render() {
-    const {infoLoading, detail} = store
+    const {infoLoading, detail, syncId, projectId} = store
 
     const baseInfo = [{
       title: '同步对象',
@@ -76,7 +76,7 @@ class SyncDetail extends Component {
           <TabRoute {...tabConfig} />
         </Spin>
         <div className="list-content box-border">
-          <Content store={store} />
+          <Content store={store} syncId={syncId} />
         </div>
       </div>
     )

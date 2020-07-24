@@ -4,6 +4,7 @@ import {Badge} from 'antd'
 export const getLastStatus = ({status}, fn) => {
   let color 
   let text
+  console.log(status)
   switch (+status) {
     case 0: color = '#108ee9'; text = '运行中'; break
     case 1: color = '#87d068'; text = '运行成功'; break

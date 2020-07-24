@@ -1,11 +1,11 @@
 import {action, runInAction, observable} from 'mobx'
-import {successTip, errorTip} from '../../../common/util'
-import {ListContentStore} from '../../../component/list-content'
+import {successTip, errorTip} from '../../common/util'
+import {ListContentStore} from '../../component/list-content'
 import io from './io'
 
 // class Store extends ListContentStore(io.getRunRecord) {
-class Store {  
-  syncId
+ class Store {
+  processeId
   @observable visibleLog = false
   @observable log = ''
 
@@ -16,7 +16,7 @@ class Store {
 
     try {
       const res = await io.getRunRecord({
-        id: this.syncId,
+        id: this.processeId,
       })
 
       runInAction(() => {
@@ -57,7 +57,7 @@ class Store {
        if(res) {
         successTip('重跑成功')
          this.getList({
-          id: this.syncId,
+          id: this.processeId,
         })
        } else {
         errorTip('重跑失败')

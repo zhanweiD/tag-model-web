@@ -2,7 +2,7 @@ import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {action, toJS} from 'mobx'
 import {Select, DatePicker, Table} from 'antd'
-import {Time} from '../../../common/util'
+import {Time} from '../../common/util'
 // import {ListContent} from '../../../component'
 import {getLastStatus} from '../util'
 
@@ -29,7 +29,7 @@ export default class RunRecord extends Component {
   constructor(props) {
     super(props)
     store.projectId = props.projectId
-    store.syncId = props.syncId
+    store.processeId = props.processeId
   }
   
   columns = [{
@@ -66,7 +66,7 @@ export default class RunRecord extends Component {
 
   componentWillMount() {
     store.getList({
-      id: this.props.syncId,
+      id: this.props.processeId,
     })
   }
 
