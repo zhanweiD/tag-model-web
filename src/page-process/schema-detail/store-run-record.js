@@ -10,6 +10,7 @@ import io from './io'
   @observable log = ''
 
   @observable list = []
+  @observable tableLoading = false
 
   @action async getList() {
     this.tableLoading = true
