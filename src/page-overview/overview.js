@@ -7,6 +7,7 @@ import {observer} from 'mobx-react'
 import {OverviewCardWrap} from '../component'
 import Cloud from './cloud'
 import TagRank from './tag-rank'
+import Distribute from './distribute'
 // import Line from './line' 
 
 import store from './store'
@@ -46,6 +47,7 @@ export default class Overview extends Component {
         <div className="page-overview">
           <OverviewCardWrap cards={cards} style={{marginBottom: '16px'}} />
           <Cloud store={store} />
+          <Distribute store={store} />
           <TagRank store={store} />
           {/* <Line />  */}
         </div>
