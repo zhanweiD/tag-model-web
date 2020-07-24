@@ -37,7 +37,7 @@ export default class ConfigDrawerOne extends Component {
       tagBaseInfo,
       recordObj,
     } = this.store
-
+    console.log(isEnum)
     return [{
       label: '新建标签',
       key: 'newTag',
@@ -157,7 +157,7 @@ export default class ConfigDrawerOne extends Component {
   @action newTag = v => {
     this.form.resetFields()
     this.store.isNewTag = v
-    this.store.isEnum = false
+    // this.store.isEnum = false
     if (!v) this.store.getTagList()
   }
   

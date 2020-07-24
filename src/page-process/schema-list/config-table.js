@@ -86,6 +86,7 @@ export default class ConfigDrawerOne extends Component {
     this.store.isNewTag = !obj.tagFieldId
     this.store.isConfig = obj.tagFieldId
     this.store.getTagCateSelectList() // 获取标签类目列表
+    if (this.store.form.resetFields) this.store.form.resetFields()
   } 
 
   // 显示全部，隐藏已发布

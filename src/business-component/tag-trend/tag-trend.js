@@ -1,9 +1,11 @@
 import {Component} from 'react'
 import {action} from 'mobx'
-import {TimeRange} from '../../component'
+import {inject, observer} from 'mobx-react'
+import {TimeRange, NoData} from '../../component'
 import getApiTrendOpt from './charts-options'
 import store from './store'
 
+@observer
 export default class TagTrend extends Component {
   defStartTime = moment().subtract(7, 'day').format('YYYY-MM-DD')
   defEndTime = moment().subtract(1, 'day').format('YYYY-MM-DD')
@@ -21,6 +23,15 @@ export default class TagTrend extends Component {
       if (res.length) this.drawChart(res)
     })
     window.addEventListener('resize', () => this.resize())
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.tagId !== this.props.tagId) {
+      store.tagId = this.props.tagId
+      store.getRatuoTrend(res => {
+        if (res.length) this.drawChart(res)
+      })
+    }
   }
 
   drawChart = data => {
@@ -52,7 +63,11 @@ export default class TagTrend extends Component {
 
   render() {
     const {tagId} = this.props
-
+    const {lineData} = store
+    const noDataConfig = {
+      text: '暂无趋势信息',
+    }
+    console.log(lineData.length)
     return (
       <div className="p16">
         <h3 className="chart-title">空值占比趋势</h3>
@@ -71,7 +86,8 @@ export default class TagTrend extends Component {
             exportTimeRange={(gte, lte) => this.getData(gte, lte)}
           />
         </div> */}
-        <div style={{height: '300px'}} ref={ref => this.lineRef = ref} />
+        <div style={{display: lineData.length ? 'block' : 'none', height: '300px'}} ref={ref => this.lineRef = ref} />
+        {!lineData.length && <NoData {...noDataConfig} />}
       </div>
     )
   }

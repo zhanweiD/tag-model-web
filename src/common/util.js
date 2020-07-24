@@ -158,7 +158,7 @@ export function listToTree(data) {
 }
 
 /**
- * @description 用于默认选中第一个类目下的第一个孩子
+ * @description 返回默认类目下的第一个孩子
  * @param {*} data 处理过的类目树数据
  */
 export function defaultKey(data) {
@@ -168,7 +168,8 @@ export function defaultKey(data) {
     return defaultKey(newData[0].children)
   } 
   else {
-    return newData[0].id
+    // console.log(newData[0].aId, newData[0].id)
+    return newData[0]
   }
 }
 

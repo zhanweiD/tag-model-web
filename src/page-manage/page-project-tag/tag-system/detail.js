@@ -1,12 +1,12 @@
 /**
  * @description 标签仓库-标签体系-标签详情
  */
-import {Component} from 'react'
-import {Button} from 'antd'
-import {action} from 'mobx'
+import {Component, Fragment} from 'react'
+import {Button, Spin} from 'antd'
+import {action, toJS} from 'mobx'
 import {inject, observer} from 'mobx-react'
 
-import {DetailHeader, Tag} from '../../../component'
+import {DetailHeader, Tag, NoData} from '../../../component'
 import {Time} from '../../../common/util'
 import TagAnalyze from '../../../business-component/tag-analyze'
 import TagTrend from '../../../business-component/tag-trend'
@@ -18,16 +18,19 @@ export default class Detail extends Component {
   constructor(props) {
     super(props)
     this.store = props.store
+    this.store.projectId = props.projectId
   }
 
   @action viewRule = () => {
     this.store.getProjectDetail()
-    this.store.visible = true
+    this.store.modalApplyVisible = true
   }
 
   render() {
-    const {tagDetail} = this.store
-    const {status, projectId, id} = tagDetail
+    const {detailLoading, tagDetail, selectedKey, projectId, useProjectId} = this.store
+    const {authorStatus} = tagDetail
+    console.log(toJS(useProjectId), toJS(projectId))
+
     const baseInfo = [{
       title: '对象',
       value: tagDetail.objName,
@@ -53,33 +56,42 @@ export default class Detail extends Component {
 
     // 不同状态的相应map
     const tagMap = {
-      1: <Tag status="success" text="有权限" />,
-      2: <Tag status="process" text="审核中" />,
+      2: <Tag status="success" text="有权限" />,
+      1: <Tag status="process" text="审核中" />,
     }
     const actions = [
       <Button 
         className="mr8" 
         type="primary" 
-        style={{display: !status && projectId ? 'block' : 'none'}}
+        // style={{display: !authorStatus && projectId !== useProjectId ? 'block' : 'none'}}
+        style={{display: !authorStatus ? 'block' : 'none'}}
         onClick={this.viewRule}
       >
         申请权限
       </Button>,
     ]
-
+    const noDataConfig = {
+      text: '请选择标签',
+    }
     return (
       <div className="detail-content">
-        <DetailHeader
-          name={tagDetail.name}
-          descr={tagDetail.descr}
-          baseInfo={baseInfo}
-          tag={tagMap[status]}
-          actions={actions}
-        />
-        <div className="bgf mt16 ">
-          <TagAnalyze tagId={id} status={status} />
-          <TagTrend tagId={id} />
-        </div>
+        {
+          selectedKey ? (
+            <Spin spinning={detailLoading}>
+              <DetailHeader
+                name={tagDetail.name}
+                descr={tagDetail.descr}
+                baseInfo={baseInfo}
+                tag={tagMap[authorStatus]}
+                actions={actions}
+              />
+              <div className="bgf mt16 ">
+                <TagAnalyze tagId={selectedKey} status={authorStatus} />
+                <TagTrend key={selectedKey} tagId={selectedKey} />
+              </div>
+            </Spin>
+          ) : <NoData {...noDataConfig} />
+        }
         <TagApply store={this.store} />
       </div>
     )

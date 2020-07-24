@@ -4,7 +4,7 @@
 import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {DtTree} from '@dtwave/uikit'
-import {action} from 'mobx'
+import {action, toJS} from 'mobx'
 import {Loading} from '../../../component'
 import Action from './tree-action'
 
@@ -28,7 +28,8 @@ export default class Tree extends Component {
         key={node.id}
         itemKey={node.aId}
         title={node.name}
-        selectable={node.parentId}
+        // selectable={false}
+        selectable={node.type === 0}
         showIcon={node.parentId === 0}
         // 对象类目只有一级
         // iconNodeSrc={e => getIconNodeSrc(e)}
@@ -43,8 +44,7 @@ export default class Tree extends Component {
   }
 
   @action onselect = (selectedKey, e) => {
-    // this.store.selectedKey = selectedKey[0]
-    this.store.selectedKey = 7524073751316160
+    this.store.selectedKey = selectedKey[0]
     this.store.getTagBaseDetail()
   }
 
@@ -64,16 +64,14 @@ export default class Tree extends Component {
       style: {minWidth: '200px'},
     }
 
-    const expandKey = Number(currentSelectKeys)
-    console.log(selectedKey)
+    // const expandKey = Number(currentSelectKeys)
     const treeConfig = {
       type: 'tree',
       selectExpand: true,
       onSelect: this.onselect,
       defaultExpandAll: expandAll,
-      // selectedKeys: selectedKey ? [selectedKey] : [],
-      // selectedKeys: [7523923517638336],
-      expandWithParentKeys: expandKey ? [expandKey] : [],
+      selectedKeys: selectedKey ? [selectedKey] : [],
+      expandWithParentKeys: toJS(currentSelectKeys),
       // defaultExpandedKeys: store.searchExpandedKeys.slice(),
     }
     return (

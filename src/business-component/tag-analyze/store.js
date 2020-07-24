@@ -13,11 +13,9 @@ class Store {
   // @observable updateStatus = 0 // 更新状态
 
   // 值域分布信息
-  @action async getValueTrend(cb) {
+  @action async getValueTrend(params, cb) {
     try {
-      const res = await io.getValueTrend({
-        id: this.tagId,
-      })
+      const res = await io.getValueTrend(params)
       runInAction(() => {
         this.chartPieValues = res.pieTemplateDtoList || []
         this.valueTrend = res || {}

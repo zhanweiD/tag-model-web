@@ -12,12 +12,12 @@ import store from './store'
 class TagSystem extends Component {
   render() {
     return (
-      <Provider store={store}>
-        <div className="tag-system">
-          <Tree store={store} />
-          <Detail store={store} />
-        </div>
-      </Provider>
+      // <Provider store={store}>
+      <div className="tag-system">
+        <Tree store={store} projectId={this.props.projectId} />
+        <Detail store={store} projectId={this.props.projectId} />
+      </div>
+      // </Provider>
       
     )
   }
