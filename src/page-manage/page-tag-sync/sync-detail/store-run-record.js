@@ -12,12 +12,13 @@ class Store {
   @observable list = []
   @observable tableLoading = false
 
-  @action async getList() {
+  @action async getList(params) {
     this.tableLoading = true
 
     try {
       const res = await io.getRunRecord({
         id: this.syncId,
+        ...params,
       })
 
       runInAction(() => {
@@ -33,14 +34,13 @@ class Store {
   }
 
   @action async getLog(id) {
-
     try {
       const res = await io.getLog({
         taskInstanceId: id,
       })
 
       runInAction(() => {
-        this.log = res
+        this.log = res.logContent
       })
     } catch (e) {
       errorTip(e.message)
@@ -48,21 +48,20 @@ class Store {
   }
 
   @action async runTask(id) {
-
     try {
       const res = await io.runTask({
         taskInstanceId: id,
       })
 
       runInAction(() => {
-       if(res) {
-        successTip('重跑成功')
-         this.getList({
-          id: this.syncId,
-        })
-       } else {
-        errorTip('重跑失败')
-       }
+        if (res) {
+          successTip('操作成功')
+          this.getList({
+            id: this.syncId,
+          })
+        } else {
+          errorTip('操作失败')
+        }
       })
     } catch (e) {
       errorTip(e.message)

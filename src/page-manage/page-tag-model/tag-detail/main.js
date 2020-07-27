@@ -73,7 +73,7 @@ class TagDetail extends Component {
       {
         title: '使用项目数',
         tooltipText: '被多少个项目申请使用，包括所属项目',
-        values: [cardInfo.entityCount || 0],
+        values: [cardInfo.projectCount || 0],
       }, {
         title: '加工方案引用数',
         tooltipText: '该标签租户下被加工方案的引用数',
@@ -102,6 +102,12 @@ class TagDetail extends Component {
     }, {
       title: '创建时间',
       value: <Time timestamp={tagBaseInfo.createTime} />,
+    }, {
+      title: '绑定方式',
+      value: tagBaseInfo.configType === 1 ? '衍生标签' : '基础标签',
+    }, {
+      title: '衍生方案',
+      value: <Time timestamp={tagBaseInfo.createTime} />,
     }]
 
     // 不同状态的相应map
@@ -129,7 +135,7 @@ class TagDetail extends Component {
             </div>
           </TabPane>
           <TabPane tab="血缘分析" key="2">
-            <div className="bgf m16  box-border pt24" style={{height: 'calc(100vh - 300px)'}}>
+            <div className="bgf m16  box-border" style={{height: 'calc(100vh - 300px)'}}>
               <TagrRelate tagId={tagId} />
             </div>
           </TabPane>

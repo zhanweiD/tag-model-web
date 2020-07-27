@@ -24,12 +24,13 @@ export default class AppList extends Component {
       title: '创建者',
       key: 'role',
       dataIndex: 'role',
-    }, {
-      title: '使用状态',
-      key: 'ctime',
-      dataIndex: 'ctime',
-      render: text => <Time timestamp={text} />,
     },
+    //  {
+    //   title: '使用状态',
+    //   key: 'ctime',
+    //   dataIndex: 'ctime',
+    //   render: text => <Time timestamp={text} />,
+    // },
   ]
 
   render() {
