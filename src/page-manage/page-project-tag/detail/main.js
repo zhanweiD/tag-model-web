@@ -51,15 +51,17 @@ class TagDetail extends Component {
       title: '创建时间',
       value: <Time timestamp={tagBaseInfo.createTime} />,
     }, {
-      title: '数据源',
-      value: tagBaseInfo.dataSource,
+      title: '绑定方式',
+      value: tagBaseInfo.configType === 1 ? '衍生标签' : '基础标签',
     }, {
-      title: '数据表',
-      value: tagBaseInfo.tableName,
-    }, {
-      title: '字段',
-      value: tagBaseInfo.fieldName,
-    }]
+      title: '所属项目',
+      value: tagBaseInfo.projectName,
+    },
+    // , {
+    //   title: '字段',
+    //   value: tagBaseInfo.fieldName,
+    // }
+    ]
 
     const cards = [
       {

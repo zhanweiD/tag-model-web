@@ -47,14 +47,11 @@ class TagDetail extends Component {
       title: '创建时间',
       value: <Time timestamp={info.createTime} />,
     }, {
-      title: '数据源',
-      value: info.dataSource,
+      title: '绑定方式',
+      value: info.configType === 1 ? '衍生标签' : '基础标签',
     }, {
-      title: '数据表',
-      value: info.tableName,
-    }, {
-      title: '字段',
-      value: info.fieldName,
+      title: '所属项目',
+      value: info.projectName,
     }]
 
     return (

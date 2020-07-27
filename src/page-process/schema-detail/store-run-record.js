@@ -12,12 +12,13 @@ import io from './io'
   @observable list = []
   @observable tableLoading = false
 
-  @action async getList() {
+  @action async getList(params) {
     this.tableLoading = true
 
     try {
       const res = await io.getRunRecord({
         id: this.processeId,
+        ...params,
       })
 
       runInAction(() => {
@@ -40,7 +41,7 @@ import io from './io'
       })
 
       runInAction(() => {
-        this.log = res
+        this.log = res.logContent
       })
     } catch (e) {
       errorTip(e.message)

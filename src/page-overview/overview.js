@@ -32,11 +32,11 @@ export default class Overview extends Component {
         values: [cardInfo.relCount || 0],
       }, {
         title: '标签总数',
-        tooltipText: '租户级别，公开的标签总数',
+        tooltipText: '已发布的标签总数',
         values: [cardInfo.tagCount || 0],
       }, {
         title: '项目总数',
-        tooltipText: '关于标签中心的项目总数',
+        tooltipText: '授权标签中心的项目总数',
         values: [cardInfo.projectCount || 0],
       },
     ]

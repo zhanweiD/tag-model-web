@@ -12,12 +12,13 @@ class Store {
   @observable list = []
   @observable tableLoading = false
 
-  @action async getList() {
+  @action async getList(params) {
     this.tableLoading = true
 
     try {
       const res = await io.getRunRecord({
         id: this.syncId,
+        ...params,
       })
 
       runInAction(() => {
@@ -40,7 +41,7 @@ class Store {
       })
 
       runInAction(() => {
-        this.log = res
+        this.log = res.logContent
       })
     } catch (e) {
       errorTip(e.message)

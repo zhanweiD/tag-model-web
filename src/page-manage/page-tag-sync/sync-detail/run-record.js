@@ -5,6 +5,7 @@ import {Select, DatePicker, Table} from 'antd'
 import {Time} from '../../../common/util'
 // import {ListContent} from '../../../component'
 import {getLastStatus} from '../util'
+import ModalLog from './modal-log'
 
 import store from './store-run-record'
 
@@ -71,6 +72,7 @@ export default class RunRecord extends Component {
   }
 
   @action.bound viewLog(data){
+    store.visibleLog = true
     store.getLog(data.taskInstance)
   }
 
@@ -82,6 +84,7 @@ export default class RunRecord extends Component {
     this.runStatus = status
     if(typeof status === 'undefined') {
       store.getList({
+        runStatus: status,
         queryStartTime: this.queryStartTime,
         queryEndTime: this.queryEndTime,
         pageSize: undefined,
@@ -175,6 +178,7 @@ export default class RunRecord extends Component {
           <RangePicker onChange={this.selectTime} allowClear />
         </div>
         <Table dataSource={toJS(list)} loading={tableLoading} columns={this.columns}/>
+        <ModalLog store={store} />
       </div>
     )
   }

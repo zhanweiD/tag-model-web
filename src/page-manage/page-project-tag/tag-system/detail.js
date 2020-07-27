@@ -50,7 +50,7 @@ export default class Detail extends Component {
       value: tagDetail.configType === 1 ? '衍生标签' : '基础标签',
     }, {
       title: '所属项目',
-      value: tagDetail.tableName,
+      value: tagDetail.projectName,
     }]
 
     // 不同状态的相应map
