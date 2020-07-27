@@ -2,6 +2,7 @@
  * @description 加工方案详情
  */
 import {Component, useEffect} from 'react'
+import {observable} from 'mobx'
 import {observer} from 'mobx-react'
 import {action} from 'mobx'
 import {Spin, NoData} from 'antd'
@@ -11,12 +12,16 @@ import {
   TabRoute,
   DetailHeader, 
 } from '../../component'
-
 import ConfigInfo from './config-info'
+import RunRecord from './run-record'
 import {Time} from '../../common/util'
 
 import store from './store'
 
+const tabs = [
+  {name: '配置信息', value: 0}, 
+  {name: '运行记录', value: 1},
+]
 @observer
 class SchemaDetail extends Component {
   constructor(props) {
@@ -24,6 +29,13 @@ class SchemaDetail extends Component {
     const {match} = props
     store.processeId = match.params.id // 方案id
   }
+
+  @observable tabId = 0 // 当前详情tabID 
+
+  @action.bound changeTab(id) {
+    this.tabId = id
+  }
+
 
   componentWillMount() {
     if (store.processeId) {
@@ -55,12 +67,21 @@ class SchemaDetail extends Component {
       value: <Time timestamp={detail.createTime} />,
     }]
 
+    const tabConfig = {
+      tabs,
+      currentTab: this.tabId,
+      changeTab: this.changeTab,
+      changeUrl: false,
+    }
+
     // 不同状态的相应map --方案状态 0 未完成、1 提交成功 2 提交失败
     const tagMap = {
       0: <Tag status="default" text="未完成" />,
       1: <Tag status="success" text="提交成功" />,
       2: <Tag status="error" text="提交失败" />,
     }
+
+    const Content = [ConfigInfo, RunRecord][+this.tabId]
 
     return (
 
@@ -76,8 +97,11 @@ class SchemaDetail extends Component {
                 tag={tagMap[detail.status]}
               />
             </div>
-            <TabRoute tabs={[{name: '配置信息', value: 1}]} />
-            <ConfigInfo store={store} />
+            <TabRoute {...tabConfig}/>
+            {/* <ConfigInfo store={store} /> */}
+            <div className="list-content box-border">
+              <Content store={store} processeId={processeId} projectId={this.props.projectId}/>
+            </div>
           </Spin>
         )
           : (
