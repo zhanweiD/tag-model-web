@@ -19,13 +19,13 @@ export default class ConfigDrawerOne extends Component {
   }
 
   @action nextStep = () => {
-    // this.store.getConfigList()
+    // this.store.getConfigList()getPreviewList
     this.store.getPreviewList()
     this.store.currentStep = 1
   }
 
   render() {
-    const {currentStep, isConfig} = this.store
+    const {currentStep, isConfig, disNext} = this.store
     return (
       <div className="config-one" style={{display: currentStep ? 'none' : 'block'}}>
         <div className="config-fb">
@@ -39,7 +39,7 @@ export default class ConfigDrawerOne extends Component {
           <Button
             type="primary"
             style={{marginRight: 8}}
-            // disabled={!isConfig}
+            disabled={disNext}
             onClick={this.nextStep}
           >
             下一步

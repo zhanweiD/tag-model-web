@@ -1,6 +1,7 @@
 import {
   action, runInAction, observable, toJS,
 } from 'mobx'
+import {observer} from 'mobx-react'
 import {errorTip, listToTree, defaultKey, successTip} from '../../../common/util'
 import io from './io'
 
@@ -9,10 +10,11 @@ class Store {
   @observable searchKey // 类目树搜索值
   @observable selectedKey = 0 // 选中的标签id
   @observable selectChild = 0 // 选中的标签id
-  @observable useProjectId = 0 // 申请项目id
+  @observable useProjectId = 0 // 标签项目id
   @observable projectId = 0 // 申请项目id
   @observable projectName = '' // 申请项目名称
 
+  @observable commonTag // 是不是公共标签
   @observable treeLoading = false
   @observable modalApplyVisible = false // 权限申请窗口
   @observable currentKey = undefined
@@ -32,22 +34,34 @@ class Store {
   }
 
   @action async getTreeData() {
+    this.treeLoading = true
+    let res = []
     try {
-      const res = await io.getTreeData({
-        searchKey: this.searchKey,
-        // projectId: this.projectId,
-      })
+      if (this.commonTag) {
+        res = await io.getTreeData({
+          searchKey: this.searchKey,
+        })
+      } else {
+        res = await io.getTreeDataPro({
+          searchKey: this.searchKey,
+          projectId: this.projectId,
+        })
+      }
       runInAction(() => {
         this.treeData = listToTree(toJS(res))
         this.showKeys(this.treeData)
-        this.selectChild = defaultKey(toJS(this.treeData))
-        this.selectedKey = this.selectChild.aId
-        this.useProjectId = this.selectChild.projectId
 
+        if (!this.selectedKey) {
+          this.selectChild = defaultKey(toJS(this.treeData))
+          this.selectedKey = this.selectChild.aId
+          this.useProjectId = this.selectChild.projectId
+        }
         this.getTagBaseDetail()
       })
     } catch (e) {
       errorTip(e.message)
+    } finally {
+      this.treeLoading = false
     }
   }
 
@@ -82,7 +96,7 @@ class Store {
         if (res) {
           successTip('操作成功')
           if (cb) cb()
-          this.getTreeData()
+          this.getTagBaseDetail()
         } 
       })
     } catch (e) {

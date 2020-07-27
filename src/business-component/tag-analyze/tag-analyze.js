@@ -36,17 +36,18 @@ export default class TagAnalyze extends Component {
       this.drawSaveTrend(pieData)
     })
   }
-  componentDidUpdate(prevProps) {
-    if (prevProps.tagId !== this.props.tagId) {
-      store.getValueTrend({id: this.props.tagId}, pieData => {
-        this.drawSaveTrend(pieData)
-      })
-    }
-  }
 
   componentDidMount() {
     this.myChart = echarts.init(this.refs.chartsPie)
     window.addEventListener('resize', () => this.resize())
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
+      store.getValueTrend({id: this.props.tagId}, pieData => {
+        this.drawSaveTrend(pieData)
+      })
+    }
   }
 
   @action resize() {
@@ -73,7 +74,7 @@ export default class TagAnalyze extends Component {
         <h3 className="chart-title">标签分布</h3>
         <Button 
           type="primary pa" 
-          disabled={this.props.status !== 1}
+          disabled={this.props.status !== 2}
           style={{top: '16px', right: '16px'}}
           onClick={store.getValueUpdate}
         >

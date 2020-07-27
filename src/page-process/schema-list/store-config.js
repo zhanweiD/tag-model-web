@@ -10,21 +10,22 @@ export default class Store {
   @observable processId = 0 // 加工方案id
   @observable projectId = 0 // 项目id
   @observable tagId = 0 // 要配置的标签id
-  @observable tagBaseInfo = {} // 衍生标签详情
-  @observable form = {} // form 表单
-  @observable ownObject = undefined // 所属对象id
+  @observable ownObject = 0 // 所属对象id
   @observable configNum = 0 // 已配置个数
   @observable currentStep = 0 // 抽屉步骤条
   @observable tabValue = 1 // tab
   @observable fieldName = '' // 搜索字段名称
 
-  @observable isEnum = 0 // 是否枚举
   @observable configDrawerVisible = false // 配置抽屉显示
+  @observable disNext = true // 禁止下一步
   @observable release = false // 是否已发布
   @observable isConfig = false // 是否已配置
+  @observable isEnum = false // 是否枚举
   @observable isNewTag = true // 是否新建标签
   @observable tableLoading = false // 列表加载
 
+  @observable tagBaseInfo = {} // 衍生标签详情
+  @observable form // form 表单
   @observable recordObj = {} // 点击的字段
   @observable list = [] // 字段列表
   @observable allList = [] // 全部字段列表
@@ -103,6 +104,7 @@ export default class Store {
   // 获取配置结果预览分页列表
   @action async getPreviewList() {
     // this.configNum = 0
+    this.previews = []
     this.tableLoading = true
     try {
       const res = await io.getFieldList({
@@ -110,14 +112,19 @@ export default class Store {
         fieldName: this.fieldName,
       })
       runInAction(() => {
-        this.previews = res || []
-        for (let i = 0; i < this.allList.length; i++) {
-          this.previews[i].bname = this.allList[i].name
-          this.previews[i].bobjName = this.allList[i].objName
-          this.previews[i].blastCount = this.allList[i].lastCount
+        res.forEach(item => {
+          if (item.tagFieldId) {
+            this.previews.push(item)
+          } 
+        })
+
+        for (let i = 0; i < this.configList.length; i++) {
+          this.previews[i].bfieldName = this.configList[i].fieldName
+          this.previews[i].btagEnName = this.configList[i].tagEnName
+          this.previews[i].btagName = this.configList[i].tagName
         }
-        console.log(this.previews)
         this.list = this.previews
+        this.pagination.totalCount = this.list.length
         this.tableLoading = false
       })
     } catch (e) {
@@ -133,13 +140,14 @@ export default class Store {
       const res = await io.createTag({
         projectId: this.projectId,
         ...params,
-        // objId: this.ownObject,
+        objId: this.ownObject,
         // objId: 7524052961396416,
         // cateId: 7524052961658560,
         configType: 1,
       })
       runInAction(() => {
         if (res) {
+          successTip('新建标签成功')
           this.tagId = res
           this.saveTagRelation()
         } else {
@@ -157,7 +165,8 @@ export default class Store {
   @action async getTagBaseDetail() {
     try {
       const res = await io.getTagBaseDetail({
-        id: this.tagId,
+        id: this.recordObj.tagId,
+        // id: 7524030350165696,
       })
       runInAction(() => {
         this.tagBaseInfo = res
@@ -201,14 +210,18 @@ export default class Store {
   @action async saveTagRelation() {
     try {
       const res = await io.saveTagRelation({
+        projectId: this.projectId,
         tagDerivativeSchemeId: this.processId,
         tagId: this.tagId,
         dataFieldName: this.recordObj.fieldName,
         dataFieldType: this.recordObj.fieldType,
       })
       runInAction(() => {
-        successTip('配置成功')
-        if (res) this.getList()
+        if (res) {
+          successTip('配置成功')
+          this.isConfig = true
+          this.getList()
+        } 
         // this.isConfig = 1
       })
     } catch (e) {
@@ -221,10 +234,15 @@ export default class Store {
     try {
       const res = await io.delTagRelation({
         id: this.recordObj.tagFieldId,
+        projectId: this.projectId,
       })
       runInAction(() => {
-        successTip('取消成功')
-        if (res) this.getList()
+        if (res) {
+          successTip('取消成功')
+          this.isConfig = false
+          this.isNewTag = true
+          this.getList()
+        }
       })
     } catch (e) {
       errorTip(e.message)

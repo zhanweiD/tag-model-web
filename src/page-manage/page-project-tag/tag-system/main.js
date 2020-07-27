@@ -14,11 +14,10 @@ class TagSystem extends Component {
     return (
       // <Provider store={store}>
       <div className="tag-system">
-        <Tree store={store} projectId={this.props.projectId} />
-        <Detail store={store} projectId={this.props.projectId} />
+        <Tree store={store} {...this.props} />
+        <Detail store={store} {...this.props} />
       </div>
-      // </Provider>
-      
+      // </Provider> 
     )
   }
 }

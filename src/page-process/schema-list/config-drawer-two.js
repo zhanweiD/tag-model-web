@@ -18,34 +18,34 @@ export default class ConfigDrawerTwo extends Component {
     title: '更新前',
     children: [
       {
-        key: 'name',
+        key: 'bfieldName',
         title: '字段',
-        dataIndex: 'name',
+        dataIndex: 'bfieldName',
       }, {
-        key: 'objName',
+        key: 'btagEnName',
         title: '唯一标识',
-        dataIndex: 'objName',
+        dataIndex: 'btagEnName',
       }, {
-        key: 'lastCount',
+        key: 'btagName',
         title: '标签名称',
-        dataIndex: 'lastCount',
+        dataIndex: 'btagName',
       }, 
     ],
   }, {
     title: '更新后',
     children: [
       {
-        key: 'nameu',
+        key: 'fieldName',
         title: '字段',
-        dataIndex: 'nameu',
+        dataIndex: 'fieldName',
       }, {
-        key: 'objNameu',
+        key: 'tagEnName',
         title: '唯一标识',
-        dataIndex: 'objNameu',
+        dataIndex: 'tagEnName',
       }, {
-        key: 'lastCountu',
+        key: 'tagName',
         title: '标签名称',
-        dataIndex: 'lastCountu',
+        dataIndex: 'tagName',
       }, 
     ],
   }]

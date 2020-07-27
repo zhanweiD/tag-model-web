@@ -29,7 +29,6 @@ export default class Detail extends Component {
   render() {
     const {detailLoading, tagDetail, selectedKey, projectId, useProjectId} = this.store
     const {authorStatus} = tagDetail
-    console.log(toJS(useProjectId), toJS(projectId))
 
     const baseInfo = [{
       title: '对象',

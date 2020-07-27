@@ -25,10 +25,10 @@ const api = {
   getSubmitLog: get(`${derivativeApi}/schema/submit_log`), // 查询提交日志
 
   // 标签配置
-  // getFieldList: get(`${derivativeApi}/scheme/field_list`), // 获取字段列表
-  getFieldList: get('http://192.168.90.129:3000/mock/119/derivative/scheme/field_list'), // 获取字段列表
-  // saveTagRelation: post(`${baseApi}/tagConfig/save_single_der_filed_tag_relation`), // 绑定衍生标签
-  saveTagRelation: post('http://192.168.90.129:3000/mock/119/tagConfig/save_single_der_filed_tag_relation'), // 绑定衍生标签
+  getFieldList: get(`${derivativeApi}/scheme/field_list`), // 获取字段列表
+  // getFieldList: get('http://192.168.90.129:3000/mock/119/derivative/scheme/field_list'), // 获取字段列表
+  saveTagRelation: post(`${baseApi}/tagConfig/save_single_der_filed_tag_relation`), // 绑定衍生标签
+  // saveTagRelation: post('http://192.168.90.129:3000/mock/119/tagConfig/save_single_der_filed_tag_relation'), // 绑定衍生标签
   // delTagRelation: post(`${baseApi}/tagConfig/delete_single_der_filed_tag_relation`), // 取消标签绑定
   delTagRelation: post('http://192.168.90.129:3000/mock/119/tagConfig/delete_single_der_filed_tag_relation'), // 取消标签绑定
   createTag: post(`${baseApi}/tag/create_derivative_tag`), // 创建衍生标签

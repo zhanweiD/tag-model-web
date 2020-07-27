@@ -67,7 +67,6 @@ export default class TagTrend extends Component {
     const noDataConfig = {
       text: '暂无趋势信息',
     }
-    console.log(lineData.length)
     return (
       <div className="p16">
         <h3 className="chart-title">空值占比趋势</h3>

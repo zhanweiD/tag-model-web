@@ -37,7 +37,6 @@ export default class ConfigDrawerOne extends Component {
       tagBaseInfo,
       recordObj,
     } = this.store
-    console.log(isEnum)
     return [{
       label: '新建标签',
       key: 'newTag',
@@ -215,12 +214,13 @@ export default class ConfigDrawerOne extends Component {
         this.store.createTag(params)
       }).catch(err => console.log(err))
     }
+    this.store.disNext = false
     // this.store.getList()
   }
 
   render() {
     const {release, isConfig, recordObj} = this.store
-    const {fieldName, tagId} = recordObj
+    const {fieldName, tagId, status} = recordObj
     const formConfig = {
       selectContent: this.selectContent(),
       disabled: true,
@@ -229,12 +229,12 @@ export default class ConfigDrawerOne extends Component {
     return (
       <Fragment>
         {
-          tagId ? (
+          fieldName ? (
             <div className="config-form">
               <div className="form-header">
                 <div>
                   <span className="fs14 mr8">{fieldName}</span>
-                  <Tag color={release ? 'processing' : 'default'}>{release === 2 ? '已发布' : '未发布'}</Tag>
+                  <Tag color={release ? 'processing' : 'default'}>{status === 2 ? '已发布' : '未发布'}</Tag>
                 </div>
                 <div>
                   <Button type="primary" disabled={release} onClick={this.submit}>

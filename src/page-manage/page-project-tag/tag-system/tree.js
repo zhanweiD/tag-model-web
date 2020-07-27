@@ -16,6 +16,8 @@ export default class Tree extends Component {
     super(props)
     this.store = props.store
 
+    this.store.projectId = props.projectId
+    this.store.commonTag = props.commonTag
     this.store.getTreeData()
   }
 

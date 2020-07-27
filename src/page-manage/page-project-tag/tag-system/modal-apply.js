@@ -38,7 +38,8 @@ export default class TagApply extends Component {
 
       const params = {
         tagIds: toJS([store.tagDetail.id]),
-        useProjectId: values.useProjectId || this.store.useProjectId,
+        // useProjectId: values.useProjectId || this.store.projectId,
+        useProjectId: this.store.projectId,
         applyDescr: values.applyDescr,
       }
       // 申请时长为永远
