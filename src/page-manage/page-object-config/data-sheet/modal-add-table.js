@@ -291,7 +291,13 @@ class ModalAddTable extends Component {
               </Select>
             )}
           </FormItem>
-          <FormItem {...formItemLayout} label="数据表">
+          <FormItem 
+          {...formItemLayout}
+           label="数据表"
+            extra={+bothTypeCode === 0 && getFieldValue('switch') 
+            ? <span>关联实体下无可用的数据表？<a target="_blank" rel="noopener noreferrer" href={`${window.__keeper.pathHrefPrefix}/manage/object-config/4/${+this.chooseEntity}/table`} >去对象配置中添加</a></span>
+            : null}
+            >
             {getFieldDecorator('dataTableName', {
               rules: [{required: true, message: '请选择数据表'}],
             })(

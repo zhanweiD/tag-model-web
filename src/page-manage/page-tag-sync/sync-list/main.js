@@ -140,8 +140,8 @@ class SyncList extends Component {
             )
           }
 
-          /* 提交成功 & 暂停 &  运行成功 */
-          if (record.status === 1 && record.scheduleType === 0 && record.lastStatus === 1) {
+          /* 提交成功 & 暂停 &  运行成功  & 运行失败 */
+          if (record.status === 1 && record.scheduleType === 0 && (record.lastStatus === 1 || record.lastStatus === 2)) {
             return (
               <Fragment>
                 <a href onClick={() => this.startSync(record)}>启动</a>

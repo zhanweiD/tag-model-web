@@ -28,8 +28,11 @@ class SyncResult extends Component {
     title: '对象名称',
     dataIndex: 'objName',
   }, {
-    title: '数据应用',
+    title: '目的数据源',
     dataIndex: 'storageName',
+  }, {
+    title: '数据源类型',
+    dataIndex: 'storageType',
   }, {
     title: '同步计划',
     dataIndex: 'tagTransferSchemeName',
