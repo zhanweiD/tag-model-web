@@ -72,12 +72,12 @@ export default class ConfigDrawerOne extends Component {
       label: '唯一标识',
       key: 'enName',
       initialValue: tagBaseInfo.enName,
-      rules: [
+      rules: !isNewTag ? null : ([
         '@transformTrim',
         '@required',
         '@max32',
         {validator: this.checkName},
-      ],
+      ]),
       disabled: release || isConfig || !isNewTag,
       component: 'input',
     }, {
@@ -166,6 +166,7 @@ export default class ConfigDrawerOne extends Component {
 
   @action.bound tagChange(e) {
     this.store.tagId = e
+    this.store.getTagBaseDetail()
   }
 
   /**
@@ -195,15 +196,16 @@ export default class ConfigDrawerOne extends Component {
   }
 
   @action submit = () => {
-    const {isConfig, recordObj} = this.store
+    const {isConfig, recordObj, isNewTag} = this.store
     if (isConfig) {
       // 取消配置
       this.store.delTagRelation()
+      this.store.disNext = false
     } else {
       this.form.validateFields().then(values => {
-        console.log(values)
         if (recordObj.valueType !== values.valueType) {
           failureTip('数据类型不匹配，请重新选择')
+          return
         }
         const params = {
           ...values,
@@ -211,10 +213,15 @@ export default class ConfigDrawerOne extends Component {
           isEnum: values.isEnum ? 1 : 0,
         }
         // 配置
-        this.store.createTag(params)
+        if (isNewTag) {
+          this.store.createTag(params)
+        } else {
+          this.store.saveTagRelation()
+        }
+        this.store.disNext = false
       }).catch(err => console.log(err))
     }
-    this.store.disNext = false
+    
     // this.store.getList()
   }
 

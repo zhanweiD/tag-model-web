@@ -26,13 +26,10 @@ const api = {
 
   // 标签配置
   getFieldList: get(`${derivativeApi}/scheme/field_list`), // 获取字段列表
-  // getFieldList: get('http://192.168.90.129:3000/mock/119/derivative/scheme/field_list'), // 获取字段列表
   saveTagRelation: post(`${baseApi}/tagConfig/save_single_der_filed_tag_relation`), // 绑定衍生标签
-  // saveTagRelation: post('http://192.168.90.129:3000/mock/119/tagConfig/save_single_der_filed_tag_relation'), // 绑定衍生标签
-  // delTagRelation: post(`${baseApi}/tagConfig/delete_single_der_filed_tag_relation`), // 取消标签绑定
-  delTagRelation: post('http://192.168.90.129:3000/mock/119/tagConfig/delete_single_der_filed_tag_relation'), // 取消标签绑定
+  delTagRelation: post(`${baseApi}/tagConfig/delete_single_der_filed_tag_relation`), // 取消标签绑定
   createTag: post(`${baseApi}/tag/create_derivative_tag`), // 创建衍生标签
-  getTagList: post(`${derivativeApi}/scheme/derivative_tag_list`), // 衍生标签列表
+  getTagList: get(`${baseApi}/tag/list_derivative_tag`), // 衍生标签列表
   tabCheckName: post(`${tagModalApi}/name_check`), // 重名校验
   getTagCateSelectList: get(`${baseApi}/cate/cate_tree`), // 创建标签 - 所属类目下拉数据
   getTagBaseDetail: get(`${tagModalApi}/tag_detail`), // 标签详情

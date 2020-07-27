@@ -9,6 +9,7 @@ class Store {
   @observable chartPieValues = []
   @observable valueTrend = {} // 值域分布信息
   @observable tagId = 0 // 标签id
+  @observable projectId // 项目id
   @observable permission = 0 // 标签权限
   // @observable updateStatus = 0 // 更新状态
 
@@ -31,6 +32,7 @@ class Store {
     try {
       const res = await io.getValueUpdate({
         id: this.tagId,
+        projectId: this.projectId,
       })
       runInAction(() => {
         if (res) successTip('更新成功')

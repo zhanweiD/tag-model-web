@@ -29,6 +29,7 @@ export default class Store {
   @observable recordObj = {} // 点击的字段
   @observable list = [] // 字段列表
   @observable allList = [] // 全部字段列表
+  @observable noConfigList = [] // 保存配置前列表信息列表
   @observable configList = [] // 已配置字段列表
   @observable noConList = [] // 未配置字段列表
   @observable previews = [] // 预览列表
@@ -68,6 +69,28 @@ export default class Store {
     this.recordObj = {}
   }
   
+  // 保存配置前字段分页列表信息， 只在初次打开抽屉使调用，只用于存储信息
+  @action async getNoConList() {
+    this.noConfigList = []
+    try {
+      const res = await io.getFieldList({
+        id: this.processId,
+        fieldName: this.fieldName,
+      })
+      runInAction(() => {
+        this.noConfigList = res || []
+        // res.forEach(item => {
+        //   if (item.tagFieldId) {
+        //     this.noConfigList.push(item)
+        //   }
+        // })
+        console.log(toJS(this.noConfigList))
+      })
+    } catch (e) {
+      console.log(e.message)
+    }
+  }
+
   // 获取字段分页列表
   @action async getList() {
     this.resetData()
@@ -80,9 +103,8 @@ export default class Store {
       })
 
       runInAction(() => {
-        this.allList = res || []
+        this.previews = this.allList = res || []
         this.list = this.allList
-
         this.list.forEach(item => {
           if (item.tagFieldId) {
             this.configList.push(item)
@@ -101,36 +123,13 @@ export default class Store {
     }
   }
 
-  // 获取配置结果预览分页列表
-  @action async getPreviewList() {
-    // this.configNum = 0
-    this.previews = []
-    this.tableLoading = true
-    try {
-      const res = await io.getFieldList({
-        id: this.processId,
-        fieldName: this.fieldName,
-      })
-      runInAction(() => {
-        res.forEach(item => {
-          if (item.tagFieldId) {
-            this.previews.push(item)
-          } 
-        })
-
-        for (let i = 0; i < this.configList.length; i++) {
-          this.previews[i].bfieldName = this.configList[i].fieldName
-          this.previews[i].btagEnName = this.configList[i].tagEnName
-          this.previews[i].btagName = this.configList[i].tagName
-        }
-        this.list = this.previews
-        this.pagination.totalCount = this.list.length
-        this.tableLoading = false
-      })
-    } catch (e) {
-      this.tableLoading = false
-      errorTip(e.message)
+  @action nextList = () => {
+    for (let i = 0; i < this.noConfigList.length; i++) {
+      this.previews[i].bfieldName = this.noConfigList[i].fieldName
+      this.previews[i].btagEnName = this.noConfigList[i].tagEnName
+      this.previews[i].btagName = this.noConfigList[i].tagName
     }
+    this.list = this.previews
   }
 
   // 新建标签
@@ -141,8 +140,6 @@ export default class Store {
         projectId: this.projectId,
         ...params,
         objId: this.ownObject,
-        // objId: 7524052961396416,
-        // cateId: 7524052961658560,
         configType: 1,
       })
       runInAction(() => {
@@ -165,12 +162,12 @@ export default class Store {
   @action async getTagBaseDetail() {
     try {
       const res = await io.getTagBaseDetail({
-        id: this.recordObj.tagId,
-        // id: 7524030350165696,
+        id: this.recordObj.tagId || this.tagId,
       })
       runInAction(() => {
         this.tagBaseInfo = res
         this.isEnum = res.isEnum
+        this.form.resetFields()
       })
     } catch (e) {
       errorTip(e.message)
@@ -196,10 +193,10 @@ export default class Store {
     try {
       const res = await io.getTagList({
         projectId: this.projectId,
-        tagDerivativeSchemeId: this.processId,
+        objId: this.ownObject,
       })
       runInAction(() => {
-        this.tagList = changeToOptions(toJS(res || []))('objName', 'objId')
+        this.tagList = changeToOptions(toJS(res || []))('name', 'id')
       })
     } catch (e) {
       errorTip(e.message)
@@ -222,7 +219,6 @@ export default class Store {
           this.isConfig = true
           this.getList()
         } 
-        // this.isConfig = 1
       })
     } catch (e) {
       errorTip(e.message)

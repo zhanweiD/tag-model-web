@@ -29,6 +29,7 @@ export default class Detail extends Component {
   render() {
     const {detailLoading, tagDetail, selectedKey, projectId, useProjectId} = this.store
     const {authorStatus} = tagDetail
+    const {commonTag} = this.props
 
     const baseInfo = [{
       title: '对象',
@@ -56,7 +57,7 @@ export default class Detail extends Component {
     // 不同状态的相应map
     const tagMap = {
       2: <Tag status="success" text="有权限" />,
-      1: <Tag status="process" text="审核中" />,
+      1: <Tag status="process" text="审批中" />,
     }
     const actions = [
       <Button 
@@ -81,11 +82,11 @@ export default class Detail extends Component {
                 name={tagDetail.name}
                 descr={tagDetail.descr}
                 baseInfo={baseInfo}
-                tag={tagMap[authorStatus]}
+                tag={commonTag ? tagMap[authorStatus] : null}
                 actions={actions}
               />
               <div className="bgf mt16 ">
-                <TagAnalyze tagId={selectedKey} status={authorStatus} />
+                {tagDetail.isEnum ? <TagAnalyze tagId={selectedKey} status={authorStatus} /> : null}
                 <TagTrend key={selectedKey} tagId={selectedKey} />
               </div>
             </Spin>

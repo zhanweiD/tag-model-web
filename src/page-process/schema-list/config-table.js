@@ -66,19 +66,15 @@ export default class ConfigDrawerOne extends Component {
  
   // 选中字段
   @action selectField = obj => {
-    switch (obj.fieldType) {
-      case 'tinyint' || 'int' || 'smallint' || 'bigint':
-        obj.valueType = 2
-        break
-      case 'float' || 'double':
-        obj.valueType = 3
-        break
-      case 'string' || 'varchar' || 'char':
-        obj.valueType = 4
-        break
-      default:
-        obj.valueType = 5 // 日期型
-        break
+    const {fieldType} = obj
+    if (fieldType === 'tinyint' || fieldType === 'int' || fieldType === 'smallint' || fieldType === 'bigint') {
+      obj.valueType = 2
+    } else if (fieldType === 'float' || fieldType === 'double' || fieldType === 'decimal(10,2)') {
+      obj.valueType = 3
+    } else if (fieldType === 'string' || fieldType === 'varchar' || fieldType === 'char') {
+      obj.valueType = 4
+    } else if (fieldType === 'timestamp' || fieldType === 'date') {
+      obj.valueType = 5
     }
 
     this.store.recordObj = obj

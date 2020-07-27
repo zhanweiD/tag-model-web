@@ -8,6 +8,7 @@ import OnerFrame from '@dtwave/oner-frame'
 import {DetailHeader, OverviewCardWrap} from '../../../component'
 import {Time} from '../../../common/util'
 import TagAnalyze from '../../../business-component/tag-analyze'
+import TagTrend from '../../../business-component/tag-trend'
 import TagrRelate from '../../../business-component/tag-relate'
 import StorageList from './storage-list'
 import AppList from './app-list'
@@ -90,7 +91,8 @@ class TagDetail extends Component {
         <Tabs defaultActiveKey="1" className="comp-tab">
           <TabPane tab="标签分析" key="1">
             <div className="bgf m16 box-border" style={{minHeight: 'calc(100vh - 298px)'}}>
-              <TagAnalyze tagId={tagId} />
+              {tagBaseInfo.isEnum ? <TagAnalyze tagId={tagId} /> : null}
+              <TagTrend tagId={tagId} />
             </div>
           </TabPane>
           <TabPane tab="血缘分析" key="2">

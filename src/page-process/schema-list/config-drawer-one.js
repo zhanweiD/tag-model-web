@@ -19,8 +19,7 @@ export default class ConfigDrawerOne extends Component {
   }
 
   @action nextStep = () => {
-    // this.store.getConfigList()getPreviewList
-    this.store.getPreviewList()
+    this.store.nextList()
     this.store.currentStep = 1
   }
 

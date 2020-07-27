@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import {action} from 'mobx'
+import {action, toJS} from 'mobx'
 import {inject, observer} from 'mobx-react'
 import {TimeRange, NoData} from '../../component'
 import getApiTrendOpt from './charts-options'
@@ -16,12 +16,20 @@ export default class TagTrend extends Component {
     store.tagId = props.tagId
   }
 
+  componentWillMount() {
+    store.getRatuoTrend(res => {
+      // if (res.length) {
+      this.drawChart(res)
+      // }
+    })
+  }
+
   componentDidMount() {
     this.chartLine = echarts.init(this.lineRef)
     // this.getData()
-    store.getRatuoTrend(res => {
-      if (res.length) this.drawChart(res)
-    })
+    // store.getRatuoTrend(res => {
+    //   if (res.length) this.drawChart(res)
+    // })
     window.addEventListener('resize', () => this.resize())
   }
 
@@ -29,9 +37,10 @@ export default class TagTrend extends Component {
     if (prevProps.tagId !== this.props.tagId) {
       store.tagId = this.props.tagId
       store.getRatuoTrend(res => {
-        if (res.length) this.drawChart(res)
+        this.drawChart(res)
       })
     }
+    this.drawChart(store.lineData)
   }
 
   drawChart = data => {

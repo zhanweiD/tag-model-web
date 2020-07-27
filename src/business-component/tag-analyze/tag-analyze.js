@@ -1,5 +1,5 @@
 /**
- * @description 空值占比趋势
+ * @description 值域分布趋势
  */
 import {Component} from 'react'
 import {action, toJS} from 'mobx'
@@ -29,6 +29,7 @@ export default class TagAnalyze extends Component {
   constructor(props) {
     super(props)
     store.tagId = props.tagId
+    store.projectId = props.projectId
   }
 
   componentWillMount() {
@@ -55,6 +56,7 @@ export default class TagAnalyze extends Component {
   }
 
   @action drawSaveTrend(pieData) {
+    chartsCount = 0
     for (let i = 0; i < pieData.length; i++) {
       chartsCount += pieData[i].count
       const c = {
@@ -71,7 +73,7 @@ export default class TagAnalyze extends Component {
     const {status, nullRatio, recordTime, name} = store.valueTrend
     return (
       <div className="p16 pt8 pr">
-        <h3 className="chart-title">标签分布</h3>
+        <h3 className="chart-title">值域分布</h3>
         <Button 
           type="primary pa" 
           disabled={this.props.status !== 2}

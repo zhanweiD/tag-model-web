@@ -184,7 +184,7 @@ export function getApiTrendOpt(data) {
   }
 }
 
-// 值域分布趋势图配置
+// 值域分布图配置
 export function getPieOpt(chartsCount, data) {
   return {
     backgroundColor: '#fff',
