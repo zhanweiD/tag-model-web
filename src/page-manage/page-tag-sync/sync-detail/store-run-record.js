@@ -34,7 +34,6 @@ class Store {
   }
 
   @action async getLog(id) {
-
     try {
       const res = await io.getLog({
         taskInstanceId: id,
@@ -49,21 +48,20 @@ class Store {
   }
 
   @action async runTask(id) {
-
     try {
       const res = await io.runTask({
         taskInstanceId: id,
       })
 
       runInAction(() => {
-       if(res) {
-        successTip('重跑成功')
-         this.getList({
-          id: this.syncId,
-        })
-       } else {
-        errorTip('重跑失败')
-       }
+        if (res) {
+          successTip('操作成功')
+          this.getList({
+            id: this.syncId,
+          })
+        } else {
+          errorTip('操作失败')
+        }
       })
     } catch (e) {
       errorTip(e.message)

@@ -67,7 +67,7 @@ class TagDetail extends Component {
       {
         title: '目的源数',
         tooltipText: '包括该标签被标签同步或者目的源管理的映射的总数。举个例子，员工.性别这个标签被标签同步到2个数据源，被目的源管理里映射了2个目的源。在目的源数是4',
-        values: [cardInfo.entityCount || 0],
+        values: [cardInfo.targetCount || 0],
       }, {
         title: '加工方案引用数',
         tooltipText: '项目内该标签被加工方案的引用数',
