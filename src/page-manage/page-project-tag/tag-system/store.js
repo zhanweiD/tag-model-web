@@ -28,13 +28,18 @@ class Store {
   // 默认展开的类目
   @action showKeys = data => {
     if (data[0].children) {
-      this.currentSelectKeys.push(data[0].aId)
+      if (data[0].isLeaf === 2) {
+        this.currentSelectKeys.push(data[0].id)
+      } else {
+        this.currentSelectKeys.push(data[0].aId)
+      }
       this.showKeys(data[0].children)
     } 
   }
 
   @action async getTreeData() {
     this.treeLoading = true
+    this.currentSelectKeys = []
     let res = []
     try {
       if (this.commonTag) {

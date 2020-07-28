@@ -28,7 +28,7 @@ export default class Tree extends Component {
     return data.map(node => (
       <DtTreeNode
         key={node.id}
-        itemKey={node.aId}
+        itemKey={node.isLeaf === 2 ? node.id : node.aId}
         title={node.name}
         // selectable={false}
         selectable={node.type === 0}
