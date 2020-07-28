@@ -5,11 +5,9 @@ import {Component} from 'react'
 import {action, toJS} from 'mobx'
 import {observer} from 'mobx-react'
 import {Badge, Button, Divider, Progress} from 'antd'
-// import Trend from './trend'
-import Distribution from './distribution'
 
 import store from './store'
-import './distribution.styl'
+import './tag-analyze.styl'
 
 import {getPieOpt} from './charts-options'
 
@@ -32,14 +30,17 @@ export default class TagAnalyze extends Component {
     store.projectId = props.projectId
   }
 
-  componentWillMount() {
-    store.getValueTrend({id: this.props.tagId}, pieData => {
-      this.drawSaveTrend(pieData)
-    })
-  }
+  // componentWillMount() {
+  //   store.getValueTrend({id: this.props.tagId}, pieData => {
+  //     this.drawSaveTrend(pieData)
+  //   })
+  // }
 
   componentDidMount() {
     this.myChart = echarts.init(this.refs.chartsPie)
+    store.getValueTrend({id: this.props.tagId}, pieData => {
+      this.drawSaveTrend(pieData)
+    })
     window.addEventListener('resize', () => this.resize())
   }
 
@@ -87,9 +88,8 @@ export default class TagAnalyze extends Component {
           <Badge status={status !== 3 ? status !== 2 ? 'warning' : 'success' : 'error'} />
           <span className="mr16">{recordTime}</span>
         </p>
-        {/* <Distribution store={store} /> */}
         <div className="chartPie-ad">
-          <div ref="chartsPie" style={{height: '400px', width: '100%'}} />
+          <div ref="chartsPie" style={{height: '300px', width: '100%'}} />
           <div className="pie-tips FBH ablt">
             <ul className="mr8">
               {

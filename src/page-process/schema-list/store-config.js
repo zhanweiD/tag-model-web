@@ -79,12 +79,6 @@ export default class Store {
       })
       runInAction(() => {
         this.noConfigList = res || []
-        // res.forEach(item => {
-        //   if (item.tagFieldId) {
-        //     this.noConfigList.push(item)
-        //   }
-        // })
-        console.log(toJS(this.noConfigList))
       })
     } catch (e) {
       console.log(e.message)
@@ -123,13 +117,16 @@ export default class Store {
     }
   }
 
+  // 预览页面数组
   @action nextList = () => {
     for (let i = 0; i < this.noConfigList.length; i++) {
       this.previews[i].bfieldName = this.noConfigList[i].fieldName
       this.previews[i].btagEnName = this.noConfigList[i].tagEnName
       this.previews[i].btagName = this.noConfigList[i].tagName
+      this.previews[i].btagFieldId = this.noConfigList[i].tagFieldId
     }
-    this.list = this.previews
+    this.list = this.previews.filter(item => item.tagFieldId || item.btagFieldId)
+    this.pagination.totalCount = this.list.length
   }
 
   // 新建标签
