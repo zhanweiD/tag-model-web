@@ -14,9 +14,11 @@ class Store {
   // @observable updateStatus = 0 // 更新状态
 
   // 值域分布信息
-  @action async getValueTrend(params, cb) {
+  @action async getValueTrend(cb) {
     try {
-      const res = await io.getValueTrend(params)
+      const res = await io.getValueTrend({
+        id: this.tagId, 
+      })
       runInAction(() => {
         this.chartPieValues = res.pieTemplateDtoList || []
         this.valueTrend = res || {}
@@ -28,14 +30,17 @@ class Store {
   }
 
   // 值域分布更新
-  @action.bound async getValueUpdate() {
+  @action.bound async getValueUpdate(cb) {
     try {
       const res = await io.getValueUpdate({
         id: this.tagId,
         projectId: this.projectId,
       })
       runInAction(() => {
-        if (res) successTip('更新成功')
+        if (res) {
+          this.getValueTrend(cb)
+          successTip('正在更新')
+        }
       })
     } catch (e) {
       errorTip(e.message)
