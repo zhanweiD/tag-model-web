@@ -88,7 +88,7 @@ export default class TagTrend extends Component {
         </div> */}
         {!lineData.length && <NoData {...noDataConfig} />}
         <div 
-          style={{width: '100%', height: '350px'}} 
+          style={{width: '100%', height: '310px'}} 
           ref={ref => this.lineRef = ref} 
         />
       </div>
