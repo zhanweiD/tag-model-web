@@ -91,10 +91,15 @@ export default class ConfigDrawerOne extends Component {
 
   // 显示全部，隐藏已发布
   @action showAll = () => {
-    const {list, pagination} = this.store
-    this.store.list = list.filter(item => item.status !== 2)
-    pagination.totalCount = this.store.list.length
-    this.store.recordObj = {}
+    const {list, pagination, hiddenRel, tabChange} = this.store
+    if (hiddenRel) {
+      tabChange(1)
+    } else {
+      this.store.list = list.filter(item => item.status !== 2)
+      pagination.totalCount = this.store.list.length
+      this.store.recordObj = {}
+    }
+    this.store.hiddenRel = !hiddenRel
   }
 
   render() {
@@ -106,6 +111,7 @@ export default class ConfigDrawerOne extends Component {
       tableLoading,
       tabChange,
       tabValue,
+      hiddenRel,
     } = this.store
 
     const listConfig = {
@@ -133,7 +139,7 @@ export default class ConfigDrawerOne extends Component {
         <Card 
           size="small" 
           title="字段列表" 
-          extra={<a href onClick={this.showAll}>显示全部</a>} 
+          extra={<a href onClick={this.showAll}>{hiddenRel ? '显示全部' : '隐藏已发布'}</a>} 
           style={{width: 525, height: 600, marginTop: '16px'}}
         >
           <Search

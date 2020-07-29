@@ -23,6 +23,7 @@ export default class Store {
   @observable isEnum = false // 是否枚举
   @observable isNewTag = true // 是否新建标签
   @observable tableLoading = false // 列表加载
+  @observable hiddenRel = false // 判断是否已隐藏发布
 
   @observable tagBaseInfo = {} // 衍生标签详情
   @observable form // form 表单
