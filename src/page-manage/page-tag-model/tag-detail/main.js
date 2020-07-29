@@ -107,7 +107,7 @@ class TagDetail extends Component {
       value: tagBaseInfo.configType === 1 ? '衍生标签' : '基础标签',
     }, {
       title: '衍生方案',
-      value: <Time timestamp={tagBaseInfo.createTime} />,
+      value: tagBaseInfo.schemeName,
     }]
 
     // 不同状态的相应map

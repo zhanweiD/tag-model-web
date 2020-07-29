@@ -10,20 +10,22 @@ export default class AppList extends Component {
   columns = [
     {
       title: '标签应用名称',
-      key: 'userName',
-      dataIndex: 'userName',
+      key: 'appName',
+      dataIndex: 'appName',
     }, {
       title: '应用类型',
-      key: 'mobile',
-      dataIndex: 'mobile',
+      key: 'type',
+      dataIndex: 'type',
+      render: text => (text === 1 ? '业务场景' : ''),
     }, {
       title: '创建时间',
-      key: 'email',
-      dataIndex: 'email',
+      key: 'createTime',
+      dataIndex: 'createTime',
+      render: text => <Time timestamp={text} />,
     }, {
       title: '创建者',
-      key: 'role',
-      dataIndex: 'role',
+      key: 'cuserName',
+      dataIndex: 'cuserName',
     },
     //  {
     //   title: '使用状态',
