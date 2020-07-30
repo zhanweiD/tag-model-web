@@ -1,7 +1,7 @@
 import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
 import {action} from 'mobx'
-import {Button, Tag} from 'antd'
+import {Button, Tag, Popconfirm} from 'antd'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
 
 @inject('bigStore')
@@ -117,13 +117,23 @@ export default class StepThree extends Component {
         </div>
        
         <div className="bottom-button">
-          <Button
-            type="primary"
-            onClick={this.submit}
-            loading={confirmLoading}
+          <Popconfirm
+            title="您确定要提交该同步计划吗?"
+            placement="topRight"
+            onConfirm={this.submit}
+            // onCancel={cancel}
+            okText="是的"
+            cancelText="取消"
           >
-            提交
-          </Button>
+            <Button
+              type="primary"
+              // onClick={this.submit}
+              loading={confirmLoading}
+            >
+              提交
+            </Button>
+          </Popconfirm>
+          
         </div>
       </div>
     )
