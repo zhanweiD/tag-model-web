@@ -154,6 +154,7 @@ export default class ConfigDrawerOne extends Component {
 
   // 是否新建标签
   @action newTag = v => {
+    this.store.tagBaseInfo = {}
     this.form.resetFields()
     this.store.isNewTag = v
     // this.store.isEnum = false
@@ -165,6 +166,7 @@ export default class ConfigDrawerOne extends Component {
   }
 
   @action.bound tagChange(e) {
+    console.log(e)
     this.store.tagId = e
     this.store.getTagBaseDetail()
   }
@@ -200,6 +202,7 @@ export default class ConfigDrawerOne extends Component {
     if (isConfig) {
       // 取消配置
       this.store.delTagRelation()
+      this.store.recordObj.tagId = null
       this.store.disNext = false
     } else {
       this.form.validateFields().then(values => {

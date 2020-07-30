@@ -53,6 +53,7 @@ export default class Store {
   @action tabChange = v => {
     const {allList, noConList, configList} = this
     this.tabValue = v
+    this.hiddenRel = false
     switch (v) {
       case 1:
         this.list = allList
@@ -70,7 +71,7 @@ export default class Store {
     this.recordObj = {}
   }
   
-  // 保存配置前字段分页列表信息， 只在初次打开抽屉使调用，只用于存储信息
+  // 保存配置前字段列表信息， 只在初次打开抽屉使调用，只用于存储信息
   @action async getNoConList() {
     this.noConfigList = []
     try {
@@ -86,7 +87,7 @@ export default class Store {
     }
   }
 
-  // 获取字段分页列表
+  // 获取字段列表
   @action async getList() {
     this.resetData()
     this.tableLoading = true
@@ -107,8 +108,8 @@ export default class Store {
           } else {
             this.noConList.push(item)
           }
+          // item.key = item.fieldName
         })
-
         this.pagination.totalCount = res.length
         this.tableLoading = false
       })

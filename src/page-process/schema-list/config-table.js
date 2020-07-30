@@ -4,6 +4,7 @@ import {action, toJS} from 'mobx'
 import {inject, observer} from 'mobx-react'
 
 import {ListContent} from '../../component'
+import {selectFieldType} from '../../common/util'
 
 const {Search} = Input
 @inject('store')
@@ -36,27 +37,6 @@ export default class ConfigDrawerOne extends Component {
     }, 
   ]
 
-  // tab 切换
-  // @action handleChange = v => {
-  //   const {allList, noConList, configList} = this.store
-  //   switch (v.target.value) {
-  //     case 1:
-  //       this.store.list = allList
-  //       break
-  //     case 2:
-  //       this.store.list = configList
-  //       break
-  //     case 0:
-  //       this.store.list = noConList
-  //       break
-  //     default:
-  //       this.store.list = allList
-  //       break
-  //   }
-  //   // this.store.status = v.target.value
-  //   this.store.recordObj = {}
-  // }
-
   // 字段搜索
   @action searchFiled = v => {
     this.store.dataFieldName = v
@@ -66,16 +46,7 @@ export default class ConfigDrawerOne extends Component {
  
   // 选中字段
   @action selectField = obj => {
-    const {fieldType} = obj
-    if (fieldType === 'tinyint' || fieldType === 'int' || fieldType === 'smallint' || fieldType === 'bigint') {
-      obj.valueType = 2
-    } else if (fieldType === 'float' || fieldType === 'double' || fieldType === 'decimal(10,2)') {
-      obj.valueType = 3
-    } else if (fieldType === 'string' || fieldType === 'varchar' || fieldType === 'char') {
-      obj.valueType = 4
-    } else if (fieldType === 'timestamp' || fieldType === 'date') {
-      obj.valueType = 5
-    }
+    selectFieldType(obj)
 
     this.store.recordObj = obj
     this.store.tagBaseInfo = {}
@@ -91,15 +62,21 @@ export default class ConfigDrawerOne extends Component {
 
   // 显示全部，隐藏已发布
   @action showAll = () => {
-    const {list, pagination, hiddenRel, tabChange} = this.store
+    const {list, pagination, hiddenRel, tabChange, tabValue} = this.store
     if (hiddenRel) {
-      tabChange(1)
+      tabChange(tabValue)
     } else {
       this.store.list = list.filter(item => item.status !== 2)
       pagination.totalCount = this.store.list.length
       this.store.recordObj = {}
     }
     this.store.hiddenRel = !hiddenRel
+  }
+
+  @action setSelect = record => {
+    console.log(record.fieldName, this.store.recordObj.fieldName)
+    const {fieldName} = this.store.recordObj
+    return record.fieldName === fieldName ? 'ant-table-row-selected' : null
   }
 
   render() {
@@ -123,6 +100,11 @@ export default class ConfigDrawerOne extends Component {
       onRow: record => ({
         onClick: () => this.selectField(record),
       }),
+      // rowSelection: {
+      //   type: 'radio',
+      //   // ...rowSelection,
+      // },
+      // rowClassName: this.setSelect,
       columns: this.columns,
       // initGetDataByParent: true, // 初始请求 在父层组件处理。列表组件componentWillMount内不再进行请求
       store: this.store, // 必填属性
