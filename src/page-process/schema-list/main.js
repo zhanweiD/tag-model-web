@@ -123,7 +123,7 @@ class SchemaList extends Component {
             {
               (record.status === 1) && (
                 <Fragment>
-                  <a onClick={this.configDrawerShow}> 标签配置</a>
+                  <a onClick={() => this.configDrawerShow(record)}> 标签配置</a>
                   <span className="table-action-line" />
                 </Fragment>
               )
@@ -231,9 +231,16 @@ class SchemaList extends Component {
   }
 
   // 显示标签配置抽屉
-  @action configDrawerShow = () => {
+  @action configDrawerShow = record => {
     this.configStore.currentStep = 0
+    this.configStore.tagId = 0
+    this.configStore.tagBaseInfo = {}
+    this.configStore.list = []
+    this.configStore.ownObject = record.objId
+    this.configStore.processId = record.id
     this.configStore.configDrawerVisible = true
+    this.configStore.disNext = true
+    this.configStore.getNoConList()
   }
 
   // 初始化数据，一般情况不需要，此项目存在项目空间中项目的切换，全局性更新，较为特殊

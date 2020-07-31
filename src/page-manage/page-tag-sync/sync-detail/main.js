@@ -3,7 +3,7 @@ import {Spin} from 'antd'
 import {action, observable} from 'mobx'
 import {observer} from 'mobx-react'
 import OnerFrame from '@dtwave/oner-frame'
-import {DetailHeader, TabRoute} from '../../../component'
+import {DetailHeader, TabRoute, Tag} from '../../../component'
 import {Time} from '../../../common/util'
 import ConfigInfo from './config-info'
 import RunRecord from './run-record'
@@ -37,7 +37,7 @@ class SyncDetail extends Component {
   }
 
   render() {
-    const {infoLoading, detail} = store
+    const {infoLoading, detail, syncId, projectId} = store
 
     const baseInfo = [{
       title: '同步对象',
@@ -65,6 +65,18 @@ class SyncDetail extends Component {
 
     const Content = [ConfigInfo, RunRecord][+this.tabId]
 
+    // 不同状态的相应map
+    const tagMap = {
+      0: <Tag status="default" text="未完成" />,
+      1: <Tag status="success" text="提交成功" />,
+      2: <Tag status="error" text="提交失败" />,
+      3: <Tag status="process" text="提交中" />,
+      4: <Tag status="success" text="更新成功" />,
+      5: <Tag status="error" text="更新失败" />,
+      6: <Tag status="process" text="更新中" />,
+      7: <Tag status="default" text="未完成" />,
+    }
+
     return (
       <div className="page-sync-detail">
         <Spin spinning={infoLoading}>
@@ -72,11 +84,12 @@ class SyncDetail extends Component {
             name={detail.name}
             descr={detail.descr}
             baseInfo={baseInfo}
+            tag={tagMap[detail.status] || null}
           />
           <TabRoute {...tabConfig} />
         </Spin>
         <div className="list-content box-border">
-          <Content store={store} />
+          <Content store={store} syncId={syncId} />
         </div>
       </div>
     )

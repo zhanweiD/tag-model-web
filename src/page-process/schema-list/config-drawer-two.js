@@ -14,27 +14,48 @@ export default class ConfigDrawerTwo extends Component {
     this.store = props.store
   }
 
-  columns = [
-    {
-      key: 'name',
-      title: '字段',
-      dataIndex: 'name',
-    }, {
-      key: 'objName',
-      title: '唯一标识',
-      dataIndex: 'objName',
-    }, {
-      key: 'lastCount',
-      title: '标签名称',
-      dataIndex: 'lastCount',
-    }, 
-  ]
+  columns = [{
+    title: '更新前',
+    children: [
+      {
+        key: 'bfieldName',
+        title: '字段',
+        dataIndex: 'bfieldName',
+      }, {
+        key: 'btagEnName',
+        title: '唯一标识',
+        dataIndex: 'btagEnName',
+      }, {
+        key: 'btagName',
+        title: '标签名称',
+        dataIndex: 'btagName',
+      }, 
+    ],
+  }, {
+    title: '更新后',
+    children: [
+      {
+        key: 'fieldName',
+        title: '字段',
+        dataIndex: 'fieldName',
+      }, {
+        key: 'tagEnName',
+        title: '唯一标识',
+        dataIndex: 'tagEnName',
+      }, {
+        key: 'tagName',
+        title: '标签名称',
+        dataIndex: 'tagName',
+      }, 
+    ],
+  }]
   @action closeDrawer = () => {
     this.store.configDrawerVisible = false
   }
   @action preStep = () => {
-    this.store.list = this.store.saveList
+    // this.store.list = this.store.allList
     this.store.currentStep = 0
+    this.store.tabChange(1)
   }
   
   render() {
@@ -45,6 +66,7 @@ export default class ConfigDrawerTwo extends Component {
 
     const listConfig = {
       tableLoading,
+      // bordered: true,
       columns: this.columns,
       initGetDataByParent: true, // 初始请求 在父层组件处理。列表组件componentWillMount内不再进行请求
       store: this.store, // 必填属性

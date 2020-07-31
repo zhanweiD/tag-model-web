@@ -12,6 +12,7 @@ class Store {
   @observable tagInvokeYday = [] // 标签昨日调用次数TOP5
   @observable tagUnpopular = [] // 冷门标签TOP5
   @observable tagInvokeAll = [] // 标签累计调用次数TOP5
+  @observable tagProject = [] // 生产标签数项目TOP5
 
   @observable loading = false
 
@@ -43,6 +44,18 @@ class Store {
       runInAction(() => {
         this.loading = false
       })
+    }
+  }
+
+  @action async getTagProject(cb) {
+    try {
+      const res = await io.tagProject()
+      runInAction(() => {
+        this.tagProject = res || []
+        if (cb && res.length)cb(res, this.getRanKMax(res))
+      })
+    } catch (e) {
+      errorTip(e.message)
     }
   }
 
@@ -88,6 +101,47 @@ class Store {
     const count = _.map(arr, countKeyName)
     const max = Math.max.apply(null, count)
     return max
+  }
+
+  @observable objTypeChart = {} // 对象类型分布
+  @observable tagChart = {} // 标签资产分布
+  @observable tagTypeChart = {} // 标签类型分布
+
+  @action async getObjTypeChart(cb) {
+    try {
+      const res = await io.getObjTypeChart()
+
+      runInAction(() => {
+        this.objTypeChart = res || {}
+        if (cb)cb(res)
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  @action async getTagChart(cb) {
+    try {
+      const res = await io.getTagChart()
+      runInAction(() => {
+        this.tagChart = res || {}
+        if (cb)cb(res)
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  @action async getTagTypeChart(cb) {
+    try {
+      const res = await io.getTagTypeChart()
+      runInAction(() => {
+        this.tagTypeChart = res || {}
+        if (cb)cb(res)
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
   }
 }
 
