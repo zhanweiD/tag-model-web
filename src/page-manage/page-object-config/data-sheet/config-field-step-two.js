@@ -219,10 +219,13 @@ export default class StepTwo extends React.Component {
 
     // 如果是被选中的，还需要更新选中数组
     store.secondSelectedRows = store.secondSelectedRows.filter(item => item.dataFieldName !== record.dataFieldName)
+    store.forceUpdateKey = Math.random() // 强制刷新表格
   }
 
   // 展开编辑弹框
-  @action.bound showEditModal(index) {
+  @action.bound showEditModal(index, record) {
+    const {store} = this.props
+    store.tagId = record.tagId
     this.tagModalVisible = true
     this.editingTagIndex = index
   }

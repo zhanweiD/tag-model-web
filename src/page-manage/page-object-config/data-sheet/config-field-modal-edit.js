@@ -1,13 +1,20 @@
+import {observer} from 'mobx-react'
 import {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
 import {Modal, Input, Spin, Select, Switch, Cascader} from 'antd'
 import {isJsonFormat, enNameReg, getNamePattern} from '../../../common/util'
+import store from './store-tag'
 
 const FormItem = Form.Item
 const {Option} = Select
+const nameTypeMap = {
+  name: 1,
+  enName: 2,
+}
 
+@observer
 class ModalTagEdit extends Component {
   static propTypes = {
     title: PropTypes.string,
@@ -70,6 +77,7 @@ class ModalTagEdit extends Component {
                 rules: [
                   {required: true, message: '名称不可为空'},
                   ...getNamePattern(),
+                  {validator: this.checkName},
                 ],
               })(<Input autoComplete="off" placeholder="不超过32个字，允许中文、英文、数字或下划线" />)}
             </FormItem>
@@ -81,6 +89,7 @@ class ModalTagEdit extends Component {
                   {transform: value => value && value.trim()},
                   {required: true, message: '英文名不可为空'},
                   {pattern: enNameReg, message: '不超过32个字，只能包含英文、数字或下划线，必须以英文开头'},
+                  {validator: this.checkName},
                 ],
               })(<Input autoComplete="off" placeholder="不超过32个字，允许英文、数字或下划线，必须以英文开头" />)}
             </FormItem>
@@ -208,6 +217,21 @@ class ModalTagEdit extends Component {
     this.setState({
       isEnum: v,
     })
+  }
+
+  /**
+   * @description 重名校验
+   */
+  checkName = (rule, value, callback) => {
+    const params = {
+      name: value,
+      nameType: nameTypeMap[rule.field], // 名称类型: 1 中文名 2 英文名
+    }
+    if (store.tagId) {
+      params.id = store.tagId
+    }
+
+    store.checkName(params, callback)
   }
 }
 
