@@ -190,6 +190,23 @@ class SyncList extends Component {
             )
           }
 
+          /* 更新失败 & 暂停 */
+          if (record.status === 5 && record.scheduleType === 0) {
+            return (
+              <Fragment>
+                <span className="disabled">启动</span>
+                <span className="table-action-line" />
+                <a href onClick={() => this.editSync(record)}>编辑</a>
+                <span className="table-action-line" />
+                <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
+                  <a href>删除</a>
+                </Popconfirm>
+                <span className="table-action-line" />
+                <a href onClick={() => this.getLog(record.id)}>提交日志</a>
+              </Fragment>
+            )
+          }
+
           /* 更新成功 & 启动 & 运行成功、运行失败 */
           if (record.status === 4 && record.scheduleType === 1 && (record.lastStatus === 1 || record.lastStatus === 2)) {
             return (

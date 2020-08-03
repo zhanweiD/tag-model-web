@@ -106,7 +106,8 @@ class TagList extends Component {
               <span className="table-action-line" />
               <a href onClick={() => store.openTagConfig('one', record)}>绑定</a>
               <span className="table-action-line" />
-              <a href onClick={() => store.openDrawer('edit', record)}>编辑</a>
+              {/* <a href onClick={() => store.openDrawer('edit', record)}>编辑</a> */}
+              <span className="disabled">编辑</span>
               <span className="table-action-line" />
               <Popconfirm placement="topRight" title="标签被删除后不可恢复，确定删除？" onConfirm={() => this.remove(record)}>
                 <a href>删除</a>
