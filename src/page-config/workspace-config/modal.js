@@ -1,5 +1,5 @@
 import React from 'react'
-import {Modal, Form, Select} from 'antd'
+import {Modal, Form, Select, Button} from 'antd'
 
 const {Option} = Select
 const formItemLayout = {
@@ -12,6 +12,7 @@ const ConfigModal = ({
   onCreate, 
   onCancel,
   workspace,
+  config,
 }) => {
   const [form] = Form.useForm()
 
@@ -43,6 +44,7 @@ const ConfigModal = ({
         <Form.Item
           name="workspaceId"
           label="环境"
+          initialValue={config.workspaceId || undefined}
           rules={[
             {
               required: true,

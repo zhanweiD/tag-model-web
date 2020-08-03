@@ -235,6 +235,19 @@ export default class StepTwo extends React.Component {
     this.tagModalVisible = false
   }
 
+  isValueTypeName = num => {
+    switch (num) {
+      case 2:
+        return '整数型'
+      case 3:
+        return '小数型'
+      case 4:
+        return '文本型'
+      default:
+        return '日期型'
+    }
+  }
+
   // 编辑标签确定事件
   @action.bound handleTagEditConfirm(values, cb) {
     const {store} = this.props
@@ -249,6 +262,7 @@ export default class StepTwo extends React.Component {
     // 将undefined的值改成空字符串
     Object.keys(values).forEach(key => {
       valuesCopy[key] = values[key] === undefined ? '' : (typeof values[key] === 'string' ? values[key].trim() : values[key])
+      valuesCopy.valueTypeName = this.isValueTypeName(values.valueType)
     })
 
     // 要更新parentId字段（对应当前所属类目的id）
