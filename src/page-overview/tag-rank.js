@@ -21,6 +21,7 @@ const countUnitMap = {
   Yday: '次',
   Unpopular: '天',
   All: '次',
+  Project: '个',
 }
 
 @observer
@@ -41,8 +42,8 @@ export default class TagRank extends Component {
 
   initSvg() {
     this.svgBulletProject = d3.select('#project') 
-    .attr('width', chartOption.svgW)
-    .attr('height', chartOption.svgH)
+      .attr('width', chartOption.svgW)
+      .attr('height', chartOption.svgH)
     this.svgBulletProject.selectAll('*').remove()
 
     this.svgBulletYday = d3.select('#bulletYday') 
@@ -108,7 +109,7 @@ export default class TagRank extends Component {
       .enter()
       .append('text')
       .attr('y', (d, i) => rectDistance * i + rectH + 36)
-      .text(d => `${d.objName}——${d.tagName}`)
+      .text(d => (type === 'Project' ? d.projectName : `${d.objName}——${d.tagName}`))
       .attr('fill', 'rgba(0,0,0, 0.45)')
 
     
@@ -132,7 +133,7 @@ export default class TagRank extends Component {
   }
 
   render() {
-    const {tagInvokeYday, tagUnpopular, tagInvokeAll} = this.store
+    const {tagProject, tagInvokeYday, tagUnpopular, tagInvokeAll} = this.store
     return (
       <div>
         <Row gutter={16}>
@@ -142,7 +143,7 @@ export default class TagRank extends Component {
               <div className="overview-rank-content">
                 <svg id="project" />
                 {
-                  !tagInvokeYday.length
+                  !tagProject.length
                     ? (
                       <div className="noData">
                         <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
