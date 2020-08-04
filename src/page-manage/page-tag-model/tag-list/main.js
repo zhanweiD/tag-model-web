@@ -104,7 +104,7 @@ class TagList extends Component {
                 <a href>发布</a>
               </Popconfirm>
               <span className="table-action-line" />
-              <a href onClick={() => store.openTagConfig('one', record)}>绑定</a>
+              <a href onClick={() => store.openTagConfig('one', record)}>解绑</a>
               <span className="table-action-line" />
               {/* <a href onClick={() => store.openDrawer('edit', record)}>编辑</a> */}
               <span className="disabled">编辑</span>
