@@ -8,6 +8,7 @@ import OnerFrame from '@dtwave/oner-frame'
 import {DetailHeader, OverviewCardWrap} from '../../../component'
 import {Time} from '../../../common/util'
 import TagAnalyze from '../../../business-component/tag-analyze'
+import TagTrend from '../../../business-component/tag-trend'
 import TagrRelate from '../../../business-component/tag-relate'
 import StorageList from './storage-list'
 import AppList from './app-list'
@@ -51,21 +52,23 @@ class TagDetail extends Component {
       title: '创建时间',
       value: <Time timestamp={tagBaseInfo.createTime} />,
     }, {
-      title: '数据源',
-      value: tagBaseInfo.dataSource,
+      title: '绑定方式',
+      value: tagBaseInfo.configType === 1 ? '衍生标签' : '基础标签',
     }, {
-      title: '数据表',
-      value: tagBaseInfo.tableName,
-    }, {
-      title: '字段',
-      value: tagBaseInfo.fieldName,
-    }]
+      title: '所属项目',
+      value: tagBaseInfo.projectName,
+    },
+    // , {
+    //   title: '字段',
+    //   value: tagBaseInfo.fieldName,
+    // }
+    ]
 
     const cards = [
       {
         title: '目的源数',
         tooltipText: '包括该标签被标签同步或者目的源管理的映射的总数。举个例子，员工.性别这个标签被标签同步到2个数据源，被目的源管理里映射了2个目的源。在目的源数是4',
-        values: [cardInfo.entityCount || 0],
+        values: [cardInfo.targetCount || 0],
       }, {
         title: '加工方案引用数',
         tooltipText: '项目内该标签被加工方案的引用数',
@@ -90,7 +93,8 @@ class TagDetail extends Component {
         <Tabs defaultActiveKey="1" className="comp-tab">
           <TabPane tab="标签分析" key="1">
             <div className="bgf m16 box-border" style={{minHeight: 'calc(100vh - 298px)'}}>
-              <TagAnalyze tagId={tagId} />
+              {tagBaseInfo.isEnum ? <TagAnalyze tagId={tagId} /> : null}
+              <TagTrend tagId={tagId} />
             </div>
           </TabPane>
           <TabPane tab="血缘分析" key="2">

@@ -64,7 +64,6 @@ export default class DataTable extends Component {
 
   render() {
     const {objId, type} = this.props
-    console.log()
     const listConfig = {
       columns: +type ? this.columns : this.simpleColumns,
       initParams: {objId: +objId},

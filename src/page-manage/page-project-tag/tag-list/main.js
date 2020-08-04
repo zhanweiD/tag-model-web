@@ -69,7 +69,7 @@ export default class TagList extends Component {
       render: text => <OmitTooltip maxWidth={120} text={text} />,
     }, {
       key: 'enName',
-      title: '唯一标识',
+      title: '标签标识',
       dataIndex: 'enName',
       render: text => <OmitTooltip maxWidth={120} text={text} />,
     }, {
@@ -94,7 +94,7 @@ export default class TagList extends Component {
     //   dataIndex: 'status',
     //   render: text => statusMap[+text] || '失效',
     // },
-     {
+    {
       key: 'action',
       title: '操作',
       width: 120,

@@ -18,7 +18,7 @@ class CommonTag extends Component {
             <TagList {...this.props} />
           </TabPane>
           <TabPane tab="标签体系" key="2">
-            <TagSystem {...this.props} />
+            <TagSystem {...this.props} commonTag />
           </TabPane>
         </Tabs>
       </div>

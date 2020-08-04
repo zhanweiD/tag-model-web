@@ -4,7 +4,8 @@
  */
 
 import {useEffect, useState} from 'react'
-// import {FormOutlined} from '@ant-design/icons'
+import {FormOutlined} from '@ant-design/icons'
+import {message} from 'antd'
 import {projectProvider} from '../../component'
 import ConfigModal from './modal'
 import io from './io'
@@ -54,6 +55,7 @@ const WorkspaceConfig = ({projectId}) => {
   
   const editClick = () => {
     changeVisible(true)
+    message.warning('不建议修改，修改后会影响之前的使用！')
     getWorkspaceList()
   }
 
@@ -73,12 +75,13 @@ const WorkspaceConfig = ({projectId}) => {
           <div className="env-config-label">环境：</div>
           <div className="env-config-value">
             <span className="mr16">{config.workspaceName}</span>
-            {/* <FormOutlined className="action" onClick={editClick} /> */}
+            <FormOutlined className="action" onClick={editClick} />
           </div>
         </div>
       </div>
       <ConfigModal 
         visible={visible}
+        config={config}
         workspace={workspace}
         onCancel={onCancel}
         onCreate={onCreate}

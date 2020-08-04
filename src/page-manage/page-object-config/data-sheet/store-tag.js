@@ -1,4 +1,4 @@
-import {observable, action, toJS} from 'mobx'
+import {observable, action, toJS, runInAction} from 'mobx'
 import io from './io-tag'
 import {errorTip, successTip, listToTree} from '../../../common/util'
 
@@ -7,6 +7,7 @@ class Store {
   projectId
   tableName
   storageId
+  tagId
 
   @observable initialList = [] // 第一步拿到的初始数据
   @observable tableData = [] // 用于第一步表格渲染
@@ -208,6 +209,28 @@ class Store {
 
     // 把第二步选中数组也清空掉
     this.secondSelectedRows = []
+  }
+
+  /**
+   * @description 重名校验
+   */
+  @action async checkName(params, cb) {
+    try {
+      const res = await io.checkName({
+        projectId: this.projectId,
+        objId: this.objId,
+        ...params,
+      })
+      runInAction(() => {
+        if (res.success) {
+          cb('名称已存在')
+        } else {
+          cb()
+        }
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
   }
 }
 

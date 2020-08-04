@@ -80,20 +80,22 @@ export default class Cloud extends Component {
             </span>
           </div>
         </div>
-        <div className="object-cloud-content">
-          <Spin spinning={loading}>
+        <Spin spinning={loading}>
+          <div className="object-cloud-content">
+
             {
-              !cloudData.length  
+              !cloudData.length
                 ? (
                   <div className="noData">
                     <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
                   </div>
-                ) 
+                )
                 : null
             }
             <div id="box" />
-          </Spin>
-        </div>
+
+          </div>
+        </Spin>
       </div>
     )
   }

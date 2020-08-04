@@ -32,6 +32,7 @@ export default class TagRank extends Component {
 
   componentDidMount() {  
     this.initSvg()
+    this.store.getTagProject((res, max) => this.drawBulletChart(res, max, 'Project'))
     // type: Yday-标签昨日调用次数TOP5/ Unpopular-冷门标签TOP5 / All-标签累计调用次数TOP5
     this.store.getTagInvokeYday((res, max) => this.drawBulletChart(res, max, 'Yday'))
     this.store.getTagUnpopular((res, max) => this.drawBulletChart(res, max, 'Unpopular'))
@@ -39,6 +40,11 @@ export default class TagRank extends Component {
   }
 
   initSvg() {
+    this.svgBulletProject = d3.select('#project') 
+    .attr('width', chartOption.svgW)
+    .attr('height', chartOption.svgH)
+    this.svgBulletProject.selectAll('*').remove()
+
     this.svgBulletYday = d3.select('#bulletYday') 
       .attr('width', chartOption.svgW)
       .attr('height', chartOption.svgH)
@@ -130,7 +136,24 @@ export default class TagRank extends Component {
     return (
       <div>
         <Row gutter={16}>
-          <Col span={8}>
+          <Col span={6}>
+            <div className="overview-rank">
+              <div className="overview-rank-header">生产标签数项目 TOP5</div>
+              <div className="overview-rank-content">
+                <svg id="project" />
+                {
+                  !tagInvokeYday.length
+                    ? (
+                      <div className="noData">
+                        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                      </div>
+                    )
+                    : null
+                }
+              </div>
+            </div>
+          </Col>
+          <Col span={6}>
             <div className="overview-rank">
               <div className="overview-rank-header">昨日标签调用次数 TOP5</div>
               <div className="overview-rank-content">
@@ -147,7 +170,7 @@ export default class TagRank extends Component {
               </div>
             </div>
           </Col>
-          <Col span={8}>
+          <Col span={6}>
             <div className="overview-rank">
               <div className="overview-rank-header">冷门标签 TOP5</div>
               <div className="overview-rank-content">
@@ -164,7 +187,7 @@ export default class TagRank extends Component {
               </div>
             </div>
           </Col>
-          <Col span={8}>
+          <Col span={6}>
             <div className="overview-rank">
               <div className="overview-rank-header">标签累计调用次数 TOP5</div>
               <div className="overview-rank-content">

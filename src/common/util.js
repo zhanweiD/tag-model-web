@@ -157,6 +157,22 @@ export function listToTree(data) {
   return newData.filter(item => item.parentId === 0)
 }
 
+/**
+ * @description 返回默认类目下的第一个孩子
+ * @param {*} data 处理过的类目树数据
+ */
+export function defaultKey(data) {
+  const newData = _.cloneDeep(data)
+
+  if (newData[0].children) {
+    return defaultKey(newData[0].children)
+  } 
+  else {
+    // console.log(newData[0].aId, newData[0].id)
+    return newData[0]
+  }
+}
+
 // 标签、对象英文名校验正则
 export const enNameReg = /^[a-zA-Z][a-zA-Z0-9_]{0,31}$/
 
@@ -253,15 +269,35 @@ export function calcSize(size, defaultUnit = 'B', isToFixed = true) {
   }
 }
 
+
+let timer = null 
 /**
  * @description 重命名校验防抖
  * @author 凡书
  * @param fn 重命名校验函数 
  * @param delay 间隔时间
  */
-
-let timer = null 
 export function debounce(fn, delay = 200) {
   clearTimeout(timer)
   timer = setTimeout(fn, delay)
+}
+
+/**
+ * @description 字段类型对应标签类型
+ * @author 凡书
+ * @param obj 字段对象 
+ * @param fieldType 字段类型
+ * @param valueType 标签类型
+ */
+export function selectFieldType (obj) {
+  const {fieldType} = obj
+  if (fieldType === 'tinyint' || fieldType === 'int' || fieldType === 'smallint' || fieldType === 'bigint') {
+    obj.valueType = 2
+  } else if (fieldType === 'float' || fieldType === 'double' || fieldType === 'decimal(10,2)') {
+    obj.valueType = 3
+  } else if (fieldType === 'string' || fieldType === 'varchar' || fieldType === 'char') {
+    obj.valueType = 4
+  } else if (fieldType === 'timestamp' || fieldType === 'date') {
+    obj.valueType = 5
+  }
 }

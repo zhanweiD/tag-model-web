@@ -3,10 +3,11 @@ import {
 } from 'mobx'
 import {CycleSelect} from '@dtwave/uikit'
 import {errorTip} from '../../../common/util'
-import {ListContentStore} from '../../../component/list-content'
+// import {ListContentStore} from '../../../component/list-content'
 import io from './io'
 
-class Store extends ListContentStore(io.getList) {
+// class Store extends ListContentStore(io.getList) {
+class Store {
   syncId
   projectId
 

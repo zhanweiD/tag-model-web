@@ -8,6 +8,41 @@ const colors = [
   'rgba(149,51,255, 0.6)',
 ]
 
+export const pieOpt = data => {
+
+  return {
+    color: colors,
+    grid: {
+      left: 50,
+      right: 50,
+      top: 30,
+      bottom: 30,
+    },
+    tooltip: {
+      trigger: 'item',
+      // formatter: params => {
+        // return `${params.name}<br />实体数: ${params.value}<br />占比: ${params.percent}%`
+      // },  
+      formatter: '{b}: {c} ({d}%)' 
+    },
+    series: [
+      {
+        type: 'pie',
+        radius: ['50%', '70%'],
+        avoidLabelOverlap: true,
+        animation: false,
+        labelLine: {
+          show: true,
+        },
+        label: {
+          formatter:'{b}: {c}' 
+        },
+        data: data,
+      },
+    ],
+  }
+} 
+
 export const lineOpt = data => {
   return {
     color: colors,
@@ -58,4 +93,3 @@ export const lineOpt = data => {
   }
 }
 
-export const lineOpt1 = []

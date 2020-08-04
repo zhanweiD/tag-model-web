@@ -184,8 +184,8 @@ export function getApiTrendOpt(data) {
   }
 }
 
-// 值域分布趋势图配置
-export function getPieOpt(chartsCount, data, legendName) {
+// 值域分布图配置
+export function getPieOpt(chartsCount, data) {
   return {
     backgroundColor: '#fff',
     title: {
@@ -220,12 +220,11 @@ export function getPieOpt(chartsCount, data, legendName) {
         fontSize: 12,
         color: '#333',
       },
-      data: legendName,
+      data: [],
     },
     series: [{
       type: 'pie',
-      // radius: ['35%', '45%'],
-      radius: ['48%', '60%'],
+      radius: ['62%', '80%'],
       center: ['50%', '50%'],
       color: colors,
       data,

@@ -40,7 +40,7 @@ export default class ConfigInfo extends Component {
     }))
 
     return (
-      <div className="config-info box-border">
+      <div className="config-info">
         <div className="info-title">逻辑配置</div>
         <div className="FBH ml32 mb24">
           <div style={{color: ' rgba(0, 0, 0, 0.45)'}}>TQL：</div>

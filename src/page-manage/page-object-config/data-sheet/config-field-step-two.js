@@ -219,10 +219,13 @@ export default class StepTwo extends React.Component {
 
     // 如果是被选中的，还需要更新选中数组
     store.secondSelectedRows = store.secondSelectedRows.filter(item => item.dataFieldName !== record.dataFieldName)
+    store.forceUpdateKey = Math.random() // 强制刷新表格
   }
 
   // 展开编辑弹框
-  @action.bound showEditModal(index) {
+  @action.bound showEditModal(index, record) {
+    const {store} = this.props
+    store.tagId = record.tagId
     this.tagModalVisible = true
     this.editingTagIndex = index
   }
@@ -230,6 +233,19 @@ export default class StepTwo extends React.Component {
   // 关闭编辑弹框
   @action.bound closeEditModal() {
     this.tagModalVisible = false
+  }
+
+  isValueTypeName = num => {
+    switch (num) {
+      case 2:
+        return '整数型'
+      case 3:
+        return '小数型'
+      case 4:
+        return '文本型'
+      default:
+        return '日期型'
+    }
   }
 
   // 编辑标签确定事件
@@ -246,6 +262,7 @@ export default class StepTwo extends React.Component {
     // 将undefined的值改成空字符串
     Object.keys(values).forEach(key => {
       valuesCopy[key] = values[key] === undefined ? '' : (typeof values[key] === 'string' ? values[key].trim() : values[key])
+      valuesCopy.valueTypeName = this.isValueTypeName(values.valueType)
     })
 
     // 要更新parentId字段（对应当前所属类目的id）

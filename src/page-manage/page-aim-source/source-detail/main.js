@@ -1,5 +1,5 @@
 import {Component, useEffect} from 'react'
-import {Spin, Popconfirm, Badge} from 'antd'
+import {Spin, Popconfirm, Badge, Select, Input} from 'antd'
 import {action, observable} from 'mobx'
 import {observer} from 'mobx-react'
 import OnerFrame from '@dtwave/oner-frame'
@@ -12,6 +12,19 @@ import ModalTagConfig from './modal'
 import store from './store'
 
 const tabs = [{name: '字段列表', value: 1}]
+// -1 / null 全部、0  未映射  、1 已映射
+const runStatus = [{
+  name: '全部',
+  value: -1,
+}, {
+  name: '未映射',
+  value: 0,
+}, {
+  name: '已映射',
+  value: 1,
+}]
+
+const {Option} = Select
 
 @observer
 class SourceDetail extends Component {
@@ -91,6 +104,30 @@ class SourceDetail extends Component {
     })
   } 
 
+  @action.bound selectStatus(status) {
+    this.status = status
+    if (typeof status === 'undefined') {
+      store.getList({
+        status,
+        dataFieldName: this.fieldName,
+      })
+    } else {
+      store.getList({
+        status,
+        dataFieldName: this.fieldName,
+      })
+    }
+  }
+
+  @action.bound searchField(e) {
+    const {value} = e.target
+    this.fieldName = value
+    store.getList({
+      status: this.status,
+      dataFieldName: value,
+    })
+  }
+
   render() {
     const {infoLoading, detail} = store
 
@@ -137,6 +174,26 @@ class SourceDetail extends Component {
           <TabRoute {...tabConfig} />
         </Spin>
         <div className="list-content box-border">
+          <div className="mb8 pl24">
+            <span className="mr8">映射状态：</span>
+            <Select
+              showSearch
+              allowClear
+              placeholder="请选择映射状态"
+              style={{width: 200}}
+              onChange={v => this.selectStatus(v)}
+              optionFilterProp="children"
+              className="mr16"
+            >
+              {
+                runStatus.map(item => (
+                  <Option key={item.value} value={item.value}>{item.name}</Option>
+                ))
+              }
+            </Select>
+            <span className="mr8">字段名称：</span>
+            <Input onChange={this.searchField} style={{width: 200}} placeholder="请输入字段名称" />
+          </div>
           <ListContent {...listConfig} />
         </div>
         <ModalTagConfig store={store} />

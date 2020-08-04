@@ -1,12 +1,14 @@
-import {Component} from 'react'
-import {action} from 'mobx'
-import {TimeRange} from '../../component'
+import {Component, Fragment} from 'react'
+import {action, toJS} from 'mobx'
+import {inject, observer} from 'mobx-react'
+import {TimeRange, NoData} from '../../component'
 import getApiTrendOpt from './charts-options'
 import store from './store'
 
+@observer
 export default class TagTrend extends Component {
-  defStartTime = moment().subtract(7, 'day').format('YYYY-MM-DD')
-  defEndTime = moment().subtract(1, 'day').format('YYYY-MM-DD')
+  // defStartTime = moment().subtract(7, 'day').format('YYYY-MM-DD')
+  // defEndTime = moment().subtract(1, 'day').format('YYYY-MM-DD')
   chartLine = null
 
   constructor(props) {
@@ -16,30 +18,43 @@ export default class TagTrend extends Component {
 
   componentDidMount() {
     this.chartLine = echarts.init(this.lineRef)
-    this.getData()
+    // this.getData()
+    store.getRatuoTrend(res => {
+      if (res.length) this.drawChart(res)
+    })
     window.addEventListener('resize', () => this.resize())
   }
 
-  drawChart = data => {
+  componentDidUpdate(prevProps) {
+    if (prevProps.tagId !== this.props.tagId) {
+      store.tagId = this.props.tagId
+      store.getRatuoTrend(res => {
+        this.drawChart(res)
+      })
+    }
+    // this.drawChart(store.lineData)
+  }
+
+  @action resize() {
+    this.chartLine && this.chartLine.resize()
+  }
+
+  @action drawChart = data => {
     this.chartLine.setOption(getApiTrendOpt(
       data
     ))
   }
 
-  @action getData(gte = this.defStartTime, lte = this.defEndTime) {
-    const params = {
-      startDate: gte,
-      endDate: lte,
-    }
+  // @action getData(gte = this.defStartTime, lte = this.defEndTime) {
+  //   const params = {
+  //     startDate: gte,
+  //     endDate: lte,
+  //   }
 
-    store.getValueTrend(params, res => {
-      if (res.length) this.drawChart(res)
-    })
-  }
-
-  @action resize() {
-    if (this.chartLine) this.chartLine.resize()
-  }
+  //   store.getRatuoTrend(res => {
+  //     if (res.length) this.drawChart(res)
+  //   })
+  // }
 
   componentWillUnmount() {
     window.removeEventListener('resize', () => this.resize())
@@ -49,11 +64,14 @@ export default class TagTrend extends Component {
 
   render() {
     const {tagId} = this.props
-
+    const {lineData} = store
+    const noDataConfig = {
+      text: '暂无趋势信息',
+    }
     return (
-      <div className="p16">
+      <div className="p16" style={{width: '100%'}}>
         <h3 className="chart-title">空值占比趋势</h3>
-        <div className="time-range-wrap">
+        {/* <div className="time-range-wrap">
           <TimeRange
             custom
             key={tagId}
@@ -67,8 +85,12 @@ export default class TagTrend extends Component {
             }]}
             exportTimeRange={(gte, lte) => this.getData(gte, lte)}
           />
-        </div>
-        <div style={{height: '300px'}} ref={ref => this.lineRef = ref} />
+        </div> */}
+        {!lineData.length && <NoData {...noDataConfig} />}
+        <div 
+          style={{width: '100%', height: '310px'}} 
+          ref={ref => this.lineRef = ref} 
+        />
       </div>
     )
   }

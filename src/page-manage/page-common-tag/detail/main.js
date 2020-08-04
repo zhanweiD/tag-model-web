@@ -8,6 +8,7 @@ import OnerFrame from '@dtwave/oner-frame'
 import {DetailHeader} from '../../../component'
 import {Time} from '../../../common/util'
 import TagAnalyze from '../../../business-component/tag-analyze'
+import TagTrend from '../../../business-component/tag-trend'
 
 import store from './store'
 
@@ -46,14 +47,11 @@ class TagDetail extends Component {
       title: '创建时间',
       value: <Time timestamp={info.createTime} />,
     }, {
-      title: '数据源',
-      value: info.dataSource,
+      title: '绑定方式',
+      value: info.configType === 1 ? '衍生标签' : '基础标签',
     }, {
-      title: '数据表',
-      value: info.tableName,
-    }, {
-      title: '字段',
-      value: info.fieldName,
+      title: '所属项目',
+      value: info.projectName,
     }]
 
     return (
@@ -66,7 +64,8 @@ class TagDetail extends Component {
           />
         </Spin>
         <div className="bgf m16 box-border"> 
-          <TagAnalyze tagId={tagId} />
+          {info.isEnum ? <TagAnalyze tagId={tagId} /> : null}
+          <TagTrend tagId={tagId} />
         </div>
       </div>
       

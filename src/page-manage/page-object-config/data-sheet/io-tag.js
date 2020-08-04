@@ -1,5 +1,5 @@
 import ioContext from '../../../common/io-context'
-import {baseApi, get, post} from '../../../common/util'
+import {baseApi, tagModalApi, get, post} from '../../../common/util'
 
 const api = {
   getFieldList: post(`${baseApi}/tagConfig/tagConfField`), // 字段列表
@@ -7,6 +7,8 @@ const api = {
   checkTagList: post(`${baseApi}/tagConfig/check_tag_config`), // 校验标签列表
   saveTags: post(`${baseApi}/tag/pool/create_batch_tag`), // 批量创建标签
   getStorageDetail: get(`${baseApi}/tagConfig/storage_detail`), // 创建成功结果
+  checkName: post(`${tagModalApi}/name_check`), // 重名校验
+
 }
 
 ioContext.create('tagConfiguration', api) 
