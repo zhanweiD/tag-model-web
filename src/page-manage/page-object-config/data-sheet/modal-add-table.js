@@ -12,6 +12,7 @@ const {Option} = Select
 const formItemLayout = {
   labelCol: {span: 7},
   wrapperCol: {span: 17},
+  colon: false,
 }
 
 @inject('bigStore')
@@ -292,12 +293,17 @@ class ModalAddTable extends Component {
             )}
           </FormItem>
           <FormItem 
-          {...formItemLayout}
-           label="数据表"
+            {...formItemLayout}
+            label="数据表"
             extra={+bothTypeCode === 0 && getFieldValue('switch') 
-            ? <span>关联实体下无可用的数据表？<a target="_blank" rel="noopener noreferrer" href={`${window.__keeper.pathHrefPrefix}/manage/object-config/4/${+this.chooseEntity}/table`} >去对象配置中添加</a></span>
-            : null}
-            >
+              ? (
+                <span>
+关联实体下无可用的数据表？
+                  <a target="_blank" rel="noopener noreferrer" href={`${window.__keeper.pathHrefPrefix}/manage/object-config/4/${+this.chooseEntity}/table`}>去对象配置中添加</a>
+                </span>
+              )
+              : null}
+          >
             {getFieldDecorator('dataTableName', {
               rules: [{required: true, message: '请选择数据表'}],
             })(
@@ -326,7 +332,7 @@ class ModalAddTable extends Component {
                   </Select>
                 )}
               </FormItem>
-            ) : <h3 className="mb24 fs14">主标签配置</h3>
+            ) : <h3 className="mb24 fs14" style={{marginLeft: '82px'}}>主标签配置</h3>
           }
         
           {/* 复杂关系1 */}
