@@ -45,7 +45,7 @@ export default class Action extends Component {
   }
 
   /**
-   * @description 添加
+   * @description 新建
    */
   @action.bound addTree() {
     this.store.categoryModal = {
@@ -63,7 +63,7 @@ export default class Action extends Component {
       <Menu>
         <Menu.Item>
           <div onClick={this.addTree} onKeyDown={() => {}} style={{margin: '-5px -12px', padding: '5px 12px'}}>
-            添加一级类目
+            新建一级类目
           </div>
         </Menu.Item>
       </Menu>

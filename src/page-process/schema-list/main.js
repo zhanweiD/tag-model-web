@@ -306,8 +306,8 @@ class SchemaList extends Component {
         myFunctionCodes={functionCodes}
         onClick={this.create}
       >
-        创建加工方案
-                </AuthBox>,
+        新建加工方案
+      </AuthBox>,
       ],
       rowKey: 'id',
       store: this.store, // 必填属性
