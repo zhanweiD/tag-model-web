@@ -285,11 +285,16 @@ export default class DrawerTagConfig extends Component {
                     const mappingItem = v[0]
           
                     const {fieldMatching, tagMatching} = v[0]
-                    // console.log(fieldMatching, tagMatching)
-                    if (fieldMatching && tagMatching && fieldMatching !== tagMatching) {
+                    // 标签Matching 0 万能
+                    if (!tagMatching) {
+                      return Promise.resolve([])
+                    }
+
+                    if (fieldMatching !== tagMatching) {
                       message.error(`${mappingItem.dataFieldName}(字段)与${mappingItem.tagName}(标签)数据类型不匹配， 绑定失败`)
                       return Promise.reject()
                     }
+                    
                     return Promise.resolve([])
                   }}
                   // beforeNameMapping={v => {
