@@ -1,6 +1,6 @@
 import {Component} from 'react'
 import {observer} from 'mobx-react'
-import {Drawer, Button} from 'antd'
+import {Drawer, Button, message} from 'antd'
 import {ErrorEater} from '@dtwave/uikit'
 import Mapping from '@dtwave/oner-mapping'
 import {Loading} from '../../../component'
@@ -240,6 +240,7 @@ export default class DrawerTagConfig extends Component {
                       dataFieldType,
                       dataStorageId,
                       dataTableName,
+                      matching: fieldMatching,
                     },
                     {
                       tagId,
@@ -247,6 +248,7 @@ export default class DrawerTagConfig extends Component {
                       tagEnName,
                       objName,
                       tagType,
+                      matching: tagMatching,
                     }
                   ) => ({
                     dataFieldName,
@@ -258,6 +260,8 @@ export default class DrawerTagConfig extends Component {
                     tagEnName,
                     objName,
                     tagType,
+                    fieldMatching,
+                    tagMatching,
                   })}
                   nameMappingField={['dataFieldName', 'tagEnName']}
                   onChange={value => this.value = value}
@@ -277,28 +281,28 @@ export default class DrawerTagConfig extends Component {
                   // searchSelectKey="objName"
                   isShowMapping
                   canMapping
-                  // beforeMapping={v => {
-                  //   const mappingItem = v[0]
-                  //   if (mappingItem.tagType !== mappingItem.dataFieldType) {   
-                  //     message.error(`${mappingItem.dataFieldName}(字段)与${mappingItem.tagName}(标签)数据类型不匹配， 绑定失败`)
-                  //     return new Promise(function (resolve, reject) {
-                  //       reject([])
-                  //     })
-                  //   } 
-                  //   return new Promise(function (resolve, reject) {
-                  //     resolve([])
-                  //   })
-                  // }}
+                  beforeMapping={v => {
+                    const mappingItem = v[0]
+          
+                    const {fieldMatching, tagMatching} = v[0]
+                    // console.log(fieldMatching, tagMatching)
+                    if (fieldMatching && tagMatching && fieldMatching !== tagMatching) {
+                      message.error(`${mappingItem.dataFieldName}(字段)与${mappingItem.tagName}(标签)数据类型不匹配， 绑定失败`)
+                      return Promise.reject()
+                    }
+                    return Promise.resolve([])
+                  }}
                   // beforeNameMapping={v => {
+                  //   console.log(v)
                   //   const originalResult = v.filter(d => d.isUsed || d.status === 2)
-        
-                  //   const successResult = v.filter(d => d.valueTypeName === d.dataFieldType)
-        
-                  //   const errorResult = v.filter(d => d.valueTypeName !== d.dataFieldType)
+
+                  //   const successResult = v.filter(d => d.dataFieldName === d.tagName)
+
+                  //   const errorResult = v.filter(d => d.dataFieldName !== d.tagName)
                   //   message.info(`${successResult.length}个标签映射成功，${errorResult.length}个标签映射失败`)
-        
+
                   //   const mappingResult = originalResult.concat(successResult)
-        
+
                   //   return new Promise(function (resolve, reject) {
                   //     resolve(mappingResult)
                   //   })
