@@ -1,4 +1,4 @@
-import ProjectTag from './project-tag'
+import ProjectTag from './main'
 import ProjectTagDetail from './detail'
 
 export {
