@@ -11,6 +11,8 @@ const ConfigModal = ({
   visible, 
   onCreate, 
   onCancel,
+  onUpdate,
+  isAdd,
   workspace,
   config,
 }) => {
@@ -26,7 +28,7 @@ const ConfigModal = ({
           .validateFields()
           .then(values => {
             form.resetFields()
-            onCreate(values)
+            isAdd ? onCreate(values) : onUpdate(values)
           })
           .catch(info => {
             console.log('Validate Failed:', info)

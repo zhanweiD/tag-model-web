@@ -39,7 +39,7 @@ export default class Tree extends Component {
 
   // 对象类目 - 对应的菜单列表
   categoryMenus = (canEdit, canDelete) => [
-    {key: 'add', value: '添加对象', onClick: (key, data) => this.openModal(key, data, TARGET_OBJECT)},
+    {key: 'add', value: '新建对象', onClick: (key, data) => this.openModal(key, data, TARGET_OBJECT)},
     {key: 'view', value: '查看对象类目', onClick: (key, data) => this.openModal(key, data, TARGET_CATEGORY)},
     {
       key: 'edit', 

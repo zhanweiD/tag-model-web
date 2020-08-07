@@ -14,12 +14,13 @@ const WorkspaceConfig = ({projectId}) => {
   const [config, changeConfig] = useState({})
   const [visible, changeVisible] = useState(false)
   const [workspace, changeWorkspace] = useState([])
+  const [isAdd, changeIsAdd] = useState(true)
   
+  // 获取初始化配置
   async function getWorkspace() {
     const res = await io.getWorkspace({
       projectId,
     })
-
     changeConfig(res)
   }
 
@@ -48,6 +49,18 @@ const WorkspaceConfig = ({projectId}) => {
     }
   }
 
+  // 修改初始化配置
+  async function updateWprkspace(params) {
+    const res = await io.updateWprkspace({
+      ...params,
+      id: config.id,
+    })
+
+    if (res) {
+      changeVisible(false)
+      getWorkspace()
+    }
+  }
 
   useEffect(() => {
     getWorkspace(projectId)
@@ -55,6 +68,7 @@ const WorkspaceConfig = ({projectId}) => {
   
   const editClick = () => {
     changeVisible(true)
+    changeIsAdd(false)
     message.warning('不建议修改，修改后会影响之前的使用！')
     getWorkspaceList()
   }
@@ -65,6 +79,11 @@ const WorkspaceConfig = ({projectId}) => {
 
   const onCreate = params => {
     initProject(params)
+  }
+
+  const onUpdate = params => {
+    updateWprkspace(params)
+    changeIsAdd(true)
   }
   
   return (
@@ -81,10 +100,12 @@ const WorkspaceConfig = ({projectId}) => {
       </div>
       <ConfigModal 
         visible={visible}
+        isAdd={isAdd}
         config={config}
         workspace={workspace}
         onCancel={onCancel}
         onCreate={onCreate}
+        onUpdate={onUpdate}
       />
     </div>
   )

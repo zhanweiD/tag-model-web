@@ -171,9 +171,9 @@ export default class TagList extends Component {
     }
 
     const noDataConfig = {
-      btnText: '去创建标签',
+      btnText: '去新建标签',
       onClick: this.goTagManager,
-      text: '没有任何标签，去标签维护创建标签吧!',
+      text: '没有任何标签，去标签维护新建标签吧!',
       // code: 'asset_tag_project_tag_operator',
       // noAuthText: '没有任何标签',
       // myFunctionCodes: functionCodes,

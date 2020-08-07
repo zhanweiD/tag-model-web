@@ -234,7 +234,7 @@ export default class DrawerCreate extends Component {
 
     const drawerConfig = {
       width: 560,
-      title: drawerTagType === 'edit' ? '编辑标签' : '创建标签',
+      title: drawerTagType === 'edit' ? '编辑标签' : '新建标签',
       maskClosable: false,
       destroyOnClose: true,
       visible: drawerTagVisible,

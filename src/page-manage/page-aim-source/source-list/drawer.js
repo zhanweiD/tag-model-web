@@ -221,7 +221,7 @@ export default class AddSource extends Component {
     } = this.store
 
     const drawerConfig = {
-      title: '添加目的源',
+      title: '新建目的源',
       visible,
       width: 560,
       maskClosable: false,
