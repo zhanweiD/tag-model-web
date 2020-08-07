@@ -111,6 +111,7 @@ export default class TagAnalyze extends Component {
                     <Progress 
                       className="interval"
                       showInfo 
+                      status="active"
                       strokeWidth={4} 
                       strokeColor="#3187ff" 
                       percent={item.ratio * 100} 

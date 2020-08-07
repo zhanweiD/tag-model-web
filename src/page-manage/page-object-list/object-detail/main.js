@@ -160,12 +160,14 @@ class ObjectDetail extends Component {
                 baseInfo={baseInfo}
                 tag={tag}
               />
-              <OverviewCardWrap cards={cards} />
             </div>
           </Spin>
-          <div className="mt16 bgf box-border">
-            <TabRoute {...tabConfig} />
-            <Content objId={+objId} type={+objDetail.type} />
+          <div className="ml16 mr16">
+            <OverviewCardWrap cards={cards} />
+            <div className="mt16 bgf box-border">
+              <TabRoute {...tabConfig} />
+              <Content objId={+objId} type={+objDetail.type} />
+            </div>
           </div>
         </div>
       </Provider>

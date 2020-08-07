@@ -12,6 +12,7 @@ import TagTrend from '../../../business-component/tag-trend'
 import TagrRelate from '../../../business-component/tag-relate'
 import StorageList from './storage-list'
 import AppList from './app-list'
+import './main.styl'
 
 import store from './store'
 
@@ -88,32 +89,35 @@ class TagDetail extends Component {
             descr={tagBaseInfo.descr}
             baseInfo={baseInfo}
           />
-          <OverviewCardWrap cards={cards} />
         </Spin>
-        <Tabs defaultActiveKey="1" className="comp-tab">
-          <TabPane tab="标签分析" key="1">
-            <div className="bgf m16 box-border" style={{minHeight: 'calc(100vh - 298px)'}}>
-              {tagBaseInfo.isEnum ? <TagAnalyze tagId={tagId} /> : null}
-              <TagTrend tagId={tagId} />
-            </div>
-          </TabPane>
-          <TabPane tab="血缘分析" key="2">
-            <div className="bgf m16 box-border" style={{height: 'calc(100vh - 298px)'}}>
-              <TagrRelate tagId={tagId} />
-            </div>
-          </TabPane>
-          <TabPane tab="目的源列表" key="3">
-            <div className="bgf m16 box-border pt24" style={{minHeight: 'calc(100vh - 298px)'}}>
-              <StorageList tagId={tagId} />
-            </div>
-   
-          </TabPane>
-          <TabPane tab="标签应用列表" key="4">
-            <div className="bgf m16 box-border pt24" style={{minHeight: 'calc(100vh - 298px)'}}>
-              <AppList tagId={tagId} />
-            </div>
-          </TabPane>
-        </Tabs>
+        <div className="ml16 mr16">
+          <OverviewCardWrap cards={cards} />
+          <Tabs defaultActiveKey="1" className="comp-tab">
+            <TabPane tab="标签分析" key="1">
+              <div className="bgf mb16 box-border" style={{minHeight: 'calc(100vh - 298px)'}}>
+                {tagBaseInfo.isEnum ? <TagAnalyze tagId={tagId} /> : null}
+                <TagTrend tagId={tagId} />
+              </div>
+            </TabPane>
+            <TabPane tab="血缘分析" key="2">
+              <div className="bgf mb16 box-border" style={{height: 'calc(100vh - 298px)'}}>
+                <TagrRelate tagId={tagId} />
+              </div>
+            </TabPane>
+            <TabPane tab="目的源列表" key="3">
+              <div className="bgf mb16 box-border pt24" style={{minHeight: 'calc(100vh - 298px)'}}>
+                <StorageList tagId={tagId} />
+              </div>
+    
+            </TabPane>
+            <TabPane tab="标签应用列表" key="4">
+              <div className="bgf mb16 box-border pt24" style={{minHeight: 'calc(100vh - 298px)'}}>
+                <AppList tagId={tagId} />
+              </div>
+            </TabPane>
+          </Tabs>
+        </div>
+        
       </div>
       
     )

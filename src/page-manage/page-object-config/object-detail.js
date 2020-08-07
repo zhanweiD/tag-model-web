@@ -179,8 +179,8 @@ export default class ObjectDetail extends Component {
                 </AuthBox>,
               ]}
             />
-            <OverviewCardWrap cards={cards} />
           </div>
+          <OverviewCardWrap cards={cards} />
         </Spin>
         <div className="box-border"> 
           <TabRoute {...tabConfig} />
