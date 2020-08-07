@@ -136,9 +136,9 @@ export default class StepTwo extends React.Component {
             closable
             message={(
               <span className="fs12">
-                选择结果：可创建标签
+                选择结果：可新建标签
                 <span style={{color: '#1890FF'}}>{blueCount}</span>
-                个，创建失败
+                个，新建失败
                 <span style={{color: '#F5222D'}}>{redCount}</span>
                 个
               </span>

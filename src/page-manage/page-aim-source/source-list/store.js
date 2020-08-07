@@ -162,7 +162,7 @@ class Store extends ListContentStore(io.getList) {
         ...params,
       })
       runInAction(() => {
-        successTip('添加成功')
+        successTip('新建成功')
         if (cb) { cb() }
         this.getList({currentPage: 1})
       })

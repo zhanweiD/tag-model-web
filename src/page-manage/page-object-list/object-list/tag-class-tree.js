@@ -31,7 +31,7 @@ export default class ObjectTree extends Component {
 
   // 标签类目
   categoryMenus = (canEdit, canDelete) => [
-    {key: 'add', value: '添加标签类目', onClick: (type, data) => this.openModal(type, data)},
+    {key: 'add', value: '新建子类目', onClick: (type, data) => this.openModal(type, data)},
     {
       key: 'edit',
       value: '编辑',

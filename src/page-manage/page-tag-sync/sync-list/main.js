@@ -357,7 +357,7 @@ class SyncList extends Component {
       searchParams: seach({
         objList: toJS(objList),
       }),
-      buttons: [<Button type="primary" onClick={() => this.addSync()}>添加同步计划</Button>],
+      buttons: [<Button type="primary" onClick={() => this.addSync()}>新建同步计划</Button>],
       store, // 必填属性
     }
 

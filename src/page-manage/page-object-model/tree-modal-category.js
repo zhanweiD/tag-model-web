@@ -58,7 +58,7 @@ export default class ModalCategory extends Component {
     }]
 
     const modalConfig = {
-      title: editType === 'edit' ? '编辑对象类目' : '添加对象类目',
+      title: editType === 'edit' ? '编辑对象类目' : '新建对象类目',
       visible,
       onCancel: this.handleCancel,
       onOk: this.submit,

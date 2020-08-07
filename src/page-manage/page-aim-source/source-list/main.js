@@ -116,7 +116,7 @@ class SourceList extends Component {
         objList: toJS(objList),
       }),
       initParams: {projectId},
-      buttons: [<Button type="primary" onClick={() => this.addSource()}>添加目的源</Button>],
+      buttons: [<Button type="primary" onClick={() => this.addSource()}>新建目的源</Button>],
       store, // 必填属性
     }
     

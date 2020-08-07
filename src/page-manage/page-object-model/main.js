@@ -58,11 +58,11 @@ class ObjectModel extends Component {
     }
 
     const noDataConfig = {
-      btnText: '添加对象',
+      btnText: '新建对象',
       onClick: this.addObject,
       code: 'asset_tag_obj_add_edit_del_publish',
       noAuthText: '暂无对象',
-      text: '没有任何对象，请在当前页面添加对象！',
+      text: '没有任何对象，请在当前页面新建对象！',
     }
 
     return (

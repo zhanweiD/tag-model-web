@@ -104,7 +104,7 @@ class TagList extends Component {
                 <a href>发布</a>
               </Popconfirm>
               <span className="table-action-line" />
-              <a href onClick={() => store.openTagConfig('one', record)}>绑定</a>
+              <a href onClick={() => store.openTagConfig('one', record)}>解绑</a>
               <span className="table-action-line" />
               {/* <a href onClick={() => store.openDrawer('edit', record)}>编辑</a> */}
               <span className="disabled">编辑</span>
@@ -266,9 +266,9 @@ class TagList extends Component {
     }
 
     const noDataConfig = {
-      btnText: '创建标签',
+      btnText: '新建标签',
       onClick: () => store.openDrawer('add'),
-      text: '没有任何标签，去创建标签吧',
+      text: '没有任何标签，去新建标签吧',
       // code: 'asset_tag_project_tag_operator',
       // myFunctionCodes: store.functionCodes,
       // noAuthText: '没有任何标签',
@@ -287,10 +287,10 @@ class TagList extends Component {
           onClick={() => store.openDrawer('add')}
           className="mr8"
         >
-        创建标签
+        新建标签
         </AuthBox>, 
 
-        // <Button className="mr8" type="primary" onClick={() => store.openDrawer('add')}>创建标签</Button>,
+        // <Button className="mr8" type="primary" onClick={() => store.openDrawer('add')}>新建标签</Button>,
         <Button className="mr8" onClick={() => store.batchPublish()} disabled={!publishRowKeys.length}>批量发布</Button>,
         <Button onClick={() => store.openBatchConfig()}>批量绑定</Button>,
 

@@ -177,15 +177,18 @@ class Store {
         ...params,
       })
       runInAction(() => {
-        if (cb) {
-          cb()
-        }
+        // if (cb) {
+        //   cb()
+        // }
       })
     } catch (e) {
       errorTip(e.message)
     } finally {
       runInAction(() => {
         this.confirmLoading = false
+        if (cb) {
+          cb()
+        }
       })
     }
   }

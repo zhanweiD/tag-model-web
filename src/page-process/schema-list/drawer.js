@@ -144,7 +144,7 @@ export default class DrawerConfig extends Component {
 
     const drawerConfig = {
       width: 1120,
-      title: drawerType === 'edit' ? '编辑加工方案' : '添加加工方案',
+      title: drawerType === 'edit' ? '编辑加工方案' : '新建加工方案',
       maskClosable: false,
       destroyOnClose: true,
       visible: drawerVisible,
