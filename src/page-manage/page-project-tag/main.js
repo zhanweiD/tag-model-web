@@ -1,7 +1,7 @@
 import {useEffect} from 'react'
 import OnerFrame from '@dtwave/oner-frame' 
 
-import CommonTag from './tab'
+import Main from './project-tag'
 
 export default () => {
   const ctx = OnerFrame.useFrame()
@@ -13,6 +13,6 @@ export default () => {
   }, [projectId])
 
   return (
-    <CommonTag key={projectId} projectId={projectId} />
+    <Main key={projectId} projectId={projectId} />
   )
 }
