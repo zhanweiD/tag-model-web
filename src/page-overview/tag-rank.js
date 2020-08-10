@@ -137,7 +137,7 @@ export default class TagRank extends Component {
     return (
       <div>
         <Row gutter={16}>
-          <Col span={6}>
+          <Col span={12}>
             <div className="overview-rank">
               <div className="overview-rank-header">生产标签数项目 TOP5</div>
               <div className="overview-rank-content">
@@ -154,7 +154,7 @@ export default class TagRank extends Component {
               </div>
             </div>
           </Col>
-          <Col span={6}>
+          <Col span={12}>
             <div className="overview-rank">
               <div className="overview-rank-header">昨日标签调用次数 TOP5</div>
               <div className="overview-rank-content">
@@ -171,7 +171,9 @@ export default class TagRank extends Component {
               </div>
             </div>
           </Col>
-          <Col span={6}>
+        </Row>
+        <Row gutter={16} className="mt16">
+          <Col span={12}>
             <div className="overview-rank">
               <div className="overview-rank-header">冷门标签 TOP5</div>
               <div className="overview-rank-content">
@@ -188,7 +190,7 @@ export default class TagRank extends Component {
               </div>
             </div>
           </Col>
-          <Col span={6}>
+          <Col span={12}>
             <div className="overview-rank">
               <div className="overview-rank-header">标签累计调用次数 TOP5</div>
               <div className="overview-rank-content">

@@ -146,8 +146,8 @@ export default class StepTwo extends React.Component {
           />
 
           {/* 标题和按钮 */}
-          <div className="mb8 ml2 mt24">
-            <span className="fs16 mr8" style={{color: 'rgba(0,0,0,0.85)'}}>标签列表</span>
+          <div className="mb16 ml2 mt24">
+            <p className="fs16 mb12" style={{color: 'rgba(0,0,0,0.85)'}}>标签列表</p>
             <Button 
               type="primary" 
               className="mr4"

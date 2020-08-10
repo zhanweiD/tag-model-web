@@ -11,7 +11,7 @@ export default class StepThree extends React.Component {
     const {successResult} = store
 
     return (
-      <div className="FBV FBJC FBAC" style={{height: '100%'}}>
+      <div className="FBV FBJC FBAC" style={{height: '100%', marginTop: '96px'}}>
         <div className="mb24">
           <CheckCircleFilled style={{color: '#52C41A', fontSize: 72}} />
         </div>

@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import cls from 'classnames'
 import Card from './card'
 
-const colors = ['#5acbaa', '#3385f6', '#586df6']
+const colors = ['#00caaa', '#3187ff', '#5c6df6']
 
 export default class CardWarp extends Component {
   static defaultProps = {
