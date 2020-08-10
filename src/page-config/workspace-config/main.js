@@ -5,7 +5,7 @@
 
 import {useEffect, useState} from 'react'
 import {FormOutlined} from '@ant-design/icons'
-import {message} from 'antd'
+import {message, Button} from 'antd'
 import {projectProvider} from '../../component'
 import ConfigModal from './modal'
 import io from './io'
@@ -89,14 +89,15 @@ const WorkspaceConfig = ({projectId}) => {
   return (
     <div>
       <div className="content-header">环境配置</div> 
-      <div className="header-page p24">
+      <div className="header-page p24 config-work">
         <div className="env-config-item">
           <div className="env-config-label">环境：</div>
           <div className="env-config-value">
             <span className="mr16">{config.workspaceName}</span>
-            <FormOutlined className="action" onClick={editClick} />
+            {/* <FormOutlined className="action" onClick={editClick} /> */}
           </div>
         </div>
+        <Button type="primary" onClick={editClick}>编辑</Button>
       </div>
       <ConfigModal 
         visible={visible}
