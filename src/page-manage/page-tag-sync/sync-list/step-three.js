@@ -90,7 +90,7 @@ export default class StepThree extends Component {
               value: dataStorageId.label,
             }, {
               title: '表',
-              value: tableName,
+              value: `tbjh_${tableName}`,
             }]}
             className="ml24 mb24"
           />
