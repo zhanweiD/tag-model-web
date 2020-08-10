@@ -72,7 +72,6 @@ export default class TagAnalyze extends Component {
   render() {
     const {tagId} = this.props
     const {status, nullRatio, recordTime, name} = store.valueTrend
-    console.log(status)
     return (
       <div className="p16 pt8 pr">
         <h3 className="chart-title">值域分布</h3>
