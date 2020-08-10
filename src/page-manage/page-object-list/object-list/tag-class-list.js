@@ -3,7 +3,7 @@ import {action, observable} from 'mobx'
 import {observer} from 'mobx-react'
 import {Table, Input} from 'antd'
 import {codeInProduct} from '../../../common/util'
-import {NoData, OmitTooltip, AuthBox} from '../../../component'
+import {NoData, OmitTooltip, Authority} from '../../../component'
 import ModalMove from './modal-move'
 
 const {Search} = Input
@@ -153,7 +153,7 @@ export default class TagList extends Component {
           ) : (
             <Fragment>
               <div className="FBH FBJB mb16">
-                <AuthBox code="asset_tag_tag_tag_select_move" onClick={() => this.moveTo()} disabled={!this.selectedRowKeys.length} type="primary">批量移动至</AuthBox>
+                <Authority authCode="tag_model:move_tag[u]" onClick={() => this.moveTo()} disabled={!this.selectedRowKeys.length} type="primary">批量移动至</Authority>
                 <Search
                   placeholder="请输入关键字搜索"
                   onSearch={value => this.onSearch(value)}

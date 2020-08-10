@@ -6,7 +6,7 @@ import {observer} from 'mobx-react'
 import {action} from 'mobx'
 import {Link} from 'react-router-dom'
 import {
-  ListContent, NoData, OmitTooltip, AuthBox,
+  ListContent, NoData, OmitTooltip, Authority,
 } from '../../../component'
 import {getDataTypeName} from '../../../common/util'
 import ModalApply from './modal-apply'
@@ -103,10 +103,8 @@ export default class TagList extends Component {
           {/* eslint-disable-next-line no-underscore-dangle */}
           {/* <a href={`${window.__keeper.pathHrefPrefix}/manage/tag-maintain/${record.id}`}>标签详情</a> */}
           <Link to={`/manage/project-tag/${record.id}`}>标签详情</Link>
-          <AuthBox 
-            code="asset_tag_project_tag_search_add_occ" 
-            myFunctionCodes={store.functionCodes}
-            isButton={false}
+          <Authority 
+            authCode="tag_model:apply_project_tag[c]" 
           >
             {
               record.status === 2
@@ -118,7 +116,7 @@ export default class TagList extends Component {
                 )
                 : null
             }
-          </AuthBox>
+          </Authority>
         
         </div>
       ),

@@ -5,7 +5,7 @@ import {Component} from 'react'
 import {action} from 'mobx'
 import {observer} from 'mobx-react'
 import {Dropdown, Menu} from 'antd'
-import {NoBorderInput} from '../../../component'
+import {NoBorderInput, Authority} from '../../../component'
 import {
   IconRefresh, IconTreeAdd, IconUnExtend, IconExtend,
 } from '../../../icon-comp'
@@ -66,11 +66,6 @@ export default class Action extends Component {
         <IconTreeAdd size="14" className="mr8 hand" />
       </Dropdown>
     )
-    // return this.store.functionCodes.includes('asset_tag_project_obj_select') ? (
-    //   <Dropdown overlay={menu}>
-    //     <IconTreeAdd size="14" className="mr8 hand" />
-    //   </Dropdown>
-    // ) : null
   }
 
   render() {
@@ -84,9 +79,12 @@ export default class Action extends Component {
 
         <div className="FBH pr6 pl6" style={{maxWidth: 70}}>
           <IconRefresh size="14" className="mr8" onClick={this.refreshTree} />
-          {
-            this.dropdownDom()
-          }
+          <Authority authCode="tag_model:select_obj[cud]">
+            {
+              this.dropdownDom()
+            }
+          </Authority>
+         
           { this.store.expandAll ? (
             <IconUnExtend size="14" className="hand" onClick={this.expandTree} /> 
           ) : (

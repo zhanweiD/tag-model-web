@@ -8,7 +8,7 @@ import {Popconfirm, Button} from 'antd'
 import {Link} from 'react-router-dom'
 
 import {
-  ListContent, projectProvider, OmitTooltip, AuthBox, NoData,
+  ListContent, projectProvider, OmitTooltip, Authority, NoData,
 } from '../../../component'
 import {
   tagStatusBadgeMap,
@@ -72,7 +72,7 @@ class TagList extends Component {
     width: 180,
     render: (text, record) => (
       <div className="FBH FBAC">
-        <AuthBox
+        <Authority
           code="asset_tag_project_tag_operator"
           myFunctionCodes={store.functionCodes}
           isButton={false}
@@ -176,7 +176,7 @@ class TagList extends Component {
           && record.isVisual === 1
           && <span className="disabled">取消发布</span>}
 
-        </AuthBox>
+        </Authority>
       </div>
     ),
   }]
@@ -280,19 +280,24 @@ class TagList extends Component {
       initParams: {projectId},
       searchParams: seach({objectSelectList: toJS(objectSelectList)}),
       buttons: [
-        <AuthBox
-          code="asset_tag_project_tag_operator"
-          myFunctionCodes={store.functionCodes}
+        <Authority
+          authCode="tag_model:create_tag[c]"
           type="primary"
           onClick={() => store.openDrawer('add')}
           className="mr8"
         >
         新建标签
-        </AuthBox>, 
-
-        // <Button className="mr8" type="primary" onClick={() => store.openDrawer('add')}>新建标签</Button>,
-        <Button className="mr8" onClick={() => store.batchPublish()} disabled={!publishRowKeys.length}>批量发布</Button>,
-        <Button onClick={() => store.openBatchConfig()}>批量绑定</Button>,
+        </Authority>, 
+        <Authority
+          authCode="tag_model:publish_tag[u]"
+        >
+          <Button className="mr8" onClick={() => store.batchPublish()} disabled={!publishRowKeys.length}>批量发布</Button>
+        </Authority>,
+        <Authority
+          authCode="tag_model:bind_tag[cud]"
+        >
+          <Button onClick={() => store.openBatchConfig()}>批量绑定</Button>
+        </Authority>,
 
       ],
       rowKey: 'id',
