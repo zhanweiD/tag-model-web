@@ -9,6 +9,7 @@ import {message} from 'antd'
 import {projectProvider} from '../../component'
 import ConfigModal from './modal'
 import io from './io'
+import {successTip, errorTip} from '../../common/util'
 
 const WorkspaceConfig = ({projectId}) => {
   const [config, changeConfig] = useState({})
@@ -18,47 +19,66 @@ const WorkspaceConfig = ({projectId}) => {
   
   // 获取初始化配置
   async function getWorkspace() {
-    const res = await io.getWorkspace({
-      projectId,
-    })
-    changeConfig(res)
+    try {
+      const res = await io.getWorkspace({
+        projectId,
+      })
+      changeConfig(res)
+    } catch (error) {
+      errorTip(error.message)
+    }
   }
 
   // 获取环境列表
   async function getWorkspaceList() {
-    const res = await io.getWorkspaceList({
-      projectId,
-    })
-    let workspaceList = []
-    if (res) {
-      workspaceList = res || []
+    try {
+      const res = await io.getWorkspaceList({
+        projectId,
+      })
+      let workspaceList = []
+      if (res) {
+        workspaceList = res || []
+      }
+      changeWorkspace(workspaceList)
+    } catch (error) {
+      errorTip(error.message)
     }
-    changeWorkspace(workspaceList)
   }
 
   // 初始化项目
   async function initProject(params) {
-    const res = await io.initProject({
-      ...params,
-      projectId,
-    })
-
-    if (res) {
-      changeVisible(false)
-      getWorkspace()
+    try {
+      const res = await io.initProject({
+        ...params,
+        projectId,
+      })
+  
+      if (res) {
+        successTip('初始化成功')
+        changeVisible(false)
+        getWorkspace()
+      }
+    } catch (error) {
+      errorTip(error.message)
     }
   }
 
   // 修改初始化配置
   async function updateWprkspace(params) {
-    const res = await io.updateWprkspace({
-      ...params,
-      id: config.id,
-    })
-
-    if (res) {
-      changeVisible(false)
-      getWorkspace()
+    try {
+      const res = await io.updateWprkspace({
+        ...params,
+        id: config.id,
+      })
+  
+      if (res) {
+        getWorkspace()
+        successTip('修改成功')
+        changeVisible(false)
+        changeIsAdd(true)
+      }
+    } catch (error) {
+      errorTip(error.message)
     }
   }
 
@@ -75,15 +95,16 @@ const WorkspaceConfig = ({projectId}) => {
 
   const onCancel = () => {
     changeVisible(false)
+    changeIsAdd(true)
   }
 
   const onCreate = params => {
+    changeIsAdd(true)
     initProject(params)
   }
 
   const onUpdate = params => {
     updateWprkspace(params)
-    changeIsAdd(true)
   }
   
   return (
