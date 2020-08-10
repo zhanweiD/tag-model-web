@@ -21,7 +21,7 @@ const ConfigModal = ({
   return (
     <Modal
       visible={visible}
-      title="初始化"
+      title={isAdd ? '初始化' : '修改初始化'}
       onCancel={onCancel}
       onOk={() => {
         form
