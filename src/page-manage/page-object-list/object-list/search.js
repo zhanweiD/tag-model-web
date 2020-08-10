@@ -3,6 +3,7 @@ const serach = ({objTypeList, objCateList}) => [
   {
     label: '对象类型',
     key: 'type',
+    size: 'small',
     control: {
       mode: 'multiple',
       options: objTypeList,
@@ -11,6 +12,7 @@ const serach = ({objTypeList, objCateList}) => [
   }, {
     label: '对象类目',
     key: 'objCateId',
+    size: 'small',
     control: {
       mode: 'multiple',
       options: objCateList,

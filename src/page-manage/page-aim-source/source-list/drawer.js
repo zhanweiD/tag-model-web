@@ -223,6 +223,7 @@ export default class AddSource extends Component {
     const drawerConfig = {
       title: '新建目的源',
       visible,
+      closable: true,
       width: 560,
       maskClosable: false,
       destroyOnClose: true,

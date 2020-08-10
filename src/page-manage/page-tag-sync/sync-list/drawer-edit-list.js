@@ -147,8 +147,8 @@ export default class SyncTagList extends Component {
                   ) : <a href disabled={this.state.editKey !== ''} onClick={() => this.edit(record)}>编辑</a>  
                 }
            
-                <span className="table-action-line" />
-                <a href onClick={() => this.remove(record)}>移除</a>
+                {/* <span className="table-action-line" /> */}
+                <a className="ml16" href onClick={() => this.remove(record)}>移除</a>
               </div>
             )
           })()}

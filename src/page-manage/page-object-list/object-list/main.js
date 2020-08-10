@@ -46,8 +46,8 @@ class ObjectList extends Component {
     dataIndex: 'action',
     render: (text, record) => (
       <div>
-        <Link to={`/manage/object-list/${record.objTypeCode}/${record.id}`}>查看详情</Link>
-        <span className="table-action-line" />
+        <Link className="mr16" to={`/manage/object-list/${record.objTypeCode}/${record.id}`}>查看详情</Link>
+        {/* <span className="table-action-line" /> */}
         <a href onClick={() => this.tagClass(record)}>标签类目</a>
       </div>
     ),

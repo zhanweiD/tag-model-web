@@ -55,8 +55,8 @@ export default class PendingApproval extends Component {
       render: (text, record) => (
         <div className="FBH FBAC">
           {/* eslint-disable-next-line no-underscore-dangle */}
-          <a href onClick={() => this.viewDetail(record, statusMap.agree)}>同意</a>
-          <span className="table-action-line" />
+          <a className="mr16" href onClick={() => this.viewDetail(record, statusMap.agree)}>同意</a>
+          {/* <span className="table-action-line" /> */}
           <a href onClick={() => this.viewDetail(record, statusMap.oppose)}>拒绝</a>
         </div> 
       ),

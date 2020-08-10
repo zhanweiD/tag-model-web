@@ -81,8 +81,8 @@ export default class DataSheet extends Component {
                 myFunctionCodes={this.bigStore.functionCodes}
                 isButton={false}
               >
-                <span className="table-action-line" />
-                <a href onClick={() => this.openTagConfig(record)}>生成标签</a>
+                {/* <span className="table-action-line" /> */}
+                <a className="ml16" href onClick={() => this.openTagConfig(record)}>生成标签</a>
               </AuthBox>
             ) : null
           }

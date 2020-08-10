@@ -112,8 +112,8 @@ export default class TagList extends Component {
               record.status === 2
                 ? (
                   <Fragment>        
-                    <span className="table-action-line" />
-                    <a href onClick={() => this.openApplyModal(record)}>权限申请</a>
+                    {/* <span className="table-action-line" /> */}
+                    <a className="ml16" href onClick={() => this.openApplyModal(record)}>权限申请</a>
                   </Fragment>
                 )
                 : null

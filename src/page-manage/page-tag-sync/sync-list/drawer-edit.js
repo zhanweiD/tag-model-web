@@ -106,6 +106,7 @@ export default class DrawerEditSync extends Component {
     const drawerConfig = {
       title: '编辑同步计划',
       visible,
+      closable: true,
       width: 1120,
       maskClosable: false,
       destroyOnClose: true,

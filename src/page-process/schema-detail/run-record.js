@@ -48,20 +48,22 @@ export default class RunRecord extends Component {
     title: '运行状态',
     dataIndex: 'runStatus',
     render: text => getSchemeRunStatus({
-      status: text
-    })
+      status: text,
+    }),
   }, {
     title: '记录数',
     dataIndex: 'recordCount',
   }, {
     title: '操作',
     dataIndex: 'action',
-    render: (text, record) => <div>
-      {record.runStatus ? <a href onClick={() => this.runTask(record)}>重跑</a> : <a className="disabled">重跑</a>}
-       {/* <a href onClick={() => this.runTask(record)}>重跑</a> */}
-       <span className="table-action-line" />
-       <a href onClick={() => this.viewLog(record)}>查看日志</a>
-       </div>
+    render: (text, record) => (
+      <div>
+        {record.runStatus ? <a href onClick={() => this.runTask(record)}>重跑</a> : <a className="disabled">重跑</a>}
+        {/* <a href onClick={() => this.runTask(record)}>重跑</a> */}
+        {/* <span className="table-action-line" /> */}
+        <a className="ml16" href onClick={() => this.viewLog(record)}>查看日志</a>
+      </div>
+    ),
   }]
 
 
@@ -71,18 +73,18 @@ export default class RunRecord extends Component {
     })
   }
 
-  @action.bound viewLog(data){
+  @action.bound viewLog(data) {
     store.visibleLog = true
     store.getLog(data.taskInstance)
   }
 
-  @action.bound runTask(data){
+  @action.bound runTask(data) {
     store.runTask(data.taskInstance)
   }
 
-  @action.bound selectStatus(status){
+  @action.bound selectStatus(status) {
     this.runStatus = status
-    if(typeof status === 'undefined') {
+    if (typeof status === 'undefined') {
       store.getList({
         runStatus: status,
         queryStartTime: this.queryStartTime,
@@ -102,7 +104,7 @@ export default class RunRecord extends Component {
   }
 
   @action.bound selectTime(date, dateString) {
-    if(date) {
+    if (date) {
       this.queryStartTime = dateString[0]
       this.queryEndTime = dateString[1]
       store.getList({
@@ -114,14 +116,13 @@ export default class RunRecord extends Component {
       })
     } else {
       this.queryStartTime = undefined
-      this.queryEndTime =undefined
+      this.queryEndTime = undefined
       store.getList({
         runStatus: this.runStatus,
         pageSize: undefined,
         currentPage: undefined,
       })
     }
-  
   }
 
   render() {
@@ -163,7 +164,7 @@ export default class RunRecord extends Component {
             showSearch
             allowClear
             placeholder="请选择运行状态"
-            style={{ width: 200 }}
+            style={{width: 200}}
             onChange={v => this.selectStatus(v)}
             optionFilterProp="children"
             className="mr16"
@@ -177,7 +178,7 @@ export default class RunRecord extends Component {
           <span className="mr8">运行日期：</span>
           <RangePicker onChange={this.selectTime} allowClear />
         </div>
-        <Table dataSource={toJS(list)} loading={tableLoading} columns={this.columns}/>
+        <Table dataSource={toJS(list)} loading={tableLoading} columns={this.columns} />
         <ModalLog store={store} />
       </div>
     )

@@ -169,6 +169,7 @@ class ModalObject extends Component {
     const drawerConfig = {
       title: editType === 'edit' ? `编辑${typeCodeMap[typeCode]}` : `添加${typeCodeMap[typeCode]}`,
       visible,
+      closable: true,
       width: 560,
       maskClosable: false,
       destroyOnClose: true,

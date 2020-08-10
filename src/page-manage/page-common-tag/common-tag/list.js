@@ -113,15 +113,15 @@ export default class Market extends Component {
                 if (record.status) { // 状态 0：可以申请 1 审批中 2 不可以申请
                   return (                 
                     <Fragment>
-                      <span className="table-action-line" /> 
-                      <span className="disabled">申请</span>
+                      {/* <span className="table-action-line" />  */}
+                      <span className="disabled ml16">申请</span>
                     </Fragment>                
                   )
                 } 
                 return (
                   <Fragment>
-                    <span className="table-action-line" /> 
-                    <a href onClick={() => this.openModal(record, 'one')}>申请</a>
+                    {/* <span className="table-action-line" />  */}
+                    <a className="ml16" href onClick={() => this.openModal(record, 'one')}>申请</a>
                   </Fragment>
                 )
               } 

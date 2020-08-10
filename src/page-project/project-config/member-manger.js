@@ -49,8 +49,8 @@ export default class MemberManger extends Component {
             myFunctionCodes={store.functionCodes}
             isButton={false}
           >
-            <a href onClick={() => this.openModal('edit', record)}>编辑</a>
-            <span className="table-action-line" />
+            <a className="mr16" href onClick={() => this.openModal('edit', record)}>编辑</a>
+            {/* <span className="table-action-line" /> */}
             <Popconfirm placement="topRight" title="确认删除？" onConfirm={() => this.delItem(record.id)}>
               <a href>删除</a>
             </Popconfirm>
@@ -93,7 +93,7 @@ export default class MemberManger extends Component {
         onClick={() => this.openModal('add')}
       >
 添加成员
-      </AuthBox>],
+                </AuthBox>],
       store, // 必填属性
     }
 

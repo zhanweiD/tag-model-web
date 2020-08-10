@@ -55,8 +55,8 @@ class SourceList extends Component {
     width: 200,
     render: (text, record) => (
       <div>
-        <a href onClick={() => this.openTagConfig(record)}>标签映射</a>
-        <span className="table-action-line" />
+        <a className="mr16" href onClick={() => this.openTagConfig(record)}>标签映射</a>
+        {/* <span className="table-action-line" /> */}
         {
           record.status ? <span className="disabled">删除</span> : (
             <Popconfirm placement="topRight" title="你确定要删除该目的源吗？" onConfirm={() => this.delItem(record.id)}>

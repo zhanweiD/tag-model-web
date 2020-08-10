@@ -73,12 +73,12 @@ class SyncList extends Component {
           if (record.status === 3 && record.scheduleType === 0) {
             return (
               <Fragment>
-                <span className="disabled">启动</span>
-                <span className="table-action-line" />
-                <span className="disabled">编辑</span>
-                <span className="table-action-line" />
-                <span className="disabled">删除</span>
-                <span className="table-action-line" />
+                <span className="disabled mr16">启动</span>
+                {/* <span className="table-action-line" /> */}
+                <span className="disabled mr16">编辑</span>
+                {/* <span className="table-action-line" /> */}
+                <span className="disabled mr16">删除</span>
+                {/* <span className="table-action-line" /> */}
                 <span className="disabled">提交日志</span>
               </Fragment>
 
@@ -89,12 +89,12 @@ class SyncList extends Component {
           if (record.status === 6 && record.scheduleType === 0 && (record.lastStatus === 1 || record.lastStatus === 2)) {
             return (
               <Fragment>
-                <span className="disabled">启动</span>
-                <span className="table-action-line" />
-                <span className="disabled">编辑</span>
-                <span className="table-action-line" />
-                <span className="disabled">删除</span>
-                <span className="table-action-line" />
+                <span className="disabled mr16">启动</span>
+                {/* <span className="table-action-line" /> */}
+                <span className="disabled mr16">编辑</span>
+                {/* <span className="table-action-line" /> */}
+                <span className="disabled mr16">删除</span>
+                {/* <span className="table-action-line" /> */}
                 <span className="disabled">提交日志</span>
               </Fragment>
 
@@ -105,14 +105,14 @@ class SyncList extends Component {
           if (record.status === 2 && record.scheduleType === 0) {
             return (
               <Fragment>
-                <span className="disabled">启动</span>
-                <span className="table-action-line" />
-                <a href onClick={() => this.editSync(record)}>编辑</a>
-                <span className="table-action-line" />
+                <span className="disabled mr16">启动</span>
+                {/* <span className="table-action-line" /> */}
+                <a className="mr16" href onClick={() => this.editSync(record)}>编辑</a>
+                {/* <span className="table-action-line" /> */}
                 <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
-                  <a href>删除</a>
+                  <a className="mr16" href>删除</a>
                 </Popconfirm>
-                <span className="table-action-line" />
+                {/* <span className="table-action-line" /> */}
                 <a href onClick={() => this.getLog(record.id)}>提交日志</a>
               </Fragment>
 
@@ -123,18 +123,18 @@ class SyncList extends Component {
           if (record.status === 2 && record.scheduleType === 1) {
             return (
               <Fragment>
-                <a href onClick={() => this.startSync(record)}>启动</a>
-                <span className="table-action-line" />
+                <a className="mr16" href onClick={() => this.startSync(record)}>启动</a>
+                {/* <span className="table-action-line" /> */}
                 <Popconfirm placement="topRight" title="你确定要执行吗？" onConfirm={() => this.runSync(record.id)}>
-                  <a href>执行</a>
+                  <a className="mr16" href>执行</a>
                 </Popconfirm>
-                <span className="table-action-line" />
-                <a href onClick={() => this.editSync(record)}>编辑</a>
-                <span className="table-action-line" />
+                {/* <span className="table-action-line" /> */}
+                <a className="mr16" href onClick={() => this.editSync(record)}>编辑</a>
+                {/* <span className="table-action-line" /> */}
                 <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
-                  <a href>删除</a>
+                  <a className="mr16" href>删除</a>
                 </Popconfirm>
-                <span className="table-action-line" />
+                {/* <span className="table-action-line" /> */}
                 <a href onClick={() => this.getLog(record.id)}>提交日志</a>
               </Fragment>
             )
@@ -144,14 +144,14 @@ class SyncList extends Component {
           if (record.status === 1 && record.scheduleType === 0 && (record.lastStatus === 1 || record.lastStatus === 2)) {
             return (
               <Fragment>
-                <a href onClick={() => this.startSync(record)}>启动</a>
-                <span className="table-action-line" />
+                <a className="mr16" href onClick={() => this.startSync(record)}>启动</a>
+                {/* <span className="table-action-line" /> */}
                 <Popconfirm placement="topRight" title="你确定要执行吗？" onConfirm={() => this.runSync(record.id)}>
-                  <a href>执行</a>
+                  <a className="mr16" href>执行</a>
                 </Popconfirm>
-                <span className="table-action-line" />
-                <a href onClick={() => this.editSync(record)}>编辑</a>
-                <span className="table-action-line" />
+                {/* <span className="table-action-line" /> */}
+                <a className="mr16" href onClick={() => this.editSync(record)}>编辑</a>
+                {/* <span className="table-action-line" /> */}
                 {
                   !record.tagUsedCount ? (
                     <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
@@ -159,8 +159,8 @@ class SyncList extends Component {
                     </Popconfirm>
                   ) : <span className="disabled">删除</span>
                 }
-                <span className="table-action-line" />
-                <a href onClick={() => this.getLog(record.id)}>提交日志</a>
+                {/* <span className="table-action-line" /> */}
+                <a className="ml16" href onClick={() => this.getLog(record.id)}>提交日志</a>
               </Fragment>
             )
           }
@@ -169,14 +169,14 @@ class SyncList extends Component {
           if (record.status === 5 && record.scheduleType === 0 && (record.lastStatus === 1 || record.lastStatus === 2)) {
             return (
               <Fragment>
-                <a href onClick={() => this.startSync(record)}>启动</a>
-                <span className="table-action-line" />
+                <a className="mr16" href onClick={() => this.startSync(record)}>启动</a>
+                {/* <span className="table-action-line" /> */}
                 <Popconfirm placement="topRight" title="你确定要执行吗？" onConfirm={() => this.runSync(record.id)}>
-                  <a href>执行</a>
+                  <a className="mr16" href>执行</a>
                 </Popconfirm>
-                <span className="table-action-line" />
-                <a href onClick={() => this.editSync(record)}>编辑</a>
-                <span className="table-action-line" />
+                {/* <span className="table-action-line" /> */}
+                <a className="mr16" href onClick={() => this.editSync(record)}>编辑</a>
+                {/* <span className="table-action-line" /> */}
                 {
                   !record.tagUsedCount ? (
                     <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
@@ -184,8 +184,8 @@ class SyncList extends Component {
                     </Popconfirm>
                   ) : <span className="disabled">删除</span>
                 }
-                <span className="table-action-line" />
-                <a href onClick={() => this.getLog(record.id)}>提交日志</a>
+                {/* <span className="table-action-line" /> */}
+                <a className="ml16" href onClick={() => this.getLog(record.id)}>提交日志</a>
               </Fragment>
             )
           }
@@ -194,14 +194,14 @@ class SyncList extends Component {
           if (record.status === 5 && record.scheduleType === 0) {
             return (
               <Fragment>
-                <span className="disabled">启动</span>
-                <span className="table-action-line" />
-                <a href onClick={() => this.editSync(record)}>编辑</a>
-                <span className="table-action-line" />
+                <span className="disabled mr16">启动</span>
+                {/* <span className="table-action-line" /> */}
+                <a className="mr16" href onClick={() => this.editSync(record)}>编辑</a>
+                {/* <span className="table-action-line" /> */}
                 <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
-                  <a href>删除</a>
+                  <a className="mr16" href>删除</a>
                 </Popconfirm>
-                <span className="table-action-line" />
+                {/* <span className="table-action-line" /> */}
                 <a href onClick={() => this.getLog(record.id)}>提交日志</a>
               </Fragment>
             )
@@ -212,11 +212,11 @@ class SyncList extends Component {
             return (
               <Fragment>
                 <Popconfirm placement="topRight" title="你确定要暂停吗？" onConfirm={() => this.pauseSync(record.id)}>
-                  <a href>暂停</a>
+                  <a className="mr16" href>暂停</a>
                 </Popconfirm>
-                <span className="table-action-line" />
-                <span className="disabled">编辑</span>
-                <span className="table-action-line" />
+                {/* <span className="table-action-line" /> */}
+                <span className="disabled mr16">编辑</span>
+                {/* <span className="table-action-line" /> */}
                 {
                   !record.tagUsedCount ? (
                     <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
@@ -224,8 +224,8 @@ class SyncList extends Component {
                     </Popconfirm>
                   ) : <span className="disabled">删除</span>
                 }
-                <span className="table-action-line" />
-                <a href onClick={() => this.getLog(record.id)}>提交日志</a>
+                {/* <span className="table-action-line" /> */}
+                <a className="ml16" href onClick={() => this.getLog(record.id)}>提交日志</a>
               </Fragment>
             )
           }
@@ -234,14 +234,14 @@ class SyncList extends Component {
           if (record.status === 4 && record.scheduleType === 0 && (record.lastStatus === 1 || record.lastStatus === 2)) {
             return (
               <Fragment>
-                <a href onClick={() => this.startSync(record)}>启动</a>
-                <span className="table-action-line" />
+                <a className="mr16" href onClick={() => this.startSync(record)}>启动</a>
+                {/* <span className="table-action-line" /> */}
                 <Popconfirm placement="topRight" title="你确定要执行吗？" onConfirm={() => this.runSync(record.id)}>
-                  <a href>执行</a>
+                  <a className="mr16" href>执行</a>
                 </Popconfirm>
-                <span className="table-action-line" />
-                <a href onClick={() => this.editSync(record)}>编辑</a>
-                <span className="table-action-line" />
+                {/* <span className="table-action-line" /> */}
+                <a className="mr16" href onClick={() => this.editSync(record)}>编辑</a>
+                {/* <span className="table-action-line" /> */}
                 {
                   !record.tagUsedCount ? (
                     <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
@@ -249,8 +249,8 @@ class SyncList extends Component {
                     </Popconfirm>
                   ) : <span className="disabled">删除</span>
                 }
-                <span className="table-action-line" />
-                <a href onClick={() => this.getLog(record.id)}>提交日志</a>
+                {/* <span className="table-action-line" /> */}
+                <a className="ml16" href onClick={() => this.getLog(record.id)}>提交日志</a>
               </Fragment>
 
             )
@@ -260,10 +260,10 @@ class SyncList extends Component {
           if (record.status === 1 && record.scheduleType === 1) {
             return (
               <Fragment>
-                <a href onClick={() => this.pauseSync(record.id)}>暂停</a>
-                <span className="table-action-line" />
-                <span className="disabled">编辑</span>
-                <span className="table-action-line" />
+                <a className="mr16" href onClick={() => this.pauseSync(record.id)}>暂停</a>
+                {/* <span className="table-action-line" /> */}
+                <span className="disabled mr16">编辑</span>
+                {/* <span className="table-action-line" /> */}
                 {
                   !record.tagUsedCount ? (
                     <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
@@ -271,20 +271,20 @@ class SyncList extends Component {
                     </Popconfirm>
                   ) : <span className="disabled">删除</span>
                 }
-                <span className="table-action-line" />
-                <a href onClick={() => this.getLog(record.id)}>提交日志</a>
+                {/* <span className="table-action-line" /> */}
+                <a className="ml16" href onClick={() => this.getLog(record.id)}>提交日志</a>
               </Fragment>
             )
           }
 
           return (
             <Fragment>
-              <span className="disabled">启动</span>
-              <span className="table-action-line" />
-              <span className="disabled">编辑</span>
-              <span className="table-action-line" />
-              <span className="disabled">删除</span>
-              <span className="table-action-line" />
+              <span className="disabled mr16">启动</span>
+              {/* <span className="table-action-line" /> */}
+              <span className="disabled mr16">编辑</span>
+              {/* <span className="table-action-line" /> */}
+              <span className="disabled mr16">删除</span>
+              {/* <span className="table-action-line" /> */}
               <span className="disabled">提交日志</span>
             </Fragment>
           )

@@ -58,8 +58,8 @@ export default class MyRequests extends Component {
           {
             (record.status === 0) ? (
               <Fragment>
-                <span className="table-action-line" />
-                <a href onClick={() => this.backout(record.id)}>撤销</a>
+                {/* <span className="table-action-line" /> */}
+                <a className="ml16" href onClick={() => this.backout(record.id)}>撤销</a>
               </Fragment>
             ) : null
           }

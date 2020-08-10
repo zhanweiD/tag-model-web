@@ -122,6 +122,7 @@ export default class SelectObject extends Component {
     const drawerConfig = {
       title: '选择对象',
       visible,
+      closable: true,
       width: 1120,
       maskClosable: false,
       destroyOnClose: true,

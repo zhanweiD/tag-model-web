@@ -65,6 +65,7 @@ export default class BatchConfig extends Component {
     const drawerConfig = {
       title: '标签配置',
       visible,
+      closable: true,
       width: 1120,
       maskClosable: false,
       destroyOnClose: true,
@@ -76,7 +77,7 @@ export default class BatchConfig extends Component {
         {...drawerConfig}
       >
         <div className="tag-config-batch">
-          <Steps current={currentStep} className="tag-config-step">
+          <Steps size="small" current={currentStep} className="tag-config-step">
             <Step title="选择标签" />
             <Step title="绑定字段" />
           </Steps>

@@ -80,10 +80,10 @@ class TagList extends Component {
           {/* 标签状态: 待绑定 未使用  操作: 绑定/编辑/删除 */}
           {record.status === 0 && record.isVisual === 0 && (
             <Fragment>
-              <a href onClick={() => store.openTagConfig('one', record)}>绑定</a>
-              <span className="table-action-line" />
-              <a href onClick={() => store.openDrawer('edit', record)}>编辑</a>
-              <span className="table-action-line" />
+              <a className="mr16" href onClick={() => store.openTagConfig('one', record)}>绑定</a>
+              {/* <span className="table-action-line" /> */}
+              <a className="mr16" href onClick={() => store.openDrawer('edit', record)}>编辑</a>
+              {/* <span className="table-action-line" /> */}
               <Popconfirm placement="topRight" title="标签被删除后不可恢复，确定删除？" onConfirm={() => this.remove(record)}>
                 <a href>删除</a>
               </Popconfirm>
@@ -101,14 +101,14 @@ class TagList extends Component {
                   tagIdList: [record.id],
                 })}
               >
-                <a href>发布</a>
+                <a className="mr16" href>发布</a>
               </Popconfirm>
-              <span className="table-action-line" />
-              <a href onClick={() => store.openTagConfig('one', record)}>解绑</a>
-              <span className="table-action-line" />
+              {/* <span className="table-action-line" /> */}
+              <a className="mr16" href onClick={() => store.openTagConfig('one', record)}>解绑</a>
+              {/* <span className="table-action-line" /> */}
               {/* <a href onClick={() => store.openDrawer('edit', record)}>编辑</a> */}
-              <span className="disabled">编辑</span>
-              <span className="table-action-line" />
+              <span className="disabled mr16">编辑</span>
+              {/* <span className="table-action-line" /> */}
               <Popconfirm placement="topRight" title="标签被删除后不可恢复，确定删除？" onConfirm={() => this.remove(record)}>
                 <a href>删除</a>
               </Popconfirm>

@@ -85,8 +85,8 @@ export default class ProjectList extends Component {
         <div className="FBH FBAC">
           {record.config === 1 && (
             <Fragment>
-              <Link to={`/project/${record.id}`}>项目配置</Link>
-              <span className="table-action-line" />
+              <Link className="mr16" to={`/project/${record.id}`}>项目配置</Link>
+              {/* <span className="table-action-line" /> */}
             </Fragment>
           )}
 
@@ -96,15 +96,15 @@ export default class ProjectList extends Component {
                 return (
                   <Fragment>
 
-                    <span className="disabled">编辑</span>
-                    <span className="table-action-line" />
+                    <span className="disabled mr16">编辑</span>
+                    {/* <span className="table-action-line" /> */}
                   </Fragment>
                 )
               }
               return (
                 <Fragment>
-                  <a href onClick={() => this.openModal('edit', record)}>编辑</a>
-                  <span className="table-action-line" />
+                  <a className="mr16" href onClick={() => this.openModal('edit', record)}>编辑</a>
+                  {/* <span className="table-action-line" /> */}
                 </Fragment>
               )
             }
@@ -116,17 +116,17 @@ export default class ProjectList extends Component {
               if (record.status === 1) {
                 return (
                   <Fragment>
-                    <span className="disabled">删除</span>
-                    <span className="table-action-line" />
+                    <span className="disabled mr16">删除</span>
+                    {/* <span className="table-action-line" /> */}
                   </Fragment>
                 )
               }
               return (
                 <Fragment>
                   <Popconfirm placement="topRight" title="项目被删除后不可恢复，确认删除？" onConfirm={() => this.delItem(record.id)}>
-                    <a href>删除</a>
+                    <a className="mr16" href>删除</a>
                   </Popconfirm>
-                  <span className="table-action-line" />
+                  {/* <span className="table-action-line" /> */}
                 </Fragment>
               )
             }

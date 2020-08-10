@@ -60,8 +60,8 @@ export default class RunRecord extends Component {
       <div>
         {record.runStatus ? <a href onClick={() => this.runTask(record)}>重跑</a> : <a className="disabled">重跑</a>}
         {/* <a href onClick={() => this.runTask(record)}>重跑</a> */}
-        <span className="table-action-line" />
-        <a href onClick={() => this.viewLog(record)}>查看日志</a>
+        {/* <span className="table-action-line" /> */}
+        <a className="ml16" href onClick={() => this.viewLog(record)}>查看日志</a>
       </div>
     ),
   }]

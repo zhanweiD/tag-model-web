@@ -36,6 +36,7 @@ export default class DrawerAddSync extends Component {
     const drawerConfig = {
       title: '新建同步计划',
       visible,
+      closable: true,
       width: 1120,
       maskClosable: false,
       destroyOnClose: true,
@@ -47,7 +48,7 @@ export default class DrawerAddSync extends Component {
         {...drawerConfig}
       >
         <div className="add-sync">
-          <Steps current={currentStep} className="add-sync-step">
+          <Steps size="small" current={currentStep} className="add-sync-step">
             <Step title="基础信息" />
             <Step title="配置同步标签" />
             <Step title="预览保存" />

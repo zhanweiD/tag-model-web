@@ -113,8 +113,8 @@ class SchemaList extends Component {
             {
               (record.status === 1) && (
                 <Fragment>
-                  <Link to={`/process/tql/${record.id}`}> 查看</Link>
-                  <span className="table-action-line" />
+                  <Link className="mr16" to={`/process/tql/${record.id}`}> 查看</Link>
+                  {/* <span className="table-action-line" /> */}
                 </Fragment>
               )
             }
@@ -123,8 +123,8 @@ class SchemaList extends Component {
             {
               (record.status === 1) && (
                 <Fragment>
-                  <a onClick={() => this.configDrawerShow(record)}> 标签配置</a>
-                  <span className="table-action-line" />
+                  <a className="mr16" onClick={() => this.configDrawerShow(record)}> 标签配置</a>
+                  {/* <span className="table-action-line" /> */}
                 </Fragment>
               )
             }
@@ -133,8 +133,8 @@ class SchemaList extends Component {
             {
               (record.status === 0 || record.status === 2) && (
                 <Fragment>
-                  <a href onClick={() => this.edit(record)}>编辑</a>
-                  <span className="table-action-line" />
+                  <a className="mr16" href onClick={() => this.edit(record)}>编辑</a>
+                  {/* <span className="table-action-line" /> */}
                 </Fragment>
               )
             }
@@ -143,8 +143,8 @@ class SchemaList extends Component {
             {
               (record.status === 1 && record.scheduleType === 1) && (
                 <Fragment>
-                  <span className="disabled">执行</span>
-                  <span className="table-action-line" />
+                  <span className="disabled mr16">执行</span>
+                  {/* <span className="table-action-line" /> */}
                 </Fragment>
               )
             }
@@ -153,8 +153,8 @@ class SchemaList extends Component {
             {
               (record.status === 1 && record.scheduleType === 2 && record.lastStatus === 0) && (
                 <Fragment>
-                  <span className="disabled">执行</span>
-                  <span className="table-action-line" />
+                  <span className="disabled mr16">执行</span>
+                  {/* <span className="table-action-line" /> */}
                 </Fragment>
               )
             }
@@ -164,9 +164,9 @@ class SchemaList extends Component {
               (record.status === 1 && record.scheduleType === 2 && record.lastStatus !== 0) && (
                 <Fragment>
                   <Popconfirm placement="topRight" title="你确定要执行吗？" onConfirm={() => this.operation(record)}>
-                    <a href>执行</a>
+                    <a className="mr16" href>执行</a>
                   </Popconfirm>
-                  <span className="table-action-line" />
+                  {/* <span className="table-action-line" /> */}
                 </Fragment>
 
               )
@@ -193,15 +193,15 @@ class SchemaList extends Component {
               )
             })()}
 
-            <span className="table-action-line" />
+            {/* <span className="table-action-line" /> */}
             <Popconfirm placement="topRight" title="你确定要克隆吗？" onConfirm={() => this.clone(record)}>
-              <a href>克隆</a>
+              <a className="ml16 mr16" href>克隆</a>
             </Popconfirm>
             {/* 方案状态: 提交成功 提交失败  操作: 提交日志 */}
             {
               record.status === 2 ? (
                 <Fragment>
-                  <span className="table-action-line" />
+                  {/* <span className="table-action-line" /> */}
                   <Dropdown overlay={() => this.menu(record)}>
                     <a href>
                       更多
@@ -307,7 +307,7 @@ class SchemaList extends Component {
         onClick={this.create}
       >
         新建加工方案
-      </AuthBox>,
+                </AuthBox>,
       ],
       rowKey: 'id',
       store: this.store, // 必填属性
