@@ -9,8 +9,8 @@ import {Children, cloneElement} from 'react'
  */
 
 const Authority = ({children, isHidden = false, authCode, customCodes}) => {
-  const {userProductFunctionCode = []} = window.frameinfo || {}
-  const functionCodes = customCodes || userProductFunctionCode
+  const {tagProductFunctionCode = []} = window.frameinfo || {}
+  const functionCodes = customCodes || tagProductFunctionCode
   const isHaveAuth = functionCodes.includes(authCode)
   if (isHidden) {
     return isHaveAuth ? children : null

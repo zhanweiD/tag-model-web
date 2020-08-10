@@ -100,9 +100,11 @@ export default class TagList extends Component {
       width: 120,
       render: (text, record) => (
         <div className="FBH FBAC">
-          {/* eslint-disable-next-line no-underscore-dangle */}
-          {/* <a href={`${window.__keeper.pathHrefPrefix}/manage/tag-maintain/${record.id}`}>标签详情</a> */}
-          <Link to={`/manage/project-tag/${record.id}`}>标签详情</Link>
+          <Authority 
+            authCode="tag_model:project_tag_detail[r]" 
+          >
+            <Link to={`/manage/project-tag/${record.id}`}>标签详情</Link>
+          </Authority>
           <Authority 
             authCode="tag_model:apply_project_tag[c]" 
           >

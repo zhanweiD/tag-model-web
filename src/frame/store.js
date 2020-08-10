@@ -11,7 +11,7 @@ class Store {
       this.getFunctionCode('tag_common'), // 标签加工
       this.getFunctionCode('tag_config'), // 后台配置
     ]).then(res => {
-      window.frameInfo.dataAssetUserProductFunctionCode = _.map(toJS(this.functionCodeList), 'functionCode')
+      window.frameInfo.tagProductFunctionCode = _.map(toJS(this.functionCodeList), 'functionCode')
       this.functionCodeDone = true
     })
   }

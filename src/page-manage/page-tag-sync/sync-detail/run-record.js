@@ -2,8 +2,7 @@ import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {action, toJS} from 'mobx'
 import {Select, DatePicker, Table} from 'antd'
-// import {Time} from '../../../common/util'
-// import {ListContent} from '../../../component'
+import {Authority} from '../../../component'
 import {getLastStatus} from '../util'
 import ModalLog from './modal-log'
 
@@ -58,10 +57,19 @@ export default class RunRecord extends Component {
     dataIndex: 'action',
     render: (text, record) => (
       <div>
-        {record.runStatus ? <a href onClick={() => this.runTask(record)}>重跑</a> : <a className="disabled">重跑</a>}
-        {/* <a href onClick={() => this.runTask(record)}>重跑</a> */}
+        <Authority 
+          authCode="tag_model:rerun_transfer[x]" 
+        >
+          {record.runStatus ? <a href onClick={() => this.runTask(record)}>重跑</a> : <a className="disabled">重跑</a>}
+        </Authority>
         <span className="table-action-line" />
-        <a href onClick={() => this.viewLog(record)}>查看日志</a>
+         
+        <Authority 
+          authCode="tag_model:transfer_log[r]" 
+        >
+          <a href onClick={() => this.viewLog(record)}>查看日志</a>
+        </Authority>
+      
       </div>
     ),
   }]
