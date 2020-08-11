@@ -19,6 +19,7 @@ const api = {
   getTagTree: get(`${syncApi}/scheme/tagTree`), // 标签树
   addSync: post(`${syncApi}/scheme/schemeSave`), // 新增同步计划
   editSync: post(`${syncApi}/scheme/schemeUpdate`), // 编辑同步计划
+  tableNameCheck: post(`${syncApi}/scheme/checkTableName`), // 数据表重名校验
 } 
 
 ioContext.create('syncList', api) 

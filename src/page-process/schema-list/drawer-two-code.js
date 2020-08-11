@@ -7,7 +7,7 @@ import {action, toJS} from 'mobx'
 import cls from 'classnames'
 import {
   message, 
-  // Spin
+  Tooltip,
 } from 'antd'
 
 import sqlFormatter from 'sql-formatter'
@@ -117,10 +117,23 @@ export default class DrawerTwoCode extends Component {
       <div className="code-content">
        
         <div className="code-menu">
-          <span className="code-menu-item mr16" onClick={() => this.operationCode()}>
-            <img src={yunxing} alt="img" />
-            <span>运行</span>
-          </span>
+          {
+            runLoading ? (
+              <Tooltip placement="topRight" title="正在运行中，不可重复运行">
+                <span className="mr16 disabled">
+                  <img src={yunxing} alt="img" />
+                  <span>运行</span>
+                </span>
+              </Tooltip>
+            
+            ) : (
+              <span className="code-menu-item mr16" onClick={() => this.operationCode()}>
+                <img src={yunxing} alt="img" />
+                <span>运行</span>
+              </span>
+            )
+          }
+        
           <span className="code-menu-item mr16" onClick={() => this.codeFormat()}>
             <img src={geshihua} alt="img" />
             <span>格式化</span>
