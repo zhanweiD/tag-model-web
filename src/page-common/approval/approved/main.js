@@ -5,7 +5,7 @@ import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {observable, action} from 'mobx'
 import {Button} from 'antd'
-import {ListContent, OmitTooltip} from '../../../component'
+import {ListContent, OmitTooltip, Authority} from '../../../component'
 import {Time, keyToName} from '../../../common/util'
 import {getTableStatus, APPLY_TYPE} from '../common/comp-approval-status'
 import ModalDetail from '../common/comp-approval-modal'
@@ -51,7 +51,7 @@ export default class Approved extends Component {
       key: 'action',
       width: 80,
       dataIndex: 'action',
-      render: (text, record) => <a href onClick={() => this.viewDetail(record)}>查看详情</a>,
+      render: (text, record) => <Authority authCode="tag_common:approved_detail[r]"><a href onClick={() => this.viewDetail(record)}>查看详情</a></Authority>,
     },
   ]
 

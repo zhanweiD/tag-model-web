@@ -4,9 +4,9 @@
  */
 
 import {useEffect, useState} from 'react'
-import {FormOutlined} from '@ant-design/icons'
+// import {FormOutlined} from '@ant-design/icons'
 import {message, Button} from 'antd'
-import {projectProvider} from '../../component'
+import {projectProvider, Authority} from '../../component'
 import ConfigModal from './modal'
 import io from './io'
 import {successTip, errorTip} from '../../common/util'
@@ -118,7 +118,9 @@ const WorkspaceConfig = ({projectId}) => {
             {/* <FormOutlined className="action" onClick={editClick} /> */}
           </div>
         </div>
-        <Button type="primary" onClick={editClick}>编辑</Button>
+        <Authority authCode="tag_config:environment_config[u]">
+          <Button type="primary" onClick={editClick}>编辑</Button>
+        </Authority>
       </div>
       <ConfigModal 
         visible={visible}

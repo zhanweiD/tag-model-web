@@ -6,7 +6,7 @@ import {observer} from 'mobx-react'
 import {action} from 'mobx'
 import {Link} from 'react-router-dom'
 import {
-  ListContent, NoData, OmitTooltip, AuthBox,
+  ListContent, NoData, OmitTooltip, Authority,
 } from '../../../component'
 import {getDataTypeName} from '../../../common/util'
 import ModalApply from './modal-apply'
@@ -100,13 +100,13 @@ export default class TagList extends Component {
       width: 120,
       render: (text, record) => (
         <div className="FBH FBAC">
-          {/* eslint-disable-next-line no-underscore-dangle */}
-          {/* <a href={`${window.__keeper.pathHrefPrefix}/manage/tag-maintain/${record.id}`}>标签详情</a> */}
-          <Link to={`/manage/project-tag/${record.id}`}>标签详情</Link>
-          <AuthBox 
-            code="asset_tag_project_tag_search_add_occ" 
-            myFunctionCodes={store.functionCodes}
-            isButton={false}
+          <Authority 
+            authCode="tag_model:project_tag_detail[r]" 
+          >
+            <Link to={`/manage/project-tag/${record.id}`}>标签详情</Link>
+          </Authority>
+          <Authority 
+            authCode="tag_model:apply_project_tag[c]" 
           >
             {
               record.status === 2
@@ -118,7 +118,7 @@ export default class TagList extends Component {
                 )
                 : null
             }
-          </AuthBox>
+          </Authority>
         
         </div>
       ),
@@ -174,8 +174,8 @@ export default class TagList extends Component {
       btnText: '去新建标签',
       onClick: this.goTagManager,
       text: '没有任何标签，去标签维护新建标签吧!',
-      // code: 'asset_tag_project_tag_operator',
-      // noAuthText: '没有任何标签',
+      code: 'tag_model:create_tag[c]',
+      noAuthText: '没有任何标签',
       // myFunctionCodes: functionCodes,
     }
     

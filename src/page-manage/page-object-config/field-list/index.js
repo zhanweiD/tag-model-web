@@ -4,7 +4,7 @@
 import {Component} from 'react'
 import {action} from 'mobx'
 import {observer, inject} from 'mobx-react'
-import {ListContent, QuestionTooltip, AuthBox} from '../../../component'
+import {ListContent, QuestionTooltip, Authority} from '../../../component'
 import {tagStatusMap, configStatusMap} from '../util'
 import DrawerTagConfig from './drawer'
 import seach from './search'
@@ -100,31 +100,15 @@ export default class FieldList extends Component {
       dataIndex: 'action',
       render: (text, record) => (
         <div className="FBH FBAC">
-          {/* <AuthBox
-            code="asset_tag_project_obj_table_field"
-            myFunctionCodes={this.bigStore.functionCodes}
-            isButton={false}
+          <Authority
+            authCode="tag_model:config_field_tag[c]"
           >
-            {
-              record.status === 2 ? <span className="disabled">移除</span> : (
-                <Popconfirm placement="topRight" title="确定移除？" onConfirm={() => this.removeList(record)}>
-                  <a href>移除</a>
-                </Popconfirm>
-              )
-            }
-          </AuthBox> */}
-          <AuthBox
-            code="asset_tag_project_field_tag"
-            myFunctionCodes={this.bigStore.functionCodes}
-            isButton={false}
-          >
-            {/* <span className="table-action-line" /> */}
             {
               record.status === 2 
                 ? <span className="disabled">生成标签</span> 
                 : <a href onClick={() => this.openModal(record)}>生成标签</a>
             }
-          </AuthBox>
+          </Authority>
         </div>
       ),
     },

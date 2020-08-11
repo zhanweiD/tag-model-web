@@ -1,13 +1,13 @@
 /**
  * @description 对象配置 - 数据表
  */
-import {Component, Fragment} from 'react'
+import {Component} from 'react'
 import {action, observable} from 'mobx'
 import {observer, inject, Provider} from 'mobx-react'
 import {
   Popconfirm, Button,
 } from 'antd'
-import {ListContent, AuthBox} from '../../../component'
+import {ListContent, Authority} from '../../../component'
 
 import ConfigField from './config-field'
 import ModalAddTable from './modal-add-table'
@@ -61,11 +61,7 @@ export default class DataSheet extends Component {
       width: 150,
       render: (text, record) => (
         <div>
-          <AuthBox
-            code="asset_tag_project_obj_table_field"
-            myFunctionCodes={this.bigStore.functionCodes}
-            isButton={false}
-          >
+          <Authority authCode="tag_model:update_table[cud]">
             {
               (record.isUsed || record.status === 1 || record.configuredField) ? <span className="disabled">移除</span> : (
                 <Popconfirm placement="topRight" title="你确定要移除该数据表吗？" onConfirm={() => this.removeList(record)}>
@@ -73,17 +69,12 @@ export default class DataSheet extends Component {
                 </Popconfirm>
               )
             }
-          </AuthBox>
+          </Authority>
           {
             this.bigStore.objDetail && this.bigStore.objDetail.type !== 0 ? (
-              <AuthBox
-                code="asset_tag_project_field_tag"
-                myFunctionCodes={this.bigStore.functionCodes}
-                isButton={false}
-              >
-                {/* <span className="table-action-line" /> */}
-                <a className="ml16" href onClick={() => this.openTagConfig(record)}>生成标签</a>
-              </AuthBox>
+              <Authority authCode="tag_model:config_table_tag[c]">
+                <a href className="ml16" onClick={() => this.openTagConfig(record)}>生成标签</a>
+              </Authority>
             ) : null
           }
         
@@ -173,42 +164,19 @@ export default class DataSheet extends Component {
     const {
       objId,
       projectId,
-      typeCode,
+      // typeCode,
     } = store
 
     // typeCode = 3 关系对象；typeCode = 4 实体对象；
-    const buttons = +typeCode === 3 ? (
-      <Fragment>
-        <AuthBox
-          code="asset_tag_project_obj_table_field" 
-          myFunctionCodes={this.bigStore.functionCodes}
-          isButton={false}
+    const buttons = (
+      <Authority authCode="tag_model:update_table[cud]">
+        <Button 
+          type="primary" 
+          onClick={() => this.openModal()}
         >
-          <Button 
-            type="primary" 
-       
-            onClick={() => this.openModal()} 
-          >
-            添加数据表
-          </Button>
-        </AuthBox>
-       
-      </Fragment>
-    ) : (
-      <Fragment>
-        <AuthBox
-          code="asset_tag_project_obj_table_field" 
-          myFunctionCodes={this.bigStore.functionCodes}
-          isButton={false}
-        >
-          <Button 
-            type="primary" 
-            onClick={() => this.openModal()} 
-          >
-            添加数据表
-          </Button>
-        </AuthBox>
-      </Fragment>
+      添加数据表
+        </Button>
+      </Authority>
     )
 
     const listConfig = {
