@@ -1,58 +1,31 @@
-import {Component, Fragment} from 'react'
-import PropTypes from 'prop-types'
-import {Button} from 'antd'
+import {Children, cloneElement} from 'react'
 
-// const functionCodes = window.productFunctionCode || []
+/**
+ * @Authority 权限校验的统一判断组件，支持现实隐藏，如果是显示但没权限的时候，props会注入disabled，class里也会添加disabled，click也会忽略掉
+ * @param {Boolean} isHidden 是隐藏还是现实
+ * @param {String} authCode 功能code
+ * @param {Array} customCodes 是自定义的codes还是根据统一的codes去做判断
+ * @param {Boolean} isCommon 判断使用的是租户下code 还是 项目下的权限code. true: 租户下 false: 项目下
+ * @example <Authority> <Button>xxx</Button></Authority>
+ */
 
-class AuthBox extends Component {
-  static propTypes = {
-    code: PropTypes.string, // 权限code
-    isButton: PropTypes.bool, // 类型是否为按钮
+const Authority = ({children, isHidden = false, authCode, customCodes, isCommon = false}) => {
+  const {tagProductFunctionCode = [], projectFunctionCode = []} = window.frameinfo || {}
+  const functionCodes = customCodes || (isCommon ? tagProductFunctionCode : projectFunctionCode)
+
+  const isHaveAuth = functionCodes.includes(authCode)
+  if (isHidden) {
+    return isHaveAuth ? children : null
   }
-
-  static defaultProps = {
-    code: '',
-    isButton: true,
-  }
-
-  getAuth = () => {
-    const {code, myFunctionCodes} = this.props
-    const functionCodes = window.productFunctionCode || []
-
-    if (!code) {
-      console.error('需配置权限code')
-      return false
-    }
-
-    if (myFunctionCodes) {
-      return myFunctionCodes.includes(code)
-    }
-
-    return functionCodes.includes(code)
-  }
-
-  renderContent = () => {
-    // const isAuth = this.getAuth()
-    const isAuth = true
-    if (!isAuth) {
-      return null
-    }
-
-    const {children, isButton, ...rest} = this.props
-
-    if (isButton) {
-      return <Button {...rest}>{children}</Button>
-    }
-    return children
-  }
-
-  render() {
-    return (
-      <Fragment>
-        {this.renderContent()}
-      </Fragment>
-    )
-  }
+  return Children.map(children, child => {
+    const {className, onClick} = child.props
+    return cloneElement(child, {
+      ...child.props,
+      onClick: isHaveAuth ? onClick : null,
+      className: isHaveAuth ? className : `${className || ''} disabled`,
+      disabled: !isHaveAuth,
+    })
+  })
 }
 
-export default AuthBox
+export default Authority

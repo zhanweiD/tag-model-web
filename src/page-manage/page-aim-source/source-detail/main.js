@@ -4,7 +4,7 @@ import {action, observable} from 'mobx'
 import {observer} from 'mobx-react'
 import OnerFrame from '@dtwave/oner-frame'
 import {
-  DetailHeader, ListContent, AuthBox, TabRoute,
+  DetailHeader, ListContent, TabRoute,
 } from '../../../component'
 import {Time} from '../../../common/util'
 import ModalTagConfig from './modal'

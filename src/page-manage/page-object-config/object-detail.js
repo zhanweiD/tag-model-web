@@ -7,7 +7,7 @@ import {Spin, Modal} from 'antd'
 import {action} from 'mobx'
 import {Time} from '../../common/util'
 import {
-  TabRoute, DetailHeader, OverviewCardWrap, Tag, AuthBox,
+  TabRoute, DetailHeader, OverviewCardWrap, Tag, Authority,
 } from '../../component'
 import {objDetailTabMap, objRelTabMap, objTypeMap} from './util'
 
@@ -168,15 +168,14 @@ export default class ObjectDetail extends Component {
               baseInfo={baseInfo}
               tag={tag}
               actions={[
-                <AuthBox 
-                  code="asset_tag_project_obj_select"
-                  myFunctionCodes={this.store.functionCodes}
+                <Authority 
+                  authCode="tag_model:select_obj[cud]"
                   type="primary" 
                   onClick={this.remove}
                   disabled={objDetail.isUsed} // 使用中对象不可以移除
                 >
                   移除
-                </AuthBox>,
+                </Authority>,
               ]}
             />
           </div>

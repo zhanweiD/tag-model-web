@@ -7,6 +7,7 @@ import 'antd/dist/antd.less'
 import '@dtwave/oner-flexbox/flexbox.css'
 import '../common/common.styl'
 import './frame.styl'
+import store from './store'
 
 const {Content} = Layout
 @observer
@@ -16,9 +17,14 @@ class Frame extends Component {
     return (
       <ConfigProvider locale={zhCn}>
         <OnerFrame {...this.props}>
-          <Layout>
-            <Content className="tag-content">{me.props.children}</Content>
-          </Layout>
+          {
+            store.functionCodeDone ? (
+              <Layout>
+                <Content className="tag-content">{me.props.children}</Content>
+              </Layout>
+            ) : <div />
+          }
+        
         </OnerFrame>
       </ConfigProvider>
     )

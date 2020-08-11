@@ -3,7 +3,7 @@ import {action, toJS} from 'mobx'
 import {observer} from 'mobx-react'
 import {Button, Popconfirm} from 'antd'
 import {Link} from 'react-router-dom'
-import {ListContent, projectProvider, OmitTooltip} from '../../../component'
+import {ListContent, projectProvider, OmitTooltip, Authority} from '../../../component'
 import {Time} from '../../../common/util'
 import seach from './search'
 import AddSource from './drawer'
@@ -54,17 +54,20 @@ class SourceList extends Component {
     dataIndex: 'action',
     width: 200,
     render: (text, record) => (
-      <div>
-        <a className="mr16" href onClick={() => this.openTagConfig(record)}>标签映射</a>
-        {/* <span className="table-action-line" /> */}
-        {
-          record.status ? <span className="disabled">删除</span> : (
-            <Popconfirm placement="topRight" title="你确定要删除该目的源吗？" onConfirm={() => this.delItem(record.id)}>
-              <a href>删除</a>
-            </Popconfirm>
-          )
-        }
-      </div>
+      <Authority 
+        authCode="tag_model:update_tag_target[ud]"
+      >
+        <div>
+          <a href className="mr16" onClick={() => this.openTagConfig(record)}>标签映射</a>
+          {
+            record.status ? <span className="disabled">删除</span> : (
+              <Popconfirm placement="topRight" title="你确定要删除该目的源吗？" onConfirm={() => this.delItem(record.id)}>
+                <a href>删除</a>
+              </Popconfirm>
+            )
+          }
+        </div>
+      </Authority>
     ),
   }]
 
@@ -116,7 +119,11 @@ class SourceList extends Component {
         objList: toJS(objList),
       }),
       initParams: {projectId},
-      buttons: [<Button type="primary" onClick={() => this.addSource()}>新建目的源</Button>],
+      buttons: [<Authority 
+        authCode="tag_model:create_target_source[c]" 
+      >
+        <Button type="primary" onClick={() => this.addSource()}>新建目的源</Button>
+      </Authority>],
       store, // 必填属性
     }
     

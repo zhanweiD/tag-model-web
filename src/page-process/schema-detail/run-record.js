@@ -2,8 +2,7 @@ import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {action, toJS} from 'mobx'
 import {Select, DatePicker, Table} from 'antd'
-import {Time} from '../../common/util'
-// import {ListContent} from '../../../component'
+import {Authority} from '../../component'
 import {getSchemeRunStatus} from '../util'
 import ModalLog from './modal-log'
 
@@ -58,10 +57,14 @@ export default class RunRecord extends Component {
     dataIndex: 'action',
     render: (text, record) => (
       <div>
-        {record.runStatus ? <a href onClick={() => this.runTask(record)}>重跑</a> : <a className="disabled">重跑</a>}
+        <Authority authCode="tag_derivative:rerun_tql[x]">
+          {record.runStatus ? <a href onClick={() => this.runTask(record)}>重跑</a> : <a className="disabled">重跑</a>}
+        </Authority>
         {/* <a href onClick={() => this.runTask(record)}>重跑</a> */}
-        {/* <span className="table-action-line" /> */}
-        <a className="ml16" href onClick={() => this.viewLog(record)}>查看日志</a>
+        <span className="table-action-line" />
+        <Authority authCode="tag_derivative:tql_log[r]">
+          <a href className="ml16" onClick={() => this.viewLog(record)}>查看日志</a>
+        </Authority>
       </div>
     ),
   }]

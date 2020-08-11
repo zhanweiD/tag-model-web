@@ -12,6 +12,7 @@ export default class NoData extends Component {
     onClick: PropTypes.func, // 按钮点击事件
     isLoading: PropTypes.bool, // 判断当前页面是否在loading; 若页面正在loading 则空组件隐藏处理；避免出现loading 空组件同时出现的情况
     code: PropTypes.string, // 权限code
+    isCommon: PropTypes.bool, // 判断使用的是租户下code 还是 项目下的权限code. true: 租户下 false: 项目下
     noAuthText: PropTypes.string, // 没权限对应的文案提示
   }
 
@@ -24,13 +25,15 @@ export default class NoData extends Component {
     isLoading: false,
     btnDisabled: false,
     onClick: () => {},
+    isCommon: false,
   }
 
   constructor(props) {
     super(props)
     const {code} = props
     if (code) {
-      const functionCodes = window.productFunctionCode || []
+      const {tagProductFunctionCode = [], projectFunctionCode = []} = window.frameinfo || {}
+      const functionCodes = props.isCommon ? tagProductFunctionCode : projectFunctionCode
 
       this.auth = functionCodes.includes(code)
     }

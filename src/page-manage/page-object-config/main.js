@@ -70,9 +70,9 @@ class ObjectConfig extends Component {
       onClick: this.selectObject,
       text: '没有任何对象，请在当前页面选择对象！',
       isLoading: treeLoading,
-      code: 'asset_tag_project_obj_select',
+      code: 'tag_model:select_obj[cud]',
       noAuthText: '没有任何对象',
-      myFunctionCodes: store.functionCodes,
+      // myFunctionCodes: store.functionCodes,
     }
 
     return (

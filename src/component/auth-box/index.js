@@ -1,3 +1,7 @@
-import AuthBox from './auth-box'
+import Authority from './auth-box'
+import AuthBox from './auth-box1'
 
-export default AuthBox
+export {
+  Authority,
+  AuthBox,
+}
