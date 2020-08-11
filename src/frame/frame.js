@@ -6,6 +6,7 @@ import OnerFrame from '@dtwave/oner-frame'
 import 'antd/dist/antd.less'
 import '@dtwave/oner-flexbox/flexbox.css'
 import '../common/common.styl'
+import '../common/cover.styl'
 import './frame.styl'
 import store from './store'
 
