@@ -7,6 +7,6 @@ const api = {
   getStorageList: get(`${baseApi}/project/getProjectDataStorageList`), // 根据项目查询添加数据源
 } 
 
-ioContext.create('syncList', api) 
+ioContext.create('syncResult', api) 
 
-export default ioContext.api.syncList
+export default ioContext.api.syncResult
