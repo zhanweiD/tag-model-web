@@ -4,7 +4,7 @@
 import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {observable, action} from 'mobx'
-import {ListContent, OmitTooltip} from '../../../component'
+import {ListContent, OmitTooltip, Authority} from '../../../component'
 import {Time, keyToName} from '../../../common/util'
 import {APPLY_TYPE} from '../common/comp-approval-status'
 import ModalDetail from '../common/comp-approval-modal'
@@ -53,11 +53,15 @@ export default class PendingApproval extends Component {
       width: 150,
       dataIndex: 'action',
       render: (text, record) => (
+
         <div className="FBH FBAC">
           {/* eslint-disable-next-line no-underscore-dangle */}
-          <a href onClick={() => this.viewDetail(record, statusMap.agree)}>同意</a>
-          <span className="table-action-line" />
-          <a href onClick={() => this.viewDetail(record, statusMap.oppose)}>拒绝</a>
+          <Authority authCode="tag_common:approve[u]">
+            <a href onClick={() => this.viewDetail(record, statusMap.agree)}>同意</a>
+            <span className="table-action-line" />
+            <a href onClick={() => this.viewDetail(record, statusMap.oppose)}>拒绝</a>
+          </Authority>
+        
         </div> 
       ),
     },

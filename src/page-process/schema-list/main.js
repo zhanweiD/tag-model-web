@@ -5,12 +5,12 @@ import {Component, Fragment} from 'react'
 import {action} from 'mobx'
 import {observer, Provider} from 'mobx-react'
 import {DownOutlined} from '@ant-design/icons'
-import {Popconfirm, Dropdown, Menu} from 'antd'
+import {Popconfirm, Dropdown, Menu, Button} from 'antd'
 import {Link} from 'react-router-dom'
 
 import {Time} from '../../common/util'
 import {
-  ListContent, AuthBox, projectProvider,
+  ListContent, Authority, projectProvider,
 } from '../../component'
 import seach from './search'
 import DrawerConfig from './drawer'
@@ -103,117 +103,135 @@ class SchemaList extends Component {
       dataIndex: 'action',
       width: 250,
       render: (text, record) => (
-        <AuthBox
-          code="asset_tag_project_scheme_operator"
-          myFunctionCodes={this.store.functionCodes}
-          isButton={false}
-        >
-          <div>
-            {/* 方案状态: 提交成功  操作: 查看 */}
-            {
-              (record.status === 1) && (
-                <Fragment>
+        <div>
+          {/* 方案状态: 提交成功  操作: 查看 */}
+          {
+            (record.status === 1) && (
+              <Fragment>
+                <Authority authCode="tag_derivative:tql_detail[r]">
                   <Link to={`/process/tql/${record.id}`}> 查看</Link>
-                  <span className="table-action-line" />
-                </Fragment>
-              )
-            }
+                </Authority>
+                <span className="table-action-line" />
+              </Fragment>
+            )
+          }
 
-            {/* 方案状态: 提交成功  操作: 标签配置 */}
-            {
-              (record.status === 1) && (
-                <Fragment>
+          {/* 方案状态: 提交成功  操作: 标签配置 */}
+          {
+            (record.status === 1) && (
+              <Fragment>
+                <Authority authCode="tag_derivative:config_tag[c]">
                   <a onClick={() => this.configDrawerShow(record)}> 标签配置</a>
-                  <span className="table-action-line" />
-                </Fragment>
-              )
-            }
+                </Authority>
+                <span className="table-action-line" />
+              </Fragment>
+            )
+          }
 
-            {/* 方案状态: 未完成/提交失败  操作: 编辑 */}
-            {
-              (record.status === 0 || record.status === 2) && (
-                <Fragment>
-                  <a href onClick={() => this.edit(record)}>编辑</a>
-                  <span className="table-action-line" />
-                </Fragment>
-              )
-            }
+          {/* 方案状态: 未完成/提交失败  操作: 编辑 */}
+          {
+            (record.status === 0 || record.status === 2) && (
+              <Fragment>
+                <a href onClick={() => this.edit(record)}>编辑</a>
+                <span className="table-action-line" />
+              </Fragment>
+            )
+          }
 
-            {/* 方案状态: 提交成功 调度类型: 周期调度  操作: 禁止执行 */}
-            {
-              (record.status === 1 && record.scheduleType === 1) && (
-                <Fragment>
+          {/* 方案状态: 提交成功 调度类型: 周期调度  操作: 禁止执行 */}
+          {
+            (record.status === 1 && record.scheduleType === 1) && (
+              <Fragment>
+                <Authority authCode="tag_derivative:run_tql[x]">
                   <span className="disabled">执行</span>
-                  <span className="table-action-line" />
-                </Fragment>
-              )
-            }
+                </Authority>
+                <span className="table-action-line" />
+              </Fragment>
+            )
+          }
 
-            {/* 方案状态: 提交成功 调度类型:手动执行 运行状态: 运行中   操作: 禁止执行 */}
-            {
-              (record.status === 1 && record.scheduleType === 2 && record.lastStatus === 0) && (
-                <Fragment>
+          {/* 方案状态: 提交成功 调度类型:手动执行 运行状态: 运行中   操作: 禁止执行 */}
+          {
+            (record.status === 1 && record.scheduleType === 2 && record.lastStatus === 0) && (
+              <Fragment>
+                <Authority authCode="tag_derivative:run_tql[x]">
                   <span className="disabled">执行</span>
-                  <span className="table-action-line" />
-                </Fragment>
-              )
-            }
+                </Authority>
+                <span className="table-action-line" />
+              </Fragment>
+            )
+          }
 
-            {/* 方案状态: 提交成功 调度类型:手动执行   操作: 执行 */}
-            {
-              (record.status === 1 && record.scheduleType === 2 && record.lastStatus !== 0) && (
-                <Fragment>
+          {/* 方案状态: 提交成功 调度类型:手动执行   操作: 执行 */}
+          {
+            (record.status === 1 && record.scheduleType === 2 && record.lastStatus !== 0) && (
+              <Fragment>
+                <Authority authCode="tag_derivative:run_tql[x]">
                   <Popconfirm placement="topRight" title="你确定要执行吗？" onConfirm={() => this.operation(record)}>
                     <a href>执行</a>
                   </Popconfirm>
-                  <span className="table-action-line" />
-                </Fragment>
+                </Authority>
+                
+                <span className="table-action-line" />
+              </Fragment>
 
-              )
-            }
-            {/* 方案状态: 提交成功 调度类型:周期执行 运行状态 运行成功 操作: 删除 */}
-            {/* 标签数只要为0 方案均可删除 */}
-            {(() => {
-              if (record.tagCount === 0) {
-                return (
+            )
+          }
+          {/* 方案状态: 提交成功 调度类型:周期执行 运行状态 运行成功 操作: 删除 */}
+          {/* 标签数只要为0 方案均可删除 */}
+          {(() => {
+            if (record.tagCount === 0) {
+              return (
+                <Authority authCode="tag_derivative:delete_tql[d]">
                   <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.remove(record)}>
                     <a href>删除</a>
                   </Popconfirm>
-                )
-              }
+                </Authority>
+              )
+            }
 
-              if (record.status === 1) {
-                return <span className="disabled">删除</span>
-              }
-
+            if (record.status === 1) {
               return (
+                <Authority authCode="tag_derivative:delete_tql[d]">
+                  <span className="disabled">删除</span>
+                </Authority>
+              )
+            }
+
+            return (
+              <Authority authCode="tag_derivative:delete_tql[d]">
                 <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.remove(record)}>
                   <a href>删除</a>
                 </Popconfirm>
-              )
-            })()}
+              </Authority>
+            )
+          })()}
 
-            <span className="table-action-line" />
+          <span className="table-action-line" />
+          <Authority authCode="tag_derivative:clone_tql[c]">
             <Popconfirm placement="topRight" title="你确定要克隆吗？" onConfirm={() => this.clone(record)}>
               <a href>克隆</a>
             </Popconfirm>
-            {/* 方案状态: 提交成功 提交失败  操作: 提交日志 */}
-            {
-              record.status === 2 ? (
-                <Fragment>
-                  <span className="table-action-line" />
+          </Authority>
+
+          {/* 方案状态: 提交成功 提交失败  操作: 提交日志 */}
+          {
+            record.status === 2 ? (
+              <Fragment>
+                <span className="table-action-line" />
+                <Authority authCode="tag_derivative:tql_submit_log[r]">
                   <Dropdown overlay={() => this.menu(record)}>
                     <a href>
                       更多
                       <DownOutlined />
                     </a>
                   </Dropdown>
-                </Fragment>
-              ) : null
-            }
+                </Authority>
+              </Fragment>
+            ) : null
+          }
 
-          </div>
-        </AuthBox>
+        </div>
 
       ),
     },
@@ -300,14 +318,15 @@ class SchemaList extends Component {
       columns: this.columns,
       initParams: {projectId: this.projectId},
       searchParams: seach({objList}),
-      buttons: [<AuthBox
-        code="asset_tag_project_scheme_operator"
-        type="primary"
-        myFunctionCodes={functionCodes}
-        onClick={this.create}
-      >
+      buttons: [<Authority authCode="tag_derivative:create_tql[c]">
+        <Button
+          type="primary"
+          // myFunctionCodes={functionCodes}
+          onClick={this.create}
+        >
         新建加工方案
-      </AuthBox>,
+        </Button>
+                </Authority>,
       ],
       rowKey: 'id',
       store: this.store, // 必填属性

@@ -6,7 +6,7 @@ import {observer} from 'mobx-react'
 import {action} from 'mobx'
 import {Link} from 'react-router-dom'
 import OnerFrame from '@dtwave/oner-frame' 
-import {ListContent} from '../../../component'
+import {ListContent, Authority} from '../../../component'
 import seach from './search'
 import TagClass from './tag-class'
 import {objTypeList, objTypeMap} from '../util'
@@ -46,9 +46,15 @@ class ObjectList extends Component {
     dataIndex: 'action',
     render: (text, record) => (
       <div>
-        <Link to={`/manage/object-list/${record.objTypeCode}/${record.id}`}>查看详情</Link>
+        <Authority authCode="tag_model:obj_detail[r]">
+          <Link to={`/manage/object-list/${record.objTypeCode}/${record.id}`}>查看详情</Link>
+
+        </Authority>
         <span className="table-action-line" />
-        <a href onClick={() => this.tagClass(record)}>标签类目</a>
+        <Authority authCode="tag_model:select_tag_cate[r]">
+          <a href onClick={() => this.tagClass(record)}>标签类目</a>
+        </Authority>
+       
       </div>
     ),
   }]

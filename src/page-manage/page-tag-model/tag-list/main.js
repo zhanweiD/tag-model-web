@@ -72,27 +72,29 @@ class TagList extends Component {
     width: 180,
     render: (text, record) => (
       <div className="FBH FBAC">
-        <Authority
-          code="asset_tag_project_tag_operator"
-          myFunctionCodes={store.functionCodes}
-          isButton={false}
-        >
-          {/* 标签状态: 待绑定 未使用  操作: 绑定/编辑/删除 */}
-          {record.status === 0 && record.isVisual === 0 && (
-            <Fragment>
+        {/* 标签状态: 待绑定 未使用  操作: 绑定/编辑/删除 */}
+        {record.status === 0 && record.isVisual === 0 && (
+          <Fragment>
+            <Authority
+              authCode="tag_model:bind_tag[cud]"
+            >
               <a href onClick={() => store.openTagConfig('one', record)}>绑定</a>
-              <span className="table-action-line" />
-              <a href onClick={() => store.openDrawer('edit', record)}>编辑</a>
-              <span className="table-action-line" />
-              <Popconfirm placement="topRight" title="标签被删除后不可恢复，确定删除？" onConfirm={() => this.remove(record)}>
-                <a href>删除</a>
-              </Popconfirm>
-            </Fragment>
-          )}
+            </Authority>
+            <span className="table-action-line" />
+            <a href onClick={() => store.openDrawer('edit', record)}>编辑</a>
+            <span className="table-action-line" />
+            <Popconfirm placement="topRight" title="标签被删除后不可恢复，确定删除？" onConfirm={() => this.remove(record)}>
+              <a href>删除</a>
+            </Popconfirm>
+          </Fragment>
+        )}
 
-          {/* 标签状态: 待发布 未使用  操作: 发布/绑定/编辑/删除 */}
-          {record.status === 1 && record.isVisual === 0 && (
-            <Fragment>
+        {/* 标签状态: 待发布 未使用  操作: 发布/绑定/编辑/删除 */}
+        {record.status === 1 && record.isVisual === 0 && (
+          <Fragment>
+            <Authority
+              authCode="tag_model:publish_tag[u]"
+            >
               <Popconfirm
                 placement="topRight"
                 title="确认发布？"
@@ -103,22 +105,32 @@ class TagList extends Component {
               >
                 <a href>发布</a>
               </Popconfirm>
-              <span className="table-action-line" />
+            </Authority>
+             
+            <span className="table-action-line" />
+            <Authority
+              authCode="tag_model:bind_tag[cud]"
+            >
               <a href onClick={() => store.openTagConfig('one', record)}>解绑</a>
-              <span className="table-action-line" />
-              {/* <a href onClick={() => store.openDrawer('edit', record)}>编辑</a> */}
-              <span className="disabled">编辑</span>
-              <span className="table-action-line" />
-              <Popconfirm placement="topRight" title="标签被删除后不可恢复，确定删除？" onConfirm={() => this.remove(record)}>
-                <a href>删除</a>
-              </Popconfirm>
-            </Fragment>
-          )}
+            </Authority>
+              
+            <span className="table-action-line" />
+            {/* <a href onClick={() => store.openDrawer('edit', record)}>编辑</a> */}
+            <span className="disabled">编辑</span>
+            <span className="table-action-line" />
+            <Popconfirm placement="topRight" title="标签被删除后不可恢复，确定删除？" onConfirm={() => this.remove(record)}>
+              <a href>删除</a>
+            </Popconfirm>
+          </Fragment>
+        )}
 
-          {/* 标签状态: 已发布 未使用 下架  操作: 取消发布/上架申请 */}
-          {/* {record.status === 2 && record.isUsed === 0 && record.publish === 0 && ( */}
-          {record.status === 2 && record.isUsed === 0 && record.isVisual === 0 && (
-            <Fragment>
+        {/* 标签状态: 已发布 未使用 下架  操作: 取消发布/上架申请 */}
+        {/* {record.status === 2 && record.isUsed === 0 && record.publish === 0 && ( */}
+        {record.status === 2 && record.isUsed === 0 && record.isVisual === 0 && (
+          <Fragment>
+            <Authority
+              authCode="tag_model:publish_tag[u]"
+            >
               <Popconfirm
                 placement="topRight"
                 title="确认取消发布？"
@@ -129,17 +141,28 @@ class TagList extends Component {
               >
                 <a href>取消发布</a>
               </Popconfirm>
-            </Fragment>
-          )}
+            </Authority>
+              
+          </Fragment>
+        )}
 
-          {/* 标签状态: 已发布 已使用 */}
-          {record.status === 2
+        {/* 标签状态: 已发布 已使用 */}
+        {record.status === 2
           && record.isUsed === 1
           && record.isVisual === 0 
-          && <span className="disabled">取消发布</span>}
+          && (
+            <Authority
+              authCode="tag_model:publish_tag[u]"
+            >
+              <span className="disabled">取消发布</span>
+            </Authority>
+          )}
 
-          {/* 可视化加工标签 待发布 */}
-          {record.isVisual === 1 && record.status === 1 && (
+        {/* 可视化加工标签 待发布 */}
+        {record.isVisual === 1 && record.status === 1 && (
+          <Authority
+            authCode="tag_model:publish_tag[u]"
+          >
             <Popconfirm
               placement="topRight"
               title="确认发布？"
@@ -150,33 +173,42 @@ class TagList extends Component {
             >
               <a href>发布</a>
             </Popconfirm>
-          )}
+          </Authority>
+        )}
 
-          {/* 可视化加工标签 发布 */}
-          {record.isVisual === 1 
+        {/* 可视化加工标签 发布 */}
+        {record.isVisual === 1 
           && record.status === 2 
           && record.isUsed === 0
           && (
-            <Popconfirm
-              placement="topRight"
-              title="确认取消发布？"
-              onConfirm={() => store.updateTagStatus({
-                status: 1,
-                tagIdList: [record.id],
-              })}
+            <Authority
+              authCode="tag_model:publish_tag[u]"
             >
-              <a href>取消发布</a>
-
-            </Popconfirm>
+              <Popconfirm
+                placement="topRight"
+                title="确认取消发布？"
+                onConfirm={() => store.updateTagStatus({
+                  status: 1,
+                  tagIdList: [record.id],
+                })}
+              >
+                <a href>取消发布</a>
+              </Popconfirm>
+            </Authority>
           )}
 
-          {/* 可视化加工标签 发布 已使用 */}
-          {record.status === 2
+        {/* 可视化加工标签 发布 已使用 */}
+        {record.status === 2
           && record.isUsed === 1
           && record.isVisual === 1
-          && <span className="disabled">取消发布</span>}
+          && (
+            <Authority
+              authCode="tag_model:publish_tag[u]"
+            >
+              <span className="disabled">取消发布</span>
+            </Authority>
+          )}
 
-        </Authority>
       </div>
     ),
   }]
@@ -269,9 +301,9 @@ class TagList extends Component {
       btnText: '新建标签',
       onClick: () => store.openDrawer('add'),
       text: '没有任何标签，去新建标签吧',
-      // code: 'asset_tag_project_tag_operator',
-      // myFunctionCodes: store.functionCodes,
-      // noAuthText: '没有任何标签',
+      code: 'tag_model:create_tag[c]',
+      isCommon: true,
+      noAuthText: '没有任何标签',
     }
 
     const listConfig = {

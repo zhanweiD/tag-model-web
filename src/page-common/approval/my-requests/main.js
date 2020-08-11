@@ -5,7 +5,7 @@ import {Component, Fragment} from 'react'
 import {observer} from 'mobx-react'
 import {observable, action} from 'mobx'
 import {Button} from 'antd'
-import {ListContent, OmitTooltip} from '../../../component'
+import {ListContent, OmitTooltip, Authority} from '../../../component'
 import {Time, keyToName} from '../../../common/util'
 import {getTableStatus, APPLY_TYPE} from '../common/comp-approval-status'
 import ModalDetail from '../common/comp-approval-modal'
@@ -54,15 +54,20 @@ export default class MyRequests extends Component {
       render: (text, record) => (
         <div className="FBH FBAC">
           {/* eslint-disable-next-line no-underscore-dangle */}
-          <a href onClick={() => this.viewDetail(record)}>查看详情</a>
-          {
-            (record.status === 0) ? (
-              <Fragment>
-                <span className="table-action-line" />
-                <a href onClick={() => this.backout(record.id)}>撤销</a>
-              </Fragment>
-            ) : null
-          }
+          <Authority authCode="tag_common:apply_detail[r]">
+            <a href onClick={() => this.viewDetail(record)}>查看详情</a>
+          </Authority>
+          <Authority authCode="tag_common:revert_apply[u]">
+            {
+              (record.status === 0) ? (
+                <Fragment>
+                  <span className="table-action-line" />
+                  <a href onClick={() => this.backout(record.id)}>撤销</a>
+                </Fragment>
+              ) : null
+            }
+         
+          </Authority>
          
         </div> 
       ),

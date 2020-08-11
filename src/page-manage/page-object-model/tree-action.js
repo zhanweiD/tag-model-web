@@ -5,7 +5,7 @@ import {Component} from 'react'
 import {action} from 'mobx'
 import {observer} from 'mobx-react'
 import {Dropdown, Menu} from 'antd'
-import {NoBorderInput} from '../../component'
+import {NoBorderInput, Authority} from '../../component'
 import {codeInProduct} from '../../common/util'
 import {
   IconRefresh, IconTreeAdd, IconUnExtend, IconExtend,
@@ -86,9 +86,12 @@ export default class Action extends Component {
 
         <div className="FBH pr6 pl6" style={{maxWidth: 70}}>
           <IconRefresh size="14" className="mr8" onClick={this.refreshTree} />
-          {
-            this.dropdownDom()
-          }
+          <Authority authCode="tag_model:update_obj_cate[cud]">
+            {
+              this.dropdownDom()
+            }
+          </Authority>
+         
           { this.store.expandAll ? (
             <IconUnExtend size="14" className="hand" onClick={this.expandTree} /> 
           ) : (

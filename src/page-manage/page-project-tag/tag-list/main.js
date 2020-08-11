@@ -174,8 +174,8 @@ export default class TagList extends Component {
       btnText: '去新建标签',
       onClick: this.goTagManager,
       text: '没有任何标签，去标签维护新建标签吧!',
-      // code: 'asset_tag_project_tag_operator',
-      // noAuthText: '没有任何标签',
+      code: 'tag_model:create_tag[c]',
+      noAuthText: '没有任何标签',
       // myFunctionCodes: functionCodes,
     }
     
