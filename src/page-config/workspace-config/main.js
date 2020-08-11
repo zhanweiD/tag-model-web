@@ -6,7 +6,7 @@
 import {useEffect, useState} from 'react'
 import {FormOutlined} from '@ant-design/icons'
 import {message} from 'antd'
-import {projectProvider} from '../../component'
+import {projectProvider, Authority} from '../../component'
 import ConfigModal from './modal'
 import io from './io'
 
@@ -94,7 +94,9 @@ const WorkspaceConfig = ({projectId}) => {
           <div className="env-config-label">环境：</div>
           <div className="env-config-value">
             <span className="mr16">{config.workspaceName}</span>
-            <FormOutlined className="action" onClick={editClick} />
+            <Authority authCode="tag_config:environment_config[u]">
+              <FormOutlined className="action" onClick={editClick} />
+            </Authority>
           </div>
         </div>
       </div>
