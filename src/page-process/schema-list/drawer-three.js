@@ -246,6 +246,7 @@ export default class DrawerThree extends Component {
                 })(
                   <Fragment>
                     <Switch 
+                      size="small"
                       checkedChildren="是" 
                       unCheckedChildren="否"
                       onChange={e => this.zoneSwitchChange(e)} 

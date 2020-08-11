@@ -127,6 +127,7 @@ export default class StepOne extends Component {
           </Select>
           <span className="fs12 ml24 mr8">展示标签状态为已发布的标签</span>
           <Switch 
+            size="small"
             checkedChildren="是" 
             unCheckedChildren="否"
             onChange={this.switchChange} 

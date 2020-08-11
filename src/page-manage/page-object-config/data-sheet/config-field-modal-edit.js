@@ -113,7 +113,7 @@ class ModalTagEdit extends Component {
               {getFieldDecorator('isEnum', {
                 initialValue: tagDetail.isEnum || 0,
                 valuePropName: 'checked',
-              })(<Switch checkedChildren="是" unCheckedChildren="否" onChange={v => this.changeIsEnum(v)} />)}
+              })(<Switch size="small" checkedChildren="是" unCheckedChildren="否" onChange={v => this.changeIsEnum(v)} />)}
             </FormItem>
 
             {/* {(tagDetail.isEnum || isEnum) && ( */}

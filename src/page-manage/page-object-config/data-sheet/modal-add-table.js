@@ -247,6 +247,7 @@ class ModalAddTable extends Component {
                 <FormItem {...formItemLayout} label="从关联实体的数据表中选择">
                   {getFieldDecorator('switch')(
                     <Switch 
+                      size="small"
                       checkedChildren="是"
                       unCheckedChildren="否"
                       onChange={this.onSwitchChange}

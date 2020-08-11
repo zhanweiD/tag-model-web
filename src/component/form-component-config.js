@@ -96,6 +96,7 @@ export default ({
         )
     ), 
     switch: <antd.Switch 
+      size="small"
       checkedChildren={rest.checkedText || '是'} 
       unCheckedChildren={rest.unCheckedText || '否'} 
       {...rest}
