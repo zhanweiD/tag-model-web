@@ -61,7 +61,7 @@ export default class RunRecord extends Component {
           {record.runStatus ? <a href onClick={() => this.runTask(record)}>重跑</a> : <a className="disabled">重跑</a>}
         </Authority>
         {/* <a href onClick={() => this.runTask(record)}>重跑</a> */}
-        <span className="table-action-line" />
+        {/* <span className="table-action-line" /> */}
         <Authority authCode="tag_derivative:tql_log[r]">
           <a href className="ml16" onClick={() => this.viewLog(record)}>查看日志</a>
         </Authority>

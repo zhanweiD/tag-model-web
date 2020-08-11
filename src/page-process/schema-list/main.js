@@ -109,9 +109,9 @@ class SchemaList extends Component {
             (record.status === 1) && (
               <Fragment>
                 <Authority authCode="tag_derivative:tql_detail[r]">
-                  <Link to={`/process/tql/${record.id}`}> 查看</Link>
+                  <Link className="mr16" to={`/process/tql/${record.id}`}> 查看</Link>
                 </Authority>
-                <span className="table-action-line" />
+                {/* <span className="table-action-line" /> */}
               </Fragment>
             )
           }
@@ -121,9 +121,9 @@ class SchemaList extends Component {
             (record.status === 1) && (
               <Fragment>
                 <Authority authCode="tag_derivative:config_tag[c]">
-                  <a onClick={() => this.configDrawerShow(record)}> 标签配置</a>
+                  <a className="mr16" onClick={() => this.configDrawerShow(record)}> 标签配置</a>
                 </Authority>
-                <span className="table-action-line" />
+                {/* <span className="table-action-line" /> */}
               </Fragment>
             )
           }
@@ -132,8 +132,8 @@ class SchemaList extends Component {
           {
             (record.status === 0 || record.status === 2) && (
               <Fragment>
-                <a href onClick={() => this.edit(record)}>编辑</a>
-                <span className="table-action-line" />
+                <a className="mr16" href onClick={() => this.edit(record)}>编辑</a>
+                {/* <span className="table-action-line" /> */}
               </Fragment>
             )
           }
@@ -143,9 +143,9 @@ class SchemaList extends Component {
             (record.status === 1 && record.scheduleType === 1) && (
               <Fragment>
                 <Authority authCode="tag_derivative:run_tql[x]">
-                  <span className="disabled">执行</span>
+                  <span className="disabled mr16">执行</span>
                 </Authority>
-                <span className="table-action-line" />
+                {/* <span className="table-action-line" /> */}
               </Fragment>
             )
           }
@@ -155,9 +155,9 @@ class SchemaList extends Component {
             (record.status === 1 && record.scheduleType === 2 && record.lastStatus === 0) && (
               <Fragment>
                 <Authority authCode="tag_derivative:run_tql[x]">
-                  <span className="disabled">执行</span>
+                  <span className="disabled mr16">执行</span>
                 </Authority>
-                <span className="table-action-line" />
+                {/* <span className="table-action-line" /> */}
               </Fragment>
             )
           }
@@ -172,7 +172,7 @@ class SchemaList extends Component {
                   </Popconfirm>
                 </Authority>
                 
-                <span className="table-action-line" />
+                {/* <span className="table-action-line" /> */}
               </Fragment>
 
             )
@@ -201,13 +201,13 @@ class SchemaList extends Component {
             return (
               <Authority authCode="tag_derivative:delete_tql[d]">
                 <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.remove(record)}>
-                  <a href>删除</a>
+                  <a className="mr16" href>删除</a>
                 </Popconfirm>
               </Authority>
             )
           })()}
 
-          <span className="table-action-line" />
+          {/* <span className="table-action-line" /> */}
           <Authority authCode="tag_derivative:clone_tql[c]">
             <Popconfirm placement="topRight" title="你确定要克隆吗？" onConfirm={() => this.clone(record)}>
               <a className="ml16 mr16" href>克隆</a>
@@ -218,7 +218,7 @@ class SchemaList extends Component {
           {
             record.status === 2 ? (
               <Fragment>
-                <span className="table-action-line" />
+                {/* <span className="table-action-line" /> */}
                 <Authority authCode="tag_derivative:tql_submit_log[r]">
                   <Dropdown overlay={() => this.menu(record)}>
                     <a href>
@@ -326,7 +326,7 @@ class SchemaList extends Component {
         >
         新建加工方案
         </Button>
-      </Authority>,
+                </Authority>,
       ],
       rowKey: 'id',
       store: this.store, // 必填属性
