@@ -69,7 +69,7 @@ export default class TagTrend extends Component {
       text: '暂无趋势信息',
     }
     return (
-      <div className="p16" style={{width: '100%'}}>
+      <div className="p16" style={{width: '100%', position: 'relative'}}>
         <h3 className="chart-title">空值占比趋势</h3>
         {/* <div className="time-range-wrap">
           <TimeRange
@@ -86,9 +86,9 @@ export default class TagTrend extends Component {
             exportTimeRange={(gte, lte) => this.getData(gte, lte)}
           />
         </div> */}
-        {!lineData.length && <NoData {...noDataConfig} />}
+        {!lineData.length && <div style={{position: 'absolute', width: '100%'}}><NoData {...noDataConfig} /></div>}
         <div 
-          style={{width: '100%', height: '310px'}} 
+          style={{width: '100%', height: '350px'}} 
           ref={ref => this.lineRef = ref} 
         />
       </div>

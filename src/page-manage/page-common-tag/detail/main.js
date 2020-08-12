@@ -63,7 +63,7 @@ class TagDetail extends Component {
             baseInfo={baseInfo}
           />
         </Spin>
-        <div className="bgf m16 box-border"> 
+        <div className="bgf m16 box-border" style={{minHeight: 'calc(100vh - 266px)'}}> 
           {info.isEnum ? <TagAnalyze tagId={tagId} /> : null}
           <TagTrend tagId={tagId} />
         </div>

@@ -10,7 +10,6 @@ const nameTextStyleColor = 'rgba(0, 0, 0, .45)'
 
 // API调用数趋势图配置
 export default function getApiTrendOpt(data) {
-  console.log(data)
   return {
     grid: {
       containLabel: true,

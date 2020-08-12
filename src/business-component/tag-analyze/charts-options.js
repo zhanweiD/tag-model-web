@@ -224,7 +224,7 @@ export function getPieOpt(chartsCount, data) {
     },
     series: [{
       type: 'pie',
-      radius: ['62%', '80%'],
+      radius: ['55%', '70%'],
       center: ['50%', '50%'],
       color: colors,
       data,

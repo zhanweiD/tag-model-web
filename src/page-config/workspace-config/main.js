@@ -5,7 +5,7 @@
 
 import {useEffect, useState} from 'react'
 // import {FormOutlined} from '@ant-design/icons'
-import {message, Button} from 'antd'
+import {message, Button, Popconfirm} from 'antd'
 import {projectProvider, Authority} from '../../component'
 import ConfigModal from './modal'
 import io from './io'
@@ -89,7 +89,6 @@ const WorkspaceConfig = ({projectId}) => {
   const editClick = () => {
     changeVisible(true)
     changeIsAdd(false)
-    message.warning('不建议修改，修改后会影响之前的使用！')
     getWorkspaceList()
   }
 
@@ -118,9 +117,19 @@ const WorkspaceConfig = ({projectId}) => {
             {/* <FormOutlined className="action" onClick={editClick} /> */}
           </div>
         </div>
-        <Authority authCode="tag_config:environment_config[u]">
-          <Button type="primary" onClick={editClick}>编辑</Button>
-        </Authority>
+        {/* <Authority authCode="tag_config:environment_config[u]"> */}
+        <Popconfirm
+          title="更改后原环境中的“标签体系、标签加工方案、标签同步计划、场景、我的查询、群体、API”都将会失效，请谨慎操作。"
+          onConfirm={editClick}
+          onCancel={() => {}}
+          okText="确认"
+          cancelText="取消"
+          style={{width: '300px'}}
+        >
+          <Button type="primary">编辑</Button>
+        </Popconfirm>
+        {/* <Button type="primary" onClick={editClick}>编辑</Button> */}
+        {/* </Authority> */}
       </div>
       <ConfigModal 
         visible={visible}

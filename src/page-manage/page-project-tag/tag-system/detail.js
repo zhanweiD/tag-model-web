@@ -75,23 +75,23 @@ export default class Detail extends Component {
     }
     return (
       <div className="detail-content">
-        {
-          selectedKey ? (
-            <Spin spinning={detailLoading}>
-              <DetailHeader
-                name={tagDetail.name}
-                descr={tagDetail.descr}
-                baseInfo={baseInfo}
-                tag={commonTag ? tagMap[authorStatus] : null}
-                actions={actions}
-              />
-              <div className="bgf mt16 ">
-                {tagDetail.isEnum ? <TagAnalyze tagId={selectedKey} status={authorStatus} /> : null}
-                <TagTrend key={selectedKey} tagId={selectedKey} />
-              </div>
-            </Spin>
-          ) : <NoData {...noDataConfig} />
-        }
+        {/* { */}
+        {/* // selectedKey ? ( */}
+        <Spin spinning={detailLoading}>
+          <DetailHeader
+            name={tagDetail.name}
+            descr={tagDetail.descr}
+            baseInfo={baseInfo}
+            tag={commonTag ? tagMap[authorStatus] : null}
+            actions={actions}
+          />
+        </Spin>
+        <div className="bgf mt16 min-h">
+          {tagDetail.isEnum ? <TagAnalyze tagId={selectedKey} status={authorStatus} /> : null}
+          <TagTrend key={selectedKey} tagId={selectedKey} />
+        </div>
+        {/* ) : <NoData {...noDataConfig} /> */}
+        {/* } */}
         <TagApply store={this.store} />
       </div>
     )

@@ -119,11 +119,13 @@ class SourceList extends Component {
         objList: toJS(objList),
       }),
       initParams: {projectId},
-      buttons: [<Authority 
-        authCode="tag_model:create_target_source[c]" 
-      >
-        <Button type="primary" onClick={() => this.addSource()}>新建目的源</Button>
-      </Authority>],
+      buttons: [
+        <Authority 
+          authCode="tag_model:create_target_source[c]" 
+        >
+          <Button type="primary" onClick={() => this.addSource()}>新建目的源</Button>
+        </Authority>,
+      ],
       store, // 必填属性
     }
     

@@ -310,11 +310,11 @@ class TagList extends Component {
       buttons: [
         <Authority
           authCode="tag_model:create_tag[c]"
-          type="primary"
-          onClick={() => store.openDrawer('add')}
-          className="mr8"
+          // type="primary"
+          // onClick={() => store.openDrawer('add')}
+          // className="mr8"
         >
-        新建标签
+          <Button type="primary" className="mr8" onClick={() => store.openDrawer('add')}>新建标签</Button>
         </Authority>, 
         <Authority
           authCode="tag_model:publish_tag[u]"
@@ -326,7 +326,6 @@ class TagList extends Component {
         >
           <Button onClick={() => store.openBatchConfig()}>批量绑定</Button>
         </Authority>,
-
       ],
       rowKey: 'id',
       initGetDataByParent: true, // 初始请求 在父层组件处理。列表组件componentWillMount内不再进行请求

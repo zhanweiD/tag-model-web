@@ -3,7 +3,7 @@
  */
 import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
-import {Spin, Modal} from 'antd'
+import {Spin, Modal, Button} from 'antd'
 import {action} from 'mobx'
 import {Time} from '../../common/util'
 import {
@@ -170,11 +170,11 @@ export default class ObjectDetail extends Component {
               actions={[
                 <Authority 
                   authCode="tag_model:select_obj[cud]"
-                  type="primary" 
-                  onClick={this.remove}
-                  disabled={objDetail.isUsed} // 使用中对象不可以移除
+                  // type="primary" 
+                  // onClick={this.remove}
+                  // disabled={objDetail.isUsed} // 使用中对象不可以移除
                 >
-                  移除
+                  <Button type="primary" onClick={this.remove} disabled={objDetail.isUsed}>移除</Button>
                 </Authority>,
               ]}
             />

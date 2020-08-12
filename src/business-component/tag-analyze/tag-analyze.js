@@ -91,7 +91,7 @@ export default class TagAnalyze extends Component {
           <span className="mr16">{recordTime}</span>
         </p>
         <div className="chartPie-ad">
-          <div ref="chartsPie" style={{height: '300px', width: '100%'}} />
+          <div ref="chartsPie" style={{height: '340px', width: '100%'}} />
           <div className="pie-tips FBH ablt">
             <ul className="mr8">
               {

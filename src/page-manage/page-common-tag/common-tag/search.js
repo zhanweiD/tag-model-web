@@ -71,7 +71,7 @@ export default class Search extends Component {
           <Input.Search
             placeholder="请输入搜索关键词"
             enterButton="搜索"
-            size="large"
+            size="small"
             onSearch={this.onSearch}
           />
         </div>
