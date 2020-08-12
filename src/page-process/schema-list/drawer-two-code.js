@@ -121,7 +121,7 @@ export default class DrawerTwoCode extends Component {
             runLoading ? (
               <Tooltip placement="topRight" title="正在运行中，不可重复运行">
                 <span className="mr16 disabled">
-                  <img src={yunxing} alt="img" />
+                  <img src={yunxing} alt="img" className="disabled" />
                   <span>运行</span>
                 </span>
               </Tooltip>

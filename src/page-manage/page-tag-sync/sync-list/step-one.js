@@ -81,10 +81,6 @@ export default class StepOne extends Component {
     return obj.storageName
   }
 
-  @action.bound changeSwitch(v) {
-    console.log(v)
-  } 
-
   @action handleSubmit = e => {
     const {
       form: {
@@ -288,7 +284,7 @@ export default class StepOne extends Component {
                   ]})(
                     <div className="FBH"> 
                     <span className="ml16 mr16">tbjh_</span>
-                    <Input autoComplete="off" placeholder="请输入表名称" disabled={!this.store.storageId} />
+                    <Input autoComplete="off" placeholder="请输入表名称" disabled={!this.store.storageId || !this.store.objId} />
                   </div>
                 )}
               </FormItem>
