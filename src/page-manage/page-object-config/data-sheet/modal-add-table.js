@@ -85,24 +85,58 @@ class ModalAddTable extends Component {
 
       resetFields(['mappingKey'])
 
-      this.store.getFieldList(fieldList => {
-        if (t.chooseEntity) {
-          t.store.getMappingKey(t.chooseEntity, field => {
-            t.chooseEntityMaJorKey = field
-            t.store.fieldList = fieldList.map(d => {
-              if (d.field === field) {
-                return {
-                  ...d,
-                  objId: t.chooseEntity,
-                  disabled: true,
+      const {objDetail} = this.bigStore
+
+      const entity1Id = objDetail.objRspList && objDetail.objRspList[0].id
+      const entity2Id = objDetail.objRspList && objDetail.objRspList[1].id
+
+      // 关系
+      if (entity1Id && entity1Id) {
+        this.store.getFieldList({objId: entity1Id}, fieldList => {
+          if (t.chooseEntity) {
+            t.store.getMappingKey(t.chooseEntity, field => {
+              t.chooseEntityMaJorKey = field
+              t.store.fieldList1 = fieldList.map(d => {
+                if (d.field === field) {
+                  return {
+                    ...d,
+                    objId: t.chooseEntity,
+                    disabled: true,
+                  }
                 }
-              }
-  
-              return d
+    
+                return d
+              })
             })
-          })
-        }
-      })
+          } else {
+            t.store.fieldList1 = fieldList
+          }
+        })
+
+        this.store.getFieldList({objId: entity2Id}, fieldList => {
+          if (t.chooseEntity) {
+            t.store.getMappingKey(t.chooseEntity, field => {
+              t.chooseEntityMaJorKey = field
+              t.store.fieldList2 = fieldList.map(d => {
+                if (d.field === field) {
+                  return {
+                    ...d,
+                    objId: t.chooseEntity,
+                    disabled: true,
+                  }
+                }
+    
+                return d
+              })
+            })
+          } else {
+            t.store.fieldList2 = fieldList
+          }
+        })
+      } else {
+        // 实体
+        this.store.getFieldList({objId: this.store.objId})
+      }
       
       this.initData()
     }
@@ -113,7 +147,26 @@ class ModalAddTable extends Component {
   }
 
   @action.bound selectEntityKey(field, index, objId) {
-    this.store.fieldList = this.store.fieldList.map(d => {
+    this.store.fieldList1 = this.store.fieldList1.map(d => {
+      if (d.field === field) {
+        return {
+          ...d,
+          disabled: true,
+          objId,
+        }
+      }
+
+      if (d.objId === objId) {
+        return {
+          ...d,
+          field: d.field,
+          disabled: false,
+        }
+      }
+      return d
+    })
+
+    this.store.fieldList2 = this.store.fieldList2.map(d => {
       if (d.field === field) {
         return {
           ...d,
@@ -216,6 +269,8 @@ class ModalAddTable extends Component {
       dataSourceList,
       dataSheetList,
       fieldList,
+      fieldList1,
+      fieldList2,
       bothTypeCode,
       storageId,
     } = this.store
@@ -326,7 +381,7 @@ class ModalAddTable extends Component {
                   <Select placeholder="请选择主标签绑定的字段" onSelect={v => this.selectMajorKey(v)} showSearch optionFilterProp="children">
                     {
                       fieldList.map(item => (
-                        <Option key={item.field} value={item.field}>{item.field}</Option>
+                        <Option key={item.field} value={item.field} disabled={!item.isMajor}>{item.field}</Option>
                       ))
                     }
                   </Select>
@@ -352,8 +407,8 @@ class ModalAddTable extends Component {
                       optionFilterProp="children"
                     >
                       {
-                        fieldList.map(item => (
-                          <Option key={item.field} value={item.field} disabled={item.disabled}>{item.field}</Option>
+                        fieldList1.map(item => (
+                          <Option key={item.field} value={item.field} disabled={item.disabled || !item.isMajor}>{item.field}</Option>
                         ))
                       }
                     </Select>
@@ -372,8 +427,8 @@ class ModalAddTable extends Component {
                       disabled={+this.chooseEntity === entity2Id}
                     >
                       {
-                        fieldList.map(item => (
-                          <Option key={item.field} value={item.field} disabled={item.disabled}>{item.field}</Option>
+                        fieldList2.map(item => (
+                          <Option key={item.field} value={item.field} disabled={item.disabled || !item.isMajor}>{item.field}</Option>
                         ))
                       }
                     </Select>

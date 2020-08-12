@@ -19,7 +19,7 @@ export default class DrawerTagConfig extends Component {
   }
 
   selectContent= () => {
-    const {modalInfo: {detail}, isEnum, tagTreeData} = this.store
+    const {modalInfo: {detail}, isEnum, tagTreeData, tagTypeList} = this.store
 
     // 默认类目
     const defaultCate = tagTreeData.filter(d => d.aId === -1)
@@ -51,13 +51,31 @@ export default class DrawerTagConfig extends Component {
     }, {
       label: '数据类型',
       key: 'valueType',
-      initialValue: detail.valueType,
+      // initialValue: detail.valueType,
       component: 'select',
       rules: [
         '@requiredSelect',
       ],
       control: {
-        options: changeToOptions(window.njkData.dict.dataType)('value', 'key'),
+        options: [
+          {
+            value: '整数型',
+            key: 2,
+            disabled: !tagTypeList.includes(2),
+          }, {
+            value: '小数型',
+            key: 3,
+            disabled: !tagTypeList.includes(3),
+          }, {
+            value: '文本型',
+            key: 4,
+            disabled: !tagTypeList.includes(4),
+          }, {
+            value: '日期型',
+            key: 5,
+            disabled: !tagTypeList.includes(5),
+          },
+        ],
       },
     }, {
       label: '是否枚举',
@@ -128,6 +146,7 @@ export default class DrawerTagConfig extends Component {
 
   @action handleCancel = () => {
     this.store.modalInfo.visible = false
+    this.store.tagTypeList.clear()
   }
 
   submit = () => {

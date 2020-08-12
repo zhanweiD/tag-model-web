@@ -152,6 +152,7 @@ export default class FieldList extends Component {
     store.isEnum = data.isEnum
     store.modalInfo.detail = data
     store.getTagTree()
+    store.getTagTypeList(data)
   }
 
   /**

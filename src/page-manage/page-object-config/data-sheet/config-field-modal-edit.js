@@ -66,7 +66,7 @@ class ModalTagEdit extends Component {
     // 默认类目
     const defaultCate = cateList.filter(d => d.aId === -1)
     const defaultCateV = defaultCate.length ? [defaultCate[0].id] : undefined
-
+  
     return (
       <Modal {...modalProps}>
         <Form>
@@ -96,13 +96,13 @@ class ModalTagEdit extends Component {
 
             <FormItem {...formItemLayout} label="数据类型">
               {getFieldDecorator('valueType', {
-                initialValue: +tagDetail.valueType || undefined,
+                // initialValue: +tagDetail.valueType || undefined,
                 rules: [{required: true, message: '请选择数据类型'}],
               })(
                 <Select placeholder="请下拉选择" showSearch optionFilterProp="children">
                   {
                     window.njkData.dict.dataType.map(item => (
-                      <Option key={item.key} value={item.key}>{item.value}</Option>
+                      <Option key={item.key} value={item.key} disabled={!store.tagTypeList.includes(item.key)}>{item.value}</Option>
                     ))
                   }
                 </Select>

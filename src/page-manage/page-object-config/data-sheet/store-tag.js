@@ -232,6 +232,20 @@ class Store {
       errorTip(e.message)
     }
   }
+
+  @observable tagTypeList = []
+  @action async getTagTypeList(params) {
+    try {
+      const res = await io.getTagTypeList({
+        fieldType: params,
+      })
+      runInAction(() => {
+        this.tagTypeList = res
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
 }
 
 export default new Store()

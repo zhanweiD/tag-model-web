@@ -147,6 +147,20 @@ class Store extends ListContentStore(io.getList) {
       errorTip(e.message)
     }
   }
+
+  @observable tagTypeList = []
+  @action async getTagTypeList(data) {
+    try {
+      const res = await io.getTagTypeList({
+        fieldType: data.dataFieldType,
+      })
+      runInAction(() => {
+        this.tagTypeList = res
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
 }
 
 export default new Store()

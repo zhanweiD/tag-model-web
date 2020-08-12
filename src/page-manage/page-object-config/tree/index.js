@@ -125,6 +125,7 @@ export default class Tree extends Component {
       selectedKeys: expandKey ? [expandKey] : [],
       expandWithParentKeys: expandKey ? [expandKey] : [],
       defaultExpandedKeys: this.store.searchExpandedKeys.slice(),
+      showDetail: true,
     }
 
     const selectObjConfig = {
