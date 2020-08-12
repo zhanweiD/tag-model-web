@@ -8,7 +8,7 @@ const api = {
   saveTags: post(`${baseApi}/tag/pool/create_batch_tag`), // 批量创建标签
   getStorageDetail: get(`${baseApi}/tagConfig/storage_detail`), // 创建成功结果
   checkName: post(`${tagModalApi}/name_check`), // 重名校验
-
+  getTagTypeList: get(`${baseApi}/tag/tag_type`), // 根据字段类型获取标签类型
 }
 
 ioContext.create('tagConfiguration', api) 

@@ -175,6 +175,7 @@ export default class ObjectTree extends Component {
       selectedKeys: expandKey ? [expandKey] : [-1], // 默认选中默认类目
       expandWithParentKeys: expandKey ? [expandKey] : [-1], // 默认选中默认类目
       defaultExpandedKeys: this.store.searchExpandedKeys.slice(),
+      showDetail: true,
     }
     return (
       <div className="object-tree tree-border">

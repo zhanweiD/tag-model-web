@@ -270,6 +270,7 @@ export default class Tree extends Component {
       selectedKeys: expandKey ? [expandKey] : [],
       expandWithParentKeys: expandKey ? [expandKey] : [],
       defaultExpandedKeys: store.searchExpandedKeys.slice(),
+      showDetail: true,
     }
   
     return (

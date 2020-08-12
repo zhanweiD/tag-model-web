@@ -51,6 +51,7 @@ class Store {
     try {
       const res = await io.runTask({
         taskInstanceId: id,
+        transferSchemeId: this.syncId,
       })
 
       runInAction(() => {

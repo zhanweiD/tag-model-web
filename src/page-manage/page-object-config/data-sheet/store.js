@@ -27,6 +27,8 @@ class Store extends ListContentStore(io.getList) {
   @observable dataSourceList = [] // 数据源下拉列表数据
   @observable dataSheetList = [] // 数据表下拉列表数据
   @observable fieldList = [] // 字段列表下拉列表数据
+  @observable fieldList1 = [] // 字段列表下拉列表数据
+  @observable fieldList2 = [] // 字段列表下拉列表数据
 
   @action.bound closeModal(cb) {
     this.modalVisible = false
@@ -43,6 +45,8 @@ class Store extends ListContentStore(io.getList) {
     this.dataSourceList.clear()
     this.dataSheetList.clear()
     this.fieldList.clear()
+    this.fieldList1.clear()
+    this.fieldList2.clear()
 
     if (cb) cb()
   }
@@ -136,12 +140,13 @@ class Store extends ListContentStore(io.getList) {
   /**
    * @description 字段列表
    */
-  @action async getFieldList(cb) {
+  @action async getFieldList(params, cb) {
     try {
       const res = await io.getFieldList({
         tableName: this.tableName,
         storageId: this.storageId,
         projectId: this.projectId,
+        ...params,
       })
       runInAction(() => {
         this.fieldList = res || []
