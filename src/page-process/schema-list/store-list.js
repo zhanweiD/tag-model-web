@@ -55,10 +55,10 @@ export default class Store extends ListContentStore(io.getList) {
       const res = await io.manualRunScheme(params)
       runInAction(() => {
         if (res) {
-          successTip('执行成功')
+          successTip('操作成功')
           this.getList()
         } else {
-          failureTip('执行失败')
+          failureTip('操作失败')
         }
       })
     } catch (e) {
