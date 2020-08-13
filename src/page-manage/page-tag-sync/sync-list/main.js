@@ -251,8 +251,8 @@ class SyncList extends Component {
             )
           }
 
-          /* 更新失败 & 暂停 & 运行成功、运行失败 */
-          if (record.status === 5 && record.scheduleType === 0 && (record.lastStatus === 1 || record.lastStatus === 2)) {
+          /* 更新失败 & 暂停 & 运行成功 */
+          if (record.status === 5 && record.scheduleType === 0 && record.lastStatus === 1) {
             return (
               <Fragment>
                 <Authority
@@ -297,6 +297,29 @@ class SyncList extends Component {
                   <a className="ml16" href onClick={() => this.getLog(record.id)}>提交日志</a>
 
                 </Authority>
+              </Fragment>
+            )
+          }
+
+          /* 更新失败 & 暂停 & 运行失败 */
+          if (record.status === 5 && record.scheduleType === 0 && record.lastStatus === 2) {
+            return (
+              <Fragment>
+                <span className="disabled">启动</span>
+                <span className="table-action-line" />
+                <span className="disabled">执行</span>
+                <span className="table-action-line" />
+                <a href onClick={() => this.editSync(record)}>编辑</a>
+                <span className="table-action-line" />
+                {
+                  !record.tagUsedCount ? (
+                    <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
+                      <a href>删除</a>
+                    </Popconfirm>
+                  ) : <span className="disabled">删除</span>
+                }
+                <span className="table-action-line" />
+                <a href onClick={() => this.getLog(record.id)}>提交日志</a>
               </Fragment>
             )
           }

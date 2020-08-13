@@ -4,6 +4,12 @@ import {ListContent} from '../../../component'
 import {Time} from '../../../common/util'
 
 import store from './store-app'
+// 1场景 2群体 3数据查询
+const appType = {
+  1: '业务场景',
+  2: '群体洞察',
+  3: '数据查询',
+} 
 
 @observer
 export default class AppList extends Component {
@@ -16,7 +22,7 @@ export default class AppList extends Component {
       title: '应用类型',
       key: 'type',
       dataIndex: 'type',
-      render: text => (text === 1 ? '业务场景' : ''),
+      render: text => <span>{appType[+text]}</span>,
     }, {
       title: '创建时间',
       key: 'createTime',
