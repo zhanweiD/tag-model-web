@@ -225,6 +225,7 @@ export default class StepTwo extends React.Component {
   // 展开编辑弹框
   @action.bound showEditModal(index, record) {
     const {store} = this.props
+    store.getTagTypeList(record.dataFieldType)
     store.tagId = record.tagId
     this.tagModalVisible = true
     this.editingTagIndex = index

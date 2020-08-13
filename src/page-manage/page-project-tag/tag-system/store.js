@@ -53,15 +53,16 @@ class Store {
         })
       }
       runInAction(() => {
-        this.treeData = listToTree(toJS(res))
-        this.showKeys(this.treeData)
-
-        if (!this.selectedKey) {
-          this.selectChild = defaultKey(toJS(this.treeData))
-          this.selectedKey = this.selectChild.aId
-          this.useProjectId = this.selectChild.projectId
+        this.treeData = listToTree(toJS(res)) || []
+        if (this.treeData.length) {
+          this.showKeys(this.treeData)
+          if (!this.selectedKey) {
+            this.selectChild = defaultKey(toJS(this.treeData))
+            this.selectedKey = this.selectChild.aId
+            this.useProjectId = this.selectChild.projectId
+          }
+          this.getTagBaseDetail()
         }
-        this.getTagBaseDetail()
       })
     } catch (e) {
       errorTip(e.message)

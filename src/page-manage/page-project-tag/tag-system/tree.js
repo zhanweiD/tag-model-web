@@ -77,6 +77,7 @@ export default class Tree extends Component {
       selectedKeys: selectedKey ? [selectedKey] : [],
       expandWithParentKeys: toJS(currentSelectKeys),
       // defaultExpandedKeys: store.searchExpandedKeys.slice(),
+      showDetail: true,
     }
     return (
       <div className="tree"> 

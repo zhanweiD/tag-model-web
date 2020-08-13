@@ -166,6 +166,23 @@ class Store {
     }
   }
 
+  @action async checkTableName(params, cb) {
+    try {
+      const res = await io.tableNameCheck({
+        // projectId: this.projectId,
+        ...params,
+      })
+      if (res.isExist) {
+        cb('表名已存在')
+      } else {
+        cb()
+      }
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+
   @observable confirmLoading = false
    // 新增同步计划
    @action async addSync(params, cb) {

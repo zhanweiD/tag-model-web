@@ -47,6 +47,7 @@ export default class ConfigField extends Component {
     store.defaultCateId = undefined
     store.secondSelectedRows.clear()
     store.successResult = {}
+    store.tagTypeList.clear()
   }
 
   render() {

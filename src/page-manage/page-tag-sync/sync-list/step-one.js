@@ -81,10 +81,6 @@ export default class StepOne extends Component {
     return obj.storageName
   }
 
-  @action.bound changeSwitch(v) {
-    console.log(v)
-  } 
-
   @action handleSubmit = e => {
     const {
       form: {
@@ -123,6 +119,17 @@ export default class StepOne extends Component {
     }
 
     this.store.checkName(params, callback)
+  }
+  
+  // 重名校验
+  changeTableName = (rule, value, callback) => {
+    // console.log(this.store.storageId)
+    const params = {
+      storageId: this.store.storageId,
+      tableName: `tbjh_${value}`,
+    }
+
+    this.store.checkTableName(params, callback)
   }
 
   @action.bound nextStep() {
@@ -264,7 +271,8 @@ export default class StepOne extends Component {
           <FormItem {...formItemLayout} label="自定义目的表">
             {getFieldDecorator('isDefineTable', {
               valuePropName: 'checked',
-            })(<Switch size="small" checkedChildren="是" unCheckedChildren="否" onChange={v => this.changeSwitch(v)} />)}
+            })(<Switch size="small" checkedChildren="是" unCheckedChildren="否" />)}
+            {/* })(<Switch checkedChildren="是" unCheckedChildren="否" onChange={v => this.changeSwitch(v)} />)} */}
           </FormItem>
           {
             getFieldValue('isDefineTable') ? (
@@ -273,11 +281,12 @@ export default class StepOne extends Component {
                   rules: [
                     {transform: value => value && value.trim()},
                     {required: true, message: '表名不能为空'},  
+                    {validator: this.changeTableName},
                   ]})(
-                  <div className="FBH"> 
-                      <span className="ml16 mr16">tbjh_</span>
-                      <Input autoComplete="off" placeholder="请输入表名称" />
-                    </div>
+                    <div className="FBH"> 
+                    <span className="ml16 mr16">tbjh_</span>
+                    <Input autoComplete="off" placeholder="请输入表名称" disabled={!this.store.storageId || !this.store.objId} />
+                  </div>
                 )}
               </FormItem>
             ) : null
