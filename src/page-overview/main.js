@@ -11,6 +11,16 @@ export default () => {
   useEffect(() => {
     ctx.useSider(false)
     ctx.useProject(false)
+    ctx.useQuickEntrance([{
+      label: '后台配置',
+      icon: 'setting',
+      url: '/tag-model/index.html#/config/environment',
+    },
+    {
+      label: '审批管理',
+      icon: 'approver',
+      url: '/tag-model/index.html#/common/approval',
+    }])
   }, [])
   return (
     <Switch>
