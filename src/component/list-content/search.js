@@ -112,7 +112,7 @@ export default class SearchContent extends Component {
       <Form className="dt-form-column comp-list-search" onSubmit={this.handleSubmit}>
         <Row>
           {searchParams.map(item => this.getWarperComponent(item))}
-          <Col span={24 - (searchParams.length % 3) * 8} className="far">
+          <Col span={24 - (searchParams.length % 3) * 8} className="far mb16">
             <Button htmlType="submit" type="primary">查询</Button>
             <Button
               className="ml8"
