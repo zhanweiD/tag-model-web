@@ -34,21 +34,20 @@ export default class LogPanel extends Component {
             className="allwindow-button"
             onClick={store.logBoxToAll}
           >
-            <span style={{fontSize: '16px', marginTop: '-8px'}}>
-              <i
-                className={cls({
-                  iconfont: true,
-                  dtwave: true,
-                  'icon-pingmusuoxiao': store.logBoxToAllFlag,
-                  'icon-quanping': !store.logBoxToAllFlag,
-                })}
-               
-              />
-            </span>
+            {/* <span style={{fontSize: '14px', marginTop: '-8px'}}> */}
+            <i
+              className={cls({
+                iconfont: true,
+                dtwave: true,
+                'icon-pingmusuoxiao': store.logBoxToAllFlag,
+                'icon-quanping': !store.logBoxToAllFlag,
+              })}
+            />
+            {/* </span> */}
           </Button>
           <Button
             key="min-log"
-            className="allwindow-button"
+            className="zoomIn-log allwindow-button"
             onClick={store.zoomInLogFun}
             disabled={store.logBoxToAllFlag}
           >

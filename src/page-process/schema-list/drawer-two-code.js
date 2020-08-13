@@ -1,7 +1,7 @@
 /**
  * @description 
  */
-import {Component} from 'react'
+import {Component, Fragment} from 'react'
 import {observer, inject} from 'mobx-react'
 import {action, toJS} from 'mobx'
 import cls from 'classnames'
@@ -13,8 +13,8 @@ import {
 import sqlFormatter from 'sql-formatter'
 import LogPanel from '../code-component/log-panel'
 
-import yunxing from '../../icon/yunxing.svg'
-import geshihua from '../../icon/geshihua.svg'
+// import yunxing from '../../icon/yunxing.svg'
+// import geshihua from '../../icon/geshihua.svg'
 
 @inject('rootStore')
 @observer
@@ -89,7 +89,7 @@ export default class DrawerTwoCode extends Component {
 
   // 停止
   @action stopOperation() {
-    console.log(this.editor.getValue())
+    this.store.stopInstance()
   }
   
   // 校验
@@ -119,23 +119,35 @@ export default class DrawerTwoCode extends Component {
         <div className="code-menu">
           {
             runLoading ? (
-              <Tooltip placement="topRight" title="正在运行中，不可重复运行">
-                <span className="mr16 disabled">
-                  <img src={yunxing} alt="img" className="disabled" />
+              <Fragment>
+                <Tooltip placement="topRight" title="正在运行中，不可重复运行">
+                  <span className="mr16 disabled">
+                    <i className="iconfont dtwave icon-run" />
+                    <span>运行</span>
+                  </span>
+                </Tooltip>
+                <span className="code-menu-item mr16" onClick={() => this.stopOperation()}>
+                  <i className="iconfont dtwave icon-tingzhi1" style={{lineHeight: '36px'}} />
+                  <span>停止</span>
+                </span>
+              </Fragment>
+            ) : (
+              <Fragment>
+                <span className="code-menu-item mr16" onClick={() => this.operationCode()}>
+                  <i className="iconfont dtwave icon-run" />
                   <span>运行</span>
                 </span>
-              </Tooltip>
-            
-            ) : (
-              <span className="code-menu-item mr16" onClick={() => this.operationCode()}>
-                <img src={yunxing} alt="img" />
-                <span>运行</span>
-              </span>
+                <span className="mr16 disabled">
+                  <i className="iconfont dtwave icon-tingzhi1" style={{lineHeight: '36px'}} />
+                  <span>停止</span>
+                </span>
+              </Fragment>
             )
           }
-        
+       
+              
           <span className="code-menu-item mr16" onClick={() => this.codeFormat()}>
-            <img src={geshihua} alt="img" />
+            <i className="iconfont dtwave icon-geshihua1" />
             <span>格式化</span>
           </span>
         </div>
