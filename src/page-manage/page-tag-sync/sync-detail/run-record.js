@@ -162,9 +162,9 @@ export default class RunRecord extends Component {
     // }
 
     return (
-      <div className="pr24 pl24"> 
+      <div className="pr24 pl24 pt24"> 
         {/* <ListContent {...listConfig} /> */}
-        <div className="mb8">
+        <div className="mb16">
           <span className="mr8">运行状态：</span>
           <Select
             showSearch

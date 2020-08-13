@@ -18,6 +18,7 @@ export default class Tree extends Component {
 
     this.store.projectId = props.projectId
     this.store.selectedKey = null
+    this.store.searchKey = null
     this.store.commonTag = props.commonTag
     this.store.getTreeData()
   }

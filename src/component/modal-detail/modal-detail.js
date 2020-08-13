@@ -3,6 +3,7 @@
  */
 import {Component} from 'react'
 import LabelItem from '../label-item'
+import './main.styl'
 
 export default class ModalDetail extends Component {
   static defaultProps = {

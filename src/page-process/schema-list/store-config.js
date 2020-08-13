@@ -217,7 +217,9 @@ export default class Store {
           successTip('配置成功')
           this.isConfig = true
           this.getList()
-        } 
+        } else {
+          errorTip('配置失败')
+        }
       })
     } catch (e) {
       errorTip(e.message)

@@ -5,7 +5,7 @@
 
 import {useEffect, useState} from 'react'
 // import {FormOutlined} from '@ant-design/icons'
-import {message, Button, Popconfirm} from 'antd'
+import {Button, Popconfirm} from 'antd'
 import {projectProvider, Authority} from '../../component'
 import ConfigModal from './modal'
 import io from './io'
@@ -119,7 +119,14 @@ const WorkspaceConfig = ({projectId}) => {
         </div>
         {/* <Authority authCode="tag_config:environment_config[u]"> */}
         <Popconfirm
-          title="更改后原环境中的“标签体系、标签加工方案、标签同步计划、场景、我的查询、群体、API”都将会失效，请谨慎操作。"
+          // title="更改后原环境中的“标签体系、标签加工方案、标签同步计划、场景、我的查询、群体、API”都将会失效，请谨慎操作。"
+          title={(
+            <div>
+更改后原环境中的“标签体系、标签加工方案、标签同步计划、场景、
+              <br />
+我的查询、群体、API”都将会失效，请谨慎操作。
+            </div>
+          )}
           onConfirm={editClick}
           onCancel={() => {}}
           okText="确认"

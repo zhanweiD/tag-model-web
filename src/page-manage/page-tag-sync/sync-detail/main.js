@@ -86,9 +86,9 @@ class SyncDetail extends Component {
             baseInfo={baseInfo}
             tag={tagMap[detail.status] || null}
           />
-          <TabRoute {...tabConfig} />
         </Spin>
         <div className="list-content box-border">
+          <TabRoute {...tabConfig} />
           <Content store={store} syncId={syncId} />
         </div>
       </div>

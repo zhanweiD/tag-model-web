@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {observable, action} from 'mobx'
 import {observer} from 'mobx-react'
 import {DatePicker, Select} from 'antd'
+import './main.styl'
 
 const {Option} = Select
 
