@@ -83,7 +83,7 @@ export default class DrawerCreate extends Component {
         disabled: !ownObject,
       },
     }, {
-      label: '唯一标识',
+      label: '标签标识',
       key: 'enName',
       initialValue: drawerTagInfo.enName,
       component: 'input',

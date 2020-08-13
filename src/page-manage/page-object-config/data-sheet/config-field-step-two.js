@@ -51,7 +51,7 @@ export default class StepTwo extends React.Component {
         render: name => <OmitTooltip text={name} maxWidth={150} />,
       },
       {
-        title: '唯一标识',
+        title: '标签标识',
         key: 'enName',
         dataIndex: 'enName',
         render: name => <OmitTooltip text={name} maxWidth={150} />,

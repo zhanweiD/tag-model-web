@@ -147,7 +147,7 @@ export default class DrawerTagConfig extends Component {
                   targetSearchKey={record => record.name || record.tagName}
                   targetColumns={[
                     {
-                      title: '唯一标识',
+                      title: '标签标识',
                       dataIndex: 'tagEnName',
                       width: 70,
                     },
@@ -213,7 +213,7 @@ export default class DrawerTagConfig extends Component {
                   ]}
                   resultTargetFullColumns={[
                     {
-                      title: '唯一标识',
+                      title: '标签标识',
                       dataIndex: 'tagEnName',
                       width: 69,
                     },

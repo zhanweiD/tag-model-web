@@ -98,7 +98,7 @@ export default class SyncTagList extends Component {
     width: 150,
     render: text => (text.length > 8 ? <Tooltip placement="top" title={text}>{`${text.slice(0, 8)}...`}</Tooltip> : text),
   }, {
-    title: '唯一标识',
+    title: '标签标识',
     dataIndex: 'enName',
     width: 150,
     render: text => (text.length > 10 ? <Tooltip placement="top" title={text}>{`${text.slice(0, 10)}...`}</Tooltip> : text),

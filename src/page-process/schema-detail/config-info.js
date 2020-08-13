@@ -18,7 +18,7 @@ export default class ConfigInfo extends Component {
     title: '字段',
     dataIndex: 'dataFieldName',
   }, {
-    title: '唯一标识',
+    title: '标签标识',
     dataIndex: 'tagEnName',
   }, {
     title: '标签名称',

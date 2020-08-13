@@ -23,7 +23,7 @@ export default class TagList extends Component {
       dataIndex: 'name',
       render: text => <OmitTooltip maxWidth={100} text={text} />,
     }, {
-      title: '唯一标识',
+      title: '标签标识',
       dataIndex: 'enName',
       render: text => <OmitTooltip maxWidth={100} text={text} />,
     }, {

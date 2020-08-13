@@ -47,7 +47,7 @@ export default class TagManagement extends Component {
       title: '对象',
       value: tagDetail.objName,
     }, {
-      title: '唯一标识',
+      title: '标签标识',
       value: tagDetail.enName,
     }, {
       title: '数据类型',

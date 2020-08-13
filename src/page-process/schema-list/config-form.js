@@ -69,7 +69,7 @@ export default class ConfigDrawerOne extends Component {
       disabled: release || isConfig,
       component: isNewTag ? 'input' : 'select',
     }, {
-      label: '唯一标识',
+      label: '标签标识',
       key: 'enName',
       initialValue: tagBaseInfo.enName,
       rules: !isNewTag ? null : ([
@@ -179,7 +179,7 @@ export default class ConfigDrawerOne extends Component {
   checkName = (rule, value, callback) => {
     const params = {
       name: value,
-      nameType: nameTypeMap[rule.field], // 名称类型: 1 中文名 2 英文名(唯一标识)
+      nameType: nameTypeMap[rule.field], // 名称类型: 1 中文名 2 英文名(标签标识)
     }
     this.store.tabCheckName(params, callback)
   }

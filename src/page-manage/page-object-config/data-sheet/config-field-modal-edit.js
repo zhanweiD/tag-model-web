@@ -82,12 +82,12 @@ class ModalTagEdit extends Component {
               })(<Input autoComplete="off" placeholder="不超过32个字，允许中文、英文、数字或下划线" />)}
             </FormItem>
 
-            <FormItem {...formItemLayout} label="英文名">
+            <FormItem {...formItemLayout} label="标签标识">
               {getFieldDecorator('enName', {
                 initialValue: tagDetail.enName || undefined,
                 rules: [
                   {transform: value => value && value.trim()},
-                  {required: true, message: '英文名不可为空'},
+                  {required: true, message: '标签标识不可为空'},
                   {pattern: enNameReg, message: '不超过32个字，只能包含英文、数字或下划线，必须以英文开头'},
                   {validator: this.checkName},
                 ],
@@ -225,7 +225,7 @@ class ModalTagEdit extends Component {
   checkName = (rule, value, callback) => {
     const params = {
       name: value,
-      nameType: nameTypeMap[rule.field], // 名称类型: 1 中文名 2 英文名
+      nameType: nameTypeMap[rule.field], // 名称类型: 1 中文名 2 标签标识
     }
     if (store.tagId) {
       params.id = store.tagId

@@ -37,7 +37,7 @@ export default class DrawerTagConfig extends Component {
         {validator: this.checkName},
       ],
     }, {
-      label: '唯一标识',
+      label: '标签标识',
       key: 'enName',
       initialValue: detail.enName,
       component: 'input',

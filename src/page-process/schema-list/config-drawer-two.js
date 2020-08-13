@@ -23,7 +23,7 @@ export default class ConfigDrawerTwo extends Component {
         dataIndex: 'bfieldName',
       }, {
         key: 'btagEnName',
-        title: '唯一标识',
+        title: '标签标识',
         dataIndex: 'btagEnName',
       }, {
         key: 'btagName',
@@ -40,7 +40,7 @@ export default class ConfigDrawerTwo extends Component {
         dataIndex: 'fieldName',
       }, {
         key: 'tagEnName',
-        title: '唯一标识',
+        title: '标签标识',
         dataIndex: 'tagEnName',
       }, {
         key: 'tagName',

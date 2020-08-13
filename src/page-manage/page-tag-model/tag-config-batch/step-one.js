@@ -18,7 +18,7 @@ export default class StepOne extends Component {
     title: '标签名称',
     dataIndex: 'name',
   }, {
-    title: '唯一标识',
+    title: '标签标识',
     dataIndex: 'enName',
   }, {
     title: '数据类型',

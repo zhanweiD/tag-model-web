@@ -26,7 +26,7 @@ const fieldHoverInfo = [{
 }]
 
 const deriveTagHoverInfo = [{
-  label: '唯一标识',
+  label: '标签标识',
   key: 'uniqueIdentification',
 }, {
   label: '数据类型',
@@ -37,7 +37,7 @@ const deriveTagHoverInfo = [{
 }]
 
 const commonTagHoverInfo = [{
-  label: '唯一标识',
+  label: '标签标识',
   key: 'uniqueIdentification',
 }, {
   label: '数据类型',

@@ -38,7 +38,7 @@ class TagDetail extends Component {
       title: '对象',
       value: tagBaseInfo.objName,
     }, {
-      title: '唯一标识',
+      title: '标签标识',
       value: tagBaseInfo.enName,
     }, {
       title: '数据类型',

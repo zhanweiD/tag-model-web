@@ -12,7 +12,7 @@ const columns = [
     dataIndex: 'name',
     render: text => <OmitTooltip maxWidth={120} text={text} />,
   }, {
-    title: '唯一标识',
+    title: '标签标识',
     dataIndex: 'enName',
     render: text => <OmitTooltip maxWidth={120} text={text} />,
   }, {

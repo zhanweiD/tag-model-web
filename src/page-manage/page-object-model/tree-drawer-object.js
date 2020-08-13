@@ -198,12 +198,12 @@ class ModalObject extends Component {
               <Input autoComplete="off" placeholder="请输入对象名称" />
             )}
           </FormItem>
-          <FormItem {...formItemLayout} label="唯一标识">
+          <FormItem {...formItemLayout} label="标签标识">
             {getFieldDecorator('enName', {
               initialValue: data.enName,
               rules: [
                 {transform: value => value && value.trim()},
-                {required: true, message: '唯一标识不能为空'},
+                {required: true, message: '标签标识不能为空'},
                 {max: 32, message: '输入不能超过32个字符'},
                 {pattern: enNameReg, message: '不超过32个字，只能包含英文、数字或下划线，必须以英文开头'},
                 {
@@ -211,7 +211,7 @@ class ModalObject extends Component {
                 }],
               validateFirst: true,
             })(
-              <Input autoComplete="off" placeholder="请输入唯一标识" />
+              <Input autoComplete="off" placeholder="请输入标签标识" />
             )}
           </FormItem>
           <FormItem {...formItemLayout} label="所属类目">
@@ -290,12 +290,12 @@ class ModalObject extends Component {
                     <Input autoComplete="off" placeholder="请输入标签名称" />
                   )}
                 </FormItem>
-                <FormItem {...formItemLayout} label="唯一标识">
+                <FormItem {...formItemLayout} label="标签标识">
                   {getFieldDecorator('tagEnName', {
                     initialValue: data.tagEnName,
                     rules: [
                       {transform: value => value && value.trim()},
-                      {required: true, message: '唯一标识不能为空'},
+                      {required: true, message: '标签标识不能为空'},
                       {max: 32, message: '输入不能超过32个字符'},
                       {pattern: enNameReg, message: '不超过32个字，只能包含英文、数字或下划线，必须以英文开头'},
                       {
@@ -303,7 +303,7 @@ class ModalObject extends Component {
                       }],
                     validateFirst: true,
                   })(
-                    <Input autoComplete="off" placeholder="请输入唯一标识" />
+                    <Input autoComplete="off" placeholder="请输入标签标识" />
                   )}
                 </FormItem>
                 <FormItem {...formItemLayout} label="数据类型">

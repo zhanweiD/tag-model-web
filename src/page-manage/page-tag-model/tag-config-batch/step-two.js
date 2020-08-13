@@ -141,7 +141,7 @@ export default class StepTwo extends Component {
                 ]}
                 sourceColumns={[
                   {
-                    title: '唯一标识',
+                    title: '标签标识',
                     dataIndex: 'enName',
                     width: 90,
                   },
