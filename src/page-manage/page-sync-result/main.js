@@ -36,11 +36,13 @@ class SyncResult extends Component {
   }, {
     title: '同步计划',
     dataIndex: 'tagTransferSchemeName',
-  }, {
-    title: '最近一次更新时间',
-    dataIndex: 'lastUpdateTime',
-    render: text => <Time timestamp={text} />,
-  }, {
+  },
+  //  {
+  //   title: '最近一次更新时间',
+  //   dataIndex: 'lastUpdateTime',
+  //   render: text => <Time timestamp={text} />,
+  // }, 
+  {
     title: '使用状态',
     dataIndex: 'tagUsed',
     render: text => (text === '使用中' ? <Badge color="#87d068" text="使用中" /> : <Badge color="#d9d9d9" text="未使用" />),

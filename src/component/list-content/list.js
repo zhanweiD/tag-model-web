@@ -58,6 +58,12 @@ export default class ListContent extends Component {
     this.store.getList()
   }
 
+  componentWillUnmount() {
+    this.store.list.clear()
+    this.store.initParams = {}
+    this.store.searchParams = {}
+  }
+
   handleSearch = (value = {}) => {
     this.remoteSearch(value)
   }

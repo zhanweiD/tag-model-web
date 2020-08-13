@@ -12,7 +12,6 @@ export default class Store {
   }
 
   projectId
-
   @observable editor = null
   @observable codeRunSuccess = false
 
@@ -309,5 +308,19 @@ export default class Store {
     }
   }
 
+  // 停止运行
+  @action stopInstance = async taskInstance => {
+    // console.log(this.taskInstanceId)
+    try {
+      const res = await io.stopInstance({
+        taskInstance: this.taskInstanceId,
+      })
+      runInAction(() => {
+        console.log(res)
+      })
+    } catch (e) {
+      ErrorEater(e.message)
+    }
+  }
   // ************************* 代码编辑 & 日志 end ************************* //
 }
