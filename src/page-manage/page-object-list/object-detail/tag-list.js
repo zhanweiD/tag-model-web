@@ -28,6 +28,7 @@ export default class TagList extends Component {
   }, {
     title: '描述',
     dataIndex: 'descr',
+    render: text => (text.length ? text : '-'),
   }, {
     title: '创建时间',
     dataIndex: 'createTime',
@@ -53,7 +54,7 @@ export default class TagList extends Component {
           onChange={e => this.onChange(e)}
           style={{width: 200}}
         />
-      </div>],
+                </div>],
       store,
     }
     return (
