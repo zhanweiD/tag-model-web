@@ -103,16 +103,17 @@ export default props => {
   const ctx = OnerFrame.useFrame()
   useEffect(() => {
     ctx.useProject(false)
-    ctx.useQuickEntrance([{
-      tip: '后台配置',
-      icon: 'setting',
-      url: '/tag-model/index.html#/config/environment',
-    },
-    {
-      tip: '审批管理',
-      icon: 'approver',
-      url: '/tag-model/index.html#/common/approval',
-    }])
+    ctx.useQuickEntrance([
+      {
+        tip: '审批管理',
+        icon: 'approver',
+        url: '/tag-model/index.html#/common/approval',
+      },
+      {
+        tip: '后台配置',
+        icon: 'setting',
+        url: '/tag-model/index.html#/config/environment',
+      }])
   }, [])
 
   return (
