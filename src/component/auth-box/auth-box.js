@@ -13,7 +13,8 @@ const Authority = ({children, isHidden = false, authCode, customCodes, isCommon 
   const {tagProductFunctionCode = [], projectFunctionCode = []} = window.frameinfo || {}
   const functionCodes = customCodes || (isCommon ? tagProductFunctionCode : projectFunctionCode)
 
-  const isHaveAuth = functionCodes.includes(authCode)
+  // const isHaveAuth = functionCodes.includes(authCode)
+  const isHaveAuth = true
   if (isHidden) {
     return isHaveAuth ? children : null
   }

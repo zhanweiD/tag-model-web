@@ -17,7 +17,7 @@ export default class UseProject extends Component {
   }, {
     title: '项目描述',
     dataIndex: 'descr',
-    render: text => (text.length ? text : '-'),
+    render: text => (text || '-'),
   }, {
     title: '所有者',
     dataIndex: 'creator',
@@ -39,7 +39,7 @@ export default class UseProject extends Component {
   }, {
     title: '项目描述',
     dataIndex: 'descr',
-    render: text => (text.length ? text : '-'),
+    render: text => (text || '-'),
   }, {
     title: '所有者',
     dataIndex: 'creator',

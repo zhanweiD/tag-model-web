@@ -43,10 +43,13 @@ export default class Main extends Component {
               {name || '--'}
               <span className="ml10">{ tag }</span>
             </div>
-            
-            {
+            <div className="detail-descr mt8">
+              <span style={{color: 'rgba(0,0,0, .45)'}}>描述：</span>
+              {descr || '-'}
+            </div>
+            {/* {
               descr ? <div className="detail-descr">{`描述：${descr}`}</div> : null
-            }
+            } */}
            
           </div>
           <div />

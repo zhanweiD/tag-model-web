@@ -137,7 +137,7 @@ export default class SyncTagList extends Component {
      
           {/* <span className="table-action-line" /> */}
           {
-            record.isMajor ? <span className="disabled ml16">移除</span> : <a href onClick={() => this.remove(record)}>移除</a>
+            record.isMajor ? <span className="disabled ml8">移除</span> : <a href onClick={() => this.remove(record)} className="ml8">移除</a>
           }
         </div>
       )
