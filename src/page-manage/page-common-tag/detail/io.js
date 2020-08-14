@@ -1,6 +1,6 @@
 import ioContext from '../../../common/io-context'
 import {
-  tagModalApi, get, post, projectApi,
+  tagModalApi, get,
 } from '../../../common/util'
 
 const api = {
