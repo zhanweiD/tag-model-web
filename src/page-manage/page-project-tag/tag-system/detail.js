@@ -61,7 +61,7 @@ export default class Detail extends Component {
     }
     const actions = [
       <Button 
-        className="mr8" 
+        // className="mr8" 
         type="primary" 
         // style={{display: !authorStatus && projectId !== useProjectId ? 'block' : 'none'}}
         style={{display: !authorStatus ? 'block' : 'none'}}

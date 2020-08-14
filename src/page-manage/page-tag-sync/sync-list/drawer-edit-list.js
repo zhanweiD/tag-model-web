@@ -148,7 +148,7 @@ export default class SyncTagList extends Component {
                 }
            
                 {/* <span className="table-action-line" /> */}
-                <a className="ml16" href onClick={() => this.remove(record)}>移除</a>
+                <a className="ml8" href onClick={() => this.remove(record)}>移除</a>
               </div>
             )
           })()}

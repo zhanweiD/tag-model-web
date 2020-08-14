@@ -10,6 +10,7 @@ import DrawerTagConfig from './drawer'
 import seach from './search'
 
 import store from './store'
+import './index.styl'
 
 @inject('bigStore')
 @observer
@@ -176,7 +177,7 @@ export default class FieldList extends Component {
     }
 
     return (
-      <div>
+      <div className="filed-list">
         <ListContent {...listConfig} key={objId} />
         <DrawerTagConfig store={store} />
       </div>
