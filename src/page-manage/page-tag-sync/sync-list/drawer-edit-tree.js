@@ -7,6 +7,7 @@ import {
 } from 'mobx'
 import {NoBorderInput, Loading, OmitTooltip} from '../../../component'
 import {IconChakan} from '../../../icon-comp'
+import tagIcon from '../../../icon/tag.svg'
 
 const {TreeNode} = Tree
 
@@ -157,11 +158,12 @@ export default class SyncTagTree extends Component {
           key={item.id}
           title={<OmitTooltip maxWidth={120} text={item.name} />}
           selectable={false}
+          icon={<img src={tagIcon} alt="icon" style={{width: '14px'}} />}
         />
       )
     }
 
-    if (item.isMajor) {
+    if (item.isMajor || item.isUsed) {
       return (
         <TreeNode
           key={item.id}
@@ -169,18 +171,7 @@ export default class SyncTagTree extends Component {
           selectable={false}
           tagData={item}
           disableCheckbox
-        />
-      )
-    }
-
-    if (item.isUsed) {
-      return (
-        <TreeNode
-          key={item.id}
-          title={<OmitTooltip maxWidth={120} text={item.name} />}
-          selectable={false}
-          tagData={item}
-          disableCheckbox
+          icon={<img src={tagIcon} alt="icon" style={{width: '14px'}} />}
         />
       )
     }
@@ -192,6 +183,7 @@ export default class SyncTagTree extends Component {
         selectable={false}
         tagData={item}
         disableCheckbox={this.store.disabledKeys.includes(item.id)}
+        icon={<img src={tagIcon} alt="icon" style={{width: '14px'}} />}
       />
     )
   })
@@ -230,6 +222,7 @@ export default class SyncTagTree extends Component {
                     defaultExpandAll
                     onCheck={this.onCheck}
                     checkedKeys={keys.map(String)}
+                    showIcon
                   >
                     {this.renderTreeNodes(toJS(treeData))}
                   </Tree>
