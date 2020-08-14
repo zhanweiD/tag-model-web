@@ -70,14 +70,14 @@ export default class TagAnalyze extends Component {
   }
 
   render() {
-    const {tagId} = this.props
+    const {tagId, authorStatus} = this.props
     const {status, nullRatio, recordTime, name} = store.valueTrend
     return (
       <div className="p16 pt8 pr">
         <h3 className="chart-title">值域分布</h3>
         <Button 
           type="primary pa" 
-          disabled={this.props.status !== 2 || status === 1}
+          disabled={authorStatus !== 2 || status === 1}
           style={{top: '16px', right: '16px'}}
           onClick={() => store.getValueUpdate(pieData => {
             this.drawSaveTrend(pieData)

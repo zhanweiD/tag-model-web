@@ -6,6 +6,7 @@ import io from './io'
 
 class Store {
   tagId
+  projectId
   @observable tagBaseInfo = {}
   @observable tagDetailLoading = false
   @observable cardInfo = {}
@@ -15,6 +16,7 @@ class Store {
     try {
       const res = await io.getTagBaseDetail({
         id: this.tagId,
+        useProjectId: this.projectId,
       })
       runInAction(() => {
         this.tagBaseInfo = res

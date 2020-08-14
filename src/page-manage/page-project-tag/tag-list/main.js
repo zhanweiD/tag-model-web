@@ -102,7 +102,7 @@ export default class TagList extends Component {
         <div className="FBH FBAC">
           {/* eslint-disable-next-line no-underscore-dangle */}
           {/* <a href={`${window.__keeper.pathHrefPrefix}/manage/tag-maintain/${record.id}`}>标签详情</a> */}
-          <Link to={`/manage/project-tag/${record.id}`}>标签详情</Link>
+          <Link to={`/manage/project-tag/${record.id}/${store.useProjectId}`}>标签详情</Link>
           <AuthBox 
             code="asset_tag_project_tag_search_add_occ" 
             myFunctionCodes={store.functionCodes}

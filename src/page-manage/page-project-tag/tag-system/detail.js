@@ -86,7 +86,7 @@ export default class Detail extends Component {
                 actions={actions}
               />
               <div className="bgf mt16 ">
-                {tagDetail.isEnum ? <TagAnalyze tagId={selectedKey} status={authorStatus} /> : null}
+                {tagDetail.isEnum ? <TagAnalyze tagId={selectedKey} authorStatus={authorStatus} /> : null}
                 <TagTrend key={selectedKey} tagId={selectedKey} />
               </div>
             </Spin>
