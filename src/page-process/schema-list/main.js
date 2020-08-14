@@ -101,7 +101,7 @@ class SchemaList extends Component {
     }, {
       title: '操作',
       dataIndex: 'action',
-      width: 250,
+      width: 300,
       render: (text, record) => (
         <div>
           {/* 方案状态: 提交成功  操作: 查看 */}
@@ -326,7 +326,7 @@ class SchemaList extends Component {
         >
         新建加工方案
         </Button>
-                </Authority>,
+      </Authority>,
       ],
       rowKey: 'id',
       store: this.store, // 必填属性

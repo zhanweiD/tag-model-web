@@ -52,6 +52,7 @@ export default class RunRecord extends Component {
   }, {
     title: '记录数',
     dataIndex: 'recordCount',
+    render: text => text || '-',
   }, {
     title: '操作',
     dataIndex: 'action',

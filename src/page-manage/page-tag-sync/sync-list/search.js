@@ -4,6 +4,13 @@ const serach = ({
   objList,
 }) => [
   {
+    label: '计划名称',
+    key: 'name',
+    control: {
+      placeholder: '请输入计划名称关键字',
+    },
+    component: 'input',
+  }, {
     label: '对象',
     key: 'objId',
     initialValue: '',
@@ -21,13 +28,6 @@ const serach = ({
       options: syncStatus,
     },
     component: 'select',
-  }, {
-    label: '计划名称',
-    key: 'name',
-    control: {
-      placeholder: '请输入计划名称关键字',
-    },
-    component: 'input',
-  },
+  }, 
 ]
 export default serach

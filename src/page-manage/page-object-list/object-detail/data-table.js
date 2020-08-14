@@ -72,8 +72,9 @@ export default class DataTable extends Component {
           placeholder="请输入数据表名称关键字"
           onChange={e => this.onChange(e)}
           style={{width: 200}}
+          size="small"
         />
-                </div>],
+      </div>],
       store,
     }
     return (
