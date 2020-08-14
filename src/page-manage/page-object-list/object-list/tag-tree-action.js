@@ -90,7 +90,6 @@ export default class Action extends Component {
             {
               this.dropdownDom()
             }
-s
           </Authority>
          
           { this.store.expandAll ? (

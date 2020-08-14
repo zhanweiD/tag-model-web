@@ -16,6 +16,7 @@ const {TextArea} = Input
 const formItemLayout = {
   labelCol: {span: 7},
   wrapperCol: {span: 12},
+  colon: false,
 }
 
 @Form.create()

@@ -45,7 +45,7 @@ export default class ModalStotageDetail extends Component {
     return (
       <Modal {...modalConfig}>
         <Spin spinning={loading}>
-          <ModalDetail data={content} />
+          <ModalDetail data={content} labelWidth={40} />
         </Spin>
       </Modal>
     )

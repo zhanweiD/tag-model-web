@@ -110,7 +110,7 @@ export default class ModalCategory extends Component {
 
     return (
       <Modal {...modalConfig}>
-        <ModalDetail data={content} labelWidth={60} />
+        <ModalDetail data={content} labelWidth={52} />
       </Modal>
     )
   }
