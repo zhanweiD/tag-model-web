@@ -146,6 +146,7 @@ const WorkspaceConfig = ({projectId}) => {
         onCancel={onCancel}
         onCreate={onCreate}
         onUpdate={onUpdate}
+        projectId={projectId}
       />
     </div>
   )

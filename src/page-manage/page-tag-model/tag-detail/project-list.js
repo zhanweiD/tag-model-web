@@ -15,7 +15,7 @@ export default class ProjectList extends Component {
     }, {
       title: '项目描述',
       key: 'descr',
-      dataIndex: 'descrs',
+      dataIndex: 'descr',
       render: text => (text || '-'),
     }, {
       title: '申请时间',

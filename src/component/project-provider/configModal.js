@@ -6,7 +6,7 @@ import ModalForm from '../modal-form'
 export default class ConfigModal extends Component {
   selectContent= () => {
     const {
-      workspace = [],
+      workspace = [], projectId,
     } = this.props
     return [{
       label: '环境',
@@ -19,6 +19,12 @@ export default class ConfigModal extends Component {
         options: workspace,
       },
       component: 'select',
+      extra:
+  <span>
+          若无可用的环境，请到
+    <a target="_blank" rel="noopener noreferrer" href={`/project/index.html?projectId=${projectId}#/detail/env`}>项目管理-环境配置</a>
+          中添加环境
+  </span>,
     }]
   }
 

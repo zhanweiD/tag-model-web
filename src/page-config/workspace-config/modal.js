@@ -1,5 +1,5 @@
 import React from 'react'
-import {Modal, Form, Select, Button} from 'antd'
+import {Modal, Form, Select} from 'antd'
 
 const {Option} = Select
 const formItemLayout = {
@@ -15,6 +15,7 @@ const ConfigModal = ({
   isAdd,
   workspace,
   config,
+  projectId,
 }) => {
   const [form] = Form.useForm()
 
@@ -53,6 +54,13 @@ const ConfigModal = ({
               message: '请选择环境',
             },
           ]}
+          extra={(
+            <span>
+              若无可用的环境，请到
+              <a target="_blank" rel="noopener noreferrer" href={`/project/index.html?projectId=${projectId}#/detail/env`}>项目管理-环境配置</a>
+              中添加环境
+            </span>
+          )}
         >
           <Select placeholder="请选择环境" showSearch optionFilterProp="children"> 
             {

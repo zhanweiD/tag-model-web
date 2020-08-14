@@ -121,6 +121,7 @@ export default PageComponent => {
             workspace={workspace}
             handleCancel={() => changeVisible(false)}
             submit={params => initProject(params)}
+            projectId={projectId}
           />
         </Fragment>
        
