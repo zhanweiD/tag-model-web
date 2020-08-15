@@ -8,6 +8,7 @@ import {OverviewCardWrap} from '../component'
 import Cloud from './cloud'
 import TagRank from './tag-rank'
 import Distribute from './distribute'
+// import OverviewCard from './overview-card'
 // import Line from './line' 
 
 import store from './store'
@@ -46,6 +47,7 @@ export default class Overview extends Component {
         <div className="content-header">总览</div>
         <div className="page-overview">
           <OverviewCardWrap cards={cards} style={{marginBottom: '16px'}} />
+          {/* <OverviewCard store={store} /> */}
           <Cloud store={store} />
           <Distribute store={store} />
           <TagRank store={store} />
