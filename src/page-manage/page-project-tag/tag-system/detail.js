@@ -71,7 +71,7 @@ export default class Detail extends Component {
       </Button>,
     ]
     const noDataConfig = {
-      text: '请选择标签',
+      text: '暂无数据',
     }
     return (
       <div className="detail-content">

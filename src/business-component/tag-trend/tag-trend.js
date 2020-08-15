@@ -86,7 +86,7 @@ export default class TagTrend extends Component {
             exportTimeRange={(gte, lte) => this.getData(gte, lte)}
           />
         </div> */}
-        {!lineData.length && <div style={{position: 'absolute', width: '100%'}}><NoData {...noDataConfig} /></div>}
+        {!lineData.length && <div style={{position: 'absolute', width: '100%', height: 'calc(100vh - 430px)'}}><NoData {...noDataConfig} /></div>}
         <div 
           style={{width: '100%', height: '350px'}} 
           ref={ref => this.lineRef = ref} 
