@@ -195,7 +195,7 @@ class ModalObject extends Component {
                 }],
               validateFirst: true,
             })(
-              <Input autoComplete="off" placeholder="请输入对象名称" />
+              <Input size="small" autoComplete="off" placeholder="请输入对象名称" />
             )}
           </FormItem>
           <FormItem {...formItemLayout} label="标签标识">
@@ -211,7 +211,7 @@ class ModalObject extends Component {
                 }],
               validateFirst: true,
             })(
-              <Input autoComplete="off" placeholder="请输入标签标识" />
+              <Input size="small" autoComplete="off" placeholder="请输入标签标识" />
             )}
           </FormItem>
           <FormItem {...formItemLayout} label="所属类目">
@@ -287,7 +287,7 @@ class ModalObject extends Component {
                       }],
                     validateFirst: true,
                   })(
-                    <Input autoComplete="off" placeholder="请输入标签名称" />
+                    <Input size="small" autoComplete="off" placeholder="请输入标签名称" />
                   )}
                 </FormItem>
                 <FormItem {...formItemLayout} label="标签标识">
@@ -303,7 +303,7 @@ class ModalObject extends Component {
                       }],
                     validateFirst: true,
                   })(
-                    <Input autoComplete="off" placeholder="请输入标签标识" />
+                    <Input size="small" autoComplete="off" placeholder="请输入标签标识" />
                   )}
                 </FormItem>
                 <FormItem {...formItemLayout} label="数据类型">

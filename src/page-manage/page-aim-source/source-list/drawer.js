@@ -247,7 +247,7 @@ export default class AddSource extends Component {
                 }],
               validateFirst: true,
             })(
-              <Input autoComplete="off" placeholder="请输入目的源名称" />
+              <Input size="small" autoComplete="off" placeholder="请输入目的源名称" />
             )}
           </FormItem>
 

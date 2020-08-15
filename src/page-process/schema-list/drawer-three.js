@@ -258,12 +258,14 @@ export default class DrawerThree extends Component {
                         <div className="param-item zone-params">
                           <Input
                             value={this.zoneParams.key} 
+                            size="small"
                             placeholder="请输入分区字段名"
                             onChange={e => this.zoneInputChange(e, 'zonekey')}
                           />
                           <span className="param-hen">－</span>
                           <Input
                             value={this.zoneParams.value} 
+                            size="small"
                             placeholder="请输入分区字段值"
                             onChange={e => this.zoneInputChange(e, 'zoneValue')}
                           />

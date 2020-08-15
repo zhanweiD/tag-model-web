@@ -175,7 +175,7 @@ export default class StepOne extends Component {
                 }],
               validateFirst: true,
             })(
-              <Input autoComplete="off" placeholder="请输入计划名称" />
+              <Input size="small" autoComplete="off" placeholder="请输入计划名称" />
             )}
           </FormItem>
        
@@ -284,10 +284,10 @@ export default class StepOne extends Component {
                     {required: true, message: '表名不能为空'},  
                     {validator: this.changeTableName},
                   ]})(
-                  <div className="FBH"> 
-                      <span className="ml16 mr16">tbjh_</span>
-                      <Input autoComplete="off" placeholder="请输入表名称" disabled={!this.store.storageId || !this.store.objId} />
-                    </div>
+                    <div className="FBH"> 
+                    <span className="ml16 mr16">tbjh_</span>
+                    <Input size="small" autoComplete="off" placeholder="请输入表名称" disabled={!this.store.storageId || !this.store.objId} />
+                  </div>
                 )}
               </FormItem>
             ) : null

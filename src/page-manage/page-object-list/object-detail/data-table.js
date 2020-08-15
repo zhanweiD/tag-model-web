@@ -2,6 +2,8 @@ import {Component} from 'react'
 import {Input} from 'antd'
 import {action} from 'mobx'
 import {observer} from 'mobx-react'
+import {SearchOutlined} from '@ant-design/icons'
+
 import {Time} from '../../../common/util'
 import {ListContent} from '../../../component'
 import store from './store-table'
@@ -68,11 +70,18 @@ export default class DataTable extends Component {
       columns: +type ? this.columns : this.simpleColumns,
       initParams: {objId: +objId},
       buttons: [<div className="pr24 far">
-        <Search
+        {/* <Search
           placeholder="请输入数据表名称关键字"
           onChange={e => this.onChange(e)}
           style={{width: 200}}
           size="small"
+        /> */}
+        <Input
+          onChange={e => this.onChange(e)}
+          style={{width: 200}}
+          size="small"
+          placeholder="请输入数据表名称关键字"
+          suffix={<SearchOutlined />}
         />
       </div>],
       store,

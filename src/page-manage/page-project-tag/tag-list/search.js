@@ -6,6 +6,7 @@ import {observer} from 'mobx-react'
 import {
   Input, Select,
 } from 'antd'
+import {SearchOutlined} from '@ant-design/icons'
 import {action} from 'mobx'
 
 const {Option} = Select
@@ -96,9 +97,15 @@ export default class Search extends Component {
           <Input.Search
             placeholder="请输入搜索关键词"
             enterButton="搜索"
-            // size="small"
+            size="small"
             onSearch={this.onSearch}
           />
+          {/* <Input
+            onSearch={this.onSearch}
+            size="small"
+            placeholder="请输入搜索关键词"
+            suffix={<SearchOutlined />}
+          /> */}
         </div>
         <div className="advanced-search">
           <div className="FBH mb16">

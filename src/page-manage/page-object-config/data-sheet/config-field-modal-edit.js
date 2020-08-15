@@ -79,7 +79,7 @@ class ModalTagEdit extends Component {
                   ...getNamePattern(),
                   {validator: this.checkName},
                 ],
-              })(<Input autoComplete="off" placeholder="不超过32个字，允许中文、英文、数字或下划线" />)}
+              })(<Input size="small" autoComplete="off" placeholder="不超过32个字，允许中文、英文、数字或下划线" />)}
             </FormItem>
 
             <FormItem {...formItemLayout} label="标签标识">
@@ -91,7 +91,7 @@ class ModalTagEdit extends Component {
                   {pattern: enNameReg, message: '不超过32个字，只能包含英文、数字或下划线，必须以英文开头'},
                   {validator: this.checkName},
                 ],
-              })(<Input autoComplete="off" placeholder="不超过32个字，允许英文、数字或下划线，必须以英文开头" />)}
+              })(<Input size="small" autoComplete="off" placeholder="不超过32个字，允许英文、数字或下划线，必须以英文开头" />)}
             </FormItem>
 
             <FormItem {...formItemLayout} label="数据类型">
@@ -130,6 +130,7 @@ class ModalTagEdit extends Component {
                   <Input.TextArea
                     autoComplete="off"
                     rows="3"
+                    size="small"
                     placeholder={'若标签值为枚举型，可将枚举代码值显示为易理解的值，例如：{"0":"女","1":"男"}'}
                   />
                 )}
@@ -158,6 +159,7 @@ class ModalTagEdit extends Component {
                 <Input.TextArea
                   autoComplete="off"
                   rows="3"
+                  size="small"
                   placeholder="标签表示的业务逻辑，例如“该用户的售手机号”，不超过128个字"
                 />
               )}
