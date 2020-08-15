@@ -113,7 +113,7 @@ export default class TagAnalyze extends Component {
                       status="active"
                       strokeWidth={4} 
                       strokeColor="#3187ff" 
-                      percent={item.ratio * 100} 
+                      percent={item.ratio} 
                     />
                     <Divider type="vertical" />
                   </li>
