@@ -77,8 +77,8 @@ export default class TagAnalyze extends Component {
         <h3 className="chart-title">值域分布</h3>
         <Button 
           type="primary pa" 
-          disabled={authorStatus !== 2 || status === 1}
-          style={{top: '16px', right: '16px'}}
+          disabled={status === 1}
+          style={{top: '16px', right: '16px', display: authorStatus !== 2 ? 'none' : 'block'}}
           onClick={() => store.getValueUpdate(pieData => {
             this.drawSaveTrend(pieData)
           })}
@@ -110,6 +110,7 @@ export default class TagAnalyze extends Component {
                     <Progress 
                       className="interval"
                       showInfo 
+                      status="active"
                       strokeWidth={4} 
                       strokeColor="#3187ff" 
                       percent={item.ratio * 100} 
