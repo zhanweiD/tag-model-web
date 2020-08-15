@@ -95,7 +95,7 @@ export default class Search extends Component {
                 }
               </Select>
               <span className="advanced-search-label">对象</span>
-              <Select value={objectId} className="mr8" style={{width: 240}} onChange={this.ownObjectSelect} showSearch optionFilterProp="children">
+              <Select value={objectId} className="mr24" style={{width: 240}} onChange={this.ownObjectSelect} showSearch optionFilterProp="children">
                 <Option value="">全部</Option>
                 {
                   objectList.map(

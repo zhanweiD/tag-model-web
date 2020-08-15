@@ -158,7 +158,7 @@ export default class SyncTagTree extends Component {
           key={item.id}
           title={<OmitTooltip maxWidth={120} text={item.name} />}
           selectable={false}
-          icon={<img src={tagIcon} alt="icon" style={{width: '14px'}} />}
+          // icon={<img src={tagIcon} alt="icon" style={{width: '14px'}} />}
         />
       )
     }
