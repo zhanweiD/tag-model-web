@@ -59,10 +59,12 @@ export default class TagAnalyze extends Component {
     let chartsCount = 0
     const data = []
     for (let i = 0; i < pieData.length; i++) {
+      console.log(pieData[i].ratio, typeof pieData[i].ratio)
+      console.log(pieData[i].ratio * 100)
       chartsCount += pieData[i].count
       const c = {
-        value: pieData[i].ratio * 100,
-        name: `${pieData[i].key} ${pieData[i].ratio * 100}% ${pieData[i].count}`,
+        value: pieData[i].ratio.toFixed(2),
+        name: `${pieData[i].key} ${(pieData[i].ratio).toFixed(2)}% ${pieData[i].count}`,
       }
       data[i] = c 
     }
@@ -113,7 +115,7 @@ export default class TagAnalyze extends Component {
                       status="active"
                       strokeWidth={4} 
                       strokeColor="#3187ff" 
-                      percent={item.ratio} 
+                      percent={item.ratio.toFixed(2)} 
                     />
                     <Divider type="vertical" />
                   </li>
