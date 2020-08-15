@@ -1,6 +1,7 @@
 import {Component} from 'react'
 import {Input} from 'antd'
 import {action} from 'mobx'
+import {SearchOutlined} from '@ant-design/icons'
 import {Time} from '../../../common/util'
 import {ListContent} from '../../../component'
 
@@ -49,12 +50,19 @@ export default class TagList extends Component {
       columns: this.columns,
       initParams: {objId: +objId},
       buttons: [<div className="pr24 far">
-        <Search
+        {/* <Search
           placeholder="请输入标签名称关键字"
           onChange={e => this.onChange(e)}
           style={{width: 200}}
+        /> */}
+        <Input
+          onChange={e => this.onChange(e)}
+          style={{width: 200}}
+          size="small"
+          placeholder="请输入标签名称关键字"
+          suffix={<SearchOutlined />}
         />
-      </div>],
+                </div>],
       store,
     }
     return (

@@ -2,6 +2,7 @@ import {Component} from 'react'
 import {Input} from 'antd'
 import {observer} from 'mobx-react'
 import {action} from 'mobx'
+import {SearchOutlined} from '@ant-design/icons'
 import {Time} from '../../../common/util'
 import {ListContent} from '../../../component'
 
@@ -64,12 +65,19 @@ export default class UseProject extends Component {
       columns: +type ? this.columns : this.simpleColumns,
       initParams: {objId: +objId},
       buttons: [<div className="pr24 far">
-        <Search
+        {/* <Search
           placeholder="请输入项目名称关键字"
           onChange={e => this.onChange(e)}
           style={{width: 200}}
+        /> */}
+        <Input
+          size="small"
+          onChange={e => this.onChange(e)}
+          placeholder="请输入项目名称关键字"
+          style={{width: 200}}
+          suffix={<SearchOutlined />}
         />
-                </div>],
+      </div>],
       store,
     }
 

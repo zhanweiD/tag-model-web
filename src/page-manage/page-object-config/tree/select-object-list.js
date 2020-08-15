@@ -7,6 +7,8 @@ import {observable, action} from 'mobx'
 import {
   Table, Input, Popconfirm, Tooltip,
 } from 'antd'
+import {SearchOutlined} from '@ant-design/icons'
+
 import {OmitTooltip} from '../../../component'
 import {Time} from '../../../common/util'
 // import {usedStatusMap} from '../util'
@@ -129,13 +131,22 @@ export default class ObjectList extends Component {
 
     return (
       <div className="FB1 select-object-list">
-        <Search
+        {/* <Search
           placeholder="请输入对象关键字"
           onSearch={this.onSearch}
           onChange={this.onChange}
           style={{width: 300}}
           className="mb8"
           // value={searchKey}
+        /> */}
+        <Input
+          onChange={this.onChange}
+          onSearch={this.onSearch}
+          className="mb8"
+          size="small"
+          placeholder="请输入对象关键字"
+          style={{width: 300}}
+          suffix={<SearchOutlined />}
         />
         <div className="select-object-table">
           <Table {...listConfig} />

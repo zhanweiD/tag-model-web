@@ -207,7 +207,7 @@ export default class DrawerOne extends Component {
                   }],
                 validateFirst: true,
               })(
-                <Input autoComplete="off" placeholder="请输入方案名称" disabled={!getFieldValue('objId')} />
+                <Input size="small" autoComplete="off" placeholder="请输入方案名称" disabled={!getFieldValue('objId')} />
               )}
             </FormItem>
        

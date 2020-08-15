@@ -17,6 +17,7 @@ export default class Page extends Component {
       <div className="param-item FBH">
         <Input 
           style={{width: 85}}
+          size="small"
           value={this.paramItem.key} 
           placeholder="输入参数名" 
           onChange={e => this.onChange(e, 'key')}
@@ -25,6 +26,7 @@ export default class Page extends Component {
         <span className="param-hen">－</span>
         <Input 
           style={{width: 85}}
+          size="small"
           value={this.paramItem.value} 
           placeholder="输入参数值" 
           onChange={e => this.onChange(e, 'value')}

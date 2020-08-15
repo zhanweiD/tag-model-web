@@ -4,6 +4,7 @@ import {observable, action, toJS} from 'mobx'
 import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
 import {Table, Input, Button, Tooltip} from 'antd'
+import {SearchOutlined} from '@ant-design/icons'
 
 const EditableContext = React.createContext()
 const {Search} = Input
@@ -58,7 +59,7 @@ class EditableCell extends Component {
               ],
               validateFirst: true,
               initialValue: text,
-            })(<Input ref={node => (this.input = node)} />)}
+            })(<Input size="small" ref={node => (this.input = node)} />)}
           </Form.Item>
         ) : (
           <span>
@@ -274,11 +275,19 @@ export default class SyncTagList extends Component {
     }
     return (
       <div className="FB1 sync-tag-list">
-        <Search
+        {/* <Search
           placeholder="请输入标签名称关键字"
           onChange={this.onChange}
           style={{width: 300}}
           className="select-tag-search"
+        /> */}
+        <Input
+          onChange={this.onChange}
+          style={{width: 300}}
+          size="small"
+          className="select-tag-search"
+          placeholder="请输入标签名称关键字"
+          suffix={<SearchOutlined />}
         />
         <Button 
           type="primary" 

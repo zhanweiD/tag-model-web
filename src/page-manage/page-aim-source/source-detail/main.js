@@ -192,7 +192,7 @@ class SourceDetail extends Component {
               }
             </Select>
             <span className="mr8">字段名称：</span>
-            <Input onChange={this.searchField} style={{width: 200}} placeholder="请输入字段名称" />
+            <Input size="small" onChange={this.searchField} style={{width: 200}} placeholder="请输入字段名称" />
           </div>
           <ListContent {...listConfig} />
         </div>

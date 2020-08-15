@@ -67,11 +67,11 @@ export default ({
 }) => {
   const map = {
     text: <span>{options}</span>,
-    input: <antd.Input placeholder={placeholder || createInputPlaceholder(label)} {...rest} />,
-    textArea: <antd.Input.TextArea rows={4} placeholder={placeholder || createInputPlaceholder(label)} {...rest} />,
-    select: <SelectTypes label={label} placeholder={placeholder || createSelectPlaceholder(label)} options={options} {...rest} />,
-    radioGroup: <antd.Radio.Group {...rest}>{radios}</antd.Radio.Group>, // 单选按钮
-    rangePicker: <antd.DatePicker.RangePicker {...rest} style={{width: '100%'}} />,
+    input: <antd.Input size="small" placeholder={placeholder || createInputPlaceholder(label)} {...rest} />,
+    textArea: <antd.Input.TextArea size="small" rows={4} placeholder={placeholder || createInputPlaceholder(label)} {...rest} />,
+    select: <SelectTypes size="small" label={label} placeholder={placeholder || createSelectPlaceholder(label)} options={options} {...rest} />,
+    radioGroup: <antd.Radio.Group size="small" {...rest}>{radios}</antd.Radio.Group>, // 单选按钮
+    rangePicker: <antd.DatePicker.RangePicker size="small" {...rest} style={{width: '100%'}} />,
     selectTree: () => (
       options.length 
         ? (
