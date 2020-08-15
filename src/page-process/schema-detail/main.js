@@ -2,9 +2,9 @@
  * @description 加工方案详情
  */
 import {Component, useEffect} from 'react'
-import {observable} from 'mobx'
+import {observable, action} from 'mobx'
 import {observer} from 'mobx-react'
-import {action} from 'mobx'
+
 import {Spin, NoData} from 'antd'
 import OnerFrame from '@dtwave/oner-frame'
 import {
@@ -97,15 +97,15 @@ class SchemaDetail extends Component {
                 tag={tagMap[detail.status]}
               />
             </div>
-            <TabRoute {...tabConfig}/>
+            <TabRoute {...tabConfig} />
             {/* <ConfigInfo store={store} /> */}
             <div className="list-content box-border">
-              <Content store={store} processeId={processeId} projectId={this.props.projectId}/>
+              <Content store={store} processeId={processeId} projectId={this.props.projectId} />
             </div>
           </Spin>
         )
           : (
-            <NoData />
+            <NoData text="暂无数据" />
           )
         }
        

@@ -177,6 +177,7 @@ export default class TagList extends Component {
       code: 'tag_model:create_tag[c]',
       noAuthText: '没有任何标签',
       // myFunctionCodes: functionCodes,
+      isLoading: tableLoading,
     }
     
     return (
@@ -184,7 +185,7 @@ export default class TagList extends Component {
         {
           !list.length && !this.isSearch() ? (
             <NoData
-              isLoading={tableLoading}
+              // isLoading={tableLoading}
               {...noDataConfig}
             />
           ) : (
