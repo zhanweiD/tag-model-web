@@ -4,8 +4,9 @@
 import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {Row, Col, Empty} from 'antd'
-
 import * as d3 from 'd3'
+import {NoData} from '../component'
+
 
 const chartOption = {
   svgW: '100%',
@@ -145,8 +146,9 @@ export default class TagRank extends Component {
                 {
                   !tagProject.length
                     ? (
-                      <div className="noData">
-                        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                      <div className="no-Data" style={{height: '240px'}}>
+                        {/* <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> */}
+                        <NoData text="暂无数据" size="small" />
                       </div>
                     )
                     : null
@@ -162,8 +164,9 @@ export default class TagRank extends Component {
                 {
                   !tagInvokeYday.length  
                     ? (
-                      <div className="noData">
-                        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                      <div className="no-Data" style={{height: '240px'}}>
+                        {/* <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> */}
+                        <NoData text="暂无数据" size="small" />
                       </div>
                     ) 
                     : null
@@ -181,8 +184,9 @@ export default class TagRank extends Component {
                 {
                   !tagUnpopular.length  
                     ? (
-                      <div className="noData">
-                        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                      <div className="no-Data" style={{height: '240px'}}>
+                        {/* <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> */}
+                        <NoData text="暂无数据" size="small" />
                       </div>
                     ) 
                     : null
@@ -198,8 +202,9 @@ export default class TagRank extends Component {
                 {
                   !tagInvokeAll.length  
                     ? (
-                      <div className="noData">
-                        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                      <div className="no-Data" style={{height: '240px'}}>
+                        {/* <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> */}
+                        <NoData text="暂无数据" size="small" />
                       </div>
                     ) 
                     : null

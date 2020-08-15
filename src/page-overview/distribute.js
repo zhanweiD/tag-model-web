@@ -2,6 +2,7 @@ import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {Row, Col, Empty} from 'antd'
 import {pieOpt} from './util'
+import {NoData} from '../component'
 
 @observer
 export default class Distribute extends Component {
@@ -76,12 +77,13 @@ export default class Distribute extends Component {
             <div className="overview-rank mb16">
               <div className="overview-rank-header">对象类型分布</div>
               <div className="overview-rank-content">
-              <div style={{height: '300px', width: '100%'}} ref={ref => this.objRef = ref} />
+                <div style={{height: '300px', width: '100%'}} ref={ref => this.objRef = ref} />
                 {
                   !objTypeChart.total
                     ? (
-                      <div className="noData">
-                        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                      <div className="no-Data" style={{height: '300px'}}>
+                        {/* <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> */}
+                        <NoData text="暂无数据" size="small" />
                       </div>
                     )
                     : null
@@ -93,12 +95,13 @@ export default class Distribute extends Component {
             <div className="overview-rank mb16">
               <div className="overview-rank-header">标签资产分布</div>
               <div className="overview-rank-content">
-              <div style={{height: '300px', width: '100%'}} ref={ref => this.tagRef = ref} />
+                <div style={{height: '300px', width: '100%'}} ref={ref => this.tagRef = ref} />
                 {
                   !tagChart.total
                     ? (
-                      <div className="noData">
-                        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                      <div className="no-Data" style={{height: '300px'}}>
+                        {/* <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> */}
+                        <NoData text="暂无数据" size="small" />
                       </div>
                     )
                     : null
@@ -110,12 +113,13 @@ export default class Distribute extends Component {
             <div className="overview-rank mb16">
               <div className="overview-rank-header">标签类型分布</div>
               <div className="overview-rank-content">
-              <div style={{height: '300px', width: '100%'}} ref={ref => this.tagTypeRef = ref} />
+                <div style={{height: '300px', width: '100%'}} ref={ref => this.tagTypeRef = ref} />
                 {
                   !tagTypeChart.total
                     ? (
-                      <div className="noData">
-                        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                      <div className="no-Data" style={{height: '300px'}}>
+                        {/* <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> */}
+                        <NoData text="暂无数据" size="small" />
                       </div>
                     )
                     : null

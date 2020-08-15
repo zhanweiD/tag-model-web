@@ -20,7 +20,7 @@ class Frame extends Component {
         <OnerFrame {...this.props}>
           {
             store.functionCodeDone ? (
-              <Layout>
+              <Layout style={{height: '100%'}}>
                 <Content className="tag-content">{me.props.children}</Content>
               </Layout>
             ) : <div />

@@ -300,6 +300,7 @@ class TagList extends Component {
       code: 'tag_model:create_tag[c]',
       isCommon: true,
       noAuthText: '没有任何标签',
+      isLoading: tableLoading,
     }
 
     const listConfig = {
@@ -339,7 +340,7 @@ class TagList extends Component {
           {
             !list.length && !this.isSearch() ? (
               <NoData
-                isLoading={tableLoading}
+                // isLoading={tableLoading}
                 {...noDataConfig}
               />
             ) : <div className="header-page box-border"><ListContent {...listConfig} /></div>

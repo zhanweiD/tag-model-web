@@ -139,6 +139,7 @@ export default class TagList extends Component {
       text: '没有任何标签，请在当前页面选择标签！',
       code: 'tag_model:move_tag[u]',
       noAuthText: '没有任何标签',
+      isLoading: tagList.loading,
     }
 
     return (
@@ -147,7 +148,7 @@ export default class TagList extends Component {
         {
           !tagList.list.length && typeof keyword === 'undefined' ? (
             <NoData
-              isLoading={tagList.loading}
+              // isLoading={tagList.loading}
               {...noDataConfig}
             />
           ) : (

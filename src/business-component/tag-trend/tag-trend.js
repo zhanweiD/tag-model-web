@@ -66,7 +66,7 @@ export default class TagTrend extends Component {
     const {tagId} = this.props
     const {lineData} = store
     const noDataConfig = {
-      text: '暂无趋势信息',
+      text: '暂无数据',
     }
     return (
       <div className="p16" style={{width: '100%', position: 'relative'}}>

@@ -6,6 +6,7 @@ import cloud from 'd3-cloud'
 import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {Empty, Spin} from 'antd'
+import {NoData} from '../component'
 
 @observer
 export default class Cloud extends Component {
@@ -86,8 +87,8 @@ export default class Cloud extends Component {
             {
               !cloudData.length
                 ? (
-                  <div className="noData">
-                    <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                  <div className="no-Data" style={{height: '492px'}}>
+                    <NoData text="暂无数据" size="small" />
                   </div>
                 )
                 : null
