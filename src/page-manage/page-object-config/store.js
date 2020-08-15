@@ -127,7 +127,7 @@ class Store {
         projectId: this.projectId,
       })
       runInAction(() => {
-        this.selectObjLoading = false
+        // this.selectObjLoading = false
         let data = res
         // 判断是否进行搜索
         if (params.searchKey) {
@@ -143,6 +143,10 @@ class Store {
       })
     } catch (e) {
       errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        this.selectObjLoading = false
+      })
     }
   }
 
@@ -165,10 +169,14 @@ class Store {
         }
         if (cb) cb(data)
         this.selectedObjList = data
-        this.selectedObjLoading = false
+        // this.selectedObjLoading = false
       })
     } catch (e) {
       errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        this.selectedObjLoading = false
+      })
     }
   }
 
@@ -191,10 +199,14 @@ class Store {
           }))
         }
         if (cb) cb(data)
-        this.selectedObjLoading = false
+        // this.selectedObjLoading = false
       })
     } catch (e) {
       errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        this.selectedObjLoading = false
+      })
     }
   }
 
