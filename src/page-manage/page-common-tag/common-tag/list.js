@@ -104,10 +104,12 @@ export default class Market extends Component {
       width: 200,
       render: (text, record) => (
         <div className="FBH FBAC">
+          {/* eslint-disable-next-line no-underscore-dangle */}
+          {/* <a href={`${window.__keeper.pathHrefPrefix}/tag-model/${record.id}`}>查看详情</a>  */}
           <Authority authCode="tag_model:public_tag_detail[r]">
-            <Link to={`/manage/common-tag/${record.id}`}>标签详情</Link>
+             <Link to={`/manage/common-tag/${record.id}/${store.useProjectId}`}>标签详情</Link>
           </Authority>
-          <Authority authCode="tag_model:apply_tag[c]">  
+          <AuthBox code="asset_tag_apply_market" isButton={false}>  
             {(() => {
               if (store.useProjectId) {
                 if (record.status) { // 状态 0：可以申请 1 审批中 2 不可以申请

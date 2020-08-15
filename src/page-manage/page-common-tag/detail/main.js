@@ -19,6 +19,7 @@ class TagDetail extends Component {
     super(props)
     const {match} = props
     store.tagId = match.params.id // 标签id
+    store.projectId = match.params.projectId // 项目id
   }
   
   componentWillMount() {
@@ -64,7 +65,7 @@ class TagDetail extends Component {
           />
         </Spin>
         <div className="bgf m16 box-border" style={{minHeight: 'calc(100vh - 266px)'}}> 
-          {info.isEnum ? <TagAnalyze tagId={tagId} /> : null}
+          {info.isEnum ? <TagAnalyze tagId={tagId} authorStatus={info.authorStatus} /> : null}
           <TagTrend tagId={tagId} />
         </div>
       </div>

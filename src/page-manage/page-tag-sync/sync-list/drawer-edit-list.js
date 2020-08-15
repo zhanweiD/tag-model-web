@@ -122,6 +122,10 @@ export default class SyncTagList extends Component {
       return (
         <div>
           {(() => {
+            if (record.canDelete) {
+              return <a href onClick={() => this.remove(record)}>移除</a>
+            }
+
             if (record.isUsed) {
               return <span className="disabled">移除</span>
             }

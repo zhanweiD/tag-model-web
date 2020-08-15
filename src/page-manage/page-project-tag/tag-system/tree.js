@@ -7,6 +7,7 @@ import {DtTree} from '@dtwave/uikit'
 import {action, toJS} from 'mobx'
 import {Loading} from '../../../component'
 import Action from './tree-action'
+import tagIcon from '../../../icon/tag.svg'
 
 const {DtTreeNode, DtTreeBox} = DtTree
 
@@ -32,12 +33,10 @@ export default class Tree extends Component {
         key={node.id}
         itemKey={node.isLeaf === 2 ? node.id : node.aId}
         title={node.name}
-        // selectable={false}
         selectable={node.type === 0}
-        showIcon={node.parentId === 0}
+        showIcon
         // 对象类目只有一级
-        // iconNodeSrc={e => getIconNodeSrc(e)}
-        // actionList={this.setActionList(node)}
+        iconNodeSrc={node.type === 0 ? tagIcon : null}
         nodeData={node}
       >
         {

@@ -24,6 +24,7 @@ class TagDetail extends Component {
     super(props)
     const {match} = props
     store.tagId = match.params.id // 标签id
+    store.projectId = match.params.projectId // 标签id
   }
   
   componentWillMount() {
@@ -95,7 +96,7 @@ class TagDetail extends Component {
           <Tabs defaultActiveKey="1" className="comp-tab">
             <TabPane tab="标签分析" key="1">
               <div className="bgf mb16 box-border" style={{minHeight: 'calc(100vh - 398px)'}}>
-                {tagBaseInfo.isEnum ? <TagAnalyze tagId={tagId} /> : null}
+                {tagBaseInfo.isEnum ? <TagAnalyze tagId={tagId} authorStatus={tagBaseInfo.authorStatus} /> : null}
                 <TagTrend tagId={tagId} />
               </div>
             </TabPane>

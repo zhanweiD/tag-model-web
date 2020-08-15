@@ -31,11 +31,11 @@ export default () => {
 
       {/* 项目标签 */}
       <Route exact path={`${prePath}/project-tag`} component={ProjectTag} />
-      <Route exact path={`${prePath}/project-tag/:id?`} component={ProjectTagDetail} />
+      <Route exact path={`${prePath}/project-tag/:id?/:projectId?`} component={ProjectTagDetail} />
 
       {/* 公共标签 */}
       <Route exact path={`${prePath}/common-tag`} component={CommonTag} />
-      <Route exact path={`${prePath}/common-tag/:id?`} component={CommonTagDetail} />
+      <Route exact path={`${prePath}/common-tag/:id?/:projectId?`} component={CommonTagDetail} />
     
       {/* ************* 标签同步 ************* */}
     
@@ -54,7 +54,7 @@ export default () => {
       
       {/* 标签维护 */}
       <Route exact strict path={`${prePath}/tag-maintain`} component={TagModel} />
-      <Route exact strict path={`${prePath}/tag-maintain/:tagId`} component={TagModelDetail} />
+      <Route exact strict path={`${prePath}/tag-maintain/:tagId/:projectId?`} component={TagModelDetail} />
 
       {/* ************* 对象管理 ************* */}
 
