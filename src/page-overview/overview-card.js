@@ -1,7 +1,13 @@
 import {Component} from 'react'
+import {observer} from 'mobx-react'
 import QuestionTooltip from '../component/question-tooltip'
 
+@observer
 export default class OverviewCard extends Component {
+  constructor(props) {
+    super(props)
+    this.store = props.store
+  }
   render() {
     const {cardInfo} = this.store
     const cards = [
@@ -24,23 +30,28 @@ export default class OverviewCard extends Component {
       },
     ]
     return (
-      {
-        // return (
-        //   <div className="mb16" style={{color: 'inherit'}}>
-        //     <div className="df-js">
-        //       {/* ml4 mt1 对齐微调 */}
-        //       <span className="ml4 mt1">
-        //         {title}
-        //       </span>
-        //       <QuestionTooltip tip={tooltipText} />
-        //     </div>
-        //     <div>
-                
-        //     </div>
-        //   </div>
-        // )
-      }
+      <div className="view-card">
+        <div className="overview-card-header">基础数据</div>
+        <div className="df-js">
+          {
+            cards.map((item, index) => {
+              return (
+                <div className="one-card" style={{width: '25%', borderRight: index === 3 ? null : '1px solid #f0f0f0'}}>
+                  <div className="df-js">
+                    {/* ml4 mt1 对齐微调 */}
+                    <div>
+                      {item.title}
+                    </div>
+                    <QuestionTooltip tip={item.tooltipText} />
+                  </div>
+                  <div className="f-color">{item.values}</div>
+                  <div />
+                </div>
+              )
+            })
+          }
+        </div>
+      </div>
     )
   }
 }
-// export default new OverviewCard()
