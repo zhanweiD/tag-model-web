@@ -9,7 +9,7 @@ import {Children, cloneElement} from 'react'
  * @example <Authority> <Button>xxx</Button></Authority>
  */
 
-const Authority = ({children, isHidden = false, authCode, customCodes, isCommon = false}) => {
+const Authority = ({children, isHidden = true, authCode, customCodes, isCommon = false}) => {
   const {tagProductFunctionCode = [], projectFunctionCode = []} = window.frameinfo || {}
   const functionCodes = customCodes || (isCommon ? tagProductFunctionCode : projectFunctionCode)
 

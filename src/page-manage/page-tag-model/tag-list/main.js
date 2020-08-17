@@ -311,16 +311,15 @@ class TagList extends Component {
       buttons: [
         <Authority
           authCode="tag_model:create_tag[c]"
-          // type="primary"
-          // onClick={() => store.openDrawer('add')}
-          // className="mr8"
         >
           <Button type="primary" className="mr8" onClick={() => store.openDrawer('add')}>新建标签</Button>
         </Authority>, 
         <Authority
           authCode="tag_model:publish_tag[u]"
         >
-          <Button className="mr8" onClick={() => store.batchPublish()} disabled={!publishRowKeys.length}>批量发布</Button>
+          <Button className="mr8" onClick={() => store.batchPublish()} disabled={!publishRowKeys.length}>
+            {`批量发布(${publishRowKeys.length})`}
+          </Button>
         </Authority>,
         <Authority
           authCode="tag_model:bind_tag[cud]"

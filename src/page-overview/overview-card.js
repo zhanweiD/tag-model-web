@@ -30,7 +30,7 @@ export default class OverviewCard extends Component {
       },
     ]
     return (
-      <div className="view-card">
+      <div className="view-card box-border">
         <div className="overview-card-header">基础数据</div>
         <div className="df-js">
           {
