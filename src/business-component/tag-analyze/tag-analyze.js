@@ -61,8 +61,8 @@ export default class TagAnalyze extends Component {
     for (let i = 0; i < pieData.length; i++) {
       chartsCount += pieData[i].count
       const c = {
-        value: pieData[i].ratio * 100,
-        name: `${pieData[i].key} ${pieData[i].ratio * 100}% ${pieData[i].count}`,
+        value: pieData[i].ratio.toFixed(2),
+        name: `${pieData[i].key} ${pieData[i].ratio.toFixed(2)}% ${pieData[i].count}`,
       }
       data[i] = c 
     }
@@ -77,8 +77,8 @@ export default class TagAnalyze extends Component {
         <h3 className="chart-title">值域分布</h3>
         <Button 
           type="primary pa" 
-          disabled={authorStatus !== 2 || status === 1}
-          style={{top: '16px', right: '16px'}}
+          disabled={status === 1}
+          style={{top: '16px', right: '16px', display: authorStatus !== 2 ? 'none' : 'block'}}
           onClick={() => store.getValueUpdate(pieData => {
             this.drawSaveTrend(pieData)
           })}
@@ -113,7 +113,7 @@ export default class TagAnalyze extends Component {
                       status="active"
                       strokeWidth={4} 
                       strokeColor="#3187ff" 
-                      percent={item.ratio * 100} 
+                      percent={item.ratio.toFixed(2)} 
                     />
                     <Divider type="vertical" />
                   </li>

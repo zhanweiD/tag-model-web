@@ -77,10 +77,10 @@ export default class ConfigDrawerTwo extends Component {
           <ListContent {...listConfig} />
         </div>
         <div className="bottom-button">
-          <Button type="primary" style={{marginRight: 8}} onClick={this.preStep}>
+          <Button style={{marginRight: 8}} onClick={this.preStep}>
             上一步
           </Button>
-          <Button style={{marginRight: 8}} onClick={() => this.closeDrawer()}>
+          <Button type="primary" style={{marginRight: 8}} onClick={() => this.closeDrawer()}>
             关闭
           </Button>
         </div>
