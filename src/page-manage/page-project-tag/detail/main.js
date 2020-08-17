@@ -83,7 +83,7 @@ class TagDetail extends Component {
     ]
 
     return (
-      <div>
+      <div style={{backgroundColor: '#f3f4f9', paddingBottom: '16px'}}>
         <Spin spinning={tagDetailLoading}>
           <DetailHeader
             name={tagBaseInfo.name}
@@ -96,24 +96,24 @@ class TagDetail extends Component {
           <div className="box-border project-tag-detail"> 
             <Tabs defaultActiveKey="1" className="comp-tab">
               <TabPane tab="标签分析" key="1">
-                <div className="bgf mb16" style={{minHeight: 'calc(100vh - 398px)'}}>
+                <div style={{minHeight: 'calc(100vh - 398px)'}}>
                   {tagBaseInfo.isEnum ? <TagAnalyze tagId={tagId} authorStatus={tagBaseInfo.authorStatus} /> : null}
                   <TagTrend tagId={tagId} />
                 </div>
               </TabPane>
               <TabPane tab="血缘分析" key="2">
-                <div className="bgf mb16" style={{height: 'calc(100vh - 398px)'}}>
+                <div style={{height: 'calc(100vh - 398px)'}}>
                   <TagrRelate tagId={tagId} />
                 </div>
               </TabPane>
               <TabPane tab="目的源列表" key="3">
-                <div className="bgf mb16 pt24" style={{minHeight: 'calc(100vh - 398px)'}}>
+                <div className="pt24" style={{minHeight: 'calc(100vh - 398px)'}}>
                   <StorageList tagId={tagId} />
                 </div>
     
               </TabPane>
               <TabPane tab="标签应用列表" key="4">
-                <div className="bgf mb16 pt24" style={{minHeight: 'calc(100vh - 398px)'}}>
+                <div className="pt24" style={{minHeight: 'calc(100vh - 398px)'}}>
                   <AppList tagId={tagId} />
                 </div>
               </TabPane>
