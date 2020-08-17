@@ -128,22 +128,22 @@ class TagDetail extends Component {
             tag={tagMap[tagBaseInfo.isUsed]}
           />
         </Spin>
-        <div className="ml16 mr16">
+        <div className="ml16 mr16 mb16">
           <OverviewCardWrap cards={cards} />
-          <Tabs defaultActiveKey="1" className="comp-tab mt0">
+          <Tabs defaultActiveKey="1" className="comp-tab mt0 box-border">
             <TabPane tab="标签分析" key="1">
-              <div className="bgf box-border" style={{minHeight: 'calc(100vh - 398px)'}}>
+              <div style={{minHeight: 'calc(100vh - 427px)'}}>
                 {tagBaseInfo.isEnum ? <TagAnalyze tagId={tagId} authorStatus={tagBaseInfo.authorStatus} /> : null}
                 <TagTrend tagId={tagId} />
               </div>
             </TabPane>
             <TabPane tab="血缘分析" key="2">
-              <div className="bgf  box-border" style={{height: 'calc(100vh - 400px)'}}>
+              <div style={{height: 'calc(100vh - 427px)'}}>
                 <TagrRelate tagId={tagId} />
               </div>
             </TabPane>
             <TabPane tab="项目列表" key="3">
-              <div className="bgf box-border pt24" style={{minHeight: 'calc(100vh - 398px)'}}>
+              <div className="pt24" style={{minHeight: 'calc(100vh - 427px)'}}>
                 <ProjectList tagId={tagId} configType={tagBaseInfo.configType} />
               </div>
             </TabPane>

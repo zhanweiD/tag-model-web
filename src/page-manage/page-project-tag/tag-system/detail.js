@@ -78,14 +78,16 @@ export default class Detail extends Component {
         {
           selectedKey ? (
             <Spin spinning={detailLoading}>
-              <DetailHeader
-                name={tagDetail.name}
-                descr={tagDetail.descr}
-                baseInfo={baseInfo}
-                tag={commonTag ? tagMap[authorStatus] : null}
-                actions={actions}
-              />
-              <div className="bgf mt16 min-h">
+              <div className="box-border">
+                <DetailHeader
+                  name={tagDetail.name}
+                  descr={tagDetail.descr}
+                  baseInfo={baseInfo}
+                  tag={commonTag ? tagMap[authorStatus] : null}
+                  actions={actions}
+                />
+              </div>
+              <div className="box-border mt16 min-h">
                 {tagDetail.isEnum ? <TagAnalyze tagId={selectedKey} authorStatus={authorStatus} /> : null}
                 <TagTrend key={selectedKey} tagId={selectedKey} />
               </div>

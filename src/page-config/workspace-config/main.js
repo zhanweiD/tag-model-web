@@ -118,8 +118,7 @@ const WorkspaceConfig = ({projectId}) => {
           </div>
         </div>
         {/* <Authority authCode="tag_config:environment_config[u]"> */}
-        <Popconfirm
-          // title="更改后原环境中的“标签体系、标签加工方案、标签同步计划、场景、我的查询、群体、API”都将会失效，请谨慎操作。"
+        {/* <Popconfirm
           title={(
             <div>
 更改后原环境中的“标签体系、标签加工方案、标签同步计划、场景、
@@ -131,11 +130,10 @@ const WorkspaceConfig = ({projectId}) => {
           onCancel={() => {}}
           okText="确认"
           cancelText="取消"
-          style={{width: '300px'}}
         >
           <Button type="primary">编辑</Button>
-        </Popconfirm>
-        {/* <Button type="primary" onClick={editClick}>编辑</Button> */}
+        </Popconfirm> */}
+        <Button type="primary" onClick={editClick}>编辑</Button>
         {/* </Authority> */}
       </div>
       <ConfigModal 

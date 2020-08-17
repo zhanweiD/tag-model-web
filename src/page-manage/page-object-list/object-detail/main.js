@@ -162,16 +162,15 @@ class ObjectDetail extends Component {
               />
             </div>
           </Spin>
-          <div className="ml16 mr16">
+          <div className="ml16 mr16 mb16">
             <OverviewCardWrap cards={cards} />
-            <div className="mt16 bgf box-border" style={{minHeight: 'calc(100vh - 322px)'}}>
+            <div className="mt16 bgf box-border" style={{minHeight: 'calc(100vh - 348px)'}}>
               <TabRoute {...tabConfig} />
               <Content objId={+objId} type={+objDetail.type} />
             </div>
           </div>
         </div>
       </Provider>
-     
     )
   }
 }

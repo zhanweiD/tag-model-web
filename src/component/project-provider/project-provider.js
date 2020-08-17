@@ -116,18 +116,21 @@ export default PageComponent => {
 
     if (!hasInit) {
       return (
-        <Fragment>
-          <NoData
-            {...noDataConfig}
-          />
-          <ConfigModal 
-            visible={visible}
-            workspace={workspace}
-            handleCancel={() => changeVisible(false)}
-            submit={params => initProject(params)}
-            projectId={projectId}
-          />
-        </Fragment>
+        <div className="h-100">
+          <div className="content-header">环境配置</div>
+          <div className="header-page" style={{minHeight: 'calc(100vh - 137px)', paddingTop: '25%'}}>
+            <NoData
+              {...noDataConfig}
+            />
+            <ConfigModal 
+              visible={visible}
+              workspace={workspace}
+              handleCancel={() => changeVisible(false)}
+              submit={params => initProject(params)}
+              projectId={projectId}
+            />
+          </div>
+        </div>
        
       )
     }

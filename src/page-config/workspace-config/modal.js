@@ -1,5 +1,5 @@
 import React from 'react'
-import {Modal, Form, Select} from 'antd'
+import {Modal, Form, Select, Popconfirm, Button} from 'antd'
 
 const {Option} = Select
 const formItemLayout = {
@@ -24,19 +24,47 @@ const ConfigModal = ({
       visible={visible}
       title={isAdd ? '初始化' : '修改初始化'}
       onCancel={onCancel}
-      onOk={() => {
-        form
-          .validateFields()
-          .then(values => {
-            form.resetFields()
-            isAdd ? onCreate(values) : onUpdate(values)
-          })
-          .catch(info => {
-            console.log('Validate Failed:', info)
-          })
-      }}
+      // onOk={() => {
+      //   form
+      //     .validateFields()
+      //     .then(values => {
+      //       form.resetFields()
+      //       isAdd ? onCreate(values) : onUpdate(values)
+      //     })
+      //     .catch(info => {
+      //       console.log('Validate Failed:', info)
+      //     })
+      // }}
       destroyOnClose
       maskClosable={false}
+      footer={[
+        <Button onClick={onCancel}>取消</Button>,
+        <Popconfirm
+          title={(
+            <div>
+更改后原环境中的“标签体系、标签加工方案、标签同步计划、场景、
+              <br />
+我的查询、群体、API”都将会失效，请谨慎操作。
+            </div>
+          )}
+          onCancel={() => {}}
+          onConfirm={() => {
+            form
+              .validateFields()
+              .then(values => {
+                form.resetFields()
+                isAdd ? onCreate(values) : onUpdate(values)
+              })
+              .catch(info => {
+                console.log('Validate Failed:', info)
+              })
+          }}
+          okText="确认"
+          cancelText="取消"
+        >
+          <Button type="primary">确定</Button>
+        </Popconfirm>,
+      ]}
     >
       <Form
         form={form}
