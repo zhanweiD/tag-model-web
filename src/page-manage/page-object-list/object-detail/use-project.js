@@ -21,17 +21,18 @@ export default class UseProject extends Component {
     render: text => (text || '-'),
   }, {
     title: '所有者',
-    dataIndex: 'creator',
+    dataIndex: 'cuserName',
   }, {
     title: '创建时间',
-    dataIndex: 'createTime',
+    dataIndex: 'ctime',
     render: text => <Time timestamp={text} />,
   }, {
     title: '生产基础标签/衍生标签',
     dataIndex: 'descr',
+    render: (text, record) => `${record.basicCount}/${record.produceCount}`,
   }, {
     title: '使用标签数',
-    dataIndex: 'descr',
+    dataIndex: 'usedCount',
   }]
 
   simpleColumns = [{
@@ -43,10 +44,10 @@ export default class UseProject extends Component {
     render: text => (text || '-'),
   }, {
     title: '所有者',
-    dataIndex: 'creator',
+    dataIndex: 'cuserName',
   }, {
     title: '创建时间',
-    dataIndex: 'createTime',
+    dataIndex: 'ctime',
     render: text => <Time timestamp={text} />,
   }]
 
@@ -77,7 +78,7 @@ export default class UseProject extends Component {
           style={{width: 200}}
           suffix={<SearchOutlined />}
         />
-                </div>],
+      </div>],
       store,
     }
 
