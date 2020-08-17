@@ -150,7 +150,7 @@ class ObjectDetail extends Component {
 
     return (
       <Provider bigStore={store}>
-        <div className="object-detail">
+        <div className="object-detail pb16">
           <Spin spinning={loading}>
             <div className="box-border">
               <DetailHeader 
@@ -162,7 +162,7 @@ class ObjectDetail extends Component {
               />
             </div>
           </Spin>
-          <div className="ml16 mr16 mb16">
+          <div className="ml16 mr16">
             <OverviewCardWrap cards={cards} />
             <div className="mt16 bgf box-border" style={{minHeight: 'calc(100vh - 348px)'}}>
               <TabRoute {...tabConfig} />
