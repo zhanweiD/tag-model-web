@@ -217,8 +217,9 @@ class TagList extends Component {
 
   componentWillMount() {
     if (store.projectId) {
-      store.getAuthCode()
+      // store.getAuthCode()
       this.initData()
+      store.checkKeyWord()
     }
   }
 

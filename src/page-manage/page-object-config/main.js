@@ -25,12 +25,12 @@ class ObjectConfig extends Component {
     store.tabId = match.params.tabId || 'view' // 当前详情tabID；默认数据视图
   }
 
-  componentWillMount() {
-    if (store.projectId) {
-      // 权限code
-      store.getAuthCode()
-    }
-  }
+  // componentWillMount() {
+  //   if (store.projectId) {
+  //     // 权限code
+  //     store.getAuthCode()
+  //   }
+  // }
 
   @action changeTab = code => {
     store.typeCode = code

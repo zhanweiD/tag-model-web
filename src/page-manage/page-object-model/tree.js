@@ -73,6 +73,7 @@ export default class Tree extends Component {
 
   componentWillMount() {
     this.getTreeData()
+    store.checkKeyWord()
   }
 
   getTreeData = () => {

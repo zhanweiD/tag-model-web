@@ -26,6 +26,7 @@ export default class FieldList extends Component {
   componentWillMount() {
     store.getDataSource()
     this.initData()
+    store.checkKeyWord()
   }
 
   componentWillReceiveProps(next) {

@@ -220,6 +220,11 @@ export default class DrawerCreate extends Component {
       nameType: nameTypeMap[rule.field], // 名称类型: 1 中文名 2 英文名
     }
 
+    if (this.store.nameKeyWord.includes(value)) {
+      callback('名称与关键字重复')
+      return 
+    }
+    
     if (this.store.drawerTagInfo.id) {
       params.id = this.store.drawerTagInfo.id
     }

@@ -27,12 +27,12 @@ export default class TagList extends Component {
     store.useProjectId = props.projectId
   }
 
-  componentWillMount() {
-    // 获取所属对象下拉数据
-    if (store.useProjectId) {
-      store.getAuthCode()
-    }
-  }
+  // componentWillMount() {
+  //   // 获取所属对象下拉数据
+  //   if (store.useProjectId) {
+  //     store.getAuthCode()
+  //   }
+  // }
 
   componentDidMount() {
     if (store.useProjectId) {
