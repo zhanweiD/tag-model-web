@@ -51,7 +51,7 @@ export default class UseProject extends Component {
   }]
 
   @action.bound onChange(v) {
-    const keyword = e.target.value
+    const keyword = v.target.value
     store.getList({
       currentPage: 1,
       keyword,
@@ -77,7 +77,7 @@ export default class UseProject extends Component {
           style={{width: 200}}
           suffix={<SearchOutlined />}
         />
-      </div>],
+                </div>],
       store,
     }
 

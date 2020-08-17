@@ -42,7 +42,7 @@ export default class ConfigInfo extends Component {
     return (
       <div className="config-info">
         <div className="info-title">逻辑配置</div>
-        <div className="FBH ml32 mb24">
+        <div className="FBH mb24">
           <div style={{color: ' rgba(0, 0, 0, 0.45)'}}>TQL：</div>
           <div>{tql}</div>
         </div>
@@ -50,7 +50,7 @@ export default class ConfigInfo extends Component {
         
         <NemoBaseInfo 
           dataSource={majorTagInfo} 
-          className="ml32 mb24"
+          className="mb24"
         />
         <div className="info-title">调度配置</div>
         <NemoBaseInfo 
@@ -67,10 +67,10 @@ export default class ConfigInfo extends Component {
             title: '调度类型',
             value: scheduleTypeObj[configDetail.scheduleType],
           }]} 
-          className="ml32 mb24"
+          className="mb24"
         />
         <div className="info-title">标签配置</div>
-        <div className="mb4">
+        <div className="mb8">
           标签数/字段数：
           {configDetail.tagCount}
           /

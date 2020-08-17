@@ -180,12 +180,18 @@ export default class Market extends Component {
     const listConfig = {
       columns: this.columns,
       buttons: useProjectId ? [
-        <Button type="primary" disabled={!store.rowKeys.length} onClick={this.batchApply}>批量申请</Button>,
-        <span className="ml8">
-          已选择 
-          <span style={{color: '#0078FF'}} className="mr4 ml4">{store.rowKeys.length}</span>
-          项
-        </span>,
+        <Button type="primary" disabled={!store.rowKeys.length} onClick={this.batchApply}>
+          {
+            `批量申请(${store.rowKeys.length})`
+          }
+
+        </Button>,
+      // ,
+        // <span className="ml8">
+        //   已选择 
+        //   <span style={{color: '#0078FF'}} className="mr4 ml4">{store.rowKeys.length}</span>
+        //   项
+        // </span>,
       ] : null,
       rowSelection: useProjectId ? rowSelection : null,
       rowKey: 'id',
