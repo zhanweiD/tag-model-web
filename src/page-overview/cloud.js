@@ -5,7 +5,7 @@ import * as d3 from 'd3'
 import cloud from 'd3-cloud'
 import {Component} from 'react'
 import {observer} from 'mobx-react'
-import {Empty, Spin} from 'antd'
+import {Spin} from 'antd'
 import {NoData} from '../component'
 
 @observer
@@ -26,13 +26,14 @@ export default class Cloud extends Component {
     this.box.style('transform', 'scale(0.3, 0.3)').style('transition', 'all .3s linear')
     this.box.selectAll('*').remove()
 
-    const scaleSize = d3.scaleLinear().domain([0, max]).range([14, 60])
+    const scaleSize = d3.scaleLinear().domain([0, max]).range([14, 40])
 
     this.fill = d3.scaleOrdinal(d3.schemeCategory10)
     this.layout = cloud()
-      .size([parseFloat(this.box.style('width')), 500])
+      .size([parseFloat(this.box.style('width')), 450])
       .words(data.map(d => ({text: d.objName, size: scaleSize(d.relCount)})))
-      .padding(10)
+      .padding(2)
+      .spiral('archimedean')
       .rotate(0)
       .font('Impact')
       .fontSize(d => d.size)
@@ -87,7 +88,7 @@ export default class Cloud extends Component {
             {
               !cloudData.length
                 ? (
-                  <div className="no-Data" style={{height: '492px'}}>
+                  <div className="no-Data" style={{height: '442px'}}>
                     <NoData text="暂无数据" size="small" />
                   </div>
                 )
