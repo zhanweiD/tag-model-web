@@ -78,7 +78,7 @@ export default class StepThree extends Component {
               title: '方案描述',
               value: descr,
             }]}
-            className="ml24 mb24"
+            className="mb24"
           />
           <div className="info-title ">配置目的源</div>
           <NemoBaseInfo 
@@ -92,7 +92,7 @@ export default class StepThree extends Component {
               title: '表',
               value: `tbjh_${tableName}`,
             }]}
-            className="ml24 mb24"
+            className="mb24"
           />
           <div className="info-title ">主标签配置</div>
           <NemoBaseInfo 
@@ -100,17 +100,17 @@ export default class StepThree extends Component {
               title: d.objName,
               value: d.columnName,
             }))}
-            className="ml24 mb24"
+            className="mb24"
           />
           <div className="info-title ">配置同步标签</div>
-          <div className="FBH ml24 mb24">
+          <div className="FBH mb24">
             <div style={{color: ' rgba(0, 0, 0, 0.45)'}}>
               <span>同步标签总数：</span>
               {tableData.length}
             </div>
             <div>{previewData.tagTotalCount}</div>
           </div>
-          <div className="FBH ml24 mb24">
+          <div className="FBH mb24">
             <div style={{color: ' rgba(0, 0, 0, 0.45)'}}>同步标签：</div>
             <div>{tableData.map(d => <Tag>{d.name}</Tag>)}</div>
           </div>

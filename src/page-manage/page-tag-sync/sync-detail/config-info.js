@@ -23,7 +23,7 @@ export default class ConfigInfo extends Component {
               title: '表',
               value: configInfo.tableName,
             }]}
-            className="ml24 mb24"
+            className="mb24"
           />
           <div className="info-title">主标签配置</div>
           <NemoBaseInfo 
@@ -31,14 +31,14 @@ export default class ConfigInfo extends Component {
               title: d.objName,
               value: d.columnName,
             }))}
-            className="ml24 mb24"
+            className="mb24"
           />
           <div className="info-title">配置同步标签</div>
-          <div className="FBH ml24 mb24">
+          <div className="FBH mb24">
             <div style={{color: ' rgba(0, 0, 0, 0.45)'}}>同步标签总数：</div>
             <div>{configInfo.tagTotalCount}</div>
           </div>
-          <div className="FBH ml24 mb24">
+          <div className="FBH mb24">
             <div style={{color: ' rgba(0, 0, 0, 0.45)'}}>同步标签：</div>
             <div>{configInfo.tagNameList && configInfo.tagNameList.map(d => <Tag>{d}</Tag>)}</div>
           </div>
