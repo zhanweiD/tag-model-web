@@ -10,11 +10,12 @@ import {Children, cloneElement} from 'react'
  */
 
 const Authority = ({children, isHidden = true, authCode, customCodes, isCommon = false}) => {
-  const {tagProductFunctionCode = [], projectFunctionCode = []} = window.frameinfo || {}
-  const functionCodes = customCodes || (isCommon ? tagProductFunctionCode : projectFunctionCode)
+  const {tagProductFunctionCode = [], projectFunctionCode = []} = window.frameInfo || {}
 
-  // const isHaveAuth = functionCodes.includes(authCode)
-  const isHaveAuth = true
+  const functionCodes = customCodes || (isCommon ? tagProductFunctionCode : projectFunctionCode.map(d => d.functionCode))
+
+  const isHaveAuth = functionCodes.includes(authCode)
+
   if (isHidden) {
     return isHaveAuth ? children : null
   }
