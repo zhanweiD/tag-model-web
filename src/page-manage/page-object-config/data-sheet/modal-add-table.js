@@ -285,7 +285,8 @@ class ModalAddTable extends Component {
     return (
       <Modal
         width={600}
-        visible={modalVisible}
+        // visible={modalVisible}
+        visible
         maskClosable={false}
         destroyOnClose
         title="添加关联表"
@@ -338,16 +339,6 @@ class ModalAddTable extends Component {
             ) : null
           }
         
-          {/* <FormItem
-            {...formItemLayout}
-            label={(
-              <span>
-                <span className="mr10">从关联实体的</span>
-                <br />
-数据表中选择
-              </span>
-            )}
-          > */}
           <FormItem {...formItemLayout} label="数据源">
             {getFieldDecorator('dataStorageId', {
               initialValue: storageId,
@@ -394,7 +385,17 @@ class ModalAddTable extends Component {
           {/* 实体2 */}
           {
             +bothTypeCode === 2 ? (
-              <FormItem {...formItemLayout} label="主标签绑定的字段">
+              // <FormItem {...formItemLayout} label="主标签绑定的字段">
+              <FormItem 
+                {...formItemLayout} 
+                label={(
+                  <span>
+                    <span className="mr10">主标签绑定的</span>
+                    <br />
+    字段
+                  </span>
+                )}
+              >
                 {getFieldDecorator('mappingKey', {
                   rules: [{required: true, message: '请选择主标签绑定的字段'}],
                 })(
