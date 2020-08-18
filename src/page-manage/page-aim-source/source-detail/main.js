@@ -46,6 +46,7 @@ class SourceDetail extends Component {
   }, {
     title: '字段描述',
     dataIndex: 'descr',
+    render: text => text || '-',
   }, {
     title: '映射状态',
     dataIndex: 'status',
@@ -58,11 +59,12 @@ class SourceDetail extends Component {
       if (record.tagName) {
         return text ? <Badge color="#87d068" text="已使用" /> : <Badge color="#d9d9d9" text="未使用" />
       }
-      return null
+      return '-'
     },
   }, { 
     title: '标签名称',
     dataIndex: 'tagName',
+    render: text => text || '-',
   }, {
     title: '操作',
     dataIndex: 'action',
@@ -175,7 +177,7 @@ class SourceDetail extends Component {
         <div className="list-content box-border">
           <TabRoute {...tabConfig} />
           <div className="mb16 pl24 pt24">
-            <span className="mr8">映射状态：</span>
+            <span className="mr8">映射状态</span>
             <Select
               showSearch
               allowClear
@@ -191,7 +193,7 @@ class SourceDetail extends Component {
                 ))
               }
             </Select>
-            <span className="mr8">字段名称：</span>
+            <span className="mr8">字段名称</span>
             <Input size="small" onChange={this.searchField} style={{width: 200}} placeholder="请输入字段名称" />
           </div>
           <ListContent {...listConfig} />

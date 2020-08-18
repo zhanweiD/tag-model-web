@@ -95,6 +95,7 @@ export default class FieldList extends Component {
       key: 'name',
       title: '标签名称',
       dataIndex: 'name',
+      render: text => text || '-',
     }, {
       key: 'action',
       title: '操作',
