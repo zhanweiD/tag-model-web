@@ -19,9 +19,11 @@ const prePath = '/manage'
 
 export default () => {
   const ctx = OnerFrame.useFrame()
+  const projectId = ctx.useProjectId()
   useEffect(() => {
     ctx.querySiderMenus({
       productCode: 'tag_model',
+      projectId,
     })
     ctx.useSider(true)
   }, [])
