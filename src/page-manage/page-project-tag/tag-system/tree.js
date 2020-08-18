@@ -5,9 +5,9 @@ import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {DtTree} from '@dtwave/uikit'
 import {action, toJS} from 'mobx'
-import {Loading} from '../../../component'
+import {Loading, NoData} from '../../../component'
 import Action from './tree-action'
-import tagIcon from '../../../icon/tag.svg'
+import tagIcon from '../../../icon/new-tag.svg'
 
 const {DtTreeNode, DtTreeBox} = DtTree
 
@@ -67,6 +67,11 @@ export default class Tree extends Component {
       style: {minWidth: '200px'},
     }
 
+    const noDataConfig = {
+      text: '暂无数据',
+      noAuthText: '暂无数据',
+    }
+
     // const expandKey = Number(currentSelectKeys)
     const treeConfig = {
       type: 'tree',
@@ -80,18 +85,28 @@ export default class Tree extends Component {
     }
     return (
       <div className="tree"> 
-        <DtTreeBox {...treeBoxConfig}>
-          {treeLoading
-            ? <Loading mode="block" height={100} />
-            : (
-              <DtTree {...treeConfig}>
-                {
-                  this.processNodeData(treeData)
-                }
-              </DtTree>
-            )
-          }
-        </DtTreeBox>
+        {
+          treeData.length ? (
+            <DtTreeBox {...treeBoxConfig}>
+              {treeLoading
+                ? <Loading mode="block" height={100} />
+                : (
+                  <DtTree {...treeConfig}>
+                    {
+                      this.processNodeData(treeData)
+                    }
+                  </DtTree>
+                )
+              }
+            </DtTreeBox>
+          ) : (
+            <div style={{height: '100%'}}>
+              <NoData
+                {...noDataConfig}
+              />
+            </div>
+          )
+        }
       </div>
     )
   }

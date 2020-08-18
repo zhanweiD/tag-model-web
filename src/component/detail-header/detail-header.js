@@ -45,7 +45,7 @@ export default class Main extends Component {
             </div>
             <div className="detail-descr mt8">
               <span style={{color: 'rgba(0,0,0, .45)'}}>描述：</span>
-              {descr || '-'}
+              <span style={{color: descr ? 'rgba(0,0,0,.65)' : 'rgba(0,0,0,.25)'}}>{descr || '-'}</span>
             </div>
             {/* {
               descr ? <div className="detail-descr">{`描述：${descr}`}</div> : null

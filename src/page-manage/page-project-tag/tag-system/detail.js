@@ -92,7 +92,7 @@ export default class Detail extends Component {
                 <TagTrend key={selectedKey} tagId={selectedKey} />
               </div>
             </Spin>
-          ) : <NoData {...noDataConfig} />
+          ) : <div className="box-border" style={{paddingTop: '15%', minHeight: 'calc(100vh - 181px)'}}><NoData {...noDataConfig} /></div>
         }
         <TagApply store={this.store} />
       </div>

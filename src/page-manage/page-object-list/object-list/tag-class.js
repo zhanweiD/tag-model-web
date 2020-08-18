@@ -92,7 +92,7 @@ export default class TagClass extends Component {
      >
        <div className="FBH" style={{height: 'calc(100vh - 56px - 96px)'}}>
          <Tree store={this.store} />
-         <div className="FB1 ml48">
+         <div className="FB1 ml48 object-cate">
            <DetailHeader 
              name={cateDetail.name}
              descr={cateDetail.descr}

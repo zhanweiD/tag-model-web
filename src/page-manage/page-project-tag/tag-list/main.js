@@ -184,10 +184,12 @@ export default class TagList extends Component {
       <div>
         {
           !list.length && !this.isSearch() ? (
-            <NoData
-              // isLoading={tableLoading}
-              {...noDataConfig}
-            />
+            <div className="header-page" style={{paddingTop: '15%', minHeight: 'calc(100vh - 181px)'}}>
+              <NoData
+                // isLoading={tableLoading}
+                {...noDataConfig}
+              />
+            </div>
           ) : (
             <Fragment>
               <Search store={store} />

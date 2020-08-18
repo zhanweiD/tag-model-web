@@ -28,6 +28,7 @@ const formItemLayout = {
     xl: {span: 18}, // >=1200
     xxl: {span: 19}, // >=1600
   },
+  colon: false,
 }
 
 @Form.create()

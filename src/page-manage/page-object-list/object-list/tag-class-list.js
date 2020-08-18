@@ -146,12 +146,13 @@ export default class TagList extends Component {
       <div className="pt32">
         <p className="mb16">标签列表</p>
         {
-          !tagList.list.length && typeof keyword === 'undefined' ? (
-            <NoData
-              // isLoading={tagList.loading}
-              {...noDataConfig}
-            />
-          ) : (
+          // !tagList.list.length && typeof keyword === 'undefined' ? (
+          //   <NoData
+          //     // isLoading={tagList.loading}
+          //     {...noDataConfig}
+          //   />
+          // ) : 
+          (
             <Fragment>
               <div className="FBH FBJB mb16">
                 <Authority authCode="tag_model:move_tag[u]">                
