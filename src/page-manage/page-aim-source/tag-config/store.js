@@ -68,13 +68,13 @@ class DrawerStore {
     try {
       const res = await io.saveMappingResult(params)
       if (res === true) {
-        successTip('绑定成功')
+        successTip('操作成功')
       } else {
-        failureTip('绑定失败')
+        failureTip('操作失败')
       }
     } catch (e) {
       errorTip(e.message)
-      failureTip('绑定失败')
+      failureTip('操作失败')
     }
   }
 }

@@ -15,37 +15,52 @@ export default class ConfigDrawerTwo extends Component {
   }
 
   columns = [{
-    title: '更新前',
+    title: '',
     children: [
       {
         key: 'bfieldName',
         title: '字段',
         dataIndex: 'bfieldName',
-      }, {
+      },
+    ],
+  }, {
+    title: '更新前',
+    children: [
+      // {
+      //   key: 'bfieldName',
+      //   title: '字段',
+      //   dataIndex: 'bfieldName',
+      // }, 
+      {
         key: 'btagEnName',
         title: '标签标识',
         dataIndex: 'btagEnName',
+        render: text => text || '-',
       }, {
         key: 'btagName',
         title: '标签名称',
         dataIndex: 'btagName',
+        render: text => text || '-',
       }, 
     ],
   }, {
     title: '更新后',
     children: [
+      // {
+      //   key: 'fieldName',
+      //   title: '字段',
+      //   dataIndex: 'fieldName',
+      // }, 
       {
-        key: 'fieldName',
-        title: '字段',
-        dataIndex: 'fieldName',
-      }, {
         key: 'tagEnName',
         title: '标签标识',
         dataIndex: 'tagEnName',
+        render: text => text || '-',
       }, {
         key: 'tagName',
         title: '标签名称',
         dataIndex: 'tagName',
+        render: text => text || '-',
       }, 
     ],
   }]
@@ -66,7 +81,7 @@ export default class ConfigDrawerTwo extends Component {
 
     const listConfig = {
       tableLoading,
-      // bordered: true,
+      bordered: true,
       columns: this.columns,
       initGetDataByParent: true, // 初始请求 在父层组件处理。列表组件componentWillMount内不再进行请求
       store: this.store, // 必填属性
