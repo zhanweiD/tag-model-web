@@ -285,8 +285,7 @@ class ModalAddTable extends Component {
     return (
       <Modal
         width={600}
-        // visible={modalVisible}
-        visible
+        visible={modalVisible}
         maskClosable={false}
         destroyOnClose
         title="添加关联表"
