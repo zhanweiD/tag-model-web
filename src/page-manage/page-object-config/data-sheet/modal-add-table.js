@@ -10,8 +10,8 @@ const FormItem = Form.Item
 const {Option} = Select
 
 const formItemLayout = {
-  labelCol: {span: 7},
-  wrapperCol: {span: 17},
+  labelCol: {span: 4},
+  wrapperCol: {span: 20},
   colon: false,
 }
 
@@ -299,7 +299,16 @@ class ModalAddTable extends Component {
           {
             +bothTypeCode === 0 ? (
               <Fragment>
-                <FormItem {...formItemLayout} label="从关联实体的数据表中选择">
+                <FormItem 
+                  {...formItemLayout} 
+                  label={(
+                    <span>
+                      <span className="mr10">从关联实体的</span>
+                      <br />
+      数据表中选择
+                    </span>
+                  )}
+                >
                   {getFieldDecorator('switch')(
                     <Switch 
                       size="small"
@@ -329,6 +338,16 @@ class ModalAddTable extends Component {
             ) : null
           }
         
+          {/* <FormItem
+            {...formItemLayout}
+            label={(
+              <span>
+                <span className="mr10">从关联实体的</span>
+                <br />
+数据表中选择
+              </span>
+            )}
+          > */}
           <FormItem {...formItemLayout} label="数据源">
             {getFieldDecorator('dataStorageId', {
               initialValue: storageId,
@@ -388,7 +407,7 @@ class ModalAddTable extends Component {
                   </Select>
                 )}
               </FormItem>
-            ) : <h3 className="mb24 fs14" style={{marginLeft: '82px'}}>主标签配置</h3>
+            ) : <h3 className="mb24 fs14" style={{marginLeft: '12px'}}>主标签配置</h3>
           }
         
           {/* 复杂关系1 */}
