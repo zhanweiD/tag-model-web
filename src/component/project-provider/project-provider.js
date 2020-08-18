@@ -29,7 +29,7 @@ export default PageComponent => {
           无可用项目 去
         <a target="_blank" className="a-href-color" rel="noopener noreferrer" href="/project/index.html#/project">项目管理</a>
     添加
-      </span>,
+            </span>,
     }
 
     // 判断项目是否初始化
@@ -118,7 +118,7 @@ export default PageComponent => {
       return (
         <div className="h-100">
           <div className="content-header">环境配置</div>
-          <div className="header-page" style={{minHeight: 'calc(100vh - 137px)', paddingTop: '25%'}}>
+          <div className="header-page" style={{minHeight: 'calc(100vh - 137px)', paddingTop: '15%'}}>
             <NoData
               {...noDataConfig}
             />
