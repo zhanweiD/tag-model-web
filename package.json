@@ -21,7 +21,7 @@
     "@dtwave/oner-flexbox": "2.0.1",
     "@dtwave/oner-mapping": "2.1.0-alpha12",
     "@dtwave/uikit": "3.0.0-alpha1",
-    "@dtwave/oner-frame": "0.0.2-alpha20",
+    "@dtwave/oner-frame": "0.0.3-alpha1",
     "antd": "4.2.0",
     "autoprefixer": "9.4.7",
     "babel-core": "6.26.3",
