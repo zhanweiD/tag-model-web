@@ -148,6 +148,19 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
+  @observable nameKeyWord = []
+  @action async checkKeyWord() {
+    try {
+      const res = await io.checkKeyWord()
+      runInAction(() => {
+        this.nameKeyWord = res
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+
   @observable tagTypeList = []
   @action async getTagTypeList(data) {
     try {

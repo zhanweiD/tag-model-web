@@ -17,6 +17,7 @@ const api = {
   getRelToEntityData: get(`${objectApi}/entity_cate_tree`), // 关系对象选择实体对象类目树
 
   checkName: post(`${objectApi}/name_check`), // 重名校验
+  checkKeyWord: get(`${objectApi}/list_keyword`),
   
   //* ------------------------------ 对象详情 ------------------------------*//
   getObjDetail: get(`${objectApi}/object_basic`), // 对象基础信息

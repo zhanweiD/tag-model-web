@@ -40,6 +40,10 @@ export default class ConfigField extends Component {
     store.storageId = editSelectedItem.dataStorageId
   }
 
+  componentWillMount() {
+    store.checkKeyWord()
+  }
+
   componentWillUnmount() {
     store.initialList.clear()
     store.secondTableList.clear()

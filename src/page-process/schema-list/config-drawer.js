@@ -23,6 +23,7 @@ export default class DrawerConfig extends Component {
     this.codeStore = codeStore
     this.store.projectId = props.projectId
     this.store.resetData()
+    this.store.checkKeyWord()
   }
 
   @action closeDrawer = () => {

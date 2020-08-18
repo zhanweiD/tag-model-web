@@ -229,6 +229,12 @@ class ModalTagEdit extends Component {
       name: value,
       nameType: nameTypeMap[rule.field], // 名称类型: 1 中文名 2 标签标识
     }
+
+    if (store.nameKeyWord.includes(value)) {
+      callback('名称与关键字重复')
+      return 
+    }
+    
     if (store.tagId) {
       params.id = store.tagId
     }

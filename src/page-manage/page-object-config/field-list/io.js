@@ -1,5 +1,5 @@
 import ioContext from '../../../common/io-context'
-import {baseApi, get, post} from '../../../common/util'
+import {baseApi, get, post, objectApi} from '../../../common/util'
 
 const api = {
   getList: get(`${baseApi}/tagConfig/getRelFieldList`), // 字段列表 - 查看关联字段(已关联字段列表)
@@ -9,6 +9,7 @@ const api = {
   getTagTree: get(`${baseApi}/cate/cate_tree`), // 标签配置 - 获取标签可移动的标签类目树
   createBatchTag: post(`${baseApi}/tag/pool/create_batch_tag`), // 标签配置 - 批量创建标签及标签字段关系
   checkName: post(`${baseApi}/tag/name_check`), // 重名校验
+  checkKeyWord: get(`${objectApi}/list_keyword`),
   getTagTypeList: get(`${baseApi}/tag/tag_type`), // 根据字段类型获取标签类型
 } 
 

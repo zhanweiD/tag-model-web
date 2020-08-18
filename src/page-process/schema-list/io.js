@@ -1,6 +1,6 @@
 import ioContext from '../../common/io-context'
 import {
-  derivativeApi, tagModalApi, baseApi, get, post,
+  derivativeApi, tagModalApi, baseApi, get, post, objectApi,
 } from '../../common/util'
 
 const api = {
@@ -31,6 +31,7 @@ const api = {
   createTag: post(`${baseApi}/tag/create_derivative_tag`), // 创建衍生标签
   getTagList: get(`${baseApi}/tag/list_derivative_tag`), // 衍生标签列表
   tabCheckName: post(`${tagModalApi}/name_check`), // 重名校验
+  checkKeyWord: get(`${objectApi}/list_keyword`),
   getTagCateSelectList: get(`${baseApi}/cate/cate_tree`), // 创建标签 - 所属类目下拉数据
   getTagBaseDetail: get(`${tagModalApi}/tag_detail`), // 标签详情
 

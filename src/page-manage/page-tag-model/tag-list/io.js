@@ -1,6 +1,6 @@
 import ioContext from '../../../common/io-context'
 import {
-  baseApi, tagModalApi, get, post,
+  baseApi, tagModalApi, get, post, objectApi,
 } from '../../../common/util'
 
 const api = {
@@ -15,6 +15,7 @@ const api = {
   updateTagStatus: post(`${tagModalApi}/update_tag_status`), // 修改标签发布状态
 
   checkName: post(`${tagModalApi}/name_check`), // 重名校验
+  checkKeyWord: get(`${objectApi}/list_keyword`),
 
   // 权限code
   getAuthCode: get(`${baseApi}/project/getFunctionCodes`),

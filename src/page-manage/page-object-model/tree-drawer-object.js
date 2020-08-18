@@ -65,8 +65,13 @@ class ModalObject extends Component {
         detail,
         editType,
       },
+      nameKeyWord,
     } = this.store
 
+    if (nameKeyWord.includes(value)) {
+      callback('名称与关键字重复')
+      return 
+    }
     const params = {
       name: value,
       type: targetTypeMap.obj, // 类型:0 类目 1 对象 

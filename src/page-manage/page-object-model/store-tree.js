@@ -279,6 +279,18 @@ class Store {
       errorTip(e.message)
     }
   }
+
+  @observable nameKeyWord = []
+  @action async checkKeyWord() {
+    try {
+      const res = await io.checkKeyWord()
+      runInAction(() => {
+        this.nameKeyWord = res
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
 }
 
 export default new Store()
