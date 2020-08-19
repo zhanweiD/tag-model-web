@@ -85,7 +85,19 @@ export default class Tree extends Component {
     }
     return (
       <div className="tree"> 
-        {
+        <DtTreeBox {...treeBoxConfig}>
+          {treeLoading
+            ? <Loading mode="block" height={100} />
+            : (
+              <DtTree {...treeConfig}>
+                {
+                  this.processNodeData(treeData)
+                }
+              </DtTree>
+            )
+          }
+        </DtTreeBox>
+        {/* {
           treeData.length ? (
             <DtTreeBox {...treeBoxConfig}>
               {treeLoading
@@ -106,7 +118,7 @@ export default class Tree extends Component {
               />
             </div>
           )
-        }
+        } */}
       </div>
     )
   }
