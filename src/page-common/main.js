@@ -19,6 +19,7 @@ export default () => {
       projectId,
     })
     ctx.useSider(false)
+    ctx.useProject(true)
   }, [])
   return (
     <Switch>

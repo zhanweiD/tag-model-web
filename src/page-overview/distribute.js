@@ -78,16 +78,15 @@ export default class Distribute extends Component {
               <div className="overview-rank-header">对象类型分布</div>
               <div className="overview-rank-content">
                 <div style={{height: '300px', width: '100%'}} ref={ref => this.objRef = ref} />
-                {
+                {/* {
                   !objTypeChart.total
                     ? (
                       <div className="no-Data" style={{height: '300px'}}>
-                        {/* <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> */}
                         <NoData text="暂无数据" size="small" />
                       </div>
                     )
                     : null
-                }
+                } */}
               </div>
             </div>
           </Col>
@@ -96,16 +95,15 @@ export default class Distribute extends Component {
               <div className="overview-rank-header">标签资产分布</div>
               <div className="overview-rank-content">
                 <div style={{height: '300px', width: '100%'}} ref={ref => this.tagRef = ref} />
-                {
+                {/* {
                   !tagChart.total
                     ? (
                       <div className="no-Data" style={{height: '300px'}}>
-                        {/* <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> */}
                         <NoData text="暂无数据" size="small" />
                       </div>
                     )
                     : null
-                }
+                } */}
               </div>
             </div>
           </Col>
@@ -114,16 +112,15 @@ export default class Distribute extends Component {
               <div className="overview-rank-header">标签类型分布</div>
               <div className="overview-rank-content">
                 <div style={{height: '300px', width: '100%'}} ref={ref => this.tagTypeRef = ref} />
-                {
+                {/* {
                   !tagTypeChart.total
                     ? (
                       <div className="no-Data" style={{height: '300px'}}>
-                        {/* <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> */}
                         <NoData text="暂无数据" size="small" />
                       </div>
                     )
                     : null
-                }
+                } */}
               </div>
             </div>
           </Col>
