@@ -305,21 +305,34 @@ class SyncList extends Component {
           if (record.status === 5 && record.scheduleType === 0 && record.lastStatus === 2) {
             return (
               <Fragment>
-                <span className="disabled">启动</span>
-                <span className="table-action-line" />
-                <span className="disabled">执行</span>
-                <span className="table-action-line" />
-                <a href onClick={() => this.editSync(record)}>编辑</a>
-                <span className="table-action-line" />
+                <Authority
+                  authCode="tag_model:run_transfer[x]"
+                >
+                  <span className="disabled mr16">启动</span>
+                </Authority>
+                <Authority
+                  authCode="tag_model:run_transfer[x]"
+                >
+                  <span className="disabled mr16">执行</span>
+                </Authority>
+                
+                <Authority
+                  authCode="tag_model:update_transfer[u]"
+                >
+                  <a href onClick={() => this.editSync(record)} className="mr16">编辑</a>
+                </Authority>
                 {
                   !record.tagUsedCount ? (
                     <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
-                      <a href>删除</a>
+                      <a href className="mr16">删除</a>
                     </Popconfirm>
-                  ) : <span className="disabled">删除</span>
+                  ) : <span className="disabled mr16">删除</span>
                 }
-                <span className="table-action-line" />
-                <a href onClick={() => this.getLog(record.id)}>提交日志</a>
+                <Authority
+                  authCode="tag_model:transfer_submit_log[r]"
+                >
+                  <a href onClick={() => this.getLog(record.id)}>提交日志</a>
+                </Authority>
               </Fragment>
             )
           }
