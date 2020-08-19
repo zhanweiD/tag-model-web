@@ -1,5 +1,5 @@
 import {
-  observable, action, runInAction,
+  observable, action, runInAction, toJS,
 } from 'mobx'
 import {
   successTip, failureTip, errorTip,
@@ -231,15 +231,25 @@ class Store extends ListContentStore(io.getList) {
     const dataDbInfo = this.dataSourceList.filter(d => d.storageId === this.storageId)[0]
 
 
-    const mappingKeys = this.fieldList
-      .filter(d => d.field === this.entity1Key || d.field === this.entity2Key)
+    const mappingKeys1 = toJS(this.fieldList1)
+      .filter(d => d.field === this.entity1Key)
       .map(d => ({
         obj_id: `${d.objId}`,
         field_name: d.field,
         field_type: d.type,
       }))
 
-    const selectFields = this.fieldList.filter(d => (d.field !== this.entity1Key) && (d.field !== this.entity2Key))
+    const mappingKeys2 = toJS(this.fieldList2)
+      .filter(d => d.field === this.entity2Key)
+      .map(d => ({
+        obj_id: `${d.objId}`,
+        field_name: d.field,
+        field_type: d.type,
+      }))
+    const mappingKeys = mappingKeys1.concat(mappingKeys2)
+    const fieldList = toJS(this.fieldList1).concat(toJS(this.fieldList2))
+    const uniqFieldList = _.unionBy(fieldList, 'field')
+    const selectFields = uniqFieldList.filter(d => (d.field !== this.entity1Key) && (d.field !== this.entity2Key))
 
     const filedObjAssReqList = selectFields.map(d => ({
       dataDbName: dataDbInfo.storageName,

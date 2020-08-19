@@ -21,24 +21,22 @@ export default class ConfigDrawerTwo extends Component {
         key: 'bfieldName',
         title: '字段',
         dataIndex: 'bfieldName',
+        width: 184,
       },
     ],
   }, {
     title: '更新前',
     children: [
-      // {
-      //   key: 'bfieldName',
-      //   title: '字段',
-      //   dataIndex: 'bfieldName',
-      // }, 
       {
         key: 'btagEnName',
         title: '标签标识',
         dataIndex: 'btagEnName',
+        width: 210,
         render: text => text || '-',
       }, {
         key: 'btagName',
         title: '标签名称',
+        width: 210,
         dataIndex: 'btagName',
         render: text => text || '-',
       }, 
@@ -46,19 +44,16 @@ export default class ConfigDrawerTwo extends Component {
   }, {
     title: '更新后',
     children: [
-      // {
-      //   key: 'fieldName',
-      //   title: '字段',
-      //   dataIndex: 'fieldName',
-      // }, 
       {
         key: 'tagEnName',
         title: '标签标识',
         dataIndex: 'tagEnName',
+        width: 210,
         render: text => text || '-',
       }, {
         key: 'tagName',
         title: '标签名称',
+        width: 210,
         dataIndex: 'tagName',
         render: text => text || '-',
       }, 

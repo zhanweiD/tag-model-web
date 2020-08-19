@@ -127,28 +127,32 @@ class TagDetail extends Component {
             baseInfo={tagBaseInfo.configType === 1 ? baseDeriveInfo : baseInfo}
             tag={tagMap[tagBaseInfo.isUsed]}
           />
-        </Spin>
-        <div className="ml16 mr16 mb16">
           <OverviewCardWrap cards={cards} />
-          <Tabs defaultActiveKey="1" className="comp-tab mt0 box-border">
-            <TabPane tab="标签分析" key="1">
-              <div style={{minHeight: 'calc(100vh - 427px)'}}>
-                {tagBaseInfo.isEnum ? <TagAnalyze tagId={tagId} authorStatus={tagBaseInfo.authorStatus} /> : null}
-                <TagTrend tagId={tagId} />
-              </div>
-            </TabPane>
-            <TabPane tab="血缘分析" key="2">
-              <div style={{height: 'calc(100vh - 427px)'}}>
-                <TagrRelate tagId={tagId} />
-              </div>
-            </TabPane>
-            <TabPane tab="项目列表" key="3">
-              <div className="pt24" style={{minHeight: 'calc(100vh - 427px)'}}>
-                <ProjectList tagId={tagId} configType={tagBaseInfo.configType} />
-              </div>
-            </TabPane>
-          </Tabs>
-        </div>
+        </Spin>
+        {
+          tagBaseInfo.configType === 2 ? (
+            <div style={{minHeight: 'calc(100vh - 360px)', backgroundColor: '#fff'}} />
+          ) : (
+            <Tabs defaultActiveKey="1" className="comp-tab mt0 box-border">
+              <TabPane tab="标签分析" key="1">
+                <div style={{minHeight: 'calc(100vh - 427px)'}}>
+                  {tagBaseInfo.isEnum ? <TagAnalyze tagId={tagId} authorStatus={tagBaseInfo.authorStatus} /> : null}
+                  <TagTrend tagId={tagId} />
+                </div>
+              </TabPane>
+              <TabPane tab="血缘分析" key="2">
+                <div style={{height: 'calc(100vh - 427px)'}}>
+                  <TagrRelate tagId={tagId} />
+                </div>
+              </TabPane>
+              <TabPane tab="项目列表" key="3">
+                <div className="pt24" style={{minHeight: 'calc(100vh - 427px)'}}>
+                  <ProjectList tagId={tagId} configType={tagBaseInfo.configType} />
+                </div>
+              </TabPane>
+            </Tabs>
+          )
+        }
       </div>
     )
   }
