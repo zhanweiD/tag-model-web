@@ -128,24 +128,31 @@ class TagDetail extends Component {
           />
           <OverviewCardWrap cards={cards} />
         </Spin>
-        <Tabs defaultActiveKey="1" className="comp-tab">
-          <TabPane tab="标签分析" key="1">
-            <div className="bgf m16 box-border" style={{minHeight: 'calc(100vh - 430px)'}}>
-              {tagBaseInfo.isEnum ? <TagAnalyze tagId={tagId} authorStatus={tagBaseInfo.authorStatus} /> : null}
-              <TagTrend tagId={tagId} />
-            </div>
-          </TabPane>
-          <TabPane tab="血缘分析" key="2">
-            <div className="bgf m16  box-border" style={{height: 'calc(100vh - 300px)'}}>
-              <TagrRelate tagId={tagId} />
-            </div>
-          </TabPane>
-          <TabPane tab="项目列表" key="3">
-            <div className="bgf m16 box-border pt24" style={{minHeight: 'calc(100vh - 430px)'}}>
-              <ProjectList tagId={tagId} configType={tagBaseInfo.configType} />
-            </div>
-          </TabPane>
-        </Tabs>
+        {
+          tagBaseInfo.configType === 2 ? (
+            <div style={{minHeight: 'calc(100vh - 360px)', backgroundColor: '#fff'}} />
+          ) : (
+            <Tabs defaultActiveKey="1" className="comp-tab">
+              <TabPane tab="标签分析" key="1">
+                <div className="bgf m16 box-border" style={{minHeight: 'calc(100vh - 430px)'}}>
+                  {tagBaseInfo.isEnum ? <TagAnalyze tagId={tagId} authorStatus={tagBaseInfo.authorStatus} /> : null}
+                  <TagTrend tagId={tagId} />
+                </div>
+              </TabPane>
+              <TabPane tab="血缘分析" key="2">
+                <div className="bgf m16  box-border" style={{height: 'calc(100vh - 300px)'}}>
+                  <TagrRelate tagId={tagId} />
+                </div>
+              </TabPane>
+              <TabPane tab="项目列表" key="3">
+                <div className="bgf m16 box-border pt24" style={{minHeight: 'calc(100vh - 430px)'}}>
+                  <ProjectList tagId={tagId} configType={tagBaseInfo.configType} />
+                </div>
+              </TabPane>
+            </Tabs>
+          )
+        }
+
       </div>
     )
   }
