@@ -2,9 +2,19 @@ import {
   action, runInAction, observable, toJS,
 } from 'mobx'
 import {observer} from 'mobx-react'
-import {errorTip, listToTree, defaultKey, successTip} from '../../../common/util'
+import {errorTip, defaultKey, successTip} from '../../../common/util'
 import io from './io'
 
+const listToTree = data => {
+  const newData = _.cloneDeep(data)
+
+  newData.forEach(item => {
+    const children = newData.filter(sitem => sitem.parentId === item.id)
+    if (children.length && !item.children) item.children = children
+  })
+
+  return newData.filter(item => item.type === 2)
+}
 class Store {
   //* *********** tree start ****************/
   @observable searchKey // 类目树搜索值
@@ -23,6 +33,7 @@ class Store {
   @observable treeData = [] // 类目树数据
   @observable searchExpandedKeys = [] // 关键字搜索展开的树节点
   @observable currentSelectKeys = []// 默认展开的树节点
+
 
   //* *********** tree end ******************/
   // 默认展开的类目
