@@ -158,10 +158,10 @@ class Store extends ListContentStore(io.getList) {
       })
       runInAction(() => {
         if (res.success) {
-          successTip('发布成功')
+          successTip('操作成功')
           this.getList()
         } else {
-          failureTip('发布失败')
+          failureTip('操作失败')
         }
       })
     } catch (e) {
@@ -179,11 +179,11 @@ class Store extends ListContentStore(io.getList) {
       })
       runInAction(() => {
         if (res.success) {
-          successTip('发布成功')
+          successTip('操作成功')
           this.getList()
           this.publishRowKeys.clear()
         } else {
-          failureTip('发布失败')
+          failureTip('操作失败')
         }
       })
     } catch (e) {
