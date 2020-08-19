@@ -7,6 +7,7 @@ import OnerFrame from '@dtwave/oner-frame'
 
 import SchemaList from './schema-list'
 import SchemaDetail from './schema-detail'
+import TqlExplain from './tql-explain'
 
 const prePath = '/process'
 
@@ -22,6 +23,7 @@ export default () => {
     <Switch>
       <Route exact path={`${prePath}/tql`} component={SchemaList} />
       <Route exact path={`${prePath}/tql/:id`} component={SchemaDetail} />
+      <Route exact path={`${prePath}/tql-explain`} component={TqlExplain} />
       <Redirect strict to={`${prePath}/tql`} />
     </Switch>
   )

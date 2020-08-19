@@ -9,7 +9,7 @@ import {
   message, 
   Tooltip,
 } from 'antd'
-
+import {QuestionCircleOutlined} from '@ant-design/icons'
 import sqlFormatter from 'sql-formatter'
 import LogPanel from '../code-component/log-panel'
 
@@ -150,6 +150,7 @@ export default class DrawerTwoCode extends Component {
             <i className="iconfont dtwave icon-geshihua1" />
             <span>格式化</span>
           </span>
+          <a target="_blank" rel="noopener noreferrer" href={`${window.__keeper.pathHrefPrefix}/process/tql-explain`} style={{marginLeft: '-8px'}}><QuestionCircleOutlined /></a> 
         </div>
         <form
           id="code_area"
