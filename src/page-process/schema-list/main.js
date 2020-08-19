@@ -201,7 +201,7 @@ class SchemaList extends Component {
             return (
               <Authority authCode="tag_derivative:delete_tql[d]">
                 <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.remove(record)}>
-                  <a className="mr16" href>删除</a>
+                  <a href>删除</a>
                 </Popconfirm>
               </Authority>
             )
@@ -326,7 +326,7 @@ class SchemaList extends Component {
         >
         新建加工方案
         </Button>
-      </Authority>,
+                </Authority>,
       ],
       rowKey: 'id',
       store: this.store, // 必填属性

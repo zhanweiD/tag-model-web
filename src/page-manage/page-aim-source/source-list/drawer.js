@@ -256,9 +256,11 @@ export default class AddSource extends Component {
               rules: [{required: true, message: '请选择同步对象'}],
             })(
               <Select
-                placeholder="请选择所属对象"
+                placeholder="请选择同步对象"
                 style={{width: '100%'}}
                 onSelect={v => this.selectObj(v)}
+                showSearch
+                optionFilterProp="children"
               >
                 {
                   objList.map(item => (

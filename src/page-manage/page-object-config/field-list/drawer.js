@@ -59,20 +59,20 @@ export default class DrawerTagConfig extends Component {
       control: {
         options: [
           {
-            value: '整数型',
-            key: 2,
+            name: '整数型',
+            value: 2,
             disabled: !tagTypeList.includes(2),
           }, {
-            value: '小数型',
-            key: 3,
+            name: '小数型',
+            value: 3,
             disabled: !tagTypeList.includes(3),
           }, {
-            value: '文本型',
-            key: 4,
+            name: '文本型',
+            value: 4,
             disabled: !tagTypeList.includes(4),
           }, {
-            value: '日期型',
-            key: 5,
+            name: '日期型',
+            value: 5,
             disabled: !tagTypeList.includes(5),
           },
         ],
