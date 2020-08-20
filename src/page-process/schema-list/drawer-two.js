@@ -43,6 +43,11 @@ export default class DrawerTwo extends Component {
       })
     })
   }
+
+  @action.bound nextStep() {
+    this.store.schemeDetail.fieldInfo = this.codeStore.fieldInfo
+    this.store.nextStep()
+  }
   
   render() {
     const {show, projectId} = this.props
@@ -62,7 +67,7 @@ export default class DrawerTwo extends Component {
           <Button
             type="primary"
             style={{marginRight: 8}}
-            onClick={this.store.nextStep}
+            onClick={this.nextStep}
             disabled={runStatusMessage.status === 'error' || runStatusMessage.status === ''}
           >
             下一步
