@@ -163,7 +163,7 @@ export default class RunRecord extends Component {
       <div className="pr24 pl24"> 
         {/* <ListContent {...listConfig} /> */}
         <div className="mb8">
-          <span className="mr8">运行状态：</span>
+          <span className="mr8">运行状态</span>
           <Select
             showSearch
             allowClear
@@ -179,7 +179,7 @@ export default class RunRecord extends Component {
               ))
             }
           </Select>
-          <span className="mr8">运行日期：</span>
+          <span className="mr8">运行日期</span>
           <RangePicker onChange={this.selectTime} allowClear />
         </div>
         <Table dataSource={toJS(list)} loading={tableLoading} columns={this.columns} />
