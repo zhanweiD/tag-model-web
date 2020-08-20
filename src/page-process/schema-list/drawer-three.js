@@ -191,7 +191,7 @@ export default class DrawerThree extends Component {
             show && schemeDetail.obj && schemeDetail.obj.map((d, i) => (
               <FormItem {...formItemLayout} label={d.name}>
                 {getFieldDecorator(`majorTag${i}`, {
-                  initialValue: majorTagInit[d.id],
+                  initialValue: schemeDetail.fieldInfo && majorTagInit && schemeDetail.fieldInfo.filter(sd => sd.column_name_alias === majorTagInit[d.id]).length ? majorTagInit[d.id] : undefined,
                   rules: [{required: true, message: '请选择'}],
                 })(
                   <Select placeholder="请选择" style={{width: '100%'}} onSelect={v => this.majorTagSelect(v, d.id)} showSearch optionFilterProp="children">

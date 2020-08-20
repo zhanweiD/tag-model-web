@@ -37,6 +37,7 @@ export default class Store {
     this.drawerType = undefined
     this.schemeDetail = {}
     this.submitLoading = false
+    this.searchKey = undefined
 
     this.codeStore.runStatusMessage = {
       status: '',
