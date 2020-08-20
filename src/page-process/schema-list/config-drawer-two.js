@@ -12,6 +12,7 @@ export default class ConfigDrawerTwo extends Component {
     super(props)
 
     this.store = props.store
+    this.listStore = props.listStore
   }
 
   columns = [{
@@ -60,6 +61,7 @@ export default class ConfigDrawerTwo extends Component {
     ],
   }]
   @action closeDrawer = () => {
+    this.listStore.getList()
     this.store.configDrawerVisible = false
   }
   @action preStep = () => {

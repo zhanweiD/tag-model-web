@@ -11,9 +11,11 @@ export default class ConfigDrawerOne extends Component {
   constructor(props) {
     super(props)
     this.store = props.store
+    this.listStore = props.listStore
   }
 
   @action closeDrawer = () => {
+    this.listStore.getList()
     this.store.configDrawerVisible = false
     this.store.recordObj = {}
   }

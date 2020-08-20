@@ -71,7 +71,7 @@ export default class ConfigDrawerOne extends Component {
     }, {
       label: '标签标识',
       key: 'enName',
-      initialValue: tagBaseInfo.enName,
+      initialValue: tagBaseInfo.enName || recordObj.fieldName,
       rules: !isNewTag ? null : ([
         '@transformTrim',
         '@required',

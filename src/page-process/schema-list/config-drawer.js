@@ -17,8 +17,9 @@ const {Step} = Steps
 export default class DrawerConfig extends Component {
   constructor(props) {
     super(props)
-    const {configStore, codeStore} = props.rootStore
+    const {configStore, codeStore, listStore} = props.rootStore
 
+    this.listStore = listStore
     this.store = configStore
     this.codeStore = codeStore
     this.store.projectId = props.projectId
@@ -27,6 +28,7 @@ export default class DrawerConfig extends Component {
   }
 
   @action closeDrawer = () => {
+    this.listStore.getList()
     this.store.configDrawerVisible = false
   }
 
@@ -39,7 +41,7 @@ export default class DrawerConfig extends Component {
     const {
       projectId,
     } = this.props
-
+    
     const drawerConfig = {
       width: 1120,
       title: '标签配置',
@@ -60,11 +62,13 @@ export default class DrawerConfig extends Component {
             <div className="processe-content">
               <ConfigDrawerOne 
                 show={currentStep === 0} 
+                listStore={this.listStore}
                 // wrappedComponentRef={form => this.store.oneForm = form ? form.props.form : form}
               />
               <ConfigDrawerTwo 
                 show={currentStep === 1} 
                 projectId={projectId}
+                listStore={this.listStore}
               />
             </div>
           </Provider>
