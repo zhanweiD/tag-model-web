@@ -134,7 +134,7 @@ class TagDetail extends Component {
         <div className="ml16 mr16 mb16">
           {
             tagBaseInfo.configType === 2 ? (
-              <div style={{minHeight: 'calc(100vh - 360px)', backgroundColor: '#fff'}} />
+              <div style={{minHeight: 'calc(100vh - 398px)', backgroundColor: '#fff'}} />
             ) : (
               <Tabs defaultActiveKey="1" className="comp-tab mt0 box-border">
                 <TabPane tab="标签分析" key="1">

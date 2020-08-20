@@ -23,7 +23,10 @@ const ConfigModal = ({
     <Modal
       visible={visible}
       title={isAdd ? '初始化' : '修改初始化'}
-      onCancel={onCancel}
+      onCancel={() => {
+        onCancel()
+        form.resetFields()
+      }}
       // onOk={() => {
       //   form
       //     .validateFields()
@@ -38,7 +41,13 @@ const ConfigModal = ({
       destroyOnClose
       maskClosable={false}
       footer={[
-        <Button onClick={onCancel}>取消</Button>,
+        <Button onClick={() => {
+          onCancel()
+          form.resetFields()
+        }}
+        >
+取消
+        </Button>,
         <Popconfirm
           title={(
             <div>
