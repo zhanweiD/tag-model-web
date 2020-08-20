@@ -112,6 +112,29 @@ class TagDetail extends Component {
       value: tagBaseInfo.schemeName,
     }]
 
+    const baseMainInfo = [{
+      title: '对象',
+      value: tagBaseInfo.objName,
+    }, {
+      title: '标签标识',
+      value: tagBaseInfo.enName,
+    }, {
+      title: '数据类型',
+      value: tagBaseInfo.valueTypeName,
+    }, {
+      title: '是否枚举',
+      value: tagBaseInfo.isEnum ? '是' : '否',
+    }, {
+      title: '创建者',
+      value: tagBaseInfo.creator,
+    }, {
+      title: '创建时间',
+      value: <Time timestamp={tagBaseInfo.createTime} />,
+    }, {
+      title: '绑定方式',
+      value: '主标签',
+    }]
+
     // 不同状态的相应map
     const tagMap = {
       0: <Tag status="wait" text="未使用" />,
@@ -124,7 +147,7 @@ class TagDetail extends Component {
           <DetailHeader
             name={tagBaseInfo.name}
             descr={tagBaseInfo.descr}
-            baseInfo={tagBaseInfo.configType === 1 ? baseDeriveInfo : baseInfo}
+            baseInfo={tagBaseInfo.configType !== 1 ? tagBaseInfo.configType !== 2 ? baseInfo : baseMainInfo : baseDeriveInfo}
             tag={tagMap[tagBaseInfo.isUsed]}
           />
           <div className="ml16 mr16">
@@ -134,7 +157,7 @@ class TagDetail extends Component {
         <div className="ml16 mr16 mb16">
           {
             tagBaseInfo.configType === 2 ? (
-              <div style={{minHeight: 'calc(100vh - 398px)', backgroundColor: '#fff'}} />
+              <div style={{minHeight: 'calc(100vh - 372px)', backgroundColor: '#fff'}} />
             ) : (
               <Tabs defaultActiveKey="1" className="comp-tab mt0 box-border">
                 <TabPane tab="标签分析" key="1">
