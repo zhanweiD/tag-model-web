@@ -65,6 +65,9 @@ class SchemaDetail extends Component {
     }, {
       title: '创建时间',
       value: <Time timestamp={detail.createTime} />,
+    }, {
+      title: '物理表',
+      value: detail.tableName,
     }]
 
     const tabConfig = {
