@@ -50,6 +50,7 @@ const createTreeNode = (data = [], valueName, titleName, selectCon) => {
       value={valueName ? node[valueName] : node.aId}
       title={titleName ? node[titleName] : node.name}
       key={node.aId}
+      size="small"
       selectable={selectCon ? (node[selectCon[0]] === selectCon[1]) : node.isLeaf === 2}
     >
       {
@@ -79,6 +80,7 @@ export default ({
             placeholder={placeholder || createSelectPlaceholder(label)}
             dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
             allowClear
+            size="small"
             // multiple
             treeDefaultExpandAll
             treeNodeFilterProp="title"
@@ -90,6 +92,7 @@ export default ({
           </antd.TreeSelect>
         ) : (
           <antd.TreeSelect
+            size="small"
             placeholder={placeholder || createSelectPlaceholder(label)}
             dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
           />
@@ -102,6 +105,7 @@ export default ({
       {...rest}
     />,
     cascader: <antd.Cascader
+      size="small"
       options={options}
       placeholder={placeholder || createSelectPlaceholder(label)}
       {...rest}
