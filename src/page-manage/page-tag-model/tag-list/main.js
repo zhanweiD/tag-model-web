@@ -342,6 +342,7 @@ class TagList extends Component {
               <NoData
                 // isLoading={tableLoading}
                 {...noDataConfig}
+                style={{marginTop: '15%'}}
               />
             ) : <div className="header-page box-border"><ListContent {...listConfig} /></div>
           }
