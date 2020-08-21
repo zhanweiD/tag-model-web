@@ -112,7 +112,7 @@ export default class TagList extends Component {
   render() {
     const {tagList, keyword} = this.store
 
-    const rowSelection = codeInProduct('asset_tag_tag_tag_select_move') && {
+    const rowSelection = codeInProduct('tag_model:move_tag[u]') && {
       selectedRowKeys: this.selectedRowKeys,
       onChange: this.changeRow,
     }

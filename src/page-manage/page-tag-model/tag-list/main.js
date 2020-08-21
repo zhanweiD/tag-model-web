@@ -80,10 +80,14 @@ class TagList extends Component {
             >
               <a href onClick={() => store.openTagConfig('one', record)} className="mr16">绑定</a>
             </Authority>
-            <a href onClick={() => store.openDrawer('edit', record)} className="mr16">编辑</a>
-            <Popconfirm placement="topRight" title="标签被删除后不可恢复，确定删除？" onConfirm={() => this.remove(record)}>
-              <a href>删除</a>
-            </Popconfirm>
+            <Authority
+              authCode="tag_model:create_tag[c]"
+            >
+              <a href onClick={() => store.openDrawer('edit', record)} className="mr16">编辑</a>
+              <Popconfirm placement="topRight" title="标签被删除后不可恢复，确定删除？" onConfirm={() => this.remove(record)}>
+                <a href>删除</a>
+              </Popconfirm>
+            </Authority>
           </Fragment>
         )}
 
@@ -112,11 +116,16 @@ class TagList extends Component {
             </Authority>
 
             {/* <a href onClick={() => store.openDrawer('edit', record)}>编辑</a> */}
-            <span className="disabled mr16">编辑</span>
+            <Authority
+              authCode="tag_model:create_tag[c]"
+            >
+              <span className="disabled mr16">编辑</span>
 
-            <Popconfirm placement="topRight" title="标签被删除后不可恢复，确定删除？" onConfirm={() => this.remove(record)}>
-              <a href>删除</a>
-            </Popconfirm>
+              <Popconfirm placement="topRight" title="标签被删除后不可恢复，确定删除？" onConfirm={() => this.remove(record)}>
+                <a href>删除</a>
+              </Popconfirm>
+            </Authority>
+          
           </Fragment>
         )}
 
@@ -299,7 +308,6 @@ class TagList extends Component {
       onClick: () => store.openDrawer('add'),
       text: '没有任何标签，去新建标签吧',
       code: 'tag_model:create_tag[c]',
-      isCommon: true,
       noAuthText: '没有任何标签',
       isLoading: tableLoading,
     }
@@ -343,6 +351,7 @@ class TagList extends Component {
                 <NoData
                 // isLoading={tableLoading}
                   {...noDataConfig}
+                  // style={{marginTop: '15%'}}
                 />
               </div>
             ) : <div className="header-page box-border"><ListContent {...listConfig} /></div>

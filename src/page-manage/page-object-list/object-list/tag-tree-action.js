@@ -68,7 +68,7 @@ export default class Action extends Component {
         </Menu.Item>
       </Menu>
     )
-    return codeInProduct('asset_tag_tag_cat_add_edit_del') ? (
+    return codeInProduct('tag_model:update_tag_cate[cud]') ? (
       <Dropdown overlay={menu}>
         <IconTreeAdd size="14" className="mr8 hand" />
       </Dropdown>

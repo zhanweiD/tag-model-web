@@ -1,12 +1,12 @@
 /**
  * @description 标签仓库-标签体系-标签详情
  */
-import {Component, Fragment} from 'react'
+import {Component} from 'react'
 import {Button, Spin} from 'antd'
-import {action, toJS} from 'mobx'
+import {action} from 'mobx'
 import {inject, observer} from 'mobx-react'
 
-import {DetailHeader, Tag, NoData} from '../../../component'
+import {DetailHeader, Tag, NoData, Authority} from '../../../component'
 import {Time} from '../../../common/util'
 import TagAnalyze from '../../../business-component/tag-analyze'
 import TagTrend from '../../../business-component/tag-trend'
@@ -60,15 +60,17 @@ export default class Detail extends Component {
       1: <Tag status="process" text="审批中" />,
     }
     const actions = [
-      <Button 
+      <Authority authCode="tag_model:apply_tag[c]">
+        <Button 
         // className="mr8" 
-        type="primary" 
-        // style={{display: !authorStatus && projectId !== useProjectId ? 'block' : 'none'}}
-        style={{display: !authorStatus ? 'block' : 'none'}}
-        onClick={this.viewRule}
-      >
+          type="primary" 
+          // style={{display: !authorStatus && projectId !== useProjectId ? 'block' : 'none'}}
+          style={{display: !authorStatus ? 'block' : 'none'}}
+          onClick={this.viewRule}
+        >
         申请权限
-      </Button>,
+        </Button>
+      </Authority>,
     ]
     const noDataConfig = {
       text: '暂无数据',

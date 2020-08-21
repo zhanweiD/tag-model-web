@@ -98,6 +98,8 @@ export default PageComponent => {
         changeVisible(true)
       },
       text: '该项目下，标签中心的环境未初始化',
+      code: 'tag_config:environment_config[u]',
+      noAuthText: '标签中心的环境未初始化',
     }
 
     if (!projectId) {

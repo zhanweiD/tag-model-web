@@ -133,8 +133,9 @@ const WorkspaceConfig = ({projectId}) => {
         >
           <Button type="primary">编辑</Button>
         </Popconfirm> */}
-        <Button type="primary" onClick={editClick}>编辑</Button>
-        {/* </Authority> */}
+        <Authority authCode="tag_config:environment_config[u]">
+          <Button type="primary" onClick={editClick}>编辑</Button>
+        </Authority>
       </div>
       <ConfigModal 
         visible={visible}
