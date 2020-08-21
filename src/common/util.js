@@ -189,9 +189,9 @@ export const getDataTypeName = (code) => {
 }
 
 
-export const codeInProduct = code => {
+export const codeInProduct = (code, isCommon) => {
   const {tagProductFunctionCode = [], projectFunctionCode = []} = window.frameInfo || {}
-  const functionCodes = props.isCommon ? tagProductFunctionCode : projectFunctionCode.map(d => d.functionCode)
+  const functionCodes = isCommon ? tagProductFunctionCode : projectFunctionCode.map(d => d.functionCode)
 
   return functionCodes.indexOf(code) > -1
 }
