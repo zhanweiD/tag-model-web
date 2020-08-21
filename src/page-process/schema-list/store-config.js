@@ -77,7 +77,7 @@ export default class Store {
     try {
       const res = await io.getFieldList({
         id: this.processId,
-        fieldName: this.fieldName,
+        // fieldName: this.fieldName,
       })
       runInAction(() => {
         this.noConfigList = res || []

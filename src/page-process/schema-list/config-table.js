@@ -39,7 +39,7 @@ export default class ConfigDrawerOne extends Component {
 
   // 字段搜索
   @action searchFiled = v => {
-    this.store.dataFieldName = v
+    this.store.fieldName = v
     this.store.getList()
     this.store.recordObj = {}
   }

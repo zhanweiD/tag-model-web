@@ -150,7 +150,7 @@ class ObjectDetail extends Component {
 
     return (
       <Provider bigStore={store}>
-        <div className="object-detail pb16">
+        <div className="object-detail0 pb16">
           <Spin spinning={loading}>
             <div className="box-border">
               <DetailHeader 

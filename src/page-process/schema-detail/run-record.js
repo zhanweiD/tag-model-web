@@ -38,10 +38,12 @@ export default class RunRecord extends Component {
   }, {
     title: '运行开始时间',
     dataIndex: 'startTime',
+    render: text => text || '-',
     // render: text => <Time timestamp={text} />,
   }, {
     title: '运行结束时间',
     dataIndex: 'stopTime',
+    render: text => text || '-',
     // render: text => <Time timestamp={text} />,
   }, {
     title: '运行状态',

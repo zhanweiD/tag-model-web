@@ -339,10 +339,12 @@ class TagList extends Component {
           <div className="content-header">标签维护</div>
           {
             !list.length && !this.isSearch() ? (
-              <NoData
+              <div className="header-page" style={{paddingTop: '15%'}}>
+                <NoData
                 // isLoading={tableLoading}
-                {...noDataConfig}
-              />
+                  {...noDataConfig}
+                />
+              </div>
             ) : <div className="header-page box-border"><ListContent {...listConfig} /></div>
           }
 

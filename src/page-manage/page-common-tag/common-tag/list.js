@@ -95,9 +95,9 @@ export default class Market extends Component {
       render: text => getDataTypeName(text),
     }, {
       key: 'projectName',
-      title: '所属项目',
+      title: '所属项目', 
       dataIndex: 'projectName',
-      render: text => <OmitTooltip maxWidth={120} text={text} />,
+      render: text => <OmitTooltip text={text} />,
     }, {
       key: 'action',
       title: '操作',

@@ -93,7 +93,7 @@ class SchemaList extends Component {
     }, {
       title: '最近运行状态',
       dataIndex: 'lastStatus',
-      render: v => (v === null ? '' : getSchemeRunStatus({status: v})),
+      render: v => (v === null ? '-' : getSchemeRunStatus({status: v})),
     }, {
       title: '创建时间',
       dataIndex: 'createTime',
@@ -258,6 +258,7 @@ class SchemaList extends Component {
     this.configStore.processId = record.id
     this.configStore.configDrawerVisible = true
     this.configStore.disNext = true
+    this.configStore.fieldName = ''
     this.configStore.getNoConList()
   }
 
