@@ -84,9 +84,11 @@ class ObjectConfig extends Component {
             <Tree history={history} selectObjUpdateKey={selectObjUpdateKey} />
             {
               objId ? <ObjectDetail objId={objId} history={history} /> : (
-                <NoData
-                  {...noObjDataConfig}
-                />
+                <div className="bgf m16" style={{width: '100%'}}>
+                  <NoData
+                    {...noObjDataConfig}
+                  />
+                </div>
               )
             }
           </div>

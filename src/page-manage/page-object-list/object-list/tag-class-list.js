@@ -2,6 +2,7 @@ import {Component, Fragment} from 'react'
 import {action, observable} from 'mobx'
 import {observer} from 'mobx-react'
 import {Table, Input, Button} from 'antd'
+import {SearchOutlined} from '@ant-design/icons'
 import {codeInProduct} from '../../../common/util'
 import {NoData, OmitTooltip, Authority} from '../../../component'
 import ModalMove from './modal-move'
@@ -143,7 +144,8 @@ export default class TagList extends Component {
     }
 
     return (
-      <div className="pt32">
+      // <div className="pt32">
+      <div>
         <p className="mb16">标签列表</p>
         {
           // !tagList.list.length && typeof keyword === 'undefined' ? (
@@ -158,12 +160,21 @@ export default class TagList extends Component {
                 <Authority authCode="tag_model:move_tag[u]">                
                   <Button onClick={() => this.moveTo()} disabled={!this.selectedRowKeys.length} type="primary">批量移动至</Button>
                 </Authority>
-                <Search
+                <Input
+                  onChange={e => this.onSearch(e.target.value)}
+                  onSearch={value => this.onSearch(value)}
+                  size="small"
                   placeholder="请输入关键字搜索"
+                  style={{width: 200}}
+                  suffix={<SearchOutlined />}
+                />
+                {/* <Search
+                  placeholder="请输入关键字搜索"
+                  size="small"
                   onSearch={value => this.onSearch(value)}
                   onChange={e => this.onSearch(e.target.value)}
                   style={{width: 200}}
-                />
+                /> */}
               </div>
               <Table {...listConfig} />
             </Fragment>

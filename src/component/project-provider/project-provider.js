@@ -19,7 +19,7 @@ export default PageComponent => {
   function ProjectProvider(props) {
     const ctx = OnerFrame.useFrame()
     const projectId = ctx.useProjectId()
-    const [hasInit, changeHasInit] = useState(true)
+    const [hasInit, changeHasInit] = useState(false)
     const [loading, changeLoading] = useState(true)
     const [visible, changeVisible] = useState(false)
     const [workspace, changeWorkspace] = useState([])
@@ -29,7 +29,7 @@ export default PageComponent => {
           无可用项目 去
         <a target="_blank" className="a-href-color" rel="noopener noreferrer" href="/project/index.html#/project">项目管理</a>
     添加
-            </span>,
+      </span>,
     }
 
     // 判断项目是否初始化

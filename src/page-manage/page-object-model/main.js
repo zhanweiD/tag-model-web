@@ -89,9 +89,11 @@ class ObjectModel extends Component {
                       history={history}
                     />
                   ) : (
-                    <NoData
-                      {...noDataConfig}
-                    />
+                    <div className="m16 bgf" style={{width: '100%'}}>
+                      <NoData
+                        {...noDataConfig}
+                      />
+                    </div>
                   )
                 }
               </div>
