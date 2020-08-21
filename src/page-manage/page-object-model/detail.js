@@ -90,7 +90,7 @@ export default class ObjectDetail extends Component {
       0: {
         tag: <Tag status="wait" text="待发布" />,
         button: 
-  <Authority authCode="tag_model:update_obj[cud]">
+  <Authority authCode="tag_model:update_obj[cud]" isCommon>
     <Button
       loading={releaseLoading}
       className="mr8"
@@ -103,7 +103,7 @@ export default class ObjectDetail extends Component {
       1: {
         tag: <Tag status="success" text="已发布" />,
         button: 
-  <Authority authCode="tag_model:update_obj[cud]">
+  <Authority authCode="tag_model:update_obj[cud]" isCommon>
     <Button 
       loading={releaseLoading} 
       className="mr8" 

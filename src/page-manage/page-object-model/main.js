@@ -63,12 +63,13 @@ class ObjectModel extends Component {
       code: 'tag_model:update_obj_cate[cud]',
       noAuthText: '暂无对象',
       text: '没有任何对象，请在当前页面新建对象！',
+      isCommon: true,
     }
 
     return (
       <Provider bigStore={store}>
         {
-          codeInProduct('tag_model:object_model[r]') ? (
+          codeInProduct('tag_model:object_model[r]', true) ? (
             <div className="page-object-modal">
               <div className="content-header-noBorder">对象模型</div>
            
