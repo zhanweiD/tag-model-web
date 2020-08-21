@@ -34,7 +34,7 @@ export default class Approval extends Component {
     const type = (match.params && match.params.type) || 'my-requests' // 默认页面 我的申请
     const Content = ContentMap[type]
 
-    const myMenuMap = codeInProduct('asset_tag_apply_approval') ? menuMap : [{
+    const myMenuMap = codeInProduct('tag_common:apply[r]') ? menuMap : [{
       name: '我的申请',
       value: 'my-requests',
     }]

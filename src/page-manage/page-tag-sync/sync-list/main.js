@@ -30,11 +30,11 @@ class SyncList extends Component {
     title: '计划名称',
     dataIndex: 'name',
     render: (text, record) => (
-      <Authority
-        authCode="tag_model:transfer_detail[r]"
-      >
-        <Link to={`/manage/tag-sync/${record.id}`}>{text}</Link>
-      </Authority>
+      // <Authority
+      //   authCode="tag_model:transfer_detail[r]"
+      // >
+      <Link to={`/manage/tag-sync/${record.id}`}>{text}</Link>
+      // </Authority>
     ),
   }, {
     title: '对象',
@@ -320,14 +320,15 @@ class SyncList extends Component {
                   authCode="tag_model:update_transfer[u]"
                 >
                   <a href onClick={() => this.editSync(record)} className="mr16">编辑</a>
+           
+                  {
+                    !record.tagUsedCount ? (
+                      <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
+                        <a href className="mr16">删除</a>
+                      </Popconfirm>
+                    ) : <span className="disabled mr16">删除</span>
+                  }
                 </Authority>
-                {
-                  !record.tagUsedCount ? (
-                    <Popconfirm placement="topRight" title="你确定要删除吗？" onConfirm={() => this.delList(record.id)}>
-                      <a href className="mr16">删除</a>
-                    </Popconfirm>
-                  ) : <span className="disabled mr16">删除</span>
-                }
                 <Authority
                   authCode="tag_model:transfer_submit_log[r]"
                 >

@@ -180,12 +180,14 @@ export default class Market extends Component {
     const listConfig = {
       columns: this.columns,
       buttons: useProjectId ? [
-        <Button type="primary" disabled={!store.rowKeys.length} onClick={this.batchApply}>
-          {
-            `批量申请(${store.rowKeys.length})`
-          }
+        <Authority authCode="tag_model:apply_tag[c]">
+          <Button type="primary" disabled={!store.rowKeys.length} onClick={this.batchApply}>
+            {
+              `批量申请(${store.rowKeys.length})`
+            }
 
-        </Button>,
+          </Button>
+        </Authority>,     
       // ,
         // <span className="ml8">
         //   已选择 

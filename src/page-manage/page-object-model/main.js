@@ -60,7 +60,7 @@ class ObjectModel extends Component {
     const noDataConfig = {
       btnText: '新建对象',
       onClick: this.addObject,
-      code: 'asset_tag_obj_add_edit_del_publish',
+      code: 'tag_model:update_obj_cate[cud]',
       noAuthText: '暂无对象',
       text: '没有任何对象，请在当前页面新建对象！',
     }
@@ -68,7 +68,7 @@ class ObjectModel extends Component {
     return (
       <Provider bigStore={store}>
         {
-          codeInProduct('asset_tag_obj_model') ? (
+          codeInProduct('tag_model:object_model[r]') ? (
             <div className="page-object-modal">
               <div className="content-header-noBorder">对象模型</div>
            

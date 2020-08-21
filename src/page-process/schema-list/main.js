@@ -129,14 +129,17 @@ class SchemaList extends Component {
           }
 
           {/* 方案状态: 未完成/提交失败  操作: 编辑 */}
-          {
-            (record.status === 0 || record.status === 2) && (
-              <Fragment>
-                <a className="mr16" href onClick={() => this.edit(record)}>编辑</a>
-                {/* <span className="table-action-line" /> */}
-              </Fragment>
-            )
-          }
+          <Authority authCode="tag_derivative:create_tql[c]">
+            {
+              (record.status === 0 || record.status === 2) && (
+                <Fragment>
+                  <a className="mr16" href onClick={() => this.edit(record)}>编辑</a>
+                  {/* <span className="table-action-line" /> */}
+                </Fragment>
+              )
+            }
+          </Authority>
+          
 
           {/* 方案状态: 提交成功 调度类型: 周期调度  操作: 禁止执行 */}
           {

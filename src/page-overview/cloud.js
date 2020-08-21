@@ -26,7 +26,7 @@ export default class Cloud extends Component {
     this.box.style('transform', 'scale(0.3, 0.3)').style('transition', 'all .3s linear')
     this.box.selectAll('*').remove()
 
-    const scaleSize = d3.scaleLinear().domain([0, max]).range([14, 40])
+    const scaleSize = data.length > 20 ? d3.scaleLinear().domain([0, max]).range([14, 20]) : d3.scaleLinear().domain([0, max]).range([14, 35]) 
 
     this.fill = d3.scaleOrdinal(d3.schemeCategory10)
     this.layout = cloud()
