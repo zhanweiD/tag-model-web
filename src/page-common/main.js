@@ -25,7 +25,7 @@ export default () => {
     <Switch>
       {/* 审批管理 */}
       <Route exact path={`${prePath}/approval/:type?`} component={Approval} />
-      <Redirect strict to={`${prePath}/project`} />
+      <Redirect strict to={`${prePath}/project/my-requests`} />
     </Switch>
   )
 }

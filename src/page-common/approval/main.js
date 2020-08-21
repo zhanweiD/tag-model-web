@@ -29,15 +29,39 @@ export default class Approval extends Component {
     history.push(`/common/approval/${e.key}`)
   }
 
+  getMenuCode = () => {
+    const menu = []
+
+    if (codeInProduct('tag_common:apply[r]')) {
+      menu.push({
+        name: '我的申请',
+        value: 'my-requests',
+      })
+    } 
+
+    if (codeInProduct('tag_common:approving[r]')) {
+      menu.push({
+        name: '待我审批',
+        value: 'pending-approval',
+      })
+    } 
+
+    if (codeInProduct('tag_common:approved[r]')) {
+      menu.push({
+        name: '我已审批',
+        value: 'approved',
+      })
+    }
+
+    return menu
+  }
+
   render() {
     const {match} = this.props
     const type = (match.params && match.params.type) || 'my-requests' // 默认页面 我的申请
     const Content = ContentMap[type]
 
-    const myMenuMap = codeInProduct('tag_common:apply[r]') ? menuMap : [{
-      name: '我的申请',
-      value: 'my-requests',
-    }]
+    const myMenuMap = this.getMenuCode()
 
     return (
       <div className="page-approval">
