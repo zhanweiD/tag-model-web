@@ -68,7 +68,7 @@ export default class Action extends Component {
         </Menu.Item>
       </Menu>
     )
-    return codeInProduct('tag_model:update_tag_cate[cud]') ? (
+    return codeInProduct('tag_model:update_tag_cate[cud]', true) ? (
       <Dropdown overlay={menu}>
         <IconTreeAdd size="14" className="mr8 hand" />
       </Dropdown>
@@ -86,7 +86,7 @@ export default class Action extends Component {
 
         <div className="FBH pr6 pl6" style={{maxWidth: 70}}>
           <IconRefresh size="14" className="mr8" onClick={this.refreshTree} />
-          <Authority authCode="tag_model:update_tag_cate[cud]">
+          <Authority authCode="tag_model:update_tag_cate[cud]" isCommon>
             {
               this.dropdownDom()
             }

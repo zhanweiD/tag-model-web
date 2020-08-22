@@ -141,7 +141,7 @@ export default class ObjectTree extends Component {
   // 设置节点的菜单
   setActionList = node => {
     // 类目 && 无权限 权限code "asset_tag_tag_cat_add_edit_del"
-    if (!codeInProduct('tag_model:update_tag_cate[cud]')) {
+    if (!codeInProduct('tag_model:update_tag_cate[cud]', true)) {
       return []
     }
 

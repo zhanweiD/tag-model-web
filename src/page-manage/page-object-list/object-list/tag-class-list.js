@@ -41,7 +41,7 @@ export default class TagList extends Component {
       title: '操作',
       dataIndex: 'action',
       width: 90,
-      render: (text, record) => <Authority authCode="tag_model:move_tag[u]"><a href onClick={() => this.moveTo(record)}>移动至</a></Authority>,
+      render: (text, record) => <Authority authCode="tag_model:move_tag[u]" isCommon><a href onClick={() => this.moveTo(record)}>移动至</a></Authority>,
     },
   ]
 
@@ -112,7 +112,7 @@ export default class TagList extends Component {
   render() {
     const {tagList, keyword} = this.store
 
-    const rowSelection = codeInProduct('tag_model:move_tag[u]') && {
+    const rowSelection = codeInProduct('tag_model:move_tag[u]', true) && {
       selectedRowKeys: this.selectedRowKeys,
       onChange: this.changeRow,
     }
@@ -141,6 +141,7 @@ export default class TagList extends Component {
       code: 'tag_model:move_tag[u]',
       noAuthText: '没有任何标签',
       isLoading: tagList.loading,
+      isCommon: true,
     }
 
     return (
@@ -157,7 +158,7 @@ export default class TagList extends Component {
           (
             <Fragment>
               <div className="FBH FBJB mb16">
-                <Authority authCode="tag_model:move_tag[u]">                
+                <Authority authCode="tag_model:move_tag[u]" isCommon>                
                   <Button onClick={() => this.moveTo()} disabled={!this.selectedRowKeys.length} type="primary">批量移动至</Button>
                 </Authority>
                 <Input
