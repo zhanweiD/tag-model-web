@@ -29,7 +29,7 @@ class LabelItem extends Component {
           {label}
           :
         </div>
-        <div className="label-item-value">{value || '暂无'}</div>
+        <div className="label-item-value">{value || '-'}</div>
         {
           action
           // eslint-disable-next-line react/button-has-type
