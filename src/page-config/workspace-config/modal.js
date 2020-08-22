@@ -27,20 +27,33 @@ const ConfigModal = ({
         onCancel()
         form.resetFields()
       }}
-      // onOk={() => {
-      //   form
-      //     .validateFields()
-      //     .then(values => {
-      //       form.resetFields()
-      //       isAdd ? onCreate(values) : onUpdate(values)
-      //     })
-      //     .catch(info => {
-      //       console.log('Validate Failed:', info)
-      //     })
-      // }}
       destroyOnClose
       maskClosable={false}
-      footer={[
+      footer={isAdd ? ([
+        <Button onClick={() => {
+          onCancel()
+          form.resetFields()
+        }}
+        >
+取消
+        </Button>,
+        <Button 
+          type="primary"
+          onClick={() => {
+            form
+              .validateFields()
+              .then(values => {
+                form.resetFields()
+                isAdd ? onCreate(values) : onUpdate(values)
+              })
+              .catch(info => {
+                console.log('Validate Failed:', info)
+              })
+          }}
+        >
+            确定
+        </Button>,
+      ]) : ([
         <Button onClick={() => {
           onCancel()
           form.resetFields()
@@ -73,7 +86,7 @@ const ConfigModal = ({
         >
           <Button type="primary">确定</Button>
         </Popconfirm>,
-      ]}
+      ])}
     >
       <Form
         form={form}
