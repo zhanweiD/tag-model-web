@@ -7,7 +7,7 @@ import {observer, inject, Provider} from 'mobx-react'
 import {
   Popconfirm, Button,
 } from 'antd'
-import {ListContent, Authority} from '../../../component'
+import {ListContent, Authority, OmitTooltip} from '../../../component'
 
 import ConfigField from './config-field'
 import ModalAddTable from './modal-add-table'
@@ -34,10 +34,12 @@ export default class DataSheet extends Component {
       title: '数据表名称',
       key: 'dataTableName',
       dataIndex: 'dataTableName',
+      render: text => <OmitTooltip maxWidth={250} text={text} />,
     }, {
       title: '数据源',
       key: 'dataStorageName',
       dataIndex: 'dataStorageName',
+      render: text => <OmitTooltip maxWidth={250} text={text} />,
     }, {
       title: '数据源类型',
       key: 'storageTypeName',

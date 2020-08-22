@@ -160,7 +160,7 @@ class ModalTagEdit extends Component {
                   autoComplete="off"
                   rows="3"
                   size="small"
-                  placeholder="标签表示的业务逻辑，例如“该用户的售手机号”，不超过128个字"
+                  placeholder="标签表示的业务逻辑，例如“该用户的手机号”，不超过128个字"
                 />
               )}
             </FormItem>

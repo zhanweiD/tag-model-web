@@ -72,7 +72,7 @@ export default class StepTwo extends React.Component {
         title: '枚举显示值',
         key: 'enumValue',
         dataIndex: 'enumValue',
-        render: name => <OmitTooltip text={name} maxWidth={200} />,
+        render: name => (name ? <OmitTooltip text={name} maxWidth={200} /> : '-'),
       },
       {
         title: '所属类目',
@@ -95,7 +95,7 @@ export default class StepTwo extends React.Component {
         title: '业务逻辑',
         key: 'descr',
         dataIndex: 'descr',
-        render: descr => <OmitTooltip text={descr} maxWidth={200} />,
+        render: descr => (descr ? <OmitTooltip text={descr} maxWidth={200} /> : '-'),
       },
       {
         title: '关联的字段',

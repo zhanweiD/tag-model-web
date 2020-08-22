@@ -16,6 +16,7 @@ const {TextArea} = Input
 const formItemLayout = {
   labelCol: {span: 4},
   wrapperCol: {span: 20},
+  colon: false,
 }
 
 const createTreeNode = (data = [], selectCon) => {
