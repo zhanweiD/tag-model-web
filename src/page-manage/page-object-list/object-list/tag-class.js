@@ -100,6 +100,7 @@ export default class TagClass extends Component {
                cateDetail.name !== '默认类目' ? (
                  <Authority 
                    authCode="tag_model:move_tag[u]"
+                   isCommon
                  >
                    <Button type="primary" className="mr4" onClick={this.openSelectTag}>选择标签</Button>
                  </Authority>

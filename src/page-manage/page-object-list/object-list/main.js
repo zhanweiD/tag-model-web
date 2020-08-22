@@ -49,7 +49,7 @@ class ObjectList extends Component {
         <Authority authCode="tag_model:obj_detail[r]" isCommon>
           <Link to={`/manage/object-list/${record.objTypeCode}/${record.id}`} className="mr16">查看详情</Link>
         </Authority>
-        <Authority authCode="tag_model:tag_cate_detail[r]" isCommon>
+        <Authority authCode="tag_model:select_tag_cate[r]" isCommon>
           <a href onClick={() => this.tagClass(record)}>标签类目</a>
         </Authority>
        
