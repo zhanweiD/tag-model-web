@@ -239,7 +239,7 @@ class TagList extends Component {
 
       // 请求列表，放在父组件进行请求是因为需要在外层做空数据判断。
       // 若返回数据为空[]。则渲染 NoData 组件。
-
+      store.initParams = {projectId: store.projectId}
       store.getList({
         projectId: store.projectId,
       })
