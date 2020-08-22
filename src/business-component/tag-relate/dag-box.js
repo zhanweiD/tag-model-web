@@ -64,7 +64,7 @@ export default class DagBox extends Component {
         <label htmlFor className="box-item-label">
           {`${label}：`}
         </label>
-        <span className="ide-text-overflow value-box">{value || '暂无'}</span>
+        <span className="ide-text-overflow value-box">{value || '-'}</span>
       </div>
     )
   }
