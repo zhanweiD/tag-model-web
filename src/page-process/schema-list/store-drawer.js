@@ -64,7 +64,10 @@ export default class Store {
   @action async getSchemeDetail(params, cb) {
     this.loading = true
     try {
-      const res = await io.getSchemeDetail(params)
+      const res = await io.getSchemeDetail({
+        projectId: this.projectId,
+        ...params,
+      })
       runInAction(() => {
         const data = res      
 
@@ -90,7 +93,10 @@ export default class Store {
   @action async getSchemeConfigInfo(params, cb) {
     this.loading = true
     try {
-      const res = await io.getSchemeConfigInfo(params)
+      const res = await io.getSchemeConfigInfo({
+        projectId: this.projectId,
+        ...params,
+      })
       runInAction(() => {
         this.schemeDetail = {...this.schemeDetail, ...res}
         if (cb) cb(res)
@@ -229,7 +235,9 @@ export default class Store {
   @action async getFunTree() {
     this.treeLoading = true
     try {
-      const res = await io.getFunTree()
+      const res = await io.getFunTree({
+        projectId: this.projectId,
+      })
       runInAction(() => {
         // this.treeData = listToTree(res)
         this.treeData = res.map(d => ({
@@ -261,6 +269,7 @@ export default class Store {
       const res = await io.saveSchema({
         ...p,
         ...params,
+        projectId: this.projectId,
       })
       runInAction(() => {
         if (res) {
@@ -368,7 +377,10 @@ export default class Store {
    @action async submitScheme(params) {
     this.submitLoading = true
     try {
-      const res = await io.submitScheme(params)
+      const res = await io.submitScheme({
+        projectId: this.projectId,
+        ...params,
+      })
       runInAction(() => {
         if (res === 1) {
           successTip('提交成功')

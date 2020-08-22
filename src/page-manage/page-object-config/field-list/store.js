@@ -88,6 +88,7 @@ class Store extends ListContentStore(io.getList) {
     try {
       const res = await io.getTagTree({
         id: this.objId,
+        projectId: this.projectId,
       })
       runInAction(() => {
         this.tagTreeData = listToTree(res)
@@ -105,6 +106,7 @@ class Store extends ListContentStore(io.getList) {
       this.confirmLoading = true
       const res = await io.createBatchTag({
         checkList,
+        projectId: this.projectId,
       })
       runInAction(() => {
         if (res) {
@@ -151,7 +153,9 @@ class Store extends ListContentStore(io.getList) {
   @observable nameKeyWord = []
   @action async checkKeyWord() {
     try {
-      const res = await io.checkKeyWord()
+      const res = await io.checkKeyWord({
+        projectId: this.projectId,
+      })
       runInAction(() => {
         this.nameKeyWord = res
       })
@@ -166,6 +170,7 @@ class Store extends ListContentStore(io.getList) {
     try {
       const res = await io.getTagTypeList({
         fieldType: data.dataFieldType,
+        projectId: this.projectId,
       })
       runInAction(() => {
         this.tagTypeList = res

@@ -68,6 +68,7 @@ class Store {
     try {
       const res = await io.getCateList({
         id: this.objId,
+        projectId: this.projectId,
       }) || []
 
       // id -> name的映射
@@ -116,6 +117,7 @@ class Store {
 
       const res = await io.saveTags({
         checkList,
+        projectId: this.projectId,
       })
 
       // 如果content是false，也是保存失败
@@ -148,6 +150,7 @@ class Store {
       const res = await io.checkTagList({
         // 有传入参数，那就用；没有就将当前列表传上去; 注意params需要是原生数组
         checkList: params || toJS(this.secondTableList),
+        projectId: this.projectId,
       })
 
       typeof successCallback === 'function' && successCallback()
@@ -236,7 +239,9 @@ class Store {
   @observable nameKeyWord = []
   @action async checkKeyWord() {
     try {
-      const res = await io.checkKeyWord()
+      const res = await io.checkKeyWord({
+        projectId: this.projectId,
+      })
       runInAction(() => {
         this.nameKeyWord = res
       })
@@ -250,6 +255,7 @@ class Store {
     try {
       const res = await io.getTagTypeList({
         fieldType: params,
+        projectId: this.projectId,
       })
       runInAction(() => {
         this.tagTypeList = res

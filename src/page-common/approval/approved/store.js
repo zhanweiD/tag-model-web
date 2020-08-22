@@ -6,6 +6,7 @@ import {ListContentStore} from '../../../component/list-content'
 import io from './io'
 
 class Store extends ListContentStore(io.getList) {
+  projectId
   @observable applicant = []
   @observable projectList = []
   @observable detail = {} // 详情
@@ -13,7 +14,9 @@ class Store extends ListContentStore(io.getList) {
 
   @action async getApplicant() {
     try {
-      const res = await io.getApplicant()
+      const res = await io.getApplicant({
+        projectId: this.projectId,
+      })
       runInAction(() => {
         this.applicant = changeToOptions(res)('applyUserName', 'applyUserId')
       })
@@ -24,7 +27,9 @@ class Store extends ListContentStore(io.getList) {
 
   @action async getProject() {
     try {
-      const res = await io.getProject()
+      const res = await io.getProject({
+        projectId: this.projectId,
+      })
       runInAction(() => {
         this.projectList = changeToOptions(res)('projectName', 'projectId')
       })
@@ -36,7 +41,10 @@ class Store extends ListContentStore(io.getList) {
   @action async getDetail(id) {
     this.detailLoading = true
     try {
-      const res = await io.getDetail({id})
+      const res = await io.getDetail({
+        id,
+        projectId: this.projectId,
+      })
       runInAction(() => {
         this.detail = res
       })

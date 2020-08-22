@@ -31,6 +31,7 @@ class Store extends ListContentStore(io.getList) {
     try {
       const res = await io.getStorageList({
         id: this.projectId,
+        projectId: this.projectId,
       }) || []
       runInAction(() => {
         this.storageList = changeToOptions(res)('storageName', 'storageId')

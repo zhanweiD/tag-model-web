@@ -16,6 +16,7 @@ class Store {
       const res = await io.getTagBaseDetail({
         id: this.tagId,
         useProjectId: this.projectId,
+        projectId: this.projectId,
       })
       runInAction(() => {
         this.info = res

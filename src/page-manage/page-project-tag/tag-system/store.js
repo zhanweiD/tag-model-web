@@ -91,6 +91,7 @@ class Store {
       const res = await io.getTagBaseDetail({
         id: this.selectedKey,
         useProjectId: this.projectId,
+        projectId: this.projectId,
       })
       runInAction(() => {
         this.tagDetail = res
@@ -108,7 +109,10 @@ class Store {
   @action async applyTag(params, cb) {
     this.confirmLoading = true
     try {
-      const res = await io.applyTag(params)
+      const res = await io.applyTag({
+        projectId: this.projectId,
+        ...params,
+      })
       runInAction(() => {
         if (res) {
           successTip('操作成功')

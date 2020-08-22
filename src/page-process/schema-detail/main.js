@@ -17,6 +17,7 @@ import RunRecord from './run-record'
 import {Time} from '../../common/util'
 
 import store from './store'
+import runStore from './store-run-record'
 
 const tabs = [
   {name: '配置信息', value: 0}, 
@@ -26,7 +27,9 @@ const tabs = [
 class SchemaDetail extends Component {
   constructor(props) {
     super(props)
-    const {match} = props
+    const {match, projectId} = props
+    store.projectId = projectId
+    runStore.projectId = projectId
     store.processeId = match.params.id // 方案id
   }
 

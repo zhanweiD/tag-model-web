@@ -6,6 +6,7 @@ import io from './io'
 // class Store extends ListContentStore(io.getRunRecord) {
 class Store {  
   syncId
+  projectId
   @observable visibleLog = false
   @observable log = ''
 
@@ -19,6 +20,7 @@ class Store {
       const res = await io.getRunRecord({
         id: this.syncId,
         ...params,
+        projectId: this.projectId,
       })
 
       runInAction(() => {
@@ -37,6 +39,7 @@ class Store {
     try {
       const res = await io.getLog({
         taskInstanceId: id,
+        projectId: this.projectId,
       })
 
       runInAction(() => {
@@ -52,6 +55,7 @@ class Store {
       const res = await io.runTask({
         taskInstanceId: id,
         transferSchemeId: this.syncId,
+        projectId: this.projectId,
       })
 
       runInAction(() => {

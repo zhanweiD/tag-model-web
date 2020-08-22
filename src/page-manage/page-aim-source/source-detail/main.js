@@ -161,7 +161,7 @@ class SourceDetail extends Component {
 
     const listConfig = {
       columns: this.columns,
-      initParams: {id: store.sourceId},
+      initParams: {id: store.sourceId, projectId: store.projectId},
       store, // 必填属性
     }
 

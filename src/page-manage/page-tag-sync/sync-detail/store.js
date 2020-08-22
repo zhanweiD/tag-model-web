@@ -26,6 +26,7 @@ class Store {
     try {
       const res = await io.getDetail({
         id: this.syncId,
+        projectId: this.projectId,
       })
 
       runInAction(() => {
@@ -45,6 +46,7 @@ class Store {
     try {
       const res = await io.getConfigInfo({
         id: this.syncId,
+        projectId: this.projectId,
       })
       
       runInAction(() => {

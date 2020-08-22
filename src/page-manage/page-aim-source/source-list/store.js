@@ -72,7 +72,9 @@ class Store extends ListContentStore(io.getList) {
   // 数据源类型
   @action async getStorageType() {
     try {
-      const res = await io.getStorageType()
+      const res = await io.getStorageType({
+        projectId: this.projectId,
+      })
       runInAction(() => {
         this.storageTypeList = changeToOptions(res)('name', 'type')
       })
@@ -141,6 +143,7 @@ class Store extends ListContentStore(io.getList) {
       const res = await io.getStorageDetail({
         id: this.projectId,
         ...params,
+        projectId: this.projectId,
       })
       runInAction(() => {
         this.storageDetail = res

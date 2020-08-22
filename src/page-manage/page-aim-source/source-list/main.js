@@ -141,6 +141,7 @@ class SourceList extends Component {
           info={drawerTagConfigInfo}
           onClose={closeTagConfig}
           onUpdate={updateTagConfig}
+          projectId={store.projectId}
         />
       </div>
     )

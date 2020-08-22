@@ -226,6 +226,7 @@ export default class Store {
     try {
       const dataLog = await io.searchLog({
         taskInstanceId,
+        projectId: this.projectId,
         nodeLogCurrentLine: this.logIndex,
       })
       // 判断是否下拉日志
@@ -314,6 +315,7 @@ export default class Store {
     try {
       const res = await io.stopInstance({
         taskInstance: this.taskInstanceId,
+        projectId: this.projectId,
       })
       runInAction(() => {
         console.log(res)

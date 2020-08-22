@@ -97,6 +97,7 @@ class Store {
       const res = await io.getStorageDetail({
         id: this.projectId,
         ...params,
+        projectId: this.projectId,
       })
       runInAction(() => {
         this.storageDetail = res
@@ -169,7 +170,7 @@ class Store {
   @action async checkTableName(params, cb) {
     try {
       const res = await io.tableNameCheck({
-        // projectId: this.projectId,
+        projectId: this.projectId,
         ...params,
       })
       if (res.isExist) {

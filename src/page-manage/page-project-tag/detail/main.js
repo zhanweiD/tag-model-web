@@ -33,7 +33,7 @@ class TagDetail extends Component {
   }
 
   render() {
-    const {tagDetailLoading, tagBaseInfo, tagId, cardInfo} = store
+    const {tagDetailLoading, tagBaseInfo, tagId, cardInfo, projectId} = store
 
     const baseInfo = [{
       title: '对象',
@@ -108,13 +108,13 @@ class TagDetail extends Component {
               </TabPane>
               <TabPane tab="目的源列表" key="3">
                 <div className="pt24" style={{minHeight: 'calc(100vh - 398px)'}}>
-                  <StorageList tagId={tagId} />
+                  <StorageList tagId={tagId} projectId={projectId} />
                 </div>
     
               </TabPane>
               <TabPane tab="标签应用列表" key="4">
                 <div className="pt24" style={{minHeight: 'calc(100vh - 398px)'}}>
-                  <AppList tagId={tagId} />
+                  <AppList tagId={tagId} projectId={projectId} />
                 </div>
               </TabPane>
             </Tabs>

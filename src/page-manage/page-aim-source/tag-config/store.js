@@ -7,6 +7,7 @@ class DrawerStore {
   target = []
 
   sourceId
+  projectId
 
 
   objList = [] // 下拉对象数据
@@ -16,6 +17,7 @@ class DrawerStore {
     try {
       const res = await io.getObjList({
         id: this.sourceId,
+        projectId: this.projectId,
       })
       this.objList = changeToOptions(res)('objName', 'objId') || []
     } catch (e) {
@@ -27,6 +29,7 @@ class DrawerStore {
     try {
       const params = {
         id: this.sourceId,
+        projectId: this.projectId,
       }
       
       const res = await io.getResultData(params)
@@ -40,6 +43,7 @@ class DrawerStore {
   async getFieldData() {
     const params = {
       id: this.sourceId,
+      projectId: this.projectId,
     }
     try {
       const res = await io.getFieldData(params)
@@ -54,6 +58,7 @@ class DrawerStore {
     try {
       const params = {
         id: this.sourceId,
+        projectId: this.projectId,
       }
 
       const res = await io.getTagData(params)
@@ -66,7 +71,10 @@ class DrawerStore {
 
   async saveResult(params) {
     try {
-      const res = await io.saveMappingResult(params)
+      const res = await io.saveMappingResult({
+        projectId: this.projectId,
+        ...params,
+      })
       if (res === true) {
         successTip('操作成功')
       } else {

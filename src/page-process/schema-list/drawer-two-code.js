@@ -170,7 +170,7 @@ export default class DrawerTwoCode extends Component {
             }
           </textarea>
         </form>   
-        <LogPanel {...logPanelConfig} />
+        <LogPanel {...logPanelConfig} projectId={this.store.projectId} />
    
       </div>
       // </Spin>

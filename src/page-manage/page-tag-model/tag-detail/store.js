@@ -17,6 +17,7 @@ class Store {
       const res = await io.getTagBaseDetail({
         id: this.tagId,
         useProjectId: this.projectId,
+        projectId: this.projectId,
       })
       runInAction(() => {
         this.tagBaseInfo = res
@@ -34,6 +35,7 @@ class Store {
     try {
       const res = await io.getCardInfo({
         id: this.tagId,
+        projectId: this.projectId,
       })
       runInAction(() => {
         this.cardInfo = res

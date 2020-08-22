@@ -37,6 +37,7 @@ class TagDetail extends Component {
       cardInfo,
       tagBaseInfo, 
       tagDetailLoading, 
+      projectId,
     } = store
 
     const baseInfo = [{
@@ -173,7 +174,7 @@ class TagDetail extends Component {
                 </TabPane>
                 <TabPane tab="项目列表" key="3">
                   <div className="pt24" style={{minHeight: 'calc(100vh - 427px)'}}>
-                    <ProjectList tagId={tagId} configType={tagBaseInfo.configType} />
+                    <ProjectList tagId={tagId} projectId={projectId} configType={tagBaseInfo.configType} />
                   </div>
                 </TabPane>
               </Tabs>

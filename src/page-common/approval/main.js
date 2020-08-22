@@ -1,6 +1,7 @@
-import {Component} from 'react'
+import {Component, useEffect} from 'react'
 import {Menu} from 'antd'
 
+import OnerFrame from '@dtwave/oner-frame'
 import {codeInProduct} from '../../common/util'
 import MyRequests from './my-requests'
 import PendingApproval from './pending-approval'
@@ -23,7 +24,7 @@ const ContentMap = {
   approved: Approved, 
 }
 
-export default class Approval extends Component {
+class Approval extends Component {
   onMenuClick = e => {
     const {history} = this.props
     history.push(`/common/approval/${e.key}`)
@@ -57,7 +58,7 @@ export default class Approval extends Component {
   }
 
   render() {
-    const {match} = this.props
+    const {match, projectId} = this.props
     const type = (match.params && match.params.type) || 'my-requests' // 默认页面 我的申请
     const Content = ContentMap[type]
 
@@ -81,4 +82,17 @@ export default class Approval extends Component {
       </div>
     )
   }
+}
+
+export default props => {
+  const ctx = OnerFrame.useFrame()
+  const projectId = ctx.useProjectId()
+
+  useEffect(() => {
+    ctx.useProject(false)
+  }, [])
+
+  return (
+    <Approval {...props} projectId={projectId} />
+  )
 }

@@ -212,7 +212,10 @@ class Store extends ListContentStore(io.getList) {
    */
   @action async getTagCateSelectList(params) {
     try {
-      const res = await io.getTagCateSelectList(params)
+      const res = await io.getTagCateSelectList({
+        projectId: this.projectId,
+        ...params,
+      })
       runInAction(() => {
         this.tagCateSelectList = listToTree(res)
       })
@@ -228,7 +231,10 @@ class Store extends ListContentStore(io.getList) {
     this.detailLoading = true
 
     try {
-      const res = await io.getTagDetail(params)
+      const res = await io.getTagDetail({
+        projectId: this.projectId,
+        ...params,
+      })
       runInAction(() => {
         this.drawerTagInfo = res
         this.isEnum = res.isEnum
@@ -298,7 +304,10 @@ class Store extends ListContentStore(io.getList) {
    */
   @action async deleteTag(params) {
     try {
-      const res = await io.deleteTag(params)
+      const res = await io.deleteTag({
+        projectId: this.projectId,
+        ...params,
+      })
       runInAction(() => {
         if (res) {
           successTip('操作成功')
@@ -311,7 +320,6 @@ class Store extends ListContentStore(io.getList) {
       errorTip(e.message)
     }
   }
-
 
   /**
    * @description 重名校验
@@ -338,7 +346,9 @@ class Store extends ListContentStore(io.getList) {
   @observable nameKeyWord = []
   @action async checkKeyWord() {
     try {
-      const res = await io.checkKeyWord()
+      const res = await io.checkKeyWord({
+        projectId: this.projectId,
+      })
       runInAction(() => {
         this.nameKeyWord = res
       })

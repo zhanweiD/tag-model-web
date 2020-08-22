@@ -46,6 +46,7 @@ class DrawerStore {
       const res = await io.getConfigTagList({
         objId: this.objId,
         configType: this.boundMethodId,
+        projectId: this.projectId,
       })
 
       runInAction(() => {
@@ -64,6 +65,7 @@ class DrawerStore {
     try {
       const res = await io.getTableList({
         id: this.objId,
+        projectId: this.projectId,
       })
 
       runInAction(() => {
@@ -80,6 +82,7 @@ class DrawerStore {
     try {
       const res = await io.getSchemeList({
         objId: this.objId,
+        projectId: this.projectId,
       })
 
       runInAction(() => {

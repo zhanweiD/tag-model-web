@@ -1,10 +1,11 @@
 /**
  * @description 审批管理-我已审批
  */
-import {Component} from 'react'
+import {Component, useEffect} from 'react'
 import {observer} from 'mobx-react'
 import {observable, action} from 'mobx'
 import {Button} from 'antd'
+import OnerFrame from '@dtwave/oner-frame'
 import {ListContent, OmitTooltip, Authority} from '../../../component'
 import {Time, keyToName} from '../../../common/util'
 import {getTableStatus, APPLY_TYPE} from '../common/comp-approval-status'
@@ -14,7 +15,7 @@ import seach from './search'
 import store from './store'
 
 @observer
-export default class Approved extends Component {
+class Approved extends Component {
   @observable visible = false // 详情弹窗控制
 
   columns = [
@@ -58,6 +59,7 @@ export default class Approved extends Component {
   componentWillMount() {
     store.getApplicant()
     store.getProject()
+    store.projectId = this.props.projectId
   }
 
   /**
@@ -88,11 +90,12 @@ export default class Approved extends Component {
 
   render() {
     const {
-      projectList, applicant, detail, detailLoading,
+      projectList, applicant, detail, detailLoading, projectId,
     } = store
     const listConfig = {
       columns: this.columns,
       searchParams: seach({projectList, applicant}),
+      initParams: {projectId},
       beforeSearch: this.beforeSearch,
       store, // 必填属性
     }
@@ -115,4 +118,17 @@ export default class Approved extends Component {
       </div>
     )
   }
+}
+
+export default props => {
+  const ctx = OnerFrame.useFrame()
+  const projectId = ctx.useProjectId()
+
+  useEffect(() => {
+    ctx.useProject(false)
+  }, [])
+
+  return (
+    <Approved {...props} projectId={projectId} />
+  )
 }

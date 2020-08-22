@@ -16,7 +16,9 @@ export default class LogPanel extends Component {
     const {
       store,
       taskId,
+      projectId,
     } = this.props
+    console.log(projectId)
     return (
       <Fragment>
         <div
@@ -135,6 +137,7 @@ export default class LogPanel extends Component {
                   >
                     <ResultTable
                       // wsId={_store.wsId}
+                      projectId={projectId}
                       fieldInfo={toJS(store.fieldInfo)}
                       taskId={taskId}
                       resultId={item.resultId}

@@ -17,7 +17,7 @@ export default class Page extends Component {
   @observable currentPage = 1
   @observable loading = false
   @action getTableResult = async currentPage => {
-    const {taskInstanceId, resultId, fieldInfo} = this.props
+    const {taskInstanceId, resultId, fieldInfo, projectId} = this.props
 
     this.loading = true
     try {
@@ -26,6 +26,7 @@ export default class Page extends Component {
         taskInstanceId,
         resultId,
         pageSize,
+        projectId,
         currentPage: currentPage || 1,
       })
       runInAction(() => {

@@ -69,6 +69,7 @@ const WorkspaceConfig = ({projectId}) => {
       const res = await io.updateWprkspace({
         ...params,
         id: config.id,
+        projectId,
       })
   
       if (res) {

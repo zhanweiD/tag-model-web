@@ -1,10 +1,11 @@
 /**
  * @description 审批管理-我的申请
  */
-import {Component} from 'react'
+import {Component, useEffect} from 'react'
 import {observer} from 'mobx-react'
 import {observable, action} from 'mobx'
 import {Button} from 'antd'
+import OnerFrame from '@dtwave/oner-frame'
 import {ListContent, OmitTooltip, Authority} from '../../../component'
 import {Time, keyToName} from '../../../common/util'
 import {getTableStatus, APPLY_TYPE} from '../common/comp-approval-status'
@@ -15,7 +16,7 @@ import seach from './search'
 import store from './store'
 
 @observer
-export default class MyRequests extends Component {
+class MyRequests extends Component {
   @observable visible = false // 详情弹窗控制
   @observable modalBackoutVisible = false // 撤销弹窗控制
 
@@ -69,6 +70,7 @@ export default class MyRequests extends Component {
   ]
 
   componentWillMount() {
+    store.projectId = this.props.projectId
     store.getProject()
   }
 
@@ -123,12 +125,13 @@ export default class MyRequests extends Component {
 
   render() {
     const {
-      projectList, detail, confirmLoading, detailLoading,
+      projectList, detail, confirmLoading, detailLoading, projectId,
     } = store
     
     const listConfig = {
       columns: this.columns,
       searchParams: seach({projectList}),
+      initParams: {projectId},
       beforeSearch: this.beforeSearch,
       store, // 必填属性
     }
@@ -166,4 +169,17 @@ export default class MyRequests extends Component {
       </div>
     )
   }
+}
+
+export default props => {
+  const ctx = OnerFrame.useFrame()
+  const projectId = ctx.useProjectId()
+
+  useEffect(() => {
+    ctx.useProject(false)
+  }, [])
+
+  return (
+    <MyRequests {...props} projectId={projectId} />
+  )
 }

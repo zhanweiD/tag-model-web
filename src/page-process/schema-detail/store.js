@@ -8,6 +8,7 @@ import io from './io'
 
 class Store {
   processeId
+  projectId
   @observable loading = false
   @observable detail = {}
 
@@ -15,6 +16,7 @@ class Store {
     try {
       const res = await io.getDetail({
         id: this.processeId,
+        projectId: this.projectId,
       })
       runInAction(() => {
         this.detail = res
@@ -38,6 +40,7 @@ class Store {
     try {
       const res = await io.getConfigInfo({
         id: this.processeId,
+        projectId: this.projectId,
       })
       runInAction(() => {
         const mainTagObj = {}
@@ -70,6 +73,7 @@ class Store {
     try {
       const res = await io.submitScheme({
         id: this.processeId,
+        projectId: this.projectId,
       })
       runInAction(() => {
         if (res) {

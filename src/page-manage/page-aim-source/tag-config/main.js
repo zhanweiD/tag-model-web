@@ -24,6 +24,7 @@ export default class DrawerTagConfig extends Component {
 
   componentWillMount() {
     this.store = new Store()
+    this.store.projectId = this.props.projectId
   }
 
   componentWillReceiveProps(nextProps) {

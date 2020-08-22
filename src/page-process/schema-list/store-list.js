@@ -35,7 +35,10 @@ export default class Store extends ListContentStore(io.getList) {
   // 提交方案
   @action async submitScheme(params) {
     try {
-      const res = await io.submitScheme(params)
+      const res = await io.submitScheme({
+        projectId: this.projectId,
+        ...params,
+      })
       runInAction(() => {
         if (res) {
           successTip('提交成功')
@@ -52,7 +55,10 @@ export default class Store extends ListContentStore(io.getList) {
   // 执行方案
   @action async operationScheme(params) {
     try {
-      const res = await io.manualRunScheme(params)
+      const res = await io.manualRunScheme({
+        projectId: this.projectId,
+        ...params,
+      })
       runInAction(() => {
         if (res) {
           successTip('操作成功')
@@ -69,7 +75,10 @@ export default class Store extends ListContentStore(io.getList) {
   // 克隆方案
   @action async cloneScheme(params) {
     try {
-      const res = await io.cloneScheme(params)
+      const res = await io.cloneScheme({
+        projectId: this.projectId,
+        ...params,
+      })
       runInAction(() => {
         if (res.success) {
           successTip('克隆成功')
@@ -114,7 +123,10 @@ export default class Store extends ListContentStore(io.getList) {
   @action async getSubmitLog(params) {
     this.submitLogLoading = true
     try {
-      const res = await io.getSubmitLog(params)
+      const res = await io.getSubmitLog({
+        projectId: this.projectId,
+        ...params,
+      })
       runInAction(() => {
         this.submitLog = res
       })

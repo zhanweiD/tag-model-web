@@ -23,6 +23,7 @@ class Store extends ListContentStore(io.getList) {
     try {
       const res = await io.getDetail({
         id: this.sourceId,
+        projectId: this.projectId,
       })
 
       runInAction(() => {
@@ -45,6 +46,7 @@ class Store extends ListContentStore(io.getList) {
     try {
       const res = await io.getObjList({
         id: this.sourceId,
+        projectId: this.projectId,
       })
       runInAction(() => {
         this.objList = changeToOptions(res)('objName', 'objId')
@@ -62,6 +64,7 @@ class Store extends ListContentStore(io.getList) {
       const res = await io.getTagList({
         id: this.sourceId,
         ...params,
+        projectId: this.projectId,
       })
       runInAction(() => {
         this.tagList = changeToOptions(res)('tagName', 'tagId')
@@ -75,7 +78,10 @@ class Store extends ListContentStore(io.getList) {
   @action async configTag(params, cb) {
     this.confirmLoading = true
     try {
-      await io.configTag(params)
+      await io.configTag({
+        projectId: this.projectId,
+        ...params,
+      })
       runInAction(() => {
         if (cb)cb()
         successTip('映射成功')
@@ -93,7 +99,10 @@ class Store extends ListContentStore(io.getList) {
   // 单个字段标签解除映射
   @action async cancelConfig(params) {
     try {
-      await io.cancelConfig(params)
+      await io.cancelConfig({
+        projectId: this.projectId,
+        ...params,
+      })
       runInAction(() => {
         successTip('取消映射成功')
         this.getList({currentPage: 1})

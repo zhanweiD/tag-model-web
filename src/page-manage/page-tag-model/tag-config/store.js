@@ -24,6 +24,7 @@ class DrawerStore {
     try {
       const res = await io.getTableList({
         id: this.objId,
+        projectId: this.projectId,
       })
 
       runInAction(() => {
@@ -40,6 +41,7 @@ class DrawerStore {
     try {
       const res = await io.getSchemeList({
         objId: this.objId,
+        projectId: this.projectId,
       })
 
       runInAction(() => {

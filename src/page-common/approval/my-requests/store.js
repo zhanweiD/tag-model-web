@@ -8,6 +8,7 @@ import {ListContentStore} from '../../../component/list-content'
 import io from './io'
 
 class Store extends ListContentStore(io.getList) {
+  projectId
   @observable projectList = []
   @observable detail = {} // 详情
   @observable confirmLoading = false
@@ -15,7 +16,9 @@ class Store extends ListContentStore(io.getList) {
 
   @action async getProject() {
     try {
-      const res = await io.getProject()
+      const res = await io.getProject({
+        projectId: this.projectId,
+      })
       runInAction(() => {
         this.projectList = changeToOptions(res)('projectName', 'projectId')
       })
@@ -27,7 +30,10 @@ class Store extends ListContentStore(io.getList) {
   @action async getDetail(id) {
     this.detailLoading = true
     try {
-      const res = await io.getDetail({id})
+      const res = await io.getDetail({
+        id,
+        projectId: this.projectId,
+      })
       runInAction(() => {
         this.detail = res
       })
@@ -43,7 +49,10 @@ class Store extends ListContentStore(io.getList) {
   @action async backout(params, cb) {
     this.confirmLoading = true
     try {
-      await io.backout(trimFormValues(params))
+      await io.backout({
+        ...trimFormValues(params),
+        projectId: this.projectId,
+      })
       runInAction(() => {
         this.confirmLoading = false
         successTip('撤销成功')

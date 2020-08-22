@@ -43,11 +43,11 @@ export default class StorageList extends Component {
   ]
 
   render() {
-    const {tagId} = this.props
+    const {tagId, projectId} = this.props
     
     const listConfig = {
       columns: this.columns,
-      initParams: {tagId},
+      initParams: {tagId, projectId},
       store, // 必填属性
     }
 

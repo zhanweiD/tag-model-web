@@ -9,6 +9,7 @@ import ConfigInfo from './config-info'
 import RunRecord from './run-record'
 
 import store from './store'
+import runStore from './store-run-record'
 
 const tabs = [
   {name: '配置信息', value: 0}, 
@@ -23,6 +24,7 @@ class SyncDetail extends Component {
     store.syncId = match.params.id 
 
     store.projectId = props.projectId
+    runStore.projectId = props.projectId
   }
 
   componentWillMount() {

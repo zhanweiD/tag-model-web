@@ -53,7 +53,10 @@ class Store extends ListContentStore(io.getList) {
   // 启动
   @action async startSync(params) {
     try {
-      const res = await io.startSync(params)
+      const res = await io.startSync({
+        projectId: this.projectId,
+        ...params,
+      })
       runInAction(() => {
         if (res) {
           successTip('启动成功')
@@ -71,7 +74,10 @@ class Store extends ListContentStore(io.getList) {
   // 暂停
   @action async pauseSync(id) {
     try {
-      const res = await io.pauseSync({id})
+      const res = await io.pauseSync({
+        id,
+        projectId: this.projectId,
+      })
       runInAction(() => {
         if (res) {
           successTip('暂停成功')
@@ -89,7 +95,10 @@ class Store extends ListContentStore(io.getList) {
   // 执行
   @action async runSync(id) {
     try {
-      const res = await io.runSync({id})
+      const res = await io.runSync({
+        id,
+        projectId: this.projectId,
+      })
       runInAction(() => {
         if (res) {
           successTip('操作成功')
@@ -109,7 +118,10 @@ class Store extends ListContentStore(io.getList) {
   // 获取提交日志
   @action async getLog(id) {
     try {
-      const res = await io.getLog({id})
+      const res = await io.getLog({
+        id,
+        projectId: this.projectId,
+      })
       runInAction(() => {
         this.submitLog = res
       })

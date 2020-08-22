@@ -77,6 +77,7 @@ export default class Store {
     try {
       const res = await io.getFieldList({
         id: this.processId,
+        projectId: this.projectId,
         // fieldName: this.fieldName,
       })
       runInAction(() => {
@@ -96,6 +97,7 @@ export default class Store {
       const res = await io.getFieldList({
         id: this.processId,
         fieldName: this.fieldName,
+        projectId: this.projectId,
       })
 
       runInAction(() => {
@@ -162,6 +164,7 @@ export default class Store {
     try {
       const res = await io.getTagBaseDetail({
         id: this.recordObj.tagId || this.tagId,
+        projectId: this.projectId,
       })
       runInAction(() => {
         this.tagBaseInfo = res
@@ -178,6 +181,7 @@ export default class Store {
     try {
       const res = await io.getTagCateSelectList({
         id: this.ownObject,
+        projectId: this.projectId,
       })
       runInAction(() => {
         this.tagCateSelectList = listToTree(res)
@@ -269,7 +273,9 @@ export default class Store {
   @observable nameKeyWord = []
   @action async checkKeyWord() {
     try {
-      const res = await io.checkKeyWord()
+      const res = await io.checkKeyWord({
+        projectId: this.projectId,
+      })
       runInAction(() => {
         this.nameKeyWord = res
       })

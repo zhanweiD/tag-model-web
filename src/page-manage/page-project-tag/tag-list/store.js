@@ -31,7 +31,9 @@ class Store extends ListContentStore(io.getList) {
 
   @action async getOwnProject() {
     try {
-      const res = await io.getOwnProject()
+      const res = await io.getOwnProject({
+        projectId: this.projectId,
+      })
       runInAction(() => {
         this.ownProjectList = res
       })
@@ -56,7 +58,10 @@ class Store extends ListContentStore(io.getList) {
   @action async applyTag(params, cb) {
     this.confirmLoading = true
     try {
-      const res = await io.applyTag(params)
+      const res = await io.applyTag({
+        projectId: this.projectId,
+        params,
+      })
       runInAction(() => {
         if (res) {
           successTip('操作成功')
@@ -77,6 +82,7 @@ class Store extends ListContentStore(io.getList) {
     try {
       const res = await io.getProjectDetail({
         id: this.useProjectId,
+        projectId: this.projectId,
       })
       runInAction(() => {
         this.projectName = res.name
