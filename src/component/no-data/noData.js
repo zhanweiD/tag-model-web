@@ -31,7 +31,7 @@ export default class NoData extends Component {
     const {code} = props
     if (code) {
       const {tagProductFunctionCode = [], projectFunctionCode = []} = window.frameInfo || {}
-      const functionCodes = props.isCommon ? tagProductFunctionCode : projectFunctionCode.map(d => d.functionCode)
+      const functionCodes = props.isCommon ? tagProductFunctionCode : projectFunctionCode
       
       this.auth = functionCodes.includes(code)
       console.log(this.auth, code)

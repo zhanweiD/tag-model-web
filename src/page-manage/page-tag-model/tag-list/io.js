@@ -17,6 +17,8 @@ const api = {
   checkName: post(`${tagModalApi}/name_check`), // 重名校验
   checkKeyWord: get(`${objectApi}/list_keyword`),
 
+  cancelTagConfig: post(`${baseApi}/tagConfig/delete_filed_tag_relation`), // 解绑标签绑定
+
   // 权限code
   getAuthCode: get(`${baseApi}/project/getFunctionCodes`),
 } 

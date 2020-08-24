@@ -112,7 +112,13 @@ class TagList extends Component {
             <Authority
               authCode="tag_model:bind_tag[cud]"
             >
-              <a href onClick={() => store.openTagConfig('one', record)} className="mr16">解绑</a>
+              <Popconfirm
+                placement="topRight"
+                title="确认解绑？"
+                onConfirm={() => this.cancelTagConfig(record)}
+              >
+                <a href className="mr16">解绑</a>
+              </Popconfirm>
             </Authority>
 
             {/* <a href onClick={() => store.openDrawer('edit', record)}>编辑</a> */}
@@ -218,9 +224,16 @@ class TagList extends Component {
     ),
   }]
 
-  @action remove(data) {
+  @action.bound remove(data) {
     store.deleteTag({
       deleteIds: [data.id],
+    })
+  }
+
+  @action.bound cancelTagConfig(data) {
+    store.cancelTagConfig({
+      tagId: data.id,
+      configType: data.configType,
     })
   }
 
