@@ -41,7 +41,7 @@ class Store extends ListContentStore(io.getList) {
     this.searchParams = {
       hotWord: this.hotWord,
       useProjectId: this.useProjectId,
-      projectId: this.ownProjectId,
+      // projectId: this.useProjectId,
       objId: this.objectId,
       type: this.projectPermission,
     }
@@ -59,7 +59,7 @@ class Store extends ListContentStore(io.getList) {
   @action async getUseProject() {
     try {
       const res = await io.getUseProject({
-        projectId: this.ownProjectId,
+        projectId: this.useProjectId,
       })
       runInAction(() => {
         this.useProjectList = res
@@ -72,7 +72,7 @@ class Store extends ListContentStore(io.getList) {
   @action async getOwnProject() {
     try {
       const res = await io.getOwnProject({
-        projectId: this.ownProjectId,
+        projectId: this.useProjectId,
       })
       runInAction(() => {
         this.ownProjectList = res
@@ -85,7 +85,7 @@ class Store extends ListContentStore(io.getList) {
   @action async getObject() {
     try {
       const res = await io.getObject({
-        projectId: this.ownProjectId,
+        projectId: this.useProjectId,
       })
       runInAction(() => {
         this.objectList = res
@@ -99,7 +99,7 @@ class Store extends ListContentStore(io.getList) {
     this.confirmLoading = true
     try {
       const res = await io.applyTag({
-        projectId: this.ownProjectId,
+        projectId: this.useProjectId,
         ...params,
       })
       runInAction(() => {
