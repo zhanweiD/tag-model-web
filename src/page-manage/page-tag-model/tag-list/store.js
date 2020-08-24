@@ -357,6 +357,25 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
+  @action async cancelTagConfig(params) {
+    try {
+      const res = await io.cancelTagConfig({
+        ...params,
+        projectId: this.projectId,
+      })
+      runInAction(() => {
+        if (res) {
+          successTip('操作成功')
+          this.getList({currentPage: 1})
+        } else {
+          failureTip('操作失败')
+        }
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
   @observable functionCodes = []
 
   /**

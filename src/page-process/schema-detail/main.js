@@ -17,7 +17,7 @@ import RunRecord from './run-record'
 import {Time} from '../../common/util'
 
 import store from './store'
-import runStore from './store-run-record'
+// import runStore from './store-run-record'
 
 const tabs = [
   {name: '配置信息', value: 0}, 
@@ -29,7 +29,7 @@ class SchemaDetail extends Component {
     super(props)
     const {match, projectId} = props
     store.projectId = projectId
-    runStore.projectId = projectId
+    // runStore.projectId = projectId 
     store.processeId = match.params.id // 方案id
   }
 
@@ -53,7 +53,7 @@ class SchemaDetail extends Component {
   }
 
   render() {
-    const {loading, detail, processeId} = store
+    const {loading, detail, processeId, projectId} = store
 
     // 详情信息
     const baseInfo = [{
@@ -106,7 +106,7 @@ class SchemaDetail extends Component {
             <TabRoute {...tabConfig} />
             {/* <ConfigInfo store={store} /> */}
             <div className="list-content box-border">
-              <Content store={store} processeId={processeId} projectId={this.props.projectId} />
+              <Content store={store} processeId={processeId} projectId={projectId} />
             </div>
           </Spin>
         )

@@ -9,7 +9,7 @@ import ConfigInfo from './config-info'
 import RunRecord from './run-record'
 
 import store from './store'
-import runStore from './store-run-record'
+// import runStore from './store-run-record'
 
 const tabs = [
   {name: '配置信息', value: 0}, 
@@ -24,7 +24,7 @@ class SyncDetail extends Component {
     store.syncId = match.params.id 
 
     store.projectId = props.projectId
-    runStore.projectId = props.projectId
+    // runStore.projectId = props.projectId
   }
 
   componentWillMount() {
@@ -91,7 +91,7 @@ class SyncDetail extends Component {
         </Spin>
         <div className="list-content box-border">
           <TabRoute {...tabConfig} />
-          <Content store={store} syncId={syncId} />
+          <Content store={store} syncId={syncId} projectId={projectId} />
         </div>
       </div>
     )
