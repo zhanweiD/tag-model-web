@@ -15,7 +15,7 @@ const Authority = ({children, isHidden = true, authCode, customCodes, isCommon =
   const functionCodes = customCodes || (isCommon ? tagProductFunctionCode : projectFunctionCode.map(d => d.functionCode))
   
   const isHaveAuth = functionCodes.includes(authCode)
-  console.log(isHaveAuth, authCode)
+  // console.log(isHaveAuth, authCode)
   // const isHaveAuth = true
   if (isHidden) {
     return isHaveAuth ? children : null

@@ -107,7 +107,7 @@ export default class Market extends Component {
           {/* eslint-disable-next-line no-underscore-dangle */}
           {/* <a href={`${window.__keeper.pathHrefPrefix}/tag-model/${record.id}`}>查看详情</a>  */}
           <Authority authCode="tag_model:public_tag_detail[r]">
-            <Link to={`/manage/common-tag/${record.id}/${store.useProjectId}`}>标签详情</Link>
+            <Link target="_blank" to={`/manage/common-tag/${record.id}/${store.useProjectId}`}>标签详情</Link>
           </Authority>
           <Authority authCode="tag_model:apply_tag[c]">  
             {(() => {

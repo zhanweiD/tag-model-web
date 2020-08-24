@@ -34,7 +34,7 @@ export default class NoData extends Component {
       const functionCodes = props.isCommon ? tagProductFunctionCode : projectFunctionCode.map(d => d.functionCode)
       
       this.auth = functionCodes.includes(code)
-      console.log(this.auth, code)
+      // console.log(this.auth, code)
       // this.auth = true
     }
   }

@@ -103,7 +103,7 @@ export default class TagList extends Component {
           <Authority 
             authCode="tag_model:project_tag_detail[r]" 
           >
-            <Link to={`/manage/project-tag/${record.id}/${store.useProjectId}`}>标签详情</Link>
+            <Link target="_blank" to={`/manage/project-tag/${record.id}/${store.useProjectId}`}>标签详情</Link>
           </Authority>
           <Authority 
             authCode="tag_model:apply_project_tag[c]" 

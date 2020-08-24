@@ -36,7 +36,8 @@ export default class OverviewCard extends Component {
           {
             cards.map((item, index) => {
               return (
-                <div className="one-card" style={{width: '25%', borderRight: index === 3 ? null : '1px solid #f0f0f0'}}>
+                // <div className="one-card" style={{width: '25%', borderRight: index === 3 ? null : '1px solid #f0f0f0'}}>
+                <div className="one-card" style={{width: '25%'}}>
                   <div className="df-js">
                     {/* ml4 mt1 对齐微调 */}
                     <div>

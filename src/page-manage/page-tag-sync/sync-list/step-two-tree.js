@@ -7,7 +7,7 @@ import {
 } from 'mobx'
 import {NoBorderInput, Loading, OmitTooltip} from '../../../component'
 import {IconChakan} from '../../../icon-comp'
-import tagIcon from '../../../icon/tag.svg'
+import tagIcon from '../../../icon/new-tag.svg'
 
 const {TreeNode} = Tree
 
