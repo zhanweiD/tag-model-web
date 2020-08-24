@@ -57,7 +57,7 @@ export default class Distribute extends Component {
       name: '基础标签',
       value: info.basicTagCount,
     }, {
-      name: '衍生关系',
+      name: '衍生标签',
       value: info.derivativeTagCount,
     }]
 
