@@ -314,7 +314,7 @@ class ModalObject extends Component {
                 </FormItem>
                 <FormItem {...formItemLayout} label="数据类型">
                   {getFieldDecorator('tagValueType', {
-                    initialValue: data.tagValueType || '4',
+                    initialValue: data.tagValueType || 4,
                     rules: [{required: true, message: '请选择数据类型'}],
                   })(
                     <Select placeholder="请选择数据类型" showSearch optionFilterProp="children">
