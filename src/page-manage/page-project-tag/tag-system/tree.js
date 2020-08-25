@@ -5,11 +5,15 @@ import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {DtTree} from '@dtwave/uikit'
 import {action, toJS} from 'mobx'
-import {Loading, NoData} from '../../../component'
+import {Loading} from '../../../component'
 import Action from './tree-action'
 import tagIcon from '../../../icon/new-tag.svg'
+import treeUnfold from '../../../icon/tree-unfold.svg'
+import treeFold from '../../../icon/tree-fold.svg'
+
 
 const {DtTreeNode, DtTreeBox} = DtTree
+const getIconNodeSrc = e => (e ? treeUnfold : treeFold)
 
 @observer
 export default class Tree extends Component {
@@ -36,7 +40,8 @@ export default class Tree extends Component {
         selectable={node.type === 0}
         showIcon
         // 对象类目只有一级
-        iconNodeSrc={node.type === 0 ? tagIcon : null}
+        // iconNodeSrc={node.type === 0 ? tagIcon : null}
+        iconNodeSrc={e => (node.type === 0 ? tagIcon : getIconNodeSrc(e))}
         nodeData={node}
       >
         {
