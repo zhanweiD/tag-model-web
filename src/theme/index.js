@@ -41,6 +41,8 @@
 
 module.exports = () => {
   return {
+    'primary-color': '#2466ff',
+    'linek-color': '#2466ff',
     'font-size-base': '12px',
     'blue-6': '#2466ff',
     'purple-6': '#8A7FEA',

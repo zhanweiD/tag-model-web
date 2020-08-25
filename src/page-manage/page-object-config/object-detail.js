@@ -184,7 +184,7 @@ export default class ObjectDetail extends Component {
         <div className="box-border"> 
           <TabRoute {...tabConfig} />
           <div className="object-tab-content">
-            <Content objId={objId} bigStore={this.store} />
+            <Content objId={objId} bigStore={this.store} key={objDetail.type} />
           </div>
         </div>
      

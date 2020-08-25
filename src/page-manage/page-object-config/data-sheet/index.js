@@ -25,6 +25,7 @@ export default class DataSheet extends Component {
     store.projectId = bigStore.projectId
     store.objId = bigStore.objId
     store.typeCode = bigStore.typeCode
+    store.relationType = bigStore.objDetail.type
   }
 
   @observable tagConfigVisible = false
@@ -80,6 +81,50 @@ export default class DataSheet extends Component {
             ) : null
           }
         
+        </div>
+      ),
+    },
+  ]
+
+  // 简单关系
+  columns1 = [
+    {
+      title: '数据表名称',
+      key: 'dataTableName',
+      dataIndex: 'dataTableName',
+      render: text => <OmitTooltip maxWidth={250} text={text} />,
+    }, {
+      title: '数据源',
+      key: 'dataStorageName',
+      dataIndex: 'dataStorageName',
+      render: text => <OmitTooltip maxWidth={250} text={text} />,
+    }, {
+      title: '数据源类型',
+      key: 'storageTypeName',
+      dataIndex: 'storageTypeName',
+    }, {
+      key: 'action',
+      title: '操作',
+      dataIndex: 'action',
+      width: 150,
+      render: (text, record) => (
+        <div>
+          <Authority authCode="tag_model:update_table[cud]">
+            {
+              (record.isUsed || record.status === 1 || record.configuredField) ? <span className="disabled">移除</span> : (
+                <Popconfirm placement="topRight" title="你确定要移除该数据表吗？" onConfirm={() => this.removeList(record)}>
+                  <a href>移除</a>
+                </Popconfirm>
+              )
+            }
+          </Authority>
+          {
+            this.bigStore.objDetail && this.bigStore.objDetail.type !== 0 ? (
+              <Authority authCode="tag_model:config_table_tag[c]">
+                <a href className="ml16" onClick={() => this.openTagConfig(record)}>生成标签</a>
+              </Authority>
+            ) : null
+          }
         </div>
       ),
     },
@@ -166,9 +211,9 @@ export default class DataSheet extends Component {
     const {
       objId,
       projectId,
+      relationType,
       // typeCode,
     } = store
-
     // typeCode = 3 关系对象；typeCode = 4 实体对象；
     const buttons = (
       <Authority authCode="tag_model:update_table[cud]">
@@ -182,7 +227,8 @@ export default class DataSheet extends Component {
     )
 
     const listConfig = {
-      columns: this.columns,
+      columns: relationType ? this.columns : this.columns1,
+      // columns: this.columns,
       initParams: {objId, projectId},
       buttons: [buttons],
       paginationConfig: {

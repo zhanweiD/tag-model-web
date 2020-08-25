@@ -29,7 +29,7 @@ export default PageComponent => {
           无可用项目 去
         <a target="_blank" className="a-href-color" rel="noopener noreferrer" href="/project/index.html#/project">项目管理</a>
     添加
-      </span>,
+            </span>,
     }
 
     // 判断项目是否初始化
@@ -84,7 +84,7 @@ export default PageComponent => {
         },
         {
           tip: '项目管理',
-          url: '/project/index.html',
+          url: '/project/index.html#detail/base',
           icon: 'project',
         }])
       judgeInit(projectId)

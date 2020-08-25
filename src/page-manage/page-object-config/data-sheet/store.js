@@ -10,6 +10,7 @@ import io from './io'
 class Store extends ListContentStore(io.getList) {
   projectId
   objId
+  relationType // 区分 2实体 & 0简单关系 & 1复杂关系
   typeCode // 区分实体&关系
 
   bothTypeCode // 区分 2实体 & 0简单关系 & 1复杂关系

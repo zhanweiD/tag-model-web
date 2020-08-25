@@ -22,7 +22,7 @@ export default () => {
       },
       {
         tip: '项目管理',
-        url: '/project/index.html',
+        url: '/project/index.html#detail/base',
         icon: 'project',
       }])
     ctx.useSider(true)
