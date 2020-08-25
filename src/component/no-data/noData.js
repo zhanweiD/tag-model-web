@@ -30,8 +30,8 @@ export default class NoData extends Component {
     super(props)
     const {code} = props
     if (code) {
-      const {tagProductFunctionCode = [], projectFunctionCode = []} = window.frameInfo || {}
-      const functionCodes = props.isCommon ? tagProductFunctionCode : projectFunctionCode
+      const {userProductFunctionCode = [], projectFunctionCode = []} = window.frameInfo || {}
+      const functionCodes = props.isCommon ? userProductFunctionCode : projectFunctionCode
       
       this.auth = functionCodes.includes(code)
       // console.log(this.auth, code)

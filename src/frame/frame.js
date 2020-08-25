@@ -8,7 +8,6 @@ import '@dtwave/oner-flexbox/flexbox.css'
 import '../common/common.styl'
 import '../common/cover.styl'
 import './frame.styl'
-import store from './store'
 
 const {Content} = Layout
 @observer
@@ -18,14 +17,9 @@ class Frame extends Component {
     return (
       <ConfigProvider locale={zhCn}>
         <OnerFrame {...this.props}>
-          {
-            store.functionCodeDone ? (
-              <Layout style={{height: '100%'}}>
-                <Content className="tag-content">{me.props.children}</Content>
-              </Layout>
-            ) : <div />
-          }
-        
+          <Layout style={{height: '100%'}}>
+            <Content className="tag-content">{me.props.children}</Content>
+          </Layout>
         </OnerFrame>
       </ConfigProvider>
     )

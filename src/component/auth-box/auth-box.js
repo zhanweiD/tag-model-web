@@ -10,9 +10,9 @@ import {Children, cloneElement} from 'react'
  */
 
 const Authority = ({children, isHidden = true, authCode, customCodes, isCommon = false}) => {
-  const {tagProductFunctionCode = [], projectFunctionCode = []} = window.frameInfo || {}
+  const {userProductFunctionCode = [], projectFunctionCode = []} = window.frameInfo || {}
 
-  const functionCodes = customCodes || (isCommon ? tagProductFunctionCode : projectFunctionCode)
+  const functionCodes = customCodes || (isCommon ? userProductFunctionCode : projectFunctionCode)
   
   const isHaveAuth = functionCodes.includes(authCode)
   // console.log(isHaveAuth, authCode)
