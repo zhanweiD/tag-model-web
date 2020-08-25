@@ -68,51 +68,35 @@ class ObjectModel extends Component {
 
     return (
       <Provider bigStore={store}>
-        {
-          codeInProduct('tag_model:object_model[r]', true) ? (
-            <div className="page-object-modal">
-              <div className="content-header-noBorder">对象模型</div>
+        <div className="page-object-modal">
+          <div className="content-header-noBorder">对象模型</div>
            
-              <TabRoute {...tabConfig} />
-              <div className="object-modal-content">
-                <Tree 
+          <TabRoute {...tabConfig} />
+          <div className="object-modal-content">
+            <Tree 
+              history={history}
+              updateTreeKey={updateTreeKey} 
+              addObjectUpdateKey={addObjectUpdateKey}
+            />
+            {
+              objId ? (
+                <ObjectDetail 
+                  updateDetailKey={updateDetailKey} 
+                  objId={objId} 
+                  store={store}
                   history={history}
-                  updateTreeKey={updateTreeKey} 
-                  addObjectUpdateKey={addObjectUpdateKey}
                 />
-                {
-                  objId ? (
-                    <ObjectDetail 
-                      updateDetailKey={updateDetailKey} 
-                      objId={objId} 
-                      store={store}
-                      history={history}
-                    />
-                  ) : (
-                    <div className="m16 bgf" style={{width: '100%'}}>
-                      <NoData
-                        {...noDataConfig}
-                      />
-                    </div>
-                  )
-                }
-              </div>
+              ) : (
+                <div className="m16 bgf" style={{width: '100%'}}>
+                  <NoData
+                    {...noDataConfig}
+                  />
+                </div>
+              )
+            }
+          </div>
            
-            </div>
-          ) : (
-            <div style={{
-              background: '#fff',
-              height: '100%',
-            }}
-            >
-              <div style={{paddingTop: '200px'}}>
-                <NotFount />
-              </div>
-            </div>
-          
-          )
-        }
-       
+        </div>
       </Provider>
     )
   }
