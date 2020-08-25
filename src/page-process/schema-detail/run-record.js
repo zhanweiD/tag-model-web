@@ -51,11 +51,13 @@ export default class RunRecord extends Component {
     render: text => getSchemeRunStatus({
       status: text,
     }),
-  }, {
-    title: '记录数',
-    dataIndex: 'recordCount',
-    render: text => text || '-',
-  }, {
+  }, 
+  // {
+  //   title: '记录数',
+  //   dataIndex: 'recordCount',
+  //   render: text => text || '-',
+  // }, 
+  {
     title: '操作',
     dataIndex: 'action',
     render: (text, record) => (

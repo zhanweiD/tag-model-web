@@ -65,7 +65,8 @@ export default class Market extends Component {
       dataIndex: 'name',
       render: (text, record) => (
         <div className="FBH">
-          <OmitTooltip maxWidth={120} text={text} />
+          {/* <OmitTooltip maxWidth={120} text={text} /> */}
+          <Link target="_blank" to={`/manage/common-tag/${record.id}/${store.useProjectId}`}>标签详情</Link>
           {(() => {
             if (record.status === 1) {
               return <Tag status="process" className="ml8" text="审批中" />
@@ -106,9 +107,9 @@ export default class Market extends Component {
         <div className="FBH FBAC">
           {/* eslint-disable-next-line no-underscore-dangle */}
           {/* <a href={`${window.__keeper.pathHrefPrefix}/tag-model/${record.id}`}>查看详情</a>  */}
-          <Authority authCode="tag_model:public_tag_detail[r]">
+          {/* <Authority authCode="tag_model:public_tag_detail[r]">
             <Link target="_blank" to={`/manage/common-tag/${record.id}/${store.useProjectId}`}>标签详情</Link>
-          </Authority>
+          </Authority> */}
           <Authority authCode="tag_model:apply_tag[c]">  
             {(() => {
               if (store.useProjectId) {

@@ -14,7 +14,7 @@ import {
 } from '../../component'
 import ConfigInfo from './config-info'
 import RunRecord from './run-record'
-import {Time} from '../../common/util'
+import {Time, codeInProduct} from '../../common/util'
 
 import store from './store'
 // import runStore from './store-run-record'
@@ -52,6 +52,15 @@ class SchemaDetail extends Component {
     })
   }
 
+  getTabCode = () => {
+    if (codeInProduct('tag_derivative:tql_submit_log[r]')) {
+      return [{name: '配置信息', value: 0}, 
+        {name: '运行记录', value: 1}]
+    }
+
+    return [{name: '配置信息', value: 0}]
+  }
+
   render() {
     const {loading, detail, processeId, projectId} = store
 
@@ -74,7 +83,7 @@ class SchemaDetail extends Component {
     }]
 
     const tabConfig = {
-      tabs,
+      tabs: this.getTabCode(),
       currentTab: this.tabId,
       changeTab: this.changeTab,
       changeUrl: false,

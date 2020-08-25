@@ -18,6 +18,7 @@ class ObjectList extends Component {
   columns = [{
     title: '对象名称',
     dataIndex: 'name',
+    render: (text, record) => <Link to={`/manage/object-list/${record.objTypeCode}/${record.id}`} className="mr16">查看详情</Link>,
   }, {
     title: '对象类目',
     dataIndex: 'objCatName',
@@ -46,9 +47,9 @@ class ObjectList extends Component {
     dataIndex: 'action',
     render: (text, record) => (
       <div>
-        <Authority authCode="tag_model:obj_detail[r]" isCommon>
+        {/* <Authority authCode="tag_model:obj_detail[r]" isCommon>
           <Link to={`/manage/object-list/${record.objTypeCode}/${record.id}`} className="mr16">查看详情</Link>
-        </Authority>
+        </Authority> */}
         <Authority authCode="tag_model:select_tag_cate[r]" isCommon>
           <a href onClick={() => this.tagClass(record)}>标签类目</a>
         </Authority>

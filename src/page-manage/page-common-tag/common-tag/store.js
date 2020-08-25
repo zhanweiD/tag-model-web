@@ -41,7 +41,7 @@ class Store extends ListContentStore(io.getList) {
     this.searchParams = {
       hotWord: this.hotWord,
       useProjectId: this.useProjectId,
-      // projectId: this.useProjectId,
+      projectId: this.ownProjectId,
       objId: this.objectId,
       type: this.projectPermission,
     }

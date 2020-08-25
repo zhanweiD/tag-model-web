@@ -96,7 +96,7 @@ class ModalTagEdit extends Component {
 
             <FormItem {...formItemLayout} label="数据类型">
               {getFieldDecorator('valueType', {
-                // initialValue: +tagDetail.valueType || undefined,
+                initialValue: +tagDetail.valueType || undefined,
                 rules: [{required: true, message: '请选择数据类型'}],
               })(
                 <Select placeholder="请下拉选择" showSearch optionFilterProp="children">

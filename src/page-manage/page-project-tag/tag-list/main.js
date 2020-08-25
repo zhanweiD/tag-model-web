@@ -66,7 +66,7 @@ export default class TagList extends Component {
       key: 'name',
       title: '标签名称',
       dataIndex: 'name',
-      render: text => <OmitTooltip maxWidth={120} text={text} />,
+      render: (text, record) => <Link target="_blank" to={`/manage/project-tag/${record.id}/${store.useProjectId}`}>标签详情</Link>,
     }, {
       key: 'enName',
       title: '标签标识',
@@ -100,11 +100,11 @@ export default class TagList extends Component {
       width: 120,
       render: (text, record) => (
         <div className="FBH FBAC">
-          <Authority 
+          {/* <Authority 
             authCode="tag_model:project_tag_detail[r]" 
           >
             <Link target="_blank" to={`/manage/project-tag/${record.id}/${store.useProjectId}`}>标签详情</Link>
-          </Authority>
+          </Authority> */}
           <Authority 
             authCode="tag_model:apply_project_tag[c]" 
           >
