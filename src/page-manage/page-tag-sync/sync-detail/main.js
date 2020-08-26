@@ -4,7 +4,7 @@ import {action, observable} from 'mobx'
 import {observer} from 'mobx-react'
 import OnerFrame from '@dtwave/oner-frame'
 import {DetailHeader, TabRoute, Tag} from '../../../component'
-import {Time} from '../../../common/util'
+import {Time, codeInProduct} from '../../../common/util'
 import ConfigInfo from './config-info'
 import RunRecord from './run-record'
 
@@ -38,6 +38,15 @@ class SyncDetail extends Component {
     this.tabId = id
   }
 
+  getTabCode = () => {
+    if (codeInProduct('tag_model:transfer_submit_log[r]')) {
+      return [{name: '配置信息', value: 0}, 
+        {name: '运行记录', value: 1}]
+    }
+
+    return [{name: '配置信息', value: 0}]
+  }
+
   render() {
     const {infoLoading, detail, syncId, projectId} = store
 
@@ -59,7 +68,7 @@ class SyncDetail extends Component {
     }]
 
     const tabConfig = {
-      tabs,
+      tabs: this.getTabCode(),
       currentTab: this.tabId,
       changeTab: this.changeTab,
       changeUrl: false,
