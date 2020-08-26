@@ -1,10 +1,12 @@
 .detail-header{
-  display: flex;
   padding: 16px 24px;
-  justify-content: space-between;
-  align-items: center;
   border-bottom: 1px solid rgba(0,0,0,.1);
   background: #fff;
+}
+.detail-header-h{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .detail-name{

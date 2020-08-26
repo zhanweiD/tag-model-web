@@ -38,26 +38,22 @@ export default class Main extends Component {
     return (
       <div className={cls({'box-border': hasBorder})}>
         <div className="detail-header">
-          <div>
+          <div className="detail-header-h">
             <div className="detail-name">
               {name || '--'}
               <span className="ml10">{ tag }</span>
             </div>
-            <div className="detail-descr mt8">
-              <span style={{color: 'rgba(0,0,0, .45)'}}>描述：</span>
-              <span style={{color: descr ? 'rgba(0,0,0,.65)' : 'rgba(0,0,0,.25)'}}>{descr || '-'}</span>
+            <div style={btnStyle} className="far">
+              {
+                this.renderAction(actions)
+              }
             </div>
-            {/* {
-              descr ? <div className="detail-descr">{`描述：${descr}`}</div> : null
-            } */}
-           
+          </div>
+          <div className="detail-descr mt8">
+            <span style={{color: 'rgba(0,0,0, .45)'}}>描述：</span>
+            <span style={{color: descr ? 'rgba(0,0,0,.65)' : 'rgba(0,0,0,.25)'}}>{descr || '-'}</span>
           </div>
           <div />
-          <div style={btnStyle} className="far">
-            {
-              this.renderAction(actions)
-            }
-          </div>
         </div>
         <div className="detail-base-info">
           {
