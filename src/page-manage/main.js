@@ -21,13 +21,15 @@ export default () => {
   const ctx = OnerFrame.useFrame()
   const projectId = ctx.useProjectId()
   useEffect(() => {
-    ctx.querySiderMenus({
-      productCode: 'tag_model',
-      projectId,
-      // parentId: 0, 
-    })
-    ctx.useSider(true)
-  }, [])
+    if (projectId) {
+      ctx.querySiderMenus({
+        productCode: 'tag_model',
+        projectId,
+        // parentId: 0, 
+      })
+      ctx.useSider(true)
+    }
+  }, [projectId])
   return (
     <Switch>
       {/* ************* 标签仓库 ************* */}

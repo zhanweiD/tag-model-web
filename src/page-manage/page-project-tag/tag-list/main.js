@@ -94,35 +94,35 @@ export default class TagList extends Component {
     //   dataIndex: 'status',
     //   render: text => statusMap[+text] || '失效',
     // },
-    {
-      key: 'action',
-      title: '操作',
-      width: 120,
-      render: (text, record) => (
-        <div className="FBH FBAC">
-          {/* <Authority 
-            authCode="tag_model:project_tag_detail[r]" 
-          >
-            <Link target="_blank" to={`/manage/project-tag/${record.id}/${store.useProjectId}`}>标签详情</Link>
-          </Authority> */}
-          <Authority 
-            authCode="tag_model:apply_project_tag[c]" 
-          >
-            {
-              record.status === 2
-                ? (
-                  <Fragment>        
-                    {/* <span className="table-action-line" /> */}
-                    <a className="ml16" href onClick={() => this.openApplyModal(record)}>权限申请</a>
-                  </Fragment>
-                )
-                : null
-            }
-          </Authority>
+    // {
+    //   key: 'action',
+    //   title: '操作',
+    //   width: 120,
+    //   render: (text, record) => (
+    //     <div className="FBH FBAC">
+    //       {/* <Authority 
+    //         authCode="tag_model:project_tag_detail[r]" 
+    //       >
+    //         <Link target="_blank" to={`/manage/project-tag/${record.id}/${store.useProjectId}`}>标签详情</Link>
+    //       </Authority> */}
+    //       <Authority 
+    //         authCode="tag_model:apply_project_tag[c]" 
+    //       >
+    //         {
+    //           record.status === 2
+    //             ? (
+    //               <Fragment>        
+    //                 {/* <span className="table-action-line" /> */}
+    //                 <a className="ml16" href onClick={() => this.openApplyModal(record)}>权限申请</a>
+    //               </Fragment>
+    //             )
+    //             : null
+    //         }
+    //       </Authority>
         
-        </div>
-      ),
-    },
+    //     </div>
+    //   ),
+    // },
   ]
 
   @action.bound openApplyModal(data) {

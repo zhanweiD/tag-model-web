@@ -14,18 +14,20 @@ export default () => {
   const projectId = ctx.useProjectId()
 
   useEffect(() => {
-    ctx.querySiderMenus({
-      productCode: 'tag_common',
-      projectId,
-    })
-    ctx.useSider(false)
-    ctx.useProject(true)
-  }, [])
+    if (projectId) {
+      ctx.querySiderMenus({
+        productCode: 'tag_common',
+        projectId,
+      })
+      ctx.useSider(false)
+      ctx.useProject(true)
+    }
+  }, [projectId])
   return (
     <Switch>
       {/* 审批管理 */}
       <Route exact path={`${prePath}/approval/:type?`} component={Approval} />
-      <Redirect strict to={`${prePath}/project/my-requests`} />
+      <Redirect strict to={`${prePath}/approval/my-requests`} />
     </Switch>
   )
 }
