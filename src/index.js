@@ -78,7 +78,7 @@ function Entry() {
           component={frameComp(Common, {
             productCode: 'tag_common',
             showSider: false,
-            showProject: false,
+            showProject: true,
           })}
         />
 
