@@ -15,12 +15,14 @@ export default () => {
   const ctx = OnerFrame.useFrame()
   const projectId = ctx.useProjectId()
   useEffect(() => {
-    ctx.querySiderMenus({
-      productCode: 'tag_derivative',
-      projectId,
-    })
-    ctx.useSider(true)
-  }, [])
+    if (projectId) {
+      ctx.querySiderMenus({
+        productCode: 'tag_derivative',
+        projectId,
+      })
+      ctx.useSider(true)
+    }
+  }, [projectId])
   return (
     <Switch>
       <Route exact path={`${prePath}/tql`} component={SchemaList} />

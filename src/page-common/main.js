@@ -14,13 +14,15 @@ export default () => {
   const projectId = ctx.useProjectId()
 
   useEffect(() => {
-    ctx.querySiderMenus({
-      productCode: 'tag_common',
-      projectId,
-    })
-    ctx.useSider(false)
-    ctx.useProject(true)
-  }, [])
+    if (projectId) {
+      ctx.querySiderMenus({
+        productCode: 'tag_common',
+        projectId,
+      })
+      ctx.useSider(false)
+      ctx.useProject(true)
+    }
+  }, [projectId])
   return (
     <Switch>
       {/* 审批管理 */}
