@@ -55,7 +55,7 @@ export default class StepOne extends React.Component {
     const {store} = this.props
     
     if (checked) {
-      store.tableData = store.initialList.filter(d => d.status === 2)
+      store.tableData = store.initialList.filter(d => d.status !== 2)
     } else {
       store.tableData = toJS(store.initialList) 
     }
@@ -72,8 +72,8 @@ export default class StepOne extends React.Component {
           字段列表
         </div> */}
         <div className="fs14 mb8 ml2">
-          <span className="mr8">展示标签状态为已发布的字段</span> 
-          <Switch size="small" checkedChildren="是" unCheckedChildren="否" onChange={this.onSwitchChange} />
+          <span className="mr8">仅展示未发布</span> 
+          <Switch size="small" defaultChecked checkedChildren="是" unCheckedChildren="否" onChange={this.onSwitchChange} />
         </div>
         <Table
           loading={store.loadings.firstTable}

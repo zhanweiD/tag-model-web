@@ -71,7 +71,7 @@ export default class TagList extends Component {
       key: 'enName',
       title: '标签标识',
       dataIndex: 'enName',
-      render: text => <OmitTooltip maxWidth={120} text={text} />,
+      render: text => <OmitTooltip maxWidth={200} text={text} />,
     }, {
       key: 'valueType',
       title: '数据类型',
@@ -81,7 +81,7 @@ export default class TagList extends Component {
       key: 'objName',
       title: '对象名称',
       dataIndex: 'objName',
-      render: text => <OmitTooltip maxWidth={120} text={text} />,
+      render: text => <OmitTooltip maxWidth={200} text={text} />,
     }, {
       key: 'projectName',
       title: '所属项目',

@@ -55,7 +55,7 @@ class Store {
       })
 
       this.initialList = res || []
-      this.tableData = res || []
+      this.tableData = this.initialList.filter(d => d.status !== 2) || []
     } catch (e) {
       errorTip(e.message)
     } finally {
