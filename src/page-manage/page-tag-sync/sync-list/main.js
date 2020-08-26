@@ -345,7 +345,7 @@ class SyncList extends Component {
                 <Authority
                   authCode="tag_model:run_transfer[x]"
                 >
-                  <span className="mr16" className="disabled">启动</span>
+                  <span className="mr16 disabled">启动</span>
                 </Authority> 
                 {/* <span className="table-action-line" /> */}
                 <Authority

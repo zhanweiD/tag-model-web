@@ -176,7 +176,7 @@ export default props => {
   const projectId = ctx.useProjectId()
 
   useEffect(() => {
-    ctx.useProject(true)
+    ctx.useProject(false)
   }, [])
 
   return (
