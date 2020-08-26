@@ -87,7 +87,7 @@ export default class TagAnalyze extends Component {
         </Button>
         <p>
           <span className="mr16">{`${(1 - nullRatio) * 100}%的实体拥有${name}这个标签`}</span>
-          <Badge status={status !== 3 ? status !== 2 ? 'warning' : 'success' : 'error'} />
+          <Badge status={status !== 3 ? status !== 2 ? 'processing' : 'success' : 'error'} />
           <span className="mr16">{recordTime}</span>
         </p>
         <div className="chartPie-ad">

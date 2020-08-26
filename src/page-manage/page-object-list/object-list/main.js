@@ -18,7 +18,7 @@ class ObjectList extends Component {
   columns = [{
     title: '对象名称',
     dataIndex: 'name',
-    render: (text, record) => <Link to={`/manage/object-list/${record.objTypeCode}/${record.id}`} className="mr16">查看详情</Link>,
+    render: (text, record) => <Link to={`/manage/object-list/${record.objTypeCode}/${record.id}`} className="mr16">{text}</Link>,
   }, {
     title: '对象类目',
     dataIndex: 'objCatName',
