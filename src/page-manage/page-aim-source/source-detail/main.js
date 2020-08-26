@@ -4,7 +4,7 @@ import {action, observable} from 'mobx'
 import {observer} from 'mobx-react'
 import OnerFrame from '@dtwave/oner-frame'
 import {
-  DetailHeader, ListContent, TabRoute,
+  DetailHeader, ListContent, TabRoute, Authority,
 } from '../../../component'
 import {Time} from '../../../common/util'
 import ModalTagConfig from './modal'
@@ -70,22 +70,27 @@ class SourceDetail extends Component {
     dataIndex: 'action',
     width: 100,
     render: (text, record) => (
-      <div>
-        {(() => {
-          if (record.tagStatus) {
-            return <span className="disabled">取消映射</span>
-          }
+      <Authority 
+        authCode="tag_model:update_tag_target[ud]"
+      >
+        <div>
+          {(() => {
+            if (record.tagStatus) {
+              return <span className="disabled">取消映射</span>
+            }
 
-          if (record.status) {
-            return (
-              <Popconfirm placement="topRight" title="你确定要取消该字段的标签映射吗？" onConfirm={() => this.cancelConfig(record)}>
-                <a href>取消映射</a>
-              </Popconfirm>
-            )
-          }
-          return <a href onClick={() => this.config(record)}>标签映射</a>
-        })()}
-      </div>
+            if (record.status) {
+              return (
+                <Popconfirm placement="topRight" title="你确定要取消该字段的标签映射吗？" onConfirm={() => this.cancelConfig(record)}>
+                  <a href>取消映射</a>
+                </Popconfirm>
+              )
+            }
+            return <a href onClick={() => this.config(record)}>标签映射</a>
+          })()}
+        </div>
+      </Authority>
+     
     ), 
   }]
 
