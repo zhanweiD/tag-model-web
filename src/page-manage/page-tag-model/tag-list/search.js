@@ -1,4 +1,4 @@
-import {tagStatusMap, usedStatusMap, publishStatusMap} from '../util'
+import {tagStatusMap, usedStatusMap, publishStatusMap, tagConfigMethodMap} from '../util'
 
 const serach = ({objectSelectList = []}) => [
   {
@@ -29,16 +29,16 @@ const serach = ({objectSelectList = []}) => [
     },
     component: 'select',
   },
-  //  {
-  //   label: '公开状态',
-  //   key: 'publish',
-  //   initialValue: '',
-  //   control: {
-  //     defaultAll: true,
-  //     options: publishStatusMap,
-  //   },
-  //   component: 'select',
-  // }, 
+  {
+    label: '绑定方式',
+    key: 'configType',
+    initialValue: '',
+    control: {
+      defaultAll: true,
+      options: tagConfigMethodMap,
+    },
+    component: 'select',
+  }, 
   {
     label: '标签名称',
     key: 'keyword',
