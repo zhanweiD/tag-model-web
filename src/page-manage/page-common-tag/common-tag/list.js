@@ -66,7 +66,7 @@ export default class Market extends Component {
       render: (text, record) => (
         <div className="FBH">
           {/* <OmitTooltip maxWidth={120} text={text} /> */}
-          <Link target="_blank" to={`/manage/common-tag/${record.id}/${store.useProjectId}`}>标签详情</Link>
+          <Link target="_blank" to={`/manage/common-tag/${record.id}/${store.useProjectId}`}>{text}</Link>
           {(() => {
             if (record.status === 1) {
               return <Tag status="process" className="ml8" text="审批中" />

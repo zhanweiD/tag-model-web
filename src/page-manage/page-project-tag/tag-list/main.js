@@ -66,7 +66,7 @@ export default class TagList extends Component {
       key: 'name',
       title: '标签名称',
       dataIndex: 'name',
-      render: (text, record) => <Link target="_blank" to={`/manage/project-tag/${record.id}/${store.useProjectId}`}>标签详情</Link>,
+      render: (text, record) => <Link target="_blank" to={`/manage/project-tag/${record.id}/${store.useProjectId}`}>{text}</Link>,
     }, {
       key: 'enName',
       title: '标签标识',
