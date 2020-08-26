@@ -60,7 +60,7 @@ export default class ListContent extends Component {
 
   componentWillUnmount() {
     this.store.list.clear()
-    this.store.initParams = {}
+    // this.store.initParams = {}
     this.store.searchParams = {}
   }
 

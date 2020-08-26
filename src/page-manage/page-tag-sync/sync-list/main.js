@@ -373,9 +373,14 @@ class SyncList extends Component {
           if (record.status === 4 && record.scheduleType === 1 && (record.lastStatus === 1 || record.lastStatus === 2)) {
             return (
               <Fragment>
-                <Popconfirm placement="topRight" title="你确定要暂停吗？" onConfirm={() => this.pauseSync(record.id)}>
-                  <a className="mr16" href>暂停</a>
-                </Popconfirm>
+                <Authority
+                  authCode="tag_model:run_transfer[x]"
+                >
+                  <Popconfirm placement="topRight" title="你确定要暂停吗？" onConfirm={() => this.pauseSync(record.id)}>
+                    <a className="mr16" href>暂停</a>
+                  </Popconfirm>
+                </Authority>
+
                 {/* <span className="table-action-line" /> */}
                 <Authority
                   authCode="tag_model:update_transfer[u]"
@@ -462,7 +467,11 @@ class SyncList extends Component {
           if (record.status === 1 && record.scheduleType === 1) {
             return (
               <Fragment>
-                <a className="mr16" href onClick={() => this.pauseSync(record.id)}>暂停</a>
+                <Authority
+                  authCode="tag_model:run_transfer[x]"
+                >
+                  <a className="mr16" href onClick={() => this.pauseSync(record.id)}>暂停</a>
+                </Authority>
                 {/* <span className="table-action-line" /> */}
                 <Authority
                   authCode="tag_model:update_transfer[u]"
