@@ -25,10 +25,13 @@ export default () => {
       ctx.querySiderMenus({
         productCode: 'tag_model',
         projectId,
-        // parentId: 0, 
       })
-      ctx.useSider(true)
+    } else {
+      ctx.querySiderMenus({
+        productCode: 'tag_model',
+      })
     }
+    ctx.useSider(true)
   }, [projectId])
   return (
     <Switch>
