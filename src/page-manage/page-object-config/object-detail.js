@@ -103,11 +103,18 @@ export default class ObjectDetail extends Component {
       title: '数据表',
       tooltipText: '项目内添加的数据表',
       values: [objCard.tableCount],
-    }, {
-      title: '已公开/已发布',
-      tooltipText: '已发布即已发布的标签数，项目内创建且发布的标签数;已公开，即公开标签数，项目内对外公开的标签数',
-      values: [objCard.publishTagCount, objCard.publicTagCount],
-    }, {
+    }, 
+    {
+      title: '已发布',
+      tooltipText: '已发布即已发布的标签数，项目内创建且发布的标签数',
+      values: [objCard.publicTagCount],
+    }, 
+    // {
+    //   title: '已公开/已发布',
+    //   tooltipText: '已发布即已发布的标签数，项目内创建且发布的标签数;已公开，即公开标签数，项目内对外公开的标签数',
+    //   values: [objCard.publishTagCount, objCard.publicTagCount],
+    // }, 
+    {
       title: '引用标签数',
       tooltipText: '项目内从其他项目申请过来的标签数（有使用权限）',
       values: [objCard.referencedTagCount],

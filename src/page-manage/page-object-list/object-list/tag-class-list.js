@@ -36,7 +36,7 @@ export default class TagList extends Component {
     }, {
       title: '描述',
       dataIndex: 'descr',
-      render: text => <OmitTooltip maxWidth={120} text={text} />,
+      render: text => (text ? <OmitTooltip maxWidth={120} text={text} /> : '-'),
     }, {
       title: '操作',
       dataIndex: 'action',
@@ -118,6 +118,7 @@ export default class TagList extends Component {
     }
 
     const listConfig = {
+      key: this.props.cateId,
       rowKey: 'id',
       rowSelection: rowSelection || null,
       columns: this.columns,

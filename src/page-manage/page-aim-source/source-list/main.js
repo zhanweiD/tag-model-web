@@ -21,7 +21,7 @@ class SourceList extends Component {
   columns = [{
     title: '目的源名称',
     dataIndex: 'name',
-    render: (text, record) => <Link to={`/manage/aim-source/${record.id}`}>{text}</Link>,
+    render: (text, record) => <Link target="_blank" to={`/manage/aim-source/${record.id}`}>{text}</Link>,
   }, {
     title: '对象',
     dataIndex: 'objName',

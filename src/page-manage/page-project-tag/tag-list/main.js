@@ -86,7 +86,7 @@ export default class TagList extends Component {
       key: 'projectName',
       title: '所属项目',
       dataIndex: 'projectName',
-      render: text => <OmitTooltip text={text} />,
+      render: text => <OmitTooltip maxWidth={200} text={text} />,
     }, 
     // {
     //   key: 'status',

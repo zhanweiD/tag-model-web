@@ -51,7 +51,7 @@ export default class DrawerTagConfig extends Component {
     }, {
       label: '数据类型',
       key: 'valueType',
-      // initialValue: detail.valueType,
+      initialValue: detail.valueType,
       component: 'select',
       rules: [
         '@requiredSelect',

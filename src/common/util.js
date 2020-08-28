@@ -164,13 +164,11 @@ export function listToTree(data) {
 export function defaultKey(data) {
   const newData = _.cloneDeep(data)
 
-  if (newData[0].children) {
-    return defaultKey(newData[0].children)
-  } 
-  else {
-    // console.log(newData[0].aId, newData[0].id)
-    return newData[0]
-  }
+  // if (newData[0].children) {
+  //   return defaultKey(newData[0].children)
+  // } 
+  // return newData[0]
+  return newData[0].children ? defaultKey(newData[0].children) : newData[0]
 }
 
 // 标签、对象英文名校验正则

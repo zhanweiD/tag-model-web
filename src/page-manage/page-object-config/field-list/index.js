@@ -2,7 +2,7 @@
  * @description 对象配置 - 字段列表
  */
 import {Component} from 'react'
-import {action} from 'mobx'
+import {action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {ListContent, QuestionTooltip, Authority} from '../../../component'
 import {tagStatusMap, configStatusMap} from '../util'
@@ -21,6 +21,8 @@ export default class FieldList extends Component {
     store.projectId = props.bigStore.projectId
     store.objId = props.bigStore.objId
     store.typeCode = props.bigStore.typeCode
+
+    store.dataSheetList = []
   }
 
   componentWillMount() {
@@ -167,7 +169,6 @@ export default class FieldList extends Component {
       dataSheetList,
       selectDataSource: this.selectDataSource,
     }
-
     const listConfig = {
       columns: this.columns,
       searchParams: seach(searchParams),

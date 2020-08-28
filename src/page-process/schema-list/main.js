@@ -109,7 +109,7 @@ class SchemaList extends Component {
             (record.status === 1) && (
               <Fragment>
                 <Authority authCode="tag_derivative:tql_detail[r]">
-                  <Link className="mr16" to={`/process/tql/${record.id}`}> 查看</Link>
+                  <Link target="_blank" className="mr16" to={`/process/tql/${record.id}`}> 查看</Link>
                 </Authority>
                 {/* <span className="table-action-line" /> */}
               </Fragment>
@@ -330,7 +330,7 @@ class SchemaList extends Component {
         >
         新建加工方案
         </Button>
-                </Authority>,
+      </Authority>,
       ],
       rowKey: 'id',
       store: this.store, // 必填属性
