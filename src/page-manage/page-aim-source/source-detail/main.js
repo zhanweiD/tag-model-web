@@ -1,6 +1,6 @@
 import {Component, useEffect} from 'react'
 import {Spin, Popconfirm, Badge, Select, Input} from 'antd'
-import {action, observable} from 'mobx'
+import {action, observable, toJS} from 'mobx'
 import {observer} from 'mobx-react'
 import OnerFrame from '@dtwave/oner-frame'
 import {
@@ -32,7 +32,9 @@ class SourceDetail extends Component {
     super(props)
     const {match} = props
     store.sourceId = match.params.id 
-    store.projectId = props.projectId
+    store.projectId = match.params.projectId
+
+    console.log(toJS(store.projectId), toJS(props.projectId))
   }
 
   @observable tabId = 1 // 当前详情tabID 

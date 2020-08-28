@@ -33,7 +33,7 @@ class SyncList extends Component {
       // <Authority
       //   authCode="tag_model:transfer_detail[r]"
       // >
-      <Link target="_blank" to={`/manage/tag-sync/${record.id}`}>{text}</Link>
+      <Link target="_blank" to={`/manage/tag-sync/${record.id}/${store.projectId}`}>{text}</Link>
       // </Authority>
     ),
   }, {
@@ -599,7 +599,7 @@ class SyncList extends Component {
         authCode="tag_model:create_transfer[c]" 
       >
         <Button type="primary" onClick={() => this.addSync()}>新建同步计划</Button>
-      </Authority>],
+                </Authority>],
       store, // 必填属性
     }
 

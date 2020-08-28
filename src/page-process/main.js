@@ -26,7 +26,7 @@ export default () => {
   return (
     <Switch>
       <Route exact path={`${prePath}/tql`} component={SchemaList} />
-      <Route exact path={`${prePath}/tql/:id`} component={SchemaDetail} />
+      <Route exact path={`${prePath}/tql/:id/:projectId?`} component={SchemaDetail} />
       <Route exact path={`${prePath}/tql-explain`} component={TqlExplain} />
       <Redirect strict to={`${prePath}/tql`} />
     </Switch>

@@ -89,6 +89,7 @@ export default class ConfigDrawerOne extends Component {
       tabChange,
       tabValue,
       hiddenRel,
+      totalCount,
     } = this.store
 
     const listConfig = {
@@ -96,18 +97,19 @@ export default class ConfigDrawerOne extends Component {
         id: processId,
         fieldName,
       },
+      hasPaging: false,
       tableLoading,
       onRow: record => ({
         onClick: () => this.selectField(record),
       }),
-      // rowSelection: {
-      //   type: 'radio',
-      //   // ...rowSelection,
-      // },
-      // rowClassName: this.setSelect,
       columns: this.columns,
       // initGetDataByParent: true, // 初始请求 在父层组件处理。列表组件componentWillMount内不再进行请求
       store: this.store, // 必填属性
+      pagination: {
+        totalCount,
+        currentPage: 1,
+        // pageSize: 10,
+      },
     }
 
     return (

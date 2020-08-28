@@ -49,11 +49,11 @@ export default () => {
     
       {/* 同步计划 */}
       <Route exact strict path={`${prePath}/tag-sync`} component={SyncList} />
-      <Route exact strict path={`${prePath}/tag-sync/:id`} component={SyncDetail} />
+      <Route exact strict path={`${prePath}/tag-sync/:id/:projectId?`} component={SyncDetail} />
 
       {/* 目的源管理 */}
       <Route exact strict path={`${prePath}/aim-source`} component={SourceList} />
-      <Route exact strict path={`${prePath}/aim-source/:id`} component={SourceDetail} />
+      <Route exact strict path={`${prePath}/aim-source/:id/:projectId?`} component={SourceDetail} />
       
       {/* 同步结果 */}
       <Route exact strict path={`${prePath}/sync-result`} component={SyncResult} />

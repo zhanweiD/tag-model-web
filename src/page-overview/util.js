@@ -9,7 +9,6 @@ const colors = [
 ]
 
 export const pieOpt = data => {
-
   return {
     color: colors,
     grid: {
@@ -21,23 +20,28 @@ export const pieOpt = data => {
     tooltip: {
       trigger: 'item',
       // formatter: params => {
-        // return `${params.name}<br />实体数: ${params.value}<br />占比: ${params.percent}%`
+      // return `${params.name}<br />实体数: ${params.value}<br />占比: ${params.percent}%`
       // },  
-      formatter: '{b}: {c} ({d}%)' 
+      formatter: '{b}: {c} ({d}%)', 
     },
     series: [
       {
         type: 'pie',
-        radius: ['50%', '70%'],
+        radius: ['42%', '60%'],
         avoidLabelOverlap: true,
         animation: false,
         labelLine: {
           show: true,
         },
         label: {
-          formatter:'{b}: {c}' 
+          formatter(v) {
+            return v.data.value > 999999 ? `${v.data.name}:\n${v.data.value}` : `${v.data.name}:${v.data.value}`
+          }, 
         },
-        data: data,
+        // label: {
+        //   formatter: '{b}: {c}', 
+        // },
+        data,
       },
     ],
   }
@@ -92,4 +96,3 @@ export const lineOpt = data => {
     }],
   }
 }
-
