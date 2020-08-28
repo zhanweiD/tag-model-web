@@ -41,6 +41,7 @@ export default class Store {
     currentPage: 1,
     totalCount: 0,
   }
+  @observable totalCount = 0
 
   @action resetData = () => {
     this.configList = [] // 已配置字段列表
@@ -57,15 +58,15 @@ export default class Store {
     switch (v) {
       case 1:
         this.list = allList
-        this.pagination.totalCount = allList.length
+        this.totalCount = allList.length
         break
       case 2:
         this.list = configList
-        this.pagination.totalCount = configList.length
+        this.totalCount = configList.length
         break
       default:
         this.list = noConList
-        this.pagination.totalCount = noConList.length
+        this.totalCount = noConList.length
         break
     }
     this.recordObj = {}
@@ -112,7 +113,7 @@ export default class Store {
           }
           // item.key = item.fieldName
         })
-        this.pagination.totalCount = res.length
+        this.totalCount = res.length
         this.tableLoading = false
       })
     } catch (e) {
@@ -130,7 +131,7 @@ export default class Store {
       this.previews[i].btagFieldId = this.noConfigList[i].tagFieldId
     }
     this.list = this.previews.filter(item => item.tagFieldId || item.btagFieldId)
-    this.pagination.totalCount = this.list.length
+    this.totalCount = this.list.length
   }
 
   // 新建标签

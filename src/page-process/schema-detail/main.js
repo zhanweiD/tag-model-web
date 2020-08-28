@@ -2,7 +2,7 @@
  * @description 加工方案详情
  */
 import {Component, useEffect} from 'react'
-import {observable, action} from 'mobx'
+import {observable, action, toJS} from 'mobx'
 import {observer} from 'mobx-react'
 
 import {Spin, NoData} from 'antd'
@@ -28,9 +28,10 @@ class SchemaDetail extends Component {
   constructor(props) {
     super(props)
     const {match, projectId} = props
-    store.projectId = projectId
+    store.projectId = match.params.projectId
     // runStore.projectId = projectId 
     store.processeId = match.params.id // 方案id
+    console.log(toJS(store.projectId))
   }
 
   @observable tabId = 0 // 当前详情tabID 

@@ -1,6 +1,6 @@
 import {Component, useEffect} from 'react'
 import {Spin} from 'antd'
-import {action, observable} from 'mobx'
+import {action, observable, toJS} from 'mobx'
 import {observer} from 'mobx-react'
 import OnerFrame from '@dtwave/oner-frame'
 import {DetailHeader, TabRoute, Tag} from '../../../component'
@@ -23,8 +23,10 @@ class SyncDetail extends Component {
     const {match} = props
     store.syncId = match.params.id 
 
-    store.projectId = props.projectId
+    store.projectId = match.params.projectId
     // runStore.projectId = props.projectId
+
+    console.log(toJS(store.projectId), toJS(props.projectId))
   }
 
   componentWillMount() {
