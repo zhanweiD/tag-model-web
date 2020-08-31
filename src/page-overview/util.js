@@ -35,13 +35,13 @@ export const pieOpt = data => {
         },
         label: {
           formatter(v) {
-            return v.data.value > 999999 ? `${v.data.name}:\n${v.data.value}` : `${v.data.name}:${v.data.value}`
+            return v.data.value > 9999 ? `${v.data.name}:\n${v.data.value}` : `${v.data.name}:${v.data.value}`
           }, 
         },
         // label: {
         //   formatter: '{b}: {c}', 
         // },
-        data,
+        data, 
       },
     ],
   }
