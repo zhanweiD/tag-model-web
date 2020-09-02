@@ -52,6 +52,7 @@ export default class ConfigField extends Component {
     store.secondSelectedRows.clear()
     store.successResult = {}
     store.tagTypeList.clear()
+    store.checkedPulish = true
   }
 
   render() {

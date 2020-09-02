@@ -2,7 +2,7 @@ import React from 'react'
 import {observer} from 'mobx-react'
 import {action, observable, toJS} from 'mobx'
 import {
-  Table, Badge, Divider, Alert, Spin, Button,
+  Table, Badge, Divider, Alert, Spin, Button, Checkbox,
 } from 'antd'
 import {QuestionTooltip, OmitTooltip} from '../../../component'
 import ModalTagEdit from './config-field-modal-edit'
@@ -22,6 +22,11 @@ export default class StepTwo extends React.Component {
     const {store} = this.props
     // 加载所属类目列表 TODO: 类目需要随时更新吗
     store.getCateList()
+  }
+
+  @action.bound checked(e) {
+    const {store} = this.props
+    store.checkedPulish = e.target.checked
   }
 
   render() {
@@ -147,16 +152,19 @@ export default class StepTwo extends React.Component {
 
           {/* 标题和按钮 */}
           <div className="mb16 ml2 mt24">
-            <p className="fs16 mb12" style={{color: 'rgba(0,0,0,0.85)'}}>标签列表</p>
-            <Button 
-              type="primary" 
-              className="mr4"
-              disabled={btnDisabled}
-              onClick={() => this.showCateModal()}
-            >
+            <div>
+              <p className="fs16 mb12" style={{color: 'rgba(0,0,0,0.85)'}}>标签列表</p>
+              <Button 
+                type="primary" 
+                className="mr4"
+                disabled={btnDisabled}
+                onClick={() => this.showCateModal()}
+              >
               选择所属类目
-            </Button>
-            <QuestionTooltip tip="若您不选择标签所属类目，那么标签将被放在该对象的默认类目中" />
+              </Button>
+              <QuestionTooltip tip="若您不选择标签所属类目，那么标签将被放在该对象的默认类目中" />
+              <Checkbox className="ml16" checked={store.checkedPulish} onChange={this.checked}>生成的标签是否直接发布</Checkbox>
+            </div>
           </div>
 
           {/* 表格 */}
