@@ -7,6 +7,7 @@ import {action, toJS} from 'mobx'
 import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
 import {Input, Select, Button, Modal, Spin} from 'antd'
+import {debounce} from '../../common/util'
 
 const FormItem = Form.Item
 const Option = {Select}
@@ -125,8 +126,8 @@ export default class DrawerOne extends Component {
     if (schemeDetail.id) {
       params.id = schemeDetail.id
     }
-
-    this.store.checkName(params, callback)
+    debounce(() => this.store.checkName(params, callback), 500)
+    // this.store.checkName(params, callback)
   }
 
   @action.bound selectObj(v) {

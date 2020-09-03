@@ -8,6 +8,7 @@ import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
 import {Drawer, Input, Select, Button} from 'antd'
 import {ModalStotageDetail, OmitTooltip} from '../../../component'
+import {debounce} from '../../../common/util'
 
 
 const FormItem = Form.Item
@@ -197,7 +198,8 @@ export default class AddSource extends Component {
     const params = {
       name: value,
     }
-    this.store.checkName(params, callback)
+    // this.store.checkName(params, callback)
+    debounce(() => this.store.checkName(params, callback), 500)
   }
 
   render() {

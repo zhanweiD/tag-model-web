@@ -4,7 +4,7 @@ import {action, toJS} from 'mobx'
 import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
 import {Button, Drawer, Input, Select, Radio, TreeSelect} from 'antd'
-import {enNameReg} from '../../common/util'
+import {enNameReg, debounce} from '../../common/util'
 import {
   targetTypeMap, nameTypeMap, typeCodeMap,
 } from './util'
@@ -98,6 +98,7 @@ class ModalObject extends Component {
       }
     }
    
+    // debounce(() => this.store.checkName(params, callback), 500)
     this.store.checkName(params, callback)
   }
 
@@ -120,7 +121,6 @@ class ModalObject extends Component {
     } = store
 
     const {form: {validateFields}} = this.props
-
     validateFields((err, values) => {
       if (!err) {
         const param = {

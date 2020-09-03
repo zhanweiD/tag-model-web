@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
 import {Modal, Input, Spin, Select, Switch, Cascader} from 'antd'
-import {isJsonFormat, enNameReg, getNamePattern} from '../../../common/util'
+import {isJsonFormat, enNameReg, getNamePattern, debounce} from '../../../common/util'
 import store from './store-tag'
 
 const FormItem = Form.Item
@@ -238,8 +238,8 @@ class ModalTagEdit extends Component {
     if (store.tagId) {
       params.id = store.tagId
     }
-
-    store.checkName(params, callback)
+    debounce(() => store.checkName(params, callback), 500)
+    // store.checkName(params, callback)
   }
 }
 

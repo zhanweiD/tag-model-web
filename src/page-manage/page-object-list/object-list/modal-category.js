@@ -4,6 +4,7 @@ import {observer} from 'mobx-react'
 import {Modal} from 'antd'
 import {ModalForm} from '../../../component'
 import {modalDefaultConfig, judgeEditType} from '../util'
+import {debounce} from '../../../common/util'
 
 @observer
 export default class ModalCategory extends Component {
@@ -79,8 +80,8 @@ export default class ModalCategory extends Component {
     if (editType === 'edit') {
       params.id = detail.aId
     }
-    
-    this.store.checkName(params, callback)
+    debounce(() => this.store.checkName(params, callback), 500)
+    // this.store.checkName(params, callback)
   }
 
   @action.bound handleCancel() {
