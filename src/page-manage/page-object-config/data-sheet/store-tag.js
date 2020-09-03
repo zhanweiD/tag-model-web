@@ -24,6 +24,8 @@ class Store {
 
   @observable successResult = {} // 第三步，成功时的数据
 
+  @observable checkedPulish = true
+
   @observable loadings = {
     firstTable: false, // 第一步表格的Loading
     tagSaving: false, // 第二步，保存标签时的加载状态
@@ -118,6 +120,7 @@ class Store {
       const res = await io.saveTags({
         checkList,
         projectId: this.projectId,
+        isPublish: this.checkedPulish ? 1 : 0,
       })
 
       // 如果content是false，也是保存失败
