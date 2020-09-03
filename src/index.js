@@ -96,7 +96,7 @@ function Entry() {
         <Route
           path="/overview"
           component={frameComp(Overview, {
-            productCode: 'be_tag',
+            productCode: 'tag_overview',
             showSider: false,
             showProject: false})}
         />
