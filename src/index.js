@@ -88,8 +88,8 @@ function Entry() {
           path="/config"
           component={frameComp(Config, {
             productCode: 'tag_config',
-            showSider: false,
-            showProject: false,
+            showSider: true,
+            showProject: true,
           })}
         />
 
