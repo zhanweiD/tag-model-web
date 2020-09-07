@@ -2,7 +2,7 @@ import {Component} from 'react'
 import {action} from 'mobx'
 import {observer} from 'mobx-react'
 import {Modal, Button} from 'antd'
-import {Time} from '../../common/util'
+import {Time, debounce} from '../../common/util'
 import {ModalForm, ModalDetail} from '../../component'
 import {targetTypeMap, nameTypeMap, modalDefaultConfig} from './util'
 
@@ -128,8 +128,8 @@ export default class ModalCategory extends Component {
     if (detail.aId) {
       params.id = detail.aId
     }
-    
-    this.store.checkName(params, callback)
+    debounce(() => this.store.checkName(params, callback), 500)
+    // this.store.checkName(params, callback)
   }
 
   @action.bound handleCancel() {

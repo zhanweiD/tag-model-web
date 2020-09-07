@@ -3,7 +3,7 @@ import {action} from 'mobx'
 import {observer} from 'mobx-react'
 import {Drawer, Button, Spin} from 'antd'
 import {ModalForm} from '../../../component'
-import {changeToOptions, enNameReg, isJsonFormat} from '../../../common/util'
+import {changeToOptions, enNameReg, isJsonFormat, debounce} from '../../../common/util'
 import {tagConfigMethodMap, nameTypeMap} from '../util'
 
 @observer
@@ -228,7 +228,7 @@ export default class DrawerCreate extends Component {
     if (this.store.drawerTagInfo.id) {
       params.id = this.store.drawerTagInfo.id
     }
-
+    // debounce(() => this.store.checkName(params, callback), 500)
     this.store.checkName(params, callback)
   }
 

@@ -3,7 +3,7 @@ import {action} from 'mobx'
 import {observer} from 'mobx-react'
 import {Drawer, Button} from 'antd'
 import {ModalForm} from '../../../component'
-import {changeToOptions, enNameReg, isJsonFormat} from '../../../common/util'
+import {changeToOptions, enNameReg, isJsonFormat, debounce} from '../../../common/util'
 
 // 名称类型映射: 1 中文名 2 英文名
 const nameTypeMap = {
@@ -205,8 +205,8 @@ export default class DrawerTagConfig extends Component {
     if (detail.id) {
       params.id = detail.id
     }
-
-    this.store.checkName(params, callback)
+    debounce(() => this.store.checkName(params, callback), 500)
+    // this.store.checkName(params, callback)
   }
 
 

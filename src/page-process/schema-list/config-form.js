@@ -186,7 +186,7 @@ export default class ConfigDrawerOne extends Component {
       callback('名称与关键字重复')
       return 
     }
-    
+    // debounce(() => this.store.tabCheckName(params, callback), 500)
     this.store.tabCheckName(params, callback)
   }
 
