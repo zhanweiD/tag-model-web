@@ -89,7 +89,7 @@ export default props => {
   const projectId = ctx.useProjectId()
 
   useEffect(() => {
-    ctx.useProject(false)
+    ctx.useProject(true, null, {visible: false})
   }, [])
 
   return (

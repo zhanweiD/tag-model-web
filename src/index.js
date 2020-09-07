@@ -47,6 +47,7 @@ const commonConfig = {
   quickEntrance,
   showSider: true,
   showProject: true,
+  onUserChange: () => window.location.href = `${window.__keeper.pathHrefPrefix || '/'}/overview`,
 }
 
 const frameComp = (Comp, cofig) => {
@@ -96,7 +97,7 @@ function Entry() {
         <Route
           path="/overview"
           component={frameComp(Overview, {
-            productCode: 'tag_overview',
+            productCode: 'tag_model',
             showSider: false,
             showProject: false})}
         />
