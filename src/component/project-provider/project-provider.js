@@ -29,7 +29,7 @@ export default PageComponent => {
           无可用项目 去
         <a target="_blank" className="a-href-color" rel="noopener noreferrer" href="/project/index.html#/project">项目管理</a>
     添加
-            </span>,
+      </span>,
     }
 
     // 判断项目是否初始化
@@ -108,7 +108,18 @@ export default PageComponent => {
 该项目下，标签中心的环境未初始化，请到
         <a target="_blank" href="/tag-model/index.html#/config/environment">后台配置-环境配置</a>
 中初始化标签中心的环境
-            </span>,
+      </span>,
+    }
+
+    const noDataConfigC = {
+      btnText: '初始化环境',
+      onClick: () => {
+        getWorkspaceList(projectId)
+        changeVisible(true)
+      },
+      text: '该项目下，标签中心的环境未初始化',
+      code: 'tag_config:environment_config[u]',
+      noAuthText: '该项目下，标签中心的环境未初始化',
     }
 
     const noDataConfig1 = {
@@ -135,9 +146,17 @@ export default PageComponent => {
         <div className="h-100">
           <div className="content-header">环境配置</div>
           <div className="header-page" style={{minHeight: 'calc(100vh - 137px)', paddingTop: '15%'}}>
-            <NoData
-              {...noDataConfig}
-            />
+            {
+              props.match.path === '/config/environment' ? (
+                <NoData
+                  {...noDataConfigC}
+                />
+              ) : (
+                <NoData
+                  {...noDataConfig}
+                />
+              )
+            }
             <ConfigModal 
               visible={visible}
               workspace={workspace}
