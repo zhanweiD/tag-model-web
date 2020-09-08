@@ -351,6 +351,7 @@ class ModalObject extends Component {
                   relToEntityData.length 
                     ? (
                       <TreeSelect
+                        size="small"
                         placeholder="请选择关联实体"
                         dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
                         allowClear
@@ -367,6 +368,7 @@ class ModalObject extends Component {
                       <TreeSelect
                         placeholder="请选择关联实体"
                         dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
+                        size="small"
                       />
                     )
                 )}
