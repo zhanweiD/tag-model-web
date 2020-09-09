@@ -139,7 +139,7 @@ export default PageComponent => {
           <div className="content-header">环境配置</div>
           <div className="header-page" style={{minHeight: 'calc(100vh - 137px)', paddingTop: '15%'}}>
             {
-              props.match.path === '/config/environment' ? (
+              props.match && props.match.path === '/config/environment' ? (
                 <NoData
                   {...noDataConfigC}
                 />

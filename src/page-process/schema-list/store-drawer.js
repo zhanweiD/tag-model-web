@@ -72,9 +72,12 @@ export default class Store {
         const data = res      
 
         if (res.scheduleType === 1) {
+          // 转为cron表达式（调度时间）
           const expression = CycleSelect.cronSrialize(res.scheduleExpression)
 
+          // 调度周期
           data.period = cycleSelectMap[expression.cycle]
+          // 调度时间
           data.periodTime = expression.time
         }
 
