@@ -115,25 +115,8 @@ const WorkspaceConfig = ({projectId}) => {
           <div className="env-config-label">环境：</div>
           <div className="env-config-value">
             <span className="mr16">{config.workspaceName}</span>
-            {/* <FormOutlined className="action" onClick={editClick} /> */}
           </div>
         </div>
-        {/* <Authority authCode="tag_config:environment_config[u]"> */}
-        {/* <Popconfirm
-          title={(
-            <div>
-更改后原环境中的“标签体系、标签加工方案、标签同步计划、场景、
-              <br />
-我的查询、群体、API”都将会失效，请谨慎操作。
-            </div>
-          )}
-          onConfirm={editClick}
-          onCancel={() => {}}
-          okText="确认"
-          cancelText="取消"
-        >
-          <Button type="primary">编辑</Button>
-        </Popconfirm> */}
         <Authority authCode="tag_config:environment_config[u]">
           <Button type="primary" onClick={editClick}>编辑</Button>
         </Authority>

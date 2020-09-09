@@ -301,13 +301,14 @@ class ModalAddTable extends Component {
               <Fragment>
                 <FormItem 
                   {...formItemLayout} 
-                  label={(
-                    <span>
-                      <span className="mr10">从关联实体的</span>
-                      <br />
-      数据表中选择
-                    </span>
-                  )}
+                  label={<OmitTooltip text="从关联实体的数据表中选择" maxWidth={80} className="rel-entity-name" />}
+                  //             label={(
+                  //               <span>
+                  //                 <span className="mr10">从关联实体的</span>
+                  //                 <br />
+                  // 数据表中选择
+                  //               </span>
+                  //             )}
                 >
                   {getFieldDecorator('switch')(
                     <Switch 
@@ -387,13 +388,14 @@ class ModalAddTable extends Component {
               // <FormItem {...formItemLayout} label="主标签绑定的字段">
               <FormItem 
                 {...formItemLayout} 
-                label={(
-                  <span>
-                    <span className="mr10">主标签绑定的</span>
-                    <br />
-    字段
-                  </span>
-                )}
+                label={<OmitTooltip text="主标签绑定的字段" maxWidth={80} className="rel-entity-name" />}
+                //             label={(
+                //               <span>
+                //                 <span className="mr10">主标签绑定的</span>
+                //                 <br />
+                // 字段
+                //               </span>
+                //             )}
               >
                 {getFieldDecorator('mappingKey', {
                   rules: [{required: true, message: '请选择主标签绑定的字段'}],
@@ -414,7 +416,7 @@ class ModalAddTable extends Component {
           {
             +bothTypeCode === 1 || +bothTypeCode === 0 ? (
               <Fragment>
-                <FormItem {...formItemLayout} label={<OmitTooltip text={entity1Name} maxWidth={150} className="rel-entity-name" />}>
+                <FormItem {...formItemLayout} label={<OmitTooltip text={entity1Name} maxWidth={80} className="rel-entity-name" />}>
                   {getFieldDecorator('entity1Key', {
                     initialValue: +this.chooseEntity === entity1Id ? this.chooseEntityMaJorKey : undefined,
                     rules: [{required: true, message: '请选择主标签绑定的字段'}],
@@ -434,7 +436,7 @@ class ModalAddTable extends Component {
                     </Select>
                   )}
                 </FormItem>
-                <FormItem {...formItemLayout} label={<OmitTooltip text={entity2Name} maxWidth={150} className="rel-entity-name" />}>
+                <FormItem {...formItemLayout} label={<OmitTooltip text={entity2Name} maxWidth={80} className="rel-entity-name" />}>
                   {getFieldDecorator('entity2Key', {
                     initialValue: +this.chooseEntity === entity2Id ? this.chooseEntityMaJorKey : undefined,
                     rules: [{required: true, message: '请选择主标签绑定的字段'}],

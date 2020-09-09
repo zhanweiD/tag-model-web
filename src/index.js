@@ -47,7 +47,7 @@ const commonConfig = {
   quickEntrance,
   showSider: true,
   showProject: true,
-  onUserChange: () => window.location.href = `${window.__keeper.pathHrefPrefix || '/'}/overview`,
+  onUserChange: () => window.location.href = `${window.__keeper.pathHrefPrefix || '/'}/overview`, // 用户信息变更跳转到首页，防止权限问题
 }
 
 const frameComp = (Comp, cofig) => {
