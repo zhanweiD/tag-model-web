@@ -27,6 +27,7 @@ export default class DrawerFour extends Component {
     })
   }
 
+  // 获取主标签
   getMajorTag = () => {
     const {
       schemeDetail: {

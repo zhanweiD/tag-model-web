@@ -1,5 +1,5 @@
 /**
- * @description 
+ * @description 运行code
  */
 import {Component, Fragment} from 'react'
 import {observer, inject} from 'mobx-react'
@@ -35,7 +35,7 @@ export default class DrawerTwoCode extends Component {
     this.store.getHeight()
 
     if (document.getElementById('codeArea')) {
-      this.store.editor = window.CodeMirror.fromTextArea(document.getElementById('codeArea'), {
+      this.store.editor = window.CodeMirror.fromTextArea(document.getElementById('codeArea'), { // 格式化输入code为sql格式
         mode: 'text/x-mysql',
         autoCloseBrackets: true,
         matchBrackets: true,
@@ -52,7 +52,7 @@ export default class DrawerTwoCode extends Component {
       })
 
       const {schemeDetail} = this.drawerStore
-      if (this.drawerStore.drawerType === 'edit' && schemeDetail.source) {
+      if (this.drawerStore.drawerType === 'edit' && schemeDetail.source) { // source运行code，如果是编辑将code转为
         this.store.editor.setValue(sqlFormatter.format(toJS(schemeDetail.source)), {language: 'n1ql', indent: '    '})
       }
     }
@@ -60,6 +60,7 @@ export default class DrawerTwoCode extends Component {
     this.store.editor.on('change', (instance, change) => this.checkIsCanHint(instance, change))
   }
 
+  // 输入提示
   @action checkIsCanHint = (instance, change) => {
     const {text} = change
     const {origin} = change
@@ -92,7 +93,7 @@ export default class DrawerTwoCode extends Component {
     this.store.stopInstance()
   }
   
-  // 校验
+  // 格式化校验
   @action codeFormat() {
     const code = this.store.editor.getValue()
     if (!code) {

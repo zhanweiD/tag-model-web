@@ -1,5 +1,5 @@
 /**
- * @description 
+ * @description 创建加工方案 - 逻辑配置
  */
 import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
@@ -22,6 +22,7 @@ export default class DrawerTwo extends Component {
     this.codeStore = props.rootStore.codeStore
   }
 
+  // 运行
   @action.bound operationCode(code) {
     this.store.paramsForm.validateFieldsAndScroll((err, values) => {
       if (err) {
@@ -35,6 +36,7 @@ export default class DrawerTwo extends Component {
       this.store.schemeDetail.source = code
       this.store.schemeDetail.parameterMappingKeys = parameterMappingKeys
 
+      // 运行任务
       this.codeStore.runTask({
         source: code,
         parameterMappingKeys,

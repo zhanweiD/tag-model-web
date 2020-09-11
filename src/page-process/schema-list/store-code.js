@@ -109,7 +109,7 @@ export default class Store {
     this.changeResultHeight(totalHeight - height)
   }
 
-  // 当日志框，resize时， 活着全屏的时候，去改变table的高度
+  // 当日志框，resize时， 或者全屏的时候，去改变table的高度
   changeResultHeight = height => {
     this.tableData.map(item => {
       if (this[`resultTableHeight${item.taskInstance}${item.resultId}`]) {
