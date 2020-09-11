@@ -1,14 +1,14 @@
 /**
- * @description 
+ * @description 运行参数
  */
 import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
 import {action, observable, toJS} from 'mobx'
 import cls from 'classnames'
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
-import { Button, Input } from 'antd';
+import {MinusCircleOutlined, PlusOutlined} from '@ant-design/icons'
+import {Form} from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
+import {Button, Input} from 'antd'
 
 import {QuestionTooltip} from '../../component'
 import ParamItemInput from './param-item'
@@ -115,9 +115,10 @@ export default class DrawerTwoParams extends Component {
             'dynamic-delete-button': true,
             noAllow: this.props.disabled,
           })}
-          onClick={this.props.disabled ? null : () => this.remove(id)} />
+          onClick={this.props.disabled ? null : () => this.remove(id)}
+        />
       </div>
-    );
+    )
   }
 
   render() {
@@ -144,6 +145,6 @@ export default class DrawerTwoParams extends Component {
           </Form>
         </div>
       </div>
-    );
+    )
   }
 }

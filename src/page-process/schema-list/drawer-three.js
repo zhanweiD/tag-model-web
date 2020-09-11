@@ -107,6 +107,7 @@ export default class DrawerThree extends Component {
     })
   }
 
+  // 分区输入映射
   @action zoneInputChange = (e, key) => {
     const {form: {setFieldsValue, validateFields}} = this.props
 
@@ -122,6 +123,7 @@ export default class DrawerThree extends Component {
     validateFields(['zoneParams'], {force: true})
   }
 
+  // 分区开关
   @action zoneSwitchChange = v => {
     const {form: {setFieldsValue, resetFields}} = this.props
     this.zoneParams.isPartitioned = v
@@ -134,6 +136,7 @@ export default class DrawerThree extends Component {
     }
   }
 
+  // 主标签选择
   @action.bound majorTagSelect(field, objId) {
     const {schemeDetail} = this.store
     schemeDetail.fieldInfo = schemeDetail.fieldInfo.map(d => {
@@ -156,6 +159,7 @@ export default class DrawerThree extends Component {
     })
   }
 
+  // 切换主标签
   getMajorTagInit = data => {
     const obj = {}
     data.forEach(d => {
@@ -250,7 +254,7 @@ export default class DrawerThree extends Component {
                       checkedChildren="是" 
                       unCheckedChildren="否"
                       onChange={e => this.zoneSwitchChange(e)} 
-                      style={{marginTop: '8px'}}
+                      style={{marginTop: '6px'}}
                       checked={this.zoneParams.isPartitioned}
                     />
                     {

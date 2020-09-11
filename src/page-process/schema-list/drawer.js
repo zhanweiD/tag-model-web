@@ -42,7 +42,7 @@ export default class DrawerConfig extends Component {
               if (err) {
                 return
               } 
-    
+              // 保存后更新store中加工详情数据
               t.store.schemeDetail.objId = Array.isArray(values.objId) ? values.objId[0].key : values.objId.key
               t.store.schemeDetail.objName = Array.isArray(values.objId) ? values.objId[0].label : values.objId.label
               t.store.schemeDetail.name = values.name
@@ -62,6 +62,7 @@ export default class DrawerConfig extends Component {
                 return
               } 
               
+              // 运行参数对象
               const parameterMappingKeys = {}
               Object.values(values).forEach(d => {
                 parameterMappingKeys[d.key] = d.value
@@ -89,7 +90,7 @@ export default class DrawerConfig extends Component {
                 const {
                   isPartitioned, key, value,
                 } = values.zoneParams
-                this.store.schemeDetail.isPartitioned = isPartitioned ? 1 : 0
+                this.store.schemeDetail.isPartitioned = isPartitioned ? 1 : 0 // 是否分区
 
                 if (isPartitioned) {
                   this.store.schemeDetail.partitionMappingKeys = [{partitionFieldName: key, partitionFieldValue: value}]
@@ -101,21 +102,23 @@ export default class DrawerConfig extends Component {
                 this.store.schemeDetail.partitionMappingKeys = []
               }
  
+              // 调度周期时间
               if (values.scheduleExpression) {
                 this.store.schemeDetail.scheduleExpression = values.scheduleExpression
 
-                const expression = CycleSelect.cronSrialize(values.scheduleExpression)
-                this.store.schemeDetail.period = cycleSelectMap[expression.cycle]
-                this.store.schemeDetail.periodTime = expression.time
+                const expression = CycleSelect.cronSrialize(values.scheduleExpression) // 转化时间格式
+                this.store.schemeDetail.period = cycleSelectMap[expression.cycle] // 调度周期
+                this.store.schemeDetail.periodTime = expression.time // 调度时间
               }
 
+              // 主标签
               const mainTagMappingKeys = schemeDetail.obj && schemeDetail.obj.map((d, i) => ({
                 objId: d.id,
-                columnName: values[`majorTag${i}`],
+                columnName: values[`majorTag${i}`], // ？？？
               }))
       
-              this.store.schemeDetail.mainTagMappingKeys = mainTagMappingKeys
-              this.store.schemeDetail.scheduleType = values.scheduleType
+              this.store.schemeDetail.mainTagMappingKeys = mainTagMappingKeys // 主标签
+              this.store.schemeDetail.scheduleType = values.scheduleType // 调度类型
 
               t.store.saveSchema({
                 status: 0,

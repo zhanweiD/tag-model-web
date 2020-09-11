@@ -3,7 +3,7 @@ import OnerFrame from '@dtwave/oner-frame'
 
 import Main from './project-tag'
 
-export default () => {
+export default props => {
   const ctx = OnerFrame.useFrame()
   const projectId = ctx.useProjectId()
 
@@ -27,8 +27,7 @@ export default () => {
       }])
     ctx.useSider(true)
   }, [projectId])
-
   return (
-    <Main key={projectId} projectId={projectId} />
+    <Main key={projectId} projectId={projectId} {...props} />
   )
 }

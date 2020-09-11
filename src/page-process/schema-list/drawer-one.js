@@ -1,5 +1,5 @@
 /**
- * @description 创建加工方案 - 逻辑配置
+ * @description 创建加工方案 - 基础信息
  */
 import {Component} from 'react'
 import {observer, inject} from 'mobx-react'

@@ -275,39 +275,47 @@ class SchemaList extends Component {
     }
   }
 
+
   @action.bound edit(data) {
     const params = {
       id: data.id,
     }
+    // 基础信息
     this.drawerStore.getSchemeDetail(params)
+    // 配置逻辑信息
     this.drawerStore.getSchemeConfigInfo(params, () => {
       this.drawerStore.drawerVisible = true
     })
     this.drawerStore.drawerType = 'edit'
   }
 
+  // 执行加工方案
   @action.bound operation(data) {
     this.store.operationScheme({
       id: data.id,
     })
   }
 
+  // 克隆
   @action.bound clone(data) {
     this.store.cloneScheme({
       id: data.id,
     })
   }
 
+  // 删除
   @action.bound remove(data) {
     this.store.deleteScheme({
       deleteIds: [data.id],
     })
   }
 
+  // 新建加工打开窗口
   @action.bound create() {
     this.drawerStore.drawerVisible = true
   }
 
+  // 提交日志
   @action.bound getSubmitLog(data) {
     this.store.modalLogVisible = true
 
@@ -330,7 +338,7 @@ class SchemaList extends Component {
         >
         新建加工方案
         </Button>
-                </Authority>,
+      </Authority>,
       ],
       rowKey: 'id',
       store: this.store, // 必填属性
