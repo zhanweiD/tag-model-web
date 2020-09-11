@@ -58,12 +58,12 @@ class ObjectModel extends Component {
     }
 
     const noDataConfig = {
-      btnText: '新建对象',
-      onClick: this.addObject,
-      code: 'tag_model:update_obj_cate[cud]',
-      noAuthText: '暂无对象',
+      // btnText: '新建对象',
+      // onClick: this.addObject,
+      // code: 'tag_model:update_obj_cate[cud]',
+      // noAuthText: '暂无对象',
       text: '没有任何对象，请在当前页面新建对象！',
-      isCommon: true,
+      // isCommon: true,
     }
 
     return (
