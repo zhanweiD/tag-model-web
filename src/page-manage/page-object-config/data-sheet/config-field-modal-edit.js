@@ -238,8 +238,8 @@ class ModalTagEdit extends Component {
     if (store.tagId) {
       params.id = store.tagId
     }
-    debounce(() => store.checkName(params, callback), 500)
-    // store.checkName(params, callback)
+    // debounce(() => store.checkName(params, callback), 500)
+    store.checkName(params, callback)
   }
 }
 

@@ -120,8 +120,8 @@ export default class StepOne extends Component {
       name: value,
     }
 
-    // this.store.checkName(params, callback)
-    debounce(() => this.store.checkName(params, callback), 500)
+    this.store.checkName(params, callback)
+    // debounce(() => this.store.checkName(params, callback), 500)
   }
   
   // 重名校验
@@ -131,8 +131,8 @@ export default class StepOne extends Component {
       storageId: this.store.storageId,
       tableName: `tbjh_${value}`,
     }
-    debounce(() => this.store.checkTableName(params, callback), 500)
-    // this.store.checkTableName(params, callback)
+    // debounce(() => this.store.checkTableName(params, callback), 500)
+    this.store.checkTableName(params, callback)
   }
 
   @action.bound nextStep() {
@@ -286,10 +286,10 @@ export default class StepOne extends Component {
                     {required: true, message: '表名不能为空'},  
                     {validator: this.changeTableName},
                   ]})(
-                  <div className="FBH"> 
-                      <span className="ml16 mr16">tbjh_</span>
-                      <Input size="small" autoComplete="off" placeholder="请输入表名称" disabled={!this.store.storageId || !this.store.objId} />
-                    </div>
+                    <div className="FBH"> 
+                    <span className="ml16 mr16">tbjh_</span>
+                    <Input size="small" autoComplete="off" placeholder="请输入表名称" disabled={!this.store.storageId || !this.store.objId} />
+                  </div>
                 )}
               </FormItem>
             ) : null

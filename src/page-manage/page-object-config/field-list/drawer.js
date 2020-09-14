@@ -205,8 +205,8 @@ export default class DrawerTagConfig extends Component {
     if (detail.id) {
       params.id = detail.id
     }
-    debounce(() => this.store.checkName(params, callback), 500)
-    // this.store.checkName(params, callback)
+    // debounce(() => this.store.checkName(params, callback), 500)
+    this.store.checkName(params, callback)
   }
 
 
