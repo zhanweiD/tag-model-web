@@ -84,7 +84,8 @@ export default class Tree extends Component {
       onSelect: this.onselect,
       defaultExpandAll: expandAll,
       selectedKeys: selectedKey ? [selectedKey] : [],
-      expandWithParentKeys: toJS(currentSelectKeys),
+      expandWithParentKeys: selectedKey ? [selectedKey] : [],
+      // expandWithParentKeys: toJS(currentSelectKeys),
       // defaultExpandedKeys: store.searchExpandedKeys.slice(),
       showDetail: true,
     }

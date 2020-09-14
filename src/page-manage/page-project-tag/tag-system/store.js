@@ -2,7 +2,7 @@ import {
   action, runInAction, observable, toJS,
 } from 'mobx'
 import {observer} from 'mobx-react'
-import {errorTip, defaultKey, successTip} from '../../../common/util'
+import {errorTip, successTip} from '../../../common/util'
 import io from './io'
 
 const listToTree = data => {
@@ -37,15 +37,8 @@ class Store {
 
   //* *********** tree end ******************/
   // 默认展开的类目
-  @action showKeys = data => {
-    if (data[0].children) {
-      if (data[0].isLeaf === 2) {
-        this.currentSelectKeys.push(data[0].id)
-      } else {
-        this.currentSelectKeys.push(data[0].aId)
-      }
-      this.showKeys(data[0].children)
-    } 
+  defaultKey = data => {
+    return data.find(item => item.type === 0) || []
   }
 
   @action async getTreeData() {
@@ -66,9 +59,9 @@ class Store {
       runInAction(() => {
         this.treeData = listToTree(toJS(res)) || []
         if (this.treeData.length) {
-          this.showKeys(this.treeData)
+          // this.showKeys(this.treeData)
           if (!this.selectedKey) {
-            this.selectChild = defaultKey(toJS(this.treeData))
+            this.selectChild = this.defaultKey(toJS(res))
             this.selectedKey = this.selectChild.aId
             this.useProjectId = this.selectChild.projectId
           }
