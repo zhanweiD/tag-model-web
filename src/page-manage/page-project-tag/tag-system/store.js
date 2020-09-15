@@ -32,13 +32,22 @@ class Store {
   @observable detailLoading = true // 详情加载
   @observable treeData = [] // 类目树数据
   @observable searchExpandedKeys = [] // 关键字搜索展开的树节点
-  @observable currentSelectKeys = []// 默认展开的树节点
-
+  @observable currentSelectKeys = [] // 默认展开的树节点
 
   //* *********** tree end ******************/
   // 默认展开的类目
+  // defaultKey = data => {
+  //   return data.find(item => item.type === 0) || []
+  // }
   defaultKey = data => {
-    return data.find(item => item.type === 0) || []
+    for (const item of data) {
+      if (item.children) {
+        return this.defaultKey(item.children)
+      }
+      if (item.type === 0) {
+        return this.selectChild = item
+      }
+    }
   }
 
   @action async getTreeData() {
@@ -53,7 +62,7 @@ class Store {
       } else {
         res = await io.getTreeDataPro({
           searchKey: this.searchKey,
-          projectId: this.projectId,
+          projectId: this.projectId, 
         })
       }
       runInAction(() => {
@@ -61,7 +70,8 @@ class Store {
         if (this.treeData.length) {
           // this.showKeys(this.treeData)
           if (!this.selectedKey) {
-            this.selectChild = this.defaultKey(toJS(res))
+            // this.selectChild = this.defaultKey(toJS(res))
+            this.defaultKey(toJS(this.treeData)) // 生成默认选中的标签
             this.selectedKey = this.selectChild.aId
             this.useProjectId = this.selectChild.projectId
           }

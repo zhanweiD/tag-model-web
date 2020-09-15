@@ -69,7 +69,7 @@ export default class TagTrend extends Component {
       text: '暂无数据',
     }
     return (
-      <div className="p16" style={{width: '100%', position: 'relative'}}>
+      <div className="pt16 pb16 pl24 pr24" style={{width: '100%', position: 'relative'}}>
         <h3 className="chart-title">空值占比趋势</h3>
         {/* <div className="time-range-wrap">
           <TimeRange

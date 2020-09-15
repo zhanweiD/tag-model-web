@@ -73,7 +73,7 @@ export default class TagAnalyze extends Component {
     const {tagId, authorStatus} = this.props
     const {status, nullRatio, recordTime, name} = store.valueTrend
     return (
-      <div className="p16 pt8 pr">
+      <div className="pb16 pt16 pl24 pr24 pr">
         <h3 className="chart-title">值域分布</h3>
         <Button 
           type="primary pa" 
