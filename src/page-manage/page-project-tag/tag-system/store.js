@@ -19,7 +19,7 @@ class Store {
   //* *********** tree start ****************/
   @observable searchKey // 类目树搜索值
   @observable selectedKey = 0 // 选中的标签id
-  @observable selectChild = 0 // 选中的标签id
+  @observable selectChild = 0 // 选中的标签
   @observable useProjectId = 0 // 标签项目id
   @observable projectId = 0 // 申请项目id
   @observable projectName = '' // 申请项目名称

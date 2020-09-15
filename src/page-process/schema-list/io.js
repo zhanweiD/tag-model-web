@@ -34,6 +34,7 @@ const api = {
   checkKeyWord: get(`${objectApi}/list_keyword`),
   getTagCateSelectList: get(`${baseApi}/cate/cate_tree`), // 创建标签 - 所属类目下拉数据
   getTagBaseDetail: get(`${tagModalApi}/tag_detail`), // 标签详情
+  getTagTypeList: get(`${baseApi}/tag/tag_type`), // 根据字段类型获取标签类型
 
   // 权限code
   getAuthCode: get(`${baseApi}/project/getFunctionCodes`),

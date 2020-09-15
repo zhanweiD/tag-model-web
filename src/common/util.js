@@ -293,5 +293,7 @@ export function selectFieldType (obj) {
     obj.valueType = 4
   } else if (fieldType === 'timestamp' || fieldType === 'date') {
     obj.valueType = 5
+  } else {
+    obj.valueType = 4
   }
 }

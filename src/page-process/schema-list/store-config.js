@@ -36,6 +36,8 @@ export default class Store {
   @observable previews = [] // 预览列表
   @observable tagList = [] // 衍生标签列表
   @observable tagCateSelectList = [] // 类目列表
+  @observable tagTypeList = [] // 标签类型列表
+
   @observable pagination = {
     pageSize: 9999,
     currentPage: 1,
@@ -72,7 +74,7 @@ export default class Store {
     this.recordObj = {}
   }
   
-  // 保存配置前字段列表信息， 只在初次打开抽屉使调用，只用于存储信息
+  // 保存配置前字段列表信息， 只在初次打开抽屉使调用，只用于存储更新前信息
   @action async getNoConList() {
     this.noConfigList = []
     try {
@@ -83,6 +85,21 @@ export default class Store {
       })
       runInAction(() => {
         this.noConfigList = res || []
+      })
+    } catch (e) {
+      console.log(e.message)
+    }
+  }
+
+  // 根据字段类型获取标签类型列表
+  @action async getTagTypeList(obj) {
+    try {
+      const res = await io.getTagTypeList({
+        fieldType: obj.fieldType,
+        projectId: this.projectId,
+      })
+      runInAction(() => {
+        this.tagTypeList = res
       })
     } catch (e) {
       console.log(e.message)
@@ -102,6 +119,7 @@ export default class Store {
       })
 
       runInAction(() => {
+        this.recordObj = {}
         this.previews = this.allList = res || []
         this.list = this.allList
         this.list.forEach(item => {

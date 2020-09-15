@@ -36,6 +36,7 @@ export default class ConfigDrawerOne extends Component {
       tagCateSelectList,
       tagBaseInfo,
       recordObj,
+      tagTypeList,
     } = this.store
     return [{
       label: '新建标签',
@@ -83,15 +84,35 @@ export default class ConfigDrawerOne extends Component {
     }, {
       label: '数据类型',
       key: 'valueType',
-      initialValue: tagBaseInfo.valueType || recordObj.valueType, // 要判断数据类型是否一致
+      // initialValue: tagBaseInfo.valueType || recordObj.valueType, // 要判断数据类型是否一致
+      initialValue: tagBaseInfo.valueType || tagTypeList[0], // 要判断数据类型是否一致
       rules: [
         '@requiredSelect',
       ],
       control: {
-        options: changeToOptions(window.njkData.dict.dataType)('value', 'key'),
+        // options: changeToOptions(window.njkData.dict.dataType)('value', 'key'),
+        options: [
+          {
+            name: '整数型',
+            value: 2,
+            disabled: !tagTypeList.includes(2),
+          }, {
+            name: '小数型',
+            value: 3,
+            disabled: !tagTypeList.includes(3),
+          }, {
+            name: '文本型',
+            value: 4,
+            disabled: !tagTypeList.includes(4),
+          }, {
+            name: '日期型',
+            value: 5,
+            disabled: !tagTypeList.includes(5),
+          },
+        ],
       },
-      // disabled: release || isConfig,
-      disabled: true,
+      // disabled: true,
+      disabled: release || isConfig || !isNewTag,
       component: 'select',
     }, {
       label: '是否枚举',
@@ -212,10 +233,10 @@ export default class ConfigDrawerOne extends Component {
       this.store.disNext = false
     } else {
       this.form.validateFields().then(values => {
-        if (recordObj.valueType !== values.valueType) {
-          failureTip('数据类型不匹配，请重新选择')
-          return
-        }
+        // if (recordObj.valueType !== values.valueType) {
+        //   failureTip('数据类型不匹配，请重新选择')
+        //   return
+        // }
         const params = {
           ...values,
           newTag: undefined,
@@ -247,7 +268,7 @@ export default class ConfigDrawerOne extends Component {
         {
           fieldName ? (
             <div className="config-form">
-              <div className="form-header">
+              <div className="form-header mb16">
                 <div>
                   <span className="fs14 mr8">{fieldName}</span>
                   <Tag color={release ? 'processing' : 'default'}>{status === 2 ? '已发布' : '未发布'}</Tag>

@@ -46,7 +46,8 @@ export default class ConfigDrawerOne extends Component {
  
   // 选中字段
   @action selectField = obj => {
-    selectFieldType(obj)
+    // selectFieldType(obj)
+    this.store.getTagTypeList(obj)
 
     this.store.recordObj = obj
     this.store.tagBaseInfo = {}
@@ -124,7 +125,7 @@ export default class ConfigDrawerOne extends Component {
           size="small" 
           title="字段列表" 
           extra={<a href onClick={this.showAll}>{hiddenRel ? '显示全部' : '隐藏已发布'}</a>} 
-          style={{width: 525, height: 600, marginTop: '16px'}}
+          style={{width: 525, height: 660, marginTop: '16px'}}
         >
           <Search
             placeholder="请输入字段名称查询"
