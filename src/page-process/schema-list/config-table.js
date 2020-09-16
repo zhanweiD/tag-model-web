@@ -4,7 +4,6 @@ import {action, toJS} from 'mobx'
 import {inject, observer} from 'mobx-react'
 
 import {ListContent} from '../../component'
-import {selectFieldType} from '../../common/util'
 
 const {Search} = Input
 @inject('store')
@@ -46,7 +45,6 @@ export default class ConfigDrawerOne extends Component {
  
   // 选中字段
   @action selectField = obj => {
-    // selectFieldType(obj)
     this.store.getTagTypeList(obj)
 
     this.store.recordObj = obj
