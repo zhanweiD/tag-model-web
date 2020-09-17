@@ -1,3 +1,6 @@
+/**
+ * 目的源管理列表 - 详情
+ */
 import {Component, useEffect} from 'react'
 import {Spin, Popconfirm, Badge, Select, Input} from 'antd'
 import {action, observable, toJS} from 'mobx'

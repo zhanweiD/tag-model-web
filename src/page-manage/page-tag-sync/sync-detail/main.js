@@ -1,3 +1,6 @@
+/**
+ * @description 标签同步详情
+ */
 import {Component, useEffect} from 'react'
 import {Spin} from 'antd'
 import {action, observable, toJS} from 'mobx'

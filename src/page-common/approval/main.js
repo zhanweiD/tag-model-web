@@ -1,3 +1,6 @@
+/**
+ * 审批管理
+ */
 import {Component, useEffect} from 'react'
 import {Menu} from 'antd'
 
@@ -6,17 +9,6 @@ import {codeInProduct} from '../../common/util'
 import MyRequests from './my-requests'
 import PendingApproval from './pending-approval'
 import Approved from './approved'
-
-const menuMap = [{
-  name: '我的申请',
-  value: 'my-requests',
-}, {
-  name: '待我审批',
-  value: 'pending-approval',
-}, {
-  name: '我已审批',
-  value: 'approved',
-}]
 
 const ContentMap = {
   'my-requests': MyRequests,

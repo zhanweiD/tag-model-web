@@ -1,3 +1,6 @@
+/**
+ * 目的源管理列表 - 字段配置页面
+ */
 import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {Drawer, Button, message} from 'antd'
