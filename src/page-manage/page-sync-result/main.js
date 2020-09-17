@@ -1,9 +1,12 @@
+
+/**
+ * @description 同步结果
+ */
 import {Component} from 'react'
 import {toJS, action} from 'mobx'
 import {observer} from 'mobx-react'
 import {Badge} from 'antd'
 import {ListContent, projectProvider} from '../../component'
-import {Time} from '../../common/util'
 import seach from './search'
 
 import store from './store'

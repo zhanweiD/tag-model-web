@@ -1,3 +1,6 @@
+/**
+ * @description 标签同步
+ */
 import {Component, Fragment} from 'react'
 import {action, toJS} from 'mobx'
 import {observer, Provider} from 'mobx-react'
