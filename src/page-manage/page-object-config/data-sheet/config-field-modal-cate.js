@@ -63,6 +63,7 @@ class ModalCateSelect extends React.Component {
                 ],
               })(
                 <Cascader
+                  size="small"
                   options={options}
                   style={{width: 360}}
                   placeholder="请选择"

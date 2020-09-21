@@ -185,7 +185,7 @@ class SourceDetail extends Component {
           />
         </Spin>
         <div className="list-content box-border">
-          <TabRoute {...tabConfig} />
+          {/* <TabRoute {...tabConfig} /> */}
           <div className="mb16 pl24 pt24">
             <span className="mr8">映射状态</span>
             <Select

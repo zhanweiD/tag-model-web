@@ -53,13 +53,13 @@ export default class StepTwo extends React.Component {
         title: '标签名称',
         key: 'name',
         dataIndex: 'name',
-        render: name => <OmitTooltip text={name} maxWidth={80} />,
+        render: name => <OmitTooltip text={name} maxWidth={60} />,
       },
       {
         title: '标签标识',
         key: 'enName',
         dataIndex: 'enName',
-        render: name => <OmitTooltip text={name} maxWidth={80} />,
+        render: name => <OmitTooltip text={name} maxWidth={60} />,
       },
       {
         title: '数据类型',
@@ -77,7 +77,7 @@ export default class StepTwo extends React.Component {
         title: '枚举显示值',
         key: 'enumValue',
         dataIndex: 'enumValue',
-        render: name => (name ? <OmitTooltip text={name} maxWidth={80} /> : '-'),
+        render: name => (name ? <OmitTooltip text={name} maxWidth={70} /> : '-'),
       },
       {
         title: '所属类目',
@@ -93,25 +93,25 @@ export default class StepTwo extends React.Component {
             cateName = store.cateMap[cateId]
           }
           
-          return <OmitTooltip text={cateName} maxWidth={80} />
+          return <OmitTooltip text={cateName} maxWidth={60} />
         },
       },
       {
         title: '业务逻辑',
         key: 'descr',
         dataIndex: 'descr',
-        render: descr => (descr ? <OmitTooltip text={descr} maxWidth={80} /> : '-'),
+        render: descr => (descr ? <OmitTooltip text={descr} maxWidth={60} /> : '-'),
       },
       {
         title: '关联的字段',
         key: 'dataFieldName',
         dataIndex: 'dataFieldName',
-        render: name => <OmitTooltip text={name} maxWidth={80} />,
+        render: name => <OmitTooltip text={name} maxWidth={70} />,
       },
       {
         title: '确认结果',
         key: 'result',
-        width: 100,
+        width: 190,
         dataIndex: 'result',
         render: (v, record) => (
           +record.isTrue === 1 

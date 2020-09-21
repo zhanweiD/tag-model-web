@@ -44,7 +44,8 @@ export default class OverviewCard extends React.Component {
       <div className={cls({'overview-card': true})} style={{color: color || 'inherit'}}>
         <div className="df-js">
           {/* ml4 mt1 对齐微调 */}
-          <span className="ml4 mt1">
+          {/* <span className="ml4 mt1"> */}
+          <span>
             {title}
             {/* {
               tooltipText ? (

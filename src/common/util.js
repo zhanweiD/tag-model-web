@@ -157,15 +157,6 @@ export function listToTree(data) {
   return newData.filter(item => item.parentId === 0)
 }
 
-/**
- * @description 返回默认类目下的第一个孩子
- * @param {*} data 处理过的类目树数据
- */
-// export function defaultKey(data) {
-//   const newData = _.cloneDeep(data)
-//   return newData[0].children ? defaultKey(newData[0].children) : newData[0]
-// }
-
 // 标签、对象英文名校验正则
 export const enNameReg = /^[a-zA-Z][a-zA-Z0-9_]{0,31}$/
 

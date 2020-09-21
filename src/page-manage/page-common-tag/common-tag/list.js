@@ -117,14 +117,14 @@ export default class Market extends Component {
                   return (                 
                     <Fragment>
                       {/* <span className="table-action-line" />  */}
-                      <span className="disabled ml16">申请</span>
+                      <span className="disabled">申请</span>
                     </Fragment>                
                   )
                 } 
                 return (
                   <Fragment>
                     {/* <span className="table-action-line" />  */}
-                    <a className="ml16" href onClick={() => this.openModal(record, 'one')}>申请</a>
+                    <a href onClick={() => this.openModal(record, 'one')}>申请</a>
                   </Fragment>
                 )
               } 

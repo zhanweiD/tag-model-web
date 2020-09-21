@@ -142,6 +142,7 @@ class ModalTagEdit extends Component {
                 initialValue: tagDetail.pathIds || defaultCateV,
               })(
                 <Cascader
+                  size="small"
                   options={cateList}
                   placeholder="请选择标签类目"
                 />
