@@ -51,6 +51,7 @@ export default class SelectObject extends Component {
 
   @action.bound closeDrawer() {
     this.store.selectObjVisible = false
+    this.selectNodes = []
   }
 
   // 保存选择对象
