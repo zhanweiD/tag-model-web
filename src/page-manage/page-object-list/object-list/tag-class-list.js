@@ -148,7 +148,7 @@ export default class TagList extends Component {
     return (
       // <div className="pt32">
       <div>
-        <p className="mb16">标签列表</p>
+        <p className="detail-name mb8">标签列表</p>
         {
           // !tagList.list.length && typeof keyword === 'undefined' ? (
           //   <NoData

@@ -143,7 +143,14 @@ export default class DrawerCreate extends Component {
         '@requiredSelect',
       ],
       control: {
-        options: tagConfigMethodMap,
+        // options: tagConfigMethodMap,
+        options: [{
+          name: '基础标签',
+          value: 0,
+        }, {
+          name: '衍生标签',
+          value: 1,
+        }],
       },
     }, {
       label: '业务逻辑',

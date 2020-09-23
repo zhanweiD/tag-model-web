@@ -1,5 +1,5 @@
 import {
-  observable, action, runInAction,
+  observable, action, runInAction, toJS,
 } from 'mobx'
 import {
   successTip, failureTip, errorTip, listToTree,
@@ -58,6 +58,17 @@ class Store {
 
   @observable objView = {} // 对象视图
   @observable objViewLoading = false // 对象视图
+  @observable firstChildrens = [] // 存放第一个孩子集
+
+  @action defaultKey = data => {
+    for (const item of data) {
+      if (item.children) {
+        this.defaultKey(item.children) 
+      } else if (item.parentId) { // 判断条件不定，使用场景有限
+        return this.firstChildrens.push(item)
+      }
+    }
+  }
 
   //* ------------------------------ 对象详情 end ------------------------------*//
 
@@ -67,6 +78,7 @@ class Store {
    */
   @action async getObjTree(cb) {
     this.treeLoading = true
+    this.firstChildrens = []
 
     try {
       const res = await io.getObjTree({
@@ -79,6 +91,7 @@ class Store {
         this.searchExpandedKeys.clear()
 
         let data = res
+        this.treeData = listToTree(data)
 
         // 判断是否进行搜索
         if (this.searchKey) {
@@ -93,7 +106,9 @@ class Store {
 
         if (res.length) {
           if (!this.objId || !res.filter(d => +d.aId === +this.objId).length) {
-            const firstObject = res.filter(item => item.parentId !== 0)[0]
+            // const firstObject = res.filter(item => item.parentId !== 0)[0]
+            this.defaultKey(toJS(this.treeData))
+            const firstObject = this.firstChildrens[0]
             // 默认展开第一个对象
             this.currentSelectKeys = firstObject && firstObject.aId
           } else {
@@ -104,7 +119,6 @@ class Store {
         }
         // 获取所有类目的数据；用于编辑对象时选择所属类目
         // this.categoryData = res.filter(item => item.parentId === 0)
-        this.treeData = listToTree(data)
 
         if (cb) cb()
       })

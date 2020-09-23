@@ -1,5 +1,5 @@
 /**
- * @description 标签管理 - 标签模型
+ * @description 标签模型 - 标签维护
  */
 import {Component, Fragment} from 'react'
 import {action, toJS} from 'mobx'

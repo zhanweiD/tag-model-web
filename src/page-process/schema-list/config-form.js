@@ -256,7 +256,7 @@ export default class ConfigDrawerOne extends Component {
   }
 
   render() {
-    const {release, isConfig, recordObj} = this.store
+    const {release, isConfig, recordObj, confirmLoading} = this.store
     const {fieldName, tagId, status} = recordObj
     const formConfig = {
       selectContent: this.selectContent(),
@@ -274,7 +274,7 @@ export default class ConfigDrawerOne extends Component {
                   <Tag color={release ? 'processing' : 'default'}>{status === 2 ? '已发布' : '未发布'}</Tag>
                 </div>
                 <div>
-                  <Button type="primary" disabled={release} onClick={this.submit}>
+                  <Button type="primary" disabled={release} onClick={this.submit} loading={confirmLoading}>
                     {isConfig ? '取消配置' : '配置'}
                   </Button>
                 </div>

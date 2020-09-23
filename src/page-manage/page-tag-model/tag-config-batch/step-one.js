@@ -111,7 +111,7 @@ export default class StepOne extends Component {
             }
           </Select>
           <span className="search-label ml16">绑定方式</span>
-          <Select value={+boundMethodId} style={{width: 240}} onChange={this.boundMethodSelect} showSearch optionFilterProp="children">
+          <Select value={boundMethodId === '' ? '' : +boundMethodId} style={{width: 240}} onChange={this.boundMethodSelect} showSearch optionFilterProp="children">
             {
               tagConfigMethodMap.map(
                 ({name, value}) => (

@@ -24,6 +24,7 @@ export default class Store {
   @observable isNewTag = true // 是否新建标签
   @observable tableLoading = false // 列表加载
   @observable hiddenRel = false // 判断是否已隐藏发布
+  @observable confirmLoading = false // 提交loading
 
   @observable tagBaseInfo = {} // 衍生标签详情
   @observable form // form 表单
@@ -243,6 +244,7 @@ export default class Store {
         } else {
           errorTip('配置失败')
         }
+        this.confirmLoading = false
       })
     } catch (e) {
       errorTip(e.message)
@@ -251,6 +253,7 @@ export default class Store {
 
   // 取消配置
   @action async delTagRelation() {
+    this.confirmLoading = true
     try {
       const res = await io.delTagRelation({
         id: this.recordObj.tagFieldId,
@@ -263,8 +266,10 @@ export default class Store {
           this.isNewTag = true
           this.getList()
         }
+        this.confirmLoading = false
       })
     } catch (e) {
+      this.confirmLoading = false
       errorTip(e.message)
     }
   }
