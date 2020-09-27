@@ -268,6 +268,7 @@ class Store extends ListContentStore(io.getList) {
         this.confirmLoading = false
         if (res.success) {
           successTip('操作成功')
+          this.getTagCateTree()
           if (cb) cb()
         } else {
           failureTip('操作失败')
