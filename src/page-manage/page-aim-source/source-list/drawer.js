@@ -8,7 +8,7 @@ import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
 import {Drawer, Input, Select, Button} from 'antd'
 import {ModalStotageDetail, OmitTooltip} from '../../../component'
-import {debounce} from '../../../common/util'
+import {debounce, getNamePattern} from '../../../common/util'
 
 
 const FormItem = Form.Item
@@ -241,9 +241,10 @@ export default class AddSource extends Component {
           <FormItem {...formItemLayout} label="目的源名称">
             {getFieldDecorator('name', {
               rules: [
-                {transform: value => value && value.trim()},
+                // {transform: value => value && value.trim()},
                 {required: true, message: '目的源名称不能为空'},
-                {max: 32, message: '输入不能超过32个字符'},
+                // {max: 32, message: '输入不能超过32个字符'},
+                ...getNamePattern(),
                 {
                   validator: this.checkName,
                 }],

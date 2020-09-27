@@ -5,6 +5,7 @@ import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
 import {Table, Input, Button, Tooltip} from 'antd'
 import {SearchOutlined} from '@ant-design/icons'
+import {getNamePattern} from '../../../common/util'
 
 const EditableContext = React.createContext()
 const {Search} = Input
@@ -41,7 +42,8 @@ class EditableCell extends Component {
           <Form.Item style={{margin: 0}} key={record.id}>
             {form.getFieldDecorator(record.id, {
               rules: [
-                {transform: value => value && value.trim()},
+                // {transform: value => value && value.trim()},
+                ...getNamePattern(),
                 {
                   required: true,
                   message: '输入不能为空',

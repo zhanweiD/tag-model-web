@@ -74,6 +74,7 @@ export default class ConfigDrawerOne extends Component {
       key: 'enName',
       initialValue: tagBaseInfo.enName || recordObj.fieldName,
       rules: !isNewTag ? null : ([
+        '@enNamePattern',
         '@transformTrim',
         '@required',
         '@max32',
@@ -137,6 +138,7 @@ export default class ConfigDrawerOne extends Component {
       rules: [
         '@transformTrim',
         '@required',
+        '@max128',
         {validator: this.handleEnumValueValidator},
       ],
       control: {
@@ -164,7 +166,7 @@ export default class ConfigDrawerOne extends Component {
       key: 'descr',
       initialValue: tagBaseInfo.descr,
       rules: [
-        {max: 100, message: '业务逻辑不能超过100字'},
+        '@max128',
       ],
       disabled: release || isConfig || !isNewTag,
       autoSize: {minRows: 3, maxRows: 5},

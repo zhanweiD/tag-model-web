@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
 import {Modal, Input, Spin, Select, Switch, Cascader} from 'antd'
-import {isJsonFormat, enNameReg, getNamePattern, debounce} from '../../../common/util'
+import {isJsonFormat, enNameReg, getNamePattern, getEnNamePattern, debounce} from '../../../common/util'
 import store from './store-tag'
 
 const FormItem = Form.Item
@@ -86,9 +86,10 @@ class ModalTagEdit extends Component {
               {getFieldDecorator('enName', {
                 initialValue: tagDetail.enName || undefined,
                 rules: [
-                  {transform: value => value && value.trim()},
+                  // {transform: value => value && value.trim()},
                   {required: true, message: '标签标识不可为空'},
-                  {pattern: enNameReg, message: '不超过32个字，只能包含英文、数字或下划线，必须以英文开头'},
+                  ...getEnNamePattern(),
+                  // {pattern: enNameReg, message: '不超过32个字，只能包含英文、数字或下划线，必须以英文开头'},
                   {validator: this.checkName},
                 ],
               })(<Input size="small" autoComplete="off" placeholder="不超过32个字，允许英文、数字或下划线，必须以英文开头" />)}
@@ -122,6 +123,7 @@ class ModalTagEdit extends Component {
                 {getFieldDecorator('enumValue', {
                   rules: [
                     {transform: value => value && value.trim()},
+                    {max: 128, message: '不能超过128个字符'},
                     {required: true, message: '枚举显示值不可为空'},
                     {validator: this.handleEnumValueValidator},
                   ],

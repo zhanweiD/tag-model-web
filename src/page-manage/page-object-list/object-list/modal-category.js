@@ -33,6 +33,9 @@ export default class ModalCategory extends Component {
       initialValue: judgeEditType(detail.name, editType),
       component: 'input',
       rules: [
+        '@namePattern',
+        '@nameUnderline',
+        '@nameShuQi',
         '@transformTrim',
         '@required',
         '@max32',

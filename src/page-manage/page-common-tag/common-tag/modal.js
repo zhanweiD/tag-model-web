@@ -175,6 +175,7 @@ export default class TagApply extends Component {
             {getFieldDecorator('applyDescr', {
               rules: [
                 {required: true, message: '请输入申请理由'},
+                {max: 128, message: '输入不能超过128个字符'},
               ],
             })(
               <TextArea placeholder="请输入申请理由" />

@@ -4,7 +4,7 @@ import {action, toJS} from 'mobx'
 import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
 import {Button, Drawer, Input, Select, Radio, TreeSelect} from 'antd'
-import {enNameReg, debounce} from '../../common/util'
+import {enNameReg, getNamePattern, getEnNamePattern, debounce} from '../../common/util'
 import {
   targetTypeMap, nameTypeMap, typeCodeMap,
 } from './util'
@@ -193,9 +193,10 @@ class ModalObject extends Component {
             {getFieldDecorator('name', {
               initialValue: data.name,
               rules: [
-                {transform: value => value && value.trim()},
+                // {transform: value => value && value.trim()},
                 {required: true, message: '对象名称不能为空'},
-                {max: 32, message: '输入不能超过32个字符'},
+                // {max: 32, message: '输入不能超过32个字符'},
+                ...getNamePattern(),
                 {
                   validator: this.checkName,
                 }],
@@ -208,10 +209,11 @@ class ModalObject extends Component {
             {getFieldDecorator('enName', {
               initialValue: data.enName,
               rules: [
-                {transform: value => value && value.trim()},
+                // {transform: value => value && value.trim()},
                 {required: true, message: '对象标识不能为空'},
-                {max: 32, message: '输入不能超过32个字符'},
-                {pattern: enNameReg, message: '不超过32个字，只能包含英文、数字或下划线，必须以英文开头'},
+                // {max: 32, message: '输入不能超过32个字符'},
+                // {pattern: enNameReg, message: '不超过32个字，只能包含英文、数字或下划线，必须以英文开头'},
+                ...getEnNamePattern(),
                 {
                   validator: this.checkName,
                 }],
@@ -285,9 +287,10 @@ class ModalObject extends Component {
                   {getFieldDecorator('tagName', {
                     initialValue: data.tagName,
                     rules: [
-                      {transform: value => value && value.trim()},
+                      // {transform: value => value && value.trim()},
                       {required: true, message: '标签名称不能为空'},
-                      {max: 32, message: '输入不能超过32个字符'},
+                      // {max: 32, message: '输入不能超过32个字符'},
+                      ...getNamePattern(),
                       {
                         validator: this.checkName,
                       }],
@@ -300,10 +303,11 @@ class ModalObject extends Component {
                   {getFieldDecorator('tagEnName', {
                     initialValue: data.tagEnName,
                     rules: [
-                      {transform: value => value && value.trim()},
+                      // {transform: value => value && value.trim()},
                       {required: true, message: '标签标识不能为空'},
-                      {max: 32, message: '输入不能超过32个字符'},
-                      {pattern: enNameReg, message: '不超过32个字，只能包含英文、数字或下划线，必须以英文开头'},
+                      // {max: 32, message: '输入不能超过32个字符'},
+                      // {pattern: enNameReg, message: '不超过32个字，只能包含英文、数字或下划线，必须以英文开头'},
+                      ...getEnNamePattern(),
                       {
                         validator: this.checkName,
                       }],

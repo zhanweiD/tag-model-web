@@ -31,6 +31,9 @@ export default class DrawerTagConfig extends Component {
       initialValue: detail.name,
       component: 'input',
       rules: [
+        '@namePattern',
+        '@nameUnderline',
+        '@nameShuQi',
         '@transformTrim',
         '@required',
         '@max32',
@@ -42,10 +45,11 @@ export default class DrawerTagConfig extends Component {
       initialValue: detail.enName,
       component: 'input',
       rules: [
+        '@enNamePattern',
         '@transformTrim',
         '@required',
         '@max32',
-        {pattern: enNameReg, message: '不超过32个字，只能包含英文、数字或下划线，必须以英文开头'},
+        // {pattern: enNameReg, message: '不超过32个字，只能包含英文、数字或下划线，必须以英文开头'},
         {validator: this.checkName},
       ],
     }, {
@@ -97,6 +101,7 @@ export default class DrawerTagConfig extends Component {
       rules: [
         '@transformTrim',
         '@required',
+        '@max128',
         {validator: this.handleEnumValueValidator},
       ],
       control: {

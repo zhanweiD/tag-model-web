@@ -42,6 +42,9 @@ export default class ModalCategory extends Component {
       initialValue: detail.name,
       component: 'input',
       rules: [
+        '@namePattern',
+        '@nameUnderline',
+        '@nameShuQi',
         '@transformTrim',
         '@required',
         '@max32',
