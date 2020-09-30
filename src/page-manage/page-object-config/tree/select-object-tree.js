@@ -23,6 +23,7 @@ export default class CateTree extends Component {
   @observable searchKey = undefined
   @observable checkedKeys = []
 
+  // 打开抽屉默认选中的keys
   componentWillReceiveProps(next) {
     const {removeListItem, selTypeCode} = this.props
     if (!_.isEqual(removeListItem, next.removeListItem) && next.removeListItem) {
@@ -35,11 +36,13 @@ export default class CateTree extends Component {
     }
   }
 
+  // 初始化数据
   @action destroy() {
     this.checkedKeys.clear()
     this.searchKey = undefined
   }
 
+  // 选中子节点or父节点
   @action onCheck = (checkedKeys, e) => {
     const {onCheck} = this.props
     const {checkedNodes} = e
@@ -61,6 +64,7 @@ export default class CateTree extends Component {
     })
   }
 
+  // 生成dom节点
   renderTreeNodes = data => data.map(item => {
     const {listDataIds} = this.props
 
