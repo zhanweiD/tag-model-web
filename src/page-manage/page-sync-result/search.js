@@ -5,7 +5,7 @@ const serach = ({objList = [], storageList = []}) => [
     initialValue: '',
     control: {
       defaultAll: true,
-      options: [{name: 'MySQL',value: 1}, {name: 'Greenplum',value: 10}],
+      options: [{name: 'MySQL', value: 1}, {name: 'Greenplum', value: 10}, {name: 'PostgreSQL', value: 11}, {name: 'Oracle', value: 2}],
     },
     component: 'select',
   }, {
