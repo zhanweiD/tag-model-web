@@ -14,7 +14,6 @@ import Manage from './page-manage'
 import Process from './page-process'
 import Common from './page-common'
 import Config from './page-config'
-import Demo from './demo/demo'
 
 const njkData = {
   dict,
