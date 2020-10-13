@@ -14,6 +14,7 @@ import Manage from './page-manage'
 import Process from './page-process'
 import Common from './page-common'
 import Config from './page-config'
+import Demo from './demo/demo'
 
 const njkData = {
   dict,
@@ -69,6 +70,7 @@ function Entry() {
       <Switch>
         {/* 标签管理 */}
         <Route path="/manage" component={frameComp(Manage, {productCode: 'tag_model'})} />
+        {/* <Route path="/demo" component={frameComp(Demo, {productCode: 'tag_model'})} /> */}
        
         {/* 标签加工 */}
         <Route path="/process" component={frameComp(Process, {productCode: 'tag_derivative'})} />
