@@ -5,18 +5,17 @@ import nodata from '../../icon/noData.svg'
 
 export default class NoData extends Component {
   static propTypes = {
-    pt: PropTypes.string, // 距离顶部的距离；默认 12%
     text: PropTypes.string, // 说明文案；不传视为不需
     btnText: PropTypes.string, // 按钮文案；不传视为不需按钮
     btnDisabled: PropTypes.bool, // 按钮是否被禁用
     onClick: PropTypes.func, // 按钮点击事件
     isLoading: PropTypes.bool, // 判断当前页面是否在loading; 若页面正在loading 则空组件隐藏处理；避免出现loading 空组件同时出现的情况
     code: PropTypes.string, // 权限code
+    isCommon: PropTypes.bool, // 判断使用的是租户下code 还是 项目下的权限code. true: 租户下 false: 项目下
     noAuthText: PropTypes.string, // 没权限对应的文案提示
   }
 
   static defaultProps = {
-    pt: '13%',
     text: '',
     btnText: '',
     code: '',
@@ -24,15 +23,19 @@ export default class NoData extends Component {
     isLoading: false,
     btnDisabled: false,
     onClick: () => {},
+    isCommon: false,
   }
 
   constructor(props) {
     super(props)
     const {code} = props
     if (code) {
-      const functionCodes = window.productFunctionCode || []
-
+      const {userProductFunctionCode = [], projectFunctionCode = []} = window.frameInfo || {}
+      const functionCodes = props.isCommon ? userProductFunctionCode : projectFunctionCode
+      
       this.auth = functionCodes.includes(code)
+      // console.log(this.auth, code)
+      // this.auth = true
     }
   }
 
@@ -53,7 +56,11 @@ export default class NoData extends Component {
 
     // 渲染说明文字
     if (text) {
-      return <div className="text" dangerouslySetInnerHTML={{__html: text}} />
+      return (
+        <div className="text">
+          {text}
+        </div>
+      )
     }
 
     return null
@@ -91,23 +98,23 @@ export default class NoData extends Component {
   }
 
   render() {
-    const {pt: paddingTop, isLoading} = this.props
-    const style = {
-      paddingTop,
-      marginBottom: '8px',
-    }
+    const {isLoading, size = 'big', style} = this.props
+
+    const imgWidth = size === 'small' ? '200px' : '300px'
 
     return (
-      <div className={`nodata ${isLoading ? 'no-show' : ''}`}>
-        <div style={style}>
-          <img width="180px" height="180px" src={nodata} alt="暂无数据" />
+      <div className={`nodata ${isLoading ? 'no-show' : ''}`} style={style}>
+        <div>
+          <div className="mb16">
+            <img width={imgWidth} src={nodata} alt="暂无数据" />
+          </div>
+          {
+            this.renderText()
+          }
+          {
+            this.renderBtn()
+          }
         </div>
-        {
-          this.renderText()
-        }
-        {
-          this.renderBtn()
-        }
       </div>
     )
   }

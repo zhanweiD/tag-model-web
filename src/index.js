@@ -8,47 +8,104 @@ import {
 } from 'react-router-dom'
 import * as dict from './common/dict'
 
-import Approval from './page-approval'
-import Market from './page-market'
-import ObjectConfig from './page-object-config'
-import ObjectList from './page-object-list'
-import ObjectModel from './page-object-model'
+import Frame from './frame'
 import Overview from './page-overview'
-import Project from './page-project'
-import Scene from './page-scene'
-import TagModel from './page-tag-model'
-import TagSchema from './page-tag-schema'
-import TagWarehouse from './page-tag-warehouse'
+import Manage from './page-manage'
+import Process from './page-process'
+import Common from './page-common'
+import Config from './page-config'
 
 const njkData = {
   dict,
 }
 
+const quickEntrance = [
+  {
+    tip: '审批管理',
+    icon: 'approver',
+    url: '/tag-model/index.html#/common/approval',
+  },
+  {
+    tip: '后台配置',
+    icon: 'setting',
+    url: '/tag-model/index.html#/config/environment',
+  },
+  {
+    tip: '项目管理',
+    url: '/project/index.html#detail/base',
+    icon: 'project',
+  },
+]
+
 window.njkData = njkData
 
+const commonConfig = {
+  theme: 'ocean', 
+  logoText: '标签中心',
+  showAllProduct: true,
+  showHeaderNav: true,
+  quickEntrance,
+  showSider: true,
+  showProject: true,
+  onUserChange: () => window.location.href = `${window.__keeper.pathHrefPrefix || '/'}/overview`, // 用户信息变更跳转到首页，防止权限问题
+}
 
-export default class Entry extends React.Component {
-  render() {
+const frameComp = (Comp, cofig) => {
+  return function frameHocComp() {
     return (
-      <Router>
-        <Switch>
-          <Route path="/overview" component={Overview} />
-          <Route path="/approval" component={Approval} />
-          <Route path="/market" component={Market} />
-          <Route path="/object-list" component={ObjectList} />
-          <Route path="/object-config" component={ObjectConfig} />
-          <Route path="/object-model" component={ObjectModel} />
-          <Route path="/project" component={Project} />
-          <Route path="/scene" component={Scene} />
-          <Route path="/tag-model" component={TagModel} />
-          <Route path="/tag-schema" component={TagSchema} />
-          <Route path="/tag-warehouse" component={TagWarehouse} />
-
-          <Redirect to="/overview" />
-        </Switch>
-      </Router>
+      <Frame
+        {...commonConfig}
+        {...cofig}
+      >
+        <Comp />
+      </Frame>
     )
   }
+}
+
+function Entry() {
+  return (
+    <Router>
+      <Switch>
+        {/* 标签管理 */}
+        <Route path="/manage" component={frameComp(Manage, {productCode: 'tag_model'})} />
+       
+        {/* 标签加工 */}
+        <Route path="/process" component={frameComp(Process, {productCode: 'tag_derivative'})} />
+
+        {/* 公共模块 */}
+        <Route
+          path="/common"
+          component={frameComp(Common, {
+            productCode: 'tag_common',
+            showSider: false,
+            showProject: true,
+          })}
+        />
+
+        {/* 配置 */}
+        <Route
+          path="/config"
+          component={frameComp(Config, {
+            productCode: 'tag_config',
+            showSider: true,
+            showProject: true,
+          })}
+        />
+
+        {/* 总览 */}
+        <Route
+          path="/overview"
+          component={frameComp(Overview, {
+            // productCode: 'tag_model',
+            productCode: 'tag_overview',
+            showSider: false,
+            showProject: false})}
+        />
+        <Redirect to="/overview" />
+      </Switch>
+    </Router>          
+  )
 }
 
 ReactDOM.render(<Entry />, document.getElementById('root'))

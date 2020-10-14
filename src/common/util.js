@@ -1,6 +1,6 @@
 /* eslint-disable */
 import {Component} from 'react'
-import {Icon, message} from 'antd'
+import { message } from 'antd';
 import {ErrorEater} from '@dtwave/uikit'
 
 //*--------------- 方法类 (返回方法) ---------------*//
@@ -28,6 +28,9 @@ export const objectApi = `${pathPrefix}/object` // 对象管理
 export const derivativeApi = `${pathPrefix}/derivative` // 衍生标签
 export const tagWarehouseApi = `${pathPrefix}/map` // 标签仓库
 
+export const syncApi =  `${pathPrefix}/transfer` // 标签同步
+export const targetSourceApi =  `${pathPrefix}/targetSource` // 目的数据源
+
 const createRequestFn = method => (url, config) => ({
   url,
   method,
@@ -47,7 +50,7 @@ export const post = createRequestFn('POST')
  * @param2 valueName 返回数据value 字段名
  */
 export const changeToOptions = (list=[]) => (labelName, valueName) => list.map((obj={}) => ({ name: obj && obj[labelName], value: obj && obj[valueName] }))
-
+export const changeToOptionsWithDisabled = (list=[]) => (labelName, valueName, disabledKey) => list.map((obj={}) => ({ name: obj && obj[labelName], value: obj && obj[valueName], disabled: obj && Number(obj[disabledKey])}))
 /**
  * @description 遍历数组根据"id"值查找对应的"name"
  * @param {*} list 数组
@@ -170,8 +173,10 @@ export const getDataTypeName = (code) => {
 }
 
 
-export const codeInProduct = code => {
-  const functionCodes = window.productFunctionCode || []
+export const codeInProduct = (code, isCommon) => {
+  const {userProductFunctionCode = [], projectFunctionCode = []} = window.frameInfo || {}
+  const functionCodes = isCommon ? userProductFunctionCode : projectFunctionCode
+
   return functionCodes.indexOf(code) > -1
 }
 
@@ -228,12 +233,69 @@ export function getNamePattern(max = 32) {
     transform: value => value && value.trim(),
   }, {
     max, 
-    message: `名称不能超过${max}个字符`,
+    message: `不能超过${max}个字符`,
   }, {
-    pattern: /^[a-zA-Z0-9_\u4e00-\u9fa5]+$/, message: '名称格式不正确，允许输入中文/英文/数字/下划线',
+    pattern: /^[a-zA-Z0-9_\u4e00-\u9fa5]+$/, message: '格式不正确，允许输入中文/英文/数字/下划线',
   }, {
-    pattern: /^(?!_)/, message: '名称不允许下划线开头',
+    pattern: /^(?!_)/, message: '不允许下划线开头',
   }, {
-    pattern: /^(?!数栖)/, message: '名称不允许数栖开头',
-  }]
+    pattern: /^(?!数栖)/, message: '不允许数栖开头',
+  }];
+}
+
+export function getEnNamePattern(max = 32) {
+  return [{
+    transform: value => value && value.trim(),
+  }, {
+    max, 
+    message: `不能超过${max}个字符`,
+  }, {
+    pattern: /^[a-zA-Z][a-zA-Z0-9_]/, message: '格式不正确，允许输入英文/数字/下划线，必须以英文开头',
+  }];
+}
+
+export function calcSize(size, defaultUnit = 'B', isToFixed = true) {
+  const map = {
+    b: 1,
+    kb: 2 ** 10,
+    mb: 2 ** 20,
+    gb: 2 ** 30,
+    tb: 
+    2 ** 40,
+  }
+}
+
+
+let timer = null 
+/**
+ * @description 重命名校验防抖
+ * @author 凡书
+ * @param fn 重命名校验函数 
+ * @param delay 间隔时间
+ */
+export function debounce(fn, delay = 200) {
+  clearTimeout(timer)
+  timer = setTimeout(fn, delay)
+}
+
+/**
+ * @description 字段类型对应标签类型
+ * @author 凡书
+ * @param obj 字段对象 
+ * @param fieldType 字段类型
+ * @param valueType 标签类型
+ */
+export function selectFieldType (obj) {
+  const {fieldType} = obj
+  if (fieldType === 'tinyint' || fieldType === 'int' || fieldType === 'smallint' || fieldType === 'bigint') {
+    obj.valueType = 2
+  } else if (fieldType === 'float' || fieldType === 'double' || fieldType === 'decimal(10,2)') {
+    obj.valueType = 3
+  } else if (fieldType === 'string' || fieldType === 'varchar' || fieldType === 'char') {
+    obj.valueType = 4
+  } else if (fieldType === 'timestamp' || fieldType === 'date') {
+    obj.valueType = 5
+  } else {
+    obj.valueType = 4
+  }
 }

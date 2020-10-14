@@ -10,32 +10,54 @@
     <link rel="stylesheet" href="./public/ide/iconfont/font.css">
     <script>
         window.__keeper = {
-          pathPrefix: '/api/be-tag/1_0_0',
-          pathHrefPrefix: '/asset-tag/index.html#',
+          pathPrefix: '/api/tagmodel/1_0_0',
+          pathHrefPrefix: '/tag-model/index.html#',
           isPrivate: true,
           encryptType: 'md5',
           showDoc: false,
           showOnlineService: false,
           showWorkOrder: false,
-          productCode: 'asset_tag', // public
+          productCode: 'be_tag', // public
           productId: 2222,
-          pageFunctionCode: 'asset_tag'
+          // pageFunctionCode: 'asset_tag'
+          parentProductCode: 'be_tag'
         }
     </script>
 </head>
 
-<body class="dt-ant-12">
+<body>
   <div id="root"></div>
-
+  <script>
+    const urlHea = window.location.hash.split('/')[1]
+    let title = '标签中心'
+    if (urlHea === 'config') {
+      title = '后台配置'
+    } else if (urlHea === 'process') {
+      title = '标签加工'
+    } else if (urlHea === 'common') {
+      title = '审批中心'
+    } else if (urlHea === 'overview') {
+      title = '标签中心'
+    } else {
+      title = '标签管理'
+    }
+    document.title = title
+  </script>
   <script src="./public/babel-polyfill/6.26.0/polyfill.min.js"></script>
-  <script src="./public/react/16.7.0/react.min.js"></script>
-  <script src="./public/react-dom/16.7.0/react-dom.min.js"></script>
-  <script src="./public/react-router-dom/4.3.1/react-router-dom.js"></script>
-  <script src="./public/mobx/4.12.0/mobx.umd.min.js"></script>
+  <script src="./public/react/16.13.1/react.min.js"></script>
+  <script src="./public/react-dom/16.13.1/react-dom.min.js"></script>
+  <!-- <script src="./public/react-dom/16.12.0/react-dom.dev.min.js"></script> -->
+  <script src="./public/react-router-dom/5.1.2/react-router-dom.min.js"></script>
+
+  <script src="./public/mobx/5.15.4/mobx.umd.min.js"></script>
   <script src="./public/mobx-react/5.4.3/mobx-react.min.js"></script>
+  <script src="./public/mobx-react-lite/2.0.6/mobxreactlite.umd.production.min.js"></script>
+
   <script src="./public/moment/2.24.0/moment.min.js"></script>
   <script src="./public/moment/2.24.0/zh-cn.js"></script>
-  <script src="./public/antd/3.18.2/antd.min.js"></script>
+  
+  <script src="./public/antd/4.2.0/antd.min.js"></script>
+
   <script src="./public/lodash/4.17.11/lodash.min.js"></script>
   <script src="./public/d3/3.3.6/d3.min.js"></script>
 
@@ -43,11 +65,7 @@
   <script src="./public/dagre/data-manage-dagre.js"></script>
   <script src="./public/jquery/2.0.0/jquery.min.js"></script>
   <script src="./public/ide/codemirror.js"></script>
-  <!-- <script src="./public/ide/codemirror-dialog.js"></script>
-  <script src="./public/ide/codemirror-searchcursor.js"></script>
-  <script src="./public/ide/codemirror-search.js"></script>
-  <script src="./public/ide/codemirror-annotatescrollbar.js"></script>
-  <script src="./public/ide/codemirror-matchesonscrollbar.js"></script> -->
+
   <script src="./public/ide/show-hint.js"></script>
   <script src="./public/ide/sql-hint.js"></script>
   <script src="./public/ide/sql.js"></script>

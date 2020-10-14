@@ -1,5 +1,56 @@
 @import "./antd-cover.styl"
 
+.tag-content
+  min-height calc(100vh - 48px)
+  background #F3F4F9
+  // background #f0f2f5
+
+.box-border
+  border 1px solid #E6EDF8
+  border-radius 2px
+  background #ffffff
+
+/* header */
+.content-header
+  line-height 56px
+  font-size 16px
+  padding-left 16px
+  background #ffffff
+  color rgba(0,0,0, .85)
+  border-bottom 1px solid #E6EDF8
+
+.content-header-noBorder
+  line-height 56px
+  font-size 16px
+  padding-left 16px
+  background #ffffff
+  color rgba(0,0,0, .85)
+
+/* 普通页面 start */
+.header-page
+  min-height calc(100vh - 138px)
+  margin 16px
+  background #ffffff
+  border 1px solid #E6EDF8
+  border-radius 2px
+
+.theme-bg 
+  background #F4F6F9
+  // background #f0f2f5
+
+.a-href-color
+  color #2466ff
+
+.bgf
+  background #ffffff
+  // border-radius 2px
+
+.comp-tab
+  // background #ffffff
+  .ant-tabs-bar
+    margin-bottom 0
+    padding-left 16px
+    background #ffffff
 
 #root
   width 100%
@@ -34,6 +85,7 @@
       align-items center
       .info-v
         color: rgba(0, 0, 0, 0.65)
+
 
 
 // 饼图边上的表格样式
@@ -79,23 +131,33 @@
 .chart-title
   font-size 14px
   margin-bottom 16px
-  padding-left 8px
+  // padding-left 8px
   position relative
-  line-height 32px
+  line-height 24px
+
+/* .chart-title:before 
+ *    position absolute
+ * content ""
+ * height 14px
+ * width 3px
+ * left 0
+ * top 9px
+ * background #2466ff */
 
 
 //*--------------- mahua ---------------*//
-.bgf
-  background #ffffff
-  // border-radius 2px
+// .bgf
+//   background #ffffff
+//   // border-radius 2px
 
 /* 内容区header */
-.content-header
-  line-height 56px
-  font-size 16px
-  padding-left 16px
-  background #ffffff
-  color rgba(0,0,0, .85)
+// .content-header
+  // line-height 56px
+  // font-size 16px
+  // padding-left 16px
+  // background #ffffff
+  // color rgba(0,0,0, .85)
+  // border-bottom 1px solid #E6EDF8
 
 /* 列表操作项 分割线 样式 */
 .table-action-line{
@@ -125,5 +187,13 @@
       border: 0px
       box-shadow 0 0 0 0
 
-
-
+// .comp-tab
+//   background #ffffff
+  
+//   .ant-tabs-bar
+//     margin-bottom 0
+//     padding-left 16px
+.oner-frame .oner-frame-body .oner-frame-content
+  background-color #f3f4f9
+// .mapping-wrap a
+//   color #2466ff !important

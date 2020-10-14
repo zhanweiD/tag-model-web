@@ -4,7 +4,8 @@
 # 打 提测包
 # eg: sh ./deploy.sh tag_name
 
-package_name="asset-tag"
+package_name="tag-model"
+tar_build_name="tagmodel"
 # 打包命令
 npm run build
 
@@ -12,10 +13,10 @@ npm run build
 if [ x$1 != x ]
 then
   #...有参数
-  tar_name="${package_name}-web-v$1.tgz"
+  tar_name="${tar_build_name}-web-$1.tgz"
 else
   #...没有参数
-  tar_name="${package_name}.tgz"
+  tar_name="${tar_build_name}.tgz"
 fi
 
 # 如果文件不存在，则创建文件夹

@@ -50,6 +50,7 @@ const createTreeNode = (data = [], valueName, titleName, selectCon) => {
       value={valueName ? node[valueName] : node.aId}
       title={titleName ? node[titleName] : node.name}
       key={node.aId}
+      size="small"
       selectable={selectCon ? (node[selectCon[0]] === selectCon[1]) : node.isLeaf === 2}
     >
       {
@@ -63,14 +64,15 @@ const createTreeNode = (data = [], valueName, titleName, selectCon) => {
  * @description 根据type返回相应antd控件
  */ 
 export default ({
-  type, label, placeholder, options = [], ...rest
+  type, label, placeholder, options = [], radios, ...rest
 }) => {
   const map = {
     text: <span>{options}</span>,
-    input: <antd.Input placeholder={placeholder || createInputPlaceholder(label)} {...rest} />,
-    textArea: <antd.Input.TextArea rows={4} placeholder={placeholder || createInputPlaceholder(label)} {...rest} />,
-    select: <SelectTypes label={label} placeholder={placeholder || createSelectPlaceholder(label)} options={options} {...rest} />,
-    rangePicker: <antd.DatePicker.RangePicker {...rest} />,
+    input: <antd.Input size="small" placeholder={placeholder || createInputPlaceholder(label)} {...rest} />,
+    textArea: <antd.Input.TextArea size="small" rows={4} placeholder={placeholder || createInputPlaceholder(label)} {...rest} />,
+    select: <SelectTypes size="small" label={label} placeholder={placeholder || createSelectPlaceholder(label)} options={options} {...rest} />,
+    radioGroup: <antd.Radio.Group size="small" {...rest}>{radios}</antd.Radio.Group>, // 单选按钮
+    rangePicker: <antd.DatePicker.RangePicker size="small" {...rest} style={{width: '100%'}} />,
     selectTree: () => (
       options.length 
         ? (
@@ -78,6 +80,7 @@ export default ({
             placeholder={placeholder || createSelectPlaceholder(label)}
             dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
             allowClear
+            size="small"
             // multiple
             treeDefaultExpandAll
             treeNodeFilterProp="title"
@@ -89,17 +92,20 @@ export default ({
           </antd.TreeSelect>
         ) : (
           <antd.TreeSelect
+            size="small"
             placeholder={placeholder || createSelectPlaceholder(label)}
             dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
           />
         )
     ), 
     switch: <antd.Switch 
+      size="small"
       checkedChildren={rest.checkedText || '是'} 
       unCheckedChildren={rest.unCheckedText || '否'} 
       {...rest}
     />,
     cascader: <antd.Cascader
+      size="small"
       options={options}
       placeholder={placeholder || createSelectPlaceholder(label)}
       {...rest}
@@ -124,8 +130,13 @@ export const mergeRules = (rules, label) => {
     '@transformTrim': {transform: value => value && value.trim()}, // 输入类型为string；校验时进行trim()去掉前后空格
     '@required': {required: true, whitespace: true, message: `请输入${label}`},
     '@requiredSelect': {required: true, message: `请选择${label}`},
+    '@requiredChecked': {required: true, message: `请选择${label}`},
     '@max32': {max: 32, message: '输入不能超过32个字符'},
     '@max128': {max: 128, message: '输入不能超过128个字符'},
+    '@enNamePattern': {pattern: /^[a-zA-Z][a-zA-Z0-9_]/, message: '格式不正确，允许输入英文/数字/下划线，必须以英文开头'},
+    '@namePattern': {pattern: /^[a-zA-Z0-9_\u4e00-\u9fa5]+$/, message: '格式不正确，允许输入中文/英文/数字/下划线'},
+    '@nameUnderline': {pattern: /^(?!_)/, message: '不允许下划线开头'},
+    '@nameShuQi': {pattern: /^(?!数栖)/, message: '不允许数栖开头'},
   }
 
   return rules.map(rule => (typeof rule === 'string' ? map[rule] : rule))

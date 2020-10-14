@@ -1,6 +1,7 @@
 import {Component} from 'react'
 import PropTypes from 'prop-types'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
+import cls from 'classnames'
 
 export default class Main extends Component {
   static propTypes = {
@@ -20,14 +21,14 @@ export default class Main extends Component {
   renderAction = actions => {
     if (!actions.length) return null
 
-    return actions.map(item => item)
+    return actions.filter(item => item)
   }
 
   renderBaseInfo = baseInfo => <NemoBaseInfo dataSource={baseInfo} key={Math.random()} />
 
   render() {
     const {
-      name, descr, actions, baseInfo, tag, btnMinWidth,
+      name, descr, actions, baseInfo, tag, btnMinWidth, hasBorder,
     } = this.props
 
     const btnStyle = btnMinWidth ? {
@@ -35,25 +36,24 @@ export default class Main extends Component {
     } : null
 
     return (
-      <div>
+      <div className={cls({'box-border': hasBorder})}>
         <div className="detail-header">
-          <div>
+          <div className="detail-header-h">
             <div className="detail-name">
               {name || '--'}
               <span className="ml10">{ tag }</span>
             </div>
-            
-            {
-              descr ? <div className="detail-descr">{`描述：${descr}`}</div> : null
-            }
-           
+            <div style={btnStyle} className="far">
+              {
+                this.renderAction(actions)
+              }
+            </div>
+          </div>
+          <div className="detail-descr mt8">
+            <span style={{color: 'rgba(0,0,0, .45)'}}>描述：</span>
+            <span style={{color: descr ? 'rgba(0,0,0,.65)' : 'rgba(0,0,0,.25)'}}>{descr || '-'}</span>
           </div>
           <div />
-          <div style={btnStyle} className="far">
-            {
-              this.renderAction(actions)
-            }
-          </div>
         </div>
         <div className="detail-base-info">
           {

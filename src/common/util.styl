@@ -126,8 +126,12 @@ for $n in 0 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 48
 .d-block
   display block
 
+.df-js
+  display flex
+  justify-content space-between
+
 .button-style
-  color #0078FF
+  color #2466ff
   cursor pointer
   border 0
   background transparent
@@ -146,14 +150,14 @@ for $n in 0 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 48
   transition all .5s
 
 .button-style-hover:hover
-  color #0078FF
+  color #2466ff
   transition all .5s
 
 .button-style-hover.active
-  color #0078FF
+  color #2466ff
 
-.ant-modal-body
-  padding 24px!important
+// .ant-modal-body
+//   padding 24px 24px 8px!important
 
 // 备注：树组件复写的样式中的一个icon需要以前的iconfont文件，而最近版的antd 3.10.4中icon已经用svg实现，没有iconfont文件了
 @font-face {
@@ -163,6 +167,6 @@ for $n in 0 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 48
 }
 
 a
-  color #0078ff
+  color #2466ff
   &:hover
-    color #0078ff
+    color #2466ff

@@ -4,8 +4,9 @@
 import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {Row, Col, Empty} from 'antd'
-
 import * as d3 from 'd3'
+import {NoData} from '../component'
+
 
 const chartOption = {
   svgW: '100%',
@@ -21,6 +22,7 @@ const countUnitMap = {
   Yday: '次',
   Unpopular: '天',
   All: '次',
+  Project: '个',
 }
 
 @observer
@@ -32,6 +34,7 @@ export default class TagRank extends Component {
 
   componentDidMount() {  
     this.initSvg()
+    this.store.getTagProject((res, max) => this.drawBulletChart(res, max, 'Project'))
     // type: Yday-标签昨日调用次数TOP5/ Unpopular-冷门标签TOP5 / All-标签累计调用次数TOP5
     this.store.getTagInvokeYday((res, max) => this.drawBulletChart(res, max, 'Yday'))
     this.store.getTagUnpopular((res, max) => this.drawBulletChart(res, max, 'Unpopular'))
@@ -39,6 +42,11 @@ export default class TagRank extends Component {
   }
 
   initSvg() {
+    this.svgBulletProject = d3.select('#project') 
+      .attr('width', chartOption.svgW)
+      .attr('height', chartOption.svgH)
+    this.svgBulletProject.selectAll('*').remove()
+
     this.svgBulletYday = d3.select('#bulletYday') 
       .attr('width', chartOption.svgW)
       .attr('height', chartOption.svgH)
@@ -102,7 +110,7 @@ export default class TagRank extends Component {
       .enter()
       .append('text')
       .attr('y', (d, i) => rectDistance * i + rectH + 36)
-      .text(d => `${d.objName}——${d.tagName}`)
+      .text(d => (type === 'Project' ? d.projectName : `${d.objName}——${d.tagName}`))
       .attr('fill', 'rgba(0,0,0, 0.45)')
 
     
@@ -126,11 +134,29 @@ export default class TagRank extends Component {
   }
 
   render() {
-    const {tagInvokeYday, tagUnpopular, tagInvokeAll} = this.store
+    const {tagProject, tagInvokeYday, tagUnpopular, tagInvokeAll} = this.store
     return (
       <div>
         <Row gutter={16}>
-          <Col span={8}>
+          <Col span={12}>
+            <div className="overview-rank">
+              <div className="overview-rank-header">生产标签数项目 TOP5</div>
+              <div className="overview-rank-content">
+                <svg id="project" />
+                {
+                  !tagProject.length
+                    ? (
+                      <div className="no-Data" style={{height: '240px'}}>
+                        {/* <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> */}
+                        <NoData text="暂无数据" size="small" />
+                      </div>
+                    )
+                    : null
+                }
+              </div>
+            </div>
+          </Col>
+          <Col span={12}>
             <div className="overview-rank">
               <div className="overview-rank-header">昨日标签调用次数 TOP5</div>
               <div className="overview-rank-content">
@@ -138,8 +164,9 @@ export default class TagRank extends Component {
                 {
                   !tagInvokeYday.length  
                     ? (
-                      <div className="noData">
-                        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                      <div className="no-Data" style={{height: '240px'}}>
+                        {/* <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> */}
+                        <NoData text="暂无数据" size="small" />
                       </div>
                     ) 
                     : null
@@ -147,7 +174,9 @@ export default class TagRank extends Component {
               </div>
             </div>
           </Col>
-          <Col span={8}>
+        </Row>
+        <Row gutter={16} className="mt16">
+          <Col span={12}>
             <div className="overview-rank">
               <div className="overview-rank-header">冷门标签 TOP5</div>
               <div className="overview-rank-content">
@@ -155,8 +184,9 @@ export default class TagRank extends Component {
                 {
                   !tagUnpopular.length  
                     ? (
-                      <div className="noData">
-                        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                      <div className="no-Data" style={{height: '240px'}}>
+                        {/* <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> */}
+                        <NoData text="暂无数据" size="small" />
                       </div>
                     ) 
                     : null
@@ -164,7 +194,7 @@ export default class TagRank extends Component {
               </div>
             </div>
           </Col>
-          <Col span={8}>
+          <Col span={12}>
             <div className="overview-rank">
               <div className="overview-rank-header">标签累计调用次数 TOP5</div>
               <div className="overview-rank-content">
@@ -172,8 +202,9 @@ export default class TagRank extends Component {
                 {
                   !tagInvokeAll.length  
                     ? (
-                      <div className="noData">
-                        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                      <div className="no-Data" style={{height: '240px'}}>
+                        {/* <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> */}
+                        <NoData text="暂无数据" size="small" />
                       </div>
                     ) 
                     : null

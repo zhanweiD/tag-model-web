@@ -5,9 +5,9 @@
 
 import {Component} from 'react'
 import PropTypes from 'prop-types'
-import {
-  Form, Button, Row, Col,
-} from 'antd'
+import {Form} from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
+import {Button, Row, Col} from 'antd'
 import ControlComponent, {mergeRules} from '../form-component-config'
 
 
@@ -28,6 +28,7 @@ const formItemLayout = {
     xl: {span: 18}, // >=1200
     xxl: {span: 19}, // >=1600
   },
+  colon: false,
 }
 
 @Form.create()
@@ -112,7 +113,7 @@ export default class SearchContent extends Component {
       <Form className="dt-form-column comp-list-search" onSubmit={this.handleSubmit}>
         <Row>
           {searchParams.map(item => this.getWarperComponent(item))}
-          <Col span={24 - (searchParams.length % 3) * 8} className="far mt4">
+          <Col span={24 - (searchParams.length % 3) * 8} className="far mb16">
             <Button htmlType="submit" type="primary">查询</Button>
             <Button
               className="ml8"

@@ -6,6 +6,7 @@ import {
   observable, action, runInAction, toJS,
 } from 'mobx'
 
+import {errorTip} from '../../common/util'
 /**
  * @description 过滤对象中value为undefined的值
  * @param {*} values @typedef object
@@ -96,7 +97,6 @@ const ListContentStore = apiFunc => class _Store {
         } = res
         this.tableLoading = false
         this.list.replace(data)
-
         this.pagination = {
           pageSize: res.pageSize || 10,
           totalCount: res.totalCount,
@@ -107,7 +107,7 @@ const ListContentStore = apiFunc => class _Store {
       runInAction(() => {
         this.tableLoading = false
       })
-      // errorTip(e.message)
+      errorTip(e.message)
     }
   }
 }

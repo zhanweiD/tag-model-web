@@ -25,19 +25,20 @@ module.exports = {
     hot: true,
     port: '9999',
     host: '0.0.0.0',
+    disableHostCheck: true,
     headers: {
       'Access-Control-Allow-Origin': '*',
     },
     noInfo: true,
-    proxy: [{
-      context: ['/config', '/api'],
-      target: 'http://192.168.90.112',
-      changeOrigin: true,
-    // }, {
-    //   context: ['/api'],
-    //   target: 'http://192.168.115.8:9001',
-    //   changeOrigin: true,
-    }],
+    proxy: [
+      {
+        context: ['/config', '/api'],
+        target: 'http://192.168.90.197',
+        changeOrigin: true,
+      },
+    ],
+    quiet: true,
+    overlay: true,
   },
   entry: './src/index',
   output: {

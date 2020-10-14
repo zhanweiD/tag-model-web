@@ -11,9 +11,12 @@ import NoBorderInput from './noborder-input'
 import LabelItem from './label-item'
 import TimeRange from './time-range'
 import NoData from './no-data'
-import AuthBox from './auth-box'
 import OmitTooltip from './omit-tooltip'
 import StatusImg from './status-img'
+import ModalStotageDetail from './modal-stroage-detail'
+import Card from './dt-card'
+import projectProvider from './project-provider'
+import {AuthBox, Authority} from './auth-box'
 
 export {
   DetailHeader,
@@ -31,6 +34,10 @@ export {
   TimeRange,
   NoData,
   AuthBox,
+  Authority,
   OmitTooltip,
   StatusImg,
+  ModalStotageDetail,
+  projectProvider,
+  Card,
 }
