@@ -9,7 +9,7 @@ import SyncResult from './page-sync-result'
 import {SourceList, SourceDetail} from './page-aim-source'
 import {SyncList, SyncDetail} from './page-tag-sync'
 import {ProjectTag, ProjectTagDetail} from './page-project-tag'
-import {CommonTag, CommonTagDetail} from './page-common-tag'
+import {CommonTag, CommonTagDetail, CommonTagCopy} from './page-common-tag'
 import {TagModel, TagModelDetail} from './page-tag-model'
 import {ObjectList, ObjectDetail} from './page-object-list'
 import ObjectModel from './page-object-model'
@@ -20,13 +20,17 @@ const prePath = '/manage'
 export default () => {
   const ctx = OnerFrame.useFrame()
   const projectId = ctx.useProjectId()
+
   useEffect(() => {
+    ctx.useProject(true)
+
     if (projectId) {
       ctx.querySiderMenus({
         productCode: 'tag_model',
         projectId,
       })
     } else {
+      // ctx.useProject(false)
       ctx.querySiderMenus({
         productCode: 'tag_model',
       })
@@ -36,13 +40,19 @@ export default () => {
   return (
     <Switch>
       {/* ************* 标签仓库 ************* */}
-
+      {console.log(projectId)}
       {/* 项目标签 */}
       <Route exact path={`${prePath}/project-tag`} component={ProjectTag} />
       <Route exact path={`${prePath}/project-tag/:id?/:projectId?`} component={ProjectTagDetail} />
 
       {/* 公共标签 */}
-      <Route exact path={`${prePath}/common-tag`} component={CommonTag} />
+      {
+        projectId ? console.log(1) : console.log(2)
+      }
+      {/* {
+        projectId ? <Route exact path={`${prePath}/common-tag`} component={CommonTag} /> : <Route exact path={`${prePath}/common-tag`} component={CommonTagCopy} />
+      } */}
+      <Route exact path={`${prePath}/common-tag`} component={projectId ? CommonTag : CommonTagCopy} />
       <Route exact path={`${prePath}/common-tag/:id?/:projectId?`} component={CommonTagDetail} />
     
       {/* ************* 标签同步 ************* */}
