@@ -205,6 +205,7 @@ export default class Store {
       })
       runInAction(() => {
         this.tagCateSelectList = listToTree(res)
+        // this.tagCateSelectList = res
       })
     } catch (e) {
       errorTip(e.message)

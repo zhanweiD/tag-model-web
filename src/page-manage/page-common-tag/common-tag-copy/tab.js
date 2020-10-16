@@ -18,7 +18,7 @@ class CommonTagCopy extends Component {
             <TagList {...this.props} />
           </TabPane>
           <TabPane tab="标签体系" key="2">
-            <TagSystem {...this.props} commonTag />
+            <TagSystem {...this.props} CommonTagCopy />
           </TabPane>
         </Tabs>
       </div>

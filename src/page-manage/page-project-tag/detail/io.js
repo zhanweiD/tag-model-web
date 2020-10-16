@@ -6,6 +6,7 @@ import {
 const api = {
   getTagBaseDetail: get(`${tagModalApi}/tag_detail`), // 标签详情
   getCardInfo: get('/api/tagapp/1_0_0/third/tag_card'), // 卡片详情
+  getCardInfoM: get('api/tagmodel/1_0_0/third/tag_card'), // 卡片详情
   getAppList: get('/api/tagapp/1_0_0/third/list_tag_app'), // 应用列表
   getSourceList: get(`${tagModalApi}/list_target_source`), // 目的源列表
 } 

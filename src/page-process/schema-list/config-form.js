@@ -150,17 +150,28 @@ export default class ConfigDrawerOne extends Component {
       rules: [
         '@requiredSelect',
       ],
-      initialValue: tagBaseInfo.parentId,
-      control: {
-        // options: tagCateSelectList,
-        options: changeToOptions(tagCateSelectList)('name', 'id'),
-        // fieldNames: {
-        //   label: 'name',
-        //   value: 'id',
-        // },
-      },
+      // initialValue: tagBaseInfo.parentId,
+      initialValue: tagBaseInfo.pathIds && tagBaseInfo.pathIds.length ? tagBaseInfo.pathIds.slice(2) : undefined,
+      // control: {
+      //   // options: tagCateSelectList,
+      //   options: changeToOptions(tagCateSelectList)('name', 'id'),
+      //   // fieldNames: {
+      //   //   label: 'name',
+      //   //   value: 'id',
+      //   // },
+      // },
       disabled: release || isConfig || !isNewTag,
-      component: 'select',
+      // component: 'select',
+      component: 'cascader',
+      control: {
+        options: tagCateSelectList,
+        // valueName: 'id',
+        // selectCon: ['isLeaf', 2],
+        fieldNames: {
+          label: 'name',
+          value: 'id',
+        },
+      },
     }, {
       label: '业务逻辑',
       key: 'descr',

@@ -3,15 +3,17 @@ import OnerFrame from '@dtwave/oner-frame'
 
 import CommonTagCopy from './tab'
 
-console.log(2)
 export default () => {
-  console.log(2)
   const ctx = OnerFrame.useFrame()
-  const projectId = ctx.useProjectId()
-  useEffect(() => {
-    ctx.useProject(false)
-    ctx.useSider(true)
-  }, [projectId])
+  ctx.useProject(false)
+  ctx.useSider(true)
+  // const projectId = ctx.useProjectId()
+  const projectId = null
+  console.log(3)
+  // useEffect(() => {
+  //   ctx.useProject(false)
+  //   ctx.useSider(true)
+  // }, [projectId])
 
   return (
     <div>
