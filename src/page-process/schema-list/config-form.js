@@ -250,6 +250,7 @@ export default class ConfigDrawerOne extends Component {
         //   failureTip('数据类型不匹配，请重新选择')
         //   return
         // }
+        values.cateId = values.cateId.pop()
         const params = {
           ...values,
           newTag: undefined,

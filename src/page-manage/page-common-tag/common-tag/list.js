@@ -136,6 +136,50 @@ export default class Market extends Component {
     },
   ]
 
+  columnsP = [
+    {
+      key: 'name',
+      title: '标签名称',
+      dataIndex: 'name',
+      render: (text, record) => (
+        <div className="FBH">
+          {/* <OmitTooltip maxWidth={120} text={text} /> */}
+          <Link target="_blank" to={`/manage/common-tag/${record.id}/${store.useProjectId}`}>{text}</Link>
+          {(() => {
+            if (record.status === 1) {
+              return <Tag status="process" className="ml8" text="审批中" />
+            }
+            //    "status":0, //状态 0：可以申请 1 审批中 2 不可以申请
+            if (record.status === 2) {
+              return <Tag status="success" className="ml8" text="有权限" />
+            } 
+            return null
+          })()}
+        </div>
+      ),
+    }, {
+      key: 'enName',
+      title: '标签标识',
+      dataIndex: 'enName',
+      render: text => <OmitTooltip maxWidth={200} text={text} />,
+    }, {
+      key: 'objName',
+      title: '对象',
+      dataIndex: 'objName',
+      render: text => <OmitTooltip maxWidth={200} text={text} />,
+    }, {
+      key: 'valueType',
+      title: '数据类型',
+      dataIndex: 'valueType',
+      render: text => getDataTypeName(text),
+    }, {
+      key: 'projectName',
+      title: '所属项目', 
+      dataIndex: 'projectName',
+      render: text => <OmitTooltip maxWidth={200} text={text} />,
+    },
+  ]
+
   @action.bound openModal(data, type) {
     store.modalType = type   
     store.selectItem = data
@@ -168,6 +212,7 @@ export default class Market extends Component {
   render() {
     const {
       useProjectId, 
+      isProject,
     } = store
 
     const rowSelection = {
@@ -179,7 +224,7 @@ export default class Market extends Component {
     }
   
     const listConfig = {
-      columns: this.columns,
+      columns: isProject ? this.columns : this.columnsP,
       buttons: useProjectId ? [
         <Authority authCode="tag_model:apply_tag[c]">
           <Button type="primary" disabled={!store.rowKeys.length} onClick={this.batchApply}>
@@ -203,13 +248,25 @@ export default class Market extends Component {
     }
 
     return (
- 
       <div>
         <Search store={store} />
-        <div className="search-list box-border">
+        {
+          isProject ? (
+            <div className="search-list box-border">
+              <ListContent {...listConfig} />
+              <Modal store={store} />
+            </div>
+          ) : (
+            <div className="search-list-p box-border">
+              <ListContent {...listConfig} />
+              <Modal store={store} />
+            </div>
+          )
+        }
+        {/* <div className="search-list box-border">
           <ListContent {...listConfig} />
           <Modal store={store} />
-        </div>
+        </div> */}
       </div>
     )
   }

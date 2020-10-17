@@ -33,7 +33,7 @@ class TagDetail extends Component {
   }
 
   render() {
-    const {tagDetailLoading, tagBaseInfo, tagId, cardInfo, projectId} = store
+    const {tagDetailLoading, tagBaseInfo, tagId, cardInfo, projectId, isTagapp} = store
 
     const baseInfo = [{
       title: '对象',
@@ -113,7 +113,7 @@ class TagDetail extends Component {
     
               </TabPane>
               {
-                false ? (
+                isTagapp ? (
                   <TabPane tab="标签应用列表" key="4">
                     <div className="pt24" style={{minHeight: 'calc(100vh - 398px)'}}>
                       <AppList tagId={tagId} projectId={projectId} />
@@ -121,7 +121,6 @@ class TagDetail extends Component {
                   </TabPane>
                 ) : null
               }
-              
             </Tabs>
           </div>
         </div>

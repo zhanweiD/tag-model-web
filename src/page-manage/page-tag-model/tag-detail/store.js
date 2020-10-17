@@ -10,6 +10,7 @@ class Store {
   @observable tagBaseInfo = {}
   @observable tagDetailLoading = false
   @observable cardInfo = {}
+  @observable isTagapp = true // 租户是否有tagapp
 
   @action async getTagBaseDetail() {
     this.tagDetailLoading = false

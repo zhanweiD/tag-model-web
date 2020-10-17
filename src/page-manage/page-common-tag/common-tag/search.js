@@ -66,10 +66,11 @@ export default class Search extends Component {
       projectPermission,
       ownProjectId,
       objectId,
+      isProject,
     } = this.store
     return (
       <div className="market-search">
-        <div className="search-box">
+        <div className="search-box" style={{marginBottom: isProject ? '24px' : '16px'}}>
           <Input.Search
             placeholder="请输入搜索关键词"
             enterButton="搜索"
@@ -83,7 +84,7 @@ export default class Search extends Component {
             suffix={<SearchOutlined />}
           /> */}
         </div>
-        <div className="advanced-search">
+        <div className="advanced-search" style={{display: isProject ? 'block' : 'none'}}>
           <div className="FBH mb16">
             <div>
               <span className="advanced-search-label">所属项目</span>

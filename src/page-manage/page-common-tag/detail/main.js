@@ -66,7 +66,7 @@ class TagDetail extends Component {
         </Spin>
         <div className="bgf m16 box-border" style={{minHeight: 'calc(100vh - 266px)'}}> 
           {info.isEnum ? <TagAnalyze tagId={tagId} authorStatus={info.authorStatus} /> : null}
-          <TagTrend tagId={tagId} />
+          <TagTrend tagId={tagId} projectId={store.projectId} />
         </div>
       </div>
       
@@ -79,7 +79,11 @@ export default props => {
   const projectId = ctx.useProjectId()
 
   useEffect(() => {
-    ctx.useProject(true, null, {visible: false})
+    // 使用该方法导致空值占比setOption 报错
+    // store.getProjects(isProject => {
+    //   isProject ? ctx.useProject(true, null, {visible: false}) : ctx.useProject(isProject)
+    // })
+    // ctx.useProject(true, null, {visible: false})
   }, [])
 
   return (

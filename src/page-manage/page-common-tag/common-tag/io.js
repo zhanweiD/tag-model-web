@@ -7,6 +7,7 @@ const api = {
   getOwnProject: get(`${marketApi}/ownProject`), // 所属项目
   getObject: get(`${marketApi}/publishedObjs`), // 对象
   applyTag: post(`${marketApi}/tagApply`), // 标签申请
+  getProjects: post('/api/project/1_0_0/project/simple/list'),
 } 
 
 ioContext.create('market', api) 
