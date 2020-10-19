@@ -8,6 +8,7 @@ import {
 const api = {
   getList: post(`${objectApi}/obj_Page`), // 对象列表
   getObjCate: get(`${objectApi}/list_obj_cate`), // 对象类目
+  getProjects: post('/api/project/1_0_0/project/simple/list'), // 项目列表
 
   //* ------------------------------ 标签类目 ------------------------------*//
   getTagCateTree: get(`${tagClassApi}/cate_tree`, {overrideSelfConcurrent: true}), // 标签类目树

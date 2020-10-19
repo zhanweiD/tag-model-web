@@ -105,7 +105,10 @@ class ObjectModel extends Component {
 export default props => {
   const ctx = OnerFrame.useFrame()
   useEffect(() => {
-    ctx.useProject(false)
+    store.getProjects(isProject => {
+      ctx.useProject(isProject, null, {visible: false})
+    })
+    // ctx.useProject(false)
     ctx.useQuickEntrance([
       {
         tip: '审批管理',

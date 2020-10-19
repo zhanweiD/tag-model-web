@@ -10,7 +10,7 @@ class Store {
   @observable tagBaseInfo = {}
   @observable tagDetailLoading = false
   @observable cardInfo = {}
-  @observable isTagapp = false
+  @observable isTagapp = false // 租户是否有tagapp
 
   @action async getTagBaseDetail() {
     this.tagDetailLoading = false
@@ -34,7 +34,6 @@ class Store {
 
   @action async getCardInfo() {
     this.isTagapp = window.frameInfo.tenantProducts.filter(item => item.productCode === 'tag_app')
-    console.log(window.frameInfo.tenantProducts, toJS(this.isTagapp))
     try {
       const res = this.isTagapp ? (await io.getCardInfo({
         id: this.tagId,
