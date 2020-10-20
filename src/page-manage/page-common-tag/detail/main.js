@@ -83,7 +83,7 @@ export default props => {
     // store.getProjects(isProject => {
     //   isProject ? ctx.useProject(true, null, {visible: false}) : ctx.useProject(isProject)
     // })
-    // ctx.useProject(true, null, {visible: false})
+    ctx.useProject(true, null, {visible: false})
   }, [])
 
   return (

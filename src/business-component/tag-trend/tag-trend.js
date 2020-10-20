@@ -41,9 +41,11 @@ export default class TagTrend extends Component {
   }
 
   @action drawChart = data => {
-    this.chartLine.setOption(getApiTrendOpt(
-      data
-    ))
+    if (this.chartLine) {
+      this.chartLine.setOption(getApiTrendOpt(
+        data
+      ))
+    }
   }
 
   // @action getData(gte = this.defStartTime, lte = this.defEndTime) {

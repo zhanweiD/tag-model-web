@@ -178,7 +178,7 @@ class ObjectDetail extends Component {
 export default props => {
   const ctx = OnerFrame.useFrame()
   useEffect(() => {
-    ctx.useProject(false)
+    ctx.useProject(true, null, {visible: false})
   }, [])
 
   return (
