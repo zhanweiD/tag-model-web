@@ -67,6 +67,19 @@ class Store extends ListContentStore(io.getList) {
     })
   }
 
+  // 项目列表
+  @action async getProjects(cb) {
+    try {
+      const res = await io.getProjects({})
+      this.isProject = res.length > 0
+      runInAction(() => {
+        cb(this.isProject)
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
   @action async getTagCateDetail() {
     try {
       const res = await io.getTagCateDetail({

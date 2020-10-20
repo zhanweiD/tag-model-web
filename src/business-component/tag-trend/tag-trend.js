@@ -14,6 +14,7 @@ export default class TagTrend extends Component {
   constructor(props) {
     super(props)
     store.tagId = props.tagId
+    store.projectId = props.projectId
   }
 
   componentDidMount() {
@@ -64,7 +65,7 @@ export default class TagTrend extends Component {
 
   render() {
     const {tagId} = this.props
-    const {lineData} = store
+    const {lineData, projectId} = store
     const noDataConfig = {
       text: '暂无数据',
     }
@@ -86,7 +87,14 @@ export default class TagTrend extends Component {
             exportTimeRange={(gte, lte) => this.getData(gte, lte)}
           />
         </div> */}
-        {!lineData.length && <div style={{position: 'absolute', width: '100%', height: 'calc(100vh - 430px)'}}><NoData {...noDataConfig} /></div>}
+        {!lineData.length && <div style={{position: 'absolute', width: '100%', height: 'calc(100vh - 538px)'}}><NoData {...noDataConfig} /></div>}
+        {/* {
+          projectId ? (
+            !lineData.length && <div style={{position: 'absolute', width: '100%', height: 'calc(100vh - 430px)'}}><NoData {...noDataConfig} /></div>
+          ) : (
+            !lineData.length && <div style={{position: 'absolute', width: '100%', height: 'calc(100vh - 538px)'}}><NoData {...noDataConfig} /></div>
+          )
+        } */}
         <div 
           style={{width: '100%', height: '400px'}} 
           ref={ref => this.lineRef = ref} 

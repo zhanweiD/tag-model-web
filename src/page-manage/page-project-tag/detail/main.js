@@ -33,7 +33,7 @@ class TagDetail extends Component {
   }
 
   render() {
-    const {tagDetailLoading, tagBaseInfo, tagId, cardInfo, projectId} = store
+    const {tagDetailLoading, tagBaseInfo, tagId, cardInfo, projectId, isTagapp} = store
 
     const baseInfo = [{
       title: '对象',
@@ -112,11 +112,15 @@ class TagDetail extends Component {
                 </div>
     
               </TabPane>
-              <TabPane tab="标签应用列表" key="4">
-                <div className="pt24" style={{minHeight: 'calc(100vh - 398px)'}}>
-                  <AppList tagId={tagId} projectId={projectId} />
-                </div>
-              </TabPane>
+              {
+                isTagapp ? (
+                  <TabPane tab="标签应用列表" key="4">
+                    <div className="pt24" style={{minHeight: 'calc(100vh - 398px)'}}>
+                      <AppList tagId={tagId} projectId={projectId} />
+                    </div>
+                  </TabPane>
+                ) : null
+              }
             </Tabs>
           </div>
         </div>
@@ -130,7 +134,6 @@ class TagDetail extends Component {
 export default props => {
   const ctx = OnerFrame.useFrame()
   const projectId = ctx.useProjectId()
-
   useEffect(() => {
     ctx.useProject(true, null, {visible: false})
   }, [])

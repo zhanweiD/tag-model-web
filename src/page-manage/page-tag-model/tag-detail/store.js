@@ -10,6 +10,7 @@ class Store {
   @observable tagBaseInfo = {}
   @observable tagDetailLoading = false
   @observable cardInfo = {}
+  @observable isTagapp = true // 租户是否有tagapp
 
   @action async getTagBaseDetail() {
     this.tagDetailLoading = false
@@ -32,11 +33,22 @@ class Store {
   }
 
   @action async getCardInfo() {
+    this.isTagapp = window.frameInfo.tenantProducts.filter(item => item.productCode === 'tag_app')
     try {
-      const res = await io.getCardInfo({
+      const res = this.isTagapp ? (await io.getCardInfo({
         id: this.tagId,
         projectId: this.projectId,
       })
+      ) : (
+        await io.getCardInfoM({
+          id: this.tagId,
+          projectId: this.projectId,
+        })
+      )
+      // const res = await io.getCardInfo({
+      //   id: this.tagId,
+      //   projectId: this.projectId,
+      // })
       runInAction(() => {
         this.cardInfo = res
       })
