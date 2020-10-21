@@ -27,9 +27,10 @@ export default PageComponent => {
     const noProjectDataConfig = {
       text: <span>
           无可用项目 去
-        <a target="_blank" className="a-href-color" rel="noopener noreferrer" href="/project/index.html#/project">项目管理</a>
+        {/* <a target="_blank" className="a-href-color" rel="noopener noreferrer" href="/project/index.html#/project">项目管理</a> */}
+        <a target="_blank" className="a-href-color" onClick={() => window.open('/project/index.html#/project', '_blank')}>项目管理</a>
     添加
-      </span>,
+            </span>,
     }
 
     // 判断项目是否初始化
@@ -87,7 +88,7 @@ export default PageComponent => {
           },
           {
             tip: '项目管理',
-            url: '/project/index.html#detail/base',
+            url: '/project/index.html#/project',
             icon: 'project',
           }])
         judgeInit(projectId)
@@ -100,7 +101,7 @@ export default PageComponent => {
 该项目下，标签中心的环境未初始化，请到
         <a target="_blank" href="/tag-model/index.html#/config/environment">后台配置-环境配置</a>
 中初始化标签中心的环境
-      </span>,
+            </span>,
     }
 
     const noDataConfigC = {
