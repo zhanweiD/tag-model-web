@@ -276,29 +276,32 @@ export default class SyncTagList extends Component {
       scroll: {y: 'calc(100% - 98)'},
     }
     return (
-      <div className="FB1 sync-tag-list">
+      <div className="FB1 sync-tag-list pl24 pr24 pt16 pb16">
         {/* <Search
           placeholder="请输入标签名称关键字"
           onChange={this.onChange}
           style={{width: 300}}
           className="select-tag-search"
         /> */}
-        <Input
-          onChange={this.onChange}
-          style={{width: 300}}
-          size="small"
-          className="select-tag-search"
-          placeholder="请输入标签名称关键字"
-          suffix={<SearchOutlined />}
-        />
-        <Button 
-          type="primary" 
-          onClick={this.removeAll} 
-          className="clear-btn"
-          disabled={!this.store.tableData.length}
-        >
+        <div className="df-js mb8">
+          <Input
+            onChange={this.onChange}
+            style={{width: 300}}
+            size="small"
+            // className="select-tag-search"
+            placeholder="请输入标签名称关键字"
+            suffix={<SearchOutlined />}
+          />
+          <Button 
+            type="primary" 
+            onClick={this.removeAll} 
+            // className="clear-btn"
+            disabled={!this.store.tableData.length}
+          >
           全部清空
-        </Button>
+          </Button>
+        </div>
+
         <EditableContext.Provider value={form}>
           <Table {...listConfig} />
         </EditableContext.Provider>
