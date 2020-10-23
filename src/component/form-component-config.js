@@ -134,7 +134,7 @@ export const mergeRules = (rules, label) => {
     '@max32': {max: 32, message: '输入不能超过32个字符'},
     '@max128': {max: 128, message: '输入不能超过128个字符'},
     '@enNamePattern': {pattern: /^[a-zA-Z][a-zA-Z0-9_]{0,}$/, message: '格式不正确，允许输入英文/数字/下划线，必须以英文开头'},
-    '@namePattern': {pattern: /^[a-zA-Z0-9_\u4e00-\u9fa5]+$/, message: '格式不正确，允许输入中文/英文/数字/下划线'},
+    '@namePattern': {pattern: /^[a-zA-Z0-9_()（）\u4e00-\u9fa5]+$/, message: '格式不正确，允许输入中文/英文/数字/下划线/()'},
     '@nameUnderline': {pattern: /^(?!_)/, message: '不允许下划线开头'},
     '@nameShuQi': {pattern: /^(?!数栖)/, message: '不允许数栖开头'},
   }
