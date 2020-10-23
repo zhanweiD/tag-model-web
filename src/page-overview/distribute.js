@@ -30,7 +30,7 @@ export default class Distribute extends Component {
       value: info.simpleRelation,
     }, {
       name: '复杂关系',
-      value: info.entityRelation,
+      value: info.complexRelation,
     }] : []
   
     this.objTypeChart.setOption(pieOpt(
