@@ -30,7 +30,7 @@ export default PageComponent => {
         {/* <a target="_blank" className="a-href-color" rel="noopener noreferrer" href="/project/index.html#/project">项目管理</a> */}
         <a target="_blank" className="a-href-color" onClick={() => window.open('/project/index.html#/project', '_blank')}>项目管理</a>
     添加
-            </span>,
+      </span>,
     }
 
     // 判断项目是否初始化
@@ -101,7 +101,7 @@ export default PageComponent => {
 该项目下，标签中心的环境未初始化，请到
         <a target="_blank" href="/tag-model/index.html#/config/environment">后台配置-环境配置</a>
 中初始化标签中心的环境
-            </span>,
+      </span>,
     }
 
     const noDataConfigC = {
@@ -116,8 +116,8 @@ export default PageComponent => {
     }
 
     const noDataConfig1 = {
-      text: '标签中心适配Hadoop的CDH、FusionInsight',
-      noAuthText: '标签中心适配Hadoop的CDH、FusionInsight',
+      text: '标签中心仅适配Hadoop集群',
+      noAuthText: '标签中心仅适配Hadoop集群',
     }
 
     if (!projectId) {
