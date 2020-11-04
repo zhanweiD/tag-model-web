@@ -182,7 +182,7 @@ module.exports = {
     }),
     new ManifestPlugin({
       fileName: 'asset-manifest.json',
-      publicPath: './public',
+      publicPath: './',
       generate: (seed, files, entrypoints) => {
         const manifestFiles = files.reduce((manifest, file) => {
           manifest[file.name] = file.path
