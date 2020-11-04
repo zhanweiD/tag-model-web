@@ -1,5 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
+const ManifestPlugin = require('webpack-manifest-plugin')
+// const WebpackAssetsManifest = require('webpack-assets-manifest')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
@@ -178,15 +180,38 @@ module.exports = {
       template: './index.html',
       chunks: ['main'],
     }),
+    new ManifestPlugin({
+      fileName: 'asset-manifest.json',
+      publicPath: './public',
+      generate: (seed, files, entrypoints) => {
+        const manifestFiles = files.reduce((manifest, file) => {
+          manifest[file.name] = file.path
+          return manifest
+        }, seed)
+        const entrypointFiles = entrypoints.main.filter(
+          fileName => !fileName.endsWith('.map')
+        )
+
+        return {
+          files: manifestFiles,
+          entrypoints: entrypointFiles,
+        }
+      },
+    }),
   ],
   externals: {
+    polyfill: 'BabelPolyfill',
     react: 'React',
     'react-dom': 'ReactDOM',
+    'react-router': 'ReactRouter',
+    'react-router-dom': 'ReactRouterDOM',
     mobx: 'mobx',
     'mobx-react': 'mobxReact',
-    _: '_',
-    antd: 'antd',
+    'mobx-react-lite': 'mobxReactLite',
     moment: 'moment',
+    antd: 'antd',
+    _: '_',
+    '@dtwave/oner-frame': 'onerFrame',
   },
 }
 
