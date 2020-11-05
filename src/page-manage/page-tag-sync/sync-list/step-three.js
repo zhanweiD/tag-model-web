@@ -96,8 +96,8 @@ export default class StepThree extends Component {
           />
           <div className="info-title ">主标签配置</div>
           <NemoBaseInfo 
-            dataSource={[].map(d => ({
-              title: d.objName,
+            dataSource={tableData.filter(d => d.isMajor).map(d => ({
+              title: d.name,
               value: d.columnName,
             }))}
             className="mb24"

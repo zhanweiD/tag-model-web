@@ -25,7 +25,7 @@ export default props => {
       },
       {
         tip: '项目管理',
-        url: '/project/index.html#detail/base',
+        url: '/project/index.html#/project',
         icon: 'project',
       }])
     ctx.useSider(true)
