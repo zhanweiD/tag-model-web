@@ -1,6 +1,6 @@
 {
   "name": "tag-model",
-  "version": "2.3.3",
+  "version": "2.3.4",
   "description": "标签模型",
   "main": "app.js",
   "scripts": {
