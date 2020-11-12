@@ -5,6 +5,7 @@ import {successTip, errorTip} from '../../common/util'
 import io from './io'
 
 class Store {
+  @observable projectId
   @observable updateDetailKey = undefined
   @observable updateTreeKey = undefined
 
@@ -138,7 +139,7 @@ class Store {
 
   /**
    * @description 项目下与对象相关的关系对象列表
-   */
+  */
   @action async getBMRelation(cb) {
     try {
       const res = await io.getBMRelation({

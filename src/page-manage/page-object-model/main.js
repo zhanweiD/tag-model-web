@@ -19,10 +19,13 @@ class ObjectModel extends Component {
   constructor(props) {
     super(props)
     const {match} = props
-    
+
+    console.log(props, 'model')
+    store.projectId = props.projectId
     store.typeCode = match.params.typeCode || '4'
     store.objId = match.params.objId
     store.tabId = match.params.tabId || '0' // 当前详情tabID；默认数据视图
+    // console.log(store.projectId)
   }
 
   @action changeTab = code => {
@@ -108,7 +111,7 @@ export default props => {
     store.getProjects(isProject => {
       ctx.useProject(isProject, null, {visible: false})
     })
-    // ctx.useProject(false)
+    // ctx.useProject(true, null, {visible: false})
     ctx.useQuickEntrance([
       {
         tip: '审批管理',
@@ -122,6 +125,6 @@ export default props => {
   }, [])
 
   return (
-    <ObjectModel {...props} />
+    <ObjectModel projectId={ctx.useProjectId()} {...props} />
   )
 }

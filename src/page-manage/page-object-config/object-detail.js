@@ -15,6 +15,7 @@ import ObjectView from './object-view'
 import DataSheet from './data-sheet'
 import FieldList from './field-list'
 import BusinessModel from './business-model'
+import TagList from '../page-tag-model/tag-list'
 
 const {confirm} = Modal
 
@@ -160,6 +161,7 @@ export default class ObjectDetail extends Component {
       view: ObjectView, 
       table: DataSheet,
       field: FieldList,
+      list: TagList,
       business: BusinessModel,
     }
 

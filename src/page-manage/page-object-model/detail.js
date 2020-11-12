@@ -12,6 +12,9 @@ import {
 import {typeCodeMap, objStatusMap, objTypeMap} from './util'
 import ObjectView from './object-view'
 import BusinessModel from './business-model'
+import UseProject from '../page-object-list/object-detail/use-project'
+import DataTable from '../page-object-list/object-detail/data-table'
+import TagList from '../page-object-list/object-detail/tag-list'
 
 @observer
 export default class ObjectDetail extends Component {
@@ -152,6 +155,9 @@ export default class ObjectDetail extends Component {
       tabs: [
         {name: '对象视图', value: 0},
         {name: '业务视图', value: 1},
+        {name: '使用项目', value: 2},
+        {name: '数据表', value: 3},
+        {name: '标签列表', value: 4},
       ],
       basePath: `/manage/object-model/${typeCode}/${objId}`,
       currentTab: this.store.tabId,
@@ -161,7 +167,7 @@ export default class ObjectDetail extends Component {
       changeUrl: true,
     }
 
-    const Content = [ObjectView, BusinessModel][+this.store.tabId]
+    const Content = [ObjectView, BusinessModel, UseProject, DataTable, TagList][+this.store.tabId]
 
     return (
       <div className="object-detail">

@@ -94,7 +94,7 @@ class ModalTagEdit extends Component {
                 ],
               })(<Input size="small" autoComplete="off" placeholder="不超过32个字，允许英文、数字或下划线，必须以英文开头" />)}
             </FormItem>
-
+            
             <FormItem {...formItemLayout} label="数据类型">
               {getFieldDecorator('valueType', {
                 initialValue: +tagDetail.valueType || undefined,

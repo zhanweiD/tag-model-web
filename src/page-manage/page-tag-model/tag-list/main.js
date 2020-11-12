@@ -357,7 +357,7 @@ class TagList extends Component {
     return (
       <Provider bigStore={store}>
         <div>
-          <div className="content-header">标签维护</div>
+          {/* <div className="content-header">标签维护</div> */}
           {
             !list.length && !this.isSearch() ? (
               <div className="header-page" style={{paddingTop: '15%'}}>

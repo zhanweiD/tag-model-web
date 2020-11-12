@@ -1,17 +1,31 @@
 import {Component} from 'react'
-import {Input} from 'antd'
+import {Input, Button, Modal} from 'antd'
 import {action} from 'mobx'
-import {observer} from 'mobx-react'
+import {observer, inject} from 'mobx-react'
 import {SearchOutlined} from '@ant-design/icons'
-
 import {Time} from '../../../common/util'
-import {ListContent} from '../../../component'
+import {ListContent, Authority, OmitTooltip} from '../../../component'
+// import ModalAddTable from '../../page-object-config/data-sheet/modal-add-table'
+import ModalRelateTable from './modal-relate-table'
 import store from './store-table'
 
 const {Search} = Input
 
+@inject('bigStore')
 @observer
 export default class DataTable extends Component {
+  constructor(props) {
+    super(props)
+    const {bigStore} = props
+    this.bigStore = bigStore
+    console.log(props, 'c')
+    store.projectId = bigStore.projectId
+    store.objId = bigStore.objId
+    store.typeCode = bigStore.typeCode
+    store.relationType = bigStore.objDetail.type
+    console.log(store.projectId, 'd')
+  }
+
   columns = [{
     title: '数据表',
     dataIndex: 'tableName',
@@ -56,6 +70,45 @@ export default class DataTable extends Component {
     render: (text, record) => `${record.tagCount}/${record.fieldCount}`,
   }]
 
+  componentWillReceiveProps(next) {
+    const {updateDetailKey, objId} = this.props
+    if (!_.isEqual(updateDetailKey, next.updateDetailKey) || !_.isEqual(+objId, +next.objId)) {
+      store.getList({objId: next.objId})
+    }
+  }
+
+  @action.bound openModal() {
+    const {typeCode, objDetail} = this.bigStore
+    if (+typeCode === 4) {
+      store.bothTypeCode = 2 // 实体
+      store.modalVisible = true
+    } else if (typeof objDetail.type === 'undefined') {
+      this.bigStore.getObjDetail(res => {
+        store.bothTypeCode = res.type
+        store.modalVisible = true
+      }) // 复杂关系 vs 简单关系
+    } else {
+      store.bothTypeCode = objDetail.type 
+      store.modalVisible = true
+    }
+    store.getDataSource()
+  }
+
+  @action.bound openTagConfig(data) {
+    store.editSelectedItem = data
+    this.tagConfigVisible = true
+  }
+
+  @action.bound closeTagConfig() {
+    this.tagConfigVisible = false
+  }
+
+  @action.bound tagConfigSuccess() {
+    store.getList({
+      objId: store.objId,
+    })
+  }
+
   @action.bound onChange(e) {
     const keyword = e.target.value
     store.getList({
@@ -65,10 +118,11 @@ export default class DataTable extends Component {
   }
 
   render() {
-    const {objId, type} = this.props
+    // const {projectId} = store
+    const {objId, type, projectId} = this.props
     const listConfig = {
       columns: +type ? this.columns : this.simpleColumns,
-      initParams: {objId: +objId},
+      initParams: {objId: +objId, projectId: +projectId},
       buttons: [<div className="pr24 far">
         {/* <Search
           placeholder="请输入数据表名称关键字"
@@ -76,6 +130,14 @@ export default class DataTable extends Component {
           style={{width: 200}}
           size="small"
         /> */}
+        {/* <Authority authCode="tag_model:update_table[cud]"> */}
+        <Button 
+          type="primary" 
+          onClick={() => this.openModal()}
+        >
+      多表关联模式设置
+        </Button>
+        {/* </Authority> */}
         <Input
           onChange={e => this.onChange(e)}
           style={{width: 200}}
@@ -89,6 +151,8 @@ export default class DataTable extends Component {
     return (
       <div className="pt16">
         <ListContent {...listConfig} />
+        {/* <ModalAddTable store={store} />  */}
+        <ModalRelateTable store={store} />
       </div>
     )
   }

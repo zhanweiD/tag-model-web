@@ -3,12 +3,11 @@ import {observer, inject} from 'mobx-react'
 import {action, observable} from 'mobx'
 import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
-import {Modal, Select, Switch, Radio, Input, Button} from 'antd'
+import {Modal, Select, Switch, Radio} from 'antd'
 import {OmitTooltip} from '../../../component'
 
 const FormItem = Form.Item
 const {Option} = Select
-const {TextArea} = Input
 
 const formItemLayout = {
   labelCol: {span: 4},
@@ -19,15 +18,17 @@ const formItemLayout = {
 @inject('bigStore')
 @Form.create()
 @observer
-class ModalAddTable extends Component {
+class ModalRelateTable extends Component {
   constructor(props) {
     super(props)
+    
     this.store = props.store
     this.bigStore = props.bigStore
   }
 
-  @observable chooseEntity // 简单关系 从关联实体的数据表中选择的实体
-  @observable chooseEntityMaJorKey // 简单关系 从关联实体的数据表中选择的实体 的主键
+  //   @observable chooseEntity // 简单关系 从关联实体的数据表中选择的实体
+  //   @observable chooseEntityMaJorKey // 简单关系 从关联实体的数据表中选择的实体 的主键
+  @observable chooseModel  
 
   @action.bound initData() {
     const {form: {resetFields}} = this.props
@@ -43,38 +44,44 @@ class ModalAddTable extends Component {
     }
   }
 
-  @action.bound onSwitchChange(checked) {
-    const {form: {resetFields}} = this.props
-    const {objDetail} = this.bigStore
+  // @action.bound onSwitchChange(checked) {
+  //   const {form: {resetFields}} = this.props
+  //   const {objDetail} = this.bigStore
 
-    this.store.tableName = undefined
-    resetFields(['dataTableName'])
-    if (checked) {
-      this.chooseEntity = objDetail.objRspList && objDetail.objRspList[0].id
-      this.store.getEntityDataSource(this.chooseEntity)
-    } else {
-      this.chooseEntity = undefined
-      this.chooseEntityMaJorKey = undefined
-      this.store.getDataSheet()
-      resetFields(['entity1Key', 'entity2Key'])
-    }
-  }
+  //   this.store.tableName = undefined
+  //   resetFields(['dataTableName'])
+  //   if (checked) {
+  //     this.chooseEntity = objDetail.objRspList && objDetail.objRspList[0].id
+  //     this.store.getEntityDataSource(this.chooseEntity)
+  //   } else {
+  //     this.chooseEntity = undefined
+  //     this.chooseEntityMaJorKey = undefined
+  //     this.store.getDataSheet()
+  //     resetFields(['entity1Key', 'entity2Key'])
+  //   }
+  // }
   
+
+  // 单选按钮
   @action.bound onRadioChange(e) {
+    // const {value} = e.target
+    // this.chooseModel = value
+    // // this.store.getEntityDataSource(value)
+
+    // const {form: {resetFields}} = this.props
+    // this.store.tableName = undefined
+    // // this.chooseEntityMaJorKey = undefined
+
+    // resetFields(['dataTableName'])
+
+    // this.initData()
     const {value} = e.target
-    this.chooseEntity = value
-    this.store.getEntityDataSource(value)
-
-    const {form: {resetFields}} = this.props
+    this.chooseModel = value
     this.store.tableName = undefined
-    this.chooseEntityMaJorKey = undefined
-
-    resetFields(['dataTableName'])
-
     this.initData()
   }
 
-  /**
+  /*
    * @description 选择数据表；请求数据表下字段列表
    * @param {*} tableName 数据表名
    */
@@ -147,46 +154,46 @@ class ModalAddTable extends Component {
     this.store.majorKeyField = field
   }
 
-  @action.bound selectEntityKey(field, index, objId) {
-    this.store.fieldList1 = this.store.fieldList1.map(d => {
-      if (d.field === field) {
-        return {
-          ...d,
-          disabled: true,
-          objId,
-        }
-      }
+  //   @action.bound selectEntityKey(field, index, objId) {
+  //     this.store.fieldList1 = this.store.fieldList1.map(d => {
+  //       if (d.field === field) {
+  //         return {
+  //           ...d,
+  //           disabled: true,
+  //           objId,
+  //         }
+  //       }
 
-      if (d.objId === objId) {
-        return {
-          ...d,
-          field: d.field,
-          disabled: false,
-        }
-      }
-      return d
-    })
+  //       if (d.objId === objId) {
+  //         return {
+  //           ...d,
+  //           field: d.field,
+  //           disabled: false,
+  //         }
+  //       }
+  //       return d
+  //     })
 
-    this.store.fieldList2 = this.store.fieldList2.map(d => {
-      if (d.field === field) {
-        return {
-          ...d,
-          disabled: true,
-          objId,
-        }
-      }
+  //     this.store.fieldList2 = this.store.fieldList2.map(d => {
+  //       if (d.field === field) {
+  //         return {
+  //           ...d,
+  //           disabled: true,
+  //           objId,
+  //         }
+  //       }
 
-      if (d.objId === objId) {
-        return {
-          ...d,
-          field: d.field,
-          disabled: false,
-        }
-      }
-      return d
-    })
-    this.store[`entity${index}Key`] = field
-  }
+  //       if (d.objId === objId) {
+  //         return {
+  //           ...d,
+  //           field: d.field,
+  //           disabled: false,
+  //         }
+  //       }
+  //       return d
+  //     })
+  //     this.store[`entity${index}Key`] = field
+  //   }
 
   @action handleSubmit = e => {
     const {
@@ -255,18 +262,6 @@ class ModalAddTable extends Component {
     resetFields()
   }
 
-  // 校验where值输入
-  handleWhereConditionValidator(value, callback) {
-    if (value) {
-      // if (!isSqlFormat(value)) {
-      //   callback('请输入正确的where格式')
-      // }
-      callback()
-    } else {
-      callback()
-    }
-  }
-
   render() {
     const {
       form: {
@@ -290,10 +285,10 @@ class ModalAddTable extends Component {
 
     const {objDetail} = this.bigStore
 
-    const entity1Id = objDetail.objRspList && objDetail.objRspList[0].id
-    const entity1Name = objDetail.objRspList && objDetail.objRspList[0].name
-    const entity2Id = objDetail.objRspList && objDetail.objRspList[1].id
-    const entity2Name = objDetail.objRspList && objDetail.objRspList[1].name
+    // const entity1Id = objDetail.objRspList && objDetail.objRspList[0].id
+    // const entity1Name = objDetail.objRspList && objDetail.objRspList[0].name
+    // const entity2Id = objDetail.objRspList && objDetail.objRspList[1].id
+    // const entity2Name = objDetail.objRspList && objDetail.objRspList[1].name
 
     return (
       <Modal
@@ -301,7 +296,7 @@ class ModalAddTable extends Component {
         visible={modalVisible}
         maskClosable={false}
         destroyOnClose
-        title="添加关联表"
+        title="多表关联模式设置"
         onOk={this.handleSubmit}
         onCancel={this.handleCancel}
         confirmLoading={confirmLoading}
@@ -309,7 +304,7 @@ class ModalAddTable extends Component {
       >
         <Form>
           {/* 0 简单关系 */}
-          {
+          {/* {
             +bothTypeCode === 0 ? (
               <Fragment>
                 <FormItem 
@@ -350,110 +345,97 @@ class ModalAddTable extends Component {
              
               </Fragment>
             ) : null
-          }
-        
-          <FormItem {...formItemLayout} label="数据源">
-            {getFieldDecorator('dataStorageId', {
-              initialValue: storageId,
-              rules: [{required: true, message: '请选择数据源'}],
+          } */}
+          <FormItem {...formItemLayout}>
+            {getFieldDecorator('model', {
+              initialValue: 2,
             })(
-              <Select 
-                placeholder="请选择数据源" 
-                disabled 
-                showSearch
-                optionFilterProp="children"
-              >
-                {
-                  dataSourceList.map(item => (
-                    <Option key={item.storageId} value={item.storageId} disabled={item.isUsed}>{item.storageName}</Option>
-                  ))
-                }
-              </Select>
+              <Radio.Group onChange={this.onRadioChange}>
+                <Radio value={1}>主表模式</Radio>
+                <Radio value={2}>并集模式</Radio>
+              </Radio.Group>,
             )}
           </FormItem>
-          <FormItem 
-            {...formItemLayout}
-            label="数据表"
-            extra={+bothTypeCode === 0 && getFieldValue('switch') 
-              ? (
-                <span>
-关联实体下无可用的数据表？
-                  <a target="_blank" rel="noopener noreferrer" href={`${window.__keeper.pathHrefPrefix}/manage/object-config/4/${+this.chooseEntity}/table`}>去对象配置中添加</a>
-                </span>
-              )
-              : null}
-          >
-            {getFieldDecorator('dataTableName', {
-              rules: [{required: true, message: '请选择数据表'}],
-            })(
-              <Select placeholder="请选择数据表" onSelect={v => this.selectDataSheet(v)} showSearch optionFilterProp="children">
-                {
-                  dataSheetList.map(item => (
-                    <Option key={item.tableName} value={item.tableName} disabled={item.isUsed}>{item.tableName}</Option>
-                  ))
-                }
-              </Select>
-            )}
-          </FormItem>
-          <FormItem {...formItemLayout} label="where条件">
-            {getFieldDecorator('whereCondition', {
-              // initialValue: storageId,
-              rules: [
-                '@transformTrim',
-                '@required',
-                '@max128',
-                // {validator: this.handleWhereConditionValidator},
-              ],
-            })(
-              <FormItem>
-                <TextArea 
-                  id="where"
-                  placeholder="请输入查询语句的where条件，该查询语句的返回结果将作为对象绑定的数据。例如：sex=“男” and age>30" 
-                />
-                <FormItem style={{textAlign: 'right'}}>
-                  <Button
-                    type="ghost"
-                    // className="mr8"
-                    onClick={() => this.handleWhereConditionValidator(document.getElementById('where'))}
-                  >
-                  校验
-                  </Button>
-                </FormItem>
-              </FormItem>
-            )}
-          </FormItem>
-          {/* 实体2 */}
-          {
-            +bothTypeCode === 2 ? (
-              // <FormItem {...formItemLayout} label="主标签绑定的字段">
-              <FormItem 
-                {...formItemLayout} 
-                label={<OmitTooltip text="主标签绑定的字段" maxWidth={80} className="rel-entity-name" />}
-                //             label={(
-                //               <span>
-                //                 <span className="mr10">主标签绑定的</span>
-                //                 <br />
-                // 字段
-                //               </span>
-                //             )}
-              >
-                {getFieldDecorator('mappingKey', {
-                  rules: [{required: true, message: '请选择主标签绑定的字段'}],
+          {this.chooseModel === 1 ? (
+            <Fragment>
+              <FormItem {...formItemLayout} label="数据源">
+                {getFieldDecorator('dataStorageId', {
+                  initialValue: storageId,
+                  rules: [{required: true, message: '请选择数据源'}],
                 })(
-                  <Select placeholder="请选择主标签绑定的字段" onSelect={v => this.selectMajorKey(v)} showSearch optionFilterProp="children">
+                  <Select 
+                    placeholder="请选择数据源" 
+                    disabled 
+                    showSearch
+                    optionFilterProp="children"
+                  >
                     {
-                      fieldList.map(item => (
-                        <Option key={item.field} value={item.field} disabled={!item.isMajor}>{item.field}</Option>
+                      dataSourceList.map(item => (
+                        <Option key={item.storageId} value={item.storageId} disabled={item.isUsed}>{item.storageName}</Option>
                       ))
                     }
                   </Select>
                 )}
               </FormItem>
-            ) : <h3 className="mb24 fs14" style={{marginLeft: '12px'}}>主标签配置</h3>
+              <FormItem 
+                {...formItemLayout}
+                label="数据表"
+                extra={+bothTypeCode === 0 && getFieldValue('switch') 
+                  ? (
+                    <span>
+    关联实体下无可用的数据表？
+                      <a target="_blank" rel="noopener noreferrer" href={`${window.__keeper.pathHrefPrefix}/manage/object-config/4/${+this.chooseEntity}/table`}>去对象配置中添加</a>
+                    </span>
+                  )
+                  : null}
+              >
+                {getFieldDecorator('dataTableName', {
+                  rules: [{required: true, message: '请选择数据表'}],
+                })(
+                  <Select placeholder="请选择数据表" onSelect={v => this.selectDataSheet(v)} showSearch optionFilterProp="children">
+                    {  
+                      dataSheetList.map(item => (
+                        <Option key={item.tableName} value={item.tableName} disabled={item.isUsed}>{item.tableName}</Option>
+                      ))
+                    }
+                  </Select>
+                )}
+              </FormItem>
+              {/* 实体2 */}
+              { 
+                +bothTypeCode === 2 ? (
+                  // <FormItem {...formItemLayout} label="主标签绑定的字段">
+                  <FormItem 
+                          {...formItemLayout} 
+                          label={<OmitTooltip text="主标签绑定的字段" maxWidth={80} className="rel-entity-name" />}
+                          //             label={(
+                          //               <span>
+                          //                 <span className="mr10">主标签绑定的</span>
+                          //                 <br />
+                          // 字段
+                          //               </span>
+                          //             )}
+                      >
+                          {getFieldDecorator('mappingKey', {
+                          rules: [{required: true, message: '请选择主标签绑定的字段'}],
+                          })(
+                          <Select placeholder="请选择主标签绑定的字段" onSelect={v => this.selectMajorKey(v)} showSearch optionFilterProp="children">
+                              {
+                              fieldList.map(item => (
+                                  <Option key={item.field} value={item.field} disabled={!item.isMajor}>{item.field}</Option>
+                              ))
+                              }
+                          </Select>
+                          )}
+                      </FormItem>
+                ) : <h3 className="mb24 fs14" style={{marginLeft: '12px'}}>主标签配置</h3>
+              } 
+            </Fragment>
+          ) : null
           }
-        
+
           {/* 复杂关系1 */}
-          {
+          {/* {
             +bothTypeCode === 1 || +bothTypeCode === 0 ? (
               <Fragment>
                 <FormItem {...formItemLayout} label={<OmitTooltip text={entity1Name} maxWidth={80} className="rel-entity-name" />}>
@@ -499,7 +481,7 @@ class ModalAddTable extends Component {
               </Fragment>
             
             ) : null
-          }
+          }  */}
         </Form>
       </Modal>
 
@@ -507,4 +489,4 @@ class ModalAddTable extends Component {
   }
 }
 
-export default ModalAddTable
+export default ModalRelateTable

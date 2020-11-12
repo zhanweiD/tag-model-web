@@ -6,7 +6,7 @@ import {observer} from 'mobx-react'
 import {action, toJS} from 'mobx'
 import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
-import {Modal, Input, DatePicker, Select, Radio} from 'antd'
+import {Modal, Input, DatePicker, Select, Radio, Space} from 'antd'
 
 const FormItem = Form.Item
 const {TextArea} = Input
@@ -133,6 +133,9 @@ export default class TagApply extends Component {
               </FormItem>
             )
           } */}
+          <FormItem {...formItemLayout} label="选择的标签">
+            {/* <span className="fs12">{}}</span> */}
+          </FormItem>
           <FormItem {...formItemLayout} label="使用项目">
             <span className="fs12">{useProjectName}</span>
           </FormItem>
@@ -148,7 +151,12 @@ export default class TagApply extends Component {
             })(
               <Radio.Group>
                 <Radio value={1}>永久</Radio>
-                {/* <Radio value={0}>自定义</Radio> */}
+                <Radio value={0}>
+                  自定义
+                  <Space direction="vertical" size={12}>
+                    <RangePicker />
+                  </Space>
+                </Radio>
               </Radio.Group>
             )}
           </FormItem>

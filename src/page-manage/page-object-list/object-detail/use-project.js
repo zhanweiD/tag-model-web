@@ -51,6 +51,17 @@ export default class UseProject extends Component {
     render: text => <Time timestamp={text} />,
   }]
 
+  // componentDidMount() {
+  //   this.store.getList()
+  // }
+
+  componentWillReceiveProps(next) {
+    const {updateDetailKey, objId} = this.props
+    if (!_.isEqual(updateDetailKey, next.updateDetailKey) || !_.isEqual(+objId, +next.objId)) {
+      store.getList({objId: next.objId})
+    }
+  }
+  
   @action.bound onChange(v) {
     const keyword = v.target.value
     store.getList({

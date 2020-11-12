@@ -28,8 +28,11 @@ class ObjectDetail extends Component {
   constructor(props) {
     super(props)
     const {match: {params}} = props
+    console.log(props, 'b')
+    store.projectId = props.projectId
     store.objId = params && params.objId
     store.typeCode = params && params.typeCode
+    console.log(store.projectId, 'a')
   }
 
   @observable tabId = 0
@@ -52,7 +55,7 @@ class ObjectDetail extends Component {
 
   render() {
     const {
-      objDetail, objCard, loading, typeCode, objId,
+      objDetail, objCard, loading, typeCode, objId, projectId,
     } = store
    
     // 详情信息
@@ -166,7 +169,7 @@ class ObjectDetail extends Component {
             <OverviewCardWrap cards={cards} />
             <div className="mt16 bgf box-border" style={{minHeight: 'calc(100vh - 348px)'}}>
               <TabRoute {...tabConfig} />
-              <Content objId={+objId} type={+objDetail.type} />
+              <Content objId={+objId} type={+objDetail.type} projectId={+projectId} />
             </div>
           </div>
         </div>
@@ -180,8 +183,8 @@ export default props => {
   useEffect(() => {
     ctx.useProject(true, null, {visible: false})
   }, [])
-
+  const projectId = ctx.useProjectId()
   return (
-    <ObjectDetail {...props} />
+    <ObjectDetail projectId={projectId} {...props} />
   )
 }

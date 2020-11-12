@@ -21,6 +21,7 @@ export default () => {
   const ctx = OnerFrame.useFrame()
   const projectId = ctx.useProjectId()
 
+  window.projectId = projectId
   useEffect(() => {
     if (projectId) {
       ctx.querySiderMenus({
