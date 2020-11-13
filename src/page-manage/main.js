@@ -21,13 +21,13 @@ export default () => {
   const ctx = OnerFrame.useFrame()
   const projectId = ctx.useProjectId()
 
-  window.projectId = projectId
   useEffect(() => {
     if (projectId) {
       ctx.querySiderMenus({
         productCode: 'tag_model',
         projectId,
       })
+      window.projectId = projectId
     } else {
       ctx.querySiderMenus({
         productCode: 'tag_model',
