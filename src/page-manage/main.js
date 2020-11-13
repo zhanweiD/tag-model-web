@@ -27,7 +27,6 @@ export default () => {
         productCode: 'tag_model',
         projectId,
       })
-      window.projectId = projectId
     } else {
       ctx.querySiderMenus({
         productCode: 'tag_model',

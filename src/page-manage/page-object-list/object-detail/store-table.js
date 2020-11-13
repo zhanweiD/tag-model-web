@@ -80,8 +80,7 @@ class Store extends ListContentStore(io.getTableList) {
   @action async getDataSource() {
     try {
       const res = await io.getDataSource({
-        // projectId: this.projectId,
-        projectId: window.projectId,
+        projectId: this.projectId,
       })
       runInAction(() => {
         this.dataSourceList = res ? [res] : []
