@@ -15,6 +15,7 @@ import ObjectView from './object-view'
 import DataSheet from './data-sheet'
 import FieldList from './field-list'
 import BusinessModel from './business-model'
+// import BusinessModel from './business-model-2'
 import TagList from '../page-tag-model/tag-list'
 
 const {confirm} = Modal

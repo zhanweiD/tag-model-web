@@ -77,6 +77,8 @@ export default class BusinessModel extends Component {
   }
 
   initSvg() {
+    console.log(toJS(this.store.businessModel))
+    console.log('---------')
     d3.select('#wrap').style('height', '464px')
     this.maxHeight = {}
     this.svg = d3.select('#box')
