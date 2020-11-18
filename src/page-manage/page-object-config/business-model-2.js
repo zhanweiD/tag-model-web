@@ -15,6 +15,8 @@ const {jsPlumb} = window
 const MAIN_WIDTH = 10000
 const MAIN_HEIGHT = 10000
 
+let isMount = false
+
 @observer
 export default class BusinessModel extends Component {
   @observable mainNode = []
@@ -48,8 +50,12 @@ export default class BusinessModel extends Component {
     this.HEIGHT = this.model.offsetHeight
     this.CONTAINER_WIDTH = this.container.offsetWidth
     this.CONTAINER_HEIGHT = this.container.offsetHeight
-
+    if (!isMount) {
+      isMount = true
+      return
+    }
     this.getData()
+    
     this.d3Container = d3Selection.select(this.model)
     this.d3Container.call(d3Drag.drag().on('drag', this.dragged))
 
@@ -64,9 +70,8 @@ export default class BusinessModel extends Component {
     const {objId} = this.props
     if (+objId !== +next.objId) {
       if (this.myIns) {
-        console.log('kakakak ')
         this.myIns.deleteEveryConnection()
-        this.myIns.reset()
+        // this.myIns.reset()
 
         this.containerX = -MAIN_WIDTH / 2
         this.containerY = -MAIN_HEIGHT / 2
@@ -119,8 +124,6 @@ export default class BusinessModel extends Component {
 
   init() {
     // 进行初始化
-    console.log(toJS(this.store.businessModel))
-
     // 重新处理一下数据
     const {objId} = this.props
     const {businessModel} = this.store
