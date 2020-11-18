@@ -6,9 +6,9 @@ import * as _ from 'lodash'
 import * as d3Drag from 'd3-drag'
 import * as d3Selection from 'd3-selection'
 import erMajorKey from '../../icon/er-major-key.svg'
-import erOpen from '../../icon/er-open.svg' // TODO: 要更换
-import BusinessDrawer from './business-drawer'
-import './business-model-2.styl'
+import erOpenRight from '../../icon/er-open-right.svg'
+import ObjectViewDrawer from './object-view-drawer'
+import './object-view-4.styl'
 
 const {jsPlumb} = window
 
@@ -18,7 +18,7 @@ const MAIN_HEIGHT = 10000
 let isMount = false
 
 @observer
-export default class BusinessModel extends Component {
+export default class ObjectView extends Component {
   @observable mainNode = []
   @observable otherNode = []
   @observable WIDTH
@@ -103,23 +103,17 @@ export default class BusinessModel extends Component {
 
   getData() {
     const t = this
-    // TODO: 这个判断什么意思？
-    if (t.store.typeCode === '4') {
-      // 先去获取关系
-      t.store.getBMRelation(
-        res => {
-          // TODO: 只会有一个吗？
-          t.relObjId = res[0] && res[0].id
+    t.store.getBMRelation(
+      res => {
+        // TODO: 只会有一个吗？
+        t.relObjId = res[0] && res[0].id
 
-          // 获取节点和关系
-          t.store.getBusinessModel(() => t.init(), {
-            relationId: res[0] && res[0].id,
-          })
-        }
-      )
-    } else {
-      t.store.getBusinessModel(() => t.init())
-    }
+        // 获取节点和关系
+        t.store.getBusinessModel(() => t.init(), {
+          relationId: res[0] && res[0].id,
+        })
+      }
+    )
   }
 
   init() {
@@ -128,7 +122,6 @@ export default class BusinessModel extends Component {
     const {objId} = this.props
     const {businessModel} = this.store
     const {links, obj} = businessModel
-    const tagsMap = {}
 
     // 图上只展示主键
     obj.forEach(item => {
@@ -136,7 +129,6 @@ export default class BusinessModel extends Component {
       const isNotMajor = _.filter(item.tag, e => e.isMajor !== 1)
 
       item.mainKey = toJS(isMajor)
-      // tagsMap[item.id] = toJS(isNotMajor)
     })
 
     const mainNode = _.find(obj, item => String(item.id) === String(objId))
@@ -153,6 +145,28 @@ export default class BusinessModel extends Component {
 
     this.mainNode = [mainNode]
     this.otherNode = otherNode
+
+    this.otherNode.forEach((item, index) => {
+      if (index === 0) {
+        item.left = this.WIDTH / 2 + this.CONTAINER_WIDTH / 2 - 200
+        item.top = this.HEIGHT / 2 + 200 - 120
+      }
+
+      if (index === 1) {
+        item.left = this.WIDTH / 2 + this.CONTAINER_WIDTH / 2 + 200
+        item.top = this.HEIGHT / 2 + 200 - 120
+      }
+
+      if (index === 2) {
+        item.left = this.WIDTH / 2 + this.CONTAINER_WIDTH / 2 - 200
+        item.top = this.HEIGHT / 2 + 200 + 120
+      }
+
+      if (index === 3) {
+        item.left = this.WIDTH / 2 + this.CONTAINER_WIDTH / 2 + 200
+        item.top = this.HEIGHT / 2 + 200 + 120
+      }
+    })
 
     setTimeout(() => {
       this.drawLink()
@@ -172,11 +186,6 @@ export default class BusinessModel extends Component {
         target: `node-${item.target}`,
         endpoint: 'Blank',
         connector: ['Flowchart'],
-        connectorStyle: {
-          lineWidth: 2, 
-          strokeStyle: 'red',
-          dashstyle: '2 4',
-        },
         anchor: ['Left', 'Right'],
         overlays: [
           ['Arrow', {width: 10, length: 10, location: 1}],
@@ -213,7 +222,7 @@ export default class BusinessModel extends Component {
     return (
       <div style={{height: '400px', overflow: 'hidden'}} ref={e => this.container = e}>
         <div 
-          className="business-model-2" 
+          className="object-view-4" 
           id="parent" 
           ref={e => this.model = e}
         >
@@ -222,7 +231,7 @@ export default class BusinessModel extends Component {
               this.mainNode.map(item => (
                 <div className="main-node" style={{left: `${this.WIDTH / 2 + this.CONTAINER_WIDTH / 2}px`, top: `${this.HEIGHT / 2 + 200}px`}}>
                   <img 
-                    src={erOpen} 
+                    src={erOpenRight} 
                     alt="main-node-open" 
                     className="main-node-open" 
                     onClick={() => this.openClick(item)}
@@ -249,9 +258,9 @@ export default class BusinessModel extends Component {
             }
             {
               this.otherNode.map(item => (
-                <div className="other-node" style={{left: `${this.WIDTH / 2 + this.CONTAINER_WIDTH / 2 - 200}px`, top: `${this.HEIGHT / 2 + 200 - 120}px`}}>
+                <div className="other-node" style={{left: `${item.left}px`, top: `${item.top}px`}}>
                   <img 
-                    src={erOpen} 
+                    src={erOpenRight} 
                     alt="other-node-open" 
                     className="other-node-open" 
                     onClick={() => this.openClick(item)}
@@ -278,7 +287,7 @@ export default class BusinessModel extends Component {
               ))
             }
           </div>
-          <BusinessDrawer 
+          <ObjectViewDrawer 
             datas={this.drawerDatas} 
             visible={this.drawerVis} 
             closeDrawer={() => this.drawerVis = false}

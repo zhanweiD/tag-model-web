@@ -11,11 +11,11 @@ import {
 } from '../../component'
 import {objDetailTabMap, objRelTabMap, objTypeMap} from './util'
 
-import ObjectView from './object-view'
+// import ObjectView from './object-view'
+import ObjectView from './object-view-router'
 import DataSheet from './data-sheet'
 import FieldList from './field-list'
 // import BusinessModel from './business-model'
-import BusinessModel from './business-model-2'
 import TagList from '../page-tag-model/tag-list'
 
 const {confirm} = Modal
@@ -163,11 +163,11 @@ export default class ObjectDetail extends Component {
       table: DataSheet,
       field: FieldList,
       list: TagList,
-      business: BusinessModel,
+      // business: BusinessModel,
     }
 
     const Content = objCompMap[tabId]
-
+    
     return (
       <div className="object-detail">
         <Spin spinning={detailLoading}>

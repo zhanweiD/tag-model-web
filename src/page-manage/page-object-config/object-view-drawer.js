@@ -5,7 +5,7 @@ import {Drawer, Table, Button} from 'antd'
 
 
 @observer
-export default class BusinessDrawer extends Component {
+export default class ObjectViewDrawer extends Component {
   columns = [
     {
       title: '标签名称',
@@ -32,7 +32,7 @@ export default class BusinessDrawer extends Component {
         title={datas.name}
         onClose={closeDrawer}
         width={560}
-        className="business-drawer"
+        className="object-view-drawer"
       >
         <div>
           <div className="FBH">
