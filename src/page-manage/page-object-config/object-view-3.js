@@ -15,7 +15,6 @@ const {jsPlumb} = window
 const MAIN_WIDTH = 10000
 const MAIN_HEIGHT = 10000
 
-let isMount = false
 
 @observer
 export default class BusinessModel extends Component {
@@ -50,10 +49,6 @@ export default class BusinessModel extends Component {
     this.HEIGHT = this.model.offsetHeight
     this.CONTAINER_WIDTH = this.container.offsetWidth
     this.CONTAINER_HEIGHT = this.container.offsetHeight
-    if (!isMount) {
-      isMount = true
-      return
-    }
     this.getData()
 
     this.d3Container = d3Selection.select(this.model)
@@ -113,7 +108,6 @@ export default class BusinessModel extends Component {
     const {objId} = this.props
     const {businessModel} = this.store
     const {links, obj} = businessModel
-    const tagsMap = {}
 
     // 图上只展示主键
     obj.forEach(item => {
@@ -121,20 +115,12 @@ export default class BusinessModel extends Component {
       const isNotMajor = _.filter(item.tag, e => e.isMajor !== 1)
 
       item.mainKey = toJS(isMajor)
-      // tagsMap[item.id] = toJS(isNotMajor)
     })
 
     const mainNode = _.find(obj, item => String(item.id) === String(objId))
 
     // TODO: 关系是否有多个呢？
     const otherNode = _.filter(obj, item => String(item.id) !== String(objId))
-
-    // console.log(objId)
-    // console.log(mainNode)
-    // console.log(otherNode)
-    // console.log(toJS(this.store.businessModel))
-    // console.log(tagsMap)
-    // console.log('-----')
 
     this.mainNode = [mainNode]
     this.otherNode = otherNode
@@ -162,6 +148,8 @@ export default class BusinessModel extends Component {
     this.myIns = jsPlumb.getInstance()
     this.myIns.setContainer('parent')
 
+    // 清除连线
+    window.d3.selectAll('.jtk-connector').remove()
     links.forEach(item => {
       this.myIns.connect({
         source: `node-${item.source}`,

@@ -15,8 +15,6 @@ const {jsPlumb} = window
 const MAIN_WIDTH = 10000
 const MAIN_HEIGHT = 10000
 
-let isMount = false
-
 @observer
 export default class ObjectView extends Component {
   @observable mainNode = []
@@ -50,10 +48,6 @@ export default class ObjectView extends Component {
     this.HEIGHT = this.model.offsetHeight
     this.CONTAINER_WIDTH = this.container.offsetWidth
     this.CONTAINER_HEIGHT = this.container.offsetHeight
-    if (!isMount) {
-      isMount = true
-      return
-    }
     this.getData()
     
     this.d3Container = d3Selection.select(this.model)
@@ -71,7 +65,6 @@ export default class ObjectView extends Component {
     if (+objId !== +next.objId) {
       if (this.myIns) {
         this.myIns.deleteEveryConnection()
-        // this.myIns.reset()
 
         this.containerX = -MAIN_WIDTH / 2
         this.containerY = -MAIN_HEIGHT / 2
@@ -179,6 +172,8 @@ export default class ObjectView extends Component {
 
     this.myIns = jsPlumb.getInstance()
     this.myIns.setContainer('parent')
+    // 清除连线
+    window.d3.selectAll('.jtk-connector').remove()
 
     links.forEach(item => {
       this.myIns.connect({
