@@ -106,7 +106,7 @@ class Store {
   }
 
 
-  /**
+  /*
    * @description 业务视图
    */
 
@@ -137,9 +137,9 @@ class Store {
 
   @observable relList = [] // 项目下与对象相关的关系对象列表
 
-  /**
+  /*
    * @description 项目下与对象相关的关系对象列表
-  */
+   */
   @action async getBMRelation(cb) {
     try {
       const res = await io.getBMRelation({

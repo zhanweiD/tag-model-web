@@ -19,6 +19,9 @@ export default class SelectObject extends Component {
   constructor(props) {
     super(props)
     this.store = props.bigStore
+    this.store.isSelectObj = props.bigStore.isSelectObj
+    this.store.isOpenSelectObj = props.bigStore.isOpenSelectObj
+    console.log(this.store.isSelectObj, 'true')
   }
 
   @observable selTypeCode = this.store.typeCode // 实体: 4, 关系: 3
@@ -28,11 +31,19 @@ export default class SelectObject extends Component {
   @observable filteredData= [] // 根据typeCode 过滤后的对象列表
   @observable searchData = [] // 过滤搜索后的对象列表
 
+  componentWillMount() {
+    this.store.getObjCate(() => {
+      this.selTypeCode = this.store.typeCode
+      this.store.isSelectObj = true
+      this.store.objId = this.store.currentSelectKeys
+    })
+  }
+
   componentWillReceiveProps(next) {
     const {visible} = this.props
     if (!_.isEqual(visible, next.visible) && next.visible) {
       this.store.getObjSelectedList(data => {
-        this.filteredData = data.filter(d => +d.objTypeCode === +this.selTypeCode)
+        this.filteredData = data.filter(d => +d.objTypeCode === +this.selTypeCode && d.isUsed === 0)
       })
 
       this.store.getObjCate({
@@ -62,13 +73,20 @@ export default class SelectObject extends Component {
       objIds,
       objTypeCode: +t.selTypeCode,
     }
+    this.store.isSelectObj = false
     this.store.saveSelectedObj(params, () => {
-      t.store.getObjTree(() => {
-        t.store.objId = t.store.currentSelectKeys
+      // t.store.getObjTree(() => {
+      //   t.store.objId = t.store.filteredData
 
-        if (!t.store.objId) {
-          t.props.history.push(`/manage/object-config/${t.store.typeCode}`)
-        }
+      //   if (!t.store.objId) {
+      //     t.props.history.push(`/manage/object-config/${t.store.typeCode}`)
+      //   }
+      // })
+      t.store.getObjCate({
+        type: this.store.typeCode,
+        // objId: this.store.currentSelectKeys,
+        isSelectObj: false,
+        // isOpenSelectObj: true,
       })
       t.destroy()
     })
@@ -116,12 +134,16 @@ export default class SelectObject extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.store.destory()
+  }
+
   render() {
     const {visible} = this.props
     const {selectObjConfirmLoading} = this.store
 
     const drawerConfig = {
-      title: '选择对象',
+      title: '设置常用对象',
       visible,
       closable: true,
       width: 1120,

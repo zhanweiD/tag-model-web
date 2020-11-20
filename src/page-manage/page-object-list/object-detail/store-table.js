@@ -1,7 +1,7 @@
 import {
-  action, runInAction, observable,
+  action, runInAction, observable, toJS,
 } from 'mobx'
-import {errorTip} from '../../../common/util'
+import {errorTip, successTip, failureTip} from '../../../common/util'
 import {ListContentStore} from '../../../component/list-content'
 import io from './io'
 
@@ -50,7 +50,7 @@ class Store extends ListContentStore(io.getTableList) {
     if (cb) cb()
   }
 
-  /**
+  /*
    * @description 移除数据表
    */
   @action async removeList(params, cb) {
@@ -74,13 +74,14 @@ class Store extends ListContentStore(io.getTableList) {
     }
   }
 
-  /**
+  /*
    * @description 数据源列表
    */
   @action async getDataSource() {
     try {
       const res = await io.getDataSource({
         projectId: this.projectId,
+        // projectId: window.projectId,
       })
       runInAction(() => {
         this.dataSourceList = res ? [res] : []
@@ -94,7 +95,7 @@ class Store extends ListContentStore(io.getTableList) {
     }
   }
 
-  /**
+  /*
    * @description 数据源列表(从关联实体的数据表中选择)
    */
   @action async getEntityDataSource(entityId) {
@@ -118,7 +119,7 @@ class Store extends ListContentStore(io.getTableList) {
     }
   }
 
-  /**
+  /*
    * @description 数据表列表
    */
   @action async getDataSheet() {
@@ -136,7 +137,7 @@ class Store extends ListContentStore(io.getTableList) {
     }
   }
 
-  /**
+  /*
    * @description 字段列表
    */
   @action async getFieldList(params, cb) {
@@ -156,7 +157,7 @@ class Store extends ListContentStore(io.getTableList) {
     }
   }
 
-  /**
+  /*
    * @description 字段列表
    */
   @action async getMappingKey(objId, cb) {
@@ -175,7 +176,7 @@ class Store extends ListContentStore(io.getTableList) {
     }
   }
 
-  /**
+  /*
    * @description 保存添加实体关联字段
    */
   @action async saveEntityField(cb) {
@@ -221,7 +222,7 @@ class Store extends ListContentStore(io.getTableList) {
     }
   }
 
-  /**
+  /*
    * @description 保存添加关系关联字段
    */
   @action async saveRelField(fieldParams, cb) {

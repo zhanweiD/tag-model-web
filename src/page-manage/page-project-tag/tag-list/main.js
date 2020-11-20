@@ -10,6 +10,7 @@ import {
 } from '../../../component'
 import {getDataTypeName} from '../../../common/util'
 import ModalApply from './modal-apply'
+import ModalBack from './modal-back'
 import Search from './search'
 
 import store from './store'
@@ -25,6 +26,7 @@ export default class TagList extends Component {
   constructor(props) {
     super(props)
     store.useProjectId = props.projectId
+    console.log(store.modalApplyVisible, store.modalBackVisible, '111')
   }
 
   // componentWillMount() {
@@ -88,41 +90,45 @@ export default class TagList extends Component {
       dataIndex: 'projectName',
       render: text => <OmitTooltip maxWidth={200} text={text} />,
     }, 
-    // {
-    //   key: 'status',
-    //   title: '使用权限状态',
-    //   dataIndex: 'status',
-    //   render: text => statusMap[+text] || '失效',
-    // },
-    // {
-    //   key: 'action',
-    //   title: '操作',
-    //   width: 120,
-    //   render: (text, record) => (
-    //     <div className="FBH FBAC">
-    //       {/* <Authority 
-    //         authCode="tag_model:project_tag_detail[r]" 
-    //       >
-    //         <Link target="_blank" to={`/manage/project-tag/${record.id}/${store.useProjectId}`}>标签详情</Link>
-    //       </Authority> */}
-    //       <Authority 
-    //         authCode="tag_model:apply_project_tag[c]" 
-    //       >
-    //         {
-    //           record.status === 2
-    //             ? (
-    //               <Fragment>        
-    //                 {/* <span className="table-action-line" /> */}
-    //                 <a className="ml16" href onClick={() => this.openApplyModal(record)}>权限申请</a>
-    //               </Fragment>
-    //             )
-    //             : null
-    //         }
-    //       </Authority>
+    {
+      key: 'status',
+      title: '使用权限状态',
+      dataIndex: 'status',
+      render: text => statusMap[+text] || '失效',
+    },
+    {
+      key: 'action',
+      title: '操作',
+      width: 120,
+      render: (text, record) => (
+        <div className="FBH FBAC">
+          {/* <Authority 
+            authCode="tag_model:project_tag_detail[r]" 
+          >
+            <Link target="_blank" to={`/manage/project-tag/${record.id}/${store.useProjectId}`}>标签详情</Link>
+          </Authority> */}
+          {/* <Authority 
+            authCode="tag_model:apply_project_tag[c]" 
+          > */}
+          {/* {
+            record.status === 2
+              ? ( */}
+          <Fragment>        
+            {/* <span className="table-action-line" /> */}
+            <a className="mr2" href onClick={() => this.openApplyModal(record)}>权限申请</a>
+          </Fragment>
+          <Fragment>        
+            {/* <span className="table-action-line" /> */}
+            <a className="mr2" href onClick={() => this.openBackModal(record)}>交回权限</a>
+          </Fragment>
+          {/* )
+          : null
+      } */}
+          {/* </Authority> */}
         
-    //     </div>
-    //   ),
-    // },
+        </div>
+      ),
+    },
   ]
 
   @action.bound openApplyModal(data) {
@@ -131,6 +137,16 @@ export default class TagList extends Component {
     }
     store.tagIds.replace([data.id])
     store.modalApplyVisible = true
+    console.log(store.modalApplyVisible, 'modalApplyVisible')
+  }
+
+  @action.bound openBackModal(data) {
+    if (!store.projectName) {
+      store.getProjectDetail()
+    }
+    store.tagIds.replace([data.id])
+    store.modalBackVisible = true
+    console.log(store.modalBackVisible, 'modalBackVisible')
   }
 
   // 是否有进行搜索操作
@@ -196,6 +212,7 @@ export default class TagList extends Component {
               <div className="search-list box-border"> 
                 <ListContent {...listConfig} />
                 <ModalApply store={store} />
+                <ModalBack store={store} />
               </div>
             </Fragment>
           ) 

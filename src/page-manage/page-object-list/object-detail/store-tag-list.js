@@ -82,7 +82,7 @@ class Store extends ListContentStore(io.getTagList) {
   }
 
   
-  /**
+  /*
    * @description 获取所属对象下拉数据
    */
   @action async getObjectSelectList() {
@@ -98,7 +98,7 @@ class Store extends ListContentStore(io.getTagList) {
     }
   }
 
-  /**
+  /*
    * @description 获取所属类目下拉数据
    */
   @action async getTagCateSelectList(params) {
@@ -115,7 +115,7 @@ class Store extends ListContentStore(io.getTagList) {
     }
   }
 
-  /**
+  /*
    * @description 标签详情
    */
   @action async getTagDetail(params) {
@@ -138,7 +138,7 @@ class Store extends ListContentStore(io.getTagList) {
     }
   }
 
-  /**
+  /*
    * @description 创建标签
    */
   @action async createTag(params, cb) {
@@ -164,7 +164,7 @@ class Store extends ListContentStore(io.getTagList) {
     }
   }
 
-  /**
+  /*
    * @description 编辑标签
    */
   @action async updateTag(params, cb) {
@@ -190,7 +190,7 @@ class Store extends ListContentStore(io.getTagList) {
     }
   }
 
-  /**
+  /*
    * @description 删除标签
    */
   @action async deleteTag(params) {
@@ -212,7 +212,7 @@ class Store extends ListContentStore(io.getTagList) {
     }
   }
 
-  /**
+  /*
    * @description 重名校验
    */
   @action async checkName(params, cb) {
@@ -269,7 +269,7 @@ class Store extends ListContentStore(io.getTagList) {
 
   @observable functionCodes = []
 
-  /**
+  /*
    * @description 权限code
    */
   @action async getAuthCode() {

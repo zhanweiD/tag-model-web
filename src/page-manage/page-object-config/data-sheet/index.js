@@ -11,6 +11,7 @@ import {ListContent, Authority, OmitTooltip} from '../../../component'
 
 import ConfigField from './config-field'
 import ModalAddTable from './modal-add-table'
+import DrawerDatasheet from './drawer-datasheet'
 
 import store from './store'
 import './index.styl'
@@ -26,16 +27,23 @@ export default class DataSheet extends Component {
     store.objId = bigStore.objId
     store.typeCode = bigStore.typeCode
     store.relationType = bigStore.objDetail.type
+    console.log(store, 'store')
+    console.log(bigStore, 'bigstore')
   }
 
   @observable tagConfigVisible = false
+  @observable drawerDatasheetVisible = false
 
   columns = [
     {
       title: '数据表名称',
       key: 'dataTableName',
       dataIndex: 'dataTableName',
-      render: text => <OmitTooltip maxWidth={250} text={text} />,
+      render: (text, record) => (
+        <div>
+          <a href onClick={() => this.openDrawerDatasheet(record)}>{text}</a>
+        </div>
+      ),
     }, {
       title: '数据源',
       key: 'dataStorageName',
@@ -197,8 +205,17 @@ export default class DataSheet extends Component {
     this.tagConfigVisible = true
   }
 
+  @action.bound openDrawerDatasheet(data) {
+    store.editSelectedItem = data // 对象id
+    this.drawerDatasheetVisible = true
+  }
+
   @action.bound closeTagConfig() {
     this.tagConfigVisible = false
+  }
+
+  @action.bound closedrawerDatasheet() {
+    this.drawerDatasheetVisible = false
   }
 
   @action.bound tagConfigSuccess() {
@@ -212,6 +229,7 @@ export default class DataSheet extends Component {
       objId,
       projectId,
       relationType,
+      drawerDatasheetVisible,
       // typeCode,
     } = store
     // typeCode = 3 关系对象；typeCode = 4 实体对象；
@@ -237,6 +255,13 @@ export default class DataSheet extends Component {
       store, // 必填属性
     }
 
+    // const drawerDatasheetConfig = {
+    //   visible: this.drawerDatasheetVisible,
+    //   onclose: this.closedrawerDatasheet(),
+    //   objId: drawerDatasheetObjId,
+    //   store,
+    // }
+
     return (
       <Provider dataSheetStore={store}>
         <div>
@@ -251,8 +276,28 @@ export default class DataSheet extends Component {
               />
             )
           }
+          {
+            this.drawerDatasheetVisible && (
+              <DrawerDatasheet 
+                store={store}
+                visible={this.drawerDatasheetVisible}
+                onClose={this.closedrawerDatasheet}
+              />
+            )
+          } 
         </div>
       </Provider>
     )
   }
 }
+
+// export default props => {
+//   const ctx = OnerFrame.useFrame()
+//   useEffect(() => {
+//     ctx.useProject(true, null, {visible: false})
+//   }, [])
+//   const projectId = ctx.useProjectId()
+//   return (
+//     <DataSheet projectId={projectId} {...props} />
+//   )
+// }

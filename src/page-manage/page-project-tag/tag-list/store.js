@@ -26,6 +26,7 @@ class Store extends ListContentStore(io.getList) {
   @observable sceneType = undefined
 
   @observable modalApplyVisible = false
+  @observable modalBackVisible = false
   @observable confirmLoading = false
   @observable tagIds = []
 

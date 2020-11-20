@@ -5,7 +5,6 @@ import {observer, inject} from 'mobx-react'
 import {SearchOutlined} from '@ant-design/icons'
 import {Time} from '../../../common/util'
 import {ListContent, Authority, OmitTooltip} from '../../../component'
-// import ModalAddTable from '../../page-object-config/data-sheet/modal-add-table'
 import ModalRelateTable from './modal-relate-table'
 import store from './store-table'
 
@@ -18,12 +17,12 @@ export default class DataTable extends Component {
     super(props)
     const {bigStore} = props
     this.bigStore = bigStore
-    console.log(props, 'c')
+    // console.log(props, 'c')
     store.projectId = bigStore.projectId
     store.objId = bigStore.objId
     store.typeCode = bigStore.typeCode
     store.relationType = bigStore.objDetail.type
-    console.log(store.projectId, 'd')
+    // console.log(store.projectId, 'd')
   }
 
   columns = [{
@@ -119,11 +118,13 @@ export default class DataTable extends Component {
 
   render() {
     // const {projectId} = store
-    const {objId, type, projectId} = this.props
+    // const {objId, type, projectId} = this.props
+    const {objId, type} = this.props
     const listConfig = {
       columns: +type ? this.columns : this.simpleColumns,
-      initParams: {objId: +objId, projectId: +projectId},
-      buttons: [<div className="pr24 far">
+      // initParams: {objId: +objId, projectId: +projectId},
+      initParams: {objId: +objId},
+      buttons: [<div className="pr24 far" style={{display: 'float'}}>
         {/* <Search
           placeholder="请输入数据表名称关键字"
           onChange={e => this.onChange(e)}
@@ -131,20 +132,26 @@ export default class DataTable extends Component {
           size="small"
         /> */}
         {/* <Authority authCode="tag_model:update_table[cud]"> */}
-        <Button 
-          type="primary" 
-          onClick={() => this.openModal()}
-        >
-      多表关联模式设置
-        </Button>
+        <div style={{float: 'left', marginBottom: '8px'}}>
+          <Button 
+            style={{marginRight: 'auto'}}
+            type="primary" 
+            className="mr8"
+            onClick={() => this.openModal()}
+          >
+        多表关联模式设置
+          </Button>
+        </div>
         {/* </Authority> */}
-        <Input
-          onChange={e => this.onChange(e)}
-          style={{width: 200}}
-          size="small"
-          placeholder="请输入数据表名称关键字"
-          suffix={<SearchOutlined />}
-        />
+        <div style={{float: 'right', marginBottom: '8px'}}>
+          <Input
+            onChange={e => this.onChange(e)}
+            style={{width: 200}}
+            size="small"
+            placeholder="请输入数据表名称关键字"
+            suffix={<SearchOutlined />}
+          />
+        </div>
       </div>],
       store,
     }

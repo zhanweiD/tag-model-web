@@ -4,7 +4,7 @@
 import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
 import {Spin, Modal, Button} from 'antd'
-import {action} from 'mobx'
+import {action, toJS} from 'mobx'
 import {Time} from '../../common/util'
 import {
   TabRoute, DetailHeader, OverviewCardWrap, Tag, Authority,
@@ -25,6 +25,7 @@ export default class ObjectDetail extends Component {
   constructor(props) {
     super(props)
     this.store = props.bigStore
+    console.log(props, 'od')
   }
 
   componentWillMount() {
@@ -43,7 +44,7 @@ export default class ObjectDetail extends Component {
     this.store.getObjCard()
   }
 
-  /**
+  /*
    * @description 移除对象；使用中的对象不可以移除
    */
   @action.bound remove() {
@@ -166,7 +167,7 @@ export default class ObjectDetail extends Component {
     }
 
     const Content = objCompMap[tabId]
-
+    console.log(toJS(objDetail))
     return (
       <div className="object-detail">
         <Spin spinning={detailLoading}>

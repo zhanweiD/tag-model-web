@@ -21,7 +21,7 @@ class Store {
   @observable treeData = [] // 类目树数据
   @observable searchExpandedKeys = [] // 关键字搜索展开的树节点
   @observable currentSelectKeys = undefined// 默认展开的树节点
-
+  @observable isSelectObj = false
   // 选择对象
   @observable selectObjVisible = false
   @observable selectObjLoading = false
@@ -73,7 +73,7 @@ class Store {
   //* ------------------------------ 对象详情 end ------------------------------*//
 
   @observable confirmLoading = false
-  /**
+  /*
    * @description 获取对象类目树
    */
   @action async getObjTree(cb) {
@@ -83,7 +83,7 @@ class Store {
     try {
       const res = await io.getObjTree({
         type: this.typeCode,
-        searchKey: this.searchKey,
+        // searchKey: this.searchKey,
         projectId: this.projectId,
       })
       runInAction(() => {
@@ -130,41 +130,81 @@ class Store {
     }
   }
 
-  /**
+  /*
    * @description 选择对象类目树
    */
-  @action async getObjCate(params) {
+  @action async getObjCate(params, cb) {
+    if (this.isSelectObj) {
+      this.treeLoading = false
+    } else {
+      this.treeLoading = true
+    }
     this.selectObjLoading = true
+    // this.treeLoading = true
+    this.firstChildrens = []
     try {
       const res = await io.getObjCate({
         ...params,
+        searchKey: this.searchKey,
         projectId: this.projectId,
       })
       runInAction(() => {
         // this.selectObjLoading = false
-        let data = res
+        // this.treeLoading = false
+        let data = res.filter(item => item.isUsed === 0) // 不显示移去列表的对象
+        // let data = res
+        
         // 判断是否进行搜索
-        if (params.searchKey) {
-          data = res.map(item => {
-            // 关键字搜索定位
-            if (params.searchKey && item.name.includes(params.searchKey)) {
-              this.findParentId(item.id, res, this.objCateExpandedKeys)
+        if (this.isSelectObj) {
+          if (this.searchKey) {
+            data = res.map(item => {
+              // 关键字搜索定位
+              if (this.searchKey && item.name.includes(this.searchKey)) {
+                this.findParentId(item.id, res, this.objCateExpandedKeys)
+              }
+              return item
+            })
+          }
+        } else {
+            if (params.searchKey) {
+              data = res.map(item => {
+                // 关键字搜索定位
+                if (params.searchKey && item.name.includes(params.searchKey)) {
+                  this.findParentId(item.id, res, this.objCateExpandedKeys)
+                }
+                return item
+              })
             }
-            return item
-          })
-        }
+          }
+
         this.objCateTree = listToTree(data)
+
+        if (res.length) {
+          if (!this.objId || !res.filter(d => +d.aId === +this.objId).length) {
+            // const firstObject = res.filter(item => item.parentId !== 0)[0]
+            this.defaultKey(toJS(this.objCateTree))
+            const firstObject = this.firstChildrens[0]
+            // 默认展开第一个对象
+            this.currentSelectKeys = firstObject && firstObject.aId
+          } else {
+            this.currentSelectKeys = this.objId
+          }
+        } else {
+          this.currentSelectKeys = undefined
+        }
+        if (cb) cb()
       })
     } catch (e) {
       errorTip(e.message)
     } finally {
       runInAction(() => {
         this.selectObjLoading = false
+        this.treeLoading = false
       })
     }
   }
 
-  /**
+  /*
    * @description 已选对象列表
    */
   @action async getObjSelectedList(cb) {
@@ -194,7 +234,7 @@ class Store {
     }
   }
 
-  /**
+  /*
    * @description 获取选择对象列表信息加入选择列表
    */
   @action async getObjSelectedDetail(objIds, cb) {
@@ -224,7 +264,7 @@ class Store {
     }
   }
 
-  /**
+  /*
    * @description 保存已选对象
    */
   @action async saveSelectedObj(params, cb) {

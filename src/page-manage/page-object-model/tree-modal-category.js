@@ -23,7 +23,7 @@ export default class ModalCategory extends Component {
     return this.renderEditModal()
   }
 
-  /**
+  /*
    * @description 渲染编辑弹窗
    */
   renderEditModal() {
@@ -81,7 +81,7 @@ export default class ModalCategory extends Component {
     )
   }
 
-  /**
+  /*
    * @description 渲染详情弹窗
    */
   renderDetail() {

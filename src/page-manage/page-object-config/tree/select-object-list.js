@@ -11,7 +11,7 @@ import {SearchOutlined} from '@ant-design/icons'
 
 import {OmitTooltip} from '../../../component'
 import {Time} from '../../../common/util'
-// import {usedStatusMap} from '../util'
+import {usedStatusMap} from '../util'
 
 const {Search} = Input
 
@@ -21,6 +21,8 @@ export default class ObjectList extends Component {
   constructor(props) {
     super(props)
     this.store = props.bigStore
+    // this.isUsed = this.store.ObjectList.isUsed
+    // console.log(props, 'sol')
   }
 
   @observable searchKey = undefined
@@ -55,12 +57,12 @@ export default class ObjectList extends Component {
       key: 'createTime',
       render: text => <Time timestamp={text} />,
     },
-    // {
-    //   title: '使用状态',
-    //   dataIndex: 'isUsed',
-    //   key: 'isUsed',
-    //   render: v => usedStatusMap(+v),
-    // },
+    {
+      title: '使用状态',
+      dataIndex: 'isUsed',
+      key: 'isUsed',
+      render: v => usedStatusMap(+v),
+    },
     {
       title: '数据表数',
       dataIndex: 'tableCount',

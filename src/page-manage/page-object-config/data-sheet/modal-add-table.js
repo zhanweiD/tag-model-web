@@ -24,6 +24,7 @@ class ModalAddTable extends Component {
     super(props)
     this.store = props.store
     this.bigStore = props.bigStore
+    // console.log(this.store, 's')
   }
 
   @observable chooseEntity // 简单关系 从关联实体的数据表中选择的实体
@@ -74,7 +75,7 @@ class ModalAddTable extends Component {
     this.initData()
   }
 
-  /**
+  /*
    * @description 选择数据表；请求数据表下字段列表
    * @param {*} tableName 数据表名
    */
@@ -396,7 +397,7 @@ class ModalAddTable extends Component {
             )}
           </FormItem>
           <FormItem {...formItemLayout} label="where条件">
-            {getFieldDecorator('whereCondition', {
+            {getFieldDecorator('whereValue', {
               // initialValue: storageId,
               rules: [
                 '@transformTrim',

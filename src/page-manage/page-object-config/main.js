@@ -4,7 +4,7 @@
 import {Component} from 'react'
 import {action} from 'mobx'
 import {observer, Provider} from 'mobx-react'
-import {TabRoute, projectProvider, NoData} from '../../component'
+import {TabRoute, projectProvider, NoData, Loading} from '../../component'
 import {changeToOptions} from '../../common/util'
 import Tree from './tree'
 import ObjectDetail from './object-detail'
@@ -17,12 +17,14 @@ class ObjectConfig extends Component {
   constructor(props) {
     super(props)
     const {match} = props
-
+    store.isSelectObj = props.isSelectObj
     store.projectId = props.projectId
     
     store.typeCode = match.params.typeCode || '4'
     store.objId = match.params.objId
     store.tabId = match.params.tabId || 'view' // 当前详情tabID；默认数据视图
+    store.isSelectObj = false
+    console.log(props.isSelectObj, 'objid')
   }
 
   // componentWillMount() {
@@ -32,14 +34,29 @@ class ObjectConfig extends Component {
   //   }
   // }
 
+
   @action changeTab = code => {
     store.typeCode = code
     store.objId = undefined
     store.tabId = 'view'
     store.searchKey = undefined
-    store.getObjTree(() => {
+    store.isSelectObj = false
+    // store.getObjTree(() => {
+    //   store.objId = store.currentSelectKeys
+    // })
+    store.getObjCate({
+      type: store.typeCode,
+      // objId: store.currentSelectKeys,
+      isSelectObj: store.isSelectObj,
+    }, () => {
       store.objId = store.currentSelectKeys
     })
+    // store.getObjCate(() => {
+      // store.type = store.typeCode
+      // store.objId = store.currentSelectKeys
+      // store.isSelectObj = false
+    // })
+    // console.log('a')
   }
 
   @action selectObject = () => {
@@ -53,7 +70,10 @@ class ObjectConfig extends Component {
       objId,
       treeLoading,
       selectObjUpdateKey,
+      selectObjLoading,
+      mainLoading,
     } = store
+    console.log(objId, '---')
 
     const tabConfig = {
       tabs: changeToOptions(window.njkData.dict.typeCodes)('value', 'key'),
@@ -70,11 +90,12 @@ class ObjectConfig extends Component {
       onClick: this.selectObject,
       text: '没有任何对象，请在当前页面选择对象！',
       isLoading: treeLoading,
+      // isLoading: selectObjLoading,
       code: 'tag_model:select_obj[cud]',
       noAuthText: '没有任何对象',
       // myFunctionCodes: store.functionCodes,
     }
-
+// console.log(selectObjLoading, "88888")
     return (
       <Provider bigStore={store}>
         <div className="page-object">

@@ -1,5 +1,5 @@
 import ioContext from '../../../common/io-context'
-import {baseApi, tagModalApi, objectApi, get, post} from '../../../common/util'
+import {baseApi, targetSourceApi, tagModalApi, objectApi, get, post} from '../../../common/util'
 
 const api = {
   //* ------------------------------ 对象详情 ------------------------------*//
@@ -19,6 +19,7 @@ const api = {
   getDataSheet: get(`${baseApi}/tagConfig/listUncorrelatedSourceTable`),
   saveEntityField: post(`${baseApi}/tagConfig/add_rel_field`),
   getEntityDataSource: get(`${baseApi}/project/object/getObjTableList`),
+  getFieldList: get(`${baseApi}/tagConfig/column_info`),
 } 
 
 ioContext.create('objectDetail', api) 

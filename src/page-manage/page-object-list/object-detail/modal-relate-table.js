@@ -28,7 +28,8 @@ class ModalRelateTable extends Component {
 
   //   @observable chooseEntity // 简单关系 从关联实体的数据表中选择的实体
   //   @observable chooseEntityMaJorKey // 简单关系 从关联实体的数据表中选择的实体 的主键
-  @observable chooseModel  
+  @observable chooseModel
+  // @observable modalRelateVisible = true 
 
   @action.bound initData() {
     const {form: {resetFields}} = this.props
@@ -77,8 +78,13 @@ class ModalRelateTable extends Component {
     // this.initData()
     const {value} = e.target
     this.chooseModel = value
+    const {form: {resetFields}} = this.props
     this.store.tableName = undefined
+    resetFields(['model'])
     this.initData()
+    // if (this.chooseModel === 2) {
+    //   this.modalRelateVisible = false
+    // }
   }
 
   /*
@@ -248,10 +254,15 @@ class ModalRelateTable extends Component {
   @action handleCancel = () => {
     const {store} = this.props
     this.chooseEntity = undefined
+    this.chooseModel = undefined
     this.chooseEntityMaJorKey = undefined
     store.closeModal()
     this.handleReset()
   }
+
+  // @action.bound closeModal(){
+  //   this.chooseModel = 2 
+  // }
 
   @action handleReset = () => {
     const {
@@ -356,7 +367,7 @@ class ModalRelateTable extends Component {
               </Radio.Group>,
             )}
           </FormItem>
-          {this.chooseModel === 1 ? (
+          { +this.chooseModel === 1 ? (
             <Fragment>
               <FormItem {...formItemLayout} label="数据源">
                 {getFieldDecorator('dataStorageId', {
@@ -406,28 +417,28 @@ class ModalRelateTable extends Component {
                 +bothTypeCode === 2 ? (
                   // <FormItem {...formItemLayout} label="主标签绑定的字段">
                   <FormItem 
-                          {...formItemLayout} 
-                          label={<OmitTooltip text="主标签绑定的字段" maxWidth={80} className="rel-entity-name" />}
-                          //             label={(
-                          //               <span>
-                          //                 <span className="mr10">主标签绑定的</span>
-                          //                 <br />
-                          // 字段
-                          //               </span>
-                          //             )}
-                      >
-                          {getFieldDecorator('mappingKey', {
-                          rules: [{required: true, message: '请选择主标签绑定的字段'}],
-                          })(
-                          <Select placeholder="请选择主标签绑定的字段" onSelect={v => this.selectMajorKey(v)} showSearch optionFilterProp="children">
-                              {
-                              fieldList.map(item => (
-                                  <Option key={item.field} value={item.field} disabled={!item.isMajor}>{item.field}</Option>
-                              ))
-                              }
-                          </Select>
-                          )}
-                      </FormItem>
+                    {...formItemLayout} 
+                    label={<OmitTooltip text="主标签绑定的字段" maxWidth={80} className="rel-entity-name" />}
+                    //             label={(
+                    //               <span>
+                    //                 <span className="mr10">主标签绑定的</span>
+                    //                 <br />
+                    // 字段
+                    //               </span>
+                    //             )}
+                  >
+                    {getFieldDecorator('mappingKey', {
+                      rules: [{required: true, message: '请选择主标签绑定的字段'}],
+                    })(
+                      <Select placeholder="请选择主标签绑定的字段" onSelect={v => this.selectMajorKey(v)} showSearch optionFilterProp="children">
+                        {
+                          fieldList.map(item => (
+                            <Option key={item.field} value={item.field} disabled={!item.isMajor}>{item.field}</Option>
+                          ))
+                        }
+                      </Select>
+                    )}
+                  </FormItem>
                 ) : <h3 className="mb24 fs14" style={{marginLeft: '12px'}}>主标签配置</h3>
               } 
             </Fragment>

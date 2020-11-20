@@ -22,6 +22,7 @@ class Store extends ListContentStore(io.getList) {
   @observable storageId = undefined
   @observable tableName = undefined
   @observable majorKeyField = undefined
+  @observable whereValue = undefined
   @observable entity1Key = undefined
   @observable entity2Key = undefined
   
@@ -37,6 +38,7 @@ class Store extends ListContentStore(io.getList) {
     this.storageId = undefined
     this.tableName = undefined
     this.majorKeyField = undefined
+    this.whereValue = undefined
 
     this.entity1Key = undefined
     this.entity2Key = undefined
@@ -52,7 +54,7 @@ class Store extends ListContentStore(io.getList) {
     if (cb) cb()
   }
 
-  /**
+  /*
    * @description 移除数据表
    */
   @action async removeList(params, cb) {
@@ -76,7 +78,7 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  /**
+  /*
    * @description 数据源列表
    */
   @action async getDataSource() {
@@ -96,7 +98,7 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  /**
+  /*
    * @description 数据源列表(从关联实体的数据表中选择)
    */
   @action async getEntityDataSource(entityId) {
@@ -120,7 +122,7 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  /**
+  /*
    * @description 数据表列表
    */
   @action async getDataSheet() {
@@ -138,7 +140,7 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  /**
+  /*
    * @description 字段列表
    */
   @action async getFieldList(params, cb) {
@@ -158,7 +160,7 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  /**
+  /*
    * @description 字段列表
    */
   @action async getMappingKey(objId, cb) {
@@ -177,7 +179,7 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  /**
+  /*
    * @description 保存添加实体关联字段
    */
   @action async saveEntityField(cb) {
@@ -223,7 +225,7 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  /**
+  /*
    * @description 保存添加关系关联字段
    */
   @action async saveRelField(fieldParams, cb) {

@@ -20,7 +20,7 @@ const formItemLayout = {
 
 @Form.create()
 @observer
-export default class TagApply extends Component {
+export default class TagBack extends Component {
   constructor(props) {
     super(props) 
     this.store = props.store
@@ -60,7 +60,7 @@ export default class TagApply extends Component {
   }
 
   @action handleCancel() {
-    this.store.modalApplyVisible = false
+    this.store.modalBackVisible = false
     this.handleReset()
   }
 
@@ -74,7 +74,7 @@ export default class TagApply extends Component {
   render() {
     const {form: {getFieldDecorator}} = this.props
     const {
-      confirmLoading, modalApplyVisible, projectName,
+      confirmLoading, modalBackVisible, projectName,
     } = this.store
 
     const modalConfig = {
@@ -82,7 +82,7 @@ export default class TagApply extends Component {
       maskClosable: false,
       title: '权限申请',
       confirmLoading,
-      visible: modalApplyVisible,
+      visible: modalBackVisible,
       onOk: e => this.handleOk(e),
       onCancel: () => this.handleCancel(),
     }

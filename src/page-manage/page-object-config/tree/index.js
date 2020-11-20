@@ -2,7 +2,7 @@
  * @description 对象管理 - 树组件
  */
 import {Component} from 'react'
-import {action} from 'mobx'
+import {action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {DtTree} from '@dtwave/uikit'
 import {Loading} from '../../../component'
@@ -22,10 +22,15 @@ export default class Tree extends Component {
   constructor(props) {
     super(props)
     this.store = props.bigStore
+    props.bigStore.isSelectObj = false
   }
 
   componentWillMount() {
+    // console.log(777777)
     this.getTreeData()
+    // this.store.getObjCate({
+    //   type: this.store.typeCode,
+    // })
   }
 
   componentWillReceiveProps(next) {
@@ -33,15 +38,28 @@ export default class Tree extends Component {
     if (!_.isEqual(selectObjUpdateKey, next.selectObjUpdateKey)) {
       this.store.selectObjVisible = true
     }
+    // if (!_.isEqual(selTypeCode, next.selTypeCode)) {
+    //   this.destroy()
+    // }
   }
 
   getTreeData() {
-    this.store.getObjTree(() => {
+    // this.store.getObjTree(() => {
+    //   this.store.objId = this.store.currentSelectKeys
+    // })
+    // this.store.getObjCate(() => {
+    //   this.store.objId = this.store.currentSelectKeys
+    //   this.store.type = this.store.typeCode
+    // })
+    this.store.getObjCate({
+      type: this.store.typeCode,
+      // objId: this.store.currentSelectKeys,
+    }, () => {
       this.store.objId = this.store.currentSelectKeys
     })
   }
 
-  /**
+  /*
    * @description 选择对象节点 改变路由 刷新对象详情
    * @param {*} selectedKeys @typedef Array 所选ID集合
    * @param {*} info 所选节点信息
@@ -73,7 +91,7 @@ export default class Tree extends Component {
     [this.store.objId] = selectedKeys
   }
 
-  /**
+  /*
    * @description 递归遍历树节点
    */
   processNodeData = data => {
@@ -103,9 +121,11 @@ export default class Tree extends Component {
 
   render() {
     const {
-      treeLoading, treeData, expandAll, currentSelectKeys, selectObjVisible,
+      treeLoading, treeData, expandAll, currentSelectKeys, selectObjVisible, objCateTree,
     } = this.store
-
+    // console.log(toJS(objCateTree))
+    // console.log(toJS(this.store.currentSelectKeys), '---') // 对象配置页面展示的详情对象
+    // console.log(expandAll, '-1-')
     const {history} = this.props
 
     const treeBoxConfig = {
@@ -116,6 +136,7 @@ export default class Tree extends Component {
     }
 
     const expandKey = Number(currentSelectKeys)
+    // console.log(expandKey, '...')
 
     const treeConfig = {
       type: 'tree',
@@ -141,8 +162,11 @@ export default class Tree extends Component {
             ? <Loading mode="block" height={100} />
             : (
               <DtTree {...treeConfig}>
-                {
+                {/* {
                   this.processNodeData(treeData)
+                } */}
+                {
+                  this.processNodeData(objCateTree)
                 }
               </DtTree>
             )

@@ -15,7 +15,7 @@ export default class TagList extends Component {
   columns = [{
     title: '标签名称',
     dataIndex: 'name',
-    render: (text, record) => <Link target="_blank" to={`/manage/object-model/${record.id}/${store.projectId}`}><OmitTooltip maxWidth={120} text={text} /></Link>,
+    // render: (text, record) => <Link target="_blank" to={`/manage/object-model/${record.id}/${store.projectId}`}><OmitTooltip maxWidth={120} text={text} /></Link>,
   }, {
     title: '绑定方式',
     dataIndex: 'configType',
@@ -165,21 +165,24 @@ export default class TagList extends Component {
     const listConfig = {
       columns: this.columns,
       initParams: {objId: +objId},
-      buttons: [<div className="pr24 far">
+      buttons: [<div className="pr24 far" style={{display: 'float'}}>
         {/* <Search
           placeholder="请输入标签名称关键字"
           onChange={e => this.onChange(e)}
           style={{width: 200}}
         /> */}
-        <Button type="primary" className="mr8" onClick={() => store.openDrawer('add')}>新建标签</Button>
-
-        <Input
-          onChange={e => this.onChange(e)}
-          style={{width: 200}}
-          size="small"
-          placeholder="请输入标签名称关键字"
-          suffix={<SearchOutlined />}
-        />
+        <div style={{float: 'left', marginBottom: '8px'}}>
+          <Button type="primary" className="mr8" onClick={() => store.openDrawer('add')}>新建标签</Button>
+        </div>
+        <div style={{float: 'right', marginBottom: '8px'}}>
+          <Input
+            onChange={e => this.onChange(e)}
+            style={{width: 200}}
+            size="small"
+            placeholder="请输入标签名称关键字"
+            suffix={<SearchOutlined />}
+          />
+        </div>
       </div>],
       store,
     }
