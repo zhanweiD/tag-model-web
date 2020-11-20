@@ -19,10 +19,11 @@ export const objDetailTabMap = [{
   name: '对象视图',
   value: 'view',
 },
+// {
+//   name: '业务视图',
+//   value: 'business',
+// }, 
 {
-  name: '业务视图',
-  value: 'business',
-}, {
   name: '数据表',
   value: 'table',
 }, {
@@ -36,10 +37,12 @@ export const objDetailTabMap = [{
 export const objRelTabMap = [{
   name: '对象视图',
   value: 'view',
-}, {
-  name: '业务视图',
-  value: 'business',
-}, {
+}, 
+// {
+//   name: '业务视图',
+//   value: 'business',
+// }, 
+{
   name: '数据表',
   value: 'table',
 }]

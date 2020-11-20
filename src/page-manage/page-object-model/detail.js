@@ -10,7 +10,8 @@ import {
   DetailHeader, Tag, OverviewCardWrap, TabRoute, Authority,
 } from '../../component'
 import {typeCodeMap, objStatusMap, objTypeMap} from './util'
-import ObjectView from './object-view'
+// import ObjectView from './object-view'
+import ObjectView from '../page-object-config/object-view-router'
 import BusinessModel from './business-model'
 import UseProject from '../page-object-list/object-detail/use-project'
 import DataTable from '../page-object-list/object-detail/data-table'
@@ -154,7 +155,7 @@ export default class ObjectDetail extends Component {
     const tabConfig = {
       tabs: [
         {name: '对象视图', value: 0},
-        {name: '业务视图', value: 1},
+        // {name: '业务视图', value: 1},
         {name: '使用项目', value: 2},
         {name: '数据表', value: 3},
         {name: '标签列表', value: 4},
@@ -187,7 +188,7 @@ export default class ObjectDetail extends Component {
         <div className="bgf  box-border">
           <TabRoute {...tabConfig} />
           <div className="object-tab-content">
-            <Content store={this.store} updateDetailKey={this.props.updateDetailKey} objId={objId} />
+            <Content bigStore={this.store} store={this.store} updateDetailKey={this.props.updateDetailKey} objId={objId} />
 
           </div>
         </div>

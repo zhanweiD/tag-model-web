@@ -448,7 +448,8 @@ class Store {
 
     const resLinks = links.map(d => ({
       source: d.u,
-      target: d.relationId,
+      // target: d.relationId,
+      target: d.v, // TODO: 不确定啊
       sourceIndex: 0,
       targetIndex: relObjTag.indexOf(d.v) + 1,
       value: 1,
