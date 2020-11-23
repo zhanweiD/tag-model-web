@@ -5,6 +5,7 @@ import {Component, Fragment} from 'react'
 import {observer} from 'mobx-react'
 import {action} from 'mobx'
 import {Link} from 'react-router-dom'
+import {Spin} from 'antd'
 import {
   ListContent, NoData, OmitTooltip, Authority,
 } from '../../../component'
@@ -195,7 +196,15 @@ export default class TagList extends Component {
       // myFunctionCodes: functionCodes,
       isLoading: tableLoading,
     }
-    
+
+    if (tableLoading) {
+      return (
+        <div style={{width: '100%', height: '100%', textAlign: 'center'}}>
+          <Spin spinning />
+        </div>
+      )
+    }
+
     return (
       <div>
         {
