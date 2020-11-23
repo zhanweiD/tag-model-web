@@ -267,7 +267,7 @@ export default class ObjectView extends Component {
                   {
                     item.mainKey.map(e => (
                       <div className="other-key">
-                        <div id={`node-${e.id}`}>
+                        <div className="omit" id={`node-${e.id}`}>
                           <img 
                             className="ml8" 
                             src={erMajorKey} 

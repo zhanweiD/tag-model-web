@@ -199,7 +199,7 @@ export default class BusinessModel extends Component {
           <div>
             {
               this.mainNode.map(item => (
-                <div className="main-node" style={{left: `${this.WIDTH / 2 + this.CONTAINER_WIDTH / 2}px`, top: `${this.HEIGHT / 2 + 200}px`}}>
+                <div className="main-node" style={{left: `${this.WIDTH / 2 + this.CONTAINER_WIDTH / 2 - 75}px`, top: `${this.HEIGHT / 2 + 200}px`}}>
                   <img
                     src={erOpenRight}
                     alt="main-node-open"
@@ -229,7 +229,7 @@ export default class BusinessModel extends Component {
             }
             {
               this.otherNode.map(item => (
-                <div className="other-node" style={{left: `${item.left}px`, top: `${item.top}px`}}>
+                <div className="other-node" style={{left: `${item.left - 75}px`, top: `${item.top}px`}}>
                   <img
                     src={erOpenRight}
                     alt="other-node-open"
@@ -242,7 +242,7 @@ export default class BusinessModel extends Component {
                   {
                     item.mainKey.map(e => (
                       <div className="other-key">
-                        <div id={`node-${e.objId}`}>
+                        <div className="omit" id={`node-${e.objId}`}>
                           <img
                             className="ml8"
                             src={erMajorKey}
