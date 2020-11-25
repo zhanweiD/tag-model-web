@@ -7,11 +7,56 @@ import {useEffect, useState} from 'react'
 // import {FormOutlined} from '@ant-design/icons'
 import {Button, Popconfirm, Modal, Table, Badge} from 'antd'
 import {ExclamationCircleOutlined} from '@ant-design/icons'
+import _ from 'lodash'
 import {projectProvider, Authority} from '../../component'
 import ConfigModal from './modal'
 import SourceModal from './source-modal'
 import io from './io'
 import {successTip, errorTip, Time} from '../../common/util'
+
+
+const useFetch = (ioFunc, params, afterFetch = () => {}) => {
+  const [isLoading, setIsLoading] = useState(false)
+  const [data, setData] = useState(null)
+  const [refetchIndex, setRefetchIndex] = useState(0)
+
+  const refetch = () => setRefetchIndex(index => index + 1)
+
+  useEffect(() => {
+    setIsLoading(true)
+
+    const fetchData = async () => {
+      try {
+        const res = await ioFunc(params)
+
+        setData(res)
+        setIsLoading(false)
+        afterFetch(res)
+      } catch (error) {
+        console.error(error.message)
+        setIsLoading(false)
+      }
+    }
+    
+    fetchData()
+  }, [refetchIndex])
+
+  return [data, isLoading, refetch]
+}
+
+const useSingleFetch = (ioFunc, params, afterFetch = () => { }) => {
+  const fetchData = async () => {
+    try {
+      const res = await ioFunc(params)
+      afterFetch(res)
+    } catch (error) {
+      console.error(error.message)
+    }
+  }
+
+  fetchData()
+}
+
 
 const WorkspaceConfig = ({projectId}) => {
   const [config, changeConfig] = useState({})
@@ -93,6 +138,15 @@ const WorkspaceConfig = ({projectId}) => {
     getWorkspace(projectId)
   }, [projectId])
 
+  const [tableDatas, isLoading, refetch] = useFetch(
+    io.listStorage,
+    {
+      projectId,
+    }, datas => {
+      console.log(datas)
+    }
+  )
+
   const editClick = () => {
     changeVisible(true)
     changeIsAdd(false)
@@ -120,6 +174,13 @@ const WorkspaceConfig = ({projectId}) => {
     }, {
       title: '数据源类型',
       dataIndex: 'storageType',
+      render: text => {
+        const target = _.find(dataType, e => e.type === text)
+        if (target) {
+          return target.name
+        } 
+        return ''
+      },
     }, {
       title: '描述',
       dataIndex: 'descr',
@@ -130,12 +191,11 @@ const WorkspaceConfig = ({projectId}) => {
       render: text => <Time timestamp={text} />,
     }, {
       title: '使用状态',
-      key: 'status',
-      dataIndex: 'status',
+      dataIndex: 'isUsed',
       render: text => (text ? <Badge color="#108ee9" text="使用中" /> : <Badge color="#d9d9d9" text="未使用" />),
     }, {
       title: '操作',
-      dataIndex: 'aa',
+      render: (text, record) => (record.isUsed ? <span className="disabled">移除</span> : <a onClick={() => removeStorage(record.storageId)}>移除</a>),
     },
   ]
 
@@ -174,6 +234,31 @@ const WorkspaceConfig = ({projectId}) => {
     getDataTypeSource()
   }, [])
 
+  const addStorage = params => {
+    useSingleFetch(
+      io.addStorage, 
+      {
+        projectId,
+        ...params,
+      }, res => {
+        setSourceVisible(false)
+        successTip('添加成功')
+      }
+    )
+  }
+
+  const removeStorage = storageId => {
+    useSingleFetch(
+      io.removeStorage, {
+        projectId,
+        storageId,
+      }, res => {
+        successTip('移除成功')
+        refetch()
+      }
+    )
+  }
+
   return (
     <div>
       <div className="content-header">环境配置</div> 
@@ -193,8 +278,9 @@ const WorkspaceConfig = ({projectId}) => {
           <div style={{color: 'rgba(0,0,0,0.45)'}}>目的源：</div>
           <Button type="primary" className="mt8" onClick={showAddModal}>添加目的源</Button>
           <Table
+            loading={isLoading}
             className="mt8"
-            dataSource={[]}
+            dataSource={tableDatas}
             columns={columns}
             pagination={false}
           />
@@ -214,8 +300,10 @@ const WorkspaceConfig = ({projectId}) => {
         visible={sourceVisible}
         dataType={dataType}
         dataSource={dataSource}
+        tableDatas={tableDatas}
         projectId={projectId}
         selectDataType={selectDataType}
+        onOk={addStorage}
         onCancel={() => setSourceVisible(false)}
       />
     </div>

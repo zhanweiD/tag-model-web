@@ -1,5 +1,6 @@
 import React from 'react'
 import {Modal, Form, Select, Popconfirm, Button} from 'antd'
+import _ from 'lodash'
 
 const {Option} = Select
 const formItemLayout = {
@@ -15,12 +16,22 @@ const ConfigModal = ({
   dataType,
   projectId,
   dataSource,
+  tableDatas,
+  onOk,
 }) => {
   const [form] = Form.useForm()
 
   const onChange = e => {
-    form.resetFields(['dataStorageId'])
+    form.resetFields(['storageId'])
     selectDataType(e)
+  }
+
+  const validateStorage = (rule, value, callback) => {
+    if (_.some(tableDatas, item => item.storageId === value)) {
+      callback('数据源已存在')
+    }
+
+    callback()
   }
 
   return (
@@ -31,9 +42,7 @@ const ConfigModal = ({
         onCancel()
         form.resetFields()
       }}
-      onOk={() => {
-        console.log(123)
-      }}
+      onOk={() => form.validateFields().then(values => onOk(values))}
       destroyOnClose
       maskClosable={false}
     >
@@ -44,7 +53,7 @@ const ConfigModal = ({
         {...formItemLayout}
       >
         <Form.Item
-          name="dataStorageType"
+          name="storageType"
           label="数据源类型"
           rules={[
             {
@@ -60,12 +69,14 @@ const ConfigModal = ({
           </Select>
         </Form.Item>
         <Form.Item
-          name="dataStorageId"
+          name="storageId"
           label="数据源"
           rules={[
             {
               required: true,
               message: '请选择数据源',
+            }, {
+              validator: (rule, value, callback) => validateStorage(rule, value, callback),
             },
           ]}
           extra={(
