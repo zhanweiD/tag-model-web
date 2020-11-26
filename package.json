@@ -19,7 +19,7 @@
     "@ant-design/icons": "4.1.0",
     "@dtwave/nemo-base-info": "1.0.9",
     "@dtwave/oner-flexbox": "2.0.1",
-    "@dtwave/oner-frame": "0.0.3-alpha14",
+    "@dtwave/oner-frame": "0.0.4-alpha21",
     "@dtwave/oner-mapping": "2.1.0-alpha12",
     "@dtwave/uikit": "3.0.0-alpha4",
     "antd": "4.2.0",
