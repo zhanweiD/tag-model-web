@@ -31,6 +31,7 @@ export default class DataTable extends Component {
   }, {
     title: '数据源',
     dataIndex: 'storageName',
+    className: 'wb',
   }, {
     title: '数据源类型',
     dataIndex: 'storageType',
@@ -53,6 +54,7 @@ export default class DataTable extends Component {
   }, {
     title: '数据源',
     dataIndex: 'storageName',
+    className: 'wb',
   }, {
     title: '数据源类型',
     dataIndex: 'storageType',
