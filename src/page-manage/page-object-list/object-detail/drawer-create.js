@@ -86,6 +86,7 @@ export default class DrawerCreate extends Component {
           '@max32',
           {validator: this.checkName},
         ],
+        autoComplete: 'off',
         control: {
           // disabled: !ownObject,
         },
@@ -102,6 +103,7 @@ export default class DrawerCreate extends Component {
           // {pattern: enNameReg, message: '不超过32个字，只能包含英文、数字或下划线，必须以英文开头'},
           {validator: this.checkName},
         ],
+        autoComplete: 'off',
         control: {
           // disabled: !ownObject,
         },
@@ -191,7 +193,7 @@ export default class DrawerCreate extends Component {
 
   @action handleCancel = () => {
     this.store.drawerTagInfo = {}
-    this.store.drawerTagVisible = true
+    this.store.drawerTagVisible = false
     this.store.isEnum = false
     this.store.tagCateSelectList.clear()
     // this.store.resetModal()
@@ -200,7 +202,8 @@ export default class DrawerCreate extends Component {
   submit = () => {
     const t = this
     const {store} = t
-    console.log(this.form)
+    store.confirmLoading = true
+
     this.form.validateFields((err, values) => {
       console.log(22)
       if (!err) {
@@ -218,14 +221,19 @@ export default class DrawerCreate extends Component {
 
           store.updateTag(params, () => {
             t.handleCancel()
-            store.getTagList()
+            store.getList()
           })
         } else {
           console.log(store)
-          store.createTag(params, () => {
-            t.handleCancel()
-            store.getTagList({currentPage: 1})
-          })
+          console.log(params)
+          debugger
+          // store.createTag(params, () => {
+          //   t.handleCancel()
+          //   store.getList({
+          //     currentPage: 1,
+          //     objId: store.objId,
+          //   })
+          // })
         }
       } else {
         console.log(err)

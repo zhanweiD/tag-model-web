@@ -285,6 +285,19 @@ class Store extends ListContentStore(io.getTableList) {
       })
     }
   }
+
+  // 设置数据表 主表模式，并集模式
+  @action async updateObjJoinMode(params, cb = () => {}) {
+    console.log(params)
+    // try {
+    //   const res = await io.updateObjJoinMode(params)
+
+    //   successTip('操作成功')
+    //   cb()
+    // } catch (e) {
+    //   errorTip(e.message)
+    // }
+  }
 }
 
 export default new Store()

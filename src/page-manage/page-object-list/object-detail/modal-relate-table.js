@@ -1,7 +1,8 @@
 import {Component, Fragment} from 'react'
 import {observer, inject} from 'mobx-react'
-import {action, observable} from 'mobx'
+import {action, observable, toJS} from 'mobx'
 import {Form} from '@ant-design/compatible'
+import _ from 'lodash'
 import '@ant-design/compatible/assets/index.css'
 import {Modal, Select, Switch, Radio} from 'antd'
 import {OmitTooltip} from '../../../component'
@@ -80,7 +81,7 @@ class ModalRelateTable extends Component {
     this.chooseModel = value
     const {form: {resetFields}} = this.props
     this.store.tableName = undefined
-    resetFields(['model'])
+    resetFields(['mode'])
     this.initData()
     // if (this.chooseModel === 2) {
     //   this.modalRelateVisible = false
@@ -210,7 +211,9 @@ class ModalRelateTable extends Component {
     const t = this
     const {
       typeCode,
-      // bothTypeCode,
+      bothTypeCode,
+      dataSourceList,
+      fieldList,
     } = this.store
 
     validateFieldsAndScroll((err, values) => {
@@ -223,6 +226,52 @@ class ModalRelateTable extends Component {
         this.store.entity2Key = values.entity2Key
       }
 
+      if (values.mode === 0) {
+        // 并集模式
+        this.store.updateObjJoinMode({
+          mode: values.mode,
+          objId: +this.store.objId,
+        }, () => {
+          t.handleCancel()
+        })
+      } else {
+
+        const targetStorage = _.find(dataSourceList, item => item.storageId === values.dataStorageId)
+        const dataStorageType = targetStorage.storageType
+        const dataDbName = targetStorage.dbName
+        let fieldArr = []
+
+        if (bothTypeCode === 2) {
+          // 实体
+          const targetField = _.find(fieldList, item => item.field === values.mappingKey)
+          const fieldName = targetField.field
+          const fieldType = targetField.type
+          fieldArr = [
+            {
+              obj_id: this.bigStore.objDetail.id,
+              tag_id: this.bigStore.objDetail.tagId,
+              field_type: fieldType,
+              field_name: fieldName,
+            },
+          ]
+        }
+        
+
+        // 主表模式
+        this.store.updateObjJoinMode({
+          mode: values.mode,
+          objId: +this.store.objId,
+          dataStorageId: values.dataStorageId,
+          dataStorageType,
+          dataDbName,
+          dataTableName: values.dataTableName,
+          fieldType: JSON.stringify(fieldArr),
+        }, () => {
+          t.handleCancel()
+        })
+      }
+
+      /*
       // 实体添加数据表
       if (+typeCode === 4) {
         this.store.saveEntityField(() => {
@@ -248,6 +297,9 @@ class ModalRelateTable extends Component {
           t.handleCancel()
         })
       }
+
+      */
+
     })
   }
 
@@ -294,8 +346,18 @@ class ModalRelateTable extends Component {
       storageId,
     } = this.store
 
-    const {objDetail} = this.bigStore
+    console.log(777777)
+    console.log(toJS(dataSheetList))
+    console.log(toJS(dataSourceList))
+    console.log(toJS(fieldList))
+    console.log(toJS(fieldList1))
+    console.log(toJS(fieldList2))
 
+    console.log(toJS(this.bigStore.objDetail))
+    console.log(toJS(this.bigStore))
+
+    const {objDetail} = this.bigStore
+    console.log(toJS(objDetail.objRspList))
     const entity1Id = objDetail.objRspList && objDetail.objRspList[0].id
     const entity1Name = objDetail.objRspList && objDetail.objRspList[0].name
     const entity2Id = objDetail.objRspList && objDetail.objRspList[1].id
@@ -315,12 +377,12 @@ class ModalRelateTable extends Component {
       >
         <Form>
           <FormItem {...formItemLayout}>
-            {getFieldDecorator('model', {
-              initialValue: 2,
+            {getFieldDecorator('mode', {
+              initialValue: 0, // 0 是并集，1是主表
             })(
               <Radio.Group onChange={this.onRadioChange}>
                 <Radio value={1}>主表模式</Radio>
-                <Radio value={2}>并集模式</Radio>
+                <Radio value={0}>并集模式</Radio>
               </Radio.Group>,
             )}
           </FormItem>

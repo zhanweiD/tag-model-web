@@ -26,6 +26,7 @@ const api = {
   checkName: post(`${tagModalApi}/name_check`), // 重名校验
   updateTag: post(`${baseApi}/global_tag/update`), // 对象模型 - 标签列表 - 编辑标签
   deleteTag: post(`${baseApi}/global_tag/delete`), // 对象模型 - 标签列表 - 删除标签
+  updateObjJoinMode: post(`${baseApi}/object/update_obj_join_mode`), // 修改对象的表关联模式
 } 
 
 ioContext.create('objectDetail', api) 
