@@ -53,11 +53,12 @@ class ObjectList extends Component {
         <Authority authCode="tag_model:select_tag_cate[r]" isCommon>
           <a href onClick={() => this.tagClass(record)}>标签类目</a>
         </Authority>
-       
+        
       </div>
+      
     ),
   }]
-
+  
   componentWillMount() {
     store.getObjCate()
   }

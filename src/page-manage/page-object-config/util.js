@@ -45,6 +45,12 @@ export const objRelTabMap = [{
 {
   name: '数据表',
   value: 'table',
+}, {
+  name: '标签列表',
+  value: 'list',
+}, {
+  name: '字段列表',
+  value: 'field',
 }]
 
 // 使用状态

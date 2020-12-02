@@ -1,5 +1,5 @@
 import {observable, action, runInAction, toJS} from 'mobx'
-import {errorTip} from '../../../common/util'
+import {errorTip, successTip, failureTip, changeToOptions} from '../../../common/util'
 import io from './io'
 
 class Store {
@@ -44,7 +44,23 @@ class Store {
     if (cb) cb()
   }
 
-  /**
+  /*
+   * @description 获取所属对象下拉数据
+   */
+  @action async getObjectSelectList() {
+    try {
+      const res = await io.getObjectSelectList({
+        projectId: this.projectId,
+      })
+      runInAction(() => {
+        this.objectSelectList = changeToOptions(res)('name', 'id')
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  /*
    * @description 数据源列表
    */
   @action async getDataSource() {
@@ -64,7 +80,7 @@ class Store {
     }
   }
 
-  /**
+  /*
    * @description 数据源列表(从关联实体的数据表中选择)
    */
   @action async getEntityDataSource(entityId) {
@@ -88,7 +104,7 @@ class Store {
     }
   }
 
-  /**
+  /*
    * @description 数据表列表
    */
   @action async getDataSheet() {
@@ -106,7 +122,7 @@ class Store {
     }
   }
 
-  /**
+  /*
    * @description 字段列表
    */
   @action async getFieldList(params, cb) {
@@ -126,7 +142,7 @@ class Store {
     }
   }
 
-  /**
+  /*
    * @description 字段列表
    */
   @action async getMappingKey(objId, cb) {
@@ -145,7 +161,7 @@ class Store {
     }
   }
 
-  /**
+  /*
    * @description 保存添加实体关联字段
    */
   @action async saveEntityField(cb) {
@@ -191,7 +207,7 @@ class Store {
     }
   }
 
-  /**
+  /*
    * @description 保存添加关系关联字段
    */
   @action async saveRelField(fieldParams, cb) {
@@ -337,7 +353,7 @@ class Store {
 
   @observable relList = [] // 项目下与对象相关的关系对象列表
 
-  /**
+  /*
    * @description 项目下与对象相关的关系对象列表
    */
   @action async getBMRelation(cb) {
@@ -386,6 +402,18 @@ class Store {
     return {
       links: resLinks,
       obj: resObj,
+    }
+  }
+  @action async getObjectSelectList() {
+    try {
+      const res = await io.getObjectSelectList({
+        projectId: this.projectId,
+      })
+      runInAction(() => {
+        this.objectSelectList = changeToOptions(res)('name', 'id')
+      })
+    } catch (e) {
+      errorTip(e.message)
     }
   }
 }

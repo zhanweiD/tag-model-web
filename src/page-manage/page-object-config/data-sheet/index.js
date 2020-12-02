@@ -27,8 +27,8 @@ export default class DataSheet extends Component {
     store.objId = bigStore.objId
     store.typeCode = bigStore.typeCode
     store.relationType = bigStore.objDetail.type
-    console.log(store, 'store')
-    console.log(bigStore, 'bigstore')
+    // console.log(store, 'store')
+    // console.log(bigStore, 'bigstore')
   }
 
   @observable tagConfigVisible = false

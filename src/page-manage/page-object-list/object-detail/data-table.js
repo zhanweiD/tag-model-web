@@ -22,7 +22,6 @@ export default class DataTable extends Component {
     store.objId = bigStore.objId
     store.typeCode = bigStore.typeCode
     store.relationType = bigStore.objDetail.type
-    // console.log(store.projectId, 'd')
   }
 
   columns = [{
@@ -73,6 +72,7 @@ export default class DataTable extends Component {
     const {updateDetailKey, objId} = this.props
     if (!_.isEqual(updateDetailKey, next.updateDetailKey) || !_.isEqual(+objId, +next.objId)) {
       store.getList({objId: next.objId})
+      store.getObjectSelectList()
     }
   }
 

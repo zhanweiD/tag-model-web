@@ -1,6 +1,6 @@
 import {Component, Fragment} from 'react'
 import {observer, inject} from 'mobx-react'
-import {action, observable} from 'mobx'
+import {action, observable, toJS} from 'mobx'
 import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
 import {Modal, Select, Switch, Radio, Input, Button} from 'antd'
@@ -35,6 +35,7 @@ class ModalAddTable extends Component {
     this.store.majorKeyField = undefined
     this.store.entity1Key = undefined
     this.store.entity2Key = undefined
+    this.store.whereCondition = undefined
  
     // 关系
     if (this.store.typeCode === '3') {
@@ -73,6 +74,10 @@ class ModalAddTable extends Component {
     resetFields(['dataTableName'])
 
     this.initData()
+  }
+
+  @action.bound onWhereChange(data) {
+    this.store.whereCondition = data.target.value
   }
 
   /*
@@ -189,6 +194,11 @@ class ModalAddTable extends Component {
     this.store[`entity${index}Key`] = field
   }
 
+  // @action checkWhere() {
+  //   this.store.checkWhere()
+  //   console.log(this.store.whereSuccess)
+  // }
+
   @action handleSubmit = e => {
     const {
       form: {
@@ -257,15 +267,22 @@ class ModalAddTable extends Component {
   }
 
   // 校验where值输入
-  handleWhereConditionValidator(value, callback) {
-    if (value) {
-      // if (!isSqlFormat(value)) {
-      //   callback('请输入正确的where格式')
-      // }
+  handleWhereConditionValidator = (rule, value, callback) => {
+    // console.log(this)
+    // console.log(this.store.whereSuccess)
+    if (this.store.whereCondition) {
+      if (!this.store.whereSuccess) {
+        debugger
+        console.log(this.store.whereSuccess)
+        // console.log(validateResult)
+        callback('请校验where条件')
+        // console.log(222)
+      }
+      // console.log(333)
       callback()
-    } else {
-      callback()
+      // console.log(444)
     }
+    callback()
   }
 
   render() {
@@ -287,6 +304,7 @@ class ModalAddTable extends Component {
       fieldList2,
       bothTypeCode,
       storageId,
+      whereCondition,
     } = this.store
 
     const {objDetail} = this.bigStore
@@ -397,28 +415,32 @@ class ModalAddTable extends Component {
             )}
           </FormItem>
           <FormItem {...formItemLayout} label="where条件">
-            {getFieldDecorator('whereValue', {
-              // initialValue: storageId,
+            {getFieldDecorator('whereCondition', {
               rules: [
                 '@transformTrim',
                 '@required',
                 '@max128',
-                // {validator: this.handleWhereConditionValidator},
               ],
             })(
               <FormItem>
                 <TextArea 
+                  onChange={this.onWhereChange}
                   id="where"
                   placeholder="请输入查询语句的where条件，该查询语句的返回结果将作为对象绑定的数据。例如：sex=“男” and age>30" 
                 />
                 <FormItem style={{textAlign: 'right'}}>
-                  <Button
-                    type="ghost"
-                    // className="mr8"
-                    onClick={() => this.handleWhereConditionValidator(document.getElementById('where'))}
-                  >
-                  校验
-                  </Button>
+                  {getFieldDecorator('validator', {
+                    rules: [
+                      {validator: this.handleWhereConditionValidator},
+                    ],
+                  })(
+                    <Button
+                      type="ghost"
+                      onClick={() => this.store.checkWhere()}
+                    >
+                    校验
+                    </Button>
+                  )}
                 </FormItem>
               </FormItem>
             )}
