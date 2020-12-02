@@ -1,7 +1,7 @@
 import {
   action, runInAction, observable, toJS,
 } from 'mobx'
-import {errorTip, successTip, failureTip} from '../../../common/util'
+import {errorTip, successTip, failureTip, changeToOptions} from '../../../common/util'
 import {ListContentStore} from '../../../component/list-content'
 import io from './io'
 

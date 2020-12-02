@@ -26,8 +26,8 @@ class ModalRelateTable extends Component {
     this.bigStore = props.bigStore
   }
 
-  //   @observable chooseEntity // 简单关系 从关联实体的数据表中选择的实体
-  //   @observable chooseEntityMaJorKey // 简单关系 从关联实体的数据表中选择的实体 的主键
+    @observable chooseEntity // 简单关系 从关联实体的数据表中选择的实体
+    @observable chooseEntityMaJorKey // 简单关系 从关联实体的数据表中选择的实体 的主键
   @observable chooseModel
   // @observable modalRelateVisible = true 
 
@@ -45,22 +45,22 @@ class ModalRelateTable extends Component {
     }
   }
 
-  // @action.bound onSwitchChange(checked) {
-  //   const {form: {resetFields}} = this.props
-  //   const {objDetail} = this.bigStore
+  @action.bound onSwitchChange(checked) {
+    const {form: {resetFields}} = this.props
+    const {objDetail} = this.bigStore
 
-  //   this.store.tableName = undefined
-  //   resetFields(['dataTableName'])
-  //   if (checked) {
-  //     this.chooseEntity = objDetail.objRspList && objDetail.objRspList[0].id
-  //     this.store.getEntityDataSource(this.chooseEntity)
-  //   } else {
-  //     this.chooseEntity = undefined
-  //     this.chooseEntityMaJorKey = undefined
-  //     this.store.getDataSheet()
-  //     resetFields(['entity1Key', 'entity2Key'])
-  //   }
-  // }
+    this.store.tableName = undefined
+    resetFields(['dataTableName'])
+    if (checked) {
+      this.chooseEntity = objDetail.objRspList && objDetail.objRspList[0].id
+      this.store.getEntityDataSource(this.chooseEntity)
+    } else {
+      this.chooseEntity = undefined
+      this.chooseEntityMaJorKey = undefined
+      this.store.getDataSheet()
+      resetFields(['entity1Key', 'entity2Key'])
+    }
+  }
   
 
   // 单选按钮
@@ -160,46 +160,46 @@ class ModalRelateTable extends Component {
     this.store.majorKeyField = field
   }
 
-  //   @action.bound selectEntityKey(field, index, objId) {
-  //     this.store.fieldList1 = this.store.fieldList1.map(d => {
-  //       if (d.field === field) {
-  //         return {
-  //           ...d,
-  //           disabled: true,
-  //           objId,
-  //         }
-  //       }
+  @action.bound selectEntityKey(field, index, objId) {
+    this.store.fieldList1 = this.store.fieldList1.map(d => {
+      if (d.field === field) {
+        return {
+          ...d,
+          disabled: true,
+          objId,
+        }
+      }
 
-  //       if (d.objId === objId) {
-  //         return {
-  //           ...d,
-  //           field: d.field,
-  //           disabled: false,
-  //         }
-  //       }
-  //       return d
-  //     })
+      if (d.objId === objId) {
+        return {
+          ...d,
+          field: d.field,
+          disabled: false,
+        }
+      }
+      return d
+    })
 
-  //     this.store.fieldList2 = this.store.fieldList2.map(d => {
-  //       if (d.field === field) {
-  //         return {
-  //           ...d,
-  //           disabled: true,
-  //           objId,
-  //         }
-  //       }
+    this.store.fieldList2 = this.store.fieldList2.map(d => {
+      if (d.field === field) {
+        return {
+          ...d,
+          disabled: true,
+          objId,
+        }
+      }
 
-  //       if (d.objId === objId) {
-  //         return {
-  //           ...d,
-  //           field: d.field,
-  //           disabled: false,
-  //         }
-  //       }
-  //       return d
-  //     })
-  //     this.store[`entity${index}Key`] = field
-  //   }
+      if (d.objId === objId) {
+        return {
+          ...d,
+          field: d.field,
+          disabled: false,
+        }
+      }
+      return d
+    })
+    this.store[`entity${index}Key`] = field
+  }
 
   @action handleSubmit = e => {
     const {
@@ -296,10 +296,10 @@ class ModalRelateTable extends Component {
 
     const {objDetail} = this.bigStore
 
-    // const entity1Id = objDetail.objRspList && objDetail.objRspList[0].id
-    // const entity1Name = objDetail.objRspList && objDetail.objRspList[0].name
-    // const entity2Id = objDetail.objRspList && objDetail.objRspList[1].id
-    // const entity2Name = objDetail.objRspList && objDetail.objRspList[1].name
+    const entity1Id = objDetail.objRspList && objDetail.objRspList[0].id
+    const entity1Name = objDetail.objRspList && objDetail.objRspList[0].name
+    const entity2Id = objDetail.objRspList && objDetail.objRspList[1].id
+    const entity2Name = objDetail.objRspList && objDetail.objRspList[1].name
 
     return (
       <Modal
@@ -314,9 +314,20 @@ class ModalRelateTable extends Component {
         className="data-sheet-modal"
       >
         <Form>
+          <FormItem {...formItemLayout}>
+            {getFieldDecorator('model', {
+              initialValue: 2,
+            })(
+              <Radio.Group onChange={this.onRadioChange}>
+                <Radio value={1}>主表模式</Radio>
+                <Radio value={2}>并集模式</Radio>
+              </Radio.Group>,
+            )}
+          </FormItem>
+          
           {/* 0 简单关系 */}
-          {/* {
-            +bothTypeCode === 0 ? (
+          {
+            +bothTypeCode === 0 && +this.chooseModel === 1 ? (
               <Fragment>
                 <FormItem 
                   {...formItemLayout} 
@@ -356,17 +367,8 @@ class ModalRelateTable extends Component {
              
               </Fragment>
             ) : null
-          } */}
-          <FormItem {...formItemLayout}>
-            {getFieldDecorator('model', {
-              initialValue: 2,
-            })(
-              <Radio.Group onChange={this.onRadioChange}>
-                <Radio value={1}>主表模式</Radio>
-                <Radio value={2}>并集模式</Radio>
-              </Radio.Group>,
-            )}
-          </FormItem>
+          }
+          
           { +this.chooseModel === 1 ? (
             <Fragment>
               <FormItem {...formItemLayout} label="数据源">
@@ -440,14 +442,15 @@ class ModalRelateTable extends Component {
                     )}
                   </FormItem>
                 ) : <h3 className="mb24 fs14" style={{marginLeft: '12px'}}>主标签配置</h3>
+                // ) : null
               } 
             </Fragment>
           ) : null
           }
 
           {/* 复杂关系1 */}
-          {/* {
-            +bothTypeCode === 1 || +bothTypeCode === 0 ? (
+          {
+            +this.chooseModel === 1 && (+bothTypeCode === 1 || +bothTypeCode === 0) ? (
               <Fragment>
                 <FormItem {...formItemLayout} label={<OmitTooltip text={entity1Name} maxWidth={80} className="rel-entity-name" />}>
                   {getFieldDecorator('entity1Key', {
@@ -492,7 +495,7 @@ class ModalRelateTable extends Component {
               </Fragment>
             
             ) : null
-          }  */}
+          } 
         </Form>
       </Modal>
 

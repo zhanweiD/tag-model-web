@@ -22,7 +22,7 @@ class Store extends ListContentStore(io.getList) {
   @observable storageId = undefined
   @observable tableName = undefined
   @observable majorKeyField = undefined
-  @observable whereValue = undefined
+  @observable whereCondition = undefined
   @observable entity1Key = undefined
   @observable entity2Key = undefined
   
@@ -38,7 +38,7 @@ class Store extends ListContentStore(io.getList) {
     this.storageId = undefined
     this.tableName = undefined
     this.majorKeyField = undefined
-    this.whereValue = undefined
+    this.whereCondition = undefined
 
     this.entity1Key = undefined
     this.entity2Key = undefined
@@ -180,6 +180,29 @@ class Store extends ListContentStore(io.getList) {
   }
 
   /*
+   * @description where条件校验
+   */
+  @observable whereSuccess = false
+  @action async checkWhere() {
+    try {
+      const res = await io.checkWhere({
+        storageType: this.typeCode,
+        whereCondition: this.whereCondition,
+      })
+      runInAction(() => {
+        this.whereSuccess = res
+        if (res) {
+          successTip('校验成功')
+        } else {
+          failureTip('校验失败')
+        }
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  /*
    * @description 保存添加实体关联字段
    */
   @action async saveEntityField(cb) {
@@ -207,6 +230,7 @@ class Store extends ListContentStore(io.getList) {
         objId: this.objId,
         projectId: this.projectId,
         filedObjReqList,
+        whereCondition: this.whereCondition,
       })
       runInAction(() => {
         if (res && cb) {

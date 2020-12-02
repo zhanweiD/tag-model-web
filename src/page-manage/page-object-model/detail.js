@@ -1,7 +1,7 @@
 /**
  * @description 对象管理 - 对象详情信息
  */
-import {Component} from 'react'
+import {Component, Fragment} from 'react'
 import {observer} from 'mobx-react'
 import {Spin, Button} from 'antd'
 import {action} from 'mobx'
@@ -16,12 +16,14 @@ import BusinessModel from './business-model'
 import UseProject from '../page-object-list/object-detail/use-project'
 import DataTable from '../page-object-list/object-detail/data-table'
 import TagList from '../page-object-list/object-detail/tag-list'
+import TagClass from '../page-object-list/object-list/tag-class'
 
 @observer
 export default class ObjectDetail extends Component {
   constructor(props) {
     super(props)
     this.store = props.store
+    console.log(this.store, 'detail')
   }
 
   componentWillMount() {
@@ -44,7 +46,7 @@ export default class ObjectDetail extends Component {
     this.store.getObjCard()
   }
  
-  /**
+  /*
    * @description 发布/取消发布
    * @param {*} status 发布操作类型标识
    */
@@ -61,9 +63,18 @@ export default class ObjectDetail extends Component {
     this.store.tabId = id
   }
 
+  @action.bound tagClass() {
+    this.store.tagClassObjId = this.store.objId // 对象id
+    this.store.tagClassVisible = true
+  }
+
+  @action.bound closeTagClass() {
+    this.store.tagClassVisible = false
+  }
+
   render() {
     const {
-      objId, objDetail, objCard, loading, releaseLoading, typeCode,
+      objId, objDetail, objCard, loading, releaseLoading, typeCode, tagClassObjId, tagClassVisible,
     } = this.store
    
     // 详情信息
@@ -107,19 +118,37 @@ export default class ObjectDetail extends Component {
       1: {
         tag: <Tag status="success" text="已发布" />,
         button: 
-  <Authority authCode="tag_model:update_obj[cud]" isCommon>
+  <Fragment>
+    <Authority authCode="tag_model:update_obj[cud]" isCommon>
+      <Button 
+        loading={releaseLoading} 
+        className="mr8" 
+        onClick={() => this.handleRelease('cancel')}
+      >
+          取消发布
+      </Button>
+    </Authority>
     <Button 
       loading={releaseLoading} 
       className="mr8" 
-      onClick={() => this.handleRelease('cancel')}
+      type="primary"
+      onClick={() => this.tagClass()}
     >
-          取消发布
+          标签类目
     </Button>
-  </Authority>,
+  </Fragment>,
       },
       2: {
         tag: <Tag status="process" text="使用中" />,
-        button: null,
+        button: 
+  <Button 
+    loading={releaseLoading} 
+    className="mr8" 
+    type="primary"
+    onClick={() => this.tagClass()}
+  >
+        标签类目
+  </Button>,
       },
     }
     const {tag} = tagMap[objDetail.status === undefined ? 'noData' : objDetail.status]
@@ -170,6 +199,13 @@ export default class ObjectDetail extends Component {
 
     const Content = [ObjectView, BusinessModel, UseProject, DataTable, TagList][+this.store.tabId]
 
+    const tagClassConfig = {
+      visible: tagClassVisible,
+      onClose: this.closeTagClass,
+      objId: tagClassObjId, // 对象id
+      store: this.store,
+    }
+
     return (
       <div className="object-detail">
         <Spin spinning={loading}>
@@ -183,6 +219,7 @@ export default class ObjectDetail extends Component {
               actions={[button]}
             />
           </div>
+          <TagClass {...tagClassConfig} />
           <OverviewCardWrap cards={cards} />
         </Spin>
         <div className="bgf  box-border">

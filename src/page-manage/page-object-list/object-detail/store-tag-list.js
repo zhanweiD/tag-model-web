@@ -9,6 +9,7 @@ import io from './io'
 
 class Store extends ListContentStore(io.getTagList) {
   projectId
+  objId
 
   // 创建标签
   @observable drawerTagVisible = false
@@ -31,6 +32,7 @@ class Store extends ListContentStore(io.getTagList) {
   // 创建标签Drawer
   @action.bound openDrawer(type, data) {
     this.drawerTagType = type
+    this.drawerTagInfo = data || {}
 
     if (type === 'edit') {
       // 获取对象详情
@@ -43,6 +45,10 @@ class Store extends ListContentStore(io.getTagList) {
         id: data.objId,
       })
     }
+    // 根据所属对象id 查询所属类目下拉框数据
+    this.getTagCateSelectList({
+      id: this.objId,
+    })
     this.drawerTagVisible = true
   }
 
@@ -71,14 +77,14 @@ class Store extends ListContentStore(io.getTagList) {
   // 更新标签配置
   @action.bound updateTagConfig() {
     this.closeTagConfig()
-    this.getList()
+    this.getTagList()
   }
 
 
   // 更新标签配置
   @action.bound updateBatchConfig() {
     this.closeBatchConfig()
-    this.getList()
+    this.getTagList()
   }
 
   
@@ -89,12 +95,37 @@ class Store extends ListContentStore(io.getTagList) {
     try {
       const res = await io.getObjectSelectList({
         projectId: this.projectId,
+        // objId: this.objId,
       })
       runInAction(() => {
         this.objectSelectList = changeToOptions(res)('name', 'id')
       })
     } catch (e) {
       errorTip(e.message)
+    }
+  }
+
+  /*
+   * @description 新建标签
+   */
+  @action async createTag(params, cb) {
+    try {
+      const res = await io.createTag({
+        objId: this.objId,
+        ...params,
+      })
+      runInAction(() => {
+        if (res) {
+          successTip('操作成功')
+          if (cb) cb()
+        } else {
+          failureTip('操作失败')
+        }
+      })
+    } catch (e) {
+      errorTip(e.message)
+    } finally {
+      this.confirmLoading = false
     }
   }
 
@@ -139,32 +170,6 @@ class Store extends ListContentStore(io.getTagList) {
   }
 
   /*
-   * @description 创建标签
-   */
-  @action async createTag(params, cb) {
-    this.confirmLoading = true
-
-    try {
-      const res = await io.createTag({
-        projectId: this.projectId,
-        ...params,
-      })
-      runInAction(() => {
-        if (res.success) {
-          successTip('操作成功')
-          if (cb) cb()
-        } else {
-          failureTip('操作失败')
-        }
-      })
-    } catch (e) {
-      errorTip(e.message)
-    } finally {
-      this.confirmLoading = false
-    }
-  }
-
-  /*
    * @description 编辑标签
    */
   @action async updateTag(params, cb) {
@@ -172,7 +177,7 @@ class Store extends ListContentStore(io.getTagList) {
 
     try {
       const res = await io.updateTag({
-        projectId: this.projectId,
+        // objId: this.objId,
         ...params,
       })
       runInAction(() => {
@@ -196,13 +201,13 @@ class Store extends ListContentStore(io.getTagList) {
   @action async deleteTag(params) {
     try {
       const res = await io.deleteTag({
-        projectId: this.projectId,
+        // projectId: this.projectId,
         ...params,
       })
       runInAction(() => {
         if (res) {
           successTip('操作成功')
-          this.getList({currentPage: 1})
+          this.getTagList({currentPage: 1})
         } else {
           failureTip('操作失败')
         }
@@ -216,6 +221,7 @@ class Store extends ListContentStore(io.getTagList) {
    * @description 重名校验
    */
   @action async checkName(params, cb) {
+    console.log(13)
     try {
       const res = await io.checkName({
         projectId: this.projectId,
@@ -257,7 +263,7 @@ class Store extends ListContentStore(io.getTagList) {
       runInAction(() => {
         if (res) {
           successTip('操作成功')
-          this.getList()
+          this.getTagList()
         } else {
           failureTip('操作失败')
         }

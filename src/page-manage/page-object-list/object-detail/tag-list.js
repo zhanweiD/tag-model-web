@@ -1,6 +1,7 @@
 import {Component, Fragment} from 'react'
 import {Input, Popconfirm, Button} from 'antd'
-import {action} from 'mobx'
+import {action, toJS} from 'mobx'
+import {inject} from 'mobx-react'
 import {Link} from 'react-router-dom'
 import {SearchOutlined} from '@ant-design/icons'
 import {Time} from '../../../common/util'
@@ -9,9 +10,20 @@ import {tagStatusBadgeMap} from '../../page-tag-model/util'
 import DrawerCreate from './drawer-create'
 import store from './store-tag-list'
 
+
 const {Search} = Input
 
+@inject('bigStore')
 export default class TagList extends Component {
+  constructor(props) {
+    super(props)
+    const {bigStore} = props
+    this.bigStore = bigStore
+    store.projectId = bigStore.projectId
+    store.objId = bigStore.objId
+    console.log(toJS(store.objectSelectList), 'sss')
+  }
+
   columns = [{
     title: '标签名称',
     dataIndex: 'name',
@@ -86,6 +98,9 @@ export default class TagList extends Component {
             {/* <a href onClick={() => store.openDrawer('edit', record)} className="mr16">编辑</a> */}
             <span className="disabled mr16">编辑</span>
             <span className="disabled mr16">删除</span>
+            {/* <Popconfirm placement="topRight" title="标签被删除后不可恢复，确定删除？" onConfirm={() => this.remove(record)}>
+              <a href>删除</a>
+            </Popconfirm> */}
             {/* </Authority> */}
           </Fragment>
         )}
@@ -116,7 +131,12 @@ export default class TagList extends Component {
   }
 
   componentWillMount() {
-    if (store.projectId) {
+    // if (store.projectId) {
+      // store.getAuthCode()
+    //   this.initData()
+    //   store.checkKeyWord()
+    // }
+    if (store.objId) {
       // store.getAuthCode()
       this.initData()
       store.checkKeyWord()
@@ -124,16 +144,27 @@ export default class TagList extends Component {
   }
 
   componentDidMount() {
+    // if (store.projectId) {
+      // 获取所属对象下拉数据
+      // store.getObjectSelectList() 
+
+      // 请求列表，放在父组件进行请求是因为需要在外层做空数据判断。
+      // 若返回数据为空[]。则渲染 NoData 组件。
+      // store.initParams = {projectId: store.projectId}
+      // store.getList({
+      //   projectId: store.projectId,
+      // })
+    // }
     if (store.projectId) {
       // 获取所属对象下拉数据
-      store.getObjectSelectList() 
+      store.getObjectSelectList()
 
       // 请求列表，放在父组件进行请求是因为需要在外层做空数据判断。
       // 若返回数据为空[]。则渲染 NoData 组件。
       store.initParams = {projectId: store.projectId}
-      store.getList({
-        projectId: store.projectId,
-      })
+      // store.getList({
+      //   projectId: store.projectId,
+      // })
     }
   }
 
