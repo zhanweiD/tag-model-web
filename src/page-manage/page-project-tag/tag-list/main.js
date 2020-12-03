@@ -27,7 +27,7 @@ export default class TagList extends Component {
   constructor(props) {
     super(props)
     store.useProjectId = props.projectId
-    console.log(store.modalApplyVisible, store.modalBackVisible, '111')
+    // console.log(store.modalApplyVisible, store.modalBackVisible, '111')
   }
 
   // componentWillMount() {
@@ -138,7 +138,7 @@ export default class TagList extends Component {
     }
     store.tagIds.replace([data.id])
     store.modalApplyVisible = true
-    console.log(store.modalApplyVisible, 'modalApplyVisible')
+    // console.log(store.modalApplyVisible, 'modalApplyVisible')
   }
 
   @action.bound openBackModal(data) {
@@ -147,7 +147,7 @@ export default class TagList extends Component {
     }
     store.tagIds.replace([data.id])
     store.modalBackVisible = true
-    console.log(store.modalBackVisible, 'modalBackVisible')
+    // console.log(store.modalBackVisible, 'modalBackVisible')
   }
 
   // 是否有进行搜索操作

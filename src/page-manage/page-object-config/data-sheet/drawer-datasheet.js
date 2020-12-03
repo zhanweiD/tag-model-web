@@ -19,41 +19,17 @@ const formItemLayout = {
   wrapperCol: {span: 19},
 }
 
-@inject('bigStore')
 @Form.create()
 @observer
 export default class DrawerDatasheet extends Component {
-  static propTypes = {
-    visible: PropTypes.bool.isRequired, // 是否显示
-    // objId: PropTypes.number.isRequired, // 对象id
-    // storageId: PropTypes.string.isRequired, // 数据源id
-    // tableName: PropTypes.string.isRequired, // 数据表名
-    onClose: PropTypes.func.isRequired, // 取消，关闭抽屉
-  }
   constructor(props) {
     super(props)
     this.store = props.store
-    this.bigStore = props.bigStore
-    this.projectId = this.store.projectId
-    this.objId = this.store.objId
-    this.tableName = this.store.tableName
-    this.storageId = this.store.storageId
-    this.storageName = this.store.dataSourceList.storageName
-    this.whereValue = this.whereValue
-    this.entity1Key = this.entity1Key
-    this.entity2Key = this.entity2Key
-    console.log(props, 'dds')
+    // console.log(props, 'dds')
   }
 
   @action.bound initData() {
-    this.store.getList()
- 
-    // 关系
-    // if (this.store.typeCode === '3') {
-    //   resetFields(['entity1Key', 'entity2Key'])
-    //   this.store.entity1Key = undefined
-    //   this.store.entity2Key = undefined
-    // }
+    this.store.getDataSheetDetail()
   }
 
   componentWillMount() {
@@ -69,7 +45,7 @@ export default class DrawerDatasheet extends Component {
   render() {
     const {
       visible,
-      dataSourceList,
+      dataSheetDetail,
     } = this.props
 
     const {objDetail} = this.bigStore

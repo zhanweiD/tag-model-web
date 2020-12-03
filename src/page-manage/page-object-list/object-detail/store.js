@@ -404,7 +404,6 @@ class Store {
       obj: resObj,
     }
   }
-
   // @action async getObjectSelectList() {
   //   try {
   //     const res = await io.getObjectSelectList({

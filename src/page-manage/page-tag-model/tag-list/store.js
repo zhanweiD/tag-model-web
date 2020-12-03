@@ -10,7 +10,7 @@ import io from './io'
 
 class Store extends ListContentStore(io.getList) {
   projectId
-  objId
+  @observable objId
 
   // 创建标签
   @observable drawerTagVisible = false

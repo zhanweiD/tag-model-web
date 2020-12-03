@@ -275,6 +275,22 @@ class Store extends ListContentStore(io.getTableList) {
       })
     }
   }
+  /*
+   * @description 获取所属对象下拉数据
+   */
+  @action async getObjectSelectList() {
+    try {
+      const res = await io.getObjectSelectList({
+        projectId: this.projectId,
+        // objId: this.objId,
+      })
+      runInAction(() => {
+        this.objectSelectList = changeToOptions(res)('name', 'id')
+      }) 
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
 
   // 设置数据表 主表模式，并集模式
   @action async updateObjJoinMode(params, cb = () => {}) {

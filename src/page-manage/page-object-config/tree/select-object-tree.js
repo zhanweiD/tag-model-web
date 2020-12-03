@@ -18,7 +18,6 @@ export default class CateTree extends Component {
   constructor(props) {
     super(props)
     this.store = props.bigStore
-    console.log(toJS(this.store.objCateTree), 'sot')
   }
 
   @observable searchKey = undefined
@@ -53,7 +52,7 @@ export default class CateTree extends Component {
     onCheck(selectNodes)
   }
 
-  /*
+  /**
    * @description 查询树节点
    */
   @action.bound searchTree(data) {
@@ -65,7 +64,6 @@ export default class CateTree extends Component {
     })
   }
 
-
   // 生成dom节点
   renderTreeNodes = data => data.map(item => {
     const {listDataIds} = this.props
@@ -75,7 +73,6 @@ export default class CateTree extends Component {
         <TreeNode
           title={<OmitTooltip maxWidth={120} text={item.name} />}
           key={item.aId}
-          // key={item.isUsed}
           dataRef={toJS(item)}
           selectable={false}
         >
@@ -87,12 +84,10 @@ export default class CateTree extends Component {
     return (
       <TreeNode
         key={item.aId}
-        // key={item.isUsed}
         title={<OmitTooltip maxWidth={120} text={item.name} />}
         selectable={false}
         objectData={toJS(item)}
-        // disableCheckbox={listDataIds.includes(item.aId)}
-        disableCheckbox={item.canDelete === 0}
+        disableCheckbox={listDataIds.includes(item.aId)}
       />
     )
   })
@@ -128,7 +123,7 @@ export default class CateTree extends Component {
                 {this.renderTreeNodes(objCateTree)}
               </Tree>
             )
-        } 
+        }
       </div>
     )
   }

@@ -159,7 +159,7 @@ export default class DataTable extends Component {
             suffix={<SearchOutlined />}
           />
         </div>
-      </div>],
+                </div>],
       store,
     }
     return (

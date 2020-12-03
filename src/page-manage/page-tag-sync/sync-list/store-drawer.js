@@ -71,7 +71,7 @@ class Store {
 
   @observable storageList = []
   // 数据源列表
-  @action async getStorageList(params) {
+  @action async getStorageList(params, cb) {
     try {
       const res = await io.getStorageList({
         projectId: this.projectId,
@@ -79,6 +79,8 @@ class Store {
       })
       runInAction(() => {
         this.storageList = res || []
+        const defaultId = res[0] ? res[0].storageId : undefined
+        if (cb) cb({key: defaultId})
       })
     } catch (e) {
       errorTip(e.message)

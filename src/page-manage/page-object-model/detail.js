@@ -23,7 +23,7 @@ export default class ObjectDetail extends Component {
   constructor(props) {
     super(props)
     this.store = props.store
-    console.log(this.store, 'detail')
+    // console.log(this.store, 'detail')
   }
 
   componentWillMount() {
