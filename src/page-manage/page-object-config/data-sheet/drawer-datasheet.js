@@ -29,7 +29,7 @@ export default class DrawerDatasheet extends Component {
   }
 
   @action.bound initData() {
-    this.store.dataSheetDetail()
+    this.store.getDataSheetDetail()
   }
 
   componentWillMount() {
