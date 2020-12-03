@@ -235,7 +235,7 @@ class ModalRelateTable extends Component {
           const fieldType = targetField.type
           fieldArr = [
             {
-              obj_id: this.bigStore.objDetail.id,
+              obj_id: String(this.bigStore.objDetail.id),
               field_type: fieldType,
               field_name: fieldName,
             },
@@ -257,11 +257,11 @@ class ModalRelateTable extends Component {
 
           fieldArr = [
             {
-              obj_id: entity1Id,
+              obj_id: String(entity1Id),
               field_type: fieldType1,
               field_name: fieldName1,
             }, {
-              obj_id: entity2Id,
+              obj_id: String(entity2Id),
               field_type: fieldType2,
               field_name: fieldName2,
             },
@@ -274,10 +274,8 @@ class ModalRelateTable extends Component {
           mode: values.mode,
           objId: +this.store.objId,
           dataStorageId: values.dataStorageId,
-          dataStorageType,
-          dataDbName,
           dataTableName: values.dataTableName,
-          mappingKeys: JSON.stringify(fieldArr),
+          mappingKeys: fieldArr,
         }, () => {
           t.handleCancel()
         })

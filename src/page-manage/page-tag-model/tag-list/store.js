@@ -1,6 +1,7 @@
 import {
   observable, action, runInAction, toJS,
 } from 'mobx'
+import _ from 'lodash'
 import {
   successTip, failureTip, errorTip, changeToOptions, listToTree,
 } from '../../../common/util'
@@ -9,6 +10,7 @@ import io from './io'
 
 class Store extends ListContentStore(io.getList) {
   projectId
+  objId
 
   // 创建标签
   @observable drawerTagVisible = false
@@ -389,6 +391,65 @@ class Store extends ListContentStore(io.getList) {
       runInAction(() => {
         this.functionCodes = res
       })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  @observable drawerInheritVis = false
+  // 标签树
+  // objId
+  @observable tagTreeList = []
+  @observable tagTreeLoading = false
+  @observable checkedKeys = []
+
+  @action async getTagTree() {
+    this.tagTreeLoading = true
+    try {
+      const res = await io.getTagTree({
+        objId: +this.objId,
+      })
+
+      this.tagTreeList = listToTree(res)
+      this.checkedKeys = _.map(_.filter(res, e => e.checked), 'aid')
+      // this.tagTreeList = res
+      this.tagTreeLoading = false
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  @observable tagDetaiList = []
+  @observable tagDetailTableLoading = false
+  // 根据标签 id 查询标签详情，批量
+  // objId
+  // tagIds
+  @action async getTagsList(tagIds) {
+    this.tagDetailTableLoading = true
+    try {
+      const res = await io.getTagsList({
+        objId: +this.objId,
+        tagIds: this.checkedKeys.map(Number),
+      })
+
+      this.tagDetaiList = res
+      this.tagDetailTableLoading = false
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  // 继承标签
+  // tagIds
+  @action async inheritTags(cb = () => {}) {
+    try {
+      const res = await io.inheritTags({
+        objId: +this.objId,
+        tagIds: this.checkedKeys.map(Number),
+      })
+      
+      successTip('操作成功')
+      cb()
     } catch (e) {
       errorTip(e.message)
     }
