@@ -15,11 +15,9 @@ export default class Action extends Component {
   constructor(props) {
     super(props)
     this.store = props.store
-    // props.store.isSelectObj = true
-    // console.log(props.store.isSelectObj, '90')
   }
 
-  /*
+  /**
    * @description 查询树节点
    */
   @action.bound searchTree(data) {
@@ -27,14 +25,14 @@ export default class Action extends Component {
     this.props.getTreeData()
   }
 
-  /*
+  /**
    * @description 刷新树节点
    */
   @action.bound refreshTree() {
     this.store.getObjTree()
   }
 
-  /*
+  /**
    * @description 展开缩放树节点
    */
   @action.bound expandTree() {
@@ -45,12 +43,11 @@ export default class Action extends Component {
     }, 100)
   }
 
-  /*
+  /**
    * @description 选择对象
    */
   @action.bound addObj() {
     this.store.selectObjVisible = true
-    this.store.isSelectObj = true
   }
 
   dropdownDom() {
@@ -58,7 +55,7 @@ export default class Action extends Component {
       <Menu>
         <Menu.Item>
           <div onClick={this.addObj} onKeyDown={() => {}} style={{margin: '-5px -12px', padding: '5px 12px'}}>
-            设置常用对象
+            选择对象
           </div>
         </Menu.Item>
       </Menu>

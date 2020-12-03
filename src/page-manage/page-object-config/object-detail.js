@@ -26,7 +26,6 @@ export default class ObjectDetail extends Component {
   constructor(props) {
     super(props)
     this.store = props.bigStore
-    console.log(props, 'od')
   }
 
   componentWillMount() {
