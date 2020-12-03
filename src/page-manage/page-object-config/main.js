@@ -24,7 +24,6 @@ class ObjectConfig extends Component {
     store.objId = match.params.objId
     store.tabId = match.params.tabId || 'view' // 当前详情tabID；默认数据视图
     store.isSelectObj = false
-    console.log(props.isSelectObj, 'objid')
   }
 
   // componentWillMount() {
@@ -52,9 +51,9 @@ class ObjectConfig extends Component {
       store.objId = store.currentSelectKeys
     })
     // store.getObjCate(() => {
-      // store.type = store.typeCode
-      // store.objId = store.currentSelectKeys
-      // store.isSelectObj = false
+    // store.type = store.typeCode
+    // store.objId = store.currentSelectKeys
+    // store.isSelectObj = false
     // })
     // console.log('a')
   }
@@ -73,7 +72,6 @@ class ObjectConfig extends Component {
       selectObjLoading,
       mainLoading,
     } = store
-    console.log(objId, '---')
 
     const tabConfig = {
       tabs: changeToOptions(window.njkData.dict.typeCodes)('value', 'key'),
@@ -95,7 +93,6 @@ class ObjectConfig extends Component {
       noAuthText: '没有任何对象',
       // myFunctionCodes: store.functionCodes,
     }
-// console.log(selectObjLoading, "88888")
     return (
       <Provider bigStore={store}>
         <div className="page-object">
