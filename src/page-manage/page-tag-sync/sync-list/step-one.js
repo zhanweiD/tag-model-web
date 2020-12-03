@@ -38,16 +38,16 @@ export default class StepOne extends Component {
     const {form: {resetFields}} = this.props
     
     this.store.objId = obj.key
-    this.store.storageId = undefined
+    // this.store.storageId = undefined
     
-    resetFields(['dataStorageId'])
+    // resetFields(['dataStorageId'])
 
-    if (this.store.storageType) {
-      this.store.getStorageList({
-        storageType: this.store.storageType,
-        objId: obj.key,
-      })
-    }
+    // if (this.store.storageType) {
+    //   this.store.getStorageList({
+    //     storageType: this.store.storageType,
+    //     objId: obj.key,
+    //   })
+    // }
   } 
 
   @action.bound selecStorageType(obj) {
@@ -59,12 +59,16 @@ export default class StepOne extends Component {
     this.store.storageList.clear()
     resetFields(['dataStorageId'])
 
-    if (getFieldValue('objId')) {
-      this.store.getStorageList({
-        storageType: obj.key,
-        objId: this.store.objId,
-      })
-    }
+    // if (getFieldValue('objId')) {
+    //   this.store.getStorageList({
+    //     storageType: obj.key,
+    //     objId: this.store.objId,
+    //   })
+    // }
+    this.store.getStorageList({
+      storageType: obj.key,
+      objId: this.store.objId,
+    }, this.selecStorage)
   } 
 
   @action.bound selecStorage(obj) {
@@ -181,38 +185,8 @@ export default class StepOne extends Component {
               <Input size="small" autoComplete="off" placeholder="请输入计划名称" />
             )}
           </FormItem>
-       
-          <FormItem {...formItemLayout} label="同步对象">
-            {getFieldDecorator('objId', {
-              rules: [{required: true, message: '请选择同步对象'}],
-            })(
-              <Select 
-                showSearch
-                labelInValue 
-                placeholder="请选择所属对象" 
-                style={{width: '100%'}} 
-                onSelect={v => this.selectObj(v)}
-                optionFilterProp="children"
-              >
-                {
-                  objList.map(item => (
-                    <Option key={item.value} value={item.value}>{item.name}</Option>
-                  ))
-                }
-              </Select>
-            )}
-          </FormItem>
-          <FormItem {...formItemLayout} label="方案描述">
-            {getFieldDecorator('descr', {
-              rules: [
-                {transform: value => value && value.trim()},
-                {max: 128, whitespace: true, message: '输入不能超过128个字符'},
-              ],
-            })(
-              <TextArea placeholder="请输入方案描述" />
-            )}
-          </FormItem>
-          <h3 className="mb24 fs14" style={{marginLeft: '200px'}}>目的源信息</h3>
+          
+          {/* <h3 className="mb24 fs14" style={{marginLeft: '200px'}}>目的源信息</h3> */}
           <FormItem {...formItemLayout} label="数据源类型">
             {getFieldDecorator('dataDbType', {
               rules: [{required: true, message: '请选择数据源类型'}],
@@ -237,12 +211,14 @@ export default class StepOne extends Component {
           <FormItem 
             {...formItemLayout} 
             label="目的源"
-            // extra={(
-            //   <span>
-            //   若无可用的数据源，请先
-            //     <a target="_blank" rel="noopener noreferrer" href={`/tag-model/index.html#/project/${this.store.projectId}`}>去项目配置中添加目的数据源</a>
-            //   </span>
-            // )}
+            extra={(
+              <span style={{color: 'rgba(0,0,0,.65)'}}>
+              若无可用的数据源，请先去
+                <a target="_blank" rel="noopener noreferrer" href="/tag-model/index.html#/config/environment">后台配置-基础配置</a>
+                中添加目的数据源
+              </span>
+            )}
+            // initialValue={storageList[0] ? storageList[0].storageId : undefined}
           >
             {getFieldDecorator('dataStorageId', {
               rules: [{required: true, message: '请选择目的源'}],
@@ -272,6 +248,26 @@ export default class StepOne extends Component {
               
             )}
           </FormItem>
+          <FormItem {...formItemLayout} label="同步对象">
+            {getFieldDecorator('objId', {
+              rules: [{required: true, message: '请选择同步对象'}],
+            })(
+              <Select 
+                showSearch
+                labelInValue 
+                placeholder="请选择所属对象" 
+                style={{width: '100%'}} 
+                onSelect={v => this.selectObj(v)}
+                optionFilterProp="children"
+              >
+                {
+                  objList.map(item => (
+                    <Option key={item.value} value={item.value}>{item.name}</Option>
+                  ))
+                }
+              </Select>
+            )}
+          </FormItem>
           <FormItem {...formItemLayout} label="自定义目的表">
             {getFieldDecorator('isDefineTable', {
               valuePropName: 'checked',
@@ -288,14 +284,24 @@ export default class StepOne extends Component {
                     {required: true, message: '表名不能为空'},  
                     {validator: this.changeTableName},
                   ]})(
-                  <div className="FBH"> 
-                      <span className="ml16 mr16">tbjh_</span>
-                      <Input size="small" autoComplete="off" placeholder="请输入表名称" disabled={!this.store.storageId || !this.store.objId} />
-                    </div>
+                    <div className="FBH"> 
+                    <span className="ml16 mr16">tbjh_</span>
+                    <Input size="small" autoComplete="off" placeholder="请输入表名称" disabled={!this.store.storageId || !this.store.objId} />
+                  </div>
                 )}
               </FormItem>
             ) : null
           }
+          <FormItem {...formItemLayout} label="方案描述">
+            {getFieldDecorator('descr', {
+              rules: [
+                {transform: value => value && value.trim()},
+                {max: 128, whitespace: true, message: '输入不能超过128个字符'},
+              ],
+            })(
+              <TextArea placeholder="请输入方案描述" />
+            )}
+          </FormItem>
          
         </Form>
         <div className="bottom-button">
