@@ -24,7 +24,6 @@ class ModalAddTable extends Component {
     super(props)
     this.store = props.store
     this.bigStore = props.bigStore
-    // console.log(this.store, 's')
   }
 
   @observable chooseEntity // 简单关系 从关联实体的数据表中选择的实体
@@ -78,6 +77,7 @@ class ModalAddTable extends Component {
 
   @action.bound onWhereChange(data) {
     this.store.whereCondition = data.target.value
+    this.store.whereSuccess = false
   }
 
   /*
@@ -268,21 +268,7 @@ class ModalAddTable extends Component {
 
   // 校验where值输入
   handleWhereConditionValidator = (rule, value, callback) => {
-    // console.log(this)
-    // console.log(this.store.whereSuccess)
-    if (this.store.whereCondition) {
-      if (!this.store.whereSuccess) {
-        debugger
-        console.log(this.store.whereSuccess)
-        // console.log(validateResult)
-        callback('请校验where条件')
-        // console.log(222)
-      }
-      // console.log(333)
-      callback()
-      // console.log(444)
-    }
-    callback()
+    this.store.whereCondition && !this.store.whereSuccess ? callback('请校验where条件') : callback()
   }
 
   render() {
@@ -305,6 +291,7 @@ class ModalAddTable extends Component {
       bothTypeCode,
       storageId,
       whereCondition,
+      whereSuccess,
     } = this.store
 
     const {objDetail} = this.bigStore
@@ -321,10 +308,12 @@ class ModalAddTable extends Component {
         maskClosable={false}
         destroyOnClose
         title="添加关联表"
-        onOk={this.handleSubmit}
+        // onOk={this.handleSubmit}
         onCancel={this.handleCancel}
         confirmLoading={confirmLoading}
         className="data-sheet-modal"
+        footer={[<Button onClick={this.handleCancel}>取消</Button>, 
+          <Button disabled={whereCondition && !whereSuccess} type="primary" onClick={this.handleSubmit}>确认</Button>]}
       >
         <Form>
           {/* 0 简单关系 */}
@@ -430,9 +419,9 @@ class ModalAddTable extends Component {
                 />
                 <FormItem style={{textAlign: 'right'}}>
                   {getFieldDecorator('validator', {
-                    rules: [
-                      {validator: this.handleWhereConditionValidator},
-                    ],
+                    // rules: [
+                    //   {validator: this.handleWhereConditionValidator},
+                    // ],
                   })(
                     <Button
                       type="ghost"
