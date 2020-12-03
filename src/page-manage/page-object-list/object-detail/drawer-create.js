@@ -184,6 +184,13 @@ export default class DrawerCreate extends Component {
     }
   }
 
+  componentWillReceiveProps(next) {
+    const {updateDetailKey, objId} = this.props
+    if (!_.isEqual(updateDetailKey, next.updateDetailKey) || !_.isEqual(+objId, +next.objId)) {
+      this.store.getList({objId: next.objId})
+    }
+  }
+
 
   @action.bound changeIsEnum(e) {
     this.store.isEnum = e
@@ -191,7 +198,7 @@ export default class DrawerCreate extends Component {
 
   @action handleCancel = () => {
     this.store.drawerTagInfo = {}
-    this.store.drawerTagVisible = true
+    this.store.drawerTagVisible = false
     this.store.isEnum = false
     this.store.tagCateSelectList.clear()
     // this.store.resetModal()
@@ -200,11 +207,9 @@ export default class DrawerCreate extends Component {
   submit = () => {
     const t = this
     const {store} = t
-    console.log(this.form)
+    // console.log(this.form)
     this.form.validateFields((err, values) => {
-      console.log(22)
       if (!err) {
-        console.log(33)
         const params = {
           ...values,
           cateId: values.cateId[values.cateId.length - 1],
@@ -213,18 +218,16 @@ export default class DrawerCreate extends Component {
         }
 
         if (store.drawerTagType === 'edit') {
-          console.log(44)
           params.id = store.drawerTagInfo.id
 
           store.updateTag(params, () => {
             t.handleCancel()
-            store.getTagList()
+            store.getList()
           })
         } else {
-          console.log(store)
           store.createTag(params, () => {
             t.handleCancel()
-            store.getTagList({currentPage: 1})
+            store.getList({currentPage: 1, objId: this.store.objId})
           })
         }
       } else {
@@ -241,13 +244,12 @@ export default class DrawerCreate extends Component {
       name: value,
       nameType: nameTypeMap[rule.field], // 名称类型: 1 中文名 2 英文名
     }
-    console.log(14)
 
     if (this.store.nameKeyWord.includes(value)) {
       callback('名称与关键字重复')
       return 
     }
-    console.log(this.store.drawerTagInfo.id)
+    // console.log(this.store.drawerTagInfo.id)
     
     if (this.store.drawerTagInfo.id) {
       params.id = this.store.drawerTagInfo.id

@@ -21,7 +21,7 @@ export default class SelectObject extends Component {
     this.store = props.bigStore
     this.store.isSelectObj = props.bigStore.isSelectObj
     this.store.isOpenSelectObj = props.bigStore.isOpenSelectObj
-    console.log(this.store.isSelectObj, 'true')
+    // console.log(this.store.isSelectObj, 'true')
   }
 
   @observable selTypeCode = this.store.typeCode // 实体: 4, 关系: 3

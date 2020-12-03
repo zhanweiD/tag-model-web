@@ -17,7 +17,7 @@ export default class TagClass extends Component {
   constructor(props) {
     super(props)
     this.store = props.store
-    console.log(this.store, 'tg')
+    // console.log(this.store, 'tg')
   }
 
   // 关闭抽屉

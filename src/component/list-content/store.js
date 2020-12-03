@@ -75,6 +75,8 @@ const ListContentStore = apiFunc => class _Store {
    * @param {object} params
    */
   @action async getList(params) {
+    console.log(this.initParams)
+    // console.log(11111)
     try {
       this.tableLoading = true
 

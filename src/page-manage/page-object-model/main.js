@@ -20,7 +20,7 @@ class ObjectModel extends Component {
     super(props)
     const {match} = props
 
-    console.log(props, 'model')
+    // console.log(props, 'model')
     store.projectId = props.projectId
     store.typeCode = match.params.typeCode || '4'
     store.objId = match.params.objId

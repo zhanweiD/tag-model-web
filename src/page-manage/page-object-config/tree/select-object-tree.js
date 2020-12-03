@@ -18,7 +18,7 @@ export default class CateTree extends Component {
   constructor(props) {
     super(props)
     this.store = props.bigStore
-    console.log(toJS(this.store.objCateTree), 'sot')
+    // console.log(toJS(this.store.objCateTree), 'sot')
   }
 
   @observable searchKey = undefined

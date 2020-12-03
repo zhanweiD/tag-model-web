@@ -28,11 +28,9 @@ class ObjectDetail extends Component {
   constructor(props) {
     super(props)
     const {match: {params}} = props
-    console.log(props, 'b')
     store.projectId = props.projectId
     store.objId = params && params.objId
     store.typeCode = params && params.typeCode
-    console.log(store.projectId, 'a')
   }
 
   @observable tabId = 0

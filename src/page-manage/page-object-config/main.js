@@ -24,7 +24,6 @@ class ObjectConfig extends Component {
     store.objId = match.params.objId
     store.tabId = match.params.tabId || 'view' // 当前详情tabID；默认数据视图
     store.isSelectObj = false
-    console.log(props.isSelectObj, 'objid')
   }
 
   // componentWillMount() {
@@ -73,7 +72,7 @@ class ObjectConfig extends Component {
       selectObjLoading,
       mainLoading,
     } = store
-    console.log(objId, '---')
+    // console.log(objId, '---')
 
     const tabConfig = {
       tabs: changeToOptions(window.njkData.dict.typeCodes)('value', 'key'),

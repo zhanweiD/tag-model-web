@@ -29,13 +29,15 @@ class TagList extends Component {
   constructor(props) {
     super(props)
     store.projectId = props.projectId
+    store.objId = props.objId
+    // console.log(props, 'taglist')
   }
 
   columns = [{
     key: 'name',
     title: '标签名称',
     dataIndex: 'name',
-    render: (text, record) => <Link target="_blank" to={`/manage/tag-maintain/${record.id}/${store.projectId}`}><OmitTooltip maxWidth={120} text={text} /></Link>,
+    // render: (text, record) => <Link target="_blank" to={`/manage/tag-maintain/${record.id}/${store.projectId}`}><OmitTooltip maxWidth={120} text={text} /></Link>,
   }, {
     key: 'configType',
     title: '绑定方式',
@@ -252,10 +254,20 @@ class TagList extends Component {
 
       // 请求列表，放在父组件进行请求是因为需要在外层做空数据判断。
       // 若返回数据为空[]。则渲染 NoData 组件。
-      store.initParams = {projectId: store.projectId}
+      store.initParams = {projectId: store.projectId, objId: store.objId}
       store.getList({
         projectId: store.projectId,
+        objId: store.objId,
       })
+    }
+  }
+
+  componentWillReceiveProps(next) {
+    const {updateDetailKey, objId} = this.props
+    if (!_.isEqual(updateDetailKey, next.updateDetailKey) || !_.isEqual(+objId, +next.objId)) {
+
+      // store.objId = next.objId
+      store.getList({objId: next.objId, currentPage: 1})
     }
   }
 
@@ -295,6 +307,7 @@ class TagList extends Component {
   render() {
     const {
       projectId,
+      objId,
       drawerTagConfigInfo,
       drawerTagConfigVisible,
       closeTagConfig,
@@ -307,6 +320,7 @@ class TagList extends Component {
       batchConfigVisible,
       publishRowKeys,
     } = store
+    // console.log(list)
 
     const rowSelection = {
       selectedRowKeys: publishRowKeys.slice(),
@@ -328,7 +342,7 @@ class TagList extends Component {
     const listConfig = {
       rowSelection,
       columns: this.columns,
-      initParams: {projectId},
+      initParams: {projectId, objId},
       searchParams: seach({objectSelectList: toJS(objectSelectList)}),
       buttons: [
         <Authority

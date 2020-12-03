@@ -9,12 +9,14 @@ const api = {
   getObjView: get(`${objectApi}/object_view`), // 对象视图
   getBusinessModel: get(`${objectApi}/business_model`), // 逻辑模型
   getBMRelation: get(`${objectApi}/list_relation`), // 对象相关的关系对象列表
-  getTagDetail: get(`${tagModalApi}/tag_detail`),
+  // getTagDetail: get(`${tagModalApi}/tag_detail`),
+  getTagDetail: post(`${baseApi}/global_tag/get`), // 编辑标签 - 标签详情
   getProjectList: get(`${objectApi}/list_project`), // 使用项目
   getTableList: get(`${objectApi}/list_table`), // 数据表
-  getTagList: get(`${objectApi}/list_tag`), // 标签列表
+  // getTagList: get(`${objectApi}/list_tag`), // 标签列表
+  getTagList: post(`${baseApi}/global_tag/list`), // 标签列表
   getTagCateSelectList: get(`${baseApi}/cate/cate_tree`), // 所属类目
-  getList: get(`${tagModalApi}/list_tag`), // 标签列表
+  // getList: get(`${tagModalApi}/list_tag`), // 标签列表
   getDataSource: get(`${baseApi}/tagConfig/datasource/pro_datasource`),
   getDataSheet: get(`${baseApi}/tagConfig/listUncorrelatedSourceTable`),
   saveEntityField: post(`${baseApi}/tagConfig/add_rel_field`),

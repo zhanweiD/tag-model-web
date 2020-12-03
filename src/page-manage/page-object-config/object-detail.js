@@ -16,7 +16,7 @@ import ObjectView from './object-view-router'
 import DataSheet from './data-sheet'
 import FieldList from './field-list'
 // import BusinessModel from './business-model'
-import TagList from '../page-tag-model/tag-list'
+import {TagModel} from '../page-tag-model'
 
 const {confirm} = Modal
 
@@ -26,7 +26,7 @@ export default class ObjectDetail extends Component {
   constructor(props) {
     super(props)
     this.store = props.bigStore
-    console.log(props, 'od')
+    // console.log(props, 'od')
   }
 
   componentWillMount() {
@@ -163,7 +163,7 @@ export default class ObjectDetail extends Component {
       view: ObjectView, 
       table: DataSheet,
       field: FieldList,
-      list: TagList,
+      list: TagModel,
       // business: BusinessModel,
     }
 

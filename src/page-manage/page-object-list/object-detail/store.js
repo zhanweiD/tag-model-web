@@ -404,18 +404,6 @@ class Store {
       obj: resObj,
     }
   }
-  @action async getObjectSelectList() {
-    try {
-      const res = await io.getObjectSelectList({
-        projectId: this.projectId,
-      })
-      runInAction(() => {
-        this.objectSelectList = changeToOptions(res)('name', 'id')
-      })
-    } catch (e) {
-      errorTip(e.message)
-    }
-  }
 }
 
 export default new Store()
