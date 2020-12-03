@@ -155,7 +155,6 @@ export function listToTree(data) {
     const children = newData.filter(sitem => sitem.parentId === item.id)
     if (children.length && !item.children) item.children = children
   })
-
   return newData.filter(item => item.parentId === 0)
 }
 

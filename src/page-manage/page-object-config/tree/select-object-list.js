@@ -148,7 +148,13 @@ export default class ObjectList extends Component {
           style={{width: 300}}
           suffix={<SearchOutlined />}
         />
-        <div className="select-object-table">
+        <div style={{
+          height: 'calc(100% - 32px)',
+          border: '1px solid #d9d9d9',
+          borderRadius: '4px',
+          overflowY: 'auto',
+        }}
+        >
           <Table {...listConfig} />
         </div>
       </div>

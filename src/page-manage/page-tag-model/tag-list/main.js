@@ -21,6 +21,7 @@ import ModalTagApply from './modal-tag-apply'
 import DrawerCreate from './drawer-create'
 import DrawerTagConfig from '../tag-config'
 import DrawerBatchConfig from '../tag-config-batch'
+import DrawerInherit from './drawer-inherit'
 
 import store from './store'
 
@@ -303,6 +304,13 @@ class TagList extends Component {
     return true
   }
 
+  // 继承标签
+  inheritTag = () => {
+    store.getTagTree()
+
+    store.drawerInheritVis = true
+  }
+
   render() {
     const {
       projectId,
@@ -359,8 +367,9 @@ class TagList extends Component {
         <Authority
           authCode="tag_model:bind_tag[cud]"
         >
-          <Button onClick={() => store.openBatchConfig()}>批量绑定</Button>
+          <Button className="mr8" onClick={() => store.openBatchConfig()}>批量绑定</Button>
         </Authority>,
+        <Button onClick={() => this.inheritTag()}>继承标签</Button>,
       ],
       rowKey: 'id',
       initGetDataByParent: true, // 初始请求 在父层组件处理。列表组件componentWillMount内不再进行请求
@@ -399,6 +408,7 @@ class TagList extends Component {
             visible={batchConfigVisible}
             objectSelectList={objectSelectList}
           />
+          <DrawerInherit />
         </div>
       </Provider>
     )
