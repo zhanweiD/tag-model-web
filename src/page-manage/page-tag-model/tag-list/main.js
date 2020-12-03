@@ -265,7 +265,6 @@ class TagList extends Component {
   componentWillReceiveProps(next) {
     const {updateDetailKey, objId} = this.props
     if (!_.isEqual(updateDetailKey, next.updateDetailKey) || !_.isEqual(+objId, +next.objId)) {
-
       // store.objId = next.objId
       store.getList({objId: next.objId, currentPage: 1})
     }
@@ -372,17 +371,18 @@ class TagList extends Component {
       <Provider bigStore={store}>
         <div>
           {/* <div className="content-header">标签维护</div> */}
-          {
+          <div className="config-tag"><ListContent {...listConfig} /></div>
+          {/* {
             !list.length && !this.isSearch() ? (
-              <div className="header-page" style={{paddingTop: '15%'}}>
+              <div style={{paddingTop: '15%'}}>
                 <NoData
                 // isLoading={tableLoading}
                   {...noDataConfig}
                   // style={{marginTop: '15%'}}
                 />
               </div>
-            ) : <div className="header-page box-border"><ListContent {...listConfig} /></div>
-          }
+            ) : <div className="config-tag"><ListContent {...listConfig} /></div>
+          } */}
 
           <ModalTagApply store={store} />
           <DrawerCreate store={store} />
