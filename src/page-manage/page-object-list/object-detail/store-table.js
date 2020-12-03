@@ -286,7 +286,11 @@ class Store extends ListContentStore(io.getTableList) {
       })
       runInAction(() => {
         this.objectSelectList = changeToOptions(res)('name', 'id')
-      })
+      }) 
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
 
   // 设置数据表 主表模式，并集模式
   @action async updateObjJoinMode(params, cb = () => {}) {
