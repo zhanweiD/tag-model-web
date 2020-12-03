@@ -1,16 +1,17 @@
 import {tagStatusMap, usedStatusMap, publishStatusMap, tagConfigMethodMap} from '../util'
 
 const serach = ({objectSelectList = []}) => [
+  // {
+  //   label: '对象',
+  //   key: 'objId',
+  //   initialValue: '',
+  //   control: {
+  //     defaultAll: true,
+  //     options: objectSelectList.slice(),
+  //   },
+  //   component: 'select',
+  // }, 
   {
-    label: '对象',
-    key: 'objId',
-    initialValue: '',
-    control: {
-      defaultAll: true,
-      options: objectSelectList.slice(),
-    },
-    component: 'select',
-  }, {
     label: '标签状态',
     key: 'status',
     initialValue: '',

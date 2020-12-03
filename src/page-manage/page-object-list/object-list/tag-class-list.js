@@ -16,7 +16,7 @@ export default class TagList extends Component {
   constructor(props) {
     super(props)
     this.store = props.store
-    console.log(this.store, 'tagclasslist')
+    // console.log(this.store, 'tagclasslist')
   }
 
   columns = [

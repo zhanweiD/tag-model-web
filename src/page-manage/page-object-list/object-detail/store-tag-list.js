@@ -33,9 +33,11 @@ class Store extends ListContentStore(io.getTagList) {
   @action.bound openDrawer(type, data) {
     this.drawerTagType = type
     this.drawerTagInfo = data || {}
+    console.log(this.drawerTagInfo)
 
     if (type === 'edit') {
       // 获取对象详情
+      console.log(data)
       this.getTagDetail({
         id: data.id,
       })
@@ -77,14 +79,14 @@ class Store extends ListContentStore(io.getTagList) {
   // 更新标签配置
   @action.bound updateTagConfig() {
     this.closeTagConfig()
-    this.getTagList()
+    this.getList()
   }
 
 
   // 更新标签配置
   @action.bound updateBatchConfig() {
     this.closeBatchConfig()
-    this.getTagList()
+    this.getList()
   }
 
   
@@ -154,7 +156,7 @@ class Store extends ListContentStore(io.getTagList) {
 
     try {
       const res = await io.getTagDetail({
-        projectId: this.projectId,
+        // projectId: this.projectId,
         ...params,
       })
       runInAction(() => {
@@ -207,7 +209,7 @@ class Store extends ListContentStore(io.getTagList) {
       runInAction(() => {
         if (res) {
           successTip('操作成功')
-          this.getTagList({currentPage: 1})
+          this.getList({currentPage: 1})
         } else {
           failureTip('操作失败')
         }
@@ -221,7 +223,6 @@ class Store extends ListContentStore(io.getTagList) {
    * @description 重名校验
    */
   @action async checkName(params, cb) {
-    console.log(13)
     try {
       const res = await io.checkName({
         projectId: this.projectId,
@@ -263,7 +264,7 @@ class Store extends ListContentStore(io.getTagList) {
       runInAction(() => {
         if (res) {
           successTip('操作成功')
-          this.getTagList()
+          this.getList()
         } else {
           failureTip('操作失败')
         }

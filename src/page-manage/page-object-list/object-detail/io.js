@@ -9,14 +9,21 @@ const api = {
   getObjView: get(`${objectApi}/object_view`), // 对象视图
   getBusinessModel: get(`${objectApi}/business_model`), // 逻辑模型
   getBMRelation: get(`${objectApi}/list_relation`), // 对象相关的关系对象列表
-  getTagDetail: get(`${tagModalApi}/tag_detail`),
+  // getTagDetail: get(`${tagModalApi}/tag_detail`),
+  getTagDetail: post(`${baseApi}/global_tag/get`), // 编辑标签 - 标签详情
   getProjectList: get(`${objectApi}/list_project`), // 使用项目
   getTableList: get(`${objectApi}/list_table`), // 数据表
-  getTagList: get(`${objectApi}/list_tag`), // 标签列表
+  // getTagList: get(`${objectApi}/list_tag`), // 标签列表
+  getTagList: post(`${baseApi}/global_tag/list`), // 标签列表
   getTagCateSelectList: get(`${baseApi}/cate/cate_tree`), // 所属类目
+  // getList: get(`${tagModalApi}/list_tag`), // 标签列表
+  // getDataSource: get(`${baseApi}/tagConfig/datasource/pro_datasource`),
+  // getDataSheet: get(`${baseApi}/tagConfig/listUncorrelatedSourceTable`),
   getList: get(`${tagModalApi}/list_tag`), // 标签列表
-  getDataSource: get(`${baseApi}/tagConfig/datasource/pro_datasource`),
-  getDataSheet: get(`${baseApi}/tagConfig/listUncorrelatedSourceTable`),
+  // getDataSource: get(`${baseApi}/tagConfig/datasource/pro_datasource`),
+  getDataSource: get(`${baseApi}/tagConfig/datasource/list_tenant`),
+  // getDataSheet: get(`${baseApi}/tagConfig/listUncorrelatedSourceTable`),
+  getDataSheet: get(`${baseApi}/tagConfig/datasource/list_table`),
   saveEntityField: post(`${baseApi}/tagConfig/add_rel_field`),
   getEntityDataSource: get(`${baseApi}/project/object/getObjTableList`),
   getFieldList: get(`${baseApi}/tagConfig/column_info`),
@@ -27,6 +34,7 @@ const api = {
   updateTag: post(`${baseApi}/global_tag/update`), // 对象模型 - 标签列表 - 编辑标签
   deleteTag: post(`${baseApi}/global_tag/delete`), // 对象模型 - 标签列表 - 删除标签
   updateObjJoinMode: post(`${baseApi}/object/update_obj_join_mode`), // 修改对象的表关联模式
+  getObjJoinMode: post(`${baseApi}/object/get_obj_join_mode`), // 查询对象的表关联模式
 } 
 
 ioContext.create('objectDetail', api) 

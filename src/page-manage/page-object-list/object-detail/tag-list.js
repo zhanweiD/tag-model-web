@@ -21,7 +21,7 @@ export default class TagList extends Component {
     this.bigStore = bigStore
     store.projectId = bigStore.projectId
     store.objId = bigStore.objId
-    console.log(toJS(store.objectSelectList), 'sss')
+    // console.log(toJS(store.objectSelectList), 'sss')
   }
 
   columns = [{
@@ -36,11 +36,9 @@ export default class TagList extends Component {
     title: '标签标识',
     dataIndex: 'enName',
   }, {
-    title: '数据类型',
-    dataIndex: 'valueTypeName',
-  }, {
-    title: '所属项目',
-    dataIndex: 'projectName',
+    key: 'creator',
+    title: '创建人',
+    dataIndex: 'creator',
   }, {
     title: '描述',
     dataIndex: 'descr',
@@ -112,7 +110,9 @@ export default class TagList extends Component {
   componentWillReceiveProps(next) {
     const {updateDetailKey, objId} = this.props
     if (!_.isEqual(updateDetailKey, next.updateDetailKey) || !_.isEqual(+objId, +next.objId)) {
-      store.getList({objId: next.objId})
+
+      store.objId = next.objId
+      store.getList({objId: next.objId, currentPage: 1})
     }
   }
 
@@ -123,10 +123,10 @@ export default class TagList extends Component {
   }
   
   @action.bound onChange(e) {
-    const keyword = e.target.value
+    const searchKey = e.target.value
     store.getList({
       currentPage: 1,
-      keyword,
+      searchKey,
     })
   }
 
@@ -161,10 +161,10 @@ export default class TagList extends Component {
 
       // 请求列表，放在父组件进行请求是因为需要在外层做空数据判断。
       // 若返回数据为空[]。则渲染 NoData 组件。
-      store.initParams = {projectId: store.projectId}
-      // store.getList({
-      //   projectId: store.projectId,
-      // })
+      // store.initParams = {projectId: store.projectId}
+      store.getList({
+        objId: store.objId,
+      })
     }
   }
 
@@ -192,10 +192,11 @@ export default class TagList extends Component {
 
   render() {
     // const {} = store
-    const {objId} = this.props
+    const {objId} = store
+    console.log(store.objId)
     const listConfig = {
       columns: this.columns,
-      initParams: {objId: +objId},
+      initParams: {objId: +store.objId, projectId: store.projectId},
       buttons: [<div className="pr24 far" style={{display: 'float'}}>
         {/* <Search
           placeholder="请输入标签名称关键字"

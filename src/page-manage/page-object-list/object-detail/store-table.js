@@ -81,14 +81,9 @@ class Store extends ListContentStore(io.getTableList) {
     try {
       const res = await io.getDataSource({
         projectId: this.projectId,
-        // projectId: window.projectId,
       })
       runInAction(() => {
-        this.dataSourceList = res ? [res] : []
-        if (res) {
-          this.storageId = res.storageId
-          this.getDataSheet()
-        }
+        this.dataSourceList = res || []
       })
     } catch (e) {
       errorTip(e.message)
@@ -122,13 +117,9 @@ class Store extends ListContentStore(io.getTableList) {
   /*
    * @description 数据表列表
    */
-  @action async getDataSheet() {
+  @action async getDataSheet(params) {
     try {
-      const res = await io.getDataSheet({
-        objId: this.objId,
-        projectId: this.projectId,
-        storageId: this.storageId,
-      })
+      const res = await io.getDataSheet(params)
       runInAction(() => {
         this.dataSheetList = res || []
       })
@@ -145,7 +136,6 @@ class Store extends ListContentStore(io.getTableList) {
       const res = await io.getFieldList({
         tableName: this.tableName,
         storageId: this.storageId,
-        projectId: this.projectId,
         ...params,
       })
       runInAction(() => {
@@ -285,18 +275,44 @@ class Store extends ListContentStore(io.getTableList) {
       })
     }
   }
+  /*
+   * @description 获取所属对象下拉数据
+   */
+  @action async getObjectSelectList() {
+    try {
+      const res = await io.getObjectSelectList({
+        projectId: this.projectId,
+        // objId: this.objId,
+      })
+      runInAction(() => {
+        this.objectSelectList = changeToOptions(res)('name', 'id')
+      })
 
   // 设置数据表 主表模式，并集模式
   @action async updateObjJoinMode(params, cb = () => {}) {
-    console.log(params)
-    // try {
-    //   const res = await io.updateObjJoinMode(params)
+    try {
+      const res = await io.updateObjJoinMode(params)
 
-    //   successTip('操作成功')
-    //   cb()
-    // } catch (e) {
-    //   errorTip(e.message)
-    // }
+      successTip('操作成功')
+      cb()
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  @observable joinModeDetail
+  
+  // 获取已有的多表关联模式
+  // objId
+  @action async getObjJoinMode(params, cb = () => {}) {
+    try {
+      const res = await io.getObjJoinMode(params)
+      
+      this.joinModeDetail = res
+      cb()
+    } catch (e) {
+      errorTip(e.message)
+    }
   }
 }
 

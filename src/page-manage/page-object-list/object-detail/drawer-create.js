@@ -186,6 +186,13 @@ export default class DrawerCreate extends Component {
     }
   }
 
+  componentWillReceiveProps(next) {
+    const {updateDetailKey, objId} = this.props
+    if (!_.isEqual(updateDetailKey, next.updateDetailKey) || !_.isEqual(+objId, +next.objId)) {
+      this.store.getList({objId: next.objId})
+    }
+  }
+
 
   @action.bound changeIsEnum(e) {
     this.store.isEnum = e
@@ -202,12 +209,8 @@ export default class DrawerCreate extends Component {
   submit = () => {
     const t = this
     const {store} = t
-    store.confirmLoading = true
-
     this.form.validateFields((err, values) => {
-      console.log(22)
       if (!err) {
-        console.log(33)
         const params = {
           ...values,
           cateId: values.cateId[values.cateId.length - 1],
@@ -216,7 +219,6 @@ export default class DrawerCreate extends Component {
         }
 
         if (store.drawerTagType === 'edit') {
-          console.log(44)
           params.id = store.drawerTagInfo.id
 
           store.updateTag(params, () => {
@@ -224,16 +226,10 @@ export default class DrawerCreate extends Component {
             store.getList()
           })
         } else {
-          console.log(store)
-          console.log(params)
-          debugger
-          // store.createTag(params, () => {
-          //   t.handleCancel()
-          //   store.getList({
-          //     currentPage: 1,
-          //     objId: store.objId,
-          //   })
-          // })
+          store.createTag(params, () => {
+            t.handleCancel()
+            store.getList({currentPage: 1, objId: this.store.objId})
+          })
         }
       } else {
         console.log(err)
@@ -249,13 +245,12 @@ export default class DrawerCreate extends Component {
       name: value,
       nameType: nameTypeMap[rule.field], // 名称类型: 1 中文名 2 英文名
     }
-    console.log(14)
 
     if (this.store.nameKeyWord.includes(value)) {
       callback('名称与关键字重复')
       return 
     }
-    console.log(this.store.drawerTagInfo.id)
+    // console.log(this.store.drawerTagInfo.id)
     
     if (this.store.drawerTagInfo.id) {
       params.id = this.store.drawerTagInfo.id

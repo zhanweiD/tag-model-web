@@ -26,6 +26,7 @@ class Store extends ListContentStore(io.getList) {
   @observable entity1Key = undefined
   @observable entity2Key = undefined
   
+  @observable dataSheetDetail = [] // 数据表详情
   @observable dataSourceList = [] // 数据源下拉列表数据
   @observable dataSheetList = [] // 数据表下拉列表数据
   @observable fieldList = [] // 字段列表下拉列表数据
@@ -134,6 +135,24 @@ class Store extends ListContentStore(io.getList) {
       })
       runInAction(() => {
         this.dataSheetList = res || []
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  /*
+   * @description 数据表详情
+   */
+  @action async getDataSheetDetail() {
+    try {
+      const res = await io.getDataSheetDetail({
+        objId: this.objId,
+        // projectId: this.projectId,
+        storageId: this.storageId,
+      })
+      runInAction(() => {
+        this.dataSheetDetail = res || []
       })
     } catch (e) {
       errorTip(e.message)
