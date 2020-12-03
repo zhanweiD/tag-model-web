@@ -15,8 +15,10 @@ const api = {
   getTagList: get(`${objectApi}/list_tag`), // 标签列表
   getTagCateSelectList: get(`${baseApi}/cate/cate_tree`), // 所属类目
   getList: get(`${tagModalApi}/list_tag`), // 标签列表
-  getDataSource: get(`${baseApi}/tagConfig/datasource/pro_datasource`),
-  getDataSheet: get(`${baseApi}/tagConfig/listUncorrelatedSourceTable`),
+  // getDataSource: get(`${baseApi}/tagConfig/datasource/pro_datasource`),
+  getDataSource: get(`${baseApi}/tagConfig/datasource/list_tenant`),
+  // getDataSheet: get(`${baseApi}/tagConfig/listUncorrelatedSourceTable`),
+  getDataSheet: get(`${baseApi}/tagConfig/datasource/list_table`),
   saveEntityField: post(`${baseApi}/tagConfig/add_rel_field`),
   getEntityDataSource: get(`${baseApi}/project/object/getObjTableList`),
   getFieldList: get(`${baseApi}/tagConfig/column_info`),
@@ -27,6 +29,7 @@ const api = {
   updateTag: post(`${baseApi}/global_tag/update`), // 对象模型 - 标签列表 - 编辑标签
   deleteTag: post(`${baseApi}/global_tag/delete`), // 对象模型 - 标签列表 - 删除标签
   updateObjJoinMode: post(`${baseApi}/object/update_obj_join_mode`), // 修改对象的表关联模式
+  getObjJoinMode: post(`${baseApi}/object/get_obj_join_mode`), // 查询对象的表关联模式
 } 
 
 ioContext.create('objectDetail', api) 

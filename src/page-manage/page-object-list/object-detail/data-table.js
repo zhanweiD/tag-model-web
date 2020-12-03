@@ -79,20 +79,23 @@ export default class DataTable extends Component {
   }
 
   @action.bound openModal() {
-    const {typeCode, objDetail} = this.bigStore
-    if (+typeCode === 4) {
-      store.bothTypeCode = 2 // 实体
-      store.modalVisible = true
-    } else if (typeof objDetail.type === 'undefined') {
-      this.bigStore.getObjDetail(res => {
-        store.bothTypeCode = res.type
-        store.modalVisible = true
-      }) // 复杂关系 vs 简单关系
-    } else {
-      store.bothTypeCode = objDetail.type 
+    const {joinModeDetail} = store
+
+    store.getDataSource()
+
+    if (joinModeDetail.mode === 0) {
+      // 并集模式
       store.modalVisible = true
     }
-    store.getDataSource()
+
+    if (joinModeDetail.mode === 1) {
+      // 交集模式
+      // 要处理数据了。。。
+      // TODO: 有问题获取不到数据
+    }
+
+    // 没数据？
+    store.modalVisible = true
   }
 
   @action.bound openTagConfig(data) {
@@ -139,7 +142,9 @@ export default class DataTable extends Component {
             style={{marginRight: 'auto'}}
             type="primary" 
             className="mr8"
-            onClick={() => this.openModal()}
+            onClick={() => store.getObjJoinMode({objId: +objId}, () => {
+              this.openModal()
+            })}
           >
         多表关联模式设置
           </Button>
