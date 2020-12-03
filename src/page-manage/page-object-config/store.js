@@ -165,17 +165,15 @@ class Store {
               return item
             })
           }
-        } else {
-            if (params.searchKey) {
-              data = res.map(item => {
-                // 关键字搜索定位
-                if (params.searchKey && item.name.includes(params.searchKey)) {
-                  this.findParentId(item.id, res, this.objCateExpandedKeys)
-                }
-                return item
-              })
+        } else if (params.searchKey) {
+          data = res.map(item => {
+            // 关键字搜索定位
+            if (params.searchKey && item.name.includes(params.searchKey)) {
+              this.findParentId(item.id, res, this.objCateExpandedKeys)
             }
-          }
+            return item
+          })
+        }
 
         this.objCateTree = listToTree(data)
 

@@ -86,6 +86,7 @@ export default class DrawerCreate extends Component {
           '@max32',
           {validator: this.checkName},
         ],
+        autoComplete: 'off',
         control: {
           // disabled: !ownObject,
         },
@@ -102,6 +103,7 @@ export default class DrawerCreate extends Component {
           // {pattern: enNameReg, message: '不超过32个字，只能包含英文、数字或下划线，必须以英文开头'},
           {validator: this.checkName},
         ],
+        autoComplete: 'off',
         control: {
           // disabled: !ownObject,
         },
@@ -207,7 +209,6 @@ export default class DrawerCreate extends Component {
   submit = () => {
     const t = this
     const {store} = t
-    // console.log(this.form)
     this.form.validateFields((err, values) => {
       if (!err) {
         const params = {

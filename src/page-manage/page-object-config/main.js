@@ -51,9 +51,9 @@ class ObjectConfig extends Component {
       store.objId = store.currentSelectKeys
     })
     // store.getObjCate(() => {
-      // store.type = store.typeCode
-      // store.objId = store.currentSelectKeys
-      // store.isSelectObj = false
+    // store.type = store.typeCode
+    // store.objId = store.currentSelectKeys
+    // store.isSelectObj = false
     // })
     // console.log('a')
   }
@@ -72,7 +72,6 @@ class ObjectConfig extends Component {
       selectObjLoading,
       mainLoading,
     } = store
-    // console.log(objId, '---')
 
     const tabConfig = {
       tabs: changeToOptions(window.njkData.dict.typeCodes)('value', 'key'),
@@ -94,7 +93,6 @@ class ObjectConfig extends Component {
       noAuthText: '没有任何对象',
       // myFunctionCodes: store.functionCodes,
     }
-// console.log(selectObjLoading, "88888")
     return (
       <Provider bigStore={store}>
         <div className="page-object">
