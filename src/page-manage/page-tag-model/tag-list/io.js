@@ -22,8 +22,8 @@ const api = {
   // 权限code
   getAuthCode: get(`${baseApi}/project/getFunctionCodes`),
 
-  getTagTree: post(`${baseApi}/global_tag/tree`), // 获取标签树
-  getTagsList: post(`${baseApi}/global_tag/listByTagIds`), // 根据标签 id 查询标签详情
+  getTagTree: get(`${baseApi}/global_tag/tree`), // 获取标签树
+  getTagsList: get(`${baseApi}/global_tag/listByTagIds`), // 根据标签 id 查询标签详情
   inheritTags: post(`${baseApi}/global_tag/extents`), // 继承标签
 } 
 
