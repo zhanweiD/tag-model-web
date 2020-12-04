@@ -11,6 +11,7 @@ import {
 } from '../../component'
 import {objDetailTabMap, objRelTabMap, objTypeMap} from './util'
 
+import TagClass from '../page-object-list/object-list/tag-class'
 // import ObjectView from './object-view'
 import ObjectView from './object-view-router'
 import DataSheet from './data-sheet'
@@ -72,9 +73,18 @@ export default class ObjectDetail extends Component {
     this.store.tabId = id
   }
 
+  @action.bound tagClass() {
+    this.store.tagClassObjId = this.store.objId // 对象id
+    this.store.tagClassVisible = true
+  }
+
+  @action.bound closeTagClass() {
+    this.store.tagClassVisible = false
+  }
+
   render() {
     const {
-      detailLoading, objDetail, objCard, tabId, typeCode, objId,
+      detailLoading, objDetail, objCard, tabId, typeCode, objId, tagClassObjId, tagClassVisible,
     } = this.store
     const baseInfo = [{
       title: '对象标识',
@@ -167,6 +177,13 @@ export default class ObjectDetail extends Component {
     }
 
     const Content = objCompMap[tabId]
+
+    const tagClassConfig = {
+      visible: tagClassVisible,
+      onClose: this.closeTagClass,
+      objId: tagClassObjId, // 对象id
+      store: this.store,
+    }
     
     return (
       <div className="object-detail">
@@ -184,11 +201,20 @@ export default class ObjectDetail extends Component {
                   // onClick={this.remove}
                   // disabled={objDetail.isUsed} // 使用中对象不可以移除
                 >
-                  <Button type="primary" onClick={this.remove} disabled={objDetail.isUsed}>移除</Button>
+                  <Button type="primary" onClick={this.remove} disabled={objDetail.isUsed} className="mr8">移除</Button>
                 </Authority>,
+                <Button 
+                  // loading={releaseLoading} 
+                  className="mr8" 
+                  type="primary"
+                  onClick={() => this.tagClass()}
+                >
+                    标签类目
+                </Button>,
               ]}
             />
           </div>
+          <TagClass {...tagClassConfig} />
           <OverviewCardWrap cards={cards} />
         </Spin>
         <div className="box-border"> 

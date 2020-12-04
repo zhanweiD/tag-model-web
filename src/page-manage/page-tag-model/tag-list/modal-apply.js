@@ -6,11 +6,12 @@ import {observer} from 'mobx-react'
 import {action, toJS} from 'mobx'
 import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
-import {Modal, Input, Radio, DatePicker, Space, ExclamationCircleOutlined} from 'antd'
+import {Modal, Input, Radio, DatePicker, Space, Select} from 'antd'
 
 const FormItem = Form.Item
 const {TextArea} = Input
 const {RangePicker} = DatePicker
+const {Option} = Select
 
 const formItemLayout = {
   labelCol: {span: 4},
@@ -20,7 +21,7 @@ const formItemLayout = {
 
 @Form.create()
 @observer
-export default class TagBack extends Component {
+export default class TagApply extends Component {
   constructor(props) {
     super(props) 
     this.store = props.store
@@ -60,7 +61,7 @@ export default class TagBack extends Component {
   }
 
   @action handleCancel() {
-    this.store.modalBackVisible = false
+    this.store.modalApplyVisible = false
     this.handleReset()
   }
 
@@ -74,15 +75,15 @@ export default class TagBack extends Component {
   render() {
     const {form: {getFieldDecorator}} = this.props
     const {
-      confirmLoading, modalBackVisible, projectName,
+      confirmLoading, modalApplyVisible, projectName,
     } = this.store
 
     const modalConfig = {
       width: 525,
       maskClosable: false,
-      title: '交回权限',
+      title: '标签授权',
       confirmLoading,
-      visible: modalBackVisible,
+      visible: modalApplyVisible,
       onOk: e => this.handleOk(e),
       onCancel: () => this.handleCancel(),
     }
@@ -92,10 +93,51 @@ export default class TagBack extends Component {
         {...modalConfig}
       >
         <Form className="FBV">
-          <p {...formItemLayout} label={<ExclamationCircleOutlined />}>
-            确定交回该标签的使用权限吗？
-          </p>
-          <p {...formItemLayout}>交回权限后将导致该项目无法使用该标签，请谨慎操作。</p>
+          <FormItem {...formItemLayout} label="标签名称">
+            {/* {projectName} */}
+          </FormItem>
+          <FormItem {...formItemLayout} label="标签标识">
+            {/* {projectName} */}
+          </FormItem>
+          <FormItem {...formItemLayout} label="授权项目">
+            {getFieldDecorator('projectId', {
+              rules: [{required: true, message: '请选择授权项目'}],
+            })(
+              <Select 
+                placeholder="请选择授权项目" 
+                showSearch
+                optionFilterProp="children"
+                // onSelect={e => this.dataSourceSelect(e)}
+              >
+                {/* {
+                  dataSourceList.map(item => (
+                    <Option key={item.storageId} value={item.storageId} disabled={item.isUsed}>{item.storageName}</Option>
+                  ))
+                } */}
+              </Select>
+            )}
+          </FormItem>
+          <FormItem
+            {...formItemLayout}
+            label="有效时长"
+          >
+            {getFieldDecorator('time', {
+              rules: [
+                {required: true, message: '请选择申请时长'},
+              ],
+              initialValue: 1,
+            })(
+              <Radio.Group>
+                <Radio value={1}>永久</Radio>
+                <Radio value={2}>
+                  自定义
+                  <Space direction="vertical" size={12}>
+                    <RangePicker />
+                  </Space>
+                </Radio>
+              </Radio.Group>
+            )}
+          </FormItem>
         </Form>
       </Modal>
     )

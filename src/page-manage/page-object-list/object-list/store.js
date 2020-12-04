@@ -58,6 +58,7 @@ class Store extends ListContentStore(io.getList) {
     visible: false,
   }
 
+
   @action findParentId(id, data, expandedKeys) {
     data.forEach(item => {
       if (item.parentId !== 0 && item.id === id) {
@@ -137,7 +138,7 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  /**
+  /*
    * @description 添加标签类目
    */
   @action async addNode(params, cb) {
@@ -166,7 +167,7 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  /**
+  /*
    * @description 编辑标签类目
    */
   @action async editNode(params, cb) {
@@ -192,7 +193,7 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  /**
+  /*
    * @description 删除标签类目
    * @param {*} params 
    * @param {*} cb 
@@ -209,7 +210,7 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  /**
+  /*
    * @description 重名校验
    */
   @action async checkName(params, cb) {
@@ -230,7 +231,7 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  /**
+  /*
    * @description 标签列表
    */
   @action async getTagList(params, type, cb) {
@@ -270,7 +271,7 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  /**
+  /*
    * @description 移动标签
    */
   @action async moveTag(params, cb) {
