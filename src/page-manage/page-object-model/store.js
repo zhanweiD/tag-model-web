@@ -1,7 +1,7 @@
 import {
   observable, action, runInAction, 
 } from 'mobx'
-import {successTip, errorTip, listToTree} from '../../common/util'
+import {successTip, errorTip, listToTree, failureTip} from '../../common/util'
 import io from './io'
 
 class Store {
@@ -30,6 +30,7 @@ class Store {
   @observable searchExpandedKeys = [] // 关键字搜索展开的树节点
   @observable categoryData = [] // 所有类目
   @observable treeData = [] // 类目树数据
+  @observable currentSelectKeys = undefined
   @observable categoryModal = {
     visible: false,
     title: '',

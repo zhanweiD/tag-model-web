@@ -45,6 +45,8 @@ class Store extends ListContentStore(io.getList) {
   // 批量发布
   @observable publishRowKeys = []
 
+  @observable modalApplyVisible = false
+
   // 上下架申请modal
   @action.bound openModal(info) {
     this.tagApplyVisible = true
@@ -444,6 +446,7 @@ class Store extends ListContentStore(io.getList) {
   @action async inheritTags(cb = () => {}) {
     try {
       const res = await io.inheritTags({
+        projectId: this.projectId,
         objId: +this.objId,
         tagIds: this.checkedKeys.map(Number),
       })

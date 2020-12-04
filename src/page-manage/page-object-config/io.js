@@ -1,6 +1,6 @@
 import ioContext from '../../common/io-context'
 import {
-  projectSpaceApi, baseApi, get, post,
+  projectSpaceApi, baseApi, get, post, tagClassApi,
 } from '../../common/util'
 
 const api = {
@@ -16,6 +16,16 @@ const api = {
   getObjSelectedList: get(`${projectSpaceApi}/object/list_obj`), // 选择对象- 已选对象列表
   getObjSelectedDetail: post(`${projectSpaceApi}/object/list_obj_info`), // 选择对象- 获取选择对象列表信息加入选择列表
   saveSelectedObj: post(`${projectSpaceApi}/object/save_obj`), // 选择对象- 项目对象选择保存
+
+  //* ------------------------------ 标签类目 ------------------------------*//
+  getTagCateTree: get(`${tagClassApi}/cate_tree`, {overrideSelfConcurrent: true}), // 标签类目树
+  checkTagCateName: post(`${tagClassApi}/name_check`, {overrideSelfConcurrent: true}), // 标签类目-重名校验
+  addTagCate: post(`${tagClassApi}/create_cate`), // 添加标签类目
+  editTagCate: post(`${tagClassApi}/update_cate`), // 修改标签类目
+  delTagCate: post(`${tagClassApi}/delete_cate`), // 删除标签类目
+  getTagCateDetail: get(`${tagClassApi}/cate_detail`), // 对象基础信息
+  getTagList: get(`${tagClassApi}/list_tag`, {overrideSelfConcurrent: true}), // 标签列表
+  moveTag: post(`${tagClassApi}/move_tag`), // 标签移动
   
   // 权限code
   getAuthCode: get(`${baseApi}/project/getFunctionCodes`),

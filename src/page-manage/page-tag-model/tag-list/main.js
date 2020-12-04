@@ -22,6 +22,7 @@ import DrawerCreate from './drawer-create'
 import DrawerTagConfig from '../tag-config'
 import DrawerBatchConfig from '../tag-config-batch'
 import DrawerInherit from './drawer-inherit'
+import ModalApply from './modal-apply'
 
 import store from './store'
 
@@ -38,7 +39,7 @@ class TagList extends Component {
     key: 'name',
     title: '标签名称',
     dataIndex: 'name',
-    // render: (text, record) => <Link target="_blank" to={`/manage/tag-maintain/${record.id}/${store.projectId}`}><OmitTooltip maxWidth={120} text={text} /></Link>,
+    render: (text, record) => <Link target="_blank" to={`/manage/tag-maintain/${record.id}/${store.projectId}`}><OmitTooltip maxWidth={120} text={text} /></Link>,
   }, {
     key: 'configType',
     title: '绑定方式',
@@ -155,6 +156,7 @@ class TagList extends Component {
               >
                 <a href>取消发布</a>
               </Popconfirm>
+              <a href onClick={() => store.openModal(record)} className="ml16">授权</a>
             </Authority>
               
           </Fragment>
@@ -169,6 +171,7 @@ class TagList extends Component {
               authCode="tag_model:publish_tag[u]"
             >
               <span className="disabled">取消发布</span>
+              <a href onClick={() => store.openModal(record)} className="ml16">授权</a>
             </Authority>
           )}
 
@@ -208,6 +211,7 @@ class TagList extends Component {
               >
                 <a href>取消发布</a>
               </Popconfirm>
+              <a href onClick={() => store.openModal(record)} className="ml16">授权</a>
             </Authority>
           )}
 
@@ -220,6 +224,7 @@ class TagList extends Component {
               authCode="tag_model:publish_tag[u]"
             >
               <span className="disabled">取消发布</span>
+              <a href onClick={() => store.openModal(record)} className="mr16">授权</a>
             </Authority>
           )}
 
@@ -238,6 +243,14 @@ class TagList extends Component {
       tagId: data.id,
       configType: data.configType,
     })
+  }
+
+  @action.bound openModal(data) {
+    if (!store.projectName) {
+      store.getProjectDetail()
+    }
+    store.tagIds.replace([data.id])
+    store.modalApplyVisible = true
   }
 
   componentWillMount() {
@@ -396,6 +409,7 @@ class TagList extends Component {
 
           <ModalTagApply store={store} />
           <DrawerCreate store={store} />
+          <ModalApply store={store} />
           <DrawerTagConfig
             projectId={projectId}
             visible={drawerTagConfigVisible}
