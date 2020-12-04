@@ -79,6 +79,7 @@ export default class FieldList extends Component {
       key: 'dataTableName',
       title: '数据表名称',
       dataIndex: 'dataTableName',
+      width: 300,
     }, {
       key: 'isConfigured',
       title: '配置状态',
@@ -175,6 +176,7 @@ export default class FieldList extends Component {
       columns: this.columns,
       searchParams: seach(searchParams),
       initParams: {objId, projectId},
+      scroll: {x: 1300},
       // paginationConfig: {
       //   hideOnSinglePage: true, // 只有一页时隐藏
       // }, 

@@ -8,7 +8,7 @@ import {action, observable, toJS} from 'mobx'
 import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
 import {Drawer, Input, Select, Button} from 'antd'
-// import {ModalStotageDetail, OmitTooltip} from '../../../component'
+import {OmitTooltip} from '../../../component'
 // import {debounce, getNamePattern} from '../../../common/util'
 
 
@@ -16,7 +16,8 @@ const FormItem = Form.Item
 
 const formItemLayout = {
   labelCol: {span: 5},
-  wrapperCol: {span: 20},
+  wrapperCol: {span: 19},
+  colon: false,
 }
 
 // @inject('bigStore')
@@ -75,20 +76,20 @@ export default class DrawerDatasheet extends Component {
       >
         <Form style={{paddingBottom: '50px'}} colon={false}>
           <FormItem {...formItemLayout} label="数据表">
-            {this.store.tableName}
+            {<OmitTooltip text={this.store.tableName} maxWidth={300} className="rel-entity-name" />}
           </FormItem>
 
           <FormItem {...formItemLayout} label="数据源">
-            {this.store.storageName}
+            {<OmitTooltip text={this.store.storageName} maxWidth={300} className="rel-entity-name" />}
           </FormItem>
           
           <FormItem {...formItemLayout} label="where条件">
-            {this.store.whereValue || '-'}
+            {<OmitTooltip text={this.store.whereValue || '-'} maxWidth={300} className="rel-entity-name" />}
           </FormItem>
 
           {
             +this.typeCode === 4 ? (
-              <FormItem {...formItemLayout} label="主标签绑定的字段">
+              <FormItem {...formItemLayout} label={<OmitTooltip text="主标签绑定的字段" maxWidth={100} className="rel-entity-name" />}>
                 {this.store.dataSheetDetail.mappingKeys && this.store.dataSheetDetail.mappingKeys.length === 1 ? [this.store.dataSheetDetail.mappingKeys[0].field_name] : undefined}
               </FormItem>
             ) : <h3 className="mb24 fs14">主标签配置</h3>
@@ -98,13 +99,13 @@ export default class DrawerDatasheet extends Component {
               <Fragment>
                 <FormItem 
                   {...formItemLayout} 
-                  label={`关联实体${this.store.dataSheetDetail.mappingKeys && this.store.dataSheetDetail.mappingKeys.length === 2 ? this.store.dataSheetDetail.mappingKeys[0].obj_name : undefined}绑定的字段`}
+                  label={this.store.dataSheetDetail.mappingKeys && this.store.dataSheetDetail.mappingKeys.length === 2 ? this.store.dataSheetDetail.mappingKeys[0].obj_name : undefined} 
                 >
                   {this.store.dataSheetDetail.mappingKeys && this.store.dataSheetDetail.mappingKeys.length === 2 ? this.store.dataSheetDetail.mappingKeys[0].field_name : undefined}
                 </FormItem>
                 <FormItem 
                   {...formItemLayout} 
-                  label={`关联实体${this.store.dataSheetDetail.mappingKeys && this.store.dataSheetDetail.mappingKeys.length === 2 ? this.store.dataSheetDetail.mappingKeys[1].obj_name : undefined}绑定的字段`}
+                  label={this.store.dataSheetDetail.mappingKeys && this.store.dataSheetDetail.mappingKeys.length === 2 ? this.store.dataSheetDetail.mappingKeys[1].obj_name : undefined}
                 >
                   {this.store.dataSheetDetail.mappingKeys && this.store.dataSheetDetail.mappingKeys.length === 2 ? this.store.dataSheetDetail.mappingKeys[1].field_name : undefined}
                 </FormItem>
