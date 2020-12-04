@@ -76,7 +76,7 @@ export default class TagApply extends Component {
   }
 
   render() {
-    const {form: {getFieldDecorator}} = this.props
+    const {form: {getFieldDecorator, getFieldValue}} = this.props
     const {
       confirmLoading, 
       modalVisible, 
@@ -84,8 +84,12 @@ export default class TagApply extends Component {
       useProjectId, 
       // useProjectName, 
       // modalType,
-      // selectItem,
+      selectItem,
+      tagIds,
     } = this.store
+
+    const selectName = selectItem && selectItem.name
+    const selectNames = tagIds && tagIds.map(item => item)
 
     const modalConfig = {
       width: 525,
@@ -104,41 +108,9 @@ export default class TagApply extends Component {
         {...modalConfig}
       >
         <Form className="FBV">
-          {/* {
-            useProjectId !== '' ? (
-              <FormItem {...formItemLayout} label="使用项目">
-                {useProjectName}
-              </FormItem>
-            ) : (
-              <FormItem {...formItemLayout} label="使用项目">
-                {
-                  getFieldDecorator('useProjectId', {
-                    rules: [
-                      {required: true, message: '请选择使用项目'},
-                    ],
-                
-                  })(<Select placeholder="请选择使用项目">
-                    {
-                      canUseProject.map(({useProjectId: id, useProjectName: name}) => (
-                        <Option 
-                          key={id} 
-                          value={id}
-                        >
-                          {name}
-                        </Option>
-                      ))
-                    }
-                     </Select>)
-                }
-              </FormItem>
-            )
-          } */}
-          <FormItem {...formItemLayout} label="选择的标签">
-            {/* <span className="fs12">{}}</span> */}
-          </FormItem>
-          <FormItem {...formItemLayout} label="使用项目">
-            <span className="fs12">{useProjectName}</span>
-          </FormItem>
+          {/* <FormItem {...formItemLayout} label="选择的标签">
+            <span className="fs12">{selectName || selectNames}</span>
+          </FormItem> */}
           <FormItem
             {...formItemLayout}
             label="申请时长"
@@ -153,14 +125,11 @@ export default class TagApply extends Component {
                 <Radio value={1}>永久</Radio>
                 <Radio value={0}>
                   自定义
-                  <Space direction="vertical" size={12}>
-                    <RangePicker />
-                  </Space>
                 </Radio>
               </Radio.Group>
             )}
           </FormItem>
-          {/* {!getFieldValue('forever') ? (
+          {!getFieldValue('forever') ? (
             <FormItem
               {...formItemLayout}
               label="自定义时长"
@@ -174,7 +143,7 @@ export default class TagApply extends Component {
               )}
             </FormItem>
           )
-            : null } */}
+            : null }
          
           <FormItem
             {...formItemLayout}

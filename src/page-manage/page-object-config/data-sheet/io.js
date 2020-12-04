@@ -12,7 +12,7 @@ const api = {
   
   checkWhere: post(`${baseApi}/tagConfig/check_where`), // 添加关联表 - where条件校验
 
-  getDataSheetDetail: post(`${baseApi}/tagConfig/obj_storage_detail`), // 数据表详情
+  getDataSheetDetail: get(`${baseApi}/tagConfig/obj_storage_detail`), // 数据表详情
 
   // 添加
   saveEntityField: post(`${baseApi}/tagConfig/add_rel_field`), // 添加关联字段(实体)

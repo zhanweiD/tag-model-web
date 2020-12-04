@@ -12,7 +12,6 @@ export default class DrawerCreate extends Component {
     super(props)
     this.store = props.store
     this.store.objId = props.store.initParams.objId
-    // console.log(toJS(this.store.drawerTagInfo), 'drawer-create')
   }
 
   // @action.bound selectObject(id) {
@@ -37,7 +36,7 @@ export default class DrawerCreate extends Component {
       tagCateSelectList, 
       objectSelectList,
     } = this.store
-    
+    console.log(drawerTagInfo)
     return [
     // {
     //   label: '所属对象',
@@ -62,7 +61,7 @@ export default class DrawerCreate extends Component {
           '@requiredSelect',
         ],
         control: {
-          // disabled: !ownObject,
+          disabled: drawerTagInfo && drawerTagInfo.pathIds,
           options: tagCateSelectList,
           // valueName: 'id',
           // selectCon: ['isLeaf', 2],
@@ -88,7 +87,7 @@ export default class DrawerCreate extends Component {
         ],
         autoComplete: 'off',
         control: {
-          // disabled: !ownObject,
+          disabled: this.store.drawerTagType === 'edit',
         },
       }, {
         label: '标签标识',
@@ -105,7 +104,7 @@ export default class DrawerCreate extends Component {
         ],
         autoComplete: 'off',
         control: {
-          // disabled: !ownObject,
+          disabled: this.store.drawerTagType === 'edit',
         },
       }, {
         label: '数据类型',
@@ -138,7 +137,7 @@ export default class DrawerCreate extends Component {
         component: 'textArea',
         rules: [
           '@transformTrim',
-          '@required',
+          // '@required',
           '@max128',
           {validator: this.handleEnumValueValidator},
         ],

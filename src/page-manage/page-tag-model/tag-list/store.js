@@ -46,6 +46,7 @@ class Store extends ListContentStore(io.getList) {
   @observable publishRowKeys = []
 
   @observable modalApplyVisible = false
+  @observable selectItem = {}
 
   // 上下架申请modal
   @action.bound openModal(info) {
