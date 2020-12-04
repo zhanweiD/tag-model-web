@@ -21,7 +21,7 @@ class Store {
   @observable treeData = [] // 类目树数据
   @observable searchExpandedKeys = [] // 关键字搜索展开的树节点
   @observable currentSelectKeys = undefined// 默认展开的树节点
-  @observable isSelectObj = false
+  // @observable isSelectObj = false
   // 选择对象
   @observable selectObjVisible = false
   @observable selectObjLoading = false
@@ -76,6 +76,132 @@ class Store {
   /*
    * @description 获取对象类目树
    */
+  // @action async getObjTree(cb) {
+  //   this.treeLoading = true
+  //   this.firstChildrens = []
+
+  //   try {
+  //     const res = await io.getObjTree({
+  //       type: this.typeCode,
+  //       // searchKey: this.searchKey,
+  //       projectId: this.projectId,
+  //     })
+  //     runInAction(() => {
+  //       this.treeLoading = false
+  //       this.searchExpandedKeys.clear()
+
+  //       let data = res
+  //       this.treeData = listToTree(data)
+
+  //       // 判断是否进行搜索
+  //       if (this.searchKey) {
+  //         data = res.map(item => {
+  //           // 关键字搜索定位
+  //           if (this.searchKey && item.name.includes(this.searchKey)) {
+  //             this.findParentId(item.id, res, this.searchExpandedKeys)
+  //           }
+  //           return item
+  //         })
+  //       }
+
+  //       if (res.length) {
+  //         if (!this.objId || !res.filter(d => +d.aId === +this.objId).length) {
+  //           // const firstObject = res.filter(item => item.parentId !== 0)[0]
+  //           this.defaultKey(toJS(this.treeData))
+  //           const firstObject = this.firstChildrens[0]
+  //           // 默认展开第一个对象
+  //           this.currentSelectKeys = firstObject && firstObject.aId
+  //         } else {
+  //           this.currentSelectKeys = this.objId
+  //         }
+  //       } else {
+  //         this.currentSelectKeys = undefined
+  //       }
+  //       // 获取所有类目的数据；用于编辑对象时选择所属类目
+  //       // this.categoryData = res.filter(item => item.parentId === 0)
+
+  //       if (cb) cb()
+  //     })
+  //   } catch (e) {
+  //     runInAction(() => {
+  //       this.treeLoading = false
+  //     })
+  //     errorTip(e.message)
+  //   }
+  // }
+
+  /*
+   * @description 选择对象类目树
+   */
+  // @action async getObjCate(params) {
+  //   if (this.isSelectObj) {
+  //     this.treeLoading = false
+  //   } else {
+  //     this.treeLoading = true
+  //   }
+  //   this.selectObjLoading = true
+  //   // this.treeLoading = true
+  //   this.firstChildrens = []
+  //   try {
+  //     const res = await io.getObjCate({
+  //       ...params,
+  //       searchKey: this.searchKey,
+  //       projectId: this.projectId,
+  //     })
+  //     runInAction(() => {
+  //       // this.selectObjLoading = false
+  //       // this.treeLoading = false
+  //       let data = res.filter(item => item.isUsed === 0) // 不显示移去列表的对象
+  //       // let data = res
+        
+  //       // 判断是否进行搜索
+  //       if (this.isSelectObj) {
+  //         if (this.searchKey) {
+  //           data = res.map(item => {
+  //             // 关键字搜索定位
+  //             if (this.searchKey && item.name.includes(this.searchKey)) {
+  //               this.findParentId(item.id, res, this.objCateExpandedKeys)
+  //             }
+  //             return item
+  //           })
+  //         }
+  //       } else if (params.searchKey) {
+  //         data = res.map(item => {
+  //           // 关键字搜索定位
+  //           if (params.searchKey && item.name.includes(params.searchKey)) {
+  //             this.findParentId(item.id, res, this.objCateExpandedKeys)
+  //           }
+  //           return item
+  //         })
+  //       }
+
+  //       this.objCateTree = listToTree(data)
+
+  //       if (res.length) {
+  //         if (!this.objId || !res.filter(d => +d.aId === +this.objId).length) {
+  //           // const firstObject = res.filter(item => item.parentId !== 0)[0]
+  //           this.defaultKey(toJS(this.objCateTree))
+  //           const firstObject = this.firstChildrens[0]
+  //           // 默认展开第一个对象
+  //           this.currentSelectKeys = firstObject && firstObject.aId
+  //         } else {
+  //           this.currentSelectKeys = this.objId
+  //         }
+  //       } else {
+  //         this.currentSelectKeys = undefined
+  //       }
+  //       if (cb) cb()
+  //     })
+  //   } catch (e) {
+  //     errorTip(e.message)
+  //   } finally {
+  //     runInAction(() => {
+  //       this.selectObjLoading = false
+  //       this.treeLoading = false
+  //     })
+  //   }
+  // }
+  // 获取对象类目树
   @action async getObjTree(cb) {
     this.treeLoading = true
     this.firstChildrens = []
@@ -83,7 +209,7 @@ class Store {
     try {
       const res = await io.getObjTree({
         type: this.typeCode,
-        // searchKey: this.searchKey,
+        searchKey: this.searchKey,
         projectId: this.projectId,
       })
       runInAction(() => {
@@ -130,42 +256,19 @@ class Store {
     }
   }
 
-  /*
-   * @description 选择对象类目树
-   */
-  @action async getObjCate(params, cb) {
-    if (this.isSelectObj) {
-      this.treeLoading = false
-    } else {
-      this.treeLoading = true
-    }
+  // 选择对象类目树
+  @action async getObjCate(params) {
     this.selectObjLoading = true
-    // this.treeLoading = true
-    this.firstChildrens = []
     try {
       const res = await io.getObjCate({
         ...params,
-        searchKey: this.searchKey,
         projectId: this.projectId,
       })
       runInAction(() => {
         // this.selectObjLoading = false
-        // this.treeLoading = false
-        let data = res.filter(item => item.isUsed === 0) // 不显示移去列表的对象
-        // let data = res
-        
+        let data = res
         // 判断是否进行搜索
-        if (this.isSelectObj) {
-          if (this.searchKey) {
-            data = res.map(item => {
-              // 关键字搜索定位
-              if (this.searchKey && item.name.includes(this.searchKey)) {
-                this.findParentId(item.id, res, this.objCateExpandedKeys)
-              }
-              return item
-            })
-          }
-        } else if (params.searchKey) {
+        if (params.searchKey) {
           data = res.map(item => {
             // 关键字搜索定位
             if (params.searchKey && item.name.includes(params.searchKey)) {
@@ -174,30 +277,13 @@ class Store {
             return item
           })
         }
-
         this.objCateTree = listToTree(data)
-
-        if (res.length) {
-          if (!this.objId || !res.filter(d => +d.aId === +this.objId).length) {
-            // const firstObject = res.filter(item => item.parentId !== 0)[0]
-            this.defaultKey(toJS(this.objCateTree))
-            const firstObject = this.firstChildrens[0]
-            // 默认展开第一个对象
-            this.currentSelectKeys = firstObject && firstObject.aId
-          } else {
-            this.currentSelectKeys = this.objId
-          }
-        } else {
-          this.currentSelectKeys = undefined
-        }
-        if (cb) cb()
       })
     } catch (e) {
       errorTip(e.message)
     } finally {
       runInAction(() => {
         this.selectObjLoading = false
-        this.treeLoading = false
       })
     }
   }

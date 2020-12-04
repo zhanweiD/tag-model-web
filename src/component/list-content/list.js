@@ -54,7 +54,6 @@ export default class ListContent extends Component {
      */
     const {initParams} = this.props
     this.store.initParams = initParams
-    console.log(initGetDataByParent)
     if (initGetDataByParent) return 
     this.store.getList()
   }

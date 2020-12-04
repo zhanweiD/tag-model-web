@@ -20,12 +20,10 @@ class ObjectModel extends Component {
     super(props)
     const {match} = props
 
-    // console.log(props, 'model')
     store.projectId = props.projectId
     store.typeCode = match.params.typeCode || '4'
     store.objId = match.params.objId
     store.tabId = match.params.tabId || '0' // 当前详情tabID；默认数据视图
-    // console.log(store.projectId)
   }
 
   @action changeTab = code => {
