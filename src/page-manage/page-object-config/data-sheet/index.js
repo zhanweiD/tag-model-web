@@ -67,7 +67,7 @@ export default class DataSheet extends Component {
       title: '已有标签被使用',
       key: 'isUsed',
       dataIndex: 'isUsed',
-      width: 100,
+      width: 120,
       render: text => <div>{text ? '是' : '否'}</div>,
     }, {
       key: 'action',
