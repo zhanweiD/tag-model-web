@@ -92,6 +92,58 @@ export default class DataTable extends Component {
       // 交集模式
       // 要处理数据了。。。
       // TODO: 有问题获取不到数据
+      store.mode = joinModeDetail.mode
+      store.dataStorageId = joinModeDetail.dataStorageId
+      store.dataTableName = joinModeDetail.dataTableName
+
+      store.getDataSheet({
+        storageId: store.dataStorageId,
+      })
+
+      if (+store.typeCode === 4) {
+        // 实体
+        store.getFieldList({objId: store.objId})
+        const {mappingKeys} = joinModeDetail
+        let fieldName
+        if (mappingKeys && mappingKeys.length && mappingKeys.length > 0) {
+          fieldName = mappingKeys[0].field_name
+        }
+        store.dataField = fieldName
+      } else {
+        const {mappingKeys} = joinModeDetail
+        let fieldName1
+        let fieldName2
+        if (mappingKeys && mappingKeys.length && mappingKeys.length > 0) {
+          const [key1, key2] = mappingKeys
+          // 有两个
+          fieldName1 = key1.field_name
+          fieldName2 = key2.field_name
+          store.getFieldList({objId: key1.obj_id}, fieldList => {
+            store.fieldList1 = fieldList.map(d => {
+              if (d.field === fieldName2) {
+                return {
+                  ...d,
+                  disabled: true,
+                }
+              }
+              return d
+            })
+          })
+          store.getFieldList({objId: key2.obj_id}, fieldList => {
+            store.fieldList2 = fieldList.map(d => {
+              if (d.field === fieldName1) {
+                return {
+                  ...d,
+                  disabled: true,
+                }
+              }
+              return d
+            })
+          })
+        }
+        store.dataField1 = fieldName1
+        store.dataField2 = fieldName2
+      }
     }
 
     // 没数据？
