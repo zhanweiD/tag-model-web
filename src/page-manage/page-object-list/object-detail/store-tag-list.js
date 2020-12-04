@@ -8,7 +8,7 @@ import {ListContentStore} from '../../../component/list-content'
 import io from './io'
 
 class Store extends ListContentStore(io.getTagList) {
-  projectId
+  projectId = undefined
   objId
 
   // 创建标签

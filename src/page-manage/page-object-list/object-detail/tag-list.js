@@ -40,16 +40,19 @@ export default class TagList extends Component {
     key: 'creator',
     title: '创建人',
     dataIndex: 'creator',
-  }, {
-    title: '描述',
-    dataIndex: 'descr',
-    render: text => (text || '-'),
+    render: (text, record) => <span>{record.createType === 1 ? '自建' : record.projectName}</span>,
   }, {
     key: 'status',
     title: '标签状态',
     dataIndex: 'status',
     render: v => tagStatusBadgeMap(+v),
-  }, {
+  }, 
+  // {
+  //   title: '描述',
+  //   dataIndex: 'descr',
+  //   render: text => (text || '-'),
+  // },
+  {
     key: 'action',
     title: '操作',
     width: 180,
@@ -196,7 +199,7 @@ export default class TagList extends Component {
     console.log(store.objId)
     const listConfig = {
       columns: this.columns,
-      initParams: {objId: +store.objId, projectId: store.projectId},
+      initParams: {objId: +store.objId},
       buttons: [<div className="pr24 far" style={{display: 'float'}}>
         {/* <Search
           placeholder="请输入标签名称关键字"
@@ -215,7 +218,7 @@ export default class TagList extends Component {
             suffix={<SearchOutlined />}
           />
         </div>
-                </div>],
+      </div>],
       store,
     }
     return (

@@ -226,7 +226,6 @@ export default class ObjectDetail extends Component {
           <TabRoute {...tabConfig} />
           <div className="object-tab-content">
             <Content bigStore={this.store} store={this.store} updateDetailKey={this.props.updateDetailKey} objId={objId} />
-
           </div>
         </div>
       </div>

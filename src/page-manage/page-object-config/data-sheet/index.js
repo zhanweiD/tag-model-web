@@ -37,7 +37,7 @@ export default class DataSheet extends Component {
       title: '数据表名称',
       key: 'dataTableName',
       dataIndex: 'dataTableName',
-      width: 200,
+      width: 250,
       fixed: 'left',
       render: (text, record) => (
         <div>
@@ -48,7 +48,7 @@ export default class DataSheet extends Component {
       title: '数据源',
       key: 'dataStorageName',
       dataIndex: 'dataStorageName',
-      width: 250,
+      width: 300,
       // render: text => <OmitTooltip maxWidth={250} text={text} />,
     }, {
       title: '数据源类型',
@@ -105,17 +105,13 @@ export default class DataSheet extends Component {
       title: '数据表名称',
       key: 'dataTableName',
       dataIndex: 'dataTableName',
-<<<<<<< HEAD
-      width: 200,
+      width: 250,
       fixed: 'left',
-      // render: text => <OmitTooltip maxWidth={250} text={text} />,
-=======
       render: (text, record) => (
         <div>
           <a href onClick={() => this.openDrawerDatasheet(record)}>{text}</a>
         </div>
       ),
->>>>>>> 5700cb97995983a36f74c560e1b3e64908782ce2
     }, {
       title: '数据源',
       key: 'dataStorageName',
@@ -126,7 +122,7 @@ export default class DataSheet extends Component {
       title: '数据源类型',
       key: 'storageTypeName',
       dataIndex: 'storageTypeName',
-      width: 200,
+      width: 150,
     }, {
       key: 'action',
       title: '操作',
@@ -230,7 +226,6 @@ export default class DataSheet extends Component {
     store.storageName = toJS(data.dataStorageName)
     // store.majorKeyField = toJS(data.mappingKey)
     this.drawerDatasheetVisible = true
-    console.log(data, 'data')
   }
 
   @action.bound closeTagConfig() {
@@ -271,6 +266,7 @@ export default class DataSheet extends Component {
     const listConfig = {
       columns: relationType ? this.columns : this.columns1,
       // columns: this.columns,
+      scroll: {x: 1300},
       initParams: {objId, projectId},
       buttons: [buttons],
       paginationConfig: {

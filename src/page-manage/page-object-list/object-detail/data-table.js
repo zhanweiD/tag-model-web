@@ -27,10 +27,13 @@ export default class DataTable extends Component {
   columns = [{
     title: '数据表',
     dataIndex: 'tableName',
+    width: 300,
+    fixed: 'left',
   }, {
     title: '数据源',
     dataIndex: 'storageName',
     className: 'wb',
+    width: 300,
   }, {
     title: '数据源类型',
     dataIndex: 'storageType',
@@ -50,10 +53,13 @@ export default class DataTable extends Component {
   simpleColumns = [{
     title: '数据表',
     dataIndex: 'tableName',
+    width: 300,
+    fixed: 'left',
   }, {
     title: '数据源',
     dataIndex: 'storageName',
     className: 'wb',
+    width: 300,
   }, {
     title: '数据源类型',
     dataIndex: 'storageType',
@@ -122,13 +128,12 @@ export default class DataTable extends Component {
   }
 
   render() {
-    // const {projectId} = store
-    // const {objId, type, projectId} = this.props
     const {objId, type} = this.props
     const listConfig = {
       columns: +type ? this.columns : this.simpleColumns,
       // initParams: {objId: +objId, projectId: +projectId},
       initParams: {objId: +objId},
+      scroll: {x: 1300},
       buttons: [<div className="pr24 far" style={{display: 'float'}}>
         {/* <Search
           placeholder="请输入数据表名称关键字"
@@ -159,7 +164,7 @@ export default class DataTable extends Component {
             suffix={<SearchOutlined />}
           />
         </div>
-      </div>],
+                </div>],
       store,
     }
     return (

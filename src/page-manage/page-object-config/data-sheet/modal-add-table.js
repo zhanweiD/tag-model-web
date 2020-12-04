@@ -411,27 +411,42 @@ class ModalAddTable extends Component {
                 '@max128',
               ],
             })(
-              <FormItem>
+              <div style={{textAlign: 'right'}}>
                 <TextArea 
                   onChange={this.onWhereChange}
                   id="where"
                   placeholder="请输入查询语句的where条件，该查询语句的返回结果将作为对象绑定的数据。例如：sex=“男” and age>30" 
                 />
-                <FormItem style={{textAlign: 'right'}}>
-                  {getFieldDecorator('validator', {
-                    // rules: [
-                    //   {validator: this.handleWhereConditionValidator},
-                    // ],
-                  })(
-                    <Button
-                      type="ghost"
-                      onClick={() => this.store.checkWhere()}
-                    >
+                <Button
+                  className="mt8"
+                  type={whereCondition ? 'primary' : 'ghost'}
+                  onClick={() => this.store.checkWhere()}
+                >
                     校验
-                    </Button>
-                  )}
-                </FormItem>
-              </FormItem>
+                </Button>
+              </div>
+              // <FormItem>
+              //   <TextArea 
+              //     onChange={this.onWhereChange}
+              //     id="where"
+              //     placeholder="请输入查询语句的where条件，该查询语句的返回结果将作为对象绑定的数据。例如：sex=“男” and age>30" 
+              //   />
+              //   <FormItem style={{textAlign: 'right'}}>
+              //     {getFieldDecorator('validator', {
+              //       // rules: [
+              //       //   {validator: this.handleWhereConditionValidator},
+              //       // ],
+              //     })(
+              //       <Button
+              //         className="mt8"
+              //         type={whereCondition ? 'primary' : 'ghost'}
+              //         onClick={() => this.store.checkWhere()}
+              //       >
+              //       校验
+              //       </Button>
+              //     )}
+              //   </FormItem>
+              // </FormItem>
             )}
           </FormItem>
           {/* 实体2 */}
