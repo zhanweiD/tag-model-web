@@ -2,7 +2,7 @@
  * @description 对象配置 - 数据表
  */
 import {Component} from 'react'
-import {action, observable} from 'mobx'
+import {action, observable, toJS} from 'mobx'
 import {observer, inject, Provider} from 'mobx-react'
 import {
   Popconfirm, Button,
@@ -105,9 +105,17 @@ export default class DataSheet extends Component {
       title: '数据表名称',
       key: 'dataTableName',
       dataIndex: 'dataTableName',
+<<<<<<< HEAD
       width: 200,
       fixed: 'left',
       // render: text => <OmitTooltip maxWidth={250} text={text} />,
+=======
+      render: (text, record) => (
+        <div>
+          <a href onClick={() => this.openDrawerDatasheet(record)}>{text}</a>
+        </div>
+      ),
+>>>>>>> 5700cb97995983a36f74c560e1b3e64908782ce2
     }, {
       title: '数据源',
       key: 'dataStorageName',
@@ -155,13 +163,13 @@ export default class DataSheet extends Component {
   componentWillReceiveProps(next) {
     const {objId} = this.props
     if (+objId !== +next.objId) {
-      store.objId = next.objId
+      store.objId = +next.objId
       // 重置列表默认参数
-      store.initParams.objId = next.objId
+      store.initParams.objId = +next.objId
       
       store.getList({
         currentPage: 1,
-        objId: next.objId,
+        objId: +next.objId,
       })
     }
   }
@@ -217,7 +225,12 @@ export default class DataSheet extends Component {
 
   @action.bound openDrawerDatasheet(data) {
     store.editSelectedItem = data // 对象id
+    store.tableName = toJS(data.dataTableName)
+    store.storageId = toJS(data.dataStorageId)
+    store.storageName = toJS(data.dataStorageName)
+    // store.majorKeyField = toJS(data.mappingKey)
     this.drawerDatasheetVisible = true
+    console.log(data, 'data')
   }
 
   @action.bound closeTagConfig() {
@@ -239,6 +252,7 @@ export default class DataSheet extends Component {
       objId,
       projectId,
       relationType,
+      storageId,
       drawerDatasheetVisible,
       // typeCode,
     } = store
