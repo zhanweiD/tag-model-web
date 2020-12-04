@@ -9,7 +9,7 @@ class Store extends ListContentStore(io.getTableList) {
   projectId
   objId
   relationType // 区分 2实体 & 0简单关系 & 1复杂关系
-  typeCode // 区分实体&关系
+  typeCode // 区分实体：4&关系：3
 
   @observable bothTypeCode // 区分 2实体 & 0简单关系 & 1复杂关系
 
@@ -134,8 +134,8 @@ class Store extends ListContentStore(io.getTableList) {
   @action async getFieldList(params, cb) {
     try {
       const res = await io.getFieldList({
-        tableName: this.tableName,
-        storageId: this.storageId,
+        tableName: this.dataTableName,
+        storageId: this.dataStorageId,
         ...params,
       })
       runInAction(() => {
@@ -292,8 +292,17 @@ class Store extends ListContentStore(io.getTableList) {
     }
   }
 
+  // ---------- 多表设置
+  @observable mode = 0
+  @observable dataStorageId
+  @observable dataTableName
+  @observable dataField
+  @observable dataField1
+  @observable dataField2
+
   // 设置数据表 主表模式，并集模式
   @action async updateObjJoinMode(params, cb = () => {}) {
+    this.confirmLoading = true
     try {
       const res = await io.updateObjJoinMode(params)
 
@@ -301,6 +310,10 @@ class Store extends ListContentStore(io.getTableList) {
       cb()
     } catch (e) {
       errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        this.confirmLoading = false
+      })
     }
   }
 

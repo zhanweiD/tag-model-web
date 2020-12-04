@@ -29,7 +29,6 @@ class ModalRelateTable extends Component {
 
   @observable chooseEntity // 简单关系 从关联实体的数据表中选择的实体
   @observable chooseEntityMaJorKey // 简单关系 从关联实体的数据表中选择的实体 的主键
-  @observable chooseModel = 0
   // @observable modalRelateVisible = true 
 
   @action.bound initData() {
@@ -50,7 +49,7 @@ class ModalRelateTable extends Component {
     const {form: {resetFields}} = this.props
     const {objDetail} = this.bigStore
 
-    this.store.tableName = undefined
+    this.store.dataTableName = undefined
     resetFields(['dataTableName'])
     if (checked) {
       this.chooseEntity = objDetail.objRspList && objDetail.objRspList[0].id
@@ -67,9 +66,13 @@ class ModalRelateTable extends Component {
   // 单选按钮
   @action.bound onRadioChange(e) {
     const {value} = e.target
-    this.chooseModel = value
     const {form: {resetFields}} = this.props
-    this.store.tableName = undefined
+    this.store.dataTableName = undefined
+    this.store.dataStorageId = undefined
+    this.store.dataField = undefined
+    this.store.dataField1 = undefined
+    this.store.dataField2 = undefined
+    this.store.mode = value
     resetFields(['mode'])
     this.initData()
   }
@@ -81,10 +84,10 @@ class ModalRelateTable extends Component {
   @action.bound selectDataSheet(tableName) {
     const t = this
     const {form: {resetFields}} = this.props
-    if (tableName !== this.store.tableName) {
-      this.store.tableName = tableName
+    if (tableName !== this.store.dataTableName) {
+      this.store.dataTableName = tableName
 
-      resetFields(['mappingKey'])
+      
 
       const {objDetail} = this.bigStore
 
@@ -136,6 +139,8 @@ class ModalRelateTable extends Component {
         })
       } else {
         // 实体
+        resetFields(['mappingKey'])
+        this.store.dataField = undefined
         this.store.getFieldList({objId: this.store.objId})
       }
       
@@ -236,6 +241,7 @@ class ModalRelateTable extends Component {
           fieldArr = [
             {
               obj_id: String(this.bigStore.objDetail.id),
+              obj_name: this.bigStore.objDetail.name,
               field_type: fieldType,
               field_name: fieldName,
             },
@@ -244,7 +250,9 @@ class ModalRelateTable extends Component {
           // 关系
           const {objDetail} = this.bigStore
           const entity1Id = objDetail.objRspList && objDetail.objRspList[0].id
+          const entity1Name = objDetail.objRspList && objDetail.objRspList[0].name
           const entity2Id = objDetail.objRspList && objDetail.objRspList[1].id
+          const entity2Name = objDetail.objRspList && objDetail.objRspList[1].name
 
           const {entity1Key, entity2Key} = values
           const targetField1 = _.find(fieldList1, item => item.field === entity1Key)
@@ -258,10 +266,12 @@ class ModalRelateTable extends Component {
           fieldArr = [
             {
               obj_id: String(entity1Id),
+              obj_name: entity1Name,
               field_type: fieldType1,
               field_name: fieldName1,
             }, {
               obj_id: String(entity2Id),
+              obj_name: entity2Name,
               field_type: fieldType2,
               field_name: fieldName2,
             },
@@ -286,7 +296,6 @@ class ModalRelateTable extends Component {
   @action handleCancel = () => {
     const {store} = this.props
     this.chooseEntity = undefined
-    this.chooseModel = undefined
     this.chooseEntityMaJorKey = undefined
     store.closeModal()
     this.handleReset()
@@ -307,16 +316,18 @@ class ModalRelateTable extends Component {
 
   @action dataSourceSelect = e => {
     const {form: {resetFields}} = this.props
-    const {typeCode} = this.store
-    if (this.chooseModel === 1) {
-      if (typeCode === 4) {
+    const {typeCode, mode} = this.store
+    if (mode === 1) {
+      if (+typeCode === 4) {
         resetFields(['dataTableName', 'mappingKey'])
+        this.store.dataTableName = undefined
+        this.store.dataField = undefined
       } else {
         resetFields(['dataTableName', 'mappingKey', 'entity1Key', 'entity2Key'])
       }
     }
 
-    this.store.storageId = e
+    this.store.dataStorageId = e
     this.store.getDataSheet({
       storageId: e,
     })
@@ -342,6 +353,12 @@ class ModalRelateTable extends Component {
       bothTypeCode,
       storageId,
       typeCode,
+      mode,
+      dataStorageId,
+      dataTableName,
+      dataField,
+      dataField1,
+      dataField2,
     } = this.store
 
     const {objDetail} = this.bigStore
@@ -365,7 +382,7 @@ class ModalRelateTable extends Component {
         <Form>
           <FormItem {...formItemLayout}>
             {getFieldDecorator('mode', {
-              initialValue: 0, // 0 是并集，1是主表
+              initialValue: mode, // 0 是并集，1是主表
             })(
               <Radio.Group onChange={this.onRadioChange}>
                 <Radio value={1}>主表模式</Radio>
@@ -374,11 +391,12 @@ class ModalRelateTable extends Component {
             )}
           </FormItem>
           
-          { +this.chooseModel === 1 ? (
+          { mode === 1 ? (
             <Fragment>
               <FormItem {...formItemLayout} label="数据源">
                 {getFieldDecorator('dataStorageId', {
                   rules: [{required: true, message: '请选择数据源'}],
+                  initialValue: dataStorageId,
                 })(
                   <Select 
                     placeholder="请选择数据源" 
@@ -408,6 +426,7 @@ class ModalRelateTable extends Component {
               >
                 {getFieldDecorator('dataTableName', {
                   rules: [{required: true, message: '请选择数据表'}],
+                  initialValue: dataTableName,
                 })(
                   <Select placeholder="请选择数据表" onSelect={v => this.selectDataSheet(v)} showSearch optionFilterProp="children">
                     {  
@@ -420,7 +439,7 @@ class ModalRelateTable extends Component {
               </FormItem>
               {/* 实体2 */}
               { 
-                this.chooseModel === 1 && +typeCode === 4 ? (
+                mode === 1 && +typeCode === 4 ? (
                   // <FormItem {...formItemLayout} label="主标签绑定的字段">
                   <FormItem 
                     {...formItemLayout} 
@@ -435,6 +454,7 @@ class ModalRelateTable extends Component {
                   >
                     {getFieldDecorator('mappingKey', {
                       rules: [{required: true, message: '请选择主标签绑定的字段'}],
+                      initialValue: dataField,
                     })(
                       <Select placeholder="请选择主标签绑定的字段" onSelect={v => this.selectMajorKey(v)} showSearch optionFilterProp="children">
                         {
@@ -452,11 +472,12 @@ class ModalRelateTable extends Component {
           ) : null
           }
           {
-            this.chooseModel === 1 && +typeCode === 3 ? (
+            mode === 1 && +typeCode === 3 ? (
               <Fragment>
                 <FormItem {...formItemLayout} label={<OmitTooltip text={entity1Name} maxWidth={80} className="rel-entity-name" />}>
                   {getFieldDecorator('entity1Key', {
                     rules: [{required: true, message: `请选择${entity1Name}绑定的字段`}],
+                    initialValue: dataField1,
                   })(
                     <Select 
                       placeholder={`请选择${entity1Name}绑定的字段`} 
@@ -475,6 +496,7 @@ class ModalRelateTable extends Component {
                 <FormItem {...formItemLayout} label={<OmitTooltip text={entity2Name} maxWidth={80} className="rel-entity-name" />}>
                   {getFieldDecorator('entity2Key', {
                     rules: [{required: true, message: `请选择${entity2Name}绑定的字段`}],
+                    initialValue: dataField2,
                   })(
                     <Select 
                       showSearch
