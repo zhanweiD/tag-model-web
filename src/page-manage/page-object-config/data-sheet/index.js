@@ -105,17 +105,11 @@ export default class DataSheet extends Component {
       title: '数据表名称',
       key: 'dataTableName',
       dataIndex: 'dataTableName',
-<<<<<<< HEAD
-      width: 200,
-      fixed: 'left',
-      // render: text => <OmitTooltip maxWidth={250} text={text} />,
-=======
       render: (text, record) => (
         <div>
           <a href onClick={() => this.openDrawerDatasheet(record)}>{text}</a>
         </div>
       ),
->>>>>>> 5700cb97995983a36f74c560e1b3e64908782ce2
     }, {
       title: '数据源',
       key: 'dataStorageName',
