@@ -20,6 +20,7 @@ class Store extends ListContentStore(io.getList) {
   @observable editSelectedItem = {}
   
   @observable storageId = undefined
+  @observable storageName = undefined
   @observable tableName = undefined
   @observable majorKeyField = undefined
   @observable whereCondition = undefined
@@ -147,9 +148,9 @@ class Store extends ListContentStore(io.getList) {
   @action async getDataSheetDetail() {
     try {
       const res = await io.getDataSheetDetail({
-        objId: this.objId,
-        // projectId: this.projectId,
+        objId: +this.objId,
         storageId: this.storageId,
+        tableName: this.tableName,
       })
       runInAction(() => {
         this.dataSheetDetail = res || []
