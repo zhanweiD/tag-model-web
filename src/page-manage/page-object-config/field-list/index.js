@@ -66,6 +66,7 @@ export default class FieldList extends Component {
       key: 'dataFieldName',
       title: '字段名称',
       dataIndex: 'dataFieldName',
+      fixed: 'left',
     }, {
       key: 'dataDbName',
       title: '数据源',
@@ -103,6 +104,7 @@ export default class FieldList extends Component {
       title: '操作',
       width: 130,
       dataIndex: 'action',
+      fixed: 'right',
       render: (text, record) => (
         <div className="FBH FBAC">
           <Authority

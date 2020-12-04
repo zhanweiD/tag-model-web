@@ -28,7 +28,7 @@ class ObjectDetail extends Component {
   constructor(props) {
     super(props)
     const {match: {params}} = props
-    store.projectId = props.projectId
+    store.projectId = undefined
     store.objId = params && params.objId
     store.typeCode = params && params.typeCode
   }

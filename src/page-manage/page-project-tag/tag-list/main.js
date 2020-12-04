@@ -27,7 +27,6 @@ export default class TagList extends Component {
   constructor(props) {
     super(props)
     store.useProjectId = props.projectId
-    // console.log(store.modalApplyVisible, store.modalBackVisible, '111')
   }
 
   // componentWillMount() {
@@ -40,8 +39,8 @@ export default class TagList extends Component {
   componentDidMount() {
     if (store.useProjectId) {
       // 请求列表，放在父组件进行请求是因为需要在外层做空数据判断。
-    // 若返回数据为空[]。则渲染 NoData 组件。
-    // 要是请求放在列表组件ListContent中的话, 就必须渲染表格的dom 影响体验
+      // 若返回数据为空[]。则渲染 NoData 组件。
+      // 要是请求放在列表组件ListContent中的话, 就必须渲染表格的dom 影响体验
       store.getList({
         useProjectId: store.useProjectId,
       })
@@ -69,6 +68,7 @@ export default class TagList extends Component {
       key: 'name',
       title: '标签名称',
       dataIndex: 'name',
+      fixed: 'left',
       render: (text, record) => <Link target="_blank" to={`/manage/project-tag/${record.id}/${store.useProjectId}`}>{text}</Link>,
     }, {
       key: 'enName',
@@ -100,33 +100,18 @@ export default class TagList extends Component {
     {
       key: 'action',
       title: '操作',
-      width: 120,
+      width: 200,
+      fixed: 'right',
       render: (text, record) => (
         <div className="FBH FBAC">
-          {/* <Authority 
-            authCode="tag_model:project_tag_detail[r]" 
-          >
-            <Link target="_blank" to={`/manage/project-tag/${record.id}/${store.useProjectId}`}>标签详情</Link>
-          </Authority> */}
-          {/* <Authority 
-            authCode="tag_model:apply_project_tag[c]" 
-          > */}
-          {/* {
-            record.status === 2
-              ? ( */}
           <Fragment>        
-            {/* <span className="table-action-line" /> */}
-            <a className="mr2" href onClick={() => this.openApplyModal(record)}>权限申请</a>
+            <a className="mr8" href>权限申请</a>
+            {/* <a className="mr8" href onClick={() => this.openApplyModal(record)}>权限申请</a> */}
           </Fragment>
           <Fragment>        
-            {/* <span className="table-action-line" /> */}
-            <a className="mr2" href onClick={() => this.openBackModal(record)}>交回权限</a>
+            <a href>交回权限</a>
+            {/* <a href onClick={() => this.openBackModal(record)}>交回权限</a> */}
           </Fragment>
-          {/* )
-          : null
-      } */}
-          {/* </Authority> */}
-        
         </div>
       ),
     },
@@ -138,7 +123,6 @@ export default class TagList extends Component {
     }
     store.tagIds.replace([data.id])
     store.modalApplyVisible = true
-    // console.log(store.modalApplyVisible, 'modalApplyVisible')
   }
 
   @action.bound openBackModal(data) {
@@ -147,7 +131,6 @@ export default class TagList extends Component {
     }
     store.tagIds.replace([data.id])
     store.modalBackVisible = true
-    // console.log(store.modalBackVisible, 'modalBackVisible')
   }
 
   // 是否有进行搜索操作

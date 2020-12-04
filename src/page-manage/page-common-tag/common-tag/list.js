@@ -63,6 +63,7 @@ export default class Market extends Component {
       key: 'name',
       title: '标签名称',
       dataIndex: 'name',
+      fixed: 'left',
       render: (text, record) => (
         <div className="FBH">
           {/* <OmitTooltip maxWidth={120} text={text} /> */}
@@ -103,6 +104,7 @@ export default class Market extends Component {
       key: 'action',
       title: '操作',
       width: 150,
+      fixed: 'right',
       render: (text, record) => (
         <div className="FBH FBAC">
           {/* eslint-disable-next-line no-underscore-dangle */}

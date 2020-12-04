@@ -150,6 +150,7 @@ export default class ListContent extends Component {
           onChange={handleTableChange}
           {...rest}
           className="table"
+          scroll={{x: 1300}}
         />
         {
           hasPaging && list.length ? (

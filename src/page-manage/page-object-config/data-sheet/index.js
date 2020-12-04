@@ -2,7 +2,7 @@
  * @description 对象配置 - 数据表
  */
 import {Component} from 'react'
-import {action, observable} from 'mobx'
+import {action, observable, toJS} from 'mobx'
 import {observer, inject, Provider} from 'mobx-react'
 import {
   Popconfirm, Button,
@@ -27,8 +27,6 @@ export default class DataSheet extends Component {
     store.objId = bigStore.objId
     store.typeCode = bigStore.typeCode
     store.relationType = bigStore.objDetail.type
-    // console.log(store, 'store')
-    // console.log(bigStore, 'bigstore')
   }
 
   @observable tagConfigVisible = false
@@ -39,6 +37,8 @@ export default class DataSheet extends Component {
       title: '数据表名称',
       key: 'dataTableName',
       dataIndex: 'dataTableName',
+      width: 200,
+      fixed: 'left',
       render: (text, record) => (
         <div>
           <a href onClick={() => this.openDrawerDatasheet(record)}>{text}</a>
@@ -48,15 +48,18 @@ export default class DataSheet extends Component {
       title: '数据源',
       key: 'dataStorageName',
       dataIndex: 'dataStorageName',
-      render: text => <OmitTooltip maxWidth={250} text={text} />,
+      width: 250,
+      // render: text => <OmitTooltip maxWidth={250} text={text} />,
     }, {
       title: '数据源类型',
       key: 'storageTypeName',
       dataIndex: 'storageTypeName',
+      width: 150,
     }, {
       title: '已配置/字段数',
       key: 'configuredField',
       dataIndex: 'configuredField',
+      width: 150,
       render: (text, record) => (
         <div>{`${text}/${record.associatedField}`}</div>
       ),
@@ -64,12 +67,14 @@ export default class DataSheet extends Component {
       title: '已有标签被使用',
       key: 'isUsed',
       dataIndex: 'isUsed',
+      width: 100,
       render: text => <div>{text ? '是' : '否'}</div>,
     }, {
       key: 'action',
       title: '操作',
       dataIndex: 'action',
-      width: 150,
+      width: 250,
+      fixed: 'right',
       render: (text, record) => (
         <div>
           <Authority authCode="tag_model:update_table[cud]">
@@ -100,21 +105,34 @@ export default class DataSheet extends Component {
       title: '数据表名称',
       key: 'dataTableName',
       dataIndex: 'dataTableName',
-      render: text => <OmitTooltip maxWidth={250} text={text} />,
+<<<<<<< HEAD
+      width: 200,
+      fixed: 'left',
+      // render: text => <OmitTooltip maxWidth={250} text={text} />,
+=======
+      render: (text, record) => (
+        <div>
+          <a href onClick={() => this.openDrawerDatasheet(record)}>{text}</a>
+        </div>
+      ),
+>>>>>>> 5700cb97995983a36f74c560e1b3e64908782ce2
     }, {
       title: '数据源',
       key: 'dataStorageName',
       dataIndex: 'dataStorageName',
-      render: text => <OmitTooltip maxWidth={250} text={text} />,
+      width: 300,
+      // render: text => <OmitTooltip maxWidth={250} text={text} />,
     }, {
       title: '数据源类型',
       key: 'storageTypeName',
       dataIndex: 'storageTypeName',
+      width: 200,
     }, {
       key: 'action',
       title: '操作',
       dataIndex: 'action',
       width: 150,
+      fixed: 'right',
       render: (text, record) => (
         <div>
           <Authority authCode="tag_model:update_table[cud]">
@@ -145,13 +163,13 @@ export default class DataSheet extends Component {
   componentWillReceiveProps(next) {
     const {objId} = this.props
     if (+objId !== +next.objId) {
-      store.objId = next.objId
+      store.objId = +next.objId
       // 重置列表默认参数
-      store.initParams.objId = next.objId
+      store.initParams.objId = +next.objId
       
       store.getList({
         currentPage: 1,
-        objId: next.objId,
+        objId: +next.objId,
       })
     }
   }
@@ -207,7 +225,12 @@ export default class DataSheet extends Component {
 
   @action.bound openDrawerDatasheet(data) {
     store.editSelectedItem = data // 对象id
+    store.tableName = toJS(data.dataTableName)
+    store.storageId = toJS(data.dataStorageId)
+    store.storageName = toJS(data.dataStorageName)
+    // store.majorKeyField = toJS(data.mappingKey)
     this.drawerDatasheetVisible = true
+    console.log(data, 'data')
   }
 
   @action.bound closeTagConfig() {
@@ -229,6 +252,7 @@ export default class DataSheet extends Component {
       objId,
       projectId,
       relationType,
+      storageId,
       drawerDatasheetVisible,
       // typeCode,
     } = store
