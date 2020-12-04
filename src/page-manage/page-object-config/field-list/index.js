@@ -66,6 +66,7 @@ export default class FieldList extends Component {
       key: 'dataFieldName',
       title: '字段名称',
       dataIndex: 'dataFieldName',
+      fixed: 'left',
     }, {
       key: 'dataDbName',
       title: '数据源',
@@ -78,6 +79,7 @@ export default class FieldList extends Component {
       key: 'dataTableName',
       title: '数据表名称',
       dataIndex: 'dataTableName',
+      width: 300,
     }, {
       key: 'isConfigured',
       title: '配置状态',
@@ -103,6 +105,7 @@ export default class FieldList extends Component {
       title: '操作',
       width: 130,
       dataIndex: 'action',
+      fixed: 'right',
       render: (text, record) => (
         <div className="FBH FBAC">
           <Authority
@@ -173,6 +176,7 @@ export default class FieldList extends Component {
       columns: this.columns,
       searchParams: seach(searchParams),
       initParams: {objId, projectId},
+      scroll: {x: 1300},
       // paginationConfig: {
       //   hideOnSinglePage: true, // 只有一页时隐藏
       // }, 

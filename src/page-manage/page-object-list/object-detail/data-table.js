@@ -17,8 +17,8 @@ export default class DataTable extends Component {
     super(props)
     const {bigStore} = props
     this.bigStore = bigStore
-    // console.log(props, 'c')
-    store.projectId = bigStore.projectId
+    store.projectId = undefined
+    // store.projectId = bigStore.projectId
     store.objId = bigStore.objId
     store.typeCode = bigStore.typeCode
     store.relationType = bigStore.objDetail.type
@@ -27,10 +27,13 @@ export default class DataTable extends Component {
   columns = [{
     title: '数据表',
     dataIndex: 'tableName',
+    width: 300,
+    fixed: 'left',
   }, {
     title: '数据源',
     dataIndex: 'storageName',
     className: 'wb',
+    width: 300,
   }, {
     title: '数据源类型',
     dataIndex: 'storageType',
@@ -50,10 +53,13 @@ export default class DataTable extends Component {
   simpleColumns = [{
     title: '数据表',
     dataIndex: 'tableName',
+    width: 300,
+    fixed: 'left',
   }, {
     title: '数据源',
     dataIndex: 'storageName',
     className: 'wb',
+    width: 300,
   }, {
     title: '数据源类型',
     dataIndex: 'storageType',
@@ -92,6 +98,58 @@ export default class DataTable extends Component {
       // 交集模式
       // 要处理数据了。。。
       // TODO: 有问题获取不到数据
+      store.mode = joinModeDetail.mode
+      store.dataStorageId = joinModeDetail.dataStorageId
+      store.dataTableName = joinModeDetail.dataTableName
+
+      store.getDataSheet({
+        storageId: store.dataStorageId,
+      })
+
+      if (+store.typeCode === 4) {
+        // 实体
+        store.getFieldList({objId: store.objId})
+        const {mappingKeys} = joinModeDetail
+        let fieldName
+        if (mappingKeys && mappingKeys.length && mappingKeys.length > 0) {
+          fieldName = mappingKeys[0].field_name
+        }
+        store.dataField = fieldName
+      } else {
+        const {mappingKeys} = joinModeDetail
+        let fieldName1
+        let fieldName2
+        if (mappingKeys && mappingKeys.length && mappingKeys.length > 0) {
+          const [key1, key2] = mappingKeys
+          // 有两个
+          fieldName1 = key1.field_name
+          fieldName2 = key2.field_name
+          store.getFieldList({objId: key1.obj_id}, fieldList => {
+            store.fieldList1 = fieldList.map(d => {
+              if (d.field === fieldName2) {
+                return {
+                  ...d,
+                  disabled: true,
+                }
+              }
+              return d
+            })
+          })
+          store.getFieldList({objId: key2.obj_id}, fieldList => {
+            store.fieldList2 = fieldList.map(d => {
+              if (d.field === fieldName1) {
+                return {
+                  ...d,
+                  disabled: true,
+                }
+              }
+              return d
+            })
+          })
+        }
+        store.dataField1 = fieldName1
+        store.dataField2 = fieldName2
+      }
     }
 
     // 没数据？
@@ -122,13 +180,12 @@ export default class DataTable extends Component {
   }
 
   render() {
-    // const {projectId} = store
-    // const {objId, type, projectId} = this.props
     const {objId, type} = this.props
     const listConfig = {
       columns: +type ? this.columns : this.simpleColumns,
       // initParams: {objId: +objId, projectId: +projectId},
       initParams: {objId: +objId},
+      scroll: {x: 1300},
       buttons: [<div className="pr24 far" style={{display: 'float'}}>
         {/* <Search
           placeholder="请输入数据表名称关键字"

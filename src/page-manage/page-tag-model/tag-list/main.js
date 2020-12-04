@@ -362,6 +362,7 @@ class TagList extends Component {
     const listConfig = {
       rowSelection,
       columns: this.columns,
+      // scroll: {x: 1300},
       initParams: {projectId, objId},
       searchParams: seach({objectSelectList: toJS(objectSelectList)}),
       buttons: [

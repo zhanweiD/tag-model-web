@@ -8,7 +8,7 @@ import {ListContentStore} from '../../../component/list-content'
 import io from './io'
 
 class Store extends ListContentStore(io.getTagList) {
-  projectId
+  projectId = undefined
   objId
 
   // 创建标签
@@ -37,7 +37,6 @@ class Store extends ListContentStore(io.getTagList) {
 
     if (type === 'edit') {
       // 获取对象详情
-      console.log(data)
       this.getTagDetail({
         id: data.id,
       })

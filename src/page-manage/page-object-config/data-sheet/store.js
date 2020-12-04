@@ -204,7 +204,6 @@ class Store extends ListContentStore(io.getList) {
    */
   @observable whereSuccess = false
   @action async checkWhere() {
-    console.log(this.storageId, this.tableName)
     try {
       const res = await io.checkWhere({
         // storageType: this.typeCode,
@@ -214,7 +213,7 @@ class Store extends ListContentStore(io.getList) {
       })
       runInAction(() => {
         this.whereSuccess = res.success
-        if (res) {
+        if (res.success) {
           successTip('校验成功')
         } else {
           failureTip(res.message)
