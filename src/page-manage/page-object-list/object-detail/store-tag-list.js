@@ -37,7 +37,6 @@ class Store extends ListContentStore(io.getTagList) {
 
     if (type === 'edit') {
       // 获取对象详情
-      console.log(data)
       this.getTagDetail({
         id: data.id,
       })

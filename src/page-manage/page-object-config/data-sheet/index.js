@@ -27,8 +27,6 @@ export default class DataSheet extends Component {
     store.objId = bigStore.objId
     store.typeCode = bigStore.typeCode
     store.relationType = bigStore.objDetail.type
-    // console.log(store, 'store')
-    // console.log(bigStore, 'bigstore')
   }
 
   @observable tagConfigVisible = false
@@ -39,6 +37,8 @@ export default class DataSheet extends Component {
       title: '数据表名称',
       key: 'dataTableName',
       dataIndex: 'dataTableName',
+      width: 200,
+      fixed: 'left',
       render: (text, record) => (
         <div>
           <a href onClick={() => this.openDrawerDatasheet(record)}>{text}</a>
@@ -48,15 +48,18 @@ export default class DataSheet extends Component {
       title: '数据源',
       key: 'dataStorageName',
       dataIndex: 'dataStorageName',
-      render: text => <OmitTooltip maxWidth={250} text={text} />,
+      width: 250,
+      // render: text => <OmitTooltip maxWidth={250} text={text} />,
     }, {
       title: '数据源类型',
       key: 'storageTypeName',
       dataIndex: 'storageTypeName',
+      width: 150,
     }, {
       title: '已配置/字段数',
       key: 'configuredField',
       dataIndex: 'configuredField',
+      width: 150,
       render: (text, record) => (
         <div>{`${text}/${record.associatedField}`}</div>
       ),
@@ -64,12 +67,14 @@ export default class DataSheet extends Component {
       title: '已有标签被使用',
       key: 'isUsed',
       dataIndex: 'isUsed',
+      width: 100,
       render: text => <div>{text ? '是' : '否'}</div>,
     }, {
       key: 'action',
       title: '操作',
       dataIndex: 'action',
-      width: 150,
+      width: 250,
+      fixed: 'right',
       render: (text, record) => (
         <div>
           <Authority authCode="tag_model:update_table[cud]">
@@ -100,21 +105,26 @@ export default class DataSheet extends Component {
       title: '数据表名称',
       key: 'dataTableName',
       dataIndex: 'dataTableName',
-      render: text => <OmitTooltip maxWidth={250} text={text} />,
+      width: 200,
+      fixed: 'left',
+      // render: text => <OmitTooltip maxWidth={250} text={text} />,
     }, {
       title: '数据源',
       key: 'dataStorageName',
       dataIndex: 'dataStorageName',
-      render: text => <OmitTooltip maxWidth={250} text={text} />,
+      width: 300,
+      // render: text => <OmitTooltip maxWidth={250} text={text} />,
     }, {
       title: '数据源类型',
       key: 'storageTypeName',
       dataIndex: 'storageTypeName',
+      width: 200,
     }, {
       key: 'action',
       title: '操作',
       dataIndex: 'action',
       width: 150,
+      fixed: 'right',
       render: (text, record) => (
         <div>
           <Authority authCode="tag_model:update_table[cud]">

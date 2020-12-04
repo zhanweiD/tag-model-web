@@ -17,8 +17,8 @@ export default class DataTable extends Component {
     super(props)
     const {bigStore} = props
     this.bigStore = bigStore
-    // console.log(props, 'c')
-    store.projectId = bigStore.projectId
+    store.projectId = undefined
+    // store.projectId = bigStore.projectId
     store.objId = bigStore.objId
     store.typeCode = bigStore.typeCode
     store.relationType = bigStore.objDetail.type
@@ -159,7 +159,7 @@ export default class DataTable extends Component {
             suffix={<SearchOutlined />}
           />
         </div>
-                </div>],
+      </div>],
       store,
     }
     return (

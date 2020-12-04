@@ -19,7 +19,8 @@ export default class TagList extends Component {
     super(props)
     const {bigStore} = props
     this.bigStore = bigStore
-    store.projectId = bigStore.projectId
+    store.projectId = undefined
+    // store.projectId = bigStore.projectId
     store.objId = bigStore.objId
     // console.log(toJS(store.objectSelectList), 'sss')
   }
@@ -110,7 +111,6 @@ export default class TagList extends Component {
   componentWillReceiveProps(next) {
     const {updateDetailKey, objId} = this.props
     if (!_.isEqual(updateDetailKey, next.updateDetailKey) || !_.isEqual(+objId, +next.objId)) {
-
       store.objId = next.objId
       store.getList({objId: next.objId, currentPage: 1})
     }
@@ -132,7 +132,7 @@ export default class TagList extends Component {
 
   componentWillMount() {
     // if (store.projectId) {
-      // store.getAuthCode()
+    // store.getAuthCode()
     //   this.initData()
     //   store.checkKeyWord()
     // }
@@ -145,15 +145,15 @@ export default class TagList extends Component {
 
   componentDidMount() {
     // if (store.projectId) {
-      // 获取所属对象下拉数据
-      // store.getObjectSelectList() 
+    // 获取所属对象下拉数据
+    // store.getObjectSelectList() 
 
-      // 请求列表，放在父组件进行请求是因为需要在外层做空数据判断。
-      // 若返回数据为空[]。则渲染 NoData 组件。
-      // store.initParams = {projectId: store.projectId}
-      // store.getList({
-      //   projectId: store.projectId,
-      // })
+    // 请求列表，放在父组件进行请求是因为需要在外层做空数据判断。
+    // 若返回数据为空[]。则渲染 NoData 组件。
+    // store.initParams = {projectId: store.projectId}
+    // store.getList({
+    //   projectId: store.projectId,
+    // })
     // }
     if (store.projectId) {
       // 获取所属对象下拉数据
@@ -215,7 +215,7 @@ export default class TagList extends Component {
             suffix={<SearchOutlined />}
           />
         </div>
-      </div>],
+                </div>],
       store,
     }
     return (
