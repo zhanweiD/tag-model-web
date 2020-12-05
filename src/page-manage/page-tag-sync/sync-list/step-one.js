@@ -30,7 +30,7 @@ export default class StepOne extends Component {
 
 
   componentWillMount() {
-    this.store.getObjList()
+    // this.store.getObjList()
     this.store.getStorageType()
   }
 
@@ -79,6 +79,8 @@ export default class StepOne extends Component {
     })
     this.store.storageId = obj.key
     this.store.storageName = this.getStoragName(obj.key)
+    if (obj.key) this.store.getObjList()
+    // this.store.getObjList()
   } 
 
   getStoragName = storageId => {

@@ -32,6 +32,7 @@ class SyncList extends Component {
   columns = [{
     title: '计划名称',
     dataIndex: 'name',
+    fixed: 'left',
     render: (text, record) => (
       // <Authority
       //   authCode="tag_model:transfer_detail[r]"
@@ -73,6 +74,7 @@ class SyncList extends Component {
     title: '操作',
     dataIndex: 'action',
     width: 260,
+    fixed: 'right',
     render: (text, record) => (
       <div>
         {/* 方案状态 0 未完成、1 提交成功 2 提交失败 3提交中 4更新成功 5更新失败 6更新中 */}
@@ -595,6 +597,7 @@ class SyncList extends Component {
     const listConfig = {
       columns: this.columns,
       initParams: {projectId},
+      scroll: {x: 1300},
       searchParams: seach({
         objList: toJS(objList),
       }),
@@ -602,7 +605,7 @@ class SyncList extends Component {
         authCode="tag_model:create_transfer[c]" 
       >
         <Button type="primary" onClick={() => this.addSync()}>新建同步计划</Button>
-                </Authority>],
+      </Authority>],
       store, // 必填属性
     }
 
