@@ -156,7 +156,7 @@ class TagList extends Component {
               >
                 <a href>取消发布</a>
               </Popconfirm>
-              <a href onClick={() => store.openModal(record)} className="ml16">授权</a>
+              <a href onClick={() => this.openModal(record)} className="ml16">授权</a>
             </Authority>
               
           </Fragment>
@@ -171,7 +171,7 @@ class TagList extends Component {
               authCode="tag_model:publish_tag[u]"
             >
               <span className="disabled">取消发布</span>
-              <a href onClick={() => store.openModal(record)} className="ml16">授权</a>
+              <a href onClick={() => this.openModal(record)} className="ml16">授权</a>
             </Authority>
           )}
 
@@ -211,7 +211,7 @@ class TagList extends Component {
               >
                 <a href>取消发布</a>
               </Popconfirm>
-              <a href onClick={() => store.openModal(record)} className="ml16">授权</a>
+              <a href onClick={() => this.openModal(record)} className="ml16">授权</a>
             </Authority>
           )}
 
@@ -224,7 +224,7 @@ class TagList extends Component {
               authCode="tag_model:publish_tag[u]"
             >
               <span className="disabled">取消发布</span>
-              <a href onClick={() => store.openModal(record)} className="mr16">授权</a>
+              <a href onClick={() => this.openModal(record)} className="mr16">授权</a>
             </Authority>
           )}
 
@@ -246,10 +246,10 @@ class TagList extends Component {
   }
 
   @action.bound openModal(data) {
-    if (!store.projectName) {
-      store.getProjectDetail()
-    }
-    store.tagIds.replace([data.id])
+    // if (!store.projectName) {
+    //   store.getProjectDetail()
+    // }
+    store.selectItem = data
     store.modalApplyVisible = true
   }
 

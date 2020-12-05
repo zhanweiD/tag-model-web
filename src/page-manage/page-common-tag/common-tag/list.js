@@ -3,7 +3,7 @@
  */
 import {Component, Fragment} from 'react'
 import {observer} from 'mobx-react'
-import {action} from 'mobx'
+import {action, toJS} from 'mobx'
 import {Button} from 'antd'
 import {Link} from 'react-router-dom'
 import {
@@ -204,6 +204,7 @@ export default class Market extends Component {
     store.modalType = 'batch' 
     store.tagIds.replace(store.rowKeys) 
     store.modalVisible = true
+    console.log(toJS(store.tagIds))
   }
 
   // // 跳转到标签模型

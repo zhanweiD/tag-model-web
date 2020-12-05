@@ -46,6 +46,7 @@ class Store extends ListContentStore(io.getList) {
   @observable publishRowKeys = []
 
   @observable modalApplyVisible = false
+  @observable selectItem = {}
 
   // 上下架申请modal
   @action.bound openModal(info) {
@@ -410,11 +411,16 @@ class Store extends ListContentStore(io.getList) {
     try {
       const res = await io.getTagTree({
         objId: +this.objId,
+        projectId: this.projectId,
       })
 
       this.tagTreeList = listToTree(res)
-      this.checkedKeys = _.map(_.filter(res, e => e.checked), 'aid')
+      this.checkedKeys = _.map(_.filter(res, e => e.checked), 'aid').map(String)
       // this.tagTreeList = res
+      if (this.checkedKeys.length > 0) {
+        // 说明有选择的
+        this.getTagsList()
+      }
       this.tagTreeLoading = false
     } catch (e) {
       errorTip(e.message)

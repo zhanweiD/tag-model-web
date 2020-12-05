@@ -3,7 +3,7 @@ import {observer, inject} from 'mobx-react'
 import {
   observable, action, toJS,
 } from 'mobx'
-import {Tree} from 'antd'
+import {Tree, Switch} from 'antd'
 
 import {NoBorderInput, Loading, OmitTooltip} from '../../../component'
 import {IconChakan} from '../../../icon-comp'
@@ -66,28 +66,41 @@ export default class CateTree extends Component {
     } = bigStore
 
     return (
-      <div style={{border: '1px solid #d9d9d9', marginRight: '16px'}}>
-        <div className="object-tree-header">
-          <NoBorderInput
-            placeholder="请输入对象名称搜索"
-            value={this.searchKey}
-            onChange={this.searchTree}
-          />
-          <IconChakan size="14" className="mr8" onClick={this.onSearch} />
+      <div>
+        <div className="mb12 mt2">
+          展示不可选择的标签
+          <Switch size="small" checkedChildren="是" unCheckedChildren="否" />
         </div>
-        {
-          tagTreeLoading ? <Loading mode="block" height={100} />
-            : (
-              <Tree
-                checkable
-                defaultExpandAll
-                onCheck={this.onCheck}
-                checkedKeys={checkedKeys}
-              >
-                {this.renderTreeNodes(tagTreeList)}
-              </Tree>
-            )
-        } 
+        <div 
+          style={{
+            border: '1px solid #d9d9d9', 
+            marginRight: '16px', 
+            height: 'calc(100% - 32px)',
+            borderRadius: '4px',
+          }}
+        >
+          <div className="object-tree-header">
+            <NoBorderInput
+              placeholder="请输入对象名称搜索"
+              value={this.searchKey}
+              onChange={this.searchTree}
+            />
+            <IconChakan size="14" className="mr8" onClick={this.onSearch} />
+          </div>
+          {
+            tagTreeLoading ? <Loading mode="block" height={100} />
+              : (
+                <Tree
+                  checkable
+                  defaultExpandAll
+                  onCheck={this.onCheck}
+                  checkedKeys={checkedKeys}
+                >
+                  {this.renderTreeNodes(tagTreeList)}
+                </Tree>
+              )
+          }
+        </div>
       </div>
     )
   }

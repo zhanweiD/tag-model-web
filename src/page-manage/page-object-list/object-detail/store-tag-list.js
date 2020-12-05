@@ -33,7 +33,7 @@ class Store extends ListContentStore(io.getTagList) {
   @action.bound openDrawer(type, data) {
     this.drawerTagType = type
     this.drawerTagInfo = data || {}
-    console.log(this.drawerTagInfo)
+    console.log(this.drawerTagInfo, 'gggggg')
 
     if (type === 'edit') {
       // 获取对象详情

@@ -68,15 +68,18 @@ export default class TagApply extends Component {
   // 表单重置
   @action handleReset() {
     const {form: {resetFields}} = this.props
-    this.store.tagIds.clear()
+    // this.store.tagIds.clear()
     resetFields()
   }
 
   render() {
-    const {form: {getFieldDecorator}} = this.props
+    const {form: {getFieldDecorator, getFieldValue}} = this.props
     const {
-      confirmLoading, modalApplyVisible, projectName,
+      confirmLoading, modalApplyVisible, projectName, selectItem,
     } = this.store
+
+    const selectName = selectItem && selectItem.name
+    const selectEnName = selectItem && selectItem.enName
 
     const modalConfig = {
       width: 525,
@@ -94,10 +97,10 @@ export default class TagApply extends Component {
       >
         <Form className="FBV">
           <FormItem {...formItemLayout} label="标签名称">
-            {/* {projectName} */}
+            {selectName}
           </FormItem>
           <FormItem {...formItemLayout} label="标签标识">
-            {/* {projectName} */}
+            {selectEnName}
           </FormItem>
           <FormItem {...formItemLayout} label="授权项目">
             {getFieldDecorator('projectId', {
@@ -121,23 +124,35 @@ export default class TagApply extends Component {
             {...formItemLayout}
             label="有效时长"
           >
-            {getFieldDecorator('time', {
+            {getFieldDecorator('forever', {
               rules: [
-                {required: true, message: '请选择申请时长'},
+                {required: true, message: '请选择有效时长'},
               ],
               initialValue: 1,
             })(
               <Radio.Group>
                 <Radio value={1}>永久</Radio>
-                <Radio value={2}>
+                <Radio value={0}>
                   自定义
-                  <Space direction="vertical" size={12}>
-                    <RangePicker />
-                  </Space>
                 </Radio>
               </Radio.Group>
             )}
           </FormItem>
+          {!getFieldValue('forever') ? (
+            <FormItem
+              {...formItemLayout}
+              label="自定义时长"
+            >
+              {getFieldDecorator('timeRange', {
+                rules: [
+                  {type: 'array', required: true, message: '请选择自定义时长'},
+                ],
+              })(
+                <RangePicker />
+              )}
+            </FormItem>
+          )
+            : null }
         </Form>
       </Modal>
     )
