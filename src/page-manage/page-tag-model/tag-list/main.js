@@ -32,7 +32,6 @@ class TagList extends Component {
     super(props)
     store.projectId = props.projectId
     store.objId = props.objId
-    // console.log(props, 'taglist')
   }
 
   columns = [{
@@ -279,7 +278,7 @@ class TagList extends Component {
   componentWillReceiveProps(next) {
     const {updateDetailKey, objId} = this.props
     if (!_.isEqual(updateDetailKey, next.updateDetailKey) || !_.isEqual(+objId, +next.objId)) {
-      // store.objId = next.objId
+      store.objId = next.objId
       store.getList({objId: next.objId, currentPage: 1})
     }
   }
