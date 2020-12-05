@@ -216,11 +216,11 @@ export default class DataTable extends Component {
             suffix={<SearchOutlined />}
           />
         </div>
-                </div>],
+      </div>],
       store,
     }
     return (
-      <div className="pt16">
+      <div>
         <ListContent {...listConfig} />
         {/* <ModalAddTable store={store} />  */}
         <ModalRelateTable store={store} />
