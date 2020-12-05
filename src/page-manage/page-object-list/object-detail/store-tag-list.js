@@ -182,7 +182,7 @@ class Store extends ListContentStore(io.getTagList) {
         ...params,
       })
       runInAction(() => {
-        if (res.success) {
+        if (res) {
           successTip('操作成功')
           if (cb) cb()
         } else {
