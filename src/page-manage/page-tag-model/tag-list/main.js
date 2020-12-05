@@ -410,6 +410,7 @@ class TagList extends Component {
           <DrawerCreate store={store} />
           <ModalApply store={store} />
           <DrawerTagConfig
+            objId={store.objId}
             projectId={projectId}
             visible={drawerTagConfigVisible}
             info={drawerTagConfigInfo}
@@ -418,6 +419,7 @@ class TagList extends Component {
             type={drawerTagConfigType}
           />
           <DrawerBatchConfig 
+            objId={store.objId}
             projectId={projectId}
             visible={batchConfigVisible}
             objectSelectList={objectSelectList}
