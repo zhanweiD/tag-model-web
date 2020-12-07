@@ -404,6 +404,10 @@ class Store extends ListContentStore(io.getList) {
   // 标签树
   // objId
   @observable tagTreeList = []
+  @observable tagTreeListAll = []
+  @observable tagTreeListAvailable = []
+  @observable treeSearchKey
+  @observable tagParentIds = []
   @observable tagTreeLoading = false
   @observable checkedKeys = []
 
@@ -413,12 +417,22 @@ class Store extends ListContentStore(io.getList) {
       const res = await io.getTagTree({
         objId: +this.objId,
         projectId: this.projectId,
+        searchKey: this.treeSearchKey,
       })
 
-      this.tagTreeList = listToTree(res)
+      const availableRes = _.filter(res, item => item.available === true)
+      
+      this.tagTreeListAll = listToTree(res)
+      this.tagTreeListAvailable = listToTree(availableRes)
+      this.tagTreeList = listToTree(availableRes)
+      this.tagParentIds = _.map(this.tagTreeList, item => {
+        if (item.children && item.children.length > 0) {
+          return String(item.aid)
+        }
+      })
+
       this.checkedKeys = _.map(_.filter(res, e => e.checked), 'aid').map(String)
-      // this.tagTreeList = res
-      if (this.checkedKeys.length > 0) {
+      if (!this.treeSearchKey && this.checkedKeys.length > 0) {
         // 说明有选择的
         this.getTagsList()
       }
@@ -437,6 +451,7 @@ class Store extends ListContentStore(io.getList) {
     this.tagDetailTableLoading = true
     try {
       const res = await io.getTagsList({
+        projectId: this.projectId,
         objId: +this.objId,
         tagIds: this.checkedKeys.map(Number),
       })
@@ -448,9 +463,11 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
+  @observable inheritLoading = false
   // 继承标签
   // tagIds
   @action async inheritTags(cb = () => {}) {
+    this.inheritLoading = true
     try {
       const res = await io.inheritTags({
         projectId: this.projectId,
@@ -462,6 +479,8 @@ class Store extends ListContentStore(io.getList) {
       cb()
     } catch (e) {
       errorTip(e.message)
+    } finally {
+      this.inheritLoading = false
     }
   }
 }

@@ -105,12 +105,12 @@ export default class TagList extends Component {
       render: (text, record) => (
         <div className="FBH FBAC">
           <Fragment>        
-            <a className="mr8" href>权限申请</a>
-            {/* <a className="mr8" href onClick={() => this.openApplyModal(record)}>权限申请</a> */}
+            {/* <a className="mr8" href>权限申请</a> */}
+            <a className="mr8" href onClick={() => this.openApplyModal(record)}>权限申请</a>
           </Fragment>
           <Fragment>        
-            <a href>交回权限</a>
-            {/* <a href onClick={() => this.openBackModal(record)}>交回权限</a> */}
+            {/* <a href>交回权限</a> */}
+            <a href onClick={() => this.openBackModal(record)}>交回权限</a>
           </Fragment>
         </div>
       ),
@@ -118,17 +118,18 @@ export default class TagList extends Component {
   ]
 
   @action.bound openApplyModal(data) {
-    if (!store.projectName) {
-      store.getProjectDetail()
-    }
+    // if (!store.projectName) {
+    //   store.getProjectDetail()
+    // }
+    store.selectItem = data
     store.tagIds.replace([data.id])
     store.modalApplyVisible = true
   }
 
   @action.bound openBackModal(data) {
-    if (!store.projectName) {
-      store.getProjectDetail()
-    }
+    // if (!store.projectName) {
+    //   store.getProjectDetail()
+    // }
     store.tagIds.replace([data.id])
     store.modalBackVisible = true
   }

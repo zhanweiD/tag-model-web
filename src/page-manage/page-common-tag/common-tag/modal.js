@@ -84,6 +84,7 @@ export default class TagApply extends Component {
       useProjectId, 
       // useProjectName, 
       // modalType,
+      selectedRows,
       selectItem,
       tagIds,
     } = this.store
@@ -108,9 +109,33 @@ export default class TagApply extends Component {
         {...modalConfig}
       >
         <Form className="FBV">
-          {/* <FormItem {...formItemLayout} label="选择的标签">
-            <span className="fs12">{selectName || selectNames}</span>
-          </FormItem> */}
+          {
+            this.store.modalType === 'one' ? (
+              <FormItem {...formItemLayout} label="选择的标签">
+                <span className="fs12">{selectName}</span>
+              </FormItem>
+            ) : (
+              <FormItem {...formItemLayout} label="选择的标签">
+                {getFieldDecorator('dataStorageId', {
+                  initialValue: tagIds,
+                })(
+                  <Select  
+                    mode="multiple"
+                  >
+                    {
+                      selectedRows.map(item => (
+                        <Option key={item.id} value={item.id}>{item.name}</Option>
+                      ))
+                    }
+                  </Select>
+                )}
+              </FormItem>
+            )
+          }
+          
+          <FormItem {...formItemLayout} label="使用项目">
+            <span className="fs12">{useProjectName}</span>
+          </FormItem>
           <FormItem
             {...formItemLayout}
             label="申请时长"

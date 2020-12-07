@@ -197,14 +197,13 @@ export default class Market extends Component {
     store.rowKeys = selectedRowKeys
   }
 
-  /**
+  /*
    * @description 批量申请
    */
   @action.bound batchApply() {
     store.modalType = 'batch' 
     store.tagIds.replace(store.rowKeys) 
     store.modalVisible = true
-    console.log(toJS(store.tagIds))
   }
 
   // // 跳转到标签模型

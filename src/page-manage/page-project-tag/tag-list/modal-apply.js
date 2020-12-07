@@ -72,9 +72,9 @@ export default class TagApply extends Component {
   }
 
   render() {
-    const {form: {getFieldDecorator}} = this.props
+    const {form: {getFieldDecorator, getFieldValue}} = this.props
     const {
-      confirmLoading, modalApplyVisible, projectName,
+      confirmLoading, modalApplyVisible, selectItem, ownProjectList, useProjectId,
     } = this.store
 
     const modalConfig = {
@@ -87,11 +87,19 @@ export default class TagApply extends Component {
       onCancel: () => this.handleCancel(),
     }
 
+    const {projectName} = ownProjectList.filter(d => d.projectId === useProjectId)[0] || {}
+
     return (
       <Modal
         {...modalConfig}
       >
         <Form className="FBV">
+          <FormItem {...formItemLayout} label="标签名称">
+            {selectItem.name}
+          </FormItem>
+          <FormItem {...formItemLayout} label="标签标识">
+            {selectItem.enName}
+          </FormItem>
           <FormItem {...formItemLayout} label="使用项目">
             {projectName}
           </FormItem>
@@ -107,15 +115,27 @@ export default class TagApply extends Component {
             })(
               <Radio.Group>
                 <Radio value={1}>永久</Radio>
-                <Radio value={2}>
+                <Radio value={0}>
                   自定义
-                  <Space direction="vertical" size={12}>
-                    <RangePicker />
-                  </Space>
                 </Radio>
               </Radio.Group>
             )}
           </FormItem>
+          {!getFieldValue('forever') ? (
+            <FormItem
+              {...formItemLayout}
+              label="自定义时长"
+            >
+              {getFieldDecorator('timeRange', {
+                rules: [
+                  {type: 'array', required: true, message: '请选择自定义时长'},
+                ],
+              })(
+                <RangePicker />
+              )}
+            </FormItem>
+          )
+            : null }
     
           <FormItem
             {...formItemLayout}

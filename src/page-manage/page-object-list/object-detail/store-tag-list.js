@@ -19,10 +19,12 @@ class Store extends ListContentStore(io.getTagList) {
   @observable tagCateSelectList = [] // 所属类目下拉数据
 
   @observable isEnum = false // 是否枚举
+  @observable editCateId = undefined
   @observable ownObject = undefined // 所属对象
+  @observable getForm 
 
-  @observable editDetail = {} // 编辑标签事的详情数据 
   @observable detailLoading = false // 请求标签详情时loading
+
 
   // 标签配置
   @observable drawerTagConfigVisible = false
@@ -32,15 +34,13 @@ class Store extends ListContentStore(io.getTagList) {
   // 创建标签Drawer
   @action.bound openDrawer(type, data) {
     this.drawerTagType = type
-    this.drawerTagInfo = data || {}
-    console.log(this.drawerTagInfo, 'gggggg')
-
+    // this.drawerTagInfo = data || {}
+    
     if (type === 'edit') {
       // 获取对象详情
       this.getTagDetail({
         id: data.id,
       })
-
       // 根据所属对象id 查询所属类目下拉框数据
       this.getTagCateSelectList({
         id: data.objId,
@@ -160,8 +160,9 @@ class Store extends ListContentStore(io.getTagList) {
       })
       runInAction(() => {
         this.drawerTagInfo = res
+        this.editCateId = res.cateId
         this.isEnum = res.isEnum
-        this.ownObject = res.objId
+        this.ownObject = res.objId  
       })
     } catch (e) {
       errorTip(e.message)
