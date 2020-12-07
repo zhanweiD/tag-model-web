@@ -22,7 +22,6 @@ export default class TagList extends Component {
     store.projectId = undefined
     // store.projectId = bigStore.projectId
     store.objId = bigStore.objId
-    // console.log(toJS(store.objectSelectList), 'sss')
   }
 
   columns = [{
@@ -196,7 +195,6 @@ export default class TagList extends Component {
   render() {
     // const {} = store
     const {objId} = store
-    console.log(store.objId)
     const listConfig = {
       columns: this.columns,
       initParams: {objId: +store.objId},

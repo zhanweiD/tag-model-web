@@ -108,9 +108,19 @@ export default class TagApply extends Component {
         {...modalConfig}
       >
         <Form className="FBV">
-          {/* <FormItem {...formItemLayout} label="选择的标签">
-            <span className="fs12">{selectName || selectNames}</span>
-          </FormItem> */}
+          {
+            this.store.modalType === 'one' ? (
+              <FormItem {...formItemLayout} label="选择的标签">
+                <span className="fs12">{selectName}</span>
+              </FormItem>
+            ) : (
+              null
+            )
+          }
+          
+          <FormItem {...formItemLayout} label="使用项目">
+            <span className="fs12">{useProjectName}</span>
+          </FormItem>
           <FormItem
             {...formItemLayout}
             label="申请时长"

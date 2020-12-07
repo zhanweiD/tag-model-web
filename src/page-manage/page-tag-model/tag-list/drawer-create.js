@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import {action} from 'mobx'
+import {action, toJS} from 'mobx'
 import {observer} from 'mobx-react'
 import {Drawer, Button, Spin} from 'antd'
 import {ModalForm} from '../../../component'
@@ -35,7 +35,6 @@ export default class DrawerCreate extends Component {
       tagCateSelectList, 
       objectSelectList,
     } = this.store
-    
     return [{
       label: '所属对象',
       key: 'objId',

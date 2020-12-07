@@ -33,10 +33,10 @@ export default class DrawerCreate extends Component {
       isEnum, // 是否枚举
       ownObject, // 所属对象
       drawerTagInfo, 
+      editCateId,
       tagCateSelectList, 
       objectSelectList,
     } = this.store
-    console.log(drawerTagInfo)
     return [
     // {
     //   label: '所属对象',
@@ -55,13 +55,12 @@ export default class DrawerCreate extends Component {
       {
         label: '所属类目',
         key: 'cateId',
-        initialValue: drawerTagInfo && drawerTagInfo.pathIds && drawerTagInfo.pathIds.length ? drawerTagInfo.pathIds.slice(2) : undefined,
+        initialValue: drawerTagInfo.cateId ? [drawerTagInfo.cateId] : undefined,
         component: 'cascader',
         rules: [
           '@requiredSelect',
         ],
         control: {
-          disabled: drawerTagInfo && drawerTagInfo.pathIds,
           options: tagCateSelectList,
           // valueName: 'id',
           // selectCon: ['isLeaf', 2],
@@ -74,7 +73,7 @@ export default class DrawerCreate extends Component {
       {
         label: '标签名称',
         key: 'name',
-        initialValue: drawerTagInfo && drawerTagInfo.name,
+        initialValue: drawerTagInfo.name,
         component: 'input',
         rules: [
           '@namePattern',
@@ -92,7 +91,7 @@ export default class DrawerCreate extends Component {
       }, {
         label: '标签标识',
         key: 'enName',
-        initialValue: drawerTagInfo && drawerTagInfo.enName,
+        initialValue: drawerTagInfo.enName,
         component: 'input',
         rules: [
           '@enNamePattern',
@@ -109,19 +108,19 @@ export default class DrawerCreate extends Component {
       }, {
         label: '数据类型',
         key: 'valueType',
-        initialValue: drawerTagInfo && drawerTagInfo.valueType,
+        initialValue: drawerTagInfo.valueType,
         component: 'select',
         rules: [
           '@requiredSelect',
         ],
         control: {
-          disabled: drawerTagInfo && drawerTagInfo.status,
+          disabled: drawerTagInfo.status,
           options: changeToOptions(window.njkData.dict.dataType)('value', 'key'),
         },
       }, {
         label: '是否枚举',
         key: 'isEnum',
-        initialValue: drawerTagInfo && drawerTagInfo.isEnum,
+        initialValue: drawerTagInfo.isEnum,
         valuePropName: 'checked',
         component: 'switch',
         control: {
@@ -133,7 +132,7 @@ export default class DrawerCreate extends Component {
         label: '枚举显示值',
         key: 'enumValue',
         hide: !isEnum,
-        initialValue: drawerTagInfo && drawerTagInfo.enumValue,
+        initialValue: drawerTagInfo.enumValue,
         component: 'textArea',
         rules: [
           '@transformTrim',
@@ -147,7 +146,7 @@ export default class DrawerCreate extends Component {
       }, {
         label: '绑定方式',
         key: 'configType',
-        initialValue: drawerTagInfo && drawerTagInfo.configType,
+        initialValue: drawerTagInfo.configType,
         component: 'select',
         rules: [
           '@requiredSelect',
@@ -165,7 +164,7 @@ export default class DrawerCreate extends Component {
       }, {
         label: '业务逻辑',
         key: 'descr',
-        initialValue: drawerTagInfo && drawerTagInfo.descr,
+        initialValue: drawerTagInfo.descr,
         component: 'textArea',
         rules: [
           '@max128',
@@ -191,7 +190,6 @@ export default class DrawerCreate extends Component {
       this.store.getList({objId: next.objId})
     }
   }
-
 
   @action.bound changeIsEnum(e) {
     this.store.isEnum = e

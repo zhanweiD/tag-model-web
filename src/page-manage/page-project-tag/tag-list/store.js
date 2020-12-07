@@ -83,7 +83,7 @@ class Store extends ListContentStore(io.getList) {
     try {
       const res = await io.getProjectDetail({
         id: this.useProjectId,
-        projectId: this.projectId,
+        projectId: this.useProjectId,
       })
       runInAction(() => {
         this.projectName = res.name

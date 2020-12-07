@@ -6,7 +6,8 @@ import {observer} from 'mobx-react'
 import {action, toJS} from 'mobx'
 import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
-import {Modal, Input, Radio, DatePicker, Space, ExclamationCircleOutlined} from 'antd'
+import {Modal, Input, Radio, DatePicker, Space} from 'antd'
+import {ExclamationCircleOutlined} from '@ant-design/icons'
 
 const FormItem = Form.Item
 const {TextArea} = Input
@@ -72,9 +73,9 @@ export default class TagBack extends Component {
   }
 
   render() {
-    const {form: {getFieldDecorator}} = this.props
+    // const {form: {getFieldDecorator}} = this.props
     const {
-      confirmLoading, modalBackVisible, projectName,
+      confirmLoading, modalBackVisible,
     } = this.store
 
     const modalConfig = {
@@ -92,10 +93,15 @@ export default class TagBack extends Component {
         {...modalConfig}
       >
         <Form className="FBV">
-          <p {...formItemLayout} label={<ExclamationCircleOutlined />}>
-            确定交回该标签的使用权限吗？
-          </p>
-          <p {...formItemLayout}>交回权限后将导致该项目无法使用该标签，请谨慎操作。</p>
+          <FormItem style={{float: 'left', width: '100px'}}>
+            <ExclamationCircleOutlined style={{color: 'yellow', fontSize: '60px'}} />
+          </FormItem>
+          <FormItem style={{marginLeft: '100px'}}>
+            <p {...formItemLayout}>
+              确定交回该标签的使用权限吗？
+            </p>
+            <p {...formItemLayout}>交回权限后将导致该项目无法使用该标签，请谨慎操作。</p>
+          </FormItem>
         </Form>
       </Modal>
     )
