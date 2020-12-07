@@ -84,6 +84,7 @@ export default class TagApply extends Component {
       useProjectId, 
       // useProjectName, 
       // modalType,
+      selectedRows,
       selectItem,
       tagIds,
     } = this.store
@@ -114,7 +115,21 @@ export default class TagApply extends Component {
                 <span className="fs12">{selectName}</span>
               </FormItem>
             ) : (
-              null
+              <FormItem {...formItemLayout} label="选择的标签">
+                {getFieldDecorator('dataStorageId', {
+                  initialValue: tagIds,
+                })(
+                  <Select  
+                    mode="multiple"
+                  >
+                    {
+                      selectedRows.map(item => (
+                        <Option key={item.id} value={item.id}>{item.name}</Option>
+                      ))
+                    }
+                  </Select>
+                )}
+              </FormItem>
             )
           }
           

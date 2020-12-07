@@ -31,33 +31,11 @@ export default class TagBack extends Component {
   @action handleOk() {
     const t = this
     const {store} = t
-    const {form: {validateFieldsAndScroll}} = t.props
-    
-    validateFieldsAndScroll((err, values) => {
-      if (err) {
-        return
-      }
+    // endTime = moment().locale('zh-cn').format('YYYY-MM-DD')   等接口呀
 
-      const params = {
-        
-        useProjectId: values.useProjectId || this.store.useProjectId,
-        applyDescr: values.applyDescr,
-      }
-      // 申请时长为永远
-      if (values.forever) {
-        params.startTime = moment().format('YYYY-MM-DD')
-        params.endTime = null
-      } else {
-        params.startTime = values.timeRange[0].format('YYYY-MM-DD')
-        params.endTime = values.timeRange[1].format('YYYY-MM-DD')
-      }
-
-      params.tagIds = toJS(store.tagIds)
-
-      store.applyTag(params, () => {
-        t.handleCancel()
-      })
-    })
+    // store.applyTag(params, () => {
+    //   t.handleCancel()
+    // })
   }
 
   @action handleCancel() {
@@ -92,17 +70,24 @@ export default class TagBack extends Component {
       <Modal
         {...modalConfig}
       >
-        <Form className="FBV">
-          <FormItem style={{float: 'left', width: '100px'}}>
-            <ExclamationCircleOutlined style={{color: 'yellow', fontSize: '60px'}} />
-          </FormItem>
-          <FormItem style={{marginLeft: '100px'}}>
-            <p {...formItemLayout}>
-              确定交回该标签的使用权限吗？
-            </p>
-            <p {...formItemLayout}>交回权限后将导致该项目无法使用该标签，请谨慎操作。</p>
-          </FormItem>
-        </Form>
+        <div 
+          className="FBV" 
+          style={{
+            display: 'grid', 
+            gridTemplateColumns: '40px auto',
+            gridGap: '8px 8px',
+          }}
+        >
+          <div>
+            <ExclamationCircleOutlined style={{color: '#DAA520', fontSize: '25px'}} />
+          </div>
+          <div>
+            <p style={{fontSize: '10px', fontWeight: 'bold'}}>确定交回该标签的使用权限吗？</p>
+          </div>
+          <div style={{fontSize: '10px', gridColumnStart: '2', gridColumnEnd: '3'}}>
+            <p>交回权限后将导致该项目无法使用该标签，请谨慎操作。</p>
+          </div>
+        </div>
       </Modal>
     )
   }

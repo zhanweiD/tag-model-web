@@ -130,7 +130,7 @@ export default class TagList extends Component {
     // if (!store.projectName) {
     //   store.getProjectDetail()
     // }
-    // store.tagIds.replace([data.id])
+    store.tagIds.replace([data.id])
     store.modalBackVisible = true
   }
 
