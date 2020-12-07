@@ -53,7 +53,6 @@ export default class CateTree extends Component {
 
   @action removeTag(id) {
     const {bigStore} = this.props
-    
     bigStore.checkedKeys = bigStore.checkedKeys.filter(e => e !== String(id))
     bigStore.tagDetaiList = bigStore.tagDetaiList.filter(e => e.id !== id)
   }

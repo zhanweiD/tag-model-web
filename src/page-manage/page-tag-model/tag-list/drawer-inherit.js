@@ -38,7 +38,7 @@ export default class DrawerInherit extends Component {
 
   render() {
     const {bigStore} = this.props
-    const {checkedKeys, drawerInheritVis} = bigStore
+    const {checkedKeys, drawerInheritVis, inheritLoading} = bigStore
     const drawerConfig = {
       title: '选择标签',
       visible: drawerInheritVis,
@@ -95,6 +95,7 @@ export default class DrawerInherit extends Component {
                 type="primary"
                 disabled={!checkedKeys.length}
                 onClick={this.onOk}
+                loading={inheritLoading}
               >
                 确定
               </Button>

@@ -12,6 +12,8 @@ export default class StepOne extends Component {
   constructor(props) {
     super(props)
     this.store = props.store
+
+    this.store.getConfigTagList()
   }
 
   columns = [{
@@ -48,10 +50,10 @@ export default class StepOne extends Component {
     this.store.nextStep()
   }
 
-  @action.bound objectSelect(v) {
-    this.store.objId = v
-    this.store.getConfigTagList()
-  }
+  // @action.bound objectSelect(v) {
+  //   this.store.objId = v
+  //   this.store.getConfigTagList()
+  // }
 
   @action.bound boundMethodSelect(v) {
     this.store.boundMethodId = v
@@ -73,7 +75,6 @@ export default class StepOne extends Component {
   render() {
     const {show, closeDrawer, objectSelectList} = this.props
     const {objId, boundMethodId, selectedRowKeys, configTagList, isShowPublished} = this.store
-
     const dataSource = isShowPublished ? configTagList.filter(d => d.deployStatus === 2) : configTagList.filter(d => d.deployStatus < 2)
 
     const rowSelection = {
@@ -95,7 +96,7 @@ export default class StepOne extends Component {
     return (
       <div style={{display: show ? 'block' : 'none'}}>
         <div className="mb24">
-          <span className="search-label">对象</span>
+          {/* <span className="search-label">对象</span>
           <Select value={objId} style={{width: 240}} onChange={this.objectSelect} placeholder="请选择" showSearch optionFilterProp="children">
             {
               objectSelectList.map(
@@ -109,7 +110,7 @@ export default class StepOne extends Component {
                 )
               )
             }
-          </Select>
+          </Select> */}
           <span className="search-label ml16">绑定方式</span>
           <Select value={boundMethodId === '' ? '' : +boundMethodId} style={{width: 240}} onChange={this.boundMethodSelect} showSearch optionFilterProp="children">
             {

@@ -44,6 +44,7 @@ class Store {
     try {
       const res = await io.getObjList({
         projectId: this.projectId,
+        storageId: this.storageId,
       })
 
       runInAction(() => {

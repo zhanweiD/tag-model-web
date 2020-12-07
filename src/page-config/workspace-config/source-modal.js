@@ -1,4 +1,5 @@
 import React from 'react'
+import {toJS} from 'mobx'
 import {Modal, Form, Select, Popconfirm, Button} from 'antd'
 import _ from 'lodash'
 
@@ -89,7 +90,7 @@ const ConfigModal = ({
         >
           <Select placeholder="请选择数据源" showSearch optionFilterProp="children">
             {
-              dataSource.map(d => <Option value={d.storageId}>{d.storageName}</Option>)
+              dataSource.map(d => <Option value={d.dataStorageId}>{d.storageName}</Option>)
             }
           </Select>
         </Form.Item>

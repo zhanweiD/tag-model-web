@@ -216,11 +216,11 @@ export default class TagList extends Component {
             suffix={<SearchOutlined />}
           />
         </div>
-      </div>],
+                </div>],
       store,
     }
     return (
-      <div className="pt16">
+      <div>
         <ListContent {...listConfig} />
         <DrawerCreate store={store} />
       </div>

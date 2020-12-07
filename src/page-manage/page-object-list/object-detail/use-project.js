@@ -89,12 +89,12 @@ export default class UseProject extends Component {
           style={{width: 200}}
           suffix={<SearchOutlined />}
         />
-      </div>],
+                </div>],
       store,
     }
 
     return (
-      <div className="pt16">
+      <div>
         <ListContent {...listConfig} />
       </div>
     )

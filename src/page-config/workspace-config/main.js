@@ -195,7 +195,14 @@ const WorkspaceConfig = ({projectId}) => {
       render: text => (text ? <Badge color="#108ee9" text="使用中" /> : <Badge color="#d9d9d9" text="未使用" />),
     }, {
       title: '操作',
-      render: (text, record) => (record.isUsed ? <span className="disabled">移除</span> : <a onClick={() => removeStorage(record.storageId)}>移除</a>),
+      render: (text, record) => (record.isUsed  
+        ? <span className="disabled">移除</span> 
+        : (
+          <Popconfirm placement="topRight" title="你确定要移除该数据源吗？" onConfirm={() => removeStorage(record.storageId)}>
+            <a>移除</a>
+          </Popconfirm>
+        )
+      ),
     },
   ]
 
@@ -242,6 +249,7 @@ const WorkspaceConfig = ({projectId}) => {
         ...params,
       }, res => {
         setSourceVisible(false)
+        refetch()
         successTip('添加成功')
       }
     )
