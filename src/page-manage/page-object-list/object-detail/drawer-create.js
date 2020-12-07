@@ -36,7 +36,6 @@ export default class DrawerCreate extends Component {
       tagCateSelectList, 
       objectSelectList,
     } = this.store
-    console.log(drawerTagInfo)
     return [
     // {
     //   label: '所属对象',

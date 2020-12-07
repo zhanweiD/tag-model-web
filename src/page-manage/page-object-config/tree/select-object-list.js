@@ -81,9 +81,9 @@ export default class ObjectList extends Component {
       width: 80,
       dataIndex: 'action',
       render: (text, record) => {
-        if (record.isUsed) {
-          return <Tooltip title="使用中的对象, 不可移除"><span className="disabled">移除</span></Tooltip>
-        }
+        // if (record.isUsed) {
+        //   return <Tooltip title="使用中的对象, 不可移除"><span className="disabled">移除</span></Tooltip>
+        // }
         return (
           <Popconfirm placement="topRight" title="确定移除？" onConfirm={() => this.remove(record)}>
             <a href>移除</a>

@@ -31,7 +31,7 @@ class TagList extends Component {
   constructor(props) {
     super(props)
     store.projectId = props.projectId
-    store.objId = props.objId
+    store.objId = +props.objId
   }
 
   columns = [{
@@ -76,6 +76,7 @@ class TagList extends Component {
     render: (text, record) => (
       <div className="FBH FBAC">
         {/* 标签状态: 待绑定 未使用  操作: 绑定/编辑/删除 */}
+        
         {record.status === 0 && record.isVisual === 0 && (
           <Fragment>
             <Authority
@@ -83,14 +84,17 @@ class TagList extends Component {
             >
               <a href onClick={() => store.openTagConfig('one', record)} className="mr16">绑定</a>
             </Authority>
-            <Authority
-              authCode="tag_model:create_tag[c]"
-            >
-              <a href onClick={() => store.openDrawer('edit', record)} className="mr16">编辑</a>
-              <Popconfirm placement="topRight" title="标签被删除后不可恢复，确定删除？" onConfirm={() => this.remove(record)}>
-                <a href>删除</a>
-              </Popconfirm>
-            </Authority>
+            {record.createType === 0 && (
+              <Authority
+                authCode="tag_model:create_tag[c]"
+              >
+                <a href onClick={() => store.openDrawer('edit', record)} className="mr16">编辑</a>
+                <Popconfirm placement="topRight" title="标签被删除后不可恢复，确定删除？" onConfirm={() => this.remove(record)}>
+                  <a href>删除</a>
+                </Popconfirm>
+              </Authority>
+            )}
+            
           </Fragment>
         )}
 
@@ -125,16 +129,19 @@ class TagList extends Component {
             </Authority>
 
             {/* <a href onClick={() => store.openDrawer('edit', record)}>编辑</a> */}
-            <Authority
-              authCode="tag_model:create_tag[c]"
-            >
-              <span className="disabled mr16">编辑</span>
+            {
+              record.createType === 0 && (
+                <Authority
+                  authCode="tag_model:create_tag[c]"
+                >
+                  <span className="disabled mr16">编辑</span>
 
-              <Popconfirm placement="topRight" title="标签被删除后不可恢复，确定删除？" onConfirm={() => this.remove(record)}>
-                <a href>删除</a>
-              </Popconfirm>
-            </Authority>
-          
+                  <Popconfirm placement="topRight" title="标签被删除后不可恢复，确定删除？" onConfirm={() => this.remove(record)}>
+                    <a href>删除</a>
+                  </Popconfirm>
+                </Authority>
+              )
+            }
           </Fragment>
         )}
 
@@ -278,7 +285,7 @@ class TagList extends Component {
   componentWillReceiveProps(next) {
     const {updateDetailKey, objId} = this.props
     if (!_.isEqual(updateDetailKey, next.updateDetailKey) || !_.isEqual(+objId, +next.objId)) {
-      store.objId = next.objId
+      store.objId = +next.objId
       store.getList({objId: next.objId, currentPage: 1})
     }
   }

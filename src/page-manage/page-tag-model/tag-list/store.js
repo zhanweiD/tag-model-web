@@ -261,6 +261,7 @@ class Store extends ListContentStore(io.getList) {
     try {
       const res = await io.createTag({
         projectId: this.projectId,
+        objId: this.objId,
         ...params,
       })
       runInAction(() => {
