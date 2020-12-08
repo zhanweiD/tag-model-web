@@ -43,7 +43,10 @@ const ConfigModal = ({
         onCancel()
         form.resetFields()
       }}
-      onOk={() => form.validateFields().then(values => onOk(values))}
+      onOk={() => form.validateFields().then(values => {
+        onOk(values)
+        form.resetFields()
+      })}
       destroyOnClose
       maskClosable={false}
     >
