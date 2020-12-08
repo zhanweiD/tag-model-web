@@ -1,6 +1,6 @@
 {
   "name": "tag-model",
-  "version": "2.3.3",
+  "version": "2.3.4",
   "description": "标签模型",
   "main": "app.js",
   "scripts": {
@@ -19,7 +19,6 @@
     "@ant-design/icons": "4.1.0",
     "@dtwave/nemo-base-info": "1.0.9",
     "@dtwave/oner-flexbox": "2.0.1",
-    "@dtwave/oner-frame": "0.0.4-alpha21",
     "@dtwave/oner-mapping": "2.1.0-alpha12",
     "@dtwave/uikit": "3.0.0-alpha4",
     "antd": "4.2.0",

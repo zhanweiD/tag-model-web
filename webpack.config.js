@@ -179,6 +179,7 @@ module.exports = {
       filename: 'index.html',
       template: './index.html',
       chunks: ['main'],
+      public_path: isDev ? 'http://www.dtwave-dev.com' : '', // 微前端改造
     }),
     new ManifestPlugin({
       fileName: 'asset-manifest.json',
