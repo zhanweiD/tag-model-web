@@ -162,13 +162,14 @@ export default class StepOne extends Component {
 
     const {
       objList,
+      syncObjList,
       storageTypeList,
       storageList,
       storageDetailLoading,
       storageDetail,
       storageVisible,
     } = this.store
-
+    console.log(objList)
     return (
       <div style={{display: show ? 'block' : 'none'}}>
         <Form>
@@ -263,8 +264,8 @@ export default class StepOne extends Component {
                 optionFilterProp="children"
               >
                 {
-                  objList.map(item => (
-                    <Option key={item.value} value={item.value}>{item.name}</Option>
+                  syncObjList.map(item => (
+                    <Option disabled={item.isUsed} key={item.objId} value={item.value}>{item.name}</Option>
                   ))
                 }
               </Select>
@@ -286,10 +287,10 @@ export default class StepOne extends Component {
                     {required: true, message: '表名不能为空'},  
                     {validator: this.changeTableName},
                   ]})(
-                    <div className="FBH"> 
-                    <span className="ml16 mr16">tbjh_</span>
-                    <Input size="small" autoComplete="off" placeholder="请输入表名称" disabled={!this.store.storageId || !this.store.objId} />
-                  </div>
+                  <div className="FBH"> 
+                      <span className="ml16 mr16">tbjh_</span>
+                      <Input size="small" autoComplete="off" placeholder="请输入表名称" disabled={!this.store.storageId || !this.store.objId} />
+                    </div>
                 )}
               </FormItem>
             ) : null

@@ -11,13 +11,22 @@ import {Time} from '../../../common/util'
 import Tree from './tag-class-tree'
 import List from './tag-class-list'
 import ModalSelectTag from './modal-select-tag'
+import Store from './store'
 
 @observer
 export default class TagClass extends Component {
   constructor(props) {
     super(props)
-    this.store = props.store
-    // console.log(this.store, 'tg')
+    // this.store = props.store
+    this.store = new Store()
+    this.store.tagClassObjId = +props.objId
+  }
+
+  componentDidUpdate(prevprops) {
+    const {props} = this
+    if (props.objId !== prevprops.objId) {
+      this.store.tagClassObjId = +props.objId
+    }
   }
 
   // 关闭抽屉

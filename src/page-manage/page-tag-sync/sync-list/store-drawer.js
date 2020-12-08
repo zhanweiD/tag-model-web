@@ -38,6 +38,7 @@ class Store {
   }
 
   @observable objList = [] // 下拉对象数据
+  @observable syncObjList = [] // 下拉对象数据
 
   // 下拉对象列表
   @action async getObjList() {
@@ -49,6 +50,7 @@ class Store {
 
       runInAction(() => {
         this.objList = changeToOptions(res)('name', 'objId')
+        this.syncObjList = res || []
       })
     } catch (e) {
       errorTip(e.message)
