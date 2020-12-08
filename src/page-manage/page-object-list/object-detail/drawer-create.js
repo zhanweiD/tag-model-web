@@ -55,7 +55,8 @@ export default class DrawerCreate extends Component {
       {
         label: '所属类目',
         key: 'cateId',
-        initialValue: drawerTagInfo.cateId ? [drawerTagInfo.cateId] : undefined,
+        initialValue: drawerTagInfo.pathIds,
+        // initialValue: drawerTagInfo.cateId ? [drawerTagInfo.cateId] : undefined,
         component: 'cascader',
         rules: [
           '@requiredSelect',
