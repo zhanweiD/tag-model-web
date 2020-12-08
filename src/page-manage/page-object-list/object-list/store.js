@@ -8,7 +8,8 @@ import {ListContentStore} from '../../../component/list-content'
 
 import io from './io'
 
-class Store extends ListContentStore(io.getList) {
+class Store {
+// class Store extends ListContentStore(io.getList) {
   @observable modalSelectTagVisible = false // 选择标签弹窗控制标识
 
   // 标签类目
@@ -311,4 +312,4 @@ class Store extends ListContentStore(io.getList) {
   }
 }
 
-export default new Store()
+export default Store

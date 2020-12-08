@@ -74,7 +74,7 @@ export default class ObjectDetail extends Component {
   }
 
   @action.bound tagClass() {
-    this.store.tagClassObjId = this.store.objId // 对象id
+    // this.store.tagClassObjId = this.store.objId // 对象id
     this.store.tagClassVisible = true
   }
 
@@ -181,7 +181,7 @@ export default class ObjectDetail extends Component {
     const tagClassConfig = {
       visible: tagClassVisible,
       onClose: this.closeTagClass,
-      objId: tagClassObjId, // 对象id
+      objId, // 对象id
       store: this.store,
     }
     
