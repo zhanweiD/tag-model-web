@@ -42,9 +42,9 @@ class Store extends ListContentStore(io.getTagList) {
         id: data.id,
       })
       // 根据所属对象id 查询所属类目下拉框数据
-      this.getTagCateSelectList({
-        id: data.objId,
-      })
+      // this.getTagCateSelectList({
+      //   id: data.objId,
+      // })
     }
     // 根据所属对象id 查询所属类目下拉框数据
     this.getTagCateSelectList({
