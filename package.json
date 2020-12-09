@@ -20,7 +20,6 @@
     "@dtwave/nemo-base-info": "1.0.9",
     "@dtwave/oner-flexbox": "2.0.1",
     "@dtwave/oner-mapping": "2.1.0-alpha12",
-    "@dtwave/uikit": "3.0.0-alpha4",
     "antd": "4.2.0",
     "autoprefixer": "9.4.7",
     "babel-core": "6.26.3",

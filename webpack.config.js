@@ -213,6 +213,7 @@ module.exports = {
     antd: 'antd',
     _: '_',
     '@dtwave/oner-frame': 'onerFrame',
+    '@dtwave/uikit': 'uikit',
   },
 }
 
