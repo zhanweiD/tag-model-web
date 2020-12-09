@@ -5,7 +5,6 @@ import {successTip, errorTip, listToTree, failureTip} from '../../common/util'
 import io from './io'
 
 class Store {
-  @observable projectId
   @observable updateDetailKey = undefined
   @observable updateTreeKey = undefined
 
