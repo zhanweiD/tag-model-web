@@ -427,11 +427,11 @@ class Store extends ListContentStore(io.getList) {
       this.tagTreeList = listToTree(availableRes)
       this.tagParentIds = _.map(this.tagTreeList, item => {
         if (item.children && item.children.length > 0) {
-          return String(item.aid)
+          return String(item.aId)
         }
       })
 
-      this.checkedKeys = _.map(_.filter(res, e => e.checked), 'aid').map(String)
+      this.checkedKeys = _.map(_.filter(res, e => e.checked), 'aId').map(String)
       if (!this.treeSearchKey && this.checkedKeys.length > 0) {
         // 说明有选择的
         this.getTagsList()

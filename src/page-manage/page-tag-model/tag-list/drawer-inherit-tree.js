@@ -20,7 +20,7 @@ export default class CateTree extends Component {
       return (
         <TreeNode
           title={<OmitTooltip maxWidth={120} text={item.name} />}
-          key={item.aid}
+          key={item.aId}
           dataRef={toJS(item)}
           selectable={false}
         >
@@ -31,11 +31,11 @@ export default class CateTree extends Component {
 
     return (
       <TreeNode
-        key={item.aid}
+        key={item.aId}
         title={<OmitTooltip maxWidth={120} text={item.name} />}
         selectable={false}
         objectData={toJS(item)}        
-        disableCheckbox={!item.available}
+        disableCheckbox={!item.available || item.isUsed}
       />
     )
   })

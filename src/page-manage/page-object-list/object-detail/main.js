@@ -177,12 +177,12 @@ class ObjectDetail extends Component {
 }
 
 export default props => {
-  const ctx = OnerFrame.useFrame()
-  useEffect(() => {
-    ctx.useProject(true, null, {visible: false})
-  }, [])
-  const projectId = ctx.useProjectId()
+  // const ctx = OnerFrame.useFrame()
+  // useEffect(() => {
+  //   ctx.useProject(true, null, {visible: false})
+  // }, [])
+  // const projectId = ctx.useProjectId()
   return (
-    <ObjectDetail projectId={projectId} {...props} />
+    <ObjectDetail {...props} />
   )
 }

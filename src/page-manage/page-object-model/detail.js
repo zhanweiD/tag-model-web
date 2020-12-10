@@ -2,7 +2,7 @@
  * @description 对象管理 - 对象详情信息
  */
 import {Component, Fragment} from 'react'
-import {observer} from 'mobx-react'
+import {inject, observer} from 'mobx-react'
 import {Spin, Button} from 'antd'
 import {action} from 'mobx'
 import {Time} from '../../common/util'
@@ -18,12 +18,12 @@ import DataTable from '../page-object-list/object-detail/data-table'
 import TagList from '../page-object-list/object-detail/tag-list'
 import TagClass from '../page-object-list/object-list/tag-class'
 
+@inject('bigStore')
 @observer
 export default class ObjectDetail extends Component {
   constructor(props) {
     super(props)
-    this.store = props.store
-    // console.log(this.store, 'detail')
+    this.store = props.bigStore
   }
 
   componentWillMount() {
