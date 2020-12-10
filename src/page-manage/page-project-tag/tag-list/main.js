@@ -15,6 +15,7 @@ import ModalBack from './modal-back'
 import Search from './search'
 
 import store from './store'
+import { CompassOutlined } from '@ant-design/icons'
 
 const statusMap = {
   0: '有效',
@@ -27,6 +28,7 @@ export default class TagList extends Component {
   constructor(props) {
     super(props)
     store.useProjectId = props.projectId
+    console.log(store)
   }
 
   // componentWillMount() {
@@ -104,13 +106,19 @@ export default class TagList extends Component {
       fixed: 'right',
       render: (text, record) => (
         <div className="FBH FBAC">
-          <Fragment>        
-            {/* <a className="mr8" href>权限申请</a> */}
-            <a className="mr8" href onClick={() => this.openApplyModal(record)}>权限申请</a>
+          <Fragment> 
+            {
+              (record.projectId === store.useProjectId) ? <a disabled className="mr8">权限申请</a> : (
+                <a className="mr8" href onClick={() => this.openApplyModal(record)}>权限申请</a>
+              )
+            }       
           </Fragment>
-          <Fragment>        
-            {/* <a href>交回权限</a> */}
-            <a href onClick={() => this.openBackModal(record)}>交回权限</a>
+          <Fragment>
+            {
+              (record.projectId === store.useProjectId) ? <a disabled>交回权限</a> : (
+                <a href onClick={() => this.openBackModal(record)}>交回权限</a>
+              )
+            }        
           </Fragment>
         </div>
       ),
@@ -130,7 +138,8 @@ export default class TagList extends Component {
     // if (!store.projectName) {
     //   store.getProjectDetail()
     // }
-    store.tagIds.replace([data.id])
+    store.projectId = data.projectId
+    store.tagId = data.id
     store.modalBackVisible = true
   }
 

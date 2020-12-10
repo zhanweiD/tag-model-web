@@ -58,6 +58,7 @@ export default class TagApply extends Component {
         this.handleCancel()
       })
     })
+    this.store.modalVisible = false
   }
 
   @action handleCancel() {

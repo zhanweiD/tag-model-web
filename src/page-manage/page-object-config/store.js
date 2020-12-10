@@ -84,49 +84,49 @@ class Store {
     })
   }
 
-  @action async getTagCateTree(cb) {
-    this.treeLoading = true
+  // @action async getTagCateTree(cb) {
+  //   this.treeLoading = true
 
-    try {
-      const res = await io.getTagCateTree({
-        id: this.tagClassObjId,
-        searchKey: this.searchKey,
-      })
-      runInAction(() => {
-        this.treeLoading = false
-        this.searchExpandedKeys.clear()
+  //   try {
+  //     const res = await io.getTagCateTree({
+  //       id: this.tagClassObjId,
+  //       searchKey: this.searchKey,
+  //     })
+  //     runInAction(() => {
+  //       this.treeLoading = false
+  //       this.searchExpandedKeys.clear()
 
-        let data = res
+  //       let data = res
 
-        // 判断是否进行搜索
-        if (this.searchKey) {
-          data = res.map(item => {
-            // 关键字搜索定位
-            if (this.searchKey && item.name.includes(this.searchKey)) {
-              this.findParentId(item.id, res, this.searchExpandedKeys)
-            }
-            return item
-          })
-        }
+  //       // 判断是否进行搜索
+  //       if (this.searchKey) {
+  //         data = res.map(item => {
+  //           // 关键字搜索定位
+  //           if (this.searchKey && item.name.includes(this.searchKey)) {
+  //             this.findParentId(item.id, res, this.searchExpandedKeys)
+  //           }
+  //           return item
+  //         })
+  //       }
 
-        if (!this.currentSelectKeys) {
-          // 默认类目
-          [this.defaultCate] = res.filter(d => d.aId === -1)
-          this.currentSelectKeys = this.defaultCate.id
-        }
-        this.categoryData = res.filter(d => d.isLeaf !== 1) // 叶子类目
+  //       if (!this.currentSelectKeys) {
+  //         // 默认类目
+  //         [this.defaultCate] = res.filter(d => d.aId === -1)
+  //         this.currentSelectKeys = this.defaultCate.id
+  //       }
+  //       this.categoryData = res.filter(d => d.isLeaf !== 1) // 叶子类目
 
-        this.treeData = listToTree(data)
-      })
+  //       this.treeData = listToTree(data)
+  //     })
 
-      if (cb) cb()
-    } catch (e) {
-      runInAction(() => {
-        this.treeLoading = false
-      })
-      errorTip(e.message)
-    }
-  }
+  //     if (cb) cb()
+  //   } catch (e) {
+  //     runInAction(() => {
+  //       this.treeLoading = false
+  //     })
+  //     errorTip(e.message)
+  //   }
+  // }
 
   /*
   * @description 添加标签类目
@@ -223,18 +223,18 @@ class Store {
     }
   }
 
-  @action async getTagCateDetail() {
-    try {
-      const res = await io.getTagCateDetail({
-        id: this.currentSelectKeys,
-      })
-      runInAction(() => {
-        this.cateDetail = res
-      })
-    } catch (e) {
-      errorTip(e.message)
-    }
-  }
+  // @action async getTagCateDetail() {
+  //   try {
+  //     const res = await io.getTagCateDetail({
+  //       id: this.currentSelectKeys,
+  //     })
+  //     runInAction(() => {
+  //       this.cateDetail = res
+  //     })
+  //   } catch (e) {
+  //     errorTip(e.message)
+  //   }
+  // }
 
   //* ------------------------------ 类目树相关 end ------------------------------*//
   //* ------------------------------ 对象详情 start ------------------------------*//

@@ -31,24 +31,24 @@ export default class TagBack extends Component {
   @action handleOk() {
     const t = this
     const {store} = t
-    // endTime = moment().locale('zh-cn').format('YYYY-MM-DD')   等接口呀
+    // endTime = moment().locale('zh-cn').format('YYYY-MM-DD') 
 
-    // store.applyTag(params, () => {
-    //   t.handleCancel()
-    // })
+    store.backAppltTag(() => {
+      t.handleCancel()
+    })
   }
 
   @action handleCancel() {
     this.store.modalBackVisible = false
-    this.handleReset()
+    // this.handleReset()
   }
 
   // 表单重置
-  @action handleReset() {
-    const {form: {resetFields}} = this.props
-    this.store.tagIds.clear()
-    resetFields()
-  }
+  // @action handleReset() {
+  //   const {form: {resetFields}} = this.props
+  //   this.store.tagId.clear()
+  //   resetFields()
+  // }
 
   render() {
     // const {form: {getFieldDecorator}} = this.props

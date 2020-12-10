@@ -54,7 +54,7 @@ export default class TagApply extends Component {
 
       params.tagIds = toJS(store.tagIds)
 
-      store.applyTag(params, () => {
+      store.applyTag(params, () => { // 接口还没有～
         t.handleCancel()
       })
     })
@@ -110,7 +110,7 @@ export default class TagApply extends Component {
                 placeholder="请选择授权项目" 
                 showSearch
                 optionFilterProp="children"
-                // onSelect={e => this.dataSourceSelect(e)}
+                // onSelect={e => this.dataSourceSelect(e)} // 项目源接口
               >
                 {/* {
                   dataSourceList.map(item => (
