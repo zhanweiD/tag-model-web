@@ -40,15 +40,7 @@ export default class TagBack extends Component {
 
   @action handleCancel() {
     this.store.modalBackVisible = false
-    // this.handleReset()
   }
-
-  // 表单重置
-  // @action handleReset() {
-  //   const {form: {resetFields}} = this.props
-  //   this.store.tagId.clear()
-  //   resetFields()
-  // }
 
   render() {
     // const {form: {getFieldDecorator}} = this.props
