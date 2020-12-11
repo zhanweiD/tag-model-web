@@ -8,6 +8,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const safeParser = require('postcss-safe-parser')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 const pkg = require('./package.json')
 
 const themeConfig = require(pkg.theme)
@@ -17,6 +18,8 @@ let commonPlugins = []
 
 const env = process.env.NODE_ENV || 'dev'
 const isDev = env === 'dev'
+const HOST = '127.0.0.1'
+const PORT = '9999'
 
 module.exports = {
   mode: isDev ? 'development' : 'production',
@@ -25,8 +28,8 @@ module.exports = {
     compress: true,
     inline: true,
     hot: true,
-    port: '9999',
-    host: '0.0.0.0',
+    port: PORT,
+    host: HOST,
     disableHostCheck: true,
     headers: {
       'Access-Control-Allow-Origin': '*',
@@ -230,6 +233,12 @@ module.exports = {
           files: manifestFiles,
           entrypoints: entrypointFiles,
         }
+      // public_path: isDev ? 'http://www.dtwave-dev.com' : '',
+      }}),
+
+    new FriendlyErrorsWebpackPlugin({
+      compilationSuccessInfo: {
+        messages: [`Your application is running here: http://${HOST}:${PORT}/#/`],
       },
     }),
   ],

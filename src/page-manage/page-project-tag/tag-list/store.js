@@ -26,8 +26,10 @@ class Store extends ListContentStore(io.getList) {
   @observable sceneType = undefined
 
   @observable modalApplyVisible = false
+  @observable modalBackVisible = false
   @observable confirmLoading = false
   @observable tagIds = []
+  @observable tagId = ''
 
   @action async getOwnProject() {
     try {
@@ -59,8 +61,31 @@ class Store extends ListContentStore(io.getList) {
     this.confirmLoading = true
     try {
       const res = await io.applyTag({
-        projectId: this.projectId,
-        params,
+        projectId: this.useProjectId,
+        ...params,
+      })
+      runInAction(() => {
+        if (res) {
+          successTip('操作成功')
+          if (cb) cb()
+          this.getList()
+        } 
+      })
+    } catch (e) {
+      errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        this.confirmLoading = false
+      })
+    }
+  }
+
+  @action async backAppltTag(params, cb) {
+    this.confirmLoading = true
+    try {
+      const res = await io.backAppltTag({
+        projectId: this.useProjectId,
+        tagId: this.tagId,
       })
       runInAction(() => {
         if (res) {
@@ -82,7 +107,7 @@ class Store extends ListContentStore(io.getList) {
     try {
       const res = await io.getProjectDetail({
         id: this.useProjectId,
-        projectId: this.projectId,
+        projectId: this.useProjectId,
       })
       runInAction(() => {
         this.projectName = res.name

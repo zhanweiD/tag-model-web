@@ -31,6 +31,8 @@ export const tagWarehouseApi = `${pathPrefix}/map` // 标签仓库
 export const syncApi =  `${pathPrefix}/transfer` // 标签同步
 export const targetSourceApi =  `${pathPrefix}/targetSource` // 目的数据源
 
+export const groupConfigApi = `/api/tagapp/1_0_0/relGroup` // 群体配置
+
 const createRequestFn = method => (url, config) => ({
   url,
   method,
@@ -153,7 +155,6 @@ export function listToTree(data) {
     const children = newData.filter(sitem => sitem.parentId === item.id)
     if (children.length && !item.children) item.children = children
   })
-
   return newData.filter(item => item.parentId === 0)
 }
 

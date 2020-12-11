@@ -29,7 +29,7 @@ class SyncDetail extends Component {
     store.projectId = match.params.projectId
     // runStore.projectId = props.projectId
 
-    console.log(toJS(store.projectId), toJS(props.projectId))
+    // console.log(toJS(store.projectId), toJS(props.projectId))
   }
 
   componentWillMount() {

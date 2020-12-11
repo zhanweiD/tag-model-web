@@ -1,6 +1,7 @@
 import {
   observable, action, runInAction, toJS,
 } from 'mobx'
+import _ from 'lodash'
 import {
   successTip, failureTip, errorTip, changeToOptions, listToTree,
 } from '../../../common/util'
@@ -9,6 +10,7 @@ import io from './io'
 
 class Store extends ListContentStore(io.getList) {
   projectId
+  @observable objId
 
   // 创建标签
   @observable drawerTagVisible = false
@@ -42,6 +44,9 @@ class Store extends ListContentStore(io.getList) {
 
   // 批量发布
   @observable publishRowKeys = []
+
+  @observable modalApplyVisible = false
+  @observable selectItem = {}
 
   // 上下架申请modal
   @action.bound openModal(info) {
@@ -118,7 +123,7 @@ class Store extends ListContentStore(io.getList) {
     this.getList()
   }
 
-  /**
+  /*
    * @description 上下架申请
    * @param {*} params 
    */
@@ -146,7 +151,7 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  /**
+  /*
    * @description 修改标签发布状态
    * @param {*} params 
    */
@@ -191,7 +196,7 @@ class Store extends ListContentStore(io.getList) {
     }
   }
   
-  /**
+  /*
    * @description 获取所属对象下拉数据
    */
   @action async getObjectSelectList() {
@@ -207,7 +212,7 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  /**
+  /*
    * @description 获取所属类目下拉数据
    */
   @action async getTagCateSelectList(params) {
@@ -224,7 +229,7 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  /**
+  /*
    * @description 标签详情
    */
   @action async getTagDetail(params) {
@@ -247,7 +252,7 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  /**
+  /*
    * @description 创建标签
    */
   @action async createTag(params, cb) {
@@ -256,6 +261,7 @@ class Store extends ListContentStore(io.getList) {
     try {
       const res = await io.createTag({
         projectId: this.projectId,
+        objId: this.objId,
         ...params,
       })
       runInAction(() => {
@@ -273,7 +279,7 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  /**
+  /*
    * @description 编辑标签
    */
   @action async updateTag(params, cb) {
@@ -299,7 +305,7 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  /**
+  /*
    * @description 删除标签
    */
   @action async deleteTag(params) {
@@ -321,7 +327,7 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  /**
+  /*
    * @description 重名校验
    */
   @action async checkName(params, cb) {
@@ -378,7 +384,7 @@ class Store extends ListContentStore(io.getList) {
 
   @observable functionCodes = []
 
-  /**
+  /*
    * @description 权限code
    */
   @action async getAuthCode() {
@@ -391,6 +397,90 @@ class Store extends ListContentStore(io.getList) {
       })
     } catch (e) {
       errorTip(e.message)
+    }
+  }
+
+  @observable drawerInheritVis = false
+  // 标签树
+  // objId
+  @observable tagTreeList = []
+  @observable tagTreeListAll = []
+  @observable tagTreeListAvailable = []
+  @observable treeSearchKey
+  @observable tagParentIds = []
+  @observable tagTreeLoading = false
+  @observable checkedKeys = []
+
+  @action async getTagTree() {
+    this.tagTreeLoading = true
+    try {
+      const res = await io.getTagTree({
+        objId: +this.objId,
+        projectId: this.projectId,
+        searchKey: this.treeSearchKey,
+      })
+
+      const availableRes = _.filter(res, item => item.available === true)
+      
+      this.tagTreeListAll = listToTree(res)
+      this.tagTreeListAvailable = listToTree(availableRes)
+      this.tagTreeList = listToTree(availableRes)
+      this.tagParentIds = _.map(this.tagTreeList, item => {
+        if (item.children && item.children.length > 0) {
+          return String(item.aId)
+        }
+      })
+
+      this.checkedKeys = _.map(_.filter(res, e => e.checked), 'aId').map(String)
+      if (!this.treeSearchKey && this.checkedKeys.length > 0) {
+        // 说明有选择的
+        this.getTagsList()
+      }
+      this.tagTreeLoading = false
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  @observable tagDetaiList = []
+  @observable tagDetailTableLoading = false
+  // 根据标签 id 查询标签详情，批量
+  // objId
+  // tagIds
+  @action async getTagsList(tagIds) {
+    this.tagDetailTableLoading = true
+    try {
+      const res = await io.getTagsList({
+        projectId: this.projectId,
+        objId: +this.objId,
+        tagIds: this.checkedKeys.map(Number),
+      })
+
+      this.tagDetaiList = res
+      this.tagDetailTableLoading = false
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  @observable inheritLoading = false
+  // 继承标签
+  // tagIds
+  @action async inheritTags(cb = () => {}) {
+    this.inheritLoading = true
+    try {
+      const res = await io.inheritTags({
+        projectId: this.projectId,
+        objId: +this.objId,
+        tagIds: this.checkedKeys.map(Number),
+      })
+      
+      successTip('操作成功')
+      cb()
+    } catch (e) {
+      errorTip(e.message)
+    } finally {
+      this.inheritLoading = false
     }
   }
 }

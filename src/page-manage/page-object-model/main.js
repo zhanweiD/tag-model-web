@@ -12,14 +12,12 @@ import ObjectDetail from './detail'
 
 import store from './store'
 
-const NotFount = () => <StatusImg status="authError" title="暂无权限" tip="您尚无相关系统权限，请联系管理员授权后即可使用" imgWidth="250" />
-
 @observer
 class ObjectModel extends Component {
   constructor(props) {
     super(props)
     const {match} = props
-    
+
     store.typeCode = match.params.typeCode || '4'
     store.objId = match.params.objId
     store.tabId = match.params.tabId || '0' // 当前详情tabID；默认数据视图
@@ -58,12 +56,7 @@ class ObjectModel extends Component {
     }
 
     const noDataConfig = {
-      // btnText: '新建对象',
-      // onClick: this.addObject,
-      // code: 'tag_model:update_obj_cate[cud]',
-      // noAuthText: '暂无对象',
       text: '没有任何对象，请在当前页面新建对象！',
-      // isCommon: true,
     }
 
     return (
@@ -83,7 +76,7 @@ class ObjectModel extends Component {
                 <ObjectDetail 
                   updateDetailKey={updateDetailKey} 
                   objId={objId} 
-                  store={store}
+                  // store={store}
                   history={history}
                 />
               ) : (
@@ -105,10 +98,10 @@ class ObjectModel extends Component {
 export default props => {
   const ctx = OnerFrame.useFrame()
   useEffect(() => {
-    store.getProjects(isProject => {
-      ctx.useProject(isProject, null, {visible: false})
-    })
-    // ctx.useProject(false)
+    // store.getProjects(isProject => {
+    //   ctx.useProject(isProject, null, {visible: false})
+    // })
+    ctx.useProject(ctx.useProjectId(), null, {visible: false})
     ctx.useQuickEntrance([
       {
         tip: '审批管理',

@@ -30,12 +30,14 @@ export default class ObjectList extends Component {
       title: '对象名称',
       dataIndex: 'name',
       key: 'name',
+      width: 80,
       render: text => <OmitTooltip maxWidth={80} text={text} />,
     },
     {
       title: '对象描述',
       dataIndex: 'descr',
       key: 'descr',
+      width: 80,
       render: text => <OmitTooltip maxWidth={80} text={text} />,
     },
     {
@@ -65,16 +67,18 @@ export default class ObjectList extends Component {
       title: '数据表数',
       dataIndex: 'tableCount',
       key: 'tableCount',
+      width: 80,
     },
     {
       title: '标签数',
       dataIndex: 'tagCount',
       key: 'tagCount',
+      width: 80,
     },
     {
       key: 'action',
       title: '操作',
-      width: 100,
+      width: 80,
       dataIndex: 'action',
       render: (text, record) => {
         if (record.isUsed) {
@@ -127,6 +131,7 @@ export default class ObjectList extends Component {
       rowKey: 'id',
       columns: this.columns,
       pagination: false,
+      // scroll: {x: 960}
     }
 
     return (
@@ -148,7 +153,13 @@ export default class ObjectList extends Component {
           style={{width: 300}}
           suffix={<SearchOutlined />}
         />
-        <div className="select-object-table">
+        <div style={{
+          height: 'calc(100% - 32px)',
+          border: '1px solid #d9d9d9',
+          borderRadius: '4px',
+          overflowY: 'auto',
+        }}
+        >
           <Table {...listConfig} />
         </div>
       </div>

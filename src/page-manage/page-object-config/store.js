@@ -21,7 +21,7 @@ class Store {
   @observable treeData = [] // 类目树数据
   @observable searchExpandedKeys = [] // 关键字搜索展开的树节点
   @observable currentSelectKeys = undefined// 默认展开的树节点
-
+  // @observable isSelectObj = false
   // 选择对象
   @observable selectObjVisible = false
   @observable selectObjLoading = false
@@ -32,6 +32,40 @@ class Store {
   @observable selectedObjLoading = false
 
   @observable selectObjUpdateKey = undefined
+
+  @observable tagClassVisible = false
+  @observable tagClassObjId // 标签类目选中的对象id
+  @observable cateDetail = {} // 类目详情
+  @observable defaultCate = {}// 默认类目
+  @observable categoryData = [] // 所有类目
+  @observable keyword = undefined // 标签列表搜索关键字
+  @observable categoryModal = {
+    visible: false,
+    title: '',
+    editType: 'add',
+    detail: {},
+  }
+  // 选择标签弹窗 - 标签列表
+  @observable tagListModal = {
+    list: [],
+    loading: false,
+    currentPage: 1,
+    pageSize: 5,
+  }
+
+  // 标签列表
+  @observable tagList = {
+    list: [],
+    loading: false,
+    currentPage: 1,
+    pageSize: 10,
+  }
+
+  // 弹窗移动至
+  @observable modalMove = {
+    selectKeys: [],
+    visible: false,
+  }
 
 
   @action destory() {
@@ -49,6 +83,158 @@ class Store {
       }
     })
   }
+
+  // @action async getTagCateTree(cb) {
+  //   this.treeLoading = true
+
+  //   try {
+  //     const res = await io.getTagCateTree({
+  //       id: this.tagClassObjId,
+  //       searchKey: this.searchKey,
+  //     })
+  //     runInAction(() => {
+  //       this.treeLoading = false
+  //       this.searchExpandedKeys.clear()
+
+  //       let data = res
+
+  //       // 判断是否进行搜索
+  //       if (this.searchKey) {
+  //         data = res.map(item => {
+  //           // 关键字搜索定位
+  //           if (this.searchKey && item.name.includes(this.searchKey)) {
+  //             this.findParentId(item.id, res, this.searchExpandedKeys)
+  //           }
+  //           return item
+  //         })
+  //       }
+
+  //       if (!this.currentSelectKeys) {
+  //         // 默认类目
+  //         [this.defaultCate] = res.filter(d => d.aId === -1)
+  //         this.currentSelectKeys = this.defaultCate.id
+  //       }
+  //       this.categoryData = res.filter(d => d.isLeaf !== 1) // 叶子类目
+
+  //       this.treeData = listToTree(data)
+  //     })
+
+  //     if (cb) cb()
+  //   } catch (e) {
+  //     runInAction(() => {
+  //       this.treeLoading = false
+  //     })
+  //     errorTip(e.message)
+  //   }
+  // }
+
+  /*
+  * @description 添加标签类目
+  */
+  @action async addNode(params, cb) {
+    this.confirmLoading = true
+    try {
+      const res = await io.addTagCate({
+        objId: this.tagClassObjId,
+        ...params,
+      })
+
+      runInAction(() => {
+        this.confirmLoading = false
+        if (res.success) {
+          successTip('操作成功')
+          // 刷新类目树
+          this.getTagCateTree(cb)
+        } else {
+          failureTip('操作失败')
+        }
+      })
+    } catch (e) {
+      runInAction(() => {
+        this.confirmLoading = false
+      })
+      errorTip(e.message)
+    }
+  }
+  
+  /*
+    * @description 编辑标签类目
+    */
+  @action async editNode(params, cb) {
+    this.confirmLoading = true
+    try {
+      await io.editTagCate({
+        objId: this.tagClassObjId,
+        ...params,
+      })
+
+      runInAction(() => {
+        this.confirmLoading = false
+        successTip('操作成功')
+        // 刷新类目树
+        this.getTagCateTree()
+        if (cb) cb()
+      })
+    } catch (e) {
+      runInAction(() => {
+        this.confirmLoading = false
+      })
+      errorTip(e.message)
+    }
+  }
+
+  /*
+   * @description 标签列表
+   */
+  @action async getTagList(params, type, cb) {
+    if (type === 'modal') {
+      this.tagListModal.loading = true
+    } else {
+      this.tagList.loading = true
+    }
+    
+    try {
+      const res = await io.getTagList(params)
+      runInAction(() => {
+        const data = {
+          loading: false,
+          list: res.data,
+          currentPage: res.currentPage || 1,
+          pageSize: res.pages || 10,
+          total: res.totalCount,
+        }
+        if (type === 'modal') {
+          this.tagListModal = data
+        } else {
+          this.tagList = data
+        }
+        if (cb) cb()
+      })
+    } catch (e) {
+      errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        if (type === 'modal') {
+          this.tagListModal.loading = false
+        } else {
+          this.tagList.loading = false
+        }
+      })
+    }
+  }
+
+  // @action async getTagCateDetail() {
+  //   try {
+  //     const res = await io.getTagCateDetail({
+  //       id: this.currentSelectKeys,
+  //     })
+  //     runInAction(() => {
+  //       this.cateDetail = res
+  //     })
+  //   } catch (e) {
+  //     errorTip(e.message)
+  //   }
+  // }
 
   //* ------------------------------ 类目树相关 end ------------------------------*//
   //* ------------------------------ 对象详情 start ------------------------------*//
@@ -73,9 +259,7 @@ class Store {
   //* ------------------------------ 对象详情 end ------------------------------*//
 
   @observable confirmLoading = false
-  /**
-   * @description 获取对象类目树
-   */
+  // 获取对象类目树
   @action async getObjTree(cb) {
     this.treeLoading = true
     this.firstChildrens = []
@@ -116,6 +300,7 @@ class Store {
           }
         } else {
           this.currentSelectKeys = undefined
+          this.selectObjVisible = true
         }
         // 获取所有类目的数据；用于编辑对象时选择所属类目
         // this.categoryData = res.filter(item => item.parentId === 0)
@@ -130,9 +315,7 @@ class Store {
     }
   }
 
-  /**
-   * @description 选择对象类目树
-   */
+  // 选择对象类目树
   @action async getObjCate(params) {
     this.selectObjLoading = true
     try {
@@ -164,7 +347,7 @@ class Store {
     }
   }
 
-  /**
+  /*
    * @description 已选对象列表
    */
   @action async getObjSelectedList(cb) {
@@ -194,7 +377,7 @@ class Store {
     }
   }
 
-  /**
+  /*
    * @description 获取选择对象列表信息加入选择列表
    */
   @action async getObjSelectedDetail(objIds, cb) {
@@ -224,7 +407,7 @@ class Store {
     }
   }
 
-  /**
+  /*
    * @description 保存已选对象
    */
   @action async saveSelectedObj(params, cb) {
@@ -408,7 +591,8 @@ class Store {
 
     const resLinks = links.map(d => ({
       source: d.u,
-      target: d.relationId,
+      // target: d.relationId,
+      target: d.v, // TODO: 不确定啊
       sourceIndex: 0,
       targetIndex: relObjTag.indexOf(d.v) + 1,
       value: 1,

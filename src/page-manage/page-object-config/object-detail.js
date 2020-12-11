@@ -4,17 +4,20 @@
 import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
 import {Spin, Modal, Button} from 'antd'
-import {action} from 'mobx'
+import {action, toJS} from 'mobx'
 import {Time} from '../../common/util'
 import {
   TabRoute, DetailHeader, OverviewCardWrap, Tag, Authority,
 } from '../../component'
 import {objDetailTabMap, objRelTabMap, objTypeMap} from './util'
 
-import ObjectView from './object-view'
+import TagClass from '../page-object-list/object-list/tag-class'
+// import ObjectView from './object-view'
+import ObjectView from './object-view-router'
 import DataSheet from './data-sheet'
 import FieldList from './field-list'
-import BusinessModel from './business-model'
+// import BusinessModel from './business-model'
+import {TagModel} from '../page-tag-model'
 
 const {confirm} = Modal
 
@@ -42,7 +45,7 @@ export default class ObjectDetail extends Component {
     this.store.getObjCard()
   }
 
-  /**
+  /*
    * @description 移除对象；使用中的对象不可以移除
    */
   @action.bound remove() {
@@ -70,9 +73,18 @@ export default class ObjectDetail extends Component {
     this.store.tabId = id
   }
 
+  @action.bound tagClass() {
+    // this.store.tagClassObjId = this.store.objId // 对象id
+    this.store.tagClassVisible = true
+  }
+
+  @action.bound closeTagClass() {
+    this.store.tagClassVisible = false
+  }
+
   render() {
     const {
-      detailLoading, objDetail, objCard, tabId, typeCode, objId,
+      detailLoading, objDetail, objCard, tabId, typeCode, objId, tagClassObjId, tagClassVisible,
     } = this.store
     const baseInfo = [{
       title: '对象标识',
@@ -160,11 +172,19 @@ export default class ObjectDetail extends Component {
       view: ObjectView, 
       table: DataSheet,
       field: FieldList,
-      business: BusinessModel,
+      list: TagModel,
+      // business: BusinessModel,
     }
 
     const Content = objCompMap[tabId]
 
+    const tagClassConfig = {
+      visible: tagClassVisible,
+      onClose: this.closeTagClass,
+      objId, // 对象id
+      store: this.store,
+    }
+    
     return (
       <div className="object-detail">
         <Spin spinning={detailLoading}>
@@ -181,11 +201,20 @@ export default class ObjectDetail extends Component {
                   // onClick={this.remove}
                   // disabled={objDetail.isUsed} // 使用中对象不可以移除
                 >
-                  <Button type="primary" onClick={this.remove} disabled={objDetail.isUsed}>移除</Button>
+                  <Button type="primary" onClick={this.remove} disabled={objDetail.isUsed} className="mr8">移除</Button>
                 </Authority>,
+                <Button 
+                  // loading={releaseLoading} 
+                  className="mr8" 
+                  type="primary"
+                  onClick={() => this.tagClass()}
+                >
+                    标签类目
+                </Button>,
               ]}
             />
           </div>
+          <TagClass {...tagClassConfig} />
           <OverviewCardWrap cards={cards} />
         </Spin>
         <div className="box-border"> 

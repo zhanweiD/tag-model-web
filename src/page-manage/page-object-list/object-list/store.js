@@ -8,7 +8,8 @@ import {ListContentStore} from '../../../component/list-content'
 
 import io from './io'
 
-class Store extends ListContentStore(io.getList) {
+class Store {
+// class Store extends ListContentStore(io.getList) {
   @observable modalSelectTagVisible = false // 选择标签弹窗控制标识
 
   // 标签类目
@@ -58,6 +59,7 @@ class Store extends ListContentStore(io.getList) {
     visible: false,
   }
 
+
   @action findParentId(id, data, expandedKeys) {
     data.forEach(item => {
       if (item.parentId !== 0 && item.id === id) {
@@ -65,19 +67,6 @@ class Store extends ListContentStore(io.getList) {
         this.findParentId(item.parentId, data, this.searchExpandedKeys)
       }
     })
-  }
-
-  // 项目列表
-  @action async getProjects(cb) {
-    try {
-      const res = await io.getProjects({})
-      this.isProject = res.length > 0
-      runInAction(() => {
-        cb(this.isProject)
-      })
-    } catch (e) {
-      errorTip(e.message)
-    }
   }
 
   @action async getTagCateDetail() {
@@ -137,7 +126,7 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  /**
+  /*
    * @description 添加标签类目
    */
   @action async addNode(params, cb) {
@@ -166,7 +155,7 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  /**
+  /*
    * @description 编辑标签类目
    */
   @action async editNode(params, cb) {
@@ -192,7 +181,7 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  /**
+  /*
    * @description 删除标签类目
    * @param {*} params 
    * @param {*} cb 
@@ -209,7 +198,7 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  /**
+  /*
    * @description 重名校验
    */
   @action async checkName(params, cb) {
@@ -230,7 +219,7 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  /**
+  /*
    * @description 标签列表
    */
   @action async getTagList(params, type, cb) {
@@ -247,7 +236,7 @@ class Store extends ListContentStore(io.getList) {
           loading: false,
           list: res.data,
           currentPage: res.currentPage || 1,
-          pageSize: res.pages || 10,
+          pageSize: res.pageSize || 10,
           total: res.totalCount,
         }
         if (type === 'modal') {
@@ -270,7 +259,7 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  /**
+  /*
    * @description 移动标签
    */
   @action async moveTag(params, cb) {
@@ -310,4 +299,4 @@ class Store extends ListContentStore(io.getList) {
   }
 }
 
-export default new Store()
+export default Store

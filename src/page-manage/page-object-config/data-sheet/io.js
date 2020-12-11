@@ -9,7 +9,10 @@ const api = {
   getDataSheet: get(`${baseApi}/tagConfig/listUncorrelatedSourceTable`), // 添加关联字段 - 数据表列表 (数据源下所有数据比爱(排除已关联))
   removeList: post(`${baseApi}/tagConfig/remove_tag_field_rel`), // 移除数据表
   getFieldList: get(`${baseApi}/tagConfig/column_info`), // 添加关联字段 - 字段列表（数据表字段信息(数据采集)）
+  
+  checkWhere: post(`${baseApi}/tagConfig/check_where`), // 添加关联表 - where条件校验
 
+  getDataSheetDetail: get(`${baseApi}/tagConfig/obj_storage_detail`), // 数据表详情
 
   // 添加
   saveEntityField: post(`${baseApi}/tagConfig/add_rel_field`), // 添加关联字段(实体)

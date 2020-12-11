@@ -190,7 +190,6 @@ export default class Tree extends Component {
     [store.currentSelectKeys] = selectedKeys;
     [store.objId] = selectedKeys;
     [this.bigStore.objId] = selectedKeys
-
     // 3. 跳转到指定路由
     const {history} = this.props
     // 刷新对象详情

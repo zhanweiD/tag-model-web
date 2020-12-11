@@ -6,7 +6,7 @@ import {observer} from 'mobx-react'
 import {action, toJS} from 'mobx'
 import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
-import {Modal, Input, DatePicker, Select, Radio} from 'antd'
+import {Modal, Input, DatePicker, Select, Radio, Space} from 'antd'
 
 const FormItem = Form.Item
 const {TextArea} = Input
@@ -58,6 +58,7 @@ export default class TagApply extends Component {
         this.handleCancel()
       })
     })
+    this.store.modalVisible = false
   }
 
   @action handleCancel() {
@@ -76,7 +77,7 @@ export default class TagApply extends Component {
   }
 
   render() {
-    const {form: {getFieldDecorator}} = this.props
+    const {form: {getFieldDecorator, getFieldValue}} = this.props
     const {
       confirmLoading, 
       modalVisible, 
@@ -84,8 +85,13 @@ export default class TagApply extends Component {
       useProjectId, 
       // useProjectName, 
       // modalType,
-      // selectItem,
+      selectedRows,
+      selectItem,
+      tagIds,
     } = this.store
+
+    const selectName = selectItem && selectItem.name
+    const selectNames = tagIds && tagIds.map(item => item)
 
     const modalConfig = {
       width: 525,
@@ -104,35 +110,30 @@ export default class TagApply extends Component {
         {...modalConfig}
       >
         <Form className="FBV">
-          {/* {
-            useProjectId !== '' ? (
-              <FormItem {...formItemLayout} label="使用项目">
-                {useProjectName}
+          {
+            this.store.modalType === 'one' ? (
+              <FormItem {...formItemLayout} label="选择的标签">
+                <span className="fs12">{selectName}</span>
               </FormItem>
             ) : (
-              <FormItem {...formItemLayout} label="使用项目">
-                {
-                  getFieldDecorator('useProjectId', {
-                    rules: [
-                      {required: true, message: '请选择使用项目'},
-                    ],
-                
-                  })(<Select placeholder="请选择使用项目">
+              <FormItem {...formItemLayout} label="选择的标签">
+                {getFieldDecorator('dataStorageId', {
+                  initialValue: tagIds,
+                })(
+                  <Select  
+                    mode="multiple"
+                  >
                     {
-                      canUseProject.map(({useProjectId: id, useProjectName: name}) => (
-                        <Option 
-                          key={id} 
-                          value={id}
-                        >
-                          {name}
-                        </Option>
+                      selectedRows.map(item => (
+                        <Option key={item.id} value={item.id}>{item.name}</Option>
                       ))
                     }
-                     </Select>)
-                }
+                  </Select>
+                )}
               </FormItem>
             )
-          } */}
+          }
+          
           <FormItem {...formItemLayout} label="使用项目">
             <span className="fs12">{useProjectName}</span>
           </FormItem>
@@ -148,11 +149,13 @@ export default class TagApply extends Component {
             })(
               <Radio.Group>
                 <Radio value={1}>永久</Radio>
-                {/* <Radio value={0}>自定义</Radio> */}
+                <Radio value={0}>
+                  自定义
+                </Radio>
               </Radio.Group>
             )}
           </FormItem>
-          {/* {!getFieldValue('forever') ? (
+          {!getFieldValue('forever') ? (
             <FormItem
               {...formItemLayout}
               label="自定义时长"
@@ -166,7 +169,7 @@ export default class TagApply extends Component {
               )}
             </FormItem>
           )
-            : null } */}
+            : null }
          
           <FormItem
             {...formItemLayout}

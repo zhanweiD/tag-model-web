@@ -38,16 +38,19 @@ class Store {
   }
 
   @observable objList = [] // 下拉对象数据
+  @observable syncObjList = [] // 下拉对象数据
 
   // 下拉对象列表
   @action async getObjList() {
     try {
       const res = await io.getObjList({
         projectId: this.projectId,
+        storageId: this.storageId,
       })
 
       runInAction(() => {
         this.objList = changeToOptions(res)('name', 'objId')
+        this.syncObjList = res || []
       })
     } catch (e) {
       errorTip(e.message)
@@ -71,7 +74,7 @@ class Store {
 
   @observable storageList = []
   // 数据源列表
-  @action async getStorageList(params) {
+  @action async getStorageList(params, cb) {
     try {
       const res = await io.getStorageList({
         projectId: this.projectId,
@@ -79,6 +82,8 @@ class Store {
       })
       runInAction(() => {
         this.storageList = res || []
+        const defaultId = res[0] ? res[0].storageId : undefined
+        if (cb) cb({key: defaultId})
       })
     } catch (e) {
       errorTip(e.message)

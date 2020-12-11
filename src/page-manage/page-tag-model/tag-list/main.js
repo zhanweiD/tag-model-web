@@ -21,6 +21,8 @@ import ModalTagApply from './modal-tag-apply'
 import DrawerCreate from './drawer-create'
 import DrawerTagConfig from '../tag-config'
 import DrawerBatchConfig from '../tag-config-batch'
+import DrawerInherit from './drawer-inherit'
+import ModalApply from './modal-apply'
 
 import store from './store'
 
@@ -29,6 +31,7 @@ class TagList extends Component {
   constructor(props) {
     super(props)
     store.projectId = props.projectId
+    store.objId = +props.objId
   }
 
   columns = [{
@@ -73,6 +76,7 @@ class TagList extends Component {
     render: (text, record) => (
       <div className="FBH FBAC">
         {/* 标签状态: 待绑定 未使用  操作: 绑定/编辑/删除 */}
+        
         {record.status === 0 && record.isVisual === 0 && (
           <Fragment>
             <Authority
@@ -80,14 +84,17 @@ class TagList extends Component {
             >
               <a href onClick={() => store.openTagConfig('one', record)} className="mr16">绑定</a>
             </Authority>
-            <Authority
-              authCode="tag_model:create_tag[c]"
-            >
-              <a href onClick={() => store.openDrawer('edit', record)} className="mr16">编辑</a>
-              <Popconfirm placement="topRight" title="标签被删除后不可恢复，确定删除？" onConfirm={() => this.remove(record)}>
-                <a href>删除</a>
-              </Popconfirm>
-            </Authority>
+            {record.createType === 0 && (
+              <Authority
+                authCode="tag_model:create_tag[c]"
+              >
+                <a href onClick={() => store.openDrawer('edit', record)} className="mr16">编辑</a>
+                <Popconfirm placement="topRight" title="标签被删除后不可恢复，确定删除？" onConfirm={() => this.remove(record)}>
+                  <a href>删除</a>
+                </Popconfirm>
+              </Authority>
+            )}
+            
           </Fragment>
         )}
 
@@ -122,16 +129,19 @@ class TagList extends Component {
             </Authority>
 
             {/* <a href onClick={() => store.openDrawer('edit', record)}>编辑</a> */}
-            <Authority
-              authCode="tag_model:create_tag[c]"
-            >
-              <span className="disabled mr16">编辑</span>
+            {
+              record.createType === 0 && (
+                <Authority
+                  authCode="tag_model:create_tag[c]"
+                >
+                  <span className="disabled mr16">编辑</span>
 
-              <Popconfirm placement="topRight" title="标签被删除后不可恢复，确定删除？" onConfirm={() => this.remove(record)}>
-                <a href>删除</a>
-              </Popconfirm>
-            </Authority>
-          
+                  <Popconfirm placement="topRight" title="标签被删除后不可恢复，确定删除？" onConfirm={() => this.remove(record)}>
+                    <a href>删除</a>
+                  </Popconfirm>
+                </Authority>
+              )
+            }
           </Fragment>
         )}
 
@@ -152,6 +162,7 @@ class TagList extends Component {
               >
                 <a href>取消发布</a>
               </Popconfirm>
+              <a href onClick={() => this.openModal(record)} className="ml16">授权</a>
             </Authority>
               
           </Fragment>
@@ -166,6 +177,7 @@ class TagList extends Component {
               authCode="tag_model:publish_tag[u]"
             >
               <span className="disabled">取消发布</span>
+              <a href onClick={() => this.openModal(record)} className="ml16">授权</a>
             </Authority>
           )}
 
@@ -205,6 +217,7 @@ class TagList extends Component {
               >
                 <a href>取消发布</a>
               </Popconfirm>
+              <a href onClick={() => this.openModal(record)} className="ml16">授权</a>
             </Authority>
           )}
 
@@ -217,6 +230,7 @@ class TagList extends Component {
               authCode="tag_model:publish_tag[u]"
             >
               <span className="disabled">取消发布</span>
+              <a href onClick={() => this.openModal(record)} className="mr16">授权</a>
             </Authority>
           )}
 
@@ -237,6 +251,14 @@ class TagList extends Component {
     })
   }
 
+  @action.bound openModal(data) {
+    // if (!store.projectName) {
+    //   store.getProjectDetail()
+    // }
+    store.selectItem = data
+    store.modalApplyVisible = true
+  }
+
   componentWillMount() {
     if (store.projectId) {
       // store.getAuthCode()
@@ -252,10 +274,19 @@ class TagList extends Component {
 
       // 请求列表，放在父组件进行请求是因为需要在外层做空数据判断。
       // 若返回数据为空[]。则渲染 NoData 组件。
-      store.initParams = {projectId: store.projectId}
+      store.initParams = {projectId: store.projectId, objId: store.objId}
       store.getList({
         projectId: store.projectId,
+        objId: store.objId,
       })
+    }
+  }
+
+  componentWillReceiveProps(next) {
+    const {updateDetailKey, objId} = this.props
+    if (!_.isEqual(updateDetailKey, next.updateDetailKey) || !_.isEqual(+objId, +next.objId)) {
+      store.objId = +next.objId
+      store.getList({objId: next.objId, currentPage: 1})
     }
   }
 
@@ -292,9 +323,17 @@ class TagList extends Component {
     return true
   }
 
+  // 继承标签
+  inheritTag = () => {
+    store.getTagTree()
+
+    store.drawerInheritVis = true
+  }
+
   render() {
     const {
       projectId,
+      objId,
       drawerTagConfigInfo,
       drawerTagConfigVisible,
       closeTagConfig,
@@ -307,6 +346,7 @@ class TagList extends Component {
       batchConfigVisible,
       publishRowKeys,
     } = store
+    // console.log(list)
 
     const rowSelection = {
       selectedRowKeys: publishRowKeys.slice(),
@@ -328,7 +368,8 @@ class TagList extends Component {
     const listConfig = {
       rowSelection,
       columns: this.columns,
-      initParams: {projectId},
+      // scroll: {x: 1300},
+      initParams: {projectId, objId},
       searchParams: seach({objectSelectList: toJS(objectSelectList)}),
       buttons: [
         <Authority
@@ -346,8 +387,9 @@ class TagList extends Component {
         <Authority
           authCode="tag_model:bind_tag[cud]"
         >
-          <Button onClick={() => store.openBatchConfig()}>批量绑定</Button>
+          <Button className="mr8" onClick={() => store.openBatchConfig()}>批量绑定</Button>
         </Authority>,
+        <Button onClick={() => this.inheritTag()}>继承标签</Button>,
       ],
       rowKey: 'id',
       initGetDataByParent: true, // 初始请求 在父层组件处理。列表组件componentWillMount内不再进行请求
@@ -357,22 +399,25 @@ class TagList extends Component {
     return (
       <Provider bigStore={store}>
         <div>
-          <div className="content-header">标签维护</div>
-          {
+          {/* <div className="content-header">标签维护</div> */}
+          <div className="config-tag"><ListContent {...listConfig} /></div>
+          {/* {
             !list.length && !this.isSearch() ? (
-              <div className="header-page" style={{paddingTop: '15%'}}>
+              <div style={{paddingTop: '15%'}}>
                 <NoData
                 // isLoading={tableLoading}
                   {...noDataConfig}
                   // style={{marginTop: '15%'}}
                 />
               </div>
-            ) : <div className="header-page box-border"><ListContent {...listConfig} /></div>
-          }
+            ) : <div className="config-tag"><ListContent {...listConfig} /></div>
+          } */}
 
           <ModalTagApply store={store} />
           <DrawerCreate store={store} />
+          <ModalApply store={store} />
           <DrawerTagConfig
+            objId={store.objId}
             projectId={projectId}
             visible={drawerTagConfigVisible}
             info={drawerTagConfigInfo}
@@ -381,10 +426,12 @@ class TagList extends Component {
             type={drawerTagConfigType}
           />
           <DrawerBatchConfig 
+            objId={store.objId}
             projectId={projectId}
             visible={batchConfigVisible}
             objectSelectList={objectSelectList}
           />
+          <DrawerInherit />
         </div>
       </Provider>
     )

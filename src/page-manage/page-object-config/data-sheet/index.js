@@ -2,7 +2,7 @@
  * @description 对象配置 - 数据表
  */
 import {Component} from 'react'
-import {action, observable} from 'mobx'
+import {action, observable, toJS} from 'mobx'
 import {observer, inject, Provider} from 'mobx-react'
 import {
   Popconfirm, Button,
@@ -11,6 +11,7 @@ import {ListContent, Authority, OmitTooltip} from '../../../component'
 
 import ConfigField from './config-field'
 import ModalAddTable from './modal-add-table'
+import DrawerDatasheet from './drawer-datasheet'
 
 import store from './store'
 import './index.styl'
@@ -29,26 +30,36 @@ export default class DataSheet extends Component {
   }
 
   @observable tagConfigVisible = false
+  @observable drawerDatasheetVisible = false
 
   columns = [
     {
       title: '数据表名称',
       key: 'dataTableName',
       dataIndex: 'dataTableName',
-      render: text => <OmitTooltip maxWidth={250} text={text} />,
+      width: 250,
+      fixed: 'left',
+      render: (text, record) => (
+        <div>
+          <a href onClick={() => this.openDrawerDatasheet(record)}>{text}</a>
+        </div>
+      ),
     }, {
       title: '数据源',
       key: 'dataStorageName',
       dataIndex: 'dataStorageName',
-      render: text => <OmitTooltip maxWidth={250} text={text} />,
+      width: 300,
+      // render: text => <OmitTooltip maxWidth={250} text={text} />,
     }, {
       title: '数据源类型',
       key: 'storageTypeName',
       dataIndex: 'storageTypeName',
+      width: 150,
     }, {
       title: '已配置/字段数',
       key: 'configuredField',
       dataIndex: 'configuredField',
+      width: 150,
       render: (text, record) => (
         <div>{`${text}/${record.associatedField}`}</div>
       ),
@@ -56,12 +67,14 @@ export default class DataSheet extends Component {
       title: '已有标签被使用',
       key: 'isUsed',
       dataIndex: 'isUsed',
+      width: 120,
       render: text => <div>{text ? '是' : '否'}</div>,
     }, {
       key: 'action',
       title: '操作',
       dataIndex: 'action',
-      width: 150,
+      width: 250,
+      fixed: 'right',
       render: (text, record) => (
         <div>
           <Authority authCode="tag_model:update_table[cud]">
@@ -92,21 +105,30 @@ export default class DataSheet extends Component {
       title: '数据表名称',
       key: 'dataTableName',
       dataIndex: 'dataTableName',
-      render: text => <OmitTooltip maxWidth={250} text={text} />,
+      width: 250,
+      fixed: 'left',
+      render: (text, record) => (
+        <div>
+          <a href onClick={() => this.openDrawerDatasheet(record)}>{text}</a>
+        </div>
+      ),
     }, {
       title: '数据源',
       key: 'dataStorageName',
       dataIndex: 'dataStorageName',
-      render: text => <OmitTooltip maxWidth={250} text={text} />,
+      width: 300,
+      // render: text => <OmitTooltip maxWidth={250} text={text} />,
     }, {
       title: '数据源类型',
       key: 'storageTypeName',
       dataIndex: 'storageTypeName',
+      width: 150,
     }, {
       key: 'action',
       title: '操作',
       dataIndex: 'action',
       width: 150,
+      fixed: 'right',
       render: (text, record) => (
         <div>
           <Authority authCode="tag_model:update_table[cud]">
@@ -137,13 +159,13 @@ export default class DataSheet extends Component {
   componentWillReceiveProps(next) {
     const {objId} = this.props
     if (+objId !== +next.objId) {
-      store.objId = next.objId
+      store.objId = +next.objId
       // 重置列表默认参数
-      store.initParams.objId = next.objId
+      store.initParams.objId = +next.objId
       
       store.getList({
         currentPage: 1,
-        objId: next.objId,
+        objId: +next.objId,
       })
     }
   }
@@ -197,8 +219,21 @@ export default class DataSheet extends Component {
     this.tagConfigVisible = true
   }
 
+  @action.bound openDrawerDatasheet(data) {
+    store.editSelectedItem = data // 对象id
+    store.tableName = toJS(data.dataTableName)
+    store.storageId = toJS(data.dataStorageId)
+    store.storageName = toJS(data.dataStorageName)
+    // store.majorKeyField = toJS(data.mappingKey)
+    this.drawerDatasheetVisible = true
+  }
+
   @action.bound closeTagConfig() {
     this.tagConfigVisible = false
+  }
+
+  @action.bound closedrawerDatasheet() {
+    this.drawerDatasheetVisible = false
   }
 
   @action.bound tagConfigSuccess() {
@@ -212,6 +247,8 @@ export default class DataSheet extends Component {
       objId,
       projectId,
       relationType,
+      storageId,
+      drawerDatasheetVisible,
       // typeCode,
     } = store
     // typeCode = 3 关系对象；typeCode = 4 实体对象；
@@ -229,6 +266,7 @@ export default class DataSheet extends Component {
     const listConfig = {
       columns: relationType ? this.columns : this.columns1,
       // columns: this.columns,
+      scroll: {x: 1300},
       initParams: {objId, projectId},
       buttons: [buttons],
       paginationConfig: {
@@ -236,6 +274,13 @@ export default class DataSheet extends Component {
       }, 
       store, // 必填属性
     }
+
+    // const drawerDatasheetConfig = {
+    //   visible: this.drawerDatasheetVisible,
+    //   onclose: this.closedrawerDatasheet(),
+    //   objId: drawerDatasheetObjId,
+    //   store,
+    // }
 
     return (
       <Provider dataSheetStore={store}>
@@ -251,8 +296,28 @@ export default class DataSheet extends Component {
               />
             )
           }
+          {
+            this.drawerDatasheetVisible && (
+              <DrawerDatasheet 
+                store={store}
+                visible={this.drawerDatasheetVisible}
+                onClose={this.closedrawerDatasheet}
+              />
+            )
+          } 
         </div>
       </Provider>
     )
   }
 }
+
+// export default props => {
+//   const ctx = OnerFrame.useFrame()
+//   useEffect(() => {
+//     ctx.useProject(true, null, {visible: false})
+//   }, [])
+//   const projectId = ctx.useProjectId()
+//   return (
+//     <DataSheet projectId={projectId} {...props} />
+//   )
+// }

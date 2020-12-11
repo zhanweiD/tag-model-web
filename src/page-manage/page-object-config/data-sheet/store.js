@@ -20,11 +20,14 @@ class Store extends ListContentStore(io.getList) {
   @observable editSelectedItem = {}
   
   @observable storageId = undefined
+  @observable storageName = undefined
   @observable tableName = undefined
   @observable majorKeyField = undefined
+  @observable whereCondition = undefined
   @observable entity1Key = undefined
   @observable entity2Key = undefined
   
+  @observable dataSheetDetail = [] // 数据表详情
   @observable dataSourceList = [] // 数据源下拉列表数据
   @observable dataSheetList = [] // 数据表下拉列表数据
   @observable fieldList = [] // 字段列表下拉列表数据
@@ -37,6 +40,7 @@ class Store extends ListContentStore(io.getList) {
     this.storageId = undefined
     this.tableName = undefined
     this.majorKeyField = undefined
+    this.whereCondition = undefined
 
     this.entity1Key = undefined
     this.entity2Key = undefined
@@ -52,7 +56,7 @@ class Store extends ListContentStore(io.getList) {
     if (cb) cb()
   }
 
-  /**
+  /*
    * @description 移除数据表
    */
   @action async removeList(params, cb) {
@@ -76,7 +80,7 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  /**
+  /*
    * @description 数据源列表
    */
   @action async getDataSource() {
@@ -96,7 +100,7 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  /**
+  /*
    * @description 数据源列表(从关联实体的数据表中选择)
    */
   @action async getEntityDataSource(entityId) {
@@ -120,7 +124,7 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  /**
+  /*
    * @description 数据表列表
    */
   @action async getDataSheet() {
@@ -138,7 +142,25 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  /**
+  /*
+   * @description 数据表详情
+   */
+  @action async getDataSheetDetail() {
+    try {
+      const res = await io.getDataSheetDetail({
+        objId: +this.objId,
+        storageId: this.storageId,
+        tableName: this.tableName,
+      })
+      runInAction(() => {
+        this.dataSheetDetail = res || []
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  /*
    * @description 字段列表
    */
   @action async getFieldList(params, cb) {
@@ -158,7 +180,7 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  /**
+  /*
    * @description 字段列表
    */
   @action async getMappingKey(objId, cb) {
@@ -177,7 +199,32 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  /**
+  /*
+   * @description where条件校验
+   */
+  @observable whereSuccess = false
+  @action async checkWhere() {
+    try {
+      const res = await io.checkWhere({
+        // storageType: this.typeCode,
+        storageId: this.storageId,
+        tableName: this.tableName,
+        whereCondition: this.whereCondition,
+      })
+      runInAction(() => {
+        this.whereSuccess = res.success
+        if (res.success) {
+          successTip('校验成功')
+        } else {
+          failureTip(res.message)
+        }
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  /*
    * @description 保存添加实体关联字段
    */
   @action async saveEntityField(cb) {
@@ -205,6 +252,7 @@ class Store extends ListContentStore(io.getList) {
         objId: this.objId,
         projectId: this.projectId,
         filedObjReqList,
+        whereCondition: this.whereCondition,
       })
       runInAction(() => {
         if (res && cb) {
@@ -223,7 +271,7 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  /**
+  /*
    * @description 保存添加关系关联字段
    */
   @action async saveRelField(fieldParams, cb) {

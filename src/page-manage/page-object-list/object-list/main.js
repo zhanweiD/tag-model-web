@@ -14,7 +14,7 @@ import {objTypeList, objTypeMap} from '../util'
 import store from './store'
 
 @observer
-class ObjectList extends Component {
+export default class ObjectList extends Component {
   columns = [{
     title: '对象名称',
     dataIndex: 'name',
@@ -53,11 +53,12 @@ class ObjectList extends Component {
         <Authority authCode="tag_model:select_tag_cate[r]" isCommon>
           <a href onClick={() => this.tagClass(record)}>标签类目</a>
         </Authority>
-       
+        
       </div>
+      
     ),
   }]
-
+  
   componentWillMount() {
     store.getObjCate()
   }
@@ -97,30 +98,4 @@ class ObjectList extends Component {
       </div>
     )
   }
-}
-
-
-export default props => {
-  const ctx = OnerFrame.useFrame()
-  useEffect(() => {
-    // 对象列表非项目纬度下，为了兼容无项目模式
-    store.getProjects(isProject => {
-      ctx.useProject(isProject, null, {visible: false})
-    })
-    ctx.useQuickEntrance([
-      {
-        tip: '审批管理',
-        icon: 'approver',
-        url: '/tag-model/index.html#/common/approval',
-      },
-      {
-        tip: '后台配置',
-        icon: 'setting',
-        url: '/tag-model/index.html#/config/environment',
-      }])
-  }, [])
-
-  return (
-    <ObjectList {...props} />
-  )
 }

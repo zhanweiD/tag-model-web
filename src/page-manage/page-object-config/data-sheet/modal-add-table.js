@@ -1,13 +1,14 @@
 import {Component, Fragment} from 'react'
 import {observer, inject} from 'mobx-react'
-import {action, observable} from 'mobx'
+import {action, observable, toJS} from 'mobx'
 import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
-import {Modal, Select, Switch, Radio} from 'antd'
+import {Modal, Select, Switch, Radio, Input, Button} from 'antd'
 import {OmitTooltip} from '../../../component'
 
 const FormItem = Form.Item
 const {Option} = Select
+const {TextArea} = Input
 
 const formItemLayout = {
   labelCol: {span: 4},
@@ -33,6 +34,7 @@ class ModalAddTable extends Component {
     this.store.majorKeyField = undefined
     this.store.entity1Key = undefined
     this.store.entity2Key = undefined
+    this.store.whereCondition = undefined
  
     // 关系
     if (this.store.typeCode === '3') {
@@ -73,7 +75,12 @@ class ModalAddTable extends Component {
     this.initData()
   }
 
-  /**
+  @action.bound onWhereChange(data) {
+    this.store.whereCondition = data.target.value
+    this.store.whereSuccess = false
+  }
+
+  /*
    * @description 选择数据表；请求数据表下字段列表
    * @param {*} tableName 数据表名
    */
@@ -187,6 +194,11 @@ class ModalAddTable extends Component {
     this.store[`entity${index}Key`] = field
   }
 
+  // @action checkWhere() {
+  //   this.store.checkWhere()
+  //   console.log(this.store.whereSuccess)
+  // }
+
   @action handleSubmit = e => {
     const {
       form: {
@@ -254,6 +266,11 @@ class ModalAddTable extends Component {
     resetFields()
   }
 
+  // 校验where值输入
+  handleWhereConditionValidator = (rule, value, callback) => {
+    this.store.whereCondition && !this.store.whereSuccess ? callback('请校验where条件') : callback()
+  }
+
   render() {
     const {
       form: {
@@ -273,6 +290,8 @@ class ModalAddTable extends Component {
       fieldList2,
       bothTypeCode,
       storageId,
+      whereCondition,
+      whereSuccess,
     } = this.store
 
     const {objDetail} = this.bigStore
@@ -289,10 +308,12 @@ class ModalAddTable extends Component {
         maskClosable={false}
         destroyOnClose
         title="添加关联表"
-        onOk={this.handleSubmit}
+        // onOk={this.handleSubmit}
         onCancel={this.handleCancel}
         confirmLoading={confirmLoading}
         className="data-sheet-modal"
+        footer={[<Button onClick={this.handleCancel}>取消</Button>, 
+          <Button disabled={whereCondition && !whereSuccess} type="primary" onClick={this.handleSubmit}>确认</Button>]}
       >
         <Form>
           {/* 0 简单关系 */}
@@ -380,6 +401,52 @@ class ModalAddTable extends Component {
                   ))
                 }
               </Select>
+            )}
+          </FormItem>
+          <FormItem {...formItemLayout} label="where条件">
+            {getFieldDecorator('whereCondition', {
+              rules: [
+                '@transformTrim',
+                '@required',
+                '@max128',
+              ],
+            })(
+              <div style={{textAlign: 'right'}}>
+                <TextArea 
+                  onChange={this.onWhereChange}
+                  id="where"
+                  placeholder="请输入查询语句的where条件，该查询语句的返回结果将作为对象绑定的数据。例如：sex=“男” and age>30" 
+                />
+                <Button
+                  className="mt8"
+                  type={whereCondition ? 'primary' : 'ghost'}
+                  onClick={() => this.store.checkWhere()}
+                >
+                    校验
+                </Button>
+              </div>
+              // <FormItem>
+              //   <TextArea 
+              //     onChange={this.onWhereChange}
+              //     id="where"
+              //     placeholder="请输入查询语句的where条件，该查询语句的返回结果将作为对象绑定的数据。例如：sex=“男” and age>30" 
+              //   />
+              //   <FormItem style={{textAlign: 'right'}}>
+              //     {getFieldDecorator('validator', {
+              //       // rules: [
+              //       //   {validator: this.handleWhereConditionValidator},
+              //       // ],
+              //     })(
+              //       <Button
+              //         className="mt8"
+              //         type={whereCondition ? 'primary' : 'ghost'}
+              //         onClick={() => this.store.checkWhere()}
+              //       >
+              //       校验
+              //       </Button>
+              //     )}
+              //   </FormItem>
+              // </FormItem>
             )}
           </FormItem>
           {/* 实体2 */}

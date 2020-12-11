@@ -38,6 +38,7 @@ export default class ConfigField extends Component {
     store.objId = objId
     store.tableName = editSelectedItem.dataTableName
     store.storageId = editSelectedItem.dataStorageId
+    // console.log(props, 'cf')
   }
 
   componentWillMount() {

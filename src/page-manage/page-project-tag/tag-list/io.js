@@ -10,6 +10,7 @@ const api = {
   getSceneList: get(`${tagWarehouseApi}/listOcc`), // 场景列表
   addToScene: post(`${tagWarehouseApi}/save_tag_occ`), // 批量添加标签至场景
   applyTag: post(`${marketApi}/tagApply`), // 标签申请
+  backAppltTag: get(`${baseApi}/apply/revoke`), // 交回权限
   getProjectDetail: get(`${projectApi}/details`), // 项目详情
   getSceneCate: get(`${tagWarehouseApi}/list_occ_cate`), // 获取指定场景下的类目列表
 

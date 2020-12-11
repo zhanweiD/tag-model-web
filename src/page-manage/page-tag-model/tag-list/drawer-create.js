@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import {action} from 'mobx'
+import {action, toJS} from 'mobx'
 import {observer} from 'mobx-react'
 import {Drawer, Button, Spin} from 'antd'
 import {ModalForm} from '../../../component'
@@ -13,9 +13,13 @@ export default class DrawerCreate extends Component {
     this.store = props.store
   }
 
+  componentDidMount() {
+    this.selectObject(this.store.objId)
+  }
+
   @action.bound selectObject(id) {
     this.store.ownObject = id
-    this.form.resetFields(['cateId', 'name', 'enName'])
+    // this.form.resetFields(['cateId', 'name', 'enName'])
 
     this.store.drawerTagInfo.pathIds = []
     this.store.drawerTagInfo.parentId = undefined
@@ -36,136 +40,137 @@ export default class DrawerCreate extends Component {
       objectSelectList,
     } = this.store
     
-    return [{
-      label: '所属对象',
-      key: 'objId',
-      initialValue: drawerTagInfo.objId,
-      component: 'select',
-      rules: [
-        '@requiredSelect',
-      ],
-      control: {
-        options: objectSelectList,
-        onSelect: v => this.selectObject(v),
-      },
-    }, 
-    {
-      label: '所属类目',
-      key: 'cateId',
-      initialValue: drawerTagInfo.pathIds && drawerTagInfo.pathIds.length ? drawerTagInfo.pathIds.slice(2) : undefined,
-      component: 'cascader',
-      rules: [
-        '@requiredSelect',
-      ],
-      control: {
-        disabled: !ownObject,
-        options: tagCateSelectList,
-        // valueName: 'id',
-        // selectCon: ['isLeaf', 2],
-        fieldNames: {
-          label: 'name',
-          value: 'id',
+    return [
+    //   {
+    //   label: '所属对象',
+    //   key: 'objId',
+    //   initialValue: drawerTagInfo.objId,
+    //   component: 'select',
+    //   rules: [
+    //     '@requiredSelect',
+    //   ],
+    //   control: {
+    //     options: objectSelectList,
+    //     onSelect: v => this.selectObject(v),
+    //   },
+    // }, 
+      {
+        label: '所属类目',
+        key: 'cateId',
+        initialValue: drawerTagInfo.pathIds && drawerTagInfo.pathIds.length ? drawerTagInfo.pathIds.slice(2) : undefined,
+        component: 'cascader',
+        rules: [
+          '@requiredSelect',
+        ],
+        control: {
+          disabled: !ownObject,
+          options: tagCateSelectList,
+          // valueName: 'id',
+          // selectCon: ['isLeaf', 2],
+          fieldNames: {
+            label: 'name',
+            value: 'id',
+          },
         },
-      },
-    }, 
-    {
-      label: '标签名称',
-      key: 'name',
-      initialValue: drawerTagInfo.name,
-      component: 'input',
-      rules: [
-        '@namePattern',
-        '@nameUnderline',
-        '@nameShuQi',
-        '@transformTrim',
-        '@required',
-        '@max32',
-        {validator: this.checkName},
-      ],
-      control: {
-        disabled: !ownObject,
-      },
-    }, {
-      label: '标签标识',
-      key: 'enName',
-      initialValue: drawerTagInfo.enName,
-      component: 'input',
-      rules: [
-        '@enNamePattern',
-        '@transformTrim',
-        '@required',
-        '@max32',
-        // {pattern: enNameReg, message: '不超过32个字，只能包含英文、数字或下划线，必须以英文开头'},
-        {validator: this.checkName},
-      ],
-      control: {
-        disabled: !ownObject,
-      },
-    }, {
-      label: '数据类型',
-      key: 'valueType',
-      initialValue: drawerTagInfo.valueType,
-      component: 'select',
-      rules: [
-        '@requiredSelect',
-      ],
-      control: {
-        disabled: drawerTagInfo.status,
-        options: changeToOptions(window.njkData.dict.dataType)('value', 'key'),
-      },
-    }, {
-      label: '是否枚举',
-      key: 'isEnum',
-      initialValue: drawerTagInfo.isEnum,
-      valuePropName: 'checked',
-      component: 'switch',
-      control: {
-        checkedText: '是',
-        unCheckedText: '否',
-        onChange: e => this.changeIsEnum(e),
-      },
-    }, {
-      label: '枚举显示值',
-      key: 'enumValue',
-      hide: !isEnum,
-      initialValue: drawerTagInfo.enumValue,
-      component: 'textArea',
-      rules: [
-        '@transformTrim',
-        '@required',
-        '@max128',
-        {validator: this.handleEnumValueValidator},
-      ],
-      control: {
-        placeholder: '若标签值为枚举型，可将枚举代码值显示为易理解的值，例如：{"0":"女","1":"男"}',
-      },
-    }, {
-      label: '绑定方式',
-      key: 'configType',
-      initialValue: drawerTagInfo.configType,
-      component: 'select',
-      rules: [
-        '@requiredSelect',
-      ],
-      control: {
+      }, 
+      {
+        label: '标签名称',
+        key: 'name',
+        initialValue: drawerTagInfo.name,
+        component: 'input',
+        rules: [
+          '@namePattern',
+          '@nameUnderline',
+          '@nameShuQi',
+          '@transformTrim',
+          '@required',
+          '@max32',
+          {validator: this.checkName},
+        ],
+        control: {
+          disabled: !ownObject,
+        },
+      }, {
+        label: '标签标识',
+        key: 'enName',
+        initialValue: drawerTagInfo.enName,
+        component: 'input',
+        rules: [
+          '@enNamePattern',
+          '@transformTrim',
+          '@required',
+          '@max32',
+          // {pattern: enNameReg, message: '不超过32个字，只能包含英文、数字或下划线，必须以英文开头'},
+          {validator: this.checkName},
+        ],
+        control: {
+          disabled: !ownObject,
+        },
+      }, {
+        label: '数据类型',
+        key: 'valueType',
+        initialValue: drawerTagInfo.valueType,
+        component: 'select',
+        rules: [
+          '@requiredSelect',
+        ],
+        control: {
+          disabled: drawerTagInfo.status,
+          options: changeToOptions(window.njkData.dict.dataType)('value', 'key'),
+        },
+      }, {
+        label: '是否枚举',
+        key: 'isEnum',
+        initialValue: drawerTagInfo.isEnum,
+        valuePropName: 'checked',
+        component: 'switch',
+        control: {
+          checkedText: '是',
+          unCheckedText: '否',
+          onChange: e => this.changeIsEnum(e),
+        },
+      }, {
+        label: '枚举显示值',
+        key: 'enumValue',
+        hide: !isEnum,
+        initialValue: drawerTagInfo.enumValue,
+        component: 'textArea',
+        rules: [
+          '@transformTrim',
+          // '@required',
+          '@max128',
+          {validator: this.handleEnumValueValidator},
+        ],
+        control: {
+          placeholder: '若标签值为枚举型，可将枚举代码值显示为易理解的值，例如：{"0":"女","1":"男"}',
+        },
+      }, {
+        label: '绑定方式',
+        key: 'configType',
+        initialValue: drawerTagInfo.configType,
+        component: 'select',
+        rules: [
+          '@requiredSelect',
+        ],
+        control: {
         // options: tagConfigMethodMap,
-        options: [{
-          name: '基础标签',
-          value: 0,
-        }, {
-          name: '衍生标签',
-          value: 1,
-        }],
-      },
-    }, {
-      label: '业务逻辑',
-      key: 'descr',
-      initialValue: drawerTagInfo.descr,
-      component: 'textArea',
-      rules: [
-        '@max128',
-      ],
-    }]
+          options: [{
+            name: '基础标签',
+            value: 0,
+          }, {
+            name: '衍生标签',
+            value: 1,
+          }],
+        },
+      }, {
+        label: '业务逻辑',
+        key: 'descr',
+        initialValue: drawerTagInfo.descr,
+        component: 'textArea',
+        rules: [
+          '@max128',
+        ],
+      }]
   }
 
   // 校验枚举值输入

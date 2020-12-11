@@ -23,19 +23,23 @@ export default class BatchConfig extends Component {
   }
 
   componentWillMount() {
-    const {projectId} = this.props
+    const {projectId, objId} = this.props
     this.store = new Store({
       projectId,
     })
+    this.store.objId = +objId
   }
 
   componentWillReceiveProps(next) {
-    const {visible} = this.props
+    const {visible, objId} = this.props
     if (visible !== next.visible && next.visible) {
       if (next.objectSelectList.length) {
-        this.store.objId = next.objectSelectList[0].value
+        // this.store.objId = next.objectSelectList[0].value
         this.store.getConfigTagList()
       }
+    }
+    if (next.objId !== +objId) {
+      this.store.objId = next.objId
     }
   }
   
@@ -43,7 +47,7 @@ export default class BatchConfig extends Component {
     this.store.currentStep = 0
     this.store.confirmLoading = false
     this.store.objId = ''
-    this.store.boundMethodId = 0
+    this.store.boundMethodId = ''
     this.store.isShowPublished = false
     this.store.selectTagList.clear()
     this.store.rowKeys.clear()

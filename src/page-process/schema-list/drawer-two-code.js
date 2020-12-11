@@ -31,9 +31,20 @@ export default class DrawerTwoCode extends Component {
     this.store.projectId = props.projectId
   }
 
+  componentDidUpdate() {
+    this.configCode(this.drawerStore.promptData)
+    // this.configCode(this.drawerStore.promptData)
+    // if (prevProps.rootStore.drawerStore.promptData !== this.props.rootStore.drawerStore.promptData) {
+    // }
+  }
+
   componentDidMount() {
     this.store.getHeight()
+    this.configCode(this.drawerStore.promptData)
+  }
 
+  configCode = data => {
+    // if (!data.ttt) return
     if (document.getElementById('codeArea')) {
       this.store.editor = window.CodeMirror.fromTextArea(document.getElementById('codeArea'), { // 格式化输入code为sql格式
         mode: 'text/x-mysql',
@@ -49,15 +60,18 @@ export default class DrawerTwoCode extends Component {
         readOnly: false,
         // keyMap: 'sublime',
         theme: 'default',
+        hintOptions: { // 自定义提示选项
+          completeSingle: false, // 当匹配只有一项的时候是否自动补全
+          tables: data,
+        },
       })
 
       const {schemeDetail} = this.drawerStore
       if (this.drawerStore.drawerType === 'edit' && schemeDetail.source) { // source运行code，如果是编辑将code转为
         this.store.editor.setValue(sqlFormatter.format(toJS(schemeDetail.source)), {language: 'n1ql', indent: '    '})
       }
+      this.store.editor.on('change', (instance, change) => this.checkIsCanHint(instance, change))
     }
-
-    this.store.editor.on('change', (instance, change) => this.checkIsCanHint(instance, change))
   }
 
   // 输入提示
@@ -105,18 +119,17 @@ export default class DrawerTwoCode extends Component {
 
   render() {
     const {taskId, runLoading} = this.store
-
     const logPanelConfig = {
       taskId,
       store: this.store,
     }
-
-    const {schemeDetail} = this.drawerStore
+    
+    // 不要注掉promptData,否则会导致该组件拿不到更新后的promptData，导致智能提示失效
+    const {schemeDetail, promptData} = this.drawerStore
 
     return (
       // <Spin spinning={runLoading} tip="运行中...">
       <div className="code-content">
-       
         <div className="code-menu">
           {
             runLoading ? (
@@ -153,6 +166,7 @@ export default class DrawerTwoCode extends Component {
           </span>
           <a target="_blank" rel="noopener noreferrer" href={`${window.__keeper.pathHrefPrefix}/process/tql-explain`} style={{marginLeft: '-8px'}}><QuestionCircleOutlined /></a> 
         </div>
+
         <form
           id="code_area"
           className={cls({
