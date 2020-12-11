@@ -31,16 +31,9 @@ export default class DrawerTwoCode extends Component {
     this.store.projectId = props.projectId
   }
 
-  componentDidUpdate() {
-    this.configCode(this.drawerStore.promptData)
-    // this.configCode(this.drawerStore.promptData)
-    // if (prevProps.rootStore.drawerStore.promptData !== this.props.rootStore.drawerStore.promptData) {
-    // }
-  }
-
   componentDidMount() {
     this.store.getHeight()
-    this.configCode(this.drawerStore.promptData)
+    this.configCode(this.props.promptData)
   }
 
   configCode = data => {
@@ -125,7 +118,7 @@ export default class DrawerTwoCode extends Component {
     }
     
     // 不要注掉promptData,否则会导致该组件拿不到更新后的promptData，导致智能提示失效
-    const {schemeDetail, promptData} = this.drawerStore
+    const {schemeDetail} = this.drawerStore
 
     return (
       // <Spin spinning={runLoading} tip="运行中...">

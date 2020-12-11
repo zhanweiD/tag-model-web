@@ -3,9 +3,10 @@
  */
 import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
-import {action} from 'mobx'
+import {action, toJS} from 'mobx'
 import {Button} from 'antd'
 
+import {Loading} from '../../component'
 import DrawerTwoTree from './drawer-two-tree'
 import DrawerTwoCode from './drawer-two-code'
 import DrawerTwoParams from './drawer-two-params'
@@ -54,16 +55,22 @@ export default class DrawerTwo extends Component {
   render() {
     const {show, projectId} = this.props
     const {runStatusMessage} = this.codeStore
-
+    const {treeLoading} = this.store
+    
     return (
       <div style={{display: show ? 'block' : 'none'}} className="logic-config">
         <div className="FBH">
           <DrawerTwoTree />
-          <DrawerTwoCode operationCode={this.operationCode} projectId={projectId} />
+          {
+            !treeLoading ? (
+              <DrawerTwoCode promptData={this.store.promptData} operationCode={this.operationCode} projectId={projectId} />
+            ) : <div className="code-content border-d9"><Loading mode="block" height={100} /></div>
+          }
           <DrawerTwoParams 
             wrappedComponentRef={form => this.store.paramsForm = form ? form.props.form : form}
           />
         </div>
+        
         <div className="bottom-button">
           <Button style={{marginRight: 8}} onClick={() => this.store.lastStep()}>上一步</Button>
           <Button
