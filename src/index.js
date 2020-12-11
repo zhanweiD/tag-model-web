@@ -49,6 +49,20 @@ const commonConfig = {
   showProject: true,
   onUserChange: () => window.location.href = `${window.__keeper.pathHrefPrefix || '/'}/overview`, // 用户信息变更跳转到首页，防止权限问题
 }
+const urlHea = window.location.hash.split('/')[1]
+let title = '标签中心'
+if (urlHea === 'config') {
+  title = '后台配置'
+} else if (urlHea === 'process') {
+  title = '标签加工'
+} else if (urlHea === 'common') {
+  title = '审批中心'
+} else if (urlHea === 'overview') {
+  title = '标签中心'
+} else {
+  title = '标签管理'
+}
+document.title = title
 
 const frameComp = (Comp, cofig) => {
   return function frameHocComp() {

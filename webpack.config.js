@@ -1,5 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
+const ManifestPlugin = require('webpack-manifest-plugin')
+// const WebpackAssetsManifest = require('webpack-assets-manifest')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
@@ -180,8 +182,60 @@ module.exports = {
       filename: 'index.html',
       template: './index.html',
       chunks: ['main'],
-      // public_path: isDev ? 'http://www.dtwave-dev.com' : '',
+      public_path: isDev ? 'http://www.dtwave-dev.com' : '', // 微前端改造
     }),
+    new ManifestPlugin({
+      fileName: 'asset-manifest.json',
+      publicPath: './',
+      generate: (seed, files, entrypoints) => {
+        const manifestFiles = files.reduce((manifest, file) => {
+          manifest[file.name] = file.path
+          return manifest
+        }, seed)
+        const entrypointFiles = entrypoints.main.filter(
+          fileName => !fileName.endsWith('.map')
+        )
+
+        return {
+          pageConfig: {
+            // 除公共资源， 项目需要加载的第三方js
+            js: [
+              './public/d3/3.3.6/d3.min.js',
+              './public/echarts/4.2.0/echarts.min.js',
+              './public/dagre/data-manage-dagre.js',
+              './public/jquery/2.0.0/jquery.min.js',
+              './public/ide/codemirror.js',
+              './public/ide/show-hint.js',
+              './public/ide/sql-hint.js',
+              './public/ide/sql.js',
+              './public/ide/lint.js',
+            ],
+            // 除公共资源，项目需要加载的第三方css
+            css: [
+              './public/ide/lint.css',
+              './public/ide/codemirror.css',
+              './public/ide/iconfont/font.css',
+            ],
+            // 页面keeper
+            __keeper: {
+              pathPrefix: '/api/tagmodel/1_0_0',
+              pathHrefPrefix: '/tag-model/index.html#',
+              isPrivate: true,
+              encryptType: 'md5',
+              showDoc: false,
+              showOnlineService: false,
+              showWorkOrder: false,
+              productCode: 'be_tag',
+              productId: 2222,
+              parentProductCode: 'be_tag',
+            },
+          },
+          files: manifestFiles,
+          entrypoints: entrypointFiles,
+        }
+      // public_path: isDev ? 'http://www.dtwave-dev.com' : '',
+      }}),
+
     new FriendlyErrorsWebpackPlugin({
       compilationSuccessInfo: {
         messages: [`Your application is running here: http://${HOST}:${PORT}/#/`],
@@ -189,13 +243,19 @@ module.exports = {
     }),
   ],
   externals: {
+    polyfill: 'BabelPolyfill',
     react: 'React',
     'react-dom': 'ReactDOM',
+    'react-router': 'ReactRouter',
+    'react-router-dom': 'ReactRouterDOM',
     mobx: 'mobx',
     'mobx-react': 'mobxReact',
-    _: '_',
-    antd: 'antd',
+    'mobx-react-lite': 'mobxReactLite',
     moment: 'moment',
+    antd: 'antd',
+    _: '_',
+    '@dtwave/oner-frame': 'onerFrame',
+    '@dtwave/uikit': 'uikit',
   },
 }
 

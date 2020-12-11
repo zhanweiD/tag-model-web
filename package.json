@@ -21,8 +21,7 @@
     "@dtwave/oner-flexbox": "2.0.1",
     "@dtwave/oner-frame": "0.0.4-alpha21",
     "@dtwave/oner-mapping": "2.1.0-alpha12",
-    "@dtwave/uikit": "3.0.0-alpha4",
-    "antd": "4.2.0",
+    "antd": "4.4.0",
     "autoprefixer": "9.4.7",
     "babel-core": "6.26.3",
     "babel-eslint": "10.0.1",
@@ -88,8 +87,10 @@
     "uglifyjs-webpack-plugin": "2.1.1",
     "url-loader": "1.1.2",
     "webpack": "4.29.3",
+    "webpack-assets-manifest": "^3.1.1",
     "webpack-bundle-analyzer": "3.3.2",
     "webpack-cli": "3.2.3",
-    "webpack-dev-server": "3.7.2"
+    "webpack-dev-server": "3.7.2",
+    "webpack-manifest-plugin": "^2.2.0"
   }
 }
