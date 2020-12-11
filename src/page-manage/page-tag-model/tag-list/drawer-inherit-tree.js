@@ -101,6 +101,7 @@ export default class CateTree extends Component {
             marginRight: '16px', 
             height: 'calc(100% - 32px)',
             borderRadius: '4px',
+            width: '200px',
           }}
         >
           <div className="object-tree-header">

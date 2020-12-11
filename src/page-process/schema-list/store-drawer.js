@@ -1,5 +1,5 @@
 import {
-  action, runInAction, observable,
+  action, runInAction, observable, toJS,
 } from 'mobx'
 import {CycleSelect} from '@dtwave/uikit'
 import {cycleSelectMap} from '../util'
@@ -181,6 +181,7 @@ export default class Store {
   @observable searchKey = undefined
   @observable expandAll = false
   @observable treeData = [] // 类目树数据
+  @observable promptData = {} // code自定义提示
   @observable searchExpandedKeys = [] // 关键字搜索展开的树节点
 
   @action findParentId(id, data, expandedKeys) {
@@ -188,6 +189,18 @@ export default class Store {
       if (item.parentId !== 0 && item.id === id) {
         expandedKeys.push(item.parentId)
         this.findParentId(item.parentId, data, this.searchExpandedKeys)
+      }
+    })
+  }
+
+  listToPrompt(data, objEnName) {
+    const newData = _.cloneDeep(data)
+    return newData.map(item => {
+      if (item.type === 0) {
+        return objEnName.push(item.enName)
+      }
+      if (item.children) {
+        this.listToPrompt(item.children, objEnName)
       }
     })
   }
@@ -220,7 +233,13 @@ export default class Store {
         }
 
         this.treeData = listToTree(data)
-
+        const obj = {}
+        this.treeData.forEach(item => {
+          if (item.children) {
+            this.listToPrompt(item.children, obj[item.enName] = [])
+          }
+        })
+        this.promptData = obj
         if (cb)cb()
       })
     } catch (e) {

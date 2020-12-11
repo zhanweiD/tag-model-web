@@ -18,7 +18,6 @@ export default class LogPanel extends Component {
       taskId,
       projectId,
     } = this.props
-    console.log(projectId)
     return (
       <Fragment>
         <div
