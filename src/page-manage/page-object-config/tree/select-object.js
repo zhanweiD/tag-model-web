@@ -121,7 +121,7 @@ export default class SelectObject extends Component {
     const {selectObjConfirmLoading} = this.store
 
     const drawerConfig = {
-      title: '选择对象',
+      title: '对象配置',
       visible,
       closable: true,
       width: 1120,

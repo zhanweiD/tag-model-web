@@ -55,7 +55,7 @@ export default class Action extends Component {
       <Menu>
         <Menu.Item>
           <div onClick={this.addObj} onKeyDown={() => {}} style={{margin: '-5px -12px', padding: '5px 12px'}}>
-            设置常用对象
+            对象配置
           </div>
         </Menu.Item>
       </Menu>
