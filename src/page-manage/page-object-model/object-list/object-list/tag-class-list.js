@@ -3,8 +3,8 @@ import {action, observable} from 'mobx'
 import {observer} from 'mobx-react'
 import {Table, Input, Button} from 'antd'
 import {SearchOutlined} from '@ant-design/icons'
-import {codeInProduct} from '../../../common/util'
-import {NoData, OmitTooltip, Authority} from '../../../component'
+import {codeInProduct} from '../../../../common/util'
+import {NoData, OmitTooltip, Authority} from '../../../../component'
 import ModalMove from './modal-move'
 
 const {Search} = Input

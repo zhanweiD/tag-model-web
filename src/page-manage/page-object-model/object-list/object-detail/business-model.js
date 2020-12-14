@@ -7,10 +7,10 @@ import {toJS, observable} from 'mobx'
 import {Select} from 'antd'
 
 import * as d3 from 'd3'
-import erClose from '../../../icon/er-close.svg'
-import erOpen from '../../../icon/er-open.svg'
-import erRelKey from '../../../icon/er-rel-key.svg'
-import erMajorKey from '../../../icon/er-major-key.svg'
+import erClose from '../../../../icon/er-close.svg'
+import erOpen from '../../../../icon/er-open.svg'
+import erRelKey from '../../../../icon/er-rel-key.svg'
+import erMajorKey from '../../../../icon/er-major-key.svg'
 
 import './business-model.styl'
 

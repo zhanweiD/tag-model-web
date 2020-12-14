@@ -3,8 +3,8 @@ import {
 } from 'mobx'
 import {
   successTip, failureTip, errorTip, changeToOptions, listToTree,
-} from '../../../common/util'
-import {ListContentStore} from '../../../component/list-content'
+} from '../../../../common/util'
+import {ListContentStore} from '../../../../component/list-content'
 import io from './io'
 
 class Store extends ListContentStore(io.getTagList) {

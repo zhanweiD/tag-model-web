@@ -11,7 +11,7 @@ import {SyncList, SyncDetail} from './page-tag-sync'
 import {ProjectTag, ProjectTagDetail} from './page-project-tag'
 import {CommonTag, CommonTagDetail} from './page-common-tag'
 import {TagModel, TagModelDetail} from './page-object-config/tag-model'
-import {ObjectList, ObjectDetail} from './page-object-list'
+import {ObjectList, ObjectDetail} from './page-object-model/object-list'
 import ObjectModel from './page-object-model'
 import ObjectConfig from './page-object-config'
 

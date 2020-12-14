@@ -13,10 +13,10 @@ import {typeCodeMap, objStatusMap, objTypeMap} from './util'
 // import ObjectView from './object-view'
 import ObjectView from '../page-object-config/object-view-router'
 import BusinessModel from './business-model'
-import UseProject from '../page-object-list/object-detail/use-project'
-import DataTable from '../page-object-list/object-detail/data-table'
-import TagList from '../page-object-list/object-detail/tag-list'
-import TagClass from '../page-object-list/object-list/tag-class'
+import UseProject from './object-list/object-detail/use-project'
+import DataTable from './object-list/object-detail/data-table'
+import TagList from './object-list/object-detail/tag-list'
+import TagClass from './object-list/object-list/tag-class'
 
 @inject('bigStore')
 @observer
@@ -130,7 +130,7 @@ export default class ObjectDetail extends Component {
     </Authority>
     <Button 
       loading={releaseLoading} 
-      className="mr8" 
+      // className="mr8" 
       type="primary"
       onClick={() => this.tagClass()}
     >
@@ -143,7 +143,7 @@ export default class ObjectDetail extends Component {
         button: 
   <Button 
     loading={releaseLoading} 
-    className="mr8" 
+    // className="mr8" 
     type="primary"
     onClick={() => this.tagClass()}
   >

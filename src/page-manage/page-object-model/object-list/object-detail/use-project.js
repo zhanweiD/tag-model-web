@@ -3,8 +3,8 @@ import {Input} from 'antd'
 import {observer} from 'mobx-react'
 import {action} from 'mobx'
 import {SearchOutlined} from '@ant-design/icons'
-import {Time} from '../../../common/util'
-import {ListContent} from '../../../component'
+import {Time} from '../../../../common/util'
+import {ListContent} from '../../../../component'
 
 import store from './store-project'
 
@@ -89,7 +89,7 @@ export default class UseProject extends Component {
           style={{width: 200}}
           suffix={<SearchOutlined />}
         />
-                </div>],
+      </div>],
       store,
     }
 

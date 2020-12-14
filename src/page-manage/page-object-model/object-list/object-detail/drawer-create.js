@@ -2,8 +2,8 @@ import {Component} from 'react'
 import {action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {Drawer, Button, Spin} from 'antd'
-import {ModalForm} from '../../../component'
-import {changeToOptions, enNameReg, isJsonFormat, debounce} from '../../../common/util'
+import {ModalForm} from '../../../../component'
+import {changeToOptions, enNameReg, isJsonFormat, debounce} from '../../../../common/util'
 import {nameTypeMap} from '../util'
 
 @observer

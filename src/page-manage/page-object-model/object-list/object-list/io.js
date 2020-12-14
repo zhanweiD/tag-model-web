@@ -1,7 +1,7 @@
-import ioContext from '../../../common/io-context'
+import ioContext from '../../../../common/io-context'
 import {
   objectApi, tagClassApi, get, post,
-} from '../../../common/util'
+} from '../../../../common/util'
 
 // const isMock = true
 

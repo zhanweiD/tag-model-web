@@ -5,11 +5,11 @@ import {Component} from 'react'
 import {action} from 'mobx'
 import {observer} from 'mobx-react'
 import {Dropdown, Menu} from 'antd'
-import {NoBorderInput, Authority} from '../../../component'
-import {codeInProduct} from '../../../common/util'
+import {NoBorderInput, Authority} from '../../../../component'
+import {codeInProduct} from '../../../../common/util'
 import {
   IconRefresh, IconTreeAdd, IconUnExtend, IconExtend,
-} from '../../../icon-comp'
+} from '../../../../icon-comp'
 
 @observer
 export default class Action extends Component {

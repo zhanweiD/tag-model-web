@@ -1,5 +1,5 @@
-import ioContext from '../../../common/io-context'
-import {baseApi, targetSourceApi, tagModalApi, objectApi, get, post} from '../../../common/util'
+import ioContext from '../../../../common/io-context'
+import {baseApi, targetSourceApi, tagModalApi, objectApi, get, post} from '../../../../common/util'
 
 const api = {
   //* ------------------------------ 对象详情 ------------------------------*//

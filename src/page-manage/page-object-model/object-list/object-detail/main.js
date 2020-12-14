@@ -7,13 +7,13 @@ import {observer, Provider} from 'mobx-react'
 import {Spin} from 'antd'
 import {observable, action} from 'mobx'
 
-import {Time} from '../../../common/util'
+import {Time} from '../../../../common/util'
 import {
   Tag,
   TabRoute,
   DetailHeader, 
   OverviewCardWrap, 
-} from '../../../component'
+} from '../../../../component'
 import {typeCodeMap, objTypeMap} from '../util'
 import ObjectView from './object-view'
 import BusinessModel from './business-model'

@@ -11,7 +11,7 @@ import {
 } from '../../component'
 import {objDetailTabMap, objRelTabMap, objTypeMap} from './util'
 
-import TagClass from '../page-object-list/object-list/tag-class'
+import TagClass from '../page-object-model/object-list/object-list/tag-class'
 // import ObjectView from './object-view'
 import ObjectView from './object-view-router'
 import DataSheet from './data-sheet'

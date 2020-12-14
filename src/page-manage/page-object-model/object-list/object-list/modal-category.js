@@ -2,9 +2,9 @@ import {Component} from 'react'
 import {action} from 'mobx'
 import {observer} from 'mobx-react'
 import {Modal} from 'antd'
-import {ModalForm} from '../../../component'
+import {ModalForm} from '../../../../component'
 import {modalDefaultConfig, judgeEditType} from '../util'
-import {debounce} from '../../../common/util'
+import {debounce} from '../../../../common/util'
 
 @observer
 export default class ModalCategory extends Component {

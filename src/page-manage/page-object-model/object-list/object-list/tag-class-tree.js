@@ -4,8 +4,8 @@ import {action} from 'mobx'
 import {observer} from 'mobx-react'
 import {Modal} from 'antd'
 import {DtTree} from '@dtwave/uikit'
-import {Loading} from '../../../component'
-import {codeInProduct} from '../../../common/util'
+import {Loading} from '../../../../component'
+import {codeInProduct} from '../../../../common/util'
 
 import {getIconNodeSrc} from '../util'
 

@@ -5,7 +5,7 @@ import {Form} from '@ant-design/compatible'
 import _ from 'lodash'
 import '@ant-design/compatible/assets/index.css'
 import {Modal, Select, Switch, Radio} from 'antd'
-import {OmitTooltip} from '../../../component'
+import {OmitTooltip} from '../../../../component'
 
 const FormItem = Form.Item
 const {Option} = Select
@@ -86,7 +86,6 @@ class ModalRelateTable extends Component {
     const {form: {resetFields}} = this.props
     if (tableName !== this.store.dataTableName) {
       this.store.dataTableName = tableName
-
       
 
       const {objDetail} = this.bigStore
