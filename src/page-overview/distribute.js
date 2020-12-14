@@ -22,7 +22,7 @@ export default class Distribute extends Component {
   }
 
   drawObjTypeChart = info => {
-    const data = [{
+    const data = info.total ? [{
       name: '实体',
       value: info.entityRelation,
     }, {
@@ -31,7 +31,7 @@ export default class Distribute extends Component {
     }, {
       name: '复杂关系',
       value: info.complexRelation,
-    }]
+    }] : []
   
     this.objTypeChart.setOption(pieOpt(
       data
@@ -39,13 +39,13 @@ export default class Distribute extends Component {
   }
 
   drawTagChart = info => {
-    const data = [{
+    const data = info.total ? [{
       name: '实体标签',
       value: info.entityTagCount,
     }, {
       name: '关系标签',
       value: info.relationTagCount,
-    }]
+    }] : []
   
     this.tagChart.setOption(pieOpt(
       data
@@ -53,13 +53,13 @@ export default class Distribute extends Component {
   }
 
   drawTagTypeChart = info => {
-    const data = [{
+    const data = info.total ? [{
       name: '基础标签',
       value: info.basicTagCount,
     }, {
       name: '衍生标签',
       value: info.derivativeTagCount,
-    }]
+    }] : []
 
     this.tagTypeChart.setOption(pieOpt(
       data
@@ -78,7 +78,7 @@ export default class Distribute extends Component {
               <div className="overview-rank-header">对象类型分布</div>
               <div className="overview-rank-content">
                 <div style={{height: '300px', width: '100%'}} ref={ref => this.objRef = ref} />
-                {/* {
+                {
                   !objTypeChart.total
                     ? (
                       <div className="no-Data" style={{height: '300px'}}>
@@ -86,7 +86,7 @@ export default class Distribute extends Component {
                       </div>
                     )
                     : null
-                } */}
+                }
               </div>
             </div>
           </Col>
@@ -95,7 +95,7 @@ export default class Distribute extends Component {
               <div className="overview-rank-header">标签资产分布</div>
               <div className="overview-rank-content">
                 <div style={{height: '300px', width: '100%'}} ref={ref => this.tagRef = ref} />
-                {/* {
+                {
                   !tagChart.total
                     ? (
                       <div className="no-Data" style={{height: '300px'}}>
@@ -103,7 +103,7 @@ export default class Distribute extends Component {
                       </div>
                     )
                     : null
-                } */}
+                }
               </div>
             </div>
           </Col>
@@ -112,7 +112,7 @@ export default class Distribute extends Component {
               <div className="overview-rank-header">标签类型分布</div>
               <div className="overview-rank-content">
                 <div style={{height: '300px', width: '100%'}} ref={ref => this.tagTypeRef = ref} />
-                {/* {
+                {
                   !tagTypeChart.total
                     ? (
                       <div className="no-Data" style={{height: '300px'}}>
@@ -120,7 +120,7 @@ export default class Distribute extends Component {
                       </div>
                     )
                     : null
-                } */}
+                }
               </div>
             </div>
           </Col>

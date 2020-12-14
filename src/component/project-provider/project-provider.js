@@ -27,7 +27,8 @@ export default PageComponent => {
     const noProjectDataConfig = {
       text: <span>
           无可用项目 去
-        <a target="_blank" className="a-href-color" rel="noopener noreferrer" href="/project/index.html#/project">项目管理</a>
+        {/* <a target="_blank" className="a-href-color" rel="noopener noreferrer" href="/project/index.html#/project">项目管理</a> */}
+        <a target="_blank" className="a-href-color" onClick={() => window.open('/project/index.html#/project', '_blank')}>项目管理</a>
     添加
             </span>,
     }
@@ -87,7 +88,7 @@ export default PageComponent => {
           },
           {
             tip: '项目管理',
-            url: '/project/index.html#detail/base',
+            url: '/project/index.html#/project',
             icon: 'project',
           }])
         judgeInit(projectId)

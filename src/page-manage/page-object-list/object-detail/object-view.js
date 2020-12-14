@@ -128,7 +128,7 @@ export default class ObjectView extends Component {
     g.graph().transition = selection => selection.transition().duration(500)
 
     render(this.container, g)
-
+    if (!this.svg.node()) return
     const {width: svgWidth, height: svgHeight} = this.svg.node().getBoundingClientRect()
 
     const initialScale = 1.2

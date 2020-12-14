@@ -20,6 +20,7 @@ const prePath = '/manage'
 export default () => {
   const ctx = OnerFrame.useFrame()
   const projectId = ctx.useProjectId()
+
   useEffect(() => {
     if (projectId) {
       ctx.querySiderMenus({
@@ -31,12 +32,12 @@ export default () => {
         productCode: 'tag_model',
       })
     }
+    // ctx.useProject(true)
     ctx.useSider(true)
   }, [projectId])
   return (
     <Switch>
       {/* ************* 标签仓库 ************* */}
-
       {/* 项目标签 */}
       <Route exact path={`${prePath}/project-tag`} component={ProjectTag} />
       <Route exact path={`${prePath}/project-tag/:id?/:projectId?`} component={ProjectTagDetail} />

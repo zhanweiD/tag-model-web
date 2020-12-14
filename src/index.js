@@ -32,7 +32,7 @@ const quickEntrance = [
   },
   {
     tip: '项目管理',
-    url: '/project/index.html#detail/base',
+    url: '/project/index.html#/project',
     icon: 'project',
   },
 ]
@@ -68,7 +68,8 @@ function Entry() {
     <Router>
       <Switch>
         {/* 标签管理 */}
-        <Route path="/manage" component={frameComp(Manage, {productCode: 'tag_model'})} />
+        {/* <Route path="/manage" component={frameComp(Manage, {productCode: 'tag_model'})} /> */}
+        <Route path="/manage" component={frameComp(Manage, {productCode: 'tag_model', showProject: false})} />
        
         {/* 标签加工 */}
         <Route path="/process" component={frameComp(Process, {productCode: 'tag_derivative'})} />

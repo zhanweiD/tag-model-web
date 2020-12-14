@@ -22,20 +22,33 @@ class Store {
   @observable loading = false
   @observable releaseLoading = false
   
-  @action async getObjDetail() {
-    this.loading = true
+    // 项目列表
+    @action async getProjects(cb) {
     try {
-      const res = await io.getObjDetail({
-        id: this.objId,
-      })
+      const res = await io.getProjects({})
+      this.isProject = res.length > 0
       runInAction(() => {
-        this.loading = false
-        this.objDetail = res
+        cb(this.isProject)
       })
     } catch (e) {
       errorTip(e.message)
     }
   }
+
+  @action async getObjDetail() {
+      this.loading = true
+      try {
+        const res = await io.getObjDetail({
+          id: this.objId,
+        })
+        runInAction(() => {
+          this.loading = false
+          this.objDetail = res
+        })
+      } catch (e) {
+        errorTip(e.message)
+      }
+    }
 
   @action async getObjCard() {
     try {

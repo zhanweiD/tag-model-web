@@ -74,7 +74,7 @@ class Store {
             // this.selectChild = this.defaultKey(toJS(res))
             this.defaultKey(toJS(this.treeData)) // 生成默认选中的标签
             this.selectChild = this.selectTags[0]
-            
+
             if (!this.selectChild) return
             this.selectedKey = this.selectChild.aId
             this.useProjectId = this.selectChild.projectId

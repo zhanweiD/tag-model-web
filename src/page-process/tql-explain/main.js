@@ -147,7 +147,7 @@ TQL（Tag Query Language）是标签查询语言，是一种基于业务逻辑�
           />
           <h3 id="params">使用参数</h3>
           <ul>
-            <li>{'WHERE条件中的参数格式必须为/${参数名}'}</li>
+            <li>{'WHERE条件中的参数格式必须为${参数名}'}</li>
             <li>样例</li>
           </ul>
           <pre>
@@ -159,7 +159,7 @@ TQL（Tag Query Language）是标签查询语言，是一种基于业务逻辑�
                 FROM
                   object_references [, object2 ]
                 WHERE
-                  tag_name=/\${tag_parameter}
+                  tag_name=\${tag_parameter}
                 `
               }
             </code>
@@ -330,7 +330,7 @@ TQL（Tag Query Language）是标签查询语言，是一种基于业务逻辑�
                 member
                 left join member_buyer  on member.id_number = member_buyer.id_number
                 left join buyer on member_buyer.buyer_id = buyer.buyer_id
-                where datediff(buyer.buyer_time,/\${time})<=30
+                where datediff(buyer.buyer_time,\${time})<=30
               group by
                 member.id_number，
                 member.sex

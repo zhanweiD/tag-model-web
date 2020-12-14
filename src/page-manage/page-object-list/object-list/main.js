@@ -103,7 +103,10 @@ class ObjectList extends Component {
 export default props => {
   const ctx = OnerFrame.useFrame()
   useEffect(() => {
-    ctx.useProject(false)
+    // 对象列表非项目纬度下，为了兼容无项目模式
+    store.getProjects(isProject => {
+      ctx.useProject(isProject, null, {visible: false})
+    })
     ctx.useQuickEntrance([
       {
         tip: '审批管理',

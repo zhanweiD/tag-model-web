@@ -6,6 +6,7 @@ import {ListContentStore} from '../../../component/list-content'
 import io from './io'
 
 class Store extends ListContentStore(io.getList) {
+  @observable isProject = true
   @observable useProjectList = []
   @observable ownProjectList = []
   @observable objectList = []
@@ -34,6 +35,19 @@ class Store extends ListContentStore(io.getList) {
     this.ownProjectId = ''
     this.objectId = ''
     this.useProjectId = ''
+  }
+
+  // 项目列表
+  @action async getProjects(cb) {
+    try {
+      const res = await io.getProjects({})
+      this.isProject = res.length > 0
+      runInAction(() => {
+        cb(this.isProject)
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
   }
 
   // 更新列表
