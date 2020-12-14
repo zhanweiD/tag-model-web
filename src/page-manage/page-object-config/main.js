@@ -66,9 +66,9 @@ class ObjectConfig extends Component {
 
     // warning here
     const noObjDataConfig = {
-      btnText: '选择对象',
+      btnText: '设置常用对象',
       onClick: this.selectObject,
-      text: '没有任何对象，请在当前页面选择对象！',
+      text: '未设置对象，请在当前页面设置对象！',
       isLoading: treeLoading,
       code: 'tag_model:select_obj[cud]',
       noAuthText: '没有任何对象',

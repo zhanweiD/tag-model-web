@@ -300,7 +300,7 @@ class Store {
           }
         } else {
           this.currentSelectKeys = undefined
-          this.selectObjVisible = true
+          // this.selectObjVisible = true
         }
         // 获取所有类目的数据；用于编辑对象时选择所属类目
         // this.categoryData = res.filter(item => item.parentId === 0)
