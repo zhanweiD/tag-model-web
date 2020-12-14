@@ -204,6 +204,7 @@ module.exports = {
               './public/echarts/4.2.0/echarts.min.js',
               './public/dagre/data-manage-dagre.js',
               './public/jquery/2.0.0/jquery.min.js',
+              './public/jsplumb/2.12.9/jsplumb.min.js',
               './public/ide/codemirror.js',
               './public/ide/show-hint.js',
               './public/ide/sql-hint.js',
