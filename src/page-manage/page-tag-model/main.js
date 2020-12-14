@@ -1,5 +1,5 @@
 /**
- * @description  对象配置
+ * @description  对象配置（标签模型）
  */
 import {Component} from 'react'
 import {action} from 'mobx'

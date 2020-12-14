@@ -10,10 +10,10 @@ import {SourceList, SourceDetail} from './page-aim-source'
 import {SyncList, SyncDetail} from './page-tag-sync'
 import {ProjectTag, ProjectTagDetail} from './page-project-tag'
 import {CommonTag, CommonTagDetail} from './page-common-tag'
-import {TagModel, TagModelDetail} from './page-object-config/tag-model'
+import {TagModel, TagModelDetail} from './page-tag-model/tag-model'
 import {ObjectList, ObjectDetail} from './page-object-model/object-list'
 import ObjectModel from './page-object-model'
-import ObjectConfig from './page-object-config'
+import ObjectConfig from './page-tag-model'
 
 const prePath = '/manage'
 

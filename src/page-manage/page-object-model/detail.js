@@ -11,7 +11,7 @@ import {
 } from '../../component'
 import {typeCodeMap, objStatusMap, objTypeMap} from './util'
 // import ObjectView from './object-view'
-import ObjectView from '../page-object-config/object-view-router'
+import ObjectView from '../page-tag-model/object-view-router'
 import BusinessModel from './business-model'
 import UseProject from './object-list/object-detail/use-project'
 import DataTable from './object-list/object-detail/data-table'
