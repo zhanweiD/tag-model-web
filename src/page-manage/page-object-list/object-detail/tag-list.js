@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom'
 import {SearchOutlined} from '@ant-design/icons'
 import {Time} from '../../../common/util'
 import {ListContent, projectProvider, OmitTooltip, Authority, NoData} from '../../../component'
-import {tagStatusBadgeMap} from '../../page-tag-model/util'
+import {tagStatusBadgeMap} from '../../page-object-config/tag-model/util'
 import DrawerCreate from './drawer-create'
 import store from './store-tag-list'
 
@@ -216,7 +216,7 @@ export default class TagList extends Component {
             suffix={<SearchOutlined />}
           />
         </div>
-                </div>],
+      </div>],
       store,
     }
     return (
