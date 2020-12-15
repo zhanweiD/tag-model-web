@@ -12,6 +12,12 @@ class Store extends ListContentStore(io.getList) {
   projectId
   @observable objId
 
+  @observable useProjectId = '' // 授权项目id
+  @observable applyProjectList = [] // 授权项目下拉数据
+  @observable tagId = ''
+  @observable startDate = ''
+  @observable endDate = ''
+
   // 创建标签
   @observable drawerTagVisible = false
   @observable drawerTagType = 'add' // 创建标签弹窗类型 添加 & 编辑
@@ -190,6 +196,46 @@ class Store extends ListContentStore(io.getList) {
         } else {
           failureTip('操作失败')
         }
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  // 授权标签
+  @action async applyTag(params, cb) {
+    try {
+      const res = await io.applyTag({
+        projectId: this.projectId,
+        tagId: this.tagId,
+        useProjectId: this.useProjectId,
+        ...params,
+      })
+      runInAction(() => {
+        if (res) {
+          successTip('操作成功')
+          if (cb) cb()
+          this.getList()
+        } else {
+          failureTip('操作失败')
+        }
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  /*
+   * @description 获取授权项目下拉数据
+   */
+  @action async getApplyProject() {
+    try {
+      const res = await io.getApplyProject({
+        projectId: this.projectId,
+        id: this.tagId,
+      })
+      runInAction(() => {
+        this.applyProjectList = res || []
       })
     } catch (e) {
       errorTip(e.message)

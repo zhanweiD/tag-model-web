@@ -13,6 +13,8 @@ const api = {
   deleteTag: post(`${tagModalApi}/delete_tag`), // 删除标签
   tagApply: post(`${tagModalApi}/tag_apply`), // 上下架申请
   updateTagStatus: post(`${tagModalApi}/update_tag_status`), // 修改标签发布状态
+  applyTag: post(`${baseApi}/apply/authorize`), // 授权标签
+  getApplyProject: get(`${baseApi}/apply/listProject`), // 授权项目下拉框
 
   checkName: post(`${tagModalApi}/name_check`), // 重名校验
   checkKeyWord: get(`${objectApi}/list_keyword`),

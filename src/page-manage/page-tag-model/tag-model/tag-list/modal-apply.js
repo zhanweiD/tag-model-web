@@ -37,12 +37,7 @@ export default class TagApply extends Component {
       if (err) {
         return
       }
-
-      const params = {
-        
-        useProjectId: values.useProjectId || this.store.useProjectId,
-        applyDescr: values.applyDescr,
-      }
+      const params = {}
       // 申请时长为永远
       if (values.forever) {
         params.startTime = moment().format('YYYY-MM-DD')
@@ -52,9 +47,7 @@ export default class TagApply extends Component {
         params.endTime = values.timeRange[1].format('YYYY-MM-DD')
       }
 
-      params.tagIds = toJS(store.tagIds)
-
-      store.applyTag(params, () => { // 接口还没有～
+      store.applyTag(params, () => {
         t.handleCancel()
       })
     })
@@ -72,12 +65,17 @@ export default class TagApply extends Component {
     resetFields()
   }
 
+  @action.bound applyProjectSelect(v) {
+    this.store.useProjectId = v
+    this.store.startDate = this.store.applyProjectList.filter(d => d.id === this.store.useProjectId)[0].endTime || ''
+  }
+
   render() {
     const {form: {getFieldDecorator, getFieldValue}} = this.props
     const {
-      confirmLoading, modalApplyVisible, projectName, selectItem,
+      confirmLoading, modalApplyVisible, selectItem, applyProjectList, useProjectId, startDate, endDate,
     } = this.store
-
+    
     const selectName = selectItem && selectItem.name
     const selectEnName = selectItem && selectItem.enName
 
@@ -103,20 +101,20 @@ export default class TagApply extends Component {
             {selectEnName}
           </FormItem>
           <FormItem {...formItemLayout} label="授权项目">
-            {getFieldDecorator('projectId', {
+            {getFieldDecorator('useprojectId', {
               rules: [{required: true, message: '请选择授权项目'}],
             })(
               <Select 
                 placeholder="请选择授权项目" 
                 showSearch
                 optionFilterProp="children"
-                // onSelect={e => this.dataSourceSelect(e)} // 项目源接口
+                onSelect={v => this.applyProjectSelect(v)}
               >
-                {/* {
-                  dataSourceList.map(item => (
-                    <Option key={item.storageId} value={item.storageId} disabled={item.isUsed}>{item.storageName}</Option>
+                {
+                  applyProjectList.map(item => (
+                    <Option key={item.id} value={item.id} disabled={item.config && !item.endTime}>{item.name}</Option>
                   ))
-                } */}
+                }
               </Select>
             )}
           </FormItem>
@@ -144,11 +142,12 @@ export default class TagApply extends Component {
               label="自定义时长"
             >
               {getFieldDecorator('timeRange', {
+                initialValue: [startDate, endDate],
                 rules: [
                   {type: 'array', required: true, message: '请选择自定义时长'},
                 ],
               })(
-                <RangePicker />
+                <RangePicker disabled={[true, false]} />
               )}
             </FormItem>
           )

@@ -28,7 +28,7 @@ export default class TagList extends Component {
   constructor(props) {
     super(props)
     store.useProjectId = props.projectId
-    console.log(store)
+    // console.log(store)
   }
 
   // componentWillMount() {
@@ -108,6 +108,7 @@ export default class TagList extends Component {
         <div className="FBH FBAC">
           <Fragment> 
             {
+              //  && !record.endTime
               (record.projectId === store.useProjectId || -1) ? <a disabled className="mr8">权限申请</a> : (
                 <a className="mr8" href onClick={() => this.openApplyModal(record)}>权限申请</a>
               )

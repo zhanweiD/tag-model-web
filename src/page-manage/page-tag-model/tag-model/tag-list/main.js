@@ -255,8 +255,11 @@ class TagList extends Component {
     // if (!store.projectName) {
     //   store.getProjectDetail()
     // }
+    console.log(data)
+    store.tagId = data.id
     store.selectItem = data
     store.modalApplyVisible = true
+    store.getApplyProject()
   }
 
   componentWillMount() {

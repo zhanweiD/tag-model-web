@@ -109,7 +109,7 @@ export default class Market extends Component {
           <Authority authCode="tag_model:apply_tag[c]">  
             {(() => {
               if (store.useProjectId) {
-                if (record.status) { // 状态 0：可以申请 1 审批中 2 不可以申请
+                if (record.status && !record.endTime) { // 状态 0：可以申请 1 审批中 2 不可以申请
                   return (                 
                     <Fragment>
                       {/* <span className="table-action-line" />  */}
