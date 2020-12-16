@@ -86,7 +86,7 @@ export default class Detail extends Component {
                   descr={tagDetail.descr}
                   baseInfo={baseInfo}
                   tag={commonTag ? tagMap[authorStatus] : null}
-                  actions={actions}
+                  // actions={actions}
                 />
               </div>
               <div className="box-border mt16 min-h">

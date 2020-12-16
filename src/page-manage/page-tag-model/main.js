@@ -78,7 +78,7 @@ class ObjectConfig extends Component {
     return (
       <Provider bigStore={store}>
         <div className="page-object">
-          <div className="content-header-noBorder">对象配置</div>
+          <div className="content-header-noBorder">标签模型</div>
           <TabRoute {...tabConfig} />
           <div className="object-content">
             <Tree history={history} selectObjUpdateKey={selectObjUpdateKey} />

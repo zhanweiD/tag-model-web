@@ -10,10 +10,10 @@ import {SourceList, SourceDetail} from './page-aim-source'
 import {SyncList, SyncDetail} from './page-tag-sync'
 import {ProjectTag, ProjectTagDetail} from './page-project-tag'
 import {CommonTag, CommonTagDetail} from './page-common-tag'
-import {TagModel, TagModelDetail} from './page-tag-model/tag-model'
-import {ObjectList, ObjectDetail} from './page-object-model/object-list'
+import {TagModelDetail} from './page-tag-model/tag-model'
+// import {ObjectList, ObjectDetail} from './page-object-model/object-list'
 import ObjectModel from './page-object-model'
-import ObjectConfig from './page-tag-model'
+import TagModel from './page-tag-model'
 
 const prePath = '/manage'
 
@@ -62,20 +62,20 @@ export default () => {
       {/* ************* 标签模型 ************* */}
       
       {/* 标签维护 */}
-      <Route exact strict path={`${prePath}/tag-maintain`} component={TagModel} />
+      {/* <Route exact strict path={`${prePath}/tag-maintain`} component={TagModel} /> */}
       <Route exact strict path={`${prePath}/tag-maintain/:tagId/:projectId?`} component={TagModelDetail} />
 
       {/* ************* 对象管理 ************* */}
 
       {/* 对象列表 */}
-      <Route exact strict path={`${prePath}/object-list`} component={ObjectList} />
-      <Route exact strict path={`${prePath}/object-list/:typeCode/:objId`} component={ObjectDetail} />
+      {/* <Route exact strict path={`${prePath}/object-list`} component={ObjectList} /> */}
+      {/* <Route exact strict path={`${prePath}/object-list/:typeCode/:objId`} component={ObjectDetail} /> */}
 
       {/* 对象模型 */}
       <Route exact strict path={`${prePath}/object-model/:typeCode?/:objId?/:tabId?`} component={ObjectModel} />
 
-      {/* 对象配置 */}
-      <Route exact path={`${prePath}/object-config/:typeCode?/:objId?/:tabId?`} component={ObjectConfig} />
+      {/* 标签模型 */}
+      <Route exact path={`${prePath}/tag-model/:typeCode?/:objId?/:tabId?`} component={TagModel} />
     </Switch>
   )
 }
