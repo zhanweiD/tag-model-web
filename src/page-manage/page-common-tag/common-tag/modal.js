@@ -92,7 +92,7 @@ export default class TagApply extends Component {
     } = this.store
 
     const defaultSelectDate = {
-      startDate: selectItem.endTime || '',
+      startDate: moment(moment(toJS(selectItem.endTime)).format()) || '',
       endDate: '',
     }
 

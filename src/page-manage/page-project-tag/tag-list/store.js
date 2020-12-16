@@ -80,7 +80,8 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-  @action async backAppltTag(params, cb) {
+  @action async backAppltTag(cb) {
+    console.log(cb)
     this.confirmLoading = true
     try {
       const res = await io.backAppltTag({
