@@ -31,19 +31,14 @@ export default class TagBack extends Component {
   @action handleOk() {
     const t = this
     const {store} = t
-    // endTime = moment().locale('zh-cn').format('YYYY-MM-DD') 
-
-    store.backAppltTag(() => {
-      t.handleCancel()
-    })
+    store.backAppltTag(t.handleCancel)
   }
 
-  @action handleCancel() {
+  @action.bound handleCancel() {
     this.store.modalBackVisible = false
   }
 
   render() {
-    // const {form: {getFieldDecorator}} = this.props
     const {
       confirmLoading, modalBackVisible,
     } = this.store

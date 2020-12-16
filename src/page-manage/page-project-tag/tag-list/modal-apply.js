@@ -76,9 +76,9 @@ export default class TagApply extends Component {
     const {
       confirmLoading, modalApplyVisible, selectItem, ownProjectList, useProjectId,
     } = this.store
-
+    console.log(toJS(selectItem.endTime))
     const defaultSelectDate = {
-      startDate: selectItem.endTime || '',
+      startDate: moment(moment(toJS(selectItem.endTime)).format()) || '',
       endDate: '',
     }
 
