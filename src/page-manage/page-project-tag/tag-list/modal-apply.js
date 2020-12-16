@@ -76,10 +76,10 @@ export default class TagApply extends Component {
     const {
       confirmLoading, modalApplyVisible, selectItem, ownProjectList, useProjectId,
     } = this.store
-    console.log(toJS(selectItem.endTime))
+    // console.log(toJS(selectItem.endTime))
     const defaultSelectDate = {
-      startDate: moment(moment(toJS(selectItem.endTime)).format()) || '',
-      endDate: '',
+      startDate: toJS(selectItem.endTime) ? moment(moment(toJS(selectItem.endTime)).format()) : moment(),
+      // endDate: '',
     }
 
     const modalConfig = {
@@ -132,7 +132,7 @@ export default class TagApply extends Component {
               label="自定义时长"
             >
               {getFieldDecorator('timeRange', {
-                initialValue: [defaultSelectDate.startDate, defaultSelectDate.endDate],
+                initialValue: [defaultSelectDate.startDate],
                 rules: [
                   {type: 'array', required: true, message: '请选择自定义时长'},
                 ],
