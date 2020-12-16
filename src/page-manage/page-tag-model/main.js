@@ -57,7 +57,7 @@ class ObjectConfig extends Component {
 
     const tabConfig = {
       tabs: changeToOptions(window.njkData.dict.typeCodes)('value', 'key'),
-      basePath: '/manage/object-config',
+      basePath: '/manage/tag-model',
       currentTab: typeCode,
       changeTab: this.changeTab,
       _history: history,

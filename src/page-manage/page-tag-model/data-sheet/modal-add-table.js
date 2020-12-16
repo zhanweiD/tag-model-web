@@ -386,7 +386,7 @@ class ModalAddTable extends Component {
               ? (
                 <span>
 关联实体下无可用的数据表？
-                  <a target="_blank" rel="noopener noreferrer" href={`${window.__keeper.pathHrefPrefix}/manage/object-config/4/${+this.chooseEntity}/table`}>去对象配置中添加</a>
+                  <a target="_blank" rel="noopener noreferrer" href={`${window.__keeper.pathHrefPrefix}/manage/tag-model/4/${+this.chooseEntity}/table`}>去对象配置中添加</a>
                 </span>
               )
               : null}

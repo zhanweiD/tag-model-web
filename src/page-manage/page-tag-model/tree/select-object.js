@@ -67,7 +67,7 @@ export default class SelectObject extends Component {
         t.store.objId = t.store.currentSelectKeys
 
         if (!t.store.objId) {
-          t.props.history.push(`/manage/object-config/${t.store.typeCode}`)
+          t.props.history.push(`/manage/tag-model/${t.store.typeCode}`)
         }
       })
       t.destroy()
