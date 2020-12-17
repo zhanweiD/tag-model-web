@@ -34,7 +34,7 @@ export default class ListContent extends Component {
     hasPaging: PropTypes.bool,
     store: PropTypes.instanceOf(Object).isRequired,
   }
-
+  
   static defaultProps = {
     columns: [],
     initParams: {},
@@ -53,6 +53,7 @@ export default class ListContent extends Component {
      *initParams: 列表配置参数值
      */
     const {initParams} = this.props
+    
     this.store.initParams = initParams
     if (initGetDataByParent) return 
     this.store.getList()
@@ -87,7 +88,7 @@ export default class ListContent extends Component {
       onSearch() 
     } else {
       this.store.searchParams = newVal
-
+      
       this.store.getList({
         pageSize: paginationConfig.pageSize || 10, // 默认pageSize 10
         currentPage: 1, // 搜索重置列表

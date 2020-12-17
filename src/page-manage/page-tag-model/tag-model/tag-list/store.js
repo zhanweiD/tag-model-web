@@ -69,7 +69,6 @@ class Store extends ListContentStore(io.getList) {
   // 创建标签Drawer
   @action.bound openDrawer(type, data) {
     this.drawerTagType = type
-
     if (type === 'edit') {
       // 获取对象详情
       this.getTagDetail({
@@ -494,7 +493,7 @@ class Store extends ListContentStore(io.getList) {
   // 根据标签 id 查询标签详情，批量
   // objId
   // tagIds
-  @action async getTagsList(tagIds) {
+  @action async getTagsList() {
     this.tagDetailTableLoading = true
     try {
       const res = await io.getTagsList({
