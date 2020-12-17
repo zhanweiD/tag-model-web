@@ -125,7 +125,6 @@ export default class DrawerTagConfig extends Component {
       tableList,
       schemeList,
     } = this.store
-
     return (
       <div className="tag-detail-drawer">
         <Drawer
@@ -283,7 +282,6 @@ export default class DrawerTagConfig extends Component {
                   })}
                   nameMappingField={['enName', 'dataFieldName']}
                   onChange={value => {
-                    console.log(value)
                     this.value = value
                   }}
                   sourceTitle="标签列表"

@@ -14,6 +14,10 @@ const {TreeNode} = Tree
 @inject('bigStore')
 @observer
 export default class CateTree extends Component {
+  constructor(props) {
+    super(props)
+    this.bigStore = props.bigStore
+  }
   // 生成dom节点
   renderTreeNodes = data => data.map(item => {
     if (item.children) {
@@ -35,7 +39,8 @@ export default class CateTree extends Component {
         title={<OmitTooltip maxWidth={120} text={item.name} />}
         selectable={false}
         objectData={toJS(item)}        
-        disableCheckbox={!item.available || item.isUsed}
+        // disableCheckbox={!item.available || item.isUsed}
+        disableCheckbox={this.bigStore.selectTagList.includes(item.aId)}
       />
     )
   })
@@ -76,7 +81,6 @@ export default class CateTree extends Component {
 
   render() {
     const {bigStore} = this.props
-
     const {
       tagTreeList,
       tagTreeLoading,

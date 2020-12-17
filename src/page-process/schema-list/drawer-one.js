@@ -200,7 +200,7 @@ export default class DrawerOne extends Component {
               {getFieldDecorator('name', {
                 initialValue: schemeDetail.name,
                 rules: [
-                  // {transform: value => value && value.trim()},
+                  {transform: value => value && value.trim()},
                   {required: true, message: '方案名称不能为空'},
                   ...getNamePattern(),  
                   // {max: 32, message: '输入不能超过32个字符'},

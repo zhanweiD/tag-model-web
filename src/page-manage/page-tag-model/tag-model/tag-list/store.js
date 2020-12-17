@@ -487,6 +487,7 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
+  @observable selectTagList = []
   @observable tagDetaiList = []
   @observable tagDetailTableLoading = false
   // 根据标签 id 查询标签详情，批量
@@ -503,6 +504,7 @@ class Store extends ListContentStore(io.getList) {
 
       this.tagDetaiList = res
       this.tagDetailTableLoading = false
+      this.selectTagList = res.map(item => item.id)
     } catch (e) {
       errorTip(e.message)
     }

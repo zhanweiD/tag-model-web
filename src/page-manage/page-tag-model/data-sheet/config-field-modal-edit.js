@@ -86,7 +86,7 @@ class ModalTagEdit extends Component {
               {getFieldDecorator('enName', {
                 initialValue: tagDetail.enName || undefined,
                 rules: [
-                  // {transform: value => value && value.trim()},
+                  {transform: value => value && value.trim()},
                   {required: true, message: '标签标识不可为空'},
                   ...getEnNamePattern(),
                   // {pattern: enNameReg, message: '不超过32个字，只能包含英文、数字或下划线，必须以英文开头'},

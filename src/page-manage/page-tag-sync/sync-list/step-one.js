@@ -176,7 +176,7 @@ export default class StepOne extends Component {
           <FormItem {...formItemLayout} label="计划名称">
             {getFieldDecorator('name', {
               rules: [
-                // {transform: value => value && value.trim()},
+                {transform: value => value && value.trim()},
                 {required: true, message: '计划名称不能为空'},  
                 // {max: 32, message: '输入不能超过32个字符'},
                 ...getNamePattern(),
@@ -282,15 +282,15 @@ export default class StepOne extends Component {
               <FormItem {...formItemLayout} label="表名">
                 {getFieldDecorator('tableName', {
                   rules: [
-                    // {transform: value => value && value.trim()},
+                    {transform: value => value && value.trim()},
                     ...getEnNamePattern(),
                     {required: true, message: '表名不能为空'},  
                     {validator: this.changeTableName},
                   ]})(
-                  <div className="FBH"> 
-                      <span className="ml16 mr16">tbjh_</span>
-                      <Input size="small" autoComplete="off" placeholder="请输入表名称" disabled={!this.store.storageId || !this.store.objId} />
-                    </div>
+                    <div className="FBH"> 
+                    <span className="ml16 mr16">tbjh_</span>
+                    <Input size="small" autoComplete="off" placeholder="请输入表名称" disabled={!this.store.storageId || !this.store.objId} />
+                  </div>
                 )}
               </FormItem>
             ) : null

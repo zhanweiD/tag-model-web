@@ -42,7 +42,7 @@ class EditableCell extends Component {
           <Form.Item style={{margin: 0}} key={record.id}>
             {form.getFieldDecorator(record.id, {
               rules: [
-                // {transform: value => value && value.trim()},
+                {transform: value => value && value.trim()},
                 ...getNamePattern(),
                 {
                   required: true,
