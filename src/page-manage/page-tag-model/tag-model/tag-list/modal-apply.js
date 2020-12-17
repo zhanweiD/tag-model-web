@@ -67,7 +67,11 @@ export default class TagApply extends Component {
 
   @action.bound applyProjectSelect(v) {
     this.store.useProjectId = v
-    this.store.startDate = moment(moment(toJS(this.store.applyProjectList.filter(d => d.id === this.store.useProjectId)[0].endTime)).format()) || ''
+    if (toJS(this.store.applyProjectList.filter(d => d.id === this.store.useProjectId)[0].endTime)) {
+      this.store.startDate = moment(moment(toJS(this.store.applyProjectList.filter(d => d.id === this.store.useProjectId)[0].endTime)).format())
+    } else {
+      this.store.startDate = moment()
+    }
   }
 
   render() {
