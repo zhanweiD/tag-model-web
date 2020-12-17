@@ -50,7 +50,7 @@ class Approval extends Component {
   }
 
   render() {
-    const {match, projectId} = this.props
+    const {match} = this.props
     const type = (match.params && match.params.type) || 'my-requests' // 默认页面 我的申请
     const Content = ContentMap[type]
 
@@ -78,13 +78,13 @@ class Approval extends Component {
 
 export default props => {
   const ctx = OnerFrame.useFrame()
-  const projectId = ctx.useProjectId()
+  // const projectId = ctx.useProjectId()
 
   useEffect(() => {
     ctx.useProject(true, null, {visible: false})
   }, [])
 
   return (
-    <Approval {...props} projectId={projectId} />
+    <Approval {...props} />
   )
 }

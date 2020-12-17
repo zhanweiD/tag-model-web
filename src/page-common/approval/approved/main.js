@@ -59,7 +59,7 @@ class Approved extends Component {
   componentWillMount() {
     store.getApplicant()
     store.getProject()
-    store.projectId = this.props.projectId
+    // store.projectId = this.props.projectId
   }
 
   /**
@@ -90,12 +90,12 @@ class Approved extends Component {
 
   render() {
     const {
-      projectList, applicant, detail, detailLoading, projectId,
+      projectList, applicant, detail, detailLoading,
     } = store
     const listConfig = {
       columns: this.columns,
       searchParams: seach({projectList, applicant}),
-      initParams: {projectId},
+      // initParams: {projectId},
       beforeSearch: this.beforeSearch,
       store, // 必填属性
     }
@@ -122,13 +122,13 @@ class Approved extends Component {
 
 export default props => {
   const ctx = OnerFrame.useFrame()
-  const projectId = ctx.useProjectId()
+  // const projectId = ctx.useProjectId()
 
   useEffect(() => {
     ctx.useProject(true, null, {visible: false})
   }, [])
 
   return (
-    <Approved {...props} projectId={projectId} />
+    <Approved {...props} />
   )
 }
