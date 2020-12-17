@@ -92,7 +92,7 @@ export default class SearchContent extends Component {
   handleSubmit = (value, e) => {
     if (value.preventDefault) value.preventDefault()
     if (e) e.preventDefault()
-
+    
     const {form, onSearch} = this.props
 
     form.validateFields((err, values) => {

@@ -255,7 +255,6 @@ class TagList extends Component {
     // if (!store.projectName) {
     //   store.getProjectDetail()
     // }
-    console.log(data)
     store.tagId = data.id
     store.selectItem = data
     store.modalApplyVisible = true
@@ -277,7 +276,7 @@ class TagList extends Component {
 
       // 请求列表，放在父组件进行请求是因为需要在外层做空数据判断。
       // 若返回数据为空[]。则渲染 NoData 组件。
-      store.initParams = {projectId: store.projectId, objId: store.objId}
+      // store.initParams = {projectId: store.projectId, objId: store.objId}
       store.getList({
         projectId: store.projectId,
         objId: store.objId,
@@ -289,6 +288,7 @@ class TagList extends Component {
     const {updateDetailKey, objId} = this.props
     if (!_.isEqual(updateDetailKey, next.updateDetailKey) || !_.isEqual(+objId, +next.objId)) {
       store.objId = +next.objId
+      store.initParams = {projectId: store.projectId, objId: store.objId}
       store.getList({objId: next.objId, currentPage: 1})
     }
   }
@@ -350,7 +350,6 @@ class TagList extends Component {
       publishRowKeys,
     } = store
     // console.log(list)
-
     const rowSelection = {
       selectedRowKeys: publishRowKeys.slice(),
       onChange: this.onTableCheck,
@@ -367,12 +366,11 @@ class TagList extends Component {
       noAuthText: '没有任何标签',
       isLoading: tableLoading,
     }
-
     const listConfig = {
       rowSelection,
       columns: this.columns,
       // scroll: {x: 1300},
-      initParams: {projectId, objId},
+      initParams: {projectId, objId: store.objId},
       searchParams: seach({objectSelectList: toJS(objectSelectList)}),
       buttons: [
         <Authority
