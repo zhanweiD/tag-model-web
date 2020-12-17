@@ -68,7 +68,7 @@ class PendingApproval extends Component {
   ]
 
   componentWillMount() {
-    store.projectId = this.props.projectId
+    // store.projectId = this.props.projectId
     store.getProject()
     store.getApplicant()
   }
@@ -115,12 +115,12 @@ class PendingApproval extends Component {
 
   render() {
     const {
-      projectList, applicant, detail, confirmLoading, detailLoading, projectId,
+      projectList, applicant, detail, confirmLoading, detailLoading,
     } = store
     const listConfig = {
       columns: this.columns,
       searchParams: seach({projectList, applicant}),
-      initParams: {projectId},
+      // initParams: {projectId},
       beforeSearch: this.beforeSearch,
       store, // 必填属性
     }
@@ -150,13 +150,13 @@ class PendingApproval extends Component {
 
 export default props => {
   const ctx = OnerFrame.useFrame()
-  const projectId = ctx.useProjectId()
+  // const projectId = ctx.useProjectId()
 
   useEffect(() => {
     ctx.useProject(true, null, {visible: false})
   }, [])
 
   return (
-    <PendingApproval {...props} projectId={projectId} />
+    <PendingApproval {...props} />
   )
 }

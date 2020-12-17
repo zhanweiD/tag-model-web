@@ -131,7 +131,7 @@ class MyRequests extends Component {
     const listConfig = {
       columns: this.columns,
       searchParams: seach({projectList}),
-      initParams: {projectId},
+      // initParams: {projectId},
       beforeSearch: this.beforeSearch,
       store, // 必填属性
     }
@@ -173,13 +173,13 @@ class MyRequests extends Component {
 
 export default props => {
   const ctx = OnerFrame.useFrame()
-  const projectId = ctx.useProjectId()
+  // const projectId = ctx.useProjectId()
 
   useEffect(() => {
     ctx.useProject(true, null, {visible: false})
   }, [])
 
   return (
-    <MyRequests {...props} projectId={projectId} />
+    <MyRequests {...props} />
   )
 }
