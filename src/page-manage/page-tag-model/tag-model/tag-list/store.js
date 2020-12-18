@@ -80,6 +80,9 @@ class Store extends ListContentStore(io.getList) {
         id: data.objId,
       })
     }
+    this.getTagCateSelectList({
+      id: this.objId,
+    })
     this.drawerTagVisible = true
   }
 

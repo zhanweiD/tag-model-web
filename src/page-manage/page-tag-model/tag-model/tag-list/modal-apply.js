@@ -61,7 +61,6 @@ export default class TagApply extends Component {
   // 表单重置
   @action handleReset() {
     const {form: {resetFields}} = this.props
-    // this.store.tagIds.clear()
     resetFields()
   }
 

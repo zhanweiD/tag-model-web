@@ -88,6 +88,7 @@ export default class DataTable extends Component {
     const {joinModeDetail} = store
 
     store.getDataSource()
+    store.mode = joinModeDetail.mode
 
     if (joinModeDetail.mode === 0) {
       // 并集模式
