@@ -310,6 +310,7 @@ class ModalRelateTable extends Component {
         resetFields,
       },
     } = this.props
+    this.store.mode = undefined
     resetFields()
   }
 
