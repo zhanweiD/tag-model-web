@@ -1,6 +1,6 @@
 {
   "name": "tag-model",
-  "version": "2.3.4",
+  "version": "2.4.0",
   "description": "标签模型",
   "main": "app.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "build": "cross-env CLIENT_ENV=production NODE_ENV=production webpack --config webpack.config.js"
   },
   "repository": {},
-  "author": "mahua",
+  "author": "fanshu",
   "license": "MIT",
   "theme": "./src/theme/index.js",
   "devDependencies": {
