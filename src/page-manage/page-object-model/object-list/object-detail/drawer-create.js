@@ -221,7 +221,7 @@ export default class DrawerCreate extends Component {
 
           store.updateTag(params, () => {
             t.handleCancel()
-            store.getList()
+            store.getList({objId: this.store.objId})
           })
         } else {
           store.createTag(params, () => {
