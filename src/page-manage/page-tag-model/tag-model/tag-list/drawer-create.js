@@ -63,7 +63,7 @@ export default class DrawerCreate extends Component {
           '@requiredSelect',
         ],
         control: {
-          disabled: this.store.drawerTagType === 'edit',
+          // disabled: this.store.drawerTagType === 'edit',
           options: tagCateSelectList,
           // valueName: 'id',
           // selectCon: ['isLeaf', 2],
@@ -88,7 +88,7 @@ export default class DrawerCreate extends Component {
           {validator: this.checkName},
         ],
         control: {
-          disabled: this.store.drawerTagType === 'edit',
+          // disabled: this.store.drawerTagType === 'edit',
         },
       }, {
         label: '标签标识',
@@ -104,7 +104,7 @@ export default class DrawerCreate extends Component {
           {validator: this.checkName},
         ],
         control: {
-          disabled: this.store.drawerTagType === 'edit',
+          // disabled: this.store.drawerTagType === 'edit',
         },
       }, {
         label: '数据类型',

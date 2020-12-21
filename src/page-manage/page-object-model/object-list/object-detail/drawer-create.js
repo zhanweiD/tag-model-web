@@ -87,7 +87,7 @@ export default class DrawerCreate extends Component {
         ],
         autoComplete: 'off',
         control: {
-          disabled: this.store.drawerTagType === 'edit',
+          // disabled: this.store.drawerTagType === 'edit',
         },
       }, {
         label: '标签标识',
@@ -104,7 +104,7 @@ export default class DrawerCreate extends Component {
         ],
         autoComplete: 'off',
         control: {
-          disabled: this.store.drawerTagType === 'edit',
+          // disabled: this.store.drawerTagType === 'edit',
         },
       }, {
         label: '数据类型',

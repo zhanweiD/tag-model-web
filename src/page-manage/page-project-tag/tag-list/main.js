@@ -6,6 +6,7 @@ import {observer} from 'mobx-react'
 import {action} from 'mobx'
 import {Link} from 'react-router-dom'
 import {Spin} from 'antd'
+import {CompassOutlined} from '@ant-design/icons'
 import {
   ListContent, NoData, OmitTooltip, Authority,
 } from '../../../component'
@@ -15,7 +16,6 @@ import ModalBack from './modal-back'
 import Search from './search'
 
 import store from './store'
-import { CompassOutlined } from '@ant-design/icons'
 
 const statusMap = {
   0: '有效',
@@ -108,14 +108,14 @@ export default class TagList extends Component {
         <div className="FBH FBAC">
           <Fragment> 
             {
-              ((record.projectId === store.useProjectId || record.projectId === -1) || (record.status && !record.endTime)) ? <a disabled className="mr8">权限申请</a> : (
+              ((record.projectId === store.useProjectId || record.projectId === -1) || (record.status && !record.endTime)) ? <a className="mr8 disabled">权限申请</a> : (
                 <a className="mr8" href onClick={() => this.openApplyModal(record)}>权限申请</a>
               )
             }       
           </Fragment>
           <Fragment>
             {
-              (record.projectId === store.useProjectId || record.projectId === -1) ? <a disabled>交回权限</a> : (
+              (record.projectId === store.useProjectId || record.projectId === -1) ? <a className="disabled">交回权限</a> : (
                 <a href onClick={() => this.openBackModal(record)}>交回权限</a>
               )
             }        
