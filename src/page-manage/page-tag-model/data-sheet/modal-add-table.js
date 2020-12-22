@@ -86,11 +86,12 @@ class ModalAddTable extends Component {
    */
   @action.bound selectDataSheet(tableName) {
     const t = this
-    const {form: {resetFields}} = this.props
+    const {form: {resetFields, setFieldsValue}} = this.props
     if (tableName !== this.store.tableName) {
       this.store.tableName = tableName
 
-      resetFields(['mappingKey'])
+      resetFields(['mappingKey', 'whereCondition'])
+      setFieldsValue({whereCondition: ''})
 
       const {objDetail} = this.bigStore
 
@@ -411,44 +412,44 @@ class ModalAddTable extends Component {
                 '@max128',
               ],
             })(
-              <div style={{textAlign: 'right'}}>
-                <TextArea 
-                  onChange={this.onWhereChange}
-                  id="where"
-                  placeholder="请输入查询语句的where条件，该查询语句的返回结果将作为对象绑定的数据。例如：sex=“男” and age>30" 
-                />
+              <TextArea 
+                onChange={this.onWhereChange}
+                id="where"
+                placeholder="请输入查询语句的where条件，该查询语句的返回结果将作为对象绑定的数据。例如：sex=“男” and age>30" 
+              />
+            )}
+          </FormItem>
+          <FormItem style={{textAlign: 'right'}}>
+            <Button
+              type={whereCondition ? 'primary' : 'ghost'}
+              onClick={() => this.store.checkWhere()}
+            >
+                校验
+            </Button>
+          </FormItem>
+          {/* <FormItem>
+            <TextArea 
+              onChange={this.onWhereChange}
+              id="where"
+              placeholder="请输入查询语句的where条件，该查询语句的返回结果将作为对象绑定的数据。例如：sex=“男” and age>30" 
+            />
+            <FormItem style={{textAlign: 'right'}}>
+              {getFieldDecorator('validator', {
+                // rules: [
+                //   {validator: this.handleWhereConditionValidator},
+                // ],
+              })(
                 <Button
                   className="mt8"
                   type={whereCondition ? 'primary' : 'ghost'}
                   onClick={() => this.store.checkWhere()}
                 >
-                    校验
+                校验
                 </Button>
-              </div>
-              // <FormItem>
-              //   <TextArea 
-              //     onChange={this.onWhereChange}
-              //     id="where"
-              //     placeholder="请输入查询语句的where条件，该查询语句的返回结果将作为对象绑定的数据。例如：sex=“男” and age>30" 
-              //   />
-              //   <FormItem style={{textAlign: 'right'}}>
-              //     {getFieldDecorator('validator', {
-              //       // rules: [
-              //       //   {validator: this.handleWhereConditionValidator},
-              //       // ],
-              //     })(
-              //       <Button
-              //         className="mt8"
-              //         type={whereCondition ? 'primary' : 'ghost'}
-              //         onClick={() => this.store.checkWhere()}
-              //       >
-              //       校验
-              //       </Button>
-              //     )}
-              //   </FormItem>
-              // </FormItem>
-            )}
-          </FormItem>
+              )}
+            </FormItem>
+          </FormItem> */}
+    
           {/* 实体2 */}
           {
             +bothTypeCode === 2 ? (
