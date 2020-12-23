@@ -84,7 +84,7 @@ export default class ObjectDetail extends Component {
 
   render() {
     const {
-      detailLoading, objDetail, objCard, tabId, typeCode, objId, tagClassObjId, tagClassVisible,
+      detailLoading, objDetail, objCard, tabId, typeCode, objId, tagClassObjId, tagClassVisible, projectId,
     } = this.store
     const baseInfo = [{
       title: '对象标识',
@@ -183,6 +183,7 @@ export default class ObjectDetail extends Component {
       onClose: this.closeTagClass,
       objId, // 对象id
       store: this.store,
+      projectId,
     }
     
     return (
