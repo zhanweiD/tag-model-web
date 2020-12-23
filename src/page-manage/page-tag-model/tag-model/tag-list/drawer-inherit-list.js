@@ -38,7 +38,7 @@ export default class CateTree extends Component {
       dataIndex: 'action',
       render: (text, record) => {
         if (record.isUsed) {
-          return <Tooltip title="使用中的对象, 不可移除"><span className="disabled">移除</span></Tooltip>
+          return <Tooltip title="使用中的标签, 不可移除"><span className="disabled">移除</span></Tooltip>
         }
         return (
           <Popconfirm placement="topRight" title="确定移除？" onConfirm={() => this.removeTag(record.id)}>
@@ -80,7 +80,7 @@ export default class CateTree extends Component {
           onSearch={this.onSearch}
           className="mb8"
           size="small"
-          placeholder="请输入对象关键字"
+          placeholder="请输入标签关键字"
           style={{width: 300}}
           suffix={<SearchOutlined />}
         />
