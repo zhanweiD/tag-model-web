@@ -68,7 +68,7 @@ export default class DrawerInherit extends Component {
                 icon={<RightOutlined />}
                 size="small"
                 style={{display: 'block'}}
-                // disabled={checkedKeys.length === 0}
+                disabled={checkedKeys.length === 0}
                 className="mb4"
                 onClick={this.toRight}
               />

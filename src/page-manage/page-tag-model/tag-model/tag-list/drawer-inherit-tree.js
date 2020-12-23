@@ -110,7 +110,7 @@ export default class CateTree extends Component {
         >
           <div className="object-tree-header">
             <NoBorderInput
-              placeholder="请输入对象名称搜索"
+              placeholder="请输入标签名称搜索"
               value={treeSearchKey}
               onChange={this.searchTree}
             />
