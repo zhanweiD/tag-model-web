@@ -52,7 +52,6 @@ export default class DrawerDatasheet extends Component {
       visible,
     } = this.props
 
-
     // const mainKey = this.store.dataSheetDetail.mappingKeys && this.store.dataSheetDetail.mappingKeys.length === 1 ? this.store.dataSheetDetail.mappingKeys[0].field_name : undefined
     // const field1Name = this.store.dataSheetDetail.mappingKeys && this.store.dataSheetDetail.mappingKeys.length === 2 ? this.store.dataSheetDetail.mappingKeys[0].field_name : undefined
     // const field2Name = this.store.dataSheetDetail.mappingKeys && this.store.dataSheetDetail.mappingKeys.length === 2 ? this.store.dataSheetDetail.mappingKeys[1].field_name : undefined
@@ -84,7 +83,7 @@ export default class DrawerDatasheet extends Component {
           </FormItem>
           
           <FormItem {...formItemLayout} label="where条件">
-            {<OmitTooltip text={this.store.whereValue || '-'} maxWidth={300} className="rel-entity-name" />}
+            {<OmitTooltip text={this.store.dataSheetDetail.whereCondition || '-'} maxWidth={300} className="rel-entity-name" />}
           </FormItem>
 
           {
