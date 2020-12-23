@@ -11,7 +11,7 @@ import io from './io'
 class Store {
 // class Store extends ListContentStore(io.getList) {
   @observable modalSelectTagVisible = false // 选择标签弹窗控制标识
-
+  @observable projectId // 对象模型or标签模型
   // 标签类目
   @observable tagClassVisible = false
   @observable tagClassObjId // 标签类目选中的对象id  
@@ -230,7 +230,10 @@ class Store {
     }
     
     try {
-      const res = await io.getTagList(params)
+      const res = await io.getTagList({
+        ...params,
+        projectId: this.projectId,
+      })
       runInAction(() => {
         const data = {
           loading: false,

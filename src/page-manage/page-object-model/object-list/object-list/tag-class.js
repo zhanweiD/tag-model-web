@@ -20,6 +20,7 @@ export default class TagClass extends Component {
     // this.store = props.store
     this.store = new Store()
     this.store.tagClassObjId = +props.objId
+    this.store.projectId = +props.projectId ? +props.projectId : undefined
   }
 
   componentDidUpdate(prevprops) {

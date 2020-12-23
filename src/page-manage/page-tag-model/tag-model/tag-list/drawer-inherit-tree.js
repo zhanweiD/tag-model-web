@@ -40,7 +40,7 @@ export default class CateTree extends Component {
         selectable={false}
         objectData={toJS(item)}        
         // disableCheckbox={!item.available || item.isUsed}
-        disableCheckbox={this.bigStore.selectTagList.includes(item.aId)}
+        disableCheckbox={this.bigStore.selectTagList.includes(item.aId) || !item.available}
       />
     )
   })
