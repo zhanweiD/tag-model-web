@@ -177,7 +177,6 @@ export default class Market extends Component {
   ]
 
   @action.bound openModal(data, type) {
-    console.log(toJS(data))
     store.modalType = type   
     store.selectItem = data
     store.tagIds.replace([data.id]) 

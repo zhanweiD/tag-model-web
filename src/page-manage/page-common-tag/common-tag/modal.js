@@ -39,7 +39,7 @@ export default class TagApply extends Component {
       if (err) {
         return
       }
-      console.log(values)
+
       const params = {
         useProjectId: values.useProjectId || this.store.useProjectId,
         applyDescr: values.applyDescr,
@@ -58,8 +58,8 @@ export default class TagApply extends Component {
       this.store.applyTag(params, () => {
         this.handleCancel()
       })
+      this.store.modalVisible = false
     })
-    this.store.modalVisible = false
   }
 
   @action handleCancel() {
@@ -127,6 +127,8 @@ export default class TagApply extends Component {
                 })(
                   <Select  
                     mode="multiple"
+                    disabled
+                    size="small"
                   >
                     {
                       selectedRows.map(item => (
@@ -168,7 +170,24 @@ export default class TagApply extends Component {
               {getFieldDecorator('timeRange', {
                 initialValue: [defaultSelectDate.startDate],
                 rules: [
+                  {required: true, message: '请选择申请时长'},
                   {type: 'array', required: true, message: '请选择自定义时长'},
+                  {
+                    // 自定义校验规则
+                    validator: (rule, value, callback) => {
+                      if (value.length === 2) {
+                        if (!value[0] || !value[1]) {
+                          callback('请选择申请时间')
+                        } else {
+                          // callback不传参数表示校验通过
+                          callback()
+                        }
+                      } else {
+                        callback('请选择申请时间')
+                      }
+                    }
+                  },
+
                 ],
               })(
                 <RangePicker disabled={[true, false]} />
