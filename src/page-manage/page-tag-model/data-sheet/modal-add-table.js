@@ -3,7 +3,7 @@ import {observer, inject} from 'mobx-react'
 import {action, observable, toJS} from 'mobx'
 import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
-import {Modal, Select, Switch, Radio, Input, Button} from 'antd'
+import {Modal, Select, Switch, Radio, Input, Button, Spin} from 'antd'
 import {OmitTooltip} from '../../../component'
 
 const FormItem = Form.Item
@@ -285,6 +285,7 @@ class ModalAddTable extends Component {
       modalVisible,
       confirmLoading,
       dataSourceList,
+      dataTableLoading,
       dataSheetList,
       fieldList,
       fieldList1,
@@ -395,7 +396,7 @@ class ModalAddTable extends Component {
             {getFieldDecorator('dataTableName', {
               rules: [{required: true, message: '请选择数据表'}],
             })(
-              <Select placeholder="请选择数据表" onSelect={v => this.selectDataSheet(v)} showSearch optionFilterProp="children">
+              <Select placeholder="请选择数据表" onSelect={v => this.selectDataSheet(v)} showSearch notFoundContent={dataTableLoading ? <div style={{textAlign: 'center'}}><Spin /></div> : null} optionFilterProp="children">
                 {
                   dataSheetList.map(item => (
                     <Option key={item.tableName} value={item.tableName} disabled={item.isUsed}>{item.tableName}</Option>
