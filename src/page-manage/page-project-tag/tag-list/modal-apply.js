@@ -135,6 +135,21 @@ export default class TagApply extends Component {
                 initialValue: [defaultSelectDate.startDate],
                 rules: [
                   {type: 'array', required: true, message: '请选择自定义时长'},
+                  {
+                    // 自定义校验规则
+                    validator: (rule, value, callback) => {
+                      if (value.length === 2) {
+                        if (!value[0] || !value[1]) {
+                          callback('请选择申请时间')
+                        } else {
+                          // callback不传参数表示校验通过
+                          callback()
+                        }
+                      } else {
+                        callback('请选择申请时间')
+                      }
+                    }
+                  },
                 ],
               })(
                 <RangePicker disabled={[true, false]} />

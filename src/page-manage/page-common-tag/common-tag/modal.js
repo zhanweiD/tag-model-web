@@ -187,7 +187,6 @@ export default class TagApply extends Component {
                       }
                     }
                   },
-
                 ],
               })(
                 <RangePicker disabled={[true, false]} />

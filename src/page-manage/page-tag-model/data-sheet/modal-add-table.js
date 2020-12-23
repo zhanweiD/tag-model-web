@@ -314,7 +314,7 @@ class ModalAddTable extends Component {
         confirmLoading={confirmLoading}
         className="data-sheet-modal"
         footer={[<Button onClick={this.handleCancel}>取消</Button>, 
-          <Button disabled={whereCondition && !whereSuccess} type="primary" onClick={this.handleSubmit}>确认</Button>]}
+          <Button disabled={whereCondition && !whereSuccess} type="primary" loading={confirmLoading} onClick={this.handleSubmit}>确认</Button>]}
       >
         <Form>
           {/* 0 简单关系 */}
