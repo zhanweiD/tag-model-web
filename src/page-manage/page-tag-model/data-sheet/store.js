@@ -16,6 +16,7 @@ class Store extends ListContentStore(io.getList) {
   bothTypeCode // 区分 2实体 & 0简单关系 & 1复杂关系
 
   @observable confirmLoading = false
+  @observable submitLoading = false
   @observable modalVisible = false
   @observable editSelectedItem = {}
   
@@ -265,9 +266,7 @@ class Store extends ListContentStore(io.getList) {
     } catch (e) {
       errorTip(e.message)
     } finally {
-      runInAction(() => {
-        this.confirmLoading = false
-      })
+      this.confirmLoading = false
     }
   }
 
