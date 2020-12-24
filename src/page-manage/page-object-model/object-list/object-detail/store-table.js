@@ -23,6 +23,7 @@ class Store extends ListContentStore(io.getTableList) {
   @observable entity1Key = undefined
   @observable entity2Key = undefined
   @observable dataSourceLoading = false
+  @observable dataTableLoading = false
   
   @observable dataSourceList = [] // 数据源下拉列表数据
   @observable dataSheetList = [] // 数据表下拉列表数据
@@ -122,6 +123,7 @@ class Store extends ListContentStore(io.getTableList) {
    * @description 数据表列表
    */
   @action async getDataSheet(params) {
+    this.dataTableLoading = true
     try {
       const res = await io.getDataSheet(params)
       runInAction(() => {
@@ -129,6 +131,8 @@ class Store extends ListContentStore(io.getTableList) {
       })
     } catch (e) {
       errorTip(e.message)
+    } finally {
+      this.dataTableLoading = false
     }
   }
 

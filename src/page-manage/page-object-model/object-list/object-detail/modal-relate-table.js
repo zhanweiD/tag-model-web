@@ -358,6 +358,7 @@ class ModalRelateTable extends Component {
       fieldList2,
       bothTypeCode,
       dataSourceLoading,
+      dataTableLoading,
       storageId,
       typeCode,
       mode,
@@ -412,6 +413,7 @@ class ModalRelateTable extends Component {
                     showSearch
                     optionFilterProp="children"
                     loading={dataSourceLoading}
+                    notFoundContent={dataSourceLoading ? <div style={{textAlign: 'center'}}><Spin /></div> : null}
                     onSelect={e => this.dataSourceSelect(e)}
                   >
                     {
@@ -438,7 +440,7 @@ class ModalRelateTable extends Component {
                   rules: [{required: true, message: '请选择数据表'}],
                   initialValue: dataTableName,
                 })(
-                  <Select placeholder="请选择数据表" onSelect={v => this.selectDataSheet(v)} showSearch optionFilterProp="children">
+                  <Select placeholder="请选择数据表" onSelect={v => this.selectDataSheet(v)} showSearch notFoundContent={dataTableLoading ? <div style={{textAlign: 'center'}}><Spin /></div> : null} optionFilterProp="children">
                     {  
                       dataSheetList.map(item => (
                         <Option key={item.tableName} value={item.tableName} disabled={item.isUsed}>{item.tableName}</Option>
