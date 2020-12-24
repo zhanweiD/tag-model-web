@@ -4,7 +4,7 @@ import {action, observable, toJS} from 'mobx'
 import {Form} from '@ant-design/compatible'
 import _ from 'lodash'
 import '@ant-design/compatible/assets/index.css'
-import {Modal, Select, Switch, Radio} from 'antd'
+import {Modal, Select, Switch, Radio, Spin} from 'antd'
 import {OmitTooltip} from '../../../../component'
 
 const FormItem = Form.Item
@@ -136,6 +136,9 @@ class ModalRelateTable extends Component {
             t.store.fieldList2 = fieldList
           }
         })
+        resetFields(['entity1Key', 'entity2Key'])
+        this.store.dataField1 = undefined
+        this.store.dataField2 = undefined
       } else {
         // 实体
         resetFields(['mappingKey'])
@@ -323,7 +326,10 @@ class ModalRelateTable extends Component {
         this.store.dataTableName = undefined
         this.store.dataField = undefined
       } else {
-        resetFields(['dataTableName', 'mappingKey', 'entity1Key', 'entity2Key'])
+        resetFields(['dataTableName', 'entity1Key', 'entity2Key'])
+        this.store.dataTableName = undefined
+        this.store.dataField1 = undefined
+        this.store.dataField2 = undefined
       }
     }
 
@@ -351,6 +357,7 @@ class ModalRelateTable extends Component {
       fieldList1,
       fieldList2,
       bothTypeCode,
+      dataSourceLoading,
       storageId,
       typeCode,
       mode,
@@ -404,6 +411,7 @@ class ModalRelateTable extends Component {
                     placeholder="请选择数据源" 
                     showSearch
                     optionFilterProp="children"
+                    loading={dataSourceLoading}
                     onSelect={e => this.dataSourceSelect(e)}
                   >
                     {
