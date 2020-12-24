@@ -212,7 +212,7 @@ class ModalRelateTable extends Component {
       if (err) {
         return
       } 
-
+      console.log(values)
       if (values.entity1Key || values.entity2Key) {
         this.store.entity1Key = values.entity1Key 
         this.store.entity2Key = values.entity2Key
@@ -361,6 +361,7 @@ class ModalRelateTable extends Component {
       dataField2,
     } = this.store
 
+  
     const {objDetail} = this.bigStore
     const entity1Id = objDetail.objRspList && objDetail.objRspList[0].id
     const entity1Name = objDetail.objRspList && objDetail.objRspList[0].name
@@ -397,6 +398,7 @@ class ModalRelateTable extends Component {
                 {getFieldDecorator('dataStorageId', {
                   rules: [{required: true, message: '请选择数据源'}],
                   initialValue: dataStorageId,
+
                 })(
                   <Select 
                     placeholder="请选择数据源" 

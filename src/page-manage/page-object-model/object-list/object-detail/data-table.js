@@ -79,6 +79,7 @@ export default class DataTable extends Component {
   componentWillReceiveProps(next) {
     const {updateDetailKey, objId} = this.props
     if (!_.isEqual(updateDetailKey, next.updateDetailKey) || !_.isEqual(+objId, +next.objId)) {
+      store.objId = +next.objId
       store.getList({objId: next.objId})
       store.getObjectSelectList()
     }
@@ -86,7 +87,7 @@ export default class DataTable extends Component {
 
   @action.bound openModal() {
     const {joinModeDetail} = store
-
+    console.log(joinModeDetail)
     store.getDataSource()
     store.mode = joinModeDetail.mode
 
