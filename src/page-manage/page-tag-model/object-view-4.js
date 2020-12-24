@@ -200,7 +200,7 @@ export default class ObjectView extends Component {
             <feMergeNode in="SourceGraphic" />
           </feMerge>
         </filter>
-        <path d="M2,50 50,2 98,50 50,98z" className="outer" fill="#74b831" />
+        <path d="M2,50 50,2 98,50 50,98z" className="outer" fill="#88b53d" />
       </svg>
     )
   }
