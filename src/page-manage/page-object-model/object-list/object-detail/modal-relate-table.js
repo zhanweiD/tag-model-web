@@ -4,7 +4,7 @@ import {action, observable, toJS} from 'mobx'
 import {Form} from '@ant-design/compatible'
 import _ from 'lodash'
 import '@ant-design/compatible/assets/index.css'
-import {Modal, Select, Switch, Radio} from 'antd'
+import {Modal, Select, Switch, Radio, Spin} from 'antd'
 import {OmitTooltip} from '../../../../component'
 
 const FormItem = Form.Item
@@ -136,6 +136,9 @@ class ModalRelateTable extends Component {
             t.store.fieldList2 = fieldList
           }
         })
+        resetFields(['entity1Key', 'entity2Key'])
+        this.store.dataField1 = undefined
+        this.store.dataField2 = undefined
       } else {
         // 实体
         resetFields(['mappingKey'])
@@ -212,7 +215,7 @@ class ModalRelateTable extends Component {
       if (err) {
         return
       } 
-
+      console.log(values)
       if (values.entity1Key || values.entity2Key) {
         this.store.entity1Key = values.entity1Key 
         this.store.entity2Key = values.entity2Key
@@ -323,7 +326,10 @@ class ModalRelateTable extends Component {
         this.store.dataTableName = undefined
         this.store.dataField = undefined
       } else {
-        resetFields(['dataTableName', 'mappingKey', 'entity1Key', 'entity2Key'])
+        resetFields(['dataTableName', 'entity1Key', 'entity2Key'])
+        this.store.dataTableName = undefined
+        this.store.dataField1 = undefined
+        this.store.dataField2 = undefined
       }
     }
 
@@ -351,6 +357,8 @@ class ModalRelateTable extends Component {
       fieldList1,
       fieldList2,
       bothTypeCode,
+      dataSourceLoading,
+      dataTableLoading,
       storageId,
       typeCode,
       mode,
@@ -361,6 +369,7 @@ class ModalRelateTable extends Component {
       dataField2,
     } = this.store
 
+  
     const {objDetail} = this.bigStore
     const entity1Id = objDetail.objRspList && objDetail.objRspList[0].id
     const entity1Name = objDetail.objRspList && objDetail.objRspList[0].name
@@ -397,11 +406,14 @@ class ModalRelateTable extends Component {
                 {getFieldDecorator('dataStorageId', {
                   rules: [{required: true, message: '请选择数据源'}],
                   initialValue: dataStorageId,
+
                 })(
                   <Select 
                     placeholder="请选择数据源" 
                     showSearch
                     optionFilterProp="children"
+                    loading={dataSourceLoading}
+                    notFoundContent={dataSourceLoading ? <div style={{textAlign: 'center'}}><Spin /></div> : null}
                     onSelect={e => this.dataSourceSelect(e)}
                   >
                     {
@@ -428,7 +440,7 @@ class ModalRelateTable extends Component {
                   rules: [{required: true, message: '请选择数据表'}],
                   initialValue: dataTableName,
                 })(
-                  <Select placeholder="请选择数据表" onSelect={v => this.selectDataSheet(v)} showSearch optionFilterProp="children">
+                  <Select placeholder="请选择数据表" onSelect={v => this.selectDataSheet(v)} showSearch notFoundContent={dataTableLoading ? <div style={{textAlign: 'center'}}><Spin /></div> : null} optionFilterProp="children">
                     {  
                       dataSheetList.map(item => (
                         <Option key={item.tableName} value={item.tableName} disabled={item.isUsed}>{item.tableName}</Option>

@@ -16,7 +16,7 @@ class Store extends ListContentStore(io.getList) {
   bothTypeCode // 区分 2实体 & 0简单关系 & 1复杂关系
 
   @observable confirmLoading = false
-  @observable submitLoading = false
+  @observable dataTableLoading = false
   @observable modalVisible = false
   @observable editSelectedItem = {}
   
@@ -129,6 +129,7 @@ class Store extends ListContentStore(io.getList) {
    * @description 数据表列表
    */
   @action async getDataSheet() {
+    this.dataTableLoading = true
     try {
       const res = await io.getDataSheet({
         objId: this.objId,
@@ -140,6 +141,8 @@ class Store extends ListContentStore(io.getList) {
       })
     } catch (e) {
       errorTip(e.message)
+    } finally {
+      this.dataTableLoading = false
     }
   }
 
