@@ -74,21 +74,21 @@ export default class DrawerDatasheet extends Component {
         {...drawerConfig}
       >
         <Form style={{paddingBottom: '50px'}} colon={false}>
-          <FormItem {...formItemLayout} label="数据表">
+          <FormItem {...formItemLayout} label={<span style={{float: 'left'}}>数据表</span>}>
             {<OmitTooltip text={this.store.tableName} maxWidth={300} className="rel-entity-name" />}
           </FormItem>
 
-          <FormItem {...formItemLayout} label="数据源">
+          <FormItem {...formItemLayout} label={<span style={{float: 'left'}}>数据源</span>}>
             {<OmitTooltip text={this.store.storageName} maxWidth={300} className="rel-entity-name" />}
           </FormItem>
           
-          <FormItem {...formItemLayout} label="where条件">
+          <FormItem {...formItemLayout} label={<span className="mb8" style={{float: 'left'}}>where条件</span>}>
             {<OmitTooltip text={this.store.dataSheetDetail.whereCondition || '-'} maxWidth={300} className="rel-entity-name" />}
           </FormItem>
 
           {
             +this.typeCode === 4 ? (
-              <FormItem {...formItemLayout} label={<OmitTooltip text="主标签绑定的字段" maxWidth={100} className="rel-entity-name" />}>
+              <FormItem {...formItemLayout} label={<OmitTooltip text="主标签绑定的字段" style={{textAlign: 'left'}} maxWidth={100} className="rel-entity-name" />}>
                 {this.store.dataSheetDetail.mappingKeys && this.store.dataSheetDetail.mappingKeys.length === 1 ? [this.store.dataSheetDetail.mappingKeys[0].field_name] : undefined}
               </FormItem>
             ) : <h3 className="mb24 fs14">主标签配置</h3>
@@ -98,13 +98,13 @@ export default class DrawerDatasheet extends Component {
               <Fragment>
                 <FormItem 
                   {...formItemLayout} 
-                  label={this.store.dataSheetDetail.mappingKeys && this.store.dataSheetDetail.mappingKeys.length === 2 ? this.store.dataSheetDetail.mappingKeys[0].obj_name : undefined} 
+                  label={<span style={{float: 'left'}}>{this.store.dataSheetDetail.mappingKeys && this.store.dataSheetDetail.mappingKeys.length === 2 ? this.store.dataSheetDetail.mappingKeys[0].obj_name : undefined}</span>}
                 >
                   {this.store.dataSheetDetail.mappingKeys && this.store.dataSheetDetail.mappingKeys.length === 2 ? this.store.dataSheetDetail.mappingKeys[0].field_name : undefined}
                 </FormItem>
                 <FormItem 
                   {...formItemLayout} 
-                  label={this.store.dataSheetDetail.mappingKeys && this.store.dataSheetDetail.mappingKeys.length === 2 ? this.store.dataSheetDetail.mappingKeys[1].obj_name : undefined}
+                  label={<span style={{float: 'left'}}>{this.store.dataSheetDetail.mappingKeys && this.store.dataSheetDetail.mappingKeys.length === 2 ? this.store.dataSheetDetail.mappingKeys[1].obj_name : undefined}</span>}
                 >
                   {this.store.dataSheetDetail.mappingKeys && this.store.dataSheetDetail.mappingKeys.length === 2 ? this.store.dataSheetDetail.mappingKeys[1].field_name : undefined}
                 </FormItem>

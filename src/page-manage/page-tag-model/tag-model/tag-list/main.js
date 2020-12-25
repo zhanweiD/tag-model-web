@@ -50,8 +50,9 @@ class TagList extends Component {
     dataIndex: 'objName',
   }, {
     key: 'creator',
-    title: '创建人',
+    title: '创建方',
     dataIndex: 'creator',
+    render: (text, record) => <span>{record.createType === 1 ? '继承' : '自建'}</span>,
   }, {
     key: 'status',
     title: '标签状态',
