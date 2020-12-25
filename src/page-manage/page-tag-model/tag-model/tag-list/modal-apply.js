@@ -73,8 +73,8 @@ export default class TagApply extends Component {
     }
   }
 
-  @action disabledDate(current) {
-    return current && current < moment().endOf('day')
+  @action disabledDate = (current) => {
+    return current && current < moment(this.store.startDate).endOf('day')
   }
 
   render() {
