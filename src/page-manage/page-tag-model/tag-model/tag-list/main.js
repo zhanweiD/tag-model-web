@@ -428,6 +428,7 @@ class TagList extends Component {
           />
           <DrawerBatchConfig 
             objId={store.objId}
+            bigStore={store}
             projectId={projectId}
             visible={batchConfigVisible}
             objectSelectList={objectSelectList}

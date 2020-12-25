@@ -38,9 +38,11 @@ export default class BatchConfig extends Component {
         this.store.getConfigTagList()
       }
     }
-    if (next.objId !== +objId) {
-      this.store.objId = next.objId
-    }
+    this.store.objId = next.objId
+    // if (next.objId !== +objId) {
+    //   this.store.objId = next.objId
+    // }
+    // console.log(this.store.objId)
   }
   
   @action.bound closeDrawer() {
