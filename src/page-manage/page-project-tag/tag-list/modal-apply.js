@@ -71,6 +71,10 @@ export default class TagApply extends Component {
     resetFields()
   }
 
+  @action disabledDate(current) {
+    return current && current < moment().endOf('day')
+  }
+
   render() {
     const {form: {getFieldDecorator, getFieldValue}} = this.props
     const {
@@ -152,7 +156,7 @@ export default class TagApply extends Component {
                   },
                 ],
               })(
-                <RangePicker disabled={[true, false]} />
+                <RangePicker disabledDate={this.disabledDate} disabled={[true, false]} />
               )}
             </FormItem>
           )
