@@ -49,7 +49,7 @@ export default class TagApply extends Component {
         params.startTime = moment().format('YYYY-MM-DD')
         params.endTime = null
       } else {
-        params.startTime = values.timeRange[0].format('YYYY-MM-DD')
+        params.startTime = moment().format('YYYY-MM-DD')
         params.endTime = values.timeRange[1].format('YYYY-MM-DD')
       }
 
