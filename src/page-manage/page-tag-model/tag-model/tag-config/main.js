@@ -63,7 +63,7 @@ export default class DrawerTagConfig extends Component {
       await this.store.getTagData()
 
       this.value = this.store.result
-      this.store.resultValue = this.store.result
+      // this.store.resultValue = this.store.result
 
       this.setState({
         loading: false,
@@ -82,7 +82,7 @@ export default class DrawerTagConfig extends Component {
 
   @action changeValue = v => {
     this.value = v
-    this.store.resultValue = v
+    // this.store.resultValue = v
   } 
 
   submit = () => {
@@ -129,9 +129,7 @@ export default class DrawerTagConfig extends Component {
       configType,
       tableList,
       schemeList,
-      resultValue,
     } = this.store
-    console.log(this.store.resultValue)
     return (
       <div className="tag-detail-drawer">
         <Drawer
@@ -352,7 +350,7 @@ export default class DrawerTagConfig extends Component {
                   onClick={this.submit}
                   loading={submitting}
                   style={{float: 'right'}}
-                  disabled={!this.store.resultValue.length}
+                  disabled={!target.length && !result.length}
                 >
                   确认
                 </Button>
