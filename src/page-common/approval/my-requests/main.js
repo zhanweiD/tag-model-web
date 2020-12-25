@@ -21,6 +21,7 @@ class MyRequests extends Component {
   @observable modalBackoutVisible = false // 撤销弹窗控制
 
   backoutId // 撤销申请id
+  projectId // 撤销申请id
 
   columns = [
     {
@@ -60,7 +61,7 @@ class MyRequests extends Component {
           </Authority>
           <Authority authCode="tag_common:revert_apply[u]">
             {
-              (record.status === 0) ? <a href className="ml16" onClick={() => this.backout(record.id)}>撤销</a> : null
+              (record.status === 0) ? <a href className="ml16" onClick={() => this.backout(record.id, record.projectId)}>撤销</a> : null
             }
           </Authority>
          
@@ -70,7 +71,7 @@ class MyRequests extends Component {
   ]
 
   componentWillMount() {
-    store.projectId = this.props.projectId
+    // store.projectId = this.props.projectId
     store.getProject()
   }
 
@@ -84,8 +85,10 @@ class MyRequests extends Component {
 
   @action handleSubmit = params => {
     const t = this
+    console.log(this.projectId)
     store.backout({
       id: this.backoutId,
+      projectId: this.projectId,
       ...params,
     }, () => {
       t.modalBackoutVisible = false
@@ -96,8 +99,9 @@ class MyRequests extends Component {
   /**
    * @description 撤销
    */
-  @action backout = id => {
+  @action backout = (id, projectId) => {
     this.backoutId = id
+    this.projectId = projectId
     this.modalBackoutVisible = true
   }
 

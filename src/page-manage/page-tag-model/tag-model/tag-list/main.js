@@ -99,8 +99,8 @@ class TagList extends Component {
               <Authority
                 authCode="tag_model:create_tag[c]"
               >
-                <Popconfirm placement="topRight" title="确定删除租户下标签？" onConfirm={() => this.removeTenant(record)}>
-                  <a href>删除</a>
+                <Popconfirm placement="topRight" title="确定移除租户下标签？" onConfirm={() => this.removeTenant(record)}>
+                  <a href>移除</a>
                 </Popconfirm>
               </Authority>
             )}
@@ -157,8 +157,8 @@ class TagList extends Component {
                 <Authority
                   authCode="tag_model:create_tag[c]"
                 >
-                  <Popconfirm placement="topRight" title="确定删除租户下标签？" onConfirm={() => this.removeTenant(record)}>
-                    <a href>删除</a>
+                  <Popconfirm placement="topRight" title="确定移除租户下标签？" onConfirm={() => this.removeTenant(record)}>
+                    <a href>移除</a>
                   </Popconfirm>
                 </Authority>
               )
