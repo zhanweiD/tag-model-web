@@ -19,6 +19,7 @@ class DrawerStore {
   configType
 
   @observable tableList = []
+  @observable resultValue = []
 
   @action async getTableList() {
     try {

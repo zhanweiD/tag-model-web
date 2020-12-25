@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import {toJS} from 'mobx'
+import {action, toJS} from 'mobx'
 import {observer} from 'mobx-react'
 import {Drawer, Button, Tabs, message} from 'antd'
 import {ErrorEater} from '@dtwave/uikit'
@@ -63,6 +63,7 @@ export default class DrawerTagConfig extends Component {
       await this.store.getTagData()
 
       this.value = this.store.result
+      this.store.resultValue = this.store.result
 
       this.setState({
         loading: false,
@@ -79,11 +80,15 @@ export default class DrawerTagConfig extends Component {
     }
   }
 
+  @action changeValue = v => {
+    this.value = v
+    this.store.resultValue = v
+  } 
+
   submit = () => {
     if (this.block) {
       return
     }
-
     this.block = true
 
     this.setState({
@@ -124,7 +129,9 @@ export default class DrawerTagConfig extends Component {
       configType,
       tableList,
       schemeList,
+      resultValue,
     } = this.store
+    console.log(this.store.resultValue)
     return (
       <div className="tag-detail-drawer">
         <Drawer
@@ -281,9 +288,7 @@ export default class DrawerTagConfig extends Component {
                     tagDerivativeSchemeId: schemeId,
                   })}
                   nameMappingField={['enName', 'dataFieldName']}
-                  onChange={value => {
-                    this.value = value
-                  }}
+                  onChange={this.changeValue}
                   sourceTitle="标签列表"
                   targetTitle="字段列表"
                   sourceTipTitle="字段："
@@ -347,6 +352,7 @@ export default class DrawerTagConfig extends Component {
                   onClick={this.submit}
                   loading={submitting}
                   style={{float: 'right'}}
+                  disabled={!this.store.resultValue.length}
                 >
                   确认
                 </Button>
