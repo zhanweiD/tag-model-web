@@ -94,6 +94,15 @@ class TagList extends Component {
                 </Popconfirm>
               </Authority>
             )}
+            {record.createType === 1 && (
+              <Authority
+                authCode="tag_model:create_tag[c]"
+              >
+                <Popconfirm placement="topRight" title="确定删除租户下标签？" onConfirm={() => this.removeTenant(record)}>
+                  <a href>删除</a>
+                </Popconfirm>
+              </Authority>
+            )}
             
           </Fragment>
         )}
@@ -137,6 +146,17 @@ class TagList extends Component {
                   <span className="disabled mr16">编辑</span>
 
                   <Popconfirm placement="topRight" title="标签被删除后不可恢复，确定删除？" onConfirm={() => this.remove(record)}>
+                    <a href>删除</a>
+                  </Popconfirm>
+                </Authority>
+              )
+            }
+            {
+              record.createType === 1 && (
+                <Authority
+                  authCode="tag_model:create_tag[c]"
+                >
+                  <Popconfirm placement="topRight" title="确定删除租户下标签？" onConfirm={() => this.removeTenant(record)}>
                     <a href>删除</a>
                   </Popconfirm>
                 </Authority>
@@ -241,6 +261,12 @@ class TagList extends Component {
   @action.bound remove(data) {
     store.deleteTag({
       deleteIds: [data.id],
+    })
+  }
+
+  @action.bound removeTenant(data) {
+    store.deleteTenantTag({
+      tagId: data.id,
     })
   }
 
