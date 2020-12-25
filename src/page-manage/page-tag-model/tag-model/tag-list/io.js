@@ -11,6 +11,7 @@ const api = {
   createTag: post(`${tagModalApi}/create_tag`), // 创建标签
   updateTag: post(`${tagModalApi}/update_tag`), // 编辑标签
   deleteTag: post(`${tagModalApi}/delete_tag`), // 删除标签
+  deleteTenantTag: post(`${baseApi}/global_tag/cancelExtends`), // 删除标签
   tagApply: post(`${tagModalApi}/tag_apply`), // 上下架申请
   updateTagStatus: post(`${tagModalApi}/update_tag_status`), // 修改标签发布状态
   applyTag: post(`${baseApi}/apply/authorize`), // 授权标签

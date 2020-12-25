@@ -374,6 +374,25 @@ class Store extends ListContentStore(io.getList) {
       errorTip(e.message)
     }
   }
+  @action async deleteTenantTag(params) {
+    try {
+      const res = await io.deleteTenantTag({
+        projectId: this.projectId,
+        ...params,
+        objId: this.objId,
+      })
+      runInAction(() => {
+        if (res) {
+          successTip('操作成功')
+          this.getList({currentPage: 1})
+        } else {
+          failureTip('操作失败')
+        }
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
 
   /*
    * @description 重名校验

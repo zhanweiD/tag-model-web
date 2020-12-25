@@ -91,7 +91,7 @@ export default class CateTree extends Component {
     return (
       <div>
         <div className="mb12 mt2 FBH FBAC">
-          <div className="mr4">展示不可选择的标签</div>
+          <div className="mr4">展示不可继承的标签</div>
           <Switch 
             size="small" 
             checkedChildren="是" 

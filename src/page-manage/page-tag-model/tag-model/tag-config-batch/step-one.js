@@ -13,7 +13,7 @@ export default class StepOne extends Component {
     super(props)
     this.store = props.store
 
-    this.store.getConfigTagList()
+    // this.store.getConfigTagList()
   }
 
   columns = [{
