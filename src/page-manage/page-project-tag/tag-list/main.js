@@ -126,6 +126,7 @@ export default class TagList extends Component {
   ]
   
   @action.bound openApplyModal(data) {
+    console.log(data)
     store.selectItem = data
     store.tagIds.replace([data.id])
     store.modalApplyVisible = true
