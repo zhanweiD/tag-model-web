@@ -18,6 +18,7 @@ export default class DrawerInherit extends Component {
     bigStore.drawerInheritVis = false
     bigStore.checkedKeys = []
     bigStore.tagDetaiList = []
+    bigStore.selectTagList = []
   }
 
   @action.bound toRight() {
