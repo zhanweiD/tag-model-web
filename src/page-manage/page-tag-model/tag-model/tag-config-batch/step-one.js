@@ -1,7 +1,7 @@
 import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {Button, Select, Switch, Table, Badge} from 'antd'
-import {action} from 'mobx'
+import {action, toJS} from 'mobx'
 import {tagConfigMethodMap} from '../util'
 import {getDataTypeName} from '../../../../common/util'
 
@@ -75,7 +75,7 @@ export default class StepOne extends Component {
   render() {
     const {show, closeDrawer, objectSelectList} = this.props
     const {objId, boundMethodId, selectedRowKeys, configTagList, isShowPublished} = this.store
-    const dataSource = isShowPublished ? configTagList.filter(d => d.deployStatus === 2) : configTagList.filter(d => d.deployStatus < 2)
+    const dataSource = isShowPublished ? configTagList : configTagList.filter(d => d.deployStatus < 2)
 
     const rowSelection = {
       selectedRowKeys,
@@ -93,6 +93,7 @@ export default class StepOne extends Component {
       rowKey: 'id',
     }
 
+    console.log(toJS(selectedRowKeys))
     return (
       <div style={{display: show ? 'block' : 'none'}}>
         <div className="mb24">
