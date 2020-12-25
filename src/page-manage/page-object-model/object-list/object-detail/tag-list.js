@@ -37,7 +37,7 @@ export default class TagList extends Component {
     dataIndex: 'enName',
   }, {
     key: 'creator',
-    title: '创建人',
+    title: '创建方',
     dataIndex: 'creator',
     render: (text, record) => <span>{record.createType === 1 ? '自建' : record.projectName}</span>,
   }, {
