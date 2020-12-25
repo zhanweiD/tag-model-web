@@ -116,6 +116,7 @@ export default class TagApply extends Component {
                 showSearch
                 optionFilterProp="children"
                 onSelect={v => this.applyProjectSelect(v)}
+                mode="multiple"
               >
                 {
                   applyProjectList.map(item => (
