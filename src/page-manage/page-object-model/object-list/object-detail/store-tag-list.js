@@ -225,8 +225,8 @@ class Store extends ListContentStore(io.getTagList) {
   @action async checkName(params, cb) {
     try {
       const res = await io.checkName({
-        projectId: this.projectId,
-        objId: this.ownObject,
+        // projectId: this.projectId,
+        objId: this.objId,
         ...params,
       })
       runInAction(() => {

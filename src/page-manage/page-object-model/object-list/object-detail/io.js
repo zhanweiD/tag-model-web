@@ -30,8 +30,7 @@ const api = {
   getObjectSelectList: get(`${baseApi}/project/object/pro_obj_list`), // 创建标签 - 所属对象下拉数据
   checkKeyWord: get(`${objectApi}/list_keyword`),
   createTag: post(`${baseApi}/global_tag/create`), // 对象模型 - 标签列表 - 新建标签
-  // checkName: post(`${tagModalApi}/name_check`), // 重名校验
-  checkName: post(`${objectApi}/name_check`),
+  checkName: post(`${tagModalApi}/name_check`), // 重名校验
   updateTag: post(`${baseApi}/global_tag/update`), // 对象模型 - 标签列表 - 编辑标签
   deleteTag: post(`${baseApi}/global_tag/delete`), // 对象模型 - 标签列表 - 删除标签
   updateObjJoinMode: post(`${baseApi}/object/update_obj_join_mode`), // 修改对象的表关联模式
