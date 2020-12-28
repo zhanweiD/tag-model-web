@@ -71,8 +71,8 @@ export default class Market extends Component {
             if (record.status === 1) {
               return <Tag status="process" className="ml8" text="审批中" />
             }
-            //    "status":0, //状态 0：可以申请 1 审批中 2 不可以申请
-            if (record.status === 2) {
+            //    "status":0, //状态 0：可以申请 1 审批中 2 不可以申请 3 可以申请当前有权限
+            if (record.status === 2 || record.status === 3) {
               return <Tag status="success" className="ml8" text="有权限" />
             } 
             return null
@@ -109,7 +109,7 @@ export default class Market extends Component {
           <Authority authCode="tag_model:apply_tag[c]">  
             {(() => {
               if (store.useProjectId) {
-                if (record.status && !record.endTime) { // 状态 0：可以申请 1 审批中 2 不可以申请
+                if ((record.status === 1 || record.status === 2) && !record.endTime) { // 状态 0：可以申请 1 审批中 2 不可以申请 3 可以申请当前有权限
                   return (                 
                     <Fragment>
                       {/* <span className="table-action-line" />  */}
@@ -145,8 +145,8 @@ export default class Market extends Component {
             if (record.status === 1) {
               return <Tag status="process" className="ml8" text="审批中" />
             }
-            //    "status":0, //状态 0：可以申请 1 审批中 2 不可以申请
-            if (record.status === 2) {
+            //    "status":0, //状态 0：可以申请 1 审批中 2 不可以申请 3 可以申请当前有权限
+            if (record.status === 2 || record.status === 3) {
               return <Tag status="success" className="ml8" text="有权限" />
             } 
             return null
