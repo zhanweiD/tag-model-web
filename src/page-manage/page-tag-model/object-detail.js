@@ -176,7 +176,14 @@ export default class ObjectDetail extends Component {
       // business: BusinessModel,
     }
 
-    const Content = objCompMap[tabId]
+    const objCompMap1 = {
+      view: ObjectView, 
+      table: DataSheet,
+      field: FieldList,
+      // business: BusinessModel,
+    }
+
+    const Content = objDetail.type === 0 ? objCompMap1[tabId] : objCompMap[tabId]
 
     const tagClassConfig = {
       visible: tagClassVisible,
