@@ -37,14 +37,13 @@ export default class TagApply extends Component {
       if (err) {
         return
       }
-
-      store.backAppltTag(t.handleCancel())
+      store.backAppltTag(t.handleCancel)
     })
   }
 
-  @action handleCancel() {
+  @action handleCancel = () => {
     this.store.modalBackVisible = false
-    // this.store.backProjectId = []
+    this.store.backProjectId.clear()
     this.handleReset()
   }
 

@@ -55,6 +55,7 @@ export default class TagApply extends Component {
 
   @action handleCancel() {
     this.store.modalApplyVisible = false
+    this.store.useProjectId.clear()
     this.handleReset()
   }
 
@@ -65,12 +66,16 @@ export default class TagApply extends Component {
   }
 
   @action.bound applyProjectSelect(v) {
-    this.store.useProjectId = v
-    if (toJS(this.store.applyProjectList.filter(d => d.id === this.store.useProjectId)[0].endTime)) {
-      this.store.startDate = moment(moment(toJS(this.store.applyProjectList.filter(d => d.id === this.store.useProjectId)[0].endTime)).format())
-    } else {
-      this.store.startDate = moment()
+    this.store.useProjectId.push(v)
+    const useProjectIds = this.store.useProjectId
+    for (let i = 0; i < useProjectIds.length; i += 1) {
+      if (toJS(this.store.applyProjectList.filter(d => d.id === i)[0].endTime)) {
+        this.store.startDate = moment(moment(toJS(this.store.applyProjectList.filter(d => d.id === this.store.useProjectId)[0].endTime)).format())
+      } else {
+        this.store.startDate = moment()
+      }
     }
+    
   }
 
   @action disabledDate = (current) => {

@@ -214,7 +214,7 @@ class Store extends ListContentStore(io.getList) {
       const res = await io.applyTag({
         projectId: this.projectId,
         tagId: this.tagId,
-        useProjectId: this.useProjectId,
+        useProjectIds: this.useProjectId,
         ...params,
       })
       runInAction(() => {
@@ -237,10 +237,9 @@ class Store extends ListContentStore(io.getList) {
 
   @action async backAppltTag(cb) {
     this.confirmLoading = true
-    console.log(toJS(this.backProjectId))
     try {
       const res = await io.backAppltTag({
-        projectId: this.backProjectId,
+        projectIds: this.backProjectId,
         tagId: this.tagId,
       })
       runInAction(() => {
