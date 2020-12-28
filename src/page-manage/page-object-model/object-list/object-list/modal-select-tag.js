@@ -19,13 +19,13 @@ const columns = [
     title: '数据类型',
     dataIndex: 'valueTypeName',
   }, {
-    title: '所属项目',
-    dataIndex: 'projectName',
-    render: text => <OmitTooltip maxWidth={120} text={text} />,
+    title: '创建方',
+    dataIndex: 'creator',
+    render: (text, record) => <span>{record.createType === 1 ? '租户' : record.projectName}</span>,
   }, {
     title: '描述',
     dataIndex: 'descr',
-    render: text => <OmitTooltip maxWidth={120} text={text} />,
+    render: text => (text ? <OmitTooltip maxWidth={120} text={text} /> : '-'),
   },
 ]
 

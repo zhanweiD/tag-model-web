@@ -23,6 +23,7 @@ import DrawerTagConfig from '../tag-config'
 import DrawerBatchConfig from '../tag-config-batch'
 import DrawerInherit from './drawer-inherit'
 import ModalApply from './modal-apply'
+import ModalBack from './modal-back'
 
 import store from './store'
 
@@ -184,6 +185,7 @@ class TagList extends Component {
                 <a href>取消发布</a>
               </Popconfirm>
               <a href onClick={() => this.openModal(record)} className="ml16">授权</a>
+              <a href onClick={() => this.openBackModal(record)} className="ml16">回收</a>
             </Authority>
               
           </Fragment>
@@ -199,6 +201,7 @@ class TagList extends Component {
             >
               <span className="disabled">取消发布</span>
               <a href onClick={() => this.openModal(record)} className="ml16">授权</a>
+              <a href onClick={() => this.openBackModal(record)} className="ml16">回收</a>
             </Authority>
           )}
 
@@ -239,6 +242,7 @@ class TagList extends Component {
                 <a href>取消发布</a>
               </Popconfirm>
               <a href onClick={() => this.openModal(record)} className="ml16">授权</a>
+              <a href onClick={() => this.openBackModal(record)} className="ml16">回收</a>
             </Authority>
           )}
 
@@ -252,6 +256,7 @@ class TagList extends Component {
             >
               <span className="disabled">取消发布</span>
               <a href onClick={() => this.openModal(record)} className="mr16">授权</a>
+              <a href onClick={() => this.openBackModal(record)} className="ml16">回收</a>
             </Authority>
           )}
 
@@ -285,6 +290,13 @@ class TagList extends Component {
     store.tagId = data.id
     store.selectItem = data
     store.modalApplyVisible = true
+    store.getApplyProject()
+  }
+
+  @action.bound openBackModal(data) {
+    store.tagId = data.id
+    store.selectItem = data
+    store.modalBackVisible = true
     store.getApplyProject()
   }
 
@@ -444,6 +456,7 @@ class TagList extends Component {
           <ModalTagApply store={store} />
           <DrawerCreate store={store} />
           <ModalApply store={store} />
+          <ModalBack store={store} />
           <DrawerTagConfig
             objId={store.objId}
             projectId={projectId}

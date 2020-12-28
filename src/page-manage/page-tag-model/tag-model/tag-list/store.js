@@ -12,7 +12,8 @@ class Store extends ListContentStore(io.getList) {
   projectId
   @observable objId
 
-  @observable useProjectId = '' // 授权项目id
+  @observable useProjectId = [] // 授权项目id
+  @observable backProjectId = [] // 回收项目id
   @observable applyProjectList = [] // 授权项目下拉数据
   @observable tagId = ''
   @observable startDate = ''
@@ -52,6 +53,7 @@ class Store extends ListContentStore(io.getList) {
   @observable publishRowKeys = []
 
   @observable modalApplyVisible = false
+  @observable modalBackVisible = false
   @observable selectItem = {}
 
   // 上下架申请modal
@@ -206,6 +208,7 @@ class Store extends ListContentStore(io.getList) {
 
   // 授权标签
   @action async applyTag(params, cb) {
+    this.confirmLoading = true
     try {
       const res = await io.applyTag({
         projectId: this.projectId,
@@ -224,6 +227,34 @@ class Store extends ListContentStore(io.getList) {
       })
     } catch (e) {
       errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        this.confirmLoading = false
+      })
+    }
+  }
+
+  @action async backAppltTag(cb) {
+    this.confirmLoading = true
+    console.log(toJS(this.backProjectId))
+    try {
+      const res = await io.backAppltTag({
+        projectId: this.backProjectId,
+        tagId: this.tagId,
+      })
+      runInAction(() => {
+        if (res) {
+          successTip('操作成功')
+          if (cb) cb()
+          this.getList()
+        } 
+      })
+    } catch (e) {
+      errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        this.confirmLoading = false
+      })
     }
   }
 

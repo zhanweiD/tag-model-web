@@ -91,7 +91,6 @@ export default class TagApply extends Component {
       selectItem,
       tagIds,
     } = this.store
-
     const defaultSelectDate = {
       startDate: toJS(selectItem.endTime) ? moment(moment(toJS(selectItem.endTime)).format()) : moment(),
       // endDate: moment(),
