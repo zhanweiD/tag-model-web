@@ -18,6 +18,7 @@ class Store extends ListContentStore(io.getList) {
   @observable tagId = ''
   @observable startDate = ''
   @observable endDate = ''
+  @observable applyProjectLoading = false
 
   // 创建标签
   @observable drawerTagVisible = false
@@ -262,6 +263,7 @@ class Store extends ListContentStore(io.getList) {
    * @description 获取授权项目下拉数据
    */
   @action async getApplyProject() {
+    this.applyProjectLoading = true
     try {
       const res = await io.getApplyProject({
         projectId: this.projectId,
@@ -272,6 +274,8 @@ class Store extends ListContentStore(io.getList) {
       })
     } catch (e) {
       errorTip(e.message)
+    } finally {
+      this.applyProjectLoading = false
     }
   }
   

@@ -6,7 +6,7 @@ import {observer} from 'mobx-react'
 import {action, toJS} from 'mobx'
 import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
-import {Modal, Input, Radio, DatePicker, Space, Select} from 'antd'
+import {Modal, Input, Radio, DatePicker, Spin, Select} from 'antd'
 
 const FormItem = Form.Item
 const {TextArea} = Input
@@ -80,7 +80,7 @@ export default class TagApply extends Component {
   render() {
     const {form: {getFieldDecorator, getFieldValue}} = this.props
     const {
-      confirmLoading, modalApplyVisible, selectItem, applyProjectList, useProjectId, startDate, endDate,
+      confirmLoading, modalApplyVisible, selectItem, applyProjectList, useProjectId, startDate, endDate, applyProjectLoading,
     } = this.store
     
     const selectName = selectItem && selectItem.name
@@ -116,6 +116,7 @@ export default class TagApply extends Component {
                 showSearch
                 optionFilterProp="children"
                 onSelect={v => this.applyProjectSelect(v)}
+                notFoundContent={applyProjectLoading ? <div style={{textAlign: 'center'}}><Spin /></div> : null}
                 mode="multiple"
               >
                 {
