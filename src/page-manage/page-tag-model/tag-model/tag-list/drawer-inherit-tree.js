@@ -20,6 +20,7 @@ export default class CateTree extends Component {
   }
   // 生成dom节点
   renderTreeNodes = data => data.map(item => {
+    const isCheck = this.bigStore.selectTagList.includes(item.aId) || !item.available
     if (item.children) {
       return (
         <TreeNode
@@ -38,9 +39,10 @@ export default class CateTree extends Component {
         key={item.aId}
         title={<OmitTooltip maxWidth={120} text={item.name} />}
         selectable={false}
-        objectData={toJS(item)}        
+        objectData={toJS(item)}  
+        // disableCheckbox      
         // disableCheckbox={!item.available || item.isUsed}
-        disableCheckbox={this.bigStore.selectTagList.includes(item.aId) || !item.available}
+        disableCheckbox={isCheck}
       />
     )
   })
