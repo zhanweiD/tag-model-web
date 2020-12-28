@@ -21,6 +21,7 @@ export default class FieldList extends Component {
     store.projectId = props.bigStore.projectId
     store.objId = props.bigStore.objId
     store.typeCode = props.bigStore.typeCode
+    store.objType = props.objType
 
     store.dataSheetList = []
   }
@@ -121,6 +122,47 @@ export default class FieldList extends Component {
       ),
     },
   ]
+  columns1 = [
+    {
+      key: 'dataFieldName',
+      title: '字段名称',
+      dataIndex: 'dataFieldName',
+      fixed: 'left',
+    }, {
+      key: 'dataDbName',
+      title: '数据源',
+      dataIndex: 'dataDbName',
+    }, {
+      key: 'dataDbTypeName',
+      title: '数据源类型',
+      dataIndex: 'dataDbTypeName',
+    }, {
+      key: 'dataTableName',
+      title: '数据表名称',
+      dataIndex: 'dataTableName',
+      width: 300,
+    }, {
+      key: 'isConfigured',
+      title: '配置状态',
+      dataIndex: 'isConfigured',
+      render: v => configStatusMap(+v),
+    }, {
+      key: 'status',
+      title: (
+        <span>
+          标签状态
+          <QuestionTooltip tip="字段绑定的标签是否发布" />
+        </span>
+      ),
+      dataIndex: 'status',
+      render: v => tagStatusMap(+v),
+    }, {
+      key: 'name',
+      title: '标签名称',
+      dataIndex: 'name',
+      render: text => text || '-',
+    },
+  ]
 
   @action removeList(data) {
     const t = this
@@ -163,7 +205,7 @@ export default class FieldList extends Component {
 
   render() {
     const {
-      objId, projectId, dataSourceList, dataSheetList, tableName,
+      objId, projectId, dataSourceList, dataSheetList, tableName, objType,
     } = store
 
     const searchParams = {
@@ -173,7 +215,7 @@ export default class FieldList extends Component {
       selectDataSource: this.selectDataSource,
     }
     const listConfig = {
-      columns: this.columns,
+      columns: objType === 0 ? this.columns1 : this.columns,
       searchParams: seach(searchParams),
       initParams: {objId, projectId},
       scroll: {x: 1300},

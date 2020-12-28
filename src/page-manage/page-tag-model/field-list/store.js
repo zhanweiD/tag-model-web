@@ -11,6 +11,7 @@ class Store extends ListContentStore(io.getList) {
   projectId
   objId
   typeCode
+  objType
   
   @observable dataSourceList = [] // 数据源下拉数据
   @observable dataSheetList = []// 数据表下拉数据
