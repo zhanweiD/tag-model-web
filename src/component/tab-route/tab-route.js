@@ -21,19 +21,22 @@ class TabRoute extends Component {
       basePath,
       changeUrl,
     } = this.props
-
     if (changeTab) changeTab(key)
     if (changeUrl) _history.push(`${basePath}/${key}`)
   }
 
   render() {
-    const {tabs, currentTab} = this.props
+    const {tabs, currentTab, objType} = this.props
+    const objList = currentTab === '4' && objType === 0 ? '0' : currentTab
+    const tagList = currentTab === 'list' && objType === 0 ? 'view' : currentTab
+    const nowCurrentTab = objList || tagList
+    
     return (
       <div className="comp-tab">
         {
           tabs.length && (
             <Tabs
-              activeKey={`${currentTab || tabs[0].value}`}
+              activeKey={`${nowCurrentTab || tabs[0].value}`}
               animated={false}
               onChange={this.changeTab}
             >

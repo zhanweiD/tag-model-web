@@ -64,7 +64,6 @@ export default class TagApply extends Component {
     const {
       confirmLoading, modalBackVisible, selectItem, applyProjectList, backProjectId, applyProjectLoading,
     } = this.store
-    console.log(toJS(backProjectId), 111)
     const selectName = selectItem && selectItem.name
     const selectEnName = selectItem && selectItem.enName
     const applyedProjectList = applyProjectList.filter(d => d.config === 1)
