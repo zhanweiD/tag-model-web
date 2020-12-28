@@ -423,6 +423,7 @@ class ModalAddTable extends Component {
           <FormItem style={{textAlign: 'right'}}>
             <Button
               type={whereCondition ? 'primary' : 'ghost'}
+              disabled={!whereCondition}
               onClick={() => this.store.checkWhere()}
             >
                 校验
