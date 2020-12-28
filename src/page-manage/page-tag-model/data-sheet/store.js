@@ -318,7 +318,7 @@ class Store extends ListContentStore(io.getList) {
         objId: this.objId,
         projectId: this.projectId,
         filedObjAssReqList,
-        
+        whereCondition: this.whereCondition,
       })
       runInAction(() => {
         if (res && cb) {
