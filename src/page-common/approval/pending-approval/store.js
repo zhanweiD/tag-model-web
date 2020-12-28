@@ -14,6 +14,7 @@ class Store extends ListContentStore(io.getList) {
   @observable detail = {} // 详情
   @observable confirmLoading = false
   @observable detailLoading = false
+  @observable nowProjectId
 
   @action async getApplicant() {
     try {
@@ -65,7 +66,7 @@ class Store extends ListContentStore(io.getList) {
     this.confirmLoading = true
     try {
       await io.goApproval({
-        projectId: this.projectId,
+        projectId: this.nowProjectId,
         ...params,
       })
       runInAction(() => {

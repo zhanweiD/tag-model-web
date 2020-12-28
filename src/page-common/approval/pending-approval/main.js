@@ -77,6 +77,7 @@ class PendingApproval extends Component {
    * @description 查看详情
    */
   @action viewDetail = (data, status) => {
+    store.nowProjectId = data.projectId
     store.getDetail(data.id)
     this.visible = true
     this.status = status
