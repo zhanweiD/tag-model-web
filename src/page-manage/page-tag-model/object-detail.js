@@ -128,7 +128,7 @@ export default class ObjectDetail extends Component {
     // }, 
     {
       title: '引用标签数',
-      tooltipText: '项目内从其他项目申请过来的标签数（有使用权限）',
+      tooltipText: '项目内从其他项目申请或授权过来的标签数（有使用权限）',
       values: [objCard.referencedTagCount],
     }, 
     // {
