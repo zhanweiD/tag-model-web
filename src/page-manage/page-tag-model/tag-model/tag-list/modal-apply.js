@@ -67,18 +67,18 @@ export default class TagApply extends Component {
 
   @action.bound applyProjectSelect(v) {
     this.store.useProjectId.push(v)
-    const useProjectIds = this.store.useProjectId
-    for (let i = 0; i < useProjectIds.length; i += 1) {
-      if (toJS(this.store.applyProjectList.filter(d => d.id === i)[0].endTime)) {
-        this.store.startDate = moment(moment(toJS(this.store.applyProjectList.filter(d => d.id === this.store.useProjectId)[0].endTime)).format())
-      } else {
-        this.store.startDate = moment()
-      }
-    }
+    // const useProjectIds = this.store.useProjectId
+    // for (let i = 0; i < useProjectIds.length; i += 1) {
+    //   if (toJS(this.store.applyProjectList.filter(d => d.id === i)[0].endTime)) {
+    //     this.store.startDate = moment(moment(toJS(this.store.applyProjectList.filter(d => d.id === this.store.useProjectId)[0].endTime)).format())
+    //   } else {
+    //     this.store.startDate = moment()
+    //   }
+    // }
   }
 
   @action disabledDate = (current) => {
-    return current && current < moment(this.store.startDate).endOf('day')
+    return current && current < moment().endOf('day')
   }
 
   render() {
@@ -156,7 +156,7 @@ export default class TagApply extends Component {
               label="自定义时长"
             >
               {getFieldDecorator('timeRange', {
-                initialValue: [startDate, endDate],
+                // initialValue: [startDate, endDate],
                 rules: [
                   {type: 'array', required: true, message: '请选择自定义时长'},
                   {
