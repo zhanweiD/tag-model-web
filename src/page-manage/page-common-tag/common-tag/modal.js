@@ -91,13 +91,13 @@ export default class TagApply extends Component {
       selectItem,
       tagIds,
     } = this.store
-    const defaultSelectDate = {
-      startDate: toJS(selectItem.endTime) ? moment(moment(toJS(selectItem.endTime)).format()) : moment(),
-      // endDate: moment(),
-    }
+    // const defaultSelectDate = {
+    //   startDate: toJS(selectItem.endTime) ? moment(moment(toJS(selectItem.endTime)).format()) : moment(),
+    //   // endDate: moment(),
+    // }
 
     const disabledDate = (current) => {
-      return current && current < moment(defaultSelectDate.startDate).endOf('day')
+      return current && current < moment().endOf('day')
     }
 
     const selectName = selectItem && selectItem.name
@@ -172,7 +172,7 @@ export default class TagApply extends Component {
               label="自定义时长"
             >
               {getFieldDecorator('timeRange', {
-                initialValue: [defaultSelectDate.startDate],
+                // initialValue: [defaultSelectDate.startDate],
                 rules: [
                   {required: true, message: '请选择申请时长'},
                   {type: 'array', required: true, message: '请选择自定义时长'},
