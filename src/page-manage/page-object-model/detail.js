@@ -180,15 +180,38 @@ export default class ObjectDetail extends Component {
       // },
     ]
 
+    const objCompMap = {
+      0: ObjectView, 
+      2: UseProject,
+      3: DataTable,
+      4: TagList,
+      // business: BusinessModel,
+    }
+
+    const objCompMap1 = {
+      0: ObjectView, 
+      2: UseProject,
+      3: DataTable,
+      4: ObjectView,
+      // business: BusinessModel,
+    }
 
     const tabConfig = {
-      tabs: [
+      tabs: objDetail.type === 0 ? (
+        [
+          {name: '对象视图', value: 0},
+          // {name: '业务视图', value: 1},
+          {name: '使用项目', value: 2},
+          {name: '数据表', value: 3},
+        ]
+      ) : ([
         {name: '对象视图', value: 0},
         // {name: '业务视图', value: 1},
         {name: '使用项目', value: 2},
         {name: '数据表', value: 3},
         {name: '标签列表', value: 4},
-      ],
+      ]),
+      objType: objDetail.type,
       basePath: `/manage/object-model/${typeCode}/${objId}`,
       currentTab: this.store.tabId,
       changeTab: this.changeTab,
@@ -196,8 +219,8 @@ export default class ObjectDetail extends Component {
       _history: this.props.history,
       changeUrl: true,
     }
-
-    const Content = [ObjectView, BusinessModel, UseProject, DataTable, TagList][+this.store.tabId]
+    const Content = objDetail.type === 0 ? objCompMap1[+this.store.tabId] : objCompMap[+this.store.tabId]
+    // const Content = [ObjectView, BusinessModel, UseProject, DataTable, TagList][+this.store.tabId]
     const tagClassConfig = {
       visible: tagClassVisible,
       onClose: this.closeTagClass,
@@ -224,7 +247,7 @@ export default class ObjectDetail extends Component {
         <div className="bgf  box-border">
           <TabRoute {...tabConfig} />
           <div className="object-tab-content">
-            <Content bigStore={this.store} store={this.store} updateDetailKey={this.props.updateDetailKey} objId={objId} />
+            <Content bigStore={this.store} store={this.store} updateDetailKey={this.props.updateDetailKey} objId={objId} objType={objDetail.type} />
           </div>
         </div>
       </div>

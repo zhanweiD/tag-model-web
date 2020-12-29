@@ -155,9 +155,9 @@ export default class ObjectDetail extends Component {
     }
 
     const tabMap = objDetail.type === 0 ? objRelTabMap : objDetailTabMap
-
     const tabConfig = {
       tabs: tabMap,
+      objType: objDetail.type,
       basePath: `/manage/tag-model/${typeCode}/${objId}`,
       currentTab: tabId,
       changeTab: this.changeTab,
@@ -180,6 +180,7 @@ export default class ObjectDetail extends Component {
       view: ObjectView, 
       table: DataSheet,
       field: FieldList,
+      list: ObjectView,
       // business: BusinessModel,
     }
 
@@ -228,7 +229,7 @@ export default class ObjectDetail extends Component {
         <div className="box-border"> 
           <TabRoute {...tabConfig} />
           <div className="object-tab-content">
-            <Content objId={objId} bigStore={this.store} key={objDetail.type} />
+            <Content objId={objId} bigStore={this.store} key={objDetail.type} objType={objDetail.type} />
           </div>
         </div>
      
