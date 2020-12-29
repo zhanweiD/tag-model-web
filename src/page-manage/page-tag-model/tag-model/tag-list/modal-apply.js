@@ -75,7 +75,6 @@ export default class TagApply extends Component {
         this.store.startDate = moment()
       }
     }
-    
   }
 
   @action disabledDate = (current) => {

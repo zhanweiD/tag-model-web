@@ -101,6 +101,7 @@ export default class TagApply extends Component {
                 disabled={!applyedProjectList.length}
                 onSelect={v => this.applyProjectSelect(v)}
                 mode="multiple"
+                size="small"
               >
                 {
                   applyedProjectList.map(item => (
