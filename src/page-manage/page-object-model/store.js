@@ -10,7 +10,9 @@ class Store {
 
   @observable addObjectUpdateKey = undefined
 
-  @observable tabId = 0
+  @observable tabId
+  @observable tabKey = 'view'
+
   // 基本详情
   @observable objId // 对象id
   @observable typeCode // 对象类型

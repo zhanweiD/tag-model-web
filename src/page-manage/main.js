@@ -75,7 +75,7 @@ export default () => {
       <Route exact strict path={`${prePath}/object-model/:typeCode?/:objId?/:tabId?`} component={ObjectModel} />
 
       {/* 标签模型 */}
-      <Route exact path={`${prePath}/tag-model/:typeCode?/:objId?/:tabId?`} component={TagModel} />
+      <Route exact strict path={`${prePath}/tag-model/:typeCode?/:objId?/:tabId?`} component={TagModel} />
     </Switch>
   )
 }

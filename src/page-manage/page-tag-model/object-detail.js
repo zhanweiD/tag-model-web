@@ -155,6 +155,7 @@ export default class ObjectDetail extends Component {
     }
 
     const tabMap = objDetail.type === 0 ? objRelTabMap : objDetailTabMap
+    console.log(tabId)
     const tabConfig = {
       tabs: tabMap,
       objType: objDetail.type,
@@ -179,7 +180,7 @@ export default class ObjectDetail extends Component {
     const objCompMap1 = {
       view: ObjectView, 
       table: DataSheet,
-      field: FieldList,
+      field: ObjectView,
       list: ObjectView,
       // business: BusinessModel,
     }

@@ -61,6 +61,7 @@ export default class ObjectDetail extends Component {
 
   @action.bound changeTab(id) {
     this.store.tabId = id
+    this.store.tabKey = id
   }
 
   @action.bound tagClass() {
@@ -74,7 +75,7 @@ export default class ObjectDetail extends Component {
 
   render() {
     const {
-      objId, objDetail, objCard, loading, releaseLoading, typeCode, tagClassObjId, tagClassVisible,
+      objId, objDetail, objCard, loading, releaseLoading, typeCode, tagClassObjId, tagClassVisible, tabKey,
     } = this.store
    
     // 详情信息
@@ -181,45 +182,46 @@ export default class ObjectDetail extends Component {
     ]
 
     const objCompMap = {
-      0: ObjectView, 
-      2: UseProject,
-      3: DataTable,
-      4: TagList,
+      view: ObjectView, 
+      pro: UseProject,
+      table: DataTable,
+      list: TagList,
       // business: BusinessModel,
     }
 
     const objCompMap1 = {
-      0: ObjectView, 
-      2: UseProject,
-      3: DataTable,
-      4: ObjectView,
+      view: ObjectView, 
+      pro: UseProject,
+      table: DataTable,
+      list: ObjectView,
       // business: BusinessModel,
     }
 
     const tabConfig = {
       tabs: objDetail.type === 0 ? (
         [
-          {name: '对象视图', value: 0},
+          {name: '对象视图', value: 'view'},
           // {name: '业务视图', value: 1},
-          {name: '使用项目', value: 2},
-          {name: '数据表', value: 3},
+          {name: '使用项目', value: 'pro'},
+          {name: '数据表', value: 'table'},
         ]
       ) : ([
-        {name: '对象视图', value: 0},
+        {name: '对象视图', value: 'view'},
         // {name: '业务视图', value: 1},
-        {name: '使用项目', value: 2},
-        {name: '数据表', value: 3},
-        {name: '标签列表', value: 4},
+        {name: '使用项目', value: 'pro'},
+        {name: '数据表', value: 'table'},
+        {name: '标签列表', value: 'list'},
       ]),
       objType: objDetail.type,
       basePath: `/manage/object-model/${typeCode}/${objId}`,
-      currentTab: this.store.tabId,
+      // currentTab: this.store.tabId,
+      currentTab: tabKey,
       changeTab: this.changeTab,
       // eslint-disable-next-line react/destructuring-assignment
       _history: this.props.history,
       changeUrl: true,
     }
-    const Content = objDetail.type === 0 ? objCompMap1[+this.store.tabId] : objCompMap[+this.store.tabId]
+    const Content = objDetail.type === 0 ? objCompMap1[tabKey] : objCompMap[tabKey]
     // const Content = [ObjectView, BusinessModel, UseProject, DataTable, TagList][+this.store.tabId]
     const tagClassConfig = {
       visible: tagClassVisible,

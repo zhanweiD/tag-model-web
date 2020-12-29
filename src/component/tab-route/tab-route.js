@@ -27,10 +27,8 @@ class TabRoute extends Component {
 
   render() {
     const {tabs, currentTab, objType} = this.props
-    const objList = currentTab === '4' && objType === 0 ? '0' : null
-    const tagList = currentTab === 'list' && objType === 0 ? 'view' : null
-    const nowCurrentTab = objList || tagList || currentTab
-    
+    const toView = !!(currentTab === 'list' || currentTab === 'field')
+    const nowCurrentTab = toView && objType === 0 ? 'view' : currentTab
     return (
       <div className="comp-tab">
         {
