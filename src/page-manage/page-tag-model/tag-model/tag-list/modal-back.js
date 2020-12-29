@@ -6,7 +6,7 @@ import {observer} from 'mobx-react'
 import {action, toJS} from 'mobx'
 import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
-import {Modal, Input, Radio, DatePicker, Spin, Select} from 'antd'
+import {Modal, Input, Radio, DatePicker, Spin, Select, Button} from 'antd'
 
 const FormItem = Form.Item
 const {TextArea} = Input
@@ -28,7 +28,7 @@ export default class TagApply extends Component {
   }
 
   // 表单提交
-  @action handleOk() {
+  @action handleOk = e => {
     const t = this
     const {store} = t
     const {form: {validateFieldsAndScroll}} = t.props
@@ -48,7 +48,7 @@ export default class TagApply extends Component {
   }
 
   // 表单重置
-  @action handleReset() {
+  @action handleReset = () => {
     const {form: {resetFields}} = this.props
     resetFields()
   }
@@ -67,19 +67,28 @@ export default class TagApply extends Component {
     const selectEnName = selectItem && selectItem.enName
     const applyedProjectList = applyProjectList.filter(d => d.config === 1)
 
-    const modalConfig = {
-      width: 525,
-      maskClosable: false,
-      title: '回收权限',
-      confirmLoading,
-      visible: modalBackVisible,
-      onOk: e => this.handleOk(e),
-      onCancel: () => this.handleCancel(),
-    }
+    // const modalConfig = {
+    //   width: 525,
+    //   maskClosable: false,
+    //   title: '回收权限',
+    //   confirmLoading,
+    //   visible: modalBackVisible,
+    //   onOk: e => this.handleOk(e),
+    //   onCancel: () => this.handleCancel(),
+    // }
 
     return (
       <Modal
-        {...modalConfig}
+        width={525}
+        maskClosable={false}
+        title="回收权限"
+        confirmLoading
+        visible={modalBackVisible}
+        // onOk: e => this.handleOk(e)
+        onCancel={this.handleCancel}
+        footer={[<Button onClick={this.handleCancel}>取消</Button>, 
+          <Button disabled={!backProjectId.length} type="primary" loading={confirmLoading} onClick={this.handleOk}>确认</Button>]}
+        
       >
         <Form className="FBV">
           <FormItem {...formItemLayout} label="标签名称">

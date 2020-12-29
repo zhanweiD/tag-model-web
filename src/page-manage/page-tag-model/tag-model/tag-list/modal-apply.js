@@ -122,6 +122,7 @@ export default class TagApply extends Component {
                 onSelect={v => this.applyProjectSelect(v)}
                 notFoundContent={applyProjectLoading ? <div style={{textAlign: 'center'}}><Spin /></div> : null}
                 mode="multiple"
+                size="small"
               >
                 {
                   applyProjectList.map(item => (
