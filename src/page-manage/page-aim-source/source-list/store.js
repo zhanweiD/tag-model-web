@@ -68,6 +68,31 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
+  @observable defaultStorage = {}
+  @observable getDefaultLogin = true
+  @observable oneForm = {}
+  @observable selecStorageType
+  // 判断是否单一数据源
+  @action async getDefaultStorage() {
+    this.getDefaultLogin = true
+    try {
+      const res = await io.getDefaultStorage({
+        projectId: this.projectId,
+      })
+      runInAction(() => {
+        this.defaultStorage = res
+        if (res.storageType) {
+          this.oneForm.setFieldsValue({dataStorageType: res.storageType})
+          this.selecStorageType(res.storageType)
+        }
+      })
+    } catch (e) {
+      errorTip(e.message)
+    } finally {
+      this.getDefaultLogin = false
+    }
+  }
+
   @observable storageTypeList = []
   // 数据源类型
   @action async getStorageType() {
@@ -85,7 +110,7 @@ class Store extends ListContentStore(io.getList) {
 
   @observable storageList = []
   // 数据源列表
-  @action async getStorageList(params) {
+  @action async getStorageList(params, cb) {
     try {
       const res = await io.getStorageList({
         projectId: this.projectId,
@@ -93,6 +118,8 @@ class Store extends ListContentStore(io.getList) {
       })
       runInAction(() => {
         this.storageList = res
+        const defaultId = res[0] ? res[0].dataStorageId : undefined
+        if (cb) cb(this.defaultStorage.storageId || defaultId)
       })
     } catch (e) {
       errorTip(e.message)

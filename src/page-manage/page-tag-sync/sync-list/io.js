@@ -20,6 +20,8 @@ const api = {
   addSync: post(`${syncApi}/scheme/schemeSave`), // 新增同步计划
   editSync: post(`${syncApi}/scheme/schemeUpdate`), // 编辑同步计划
   tableNameCheck: post(`${syncApi}/scheme/checkTableName`), // 数据表重名校验
+
+  getDefaultStorage: get(`${baseApi}/projectStorage/getDefaultStorage`), // 是否单一数据源
 } 
 
 ioContext.create('syncList', api) 
