@@ -14,6 +14,8 @@ const api = {
   getRelObj: get(`${targetSourceApi}/relObjByObjId`), // 根据objId 查询关联对象（实体就是其自身）
   getStorageDetail: get(`${baseApi}/project/storageDetails`), // 数据源详情
   checkName: get(`${targetSourceApi}/checkName`), // 重名校验
+
+  getDefaultStorage: get(`${baseApi}/projectStorage/getDefaultStorage`), // 是否单一数据源
 } 
 
 ioContext.create('sourceList', api) 

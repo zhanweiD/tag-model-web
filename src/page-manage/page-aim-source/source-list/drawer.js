@@ -28,6 +28,12 @@ export default class AddSource extends Component {
     this.store = props.store
   }
 
+  componentDidMount() {
+    this.store.oneForm = this.props.form
+    this.store.selecStorageType = this.selecStorageType
+    this.store.getDefaultStorage()
+  }
+
   @observable objId
   @observable storageId
   @observable entity0Key
@@ -53,16 +59,16 @@ export default class AddSource extends Component {
       objId: v,
     })
 
-    const dataStorageType = getFieldValue('dataStorageType')
-    if (typeof dataStorageType !== 'undefined') {
-      this.store.getStorageList({
-        dataStorageType,
-        objId: v,
-      })
-    }
+    // const dataStorageType = getFieldValue('dataStorageType')
+    // if (typeof dataStorageType !== 'undefined') {
+    //   this.store.getStorageList({
+    //     dataStorageType,
+    //     objId: v,
+    //   })
+    // }
      
-    this.storageId = undefined
-    resetFields(['dataStorageId'])
+    // this.storageId = undefined
+    // resetFields(['dataStorageId'])
     this.resetSelect()
   } 
 
@@ -74,12 +80,12 @@ export default class AddSource extends Component {
     this.resetSelect()
 
     const objId = getFieldValue('objId')
-    if (typeof objId !== 'undefined') {
-      this.store.getStorageList({
-        dataStorageType: v,
-        objId,
-      })
-    }
+    // if (typeof objId !== 'undefined') {
+    this.store.getStorageList({
+      dataStorageType: v,
+      objId,
+    }, this.selecStorage)
+    // }
   } 
 
   @action.bound selecStorage(v) {
@@ -254,37 +260,6 @@ export default class AddSource extends Component {
             )}
           </FormItem>
 
-          <FormItem {...formItemLayout} label="同步对象">
-            {getFieldDecorator('objId', {
-              rules: [{required: true, message: '请选择同步对象'}],
-            })(
-              <Select
-                placeholder="请选择同步对象"
-                style={{width: '100%'}}
-                onSelect={v => this.selectObj(v)}
-                showSearch
-                optionFilterProp="children"
-              >
-                {
-                  objList.map(item => (
-                    <Option key={item.value} value={item.value}>{item.name}</Option>
-                  ))
-                }
-              </Select>
-            )}
-          </FormItem>
-          
-          <FormItem {...formItemLayout} label="方案描述">
-            {getFieldDecorator('descr', {
-              rules: [
-                {transform: value => value && value.trim()},
-                {max: 128, whitespace: true, message: '输入不能超过128个字符'},
-              ],
-            })(
-              <TextArea placeholder="请输入方案描述" />
-            )}
-          </FormItem>
-          <h3 className="mb24 fs14">目的源信息</h3>
           <FormItem {...formItemLayout} label="数据源类型">
             {getFieldDecorator('dataStorageType', {
               rules: [{required: true, message: '请选择数据源类型'}],
@@ -340,6 +315,39 @@ export default class AddSource extends Component {
 
             )}
           </FormItem>
+
+          <FormItem {...formItemLayout} label="同步对象">
+            {getFieldDecorator('objId', {
+              rules: [{required: true, message: '请选择同步对象'}],
+            })(
+              <Select
+                placeholder="请选择同步对象"
+                style={{width: '100%'}}
+                onSelect={v => this.selectObj(v)}
+                showSearch
+                optionFilterProp="children"
+              >
+                {
+                  objList.map(item => (
+                    <Option key={item.value} value={item.value}>{item.name}</Option>
+                  ))
+                }
+              </Select>
+            )}
+          </FormItem>
+          
+          <FormItem {...formItemLayout} label="方案描述">
+            {getFieldDecorator('descr', {
+              rules: [
+                {transform: value => value && value.trim()},
+                {max: 128, whitespace: true, message: '输入不能超过128个字符'},
+              ],
+            })(
+              <TextArea placeholder="请输入方案描述" />
+            )}
+          </FormItem>
+          {/* <h3 className="mb24 fs14">目的源信息</h3> */}
+          
           <FormItem {...formItemLayout} label="目的表">
             {getFieldDecorator('dataTableName', {
               rules: [{required: true, message: '请选择目的表'}],

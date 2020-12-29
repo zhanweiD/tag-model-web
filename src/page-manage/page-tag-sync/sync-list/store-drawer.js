@@ -57,6 +57,31 @@ class Store {
     }
   }
 
+  @observable defaultStorage = {}
+  @observable getDefaultLogin = true
+  @observable oneForm = {}
+  @observable selecStorageType
+  // 判断是否单一数据源
+  @action async getDefaultStorage() {
+    this.getDefaultLogin = true
+    try {
+      const res = await io.getDefaultStorage({
+        projectId: this.projectId,
+      })
+      runInAction(() => {
+        this.defaultStorage = res
+        if (res.storageType) {
+          this.oneForm.setFieldsValue({dataDbType: res.storageType})
+          this.selecStorageType(res.storageType)
+        }
+      })
+    } catch (e) {
+      errorTip(e.message)
+    } finally {
+      this.getDefaultLogin = false
+    }
+  }
+
   @observable storageTypeList = []
   // 数据源类型
   @action async getStorageType() {
@@ -83,7 +108,7 @@ class Store {
       runInAction(() => {
         this.storageList = res || []
         const defaultId = res[0] ? res[0].storageId : undefined
-        if (cb) cb({key: defaultId})
+        if (cb) cb({key: this.defaultStorage.storageId || defaultId})
       })
     } catch (e) {
       errorTip(e.message)

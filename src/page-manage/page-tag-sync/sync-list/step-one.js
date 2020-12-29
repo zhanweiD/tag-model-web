@@ -6,7 +6,7 @@ import {observer} from 'mobx-react'
 import {action} from 'mobx'
 import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
-import {Input, Select, Button, Switch} from 'antd'
+import {Input, Select, Button, Switch, Spin} from 'antd'
 import {ModalStotageDetail} from '../../../component'
 import {debounce, getNamePattern, getEnNamePattern} from '../../../common/util'
 
@@ -34,6 +34,12 @@ export default class StepOne extends Component {
     this.store.getStorageType()
   }
 
+  componentDidMount() {
+    this.store.oneForm = this.props.form
+    this.store.selecStorageType = this.selecStorageType
+    this.store.getDefaultStorage()
+  }
+
   @action.bound selectObj(obj) {
     const {form: {resetFields}} = this.props
     
@@ -50,9 +56,9 @@ export default class StepOne extends Component {
     // }
   } 
 
-  @action.bound selecStorageType(obj) {
+  @action.bound selecStorageType(v) {
     const {form: {resetFields, getFieldValue}} = this.props
-    this.store.storageType = obj.key
+    this.store.storageType = v
     
     this.store.storageId = undefined
 
@@ -66,7 +72,7 @@ export default class StepOne extends Component {
     //   })
     // }
     this.store.getStorageList({
-      storageType: obj.key,
+      storageType: v,
       objId: this.store.objId,
     }, this.selecStorage)
   } 
@@ -168,8 +174,13 @@ export default class StepOne extends Component {
       storageDetailLoading,
       storageDetail,
       storageVisible,
+      defaultStorage,
+      getDefaultLogin,
     } = this.store
-    console.log(objList)
+
+    // if (defaultStorage.storageType) {
+    //   this.selecStorageType({key: defaultStorage.storageType})
+    // }
     return (
       <div style={{display: show ? 'block' : 'none'}}>
         <Form>
@@ -193,10 +204,11 @@ export default class StepOne extends Component {
           <FormItem {...formItemLayout} label="数据源类型">
             {getFieldDecorator('dataDbType', {
               rules: [{required: true, message: '请选择数据源类型'}],
+              initialValue: defaultStorage.storageType,
             })(
               <Select 
                 showSearch
-                labelInValue 
+                // labelInValue // 贼坑，设置不上初始值
                 placeholder="请选择数据源类型" 
                 style={{width: '100%'}} 
                 onSelect={v => this.selecStorageType(v)}
@@ -305,8 +317,8 @@ export default class StepOne extends Component {
               <TextArea placeholder="请输入方案描述" />
             )}
           </FormItem>
-         
         </Form>
+          
         <div className="bottom-button">
           <Button style={{marginRight: 8}} onClick={() => closeDrawer()}>关闭</Button>
           <Button

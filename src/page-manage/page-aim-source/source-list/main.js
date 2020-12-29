@@ -93,6 +93,7 @@ class SourceList extends Component {
 
   @action.bound addSource() {
     store.getStorageType()
+    store.getDefaultStorage()
     store.visible = true
   }
 
