@@ -102,7 +102,7 @@ export default class TagApply extends Component {
               rules: [{required: true, message: '请选择回收项目'}],
             })(
               <Select 
-                placeholder="请选择回收项目" 
+                placeholder={applyedProjectList.length ? '请选择回收项目' : '当前标签未授权给任何项目'}
                 showSearch
                 optionFilterProp="children"
                 notFoundContent={applyProjectLoading ? <div style={{textAlign: 'center'}}><Spin /></div> : null}

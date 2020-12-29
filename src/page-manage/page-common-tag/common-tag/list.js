@@ -98,7 +98,7 @@ export default class Market extends Component {
       key: 'projectName',
       title: '所属项目', 
       dataIndex: 'projectName',
-      render: text => <OmitTooltip maxWidth={200} text={text} />,
+      render: (text, record) => <span>{record.projectName ? record.projectName : '租户'}</span>,
     }, {
       key: 'action',
       title: '操作',
