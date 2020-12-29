@@ -19,7 +19,7 @@ class Store extends ListContentStore(io.getList) {
   @observable dataTableLoading = false
   @observable modalVisible = false
   @observable editSelectedItem = {}
-  
+
   @observable storageId = undefined
   @observable storageName = undefined
   @observable tableName = undefined
@@ -239,7 +239,6 @@ class Store extends ListContentStore(io.getList) {
     const majorKeyInfo = this.fieldList.filter(d => d.field === this.majorKeyField)[0]
 
     const selectFields = this.fieldList.filter(d => d.field !== this.majorKeyField)
-
     const filedObjReqList = selectFields.map(d => ({
       dataDbName: dataDbInfo.storageName,
       dataStorageId: dataDbInfo.storageId,
@@ -249,6 +248,7 @@ class Store extends ListContentStore(io.getList) {
       dataFieldType: d.type,
       mappingKey: majorKeyInfo.field,
       mappingKeyType: majorKeyInfo.type,
+      dataFieldDescr: d.descr,
     }))
 
     try {
@@ -309,6 +309,7 @@ class Store extends ListContentStore(io.getList) {
       dataTableName: this.tableName,
       dataFieldName: d.field,
       dataFieldType: d.type,
+      dataFieldDescr: d.descr,
       mappingKeys: JSON.stringify(mappingKeys),
       ...fieldParams,
     }))

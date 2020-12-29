@@ -119,7 +119,7 @@ export default class CateTree extends Component {
             <IconChakan size="14" className="mr8" onClick={this.onSearch} />
           </div>
           {
-            tagTreeLoading ? <Loading mode="block" height={100} />
+            tagTreeLoading && this.bigStore.selectTagList.length ? <Loading mode="block" height={100} />
               : (
                 <Tree
                   checkable

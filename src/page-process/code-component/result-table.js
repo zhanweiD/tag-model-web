@@ -71,7 +71,7 @@ export default class Page extends Component {
         >
           {!this.loading
             && (
-              <div>
+              <div style={{width: '1280px'}}>
                 <table style={{height: '100%'}} ref={p => this.resultDom = p}>
                   <thead>
                     <tr>

@@ -93,7 +93,7 @@ export default class DrawerInherit extends Component {
               <Button onClick={this.closeDrawer} className="mr8">取消</Button>
               <Button
                 type="primary"
-                disabled={!checkedKeys.length}
+                // disabled={!checkedKeys.length}
                 onClick={this.onOk}
                 loading={inheritLoading}
               >

@@ -244,7 +244,7 @@ export default class ObjectDetail extends Component {
           <TagClass {...tagClassConfig} />
           <OverviewCardWrap cards={cards} />
         </Spin>
-        <div className="bgf  box-border">
+        <div className="bgf box-border">
           <TabRoute {...tabConfig} />
           <div className="object-tab-content">
             <Content bigStore={this.store} store={this.store} updateDetailKey={this.props.updateDetailKey} objId={objId} objType={objDetail.type} />

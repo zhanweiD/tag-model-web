@@ -559,10 +559,11 @@ class Store extends ListContentStore(io.getList) {
       })
 
       this.tagDetaiList = res
-      this.tagDetailTableLoading = false
       this.selectTagList = res.map(item => item.id)
     } catch (e) {
       errorTip(e.message)
+    } finally {
+      this.tagDetailTableLoading = false
     }
   }
 
