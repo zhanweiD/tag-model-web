@@ -70,10 +70,6 @@ export default class DataTable extends Component {
     title: '添加时间',
     dataIndex: 'ctime',
     render: text => <Time timestamp={text} />,
-  }, {
-    title: '标签/字段数',
-    dataIndex: 'tagCount',
-    render: (text, record) => `${record.tagCount}/${record.fieldCount}`,
   }]
 
   componentWillReceiveProps(next) {
@@ -218,7 +214,7 @@ export default class DataTable extends Component {
             suffix={<SearchOutlined />}
           />
         </div>
-                </div>],
+      </div>],
       store,
     }
     return (
