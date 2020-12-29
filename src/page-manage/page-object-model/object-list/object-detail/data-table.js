@@ -178,9 +178,9 @@ export default class DataTable extends Component {
   }
 
   render() {
-    const {objId, type} = this.props
+    const {objId, type, objType} = this.props
     const listConfig = {
-      columns: +type ? this.columns : this.simpleColumns,
+      columns: +objType ? this.columns : this.simpleColumns,
       // initParams: {objId: +objId, projectId: +projectId},
       initParams: {objId: +objId},
       scroll: {x: 1300},
@@ -214,7 +214,7 @@ export default class DataTable extends Component {
             suffix={<SearchOutlined />}
           />
         </div>
-      </div>],
+                </div>],
       store,
     }
     return (
