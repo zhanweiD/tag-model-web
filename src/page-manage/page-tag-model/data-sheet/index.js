@@ -12,6 +12,7 @@ import {ListContent, Authority, OmitTooltip} from '../../../component'
 import ConfigField from './config-field'
 import ModalAddTable from './modal-add-table'
 import DrawerDatasheet from './drawer-datasheet'
+import EditWhereCondition from './editWhereCondition'
 
 import store from './store'
 import './index.styl'
@@ -86,6 +87,9 @@ export default class DataSheet extends Component {
               )
             }
           </Authority>
+          {/* <Authority authCode="tag_model:config_table_tag[c]"> */}
+          <a href className="ml16" onClick={() => this.openWhereCondition(record)}>编辑</a>
+          {/* </Authority> */}
           {
             this.bigStore.objDetail && this.bigStore.objDetail.type !== 0 ? (
               <Authority authCode="tag_model:config_table_tag[c]">
@@ -140,6 +144,9 @@ export default class DataSheet extends Component {
               )
             }
           </Authority>
+          {/* <Authority authCode="tag_model:config_table_tag[c]"> */}
+          <a href className="ml16" onClick={() => this.openWhereCondition(record)}>编辑</a>
+          {/* </Authority> */}
           {
             this.bigStore.objDetail && this.bigStore.objDetail.type !== 0 ? (
               <Authority authCode="tag_model:config_table_tag[c]">
@@ -214,6 +221,26 @@ export default class DataSheet extends Component {
     store.getDataSource()
   }
 
+  @action.bound openWhereCondition(data) {
+    store.editSelectDetail = data
+    store.tableName = data.dataTableName
+    console.log(data)
+    const {typeCode, objDetail} = this.bigStore
+    if (+typeCode === 4) {
+      store.bothTypeCode = 2 // 实体
+      store.modelEditModal = true
+    } else if (typeof objDetail.type === 'undefined') {
+      this.bigStore.getObjDetail(res => {
+        store.bothTypeCode = res.type
+        store.modelEditModal = true
+      }) // 复杂关系 vs 简单关系
+    } else {
+      store.bothTypeCode = objDetail.type 
+      store.modelEditModal = true
+    }
+    store.getDataSource()
+  }
+
   @action.bound openTagConfig(data) {
     store.editSelectedItem = data
     this.tagConfigVisible = true
@@ -221,9 +248,9 @@ export default class DataSheet extends Component {
 
   @action.bound openDrawerDatasheet(data) {
     store.editSelectedItem = data // 对象id
-    store.tableName = toJS(data.dataTableName)
+    // store.tableName = toJS(data.dataTableName)
     store.storageId = toJS(data.dataStorageId)
-    store.storageName = toJS(data.dataStorageName)
+    // store.storageName = toJS(data.dataStorageName)
     // store.majorKeyField = toJS(data.mappingKey)
     this.drawerDatasheetVisible = true
   }
@@ -287,6 +314,7 @@ export default class DataSheet extends Component {
         <div>
           <ListContent {...listConfig} />
           <ModalAddTable store={store} />
+          <EditWhereCondition store={store} />
           {
             this.tagConfigVisible && (
               <ConfigField 
