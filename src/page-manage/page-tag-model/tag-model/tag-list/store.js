@@ -10,6 +10,7 @@ import io from './io'
 
 class Store extends ListContentStore(io.getList) {
   projectId
+  bigStore
   @observable objId
 
   @observable useProjectId = [] // 授权项目id
@@ -175,6 +176,7 @@ class Store extends ListContentStore(io.getList) {
       runInAction(() => {
         if (res.success) {
           successTip('操作成功')
+          this.bigStore.getObjCard()
           this.getList()
         } else {
           failureTip('操作失败')
@@ -196,6 +198,7 @@ class Store extends ListContentStore(io.getList) {
       runInAction(() => {
         if (res.success) {
           successTip('操作成功')
+          this.bigStore.getObjCard()
           this.getList()
           this.publishRowKeys.clear()
         } else {
@@ -220,6 +223,7 @@ class Store extends ListContentStore(io.getList) {
       runInAction(() => {
         if (res) {
           successTip('操作成功')
+          this.bigStore.getObjCard()
           if (cb) cb()
           this.getList()
         } else {
@@ -245,6 +249,7 @@ class Store extends ListContentStore(io.getList) {
       runInAction(() => {
         if (res) {
           successTip('操作成功')
+          this.bigStore.getObjCard()
           if (cb) cb()
           this.getList()
         } 

@@ -20,6 +20,8 @@ export default class BatchConfig extends Component {
   constructor(props) {
     super(props)
     this.bigStore = props.bigStore
+
+    this.objStore = props.objStore
   }
 
   componentWillMount() {
@@ -59,6 +61,7 @@ export default class BatchConfig extends Component {
 
   @action.bound onUpdate() {
     this.closeDrawer()
+    this.objStore.getObjCard()
     this.bigStore.getList({
       current: 1,
     })

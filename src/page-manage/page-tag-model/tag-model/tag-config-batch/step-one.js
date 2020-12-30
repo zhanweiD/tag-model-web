@@ -93,7 +93,6 @@ export default class StepOne extends Component {
       rowKey: 'id',
     }
 
-    console.log(toJS(selectedRowKeys))
     return (
       <div style={{display: show ? 'block' : 'none'}}>
         <div className="mb24">

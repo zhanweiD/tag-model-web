@@ -4,7 +4,7 @@ import {
 } from '../../common/util'
 
 const api = {
-  getProjects: post('/api/project/1_0_0/project/simple/list'),
+  getProjects: post('/api/project/current/project/simple/list'),
   //* ------------------------------ 对象类目树 ------------------------------*//
   getObjTree: get(`${objectApi}/obj_cate_tree`, {overrideSelfConcurrent: true}), // 对象类目树
   getCateDetail: get(`${objectApi}/cate_detail`), // 查看对象类目

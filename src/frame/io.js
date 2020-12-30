@@ -4,7 +4,7 @@ import {
 } from '../common/util'
 
 const api = {
-  getProjects: post('/api/project/1_0_0/project/simple/list'),
+  getProjects: post('/api/project/current/project/simple/list'),
 } 
 
 ioContext.create('tagFrame', api) 

@@ -31,7 +31,7 @@ export const tagWarehouseApi = `${pathPrefix}/map` // 标签仓库
 export const syncApi =  `${pathPrefix}/transfer` // 标签同步
 export const targetSourceApi =  `${pathPrefix}/targetSource` // 目的数据源
 
-export const groupConfigApi = `/api/tagapp/1_0_0/relGroup` // 群体配置
+export const groupConfigApi = `/api/tagapp/current/relGroup` // 群体配置
 
 const createRequestFn = method => (url, config) => ({
   url,

@@ -1,6 +1,7 @@
 import {Component} from 'react'
+import {action} from 'mobx'
 import {observer} from 'mobx-react'
-import {Button, message} from 'antd'
+import {Button, message, Checkbox} from 'antd'
 import {ErrorEater} from '@dtwave/uikit'
 import Mapping from '@dtwave/oner-mapping'
 import {Loading} from '../../../../component'
@@ -65,25 +66,35 @@ export default class StepTwo extends Component {
     }
 
     this.block = true
-
+    const {
+      onUpdate,
+    } = this.props
+    // if (onUpdate) {
+    //   onUpdate()
+    // }
     this.setState({
       submitting: true,
     }, () => {
-      this.store.saveResult(this.value).then(() => {
+      this.store.saveResult(this.value, onUpdate).then(() => {
         this.setState({
           submitting: false,
         })
         setTimeout(() => {
           this.block = false
-          const {
-            onUpdate,
-          } = this.props
-          if (onUpdate) {
-            onUpdate()
-          }
+          // const {
+          //   onUpdate,
+          // } = this.props
+          // if (onUpdate) {
+          //   onUpdate()
+          // }
         }, 200)
       })
     })
+  }
+
+  @action.bound checked(e) {
+    const {store} = this.props
+    store.checkedPulish = e.target.checked
   }
 
   render() {
@@ -111,177 +122,186 @@ export default class StepTwo extends Component {
           loading
             ? <Loading mode="block" height={200} /> 
             : (
-              <Mapping
-                style={{
-                  display: 'inline-block',
-                  width: '100%',
-                }}
-                source={source}
-                target={target}
-                sourceRowKey={record => record.tagId || record.id}
-                targetRowKey={record => `${record.dataStorageId}${record.dataTableName}${record.dataFieldName}`}
-                sourceSearchKey={record => record.name || record.tagName}
-                targetSearchKey={record => record.dataFieldName}
-                targetColumns={[
-                  {
-                    title: '字段名称',
-                    dataIndex: 'dataFieldName',
-                    width: 80,
-                  },
-                  {
-                    title: '数据类型',
-                    dataIndex: 'dataFieldType',
-                    width: 80,
-                  },
-                  {
-                    title: boundMethodId === 1 ? '加工方案' : '数据表',
-                    dataIndex: boundMethodId === 1 ? 'schemeName' : 'dataTableName',
-                    width: 90,
-                  },
-                ]}
-                sourceColumns={[
-                  {
-                    title: '标签标识',
-                    dataIndex: 'enName',
-                    width: 90,
-                  },
-                  {
-                    title: '标签名称',
-                    dataIndex: 'name',
-                    width: 90,
-                  },
-                  {
-                    title: '数据类型',
-                    dataIndex: 'valueTypeName',
-                    width: 90,
-                  },
-                ]}
-                result={result}
-                resultSourceColumns={[
-                  {
-                    title: '标签名称',
-                    dataIndex: 'tagName',
-                    width: 96,
-                  },
-                ]}
-                resultTargetColumns={[
-                  {
-                    title: '字段标识',
-                    dataIndex: 'dataFieldName',
-                    width: 69,
-                  },
-                ]}
-                resultSourceFullColumns={[
-                  {
-                    title: '标签英文名',
-                    dataIndex: 'tagEnName',
-                    width: 100,
-                  },
-                  {
-                    title: '标签中文名',
-                    dataIndex: 'tagName',
-                    width: 80,
-                  },
-                  {
-                    title: '数据类型',
-                    dataIndex: 'tagValueTypeName',
-                    width: 80,
-                  },
-                ]}
-                resultTargetFullColumns={[
-                  {
-                    title: '字段类型',
-                    dataIndex: 'dataFieldName',
-                    width: 60,
-                  },
-                  {
-                    title: '字段类型',
-                    dataIndex: 'dataFieldType',
-                    width: 60,
-                  },
-                  {
-                    title: boundMethodId === 1 ? '加工方案' : '数据表',
-                    dataIndex: boundMethodId === 1 ? 'schemeName' : 'dataTableName',
-                    width: 130,
-                  },
-                ]}
-                resultRowKey={record => record.tagId}
-                mappingField={(
-                  {
-                    id: tagId,
-                    name: tagName,
-                    enName: tagEnName,
-                    valueType: tagValueType,
-                    valueTypeName: tagValueTypeName,
-                  },
-                  {
+              <div>
+                <div style={{textAlign: 'right'}}>
+                  <Checkbox checked={this.store.checkedPulish} onChange={this.checked}>绑定的标签是否直接发布</Checkbox>
+                </div>
+                <Mapping
+                  style={{
+                    display: 'inline-block',
+                    width: '100%',
+                  }}
+                  source={source}
+                  target={target}
+                  sourceRowKey={record => record.tagId || record.id}
+                  targetRowKey={record => `${record.dataStorageId}${record.dataTableName}${record.dataFieldName}`}
+                  sourceSearchKey={record => record.name || record.tagName}
+                  targetSearchKey={record => record.dataFieldName}
+                  targetColumns={[
+                    {
+                      title: '字段名称',
+                      dataIndex: 'dataFieldName',
+                      width: 80,
+                    },
+                    {
+                      title: '数据类型',
+                      dataIndex: 'dataFieldType',
+                      width: 80,
+                    },
+                    {
+                      title: boundMethodId === 1 ? '加工方案' : '数据表',
+                      dataIndex: boundMethodId === 1 ? 'schemeName' : 'dataTableName',
+                      width: 90,
+                    },
+                  ]}
+                  sourceColumns={[
+                    {
+                      title: '标签标识',
+                      dataIndex: 'enName',
+                      width: 90,
+                    },
+                    {
+                      title: '标签名称',
+                      dataIndex: 'name',
+                      width: 90,
+                    },
+                    {
+                      title: '数据类型',
+                      dataIndex: 'valueTypeName',
+                      width: 90,
+                    },
+                  ]}
+                  result={result}
+                  resultSourceColumns={[
+                    {
+                      title: '标签名称',
+                      dataIndex: 'tagName',
+                      width: 96,
+                    },
+                  ]}
+                  resultTargetColumns={[
+                    {
+                      title: '字段标识',
+                      dataIndex: 'dataFieldName',
+                      width: 69,
+                    },
+                  ]}
+                  resultSourceFullColumns={[
+                    {
+                      title: '标签英文名',
+                      dataIndex: 'tagEnName',
+                      width: 100,
+                    },
+                    {
+                      title: '标签中文名',
+                      dataIndex: 'tagName',
+                      width: 80,
+                    },
+                    {
+                      title: '数据类型',
+                      dataIndex: 'tagValueTypeName',
+                      width: 80,
+                    },
+                  ]}
+                  resultTargetFullColumns={[
+                    {
+                      title: '字段类型',
+                      dataIndex: 'dataFieldName',
+                      width: 60,
+                    },
+                    {
+                      title: '字段类型',
+                      dataIndex: 'dataFieldType',
+                      width: 60,
+                    },
+                    {
+                      title: boundMethodId === 1 ? '加工方案' : '数据表',
+                      dataIndex: boundMethodId === 1 ? 'schemeName' : 'dataTableName',
+                      width: 130,
+                    },
+                  ]}
+                  resultRowKey={record => record.tagId}
+                  mappingField={(
+                    {
+                      id: tagId,
+                      name: tagName,
+                      enName: tagEnName,
+                      valueType: tagValueType,
+                      valueTypeName: tagValueTypeName,
+                    },
+                    {
+                      dataStorageId,
+                      dataDbName,
+                      dataDbType,
+                      dataTableName,
+                      dataFieldName,
+                      dataFieldType,
+                      isUsed,
+                      schemeId,
+                      tagType,
+                    }
+                  ) => ({
+                    tagId,
+                    tagName,
+                    tagEnName,
+                    tagValueType,
+                    tagValueTypeName,
                     dataStorageId,
                     dataDbName,
                     dataDbType,
                     dataTableName,
                     dataFieldName,
                     dataFieldType,
-                    isUsed,
-                    schemeId,
                     tagType,
-                  }
-                ) => ({
-                  tagId,
-                  tagName,
-                  tagEnName,
-                  tagValueType,
-                  tagValueTypeName,
-                  dataStorageId,
-                  dataDbName,
-                  dataDbType,
-                  dataTableName,
-                  dataFieldName,
-                  dataFieldType,
-                  tagType,
-                  isUsed,
-                  tagDerivativeSchemeId: schemeId,
-                })}
-                nameMappingField={['enName', 'dataFieldName']}
-                onChange={value => this.value = value}
-                sourceTitle="标签列表"
-                targetTitle="字段列表"
-                sourceTipTitle="字段："
-                targetTipTitle="标签："
-                sourceSearchPlaceholder="请输入名称搜索"
-                targetSearchPlaceholder="请输入名称搜索"
-                sourceDisableKey={record => record.status === 2}
-                targetDisableKey={record => record.status === 2}
-                disableKey={record => record.used === 1 || record.isUsed === 1 || record.status === 2}
-                disableMsg={record => (record.status === 2 ? '标签已发布无法删除映射' : '使用中无法删除映射')}
-                // hasSearchSelect
-                // searchSelectList={boundMethodId === 1 ? schemeList : tableList}
-                // searchSelectPlaceholder={boundMethodId === 1 ? '请选择加工方案' : '请选择数据表'}
-                // searchSelectKey={boundMethodId === 1 ? 'schemeName' : 'dataTableName'}
-                isShowMapping
-                canMapping
-                beforeMapping={v => {
-                  const mappingItem = v[0]
-                  if (mappingItem.tagValueType !== mappingItem.tagType) {   
-                    message.error(`${mappingItem.tagName}(标签)与${mappingItem.dataFieldName}(字段)数据类型不匹配， 绑定失败`)
+                    isUsed,
+                    tagDerivativeSchemeId: schemeId,
+                  })}
+                  nameMappingField={['enName', 'dataFieldName']}
+                  onChange={value => {
+                    this.value = value
+                    this.store.pubTagList = value
+                  }}
+                  sourceTitle="标签列表"
+                  targetTitle="字段列表"
+                  sourceTipTitle="字段："
+                  targetTipTitle="标签："
+                  sourceSearchPlaceholder="请输入名称搜索"
+                  targetSearchPlaceholder="请输入名称搜索"
+                  sourceDisableKey={record => record.status === 2}
+                  targetDisableKey={record => record.status === 2}
+                  disableKey={record => record.used === 1 || record.isUsed === 1 || record.status === 2}
+                  disableMsg={record => (record.status === 2 ? '标签已发布无法删除映射' : '使用中无法删除映射')}
+                  // hasSearchSelect
+                  // searchSelectList={boundMethodId === 1 ? schemeList : tableList}
+                  // searchSelectPlaceholder={boundMethodId === 1 ? '请选择加工方案' : '请选择数据表'}
+                  // searchSelectKey={boundMethodId === 1 ? 'schemeName' : 'dataTableName'}
+                  isShowMapping
+                  canMapping
+                  beforeMapping={v => {
+                    const mappingItem = v[0]
+                    if (mappingItem.tagValueType !== mappingItem.tagType) {   
+                      message.error(`${mappingItem.tagName}(标签)与${mappingItem.dataFieldName}(字段)数据类型不匹配， 绑定失败`)
+                      return new Promise(function (resolve, reject) {
+                        reject([])
+                      })
+                    } 
                     return new Promise(function (resolve, reject) {
-                      reject([])
+                      resolve([])
                     })
-                  } 
-                  return new Promise(function (resolve, reject) {
-                    resolve([])
-                  })
-                }}
-                beforeNameMapping={v => {
-                  const successResult = v.filter(d => (d.tagValueType === d.tagType) || d.status === 2 || d.isUsed)
+                  }}
+                  beforeNameMapping={v => {
+                    const successResult = v.filter(d => (d.tagValueType === d.tagType) || d.status === 2 || d.isUsed)
                     
-                  const errorResult = v.filter(d => (d.tagValueType !== d.tagType) && !d.isUsed && d.status !== 2)
-                  message.info(`${successResult.length}个标签映射成功，${errorResult.length}个标签映射失败`)
+                    const errorResult = v.filter(d => (d.tagValueType !== d.tagType) && !d.isUsed && d.status !== 2)
+                    message.info(`${successResult.length}个标签映射成功，${errorResult.length}个标签映射失败`)
         
-                  return new Promise(function (resolve, reject) {
-                    resolve(successResult)
-                  })
-                }}
-              />
+                    return new Promise(function (resolve, reject) {
+                      resolve(successResult)
+                    })
+                  }}
+                />
+              </div>
+
             )
               
         }

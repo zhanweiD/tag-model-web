@@ -17,6 +17,9 @@ class DrawerStore {
 
   @observable confirmLoading = false
   @observable currentStep = 0
+
+  @observable checkedPulish = true
+  @observable pubTagList = []
   
   // 选择标签 - 搜索相关
   @observable objId = undefined // 选择的对象id
@@ -37,6 +40,25 @@ class DrawerStore {
   // 下一步
   @action.bound nextStep() {
     this.currentStep = this.currentStep + 1
+  }
+
+  @action async updateTagStatus(data) {
+    try {
+      const res = await io.updateTagStatus({
+        projectId: this.projectId,
+        status: 2,
+        tagIdList: data,
+      })
+      runInAction(() => {
+        if (res.success) {
+          successTip('发布成功')
+        } else {
+          failureTip('发布失败')
+        }
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
   }
 
   @observable configTagList = []
@@ -109,6 +131,7 @@ class DrawerStore {
       }
 
       this.result = res || []
+      this.pubTagList = res || []
     } catch (e) {
       errorTip(e.message)
     }
@@ -155,7 +178,7 @@ class DrawerStore {
     }
   }
 
-  async saveResult(reqList) {
+  async saveResult(reqList, cb) {
     try {
       const params = {
         reqList,
@@ -170,6 +193,16 @@ class DrawerStore {
       } else {
         res = await io.saveMappingResult(params)
       }
+
+      if (this.checkedPulish) {
+        const tagIdList = this.pubTagList.filter(item => item.status !== 2).map(item => item.tagId)
+        if (tagIdList.length) {
+          await this.updateTagStatus(tagIdList)
+        }
+      }
+      runInAction(() => {
+        if (cb) cb()
+      })
      
       if (res === true) {
         successTip('操作成功')

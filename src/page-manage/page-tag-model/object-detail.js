@@ -155,7 +155,6 @@ export default class ObjectDetail extends Component {
     }
 
     const tabMap = objDetail.type === 0 ? objRelTabMap : objDetailTabMap
-    console.log(tabId)
     const tabConfig = {
       tabs: tabMap,
       objType: objDetail.type,

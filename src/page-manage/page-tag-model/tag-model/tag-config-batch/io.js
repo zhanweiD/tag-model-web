@@ -1,5 +1,5 @@
 import ioContext from '../../../../common/io-context'
-import {get, post, baseApi} from '../../../../common/util'
+import {get, post, baseApi, tagModalApi} from '../../../../common/util'
 
 const api = {
   // 基础标签
@@ -17,6 +17,8 @@ const api = {
   getConfigTagList: get(`${baseApi}/tag/listTagByObjAndType`),
   getTableList: get(`${baseApi}/object/table_obj`), // 获取对象下数据表
   getSchemeList: get(`${baseApi}/derivative/schema/derivative_scheme`), // 获取衍生方案名称列表
+
+  updateTagStatus: post(`${tagModalApi}/update_tag_status`), // 修改标签发布状态
 } 
 
 ioContext.create('tagConfigBatch', api) 

@@ -3,7 +3,7 @@
  */
 import {Component, Fragment} from 'react'
 import {action, toJS} from 'mobx'
-import {observer, Provider} from 'mobx-react'
+import {observer, inject, Provider} from 'mobx-react'
 import {Popconfirm, Button} from 'antd'
 import {Link} from 'react-router-dom'
 
@@ -27,12 +27,14 @@ import ModalBack from './modal-back'
 
 import store from './store'
 
+@inject('bigStore')
 @observer
 class TagList extends Component {
   constructor(props) {
     super(props)
     store.projectId = props.projectId
     store.objId = +props.objId
+    store.bigStore = props.bigStore
   }
 
   columns = [{
@@ -468,7 +470,7 @@ class TagList extends Component {
           />
           <DrawerBatchConfig 
             objId={store.objId}
-            bigStore={store}
+            objStore={store.bigStore}
             projectId={projectId}
             visible={batchConfigVisible}
             objectSelectList={objectSelectList}
