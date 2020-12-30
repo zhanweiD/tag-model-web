@@ -18,7 +18,9 @@ class Store extends ListContentStore(io.getList) {
   @observable confirmLoading = false
   @observable dataTableLoading = false
   @observable modalVisible = false
+  @observable modelEditModal = false
   @observable editSelectedItem = {}
+  @observable editSelectDetail = {}
 
   @observable storageId = undefined
   @observable storageName = undefined

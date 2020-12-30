@@ -52,6 +52,10 @@ export default class DrawerDatasheet extends Component {
       visible,
     } = this.props
 
+    const {
+      editSelectedItem,
+    } = this.store
+
     // const mainKey = this.store.dataSheetDetail.mappingKeys && this.store.dataSheetDetail.mappingKeys.length === 1 ? this.store.dataSheetDetail.mappingKeys[0].field_name : undefined
     // const field1Name = this.store.dataSheetDetail.mappingKeys && this.store.dataSheetDetail.mappingKeys.length === 2 ? this.store.dataSheetDetail.mappingKeys[0].field_name : undefined
     // const field2Name = this.store.dataSheetDetail.mappingKeys && this.store.dataSheetDetail.mappingKeys.length === 2 ? this.store.dataSheetDetail.mappingKeys[1].field_name : undefined
@@ -75,11 +79,11 @@ export default class DrawerDatasheet extends Component {
       >
         <Form style={{paddingBottom: '50px'}} colon={false}>
           <FormItem label={<span style={{float: 'left'}}>数据表：</span>}>
-            {<OmitTooltip text={this.store.tableName} maxWidth={300} className="rel-entity-name" />}
+            {<OmitTooltip text={editSelectedItem.dataTableName} maxWidth={300} className="rel-entity-name" />}
           </FormItem>
 
           <FormItem label={<span style={{float: 'left'}}>数据源：</span>}>
-            {<OmitTooltip text={this.store.storageName} maxWidth={400} className="rel-entity-name" />}
+            {<OmitTooltip text={editSelectedItem.dataStorageName} maxWidth={400} className="rel-entity-name" />}
           </FormItem>
           
           <FormItem label={<span className="mb8" style={{float: 'left'}}>where条件：</span>}>
