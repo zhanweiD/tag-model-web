@@ -226,6 +226,7 @@ export default class AddSource extends Component {
       storageLoading,
       storageDetail,
       storageDetailVisible,
+      defaultStorage,
     } = this.store
 
     const drawerConfig = {
@@ -266,6 +267,7 @@ export default class AddSource extends Component {
             })(
               <Select
                 showSearch
+                disabled={defaultStorage.storageType}
                 optionFilterProp="children"
                 placeholder="请选择数据源类型"
                 style={{width: '100%'}}
@@ -296,6 +298,7 @@ export default class AddSource extends Component {
               <div className="select-storage">
                 <Select
                   showSearch
+                  disabled={defaultStorage.storageId}
                   optionFilterProp="children"
                   value={this.storageId}
                   placeholder="请选择数据源"

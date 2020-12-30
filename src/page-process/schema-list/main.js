@@ -70,6 +70,7 @@ class SchemaList extends Component {
     {
       title: '加工方案',
       dataIndex: 'name',
+      fixed: 'left',
     }, {
       title: '对象',
       dataIndex: 'objName',
@@ -102,6 +103,7 @@ class SchemaList extends Component {
       title: '操作',
       dataIndex: 'action',
       width: 300,
+      fixed: 'right',
       render: (text, record) => (
         <div>
           {/* 方案状态: 提交成功  操作: 查看 */}
@@ -330,6 +332,7 @@ class SchemaList extends Component {
       columns: this.columns,
       initParams: {projectId: this.projectId},
       searchParams: seach({objList}),
+      scroll: {x: 1300},
       buttons: [<Authority authCode="tag_derivative:create_tql[c]">
         <Button
           type="primary"
@@ -338,7 +341,7 @@ class SchemaList extends Component {
         >
         新建加工方案
         </Button>
-      </Authority>,
+                </Authority>,
       ],
       rowKey: 'id',
       store: this.store, // 必填属性

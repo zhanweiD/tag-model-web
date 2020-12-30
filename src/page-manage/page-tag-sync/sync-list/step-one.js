@@ -58,7 +58,7 @@ export default class StepOne extends Component {
 
   @action.bound selecStorageType(v) {
     const {form: {resetFields, getFieldValue}} = this.props
-    this.store.storageType = v
+    this.store.storageType = v.key
     
     this.store.storageId = undefined
 
@@ -72,17 +72,16 @@ export default class StepOne extends Component {
     //   })
     // }
     this.store.getStorageList({
-      storageType: v,
+      storageType: v.key,
       objId: this.store.objId,
     }, this.selecStorage)
   } 
 
   @action.bound selecStorage(obj) {
-    const {form: {setFieldsValue}} = this.props
-
-    setFieldsValue({
-      dataStorageId: obj,
-    })
+    // const {form: {setFieldsValue}} = this.props
+    // setFieldsValue({
+    //   dataStorageId: obj,
+    // })
     this.store.storageId = obj.key
     this.store.storageName = this.getStoragName(obj.key)
     if (obj.key) this.store.getObjList()
@@ -108,7 +107,7 @@ export default class StepOne extends Component {
       if (err) {
         return
       } 
-
+      console.log(values)
       t.store.previewData = values
       t.nextStep()
     })
@@ -177,7 +176,6 @@ export default class StepOne extends Component {
       defaultStorage,
       getDefaultLogin,
     } = this.store
-
     // if (defaultStorage.storageType) {
     //   this.selecStorageType({key: defaultStorage.storageType})
     // }
@@ -208,7 +206,8 @@ export default class StepOne extends Component {
             })(
               <Select 
                 showSearch
-                // labelInValue // 贼坑，设置不上初始值
+                labelInValue // 贼坑，设置不上初始值
+                disabled={defaultStorage.storageType}
                 placeholder="请选择数据源类型" 
                 style={{width: '100%'}} 
                 onSelect={v => this.selecStorageType(v)}
@@ -242,6 +241,7 @@ export default class StepOne extends Component {
                 <Select 
                   showSearch
                   labelInValue 
+                  disabled={defaultStorage.storageId}
                   value={this.store.storageId ? {key: this.store.storageId} : undefined}
                   placeholder="请选择目的源" 
                   style={{width: '100%'}} 
@@ -299,10 +299,10 @@ export default class StepOne extends Component {
                     {required: true, message: '表名不能为空'},  
                     {validator: this.changeTableName},
                   ]})(
-                    <div className="FBH"> 
-                    <span className="ml16 mr16">tbjh_</span>
-                    <Input size="small" autoComplete="off" placeholder="请输入表名称" disabled={!this.store.storageId || !this.store.objId} />
-                  </div>
+                  <div className="FBH"> 
+                      <span className="ml16 mr16">tbjh_</span>
+                      <Input size="small" autoComplete="off" placeholder="请输入表名称" disabled={!this.store.storageId || !this.store.objId} />
+                    </div>
                 )}
               </FormItem>
             ) : null

@@ -71,8 +71,8 @@ class Store {
       runInAction(() => {
         this.defaultStorage = res
         if (res.storageType) {
-          this.oneForm.setFieldsValue({dataDbType: res.storageType})
-          this.selecStorageType(res.storageType)
+          this.oneForm.setFieldsValue({dataDbType: {label: res.storageTypeName, key: res.storageType}})
+          this.selecStorageType({key: res.storageType, label: res.storageName})
         }
       })
     } catch (e) {
@@ -107,8 +107,11 @@ class Store {
       })
       runInAction(() => {
         this.storageList = res || []
-        const defaultId = res[0] ? res[0].storageId : undefined
-        if (cb) cb({key: this.defaultStorage.storageId || defaultId})
+        const defaultId = res[0] ? res[0] : {}
+        this.oneForm.setFieldsValue({
+          dataStorageId: {key: this.defaultStorage.storageId || defaultId.storageId, label: this.defaultStorage.storageName || defaultId.storageName},
+        })
+        if (cb) cb({key: this.defaultStorage.storageId || defaultId.storageId, label: this.defaultStorage.storageName || defaultId.storageName})
       })
     } catch (e) {
       errorTip(e.message)

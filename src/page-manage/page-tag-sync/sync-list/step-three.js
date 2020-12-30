@@ -82,7 +82,7 @@ export default class StepThree extends Component {
           />
           <div className="info-title ">配置目的源</div>
           <NemoBaseInfo 
-            dataSource={[{
+            dataSource={tableName ? [{
               title: '数据源类型',
               value: dataDbType.label,
             }, {
@@ -90,7 +90,13 @@ export default class StepThree extends Component {
               value: dataStorageId.label,
             }, {
               title: '表',
-              value: `tbjh_${tableName}`,
+              value: `tbjh_${tableName || objId.key}`,
+            }] : [{
+              title: '数据源类型',
+              value: dataDbType.label,
+            }, {
+              title: '数据源',
+              value: dataStorageId.label,
             }]}
             className="mb24"
           />
