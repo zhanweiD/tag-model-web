@@ -66,27 +66,27 @@ export default class StepTwo extends Component {
     }
 
     this.block = true
-    const {
-      onUpdate,
-    } = this.props
+    // const {
+    //   onUpdate,
+    // } = this.props
     // if (onUpdate) {
     //   onUpdate()
     // }
     this.setState({
       submitting: true,
     }, () => {
-      this.store.saveResult(this.value, onUpdate).then(() => {
+      this.store.saveResult(this.value).then(() => {
         this.setState({
           submitting: false,
         })
         setTimeout(() => {
           this.block = false
-          // const {
-          //   onUpdate,
-          // } = this.props
-          // if (onUpdate) {
-          //   onUpdate()
-          // }
+          const {
+            onUpdate,
+          } = this.props
+          if (onUpdate) {
+            onUpdate()
+          }
         }, 200)
       })
     })
