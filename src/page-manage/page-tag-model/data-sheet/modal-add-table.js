@@ -286,6 +286,7 @@ class ModalAddTable extends Component {
       confirmLoading,
       dataSourceList,
       dataTableLoading,
+      checkLoading,
       dataSheetList,
       fieldList,
       fieldList1,
@@ -424,6 +425,7 @@ class ModalAddTable extends Component {
             <Button
               type={whereCondition ? 'primary' : 'ghost'}
               disabled={!whereCondition}
+              loading={checkLoading}
               onClick={() => this.store.checkWhere()}
             >
                 校验

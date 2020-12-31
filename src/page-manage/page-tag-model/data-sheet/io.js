@@ -13,6 +13,9 @@ const api = {
   checkWhere: post(`${baseApi}/tagConfig/check_where`), // 添加关联表 - where条件校验
 
   getDataSheetDetail: get(`${baseApi}/tagConfig/obj_storage_detail`), // 数据表详情
+  updateEntityField: post(`${baseApi}/tagConfig/update_rel_field`), // 更新关联表where条件（实体）
+  updateRelField: post(`${baseApi}/tagConfig/update_rel_field_ass`), // 更新关联表where条件（关系）
+
 
   // 添加
   saveEntityField: post(`${baseApi}/tagConfig/add_rel_field`), // 添加关联字段(实体)
