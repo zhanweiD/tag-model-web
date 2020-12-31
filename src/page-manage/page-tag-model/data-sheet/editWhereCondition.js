@@ -35,6 +35,7 @@ class EditWhereCondition extends Component {
     this.store.entity1Key = undefined
     this.store.entity2Key = undefined
     this.store.whereCondition = undefined
+    this.store.getDataSource()
  
     // 关系
     if (this.store.typeCode === '3') {
@@ -224,7 +225,7 @@ class EditWhereCondition extends Component {
 
       // 实体添加数据表
       if (+typeCode === 4) {
-        this.store.saveEntityField(() => {
+        this.store.updateEntityField(() => {
           t.bigStore.getObjDetail()
           t.bigStore.getObjCard()
           t.store.getList({
@@ -234,7 +235,7 @@ class EditWhereCondition extends Component {
           t.handleCancel()
         })
       } else {
-        this.store.saveRelField({
+        this.store.updateRelField({
           fromEntity: this.chooseEntity ? 1 : 0,
           entityId: this.chooseEntity,
         }, () => {
@@ -285,6 +286,7 @@ class EditWhereCondition extends Component {
       dataSourceList,
       dataTableLoading,
       dataSheetList,
+      dataSheetDetail,
       fieldList,
       fieldList1,
       fieldList2,
@@ -294,7 +296,7 @@ class EditWhereCondition extends Component {
       whereSuccess,
       editSelectDetail,
     } = this.store
-
+    console.log(dataSheetDetail)
     const {objDetail} = this.bigStore
 
     const entity1Id = objDetail.objRspList && objDetail.objRspList[0].id
@@ -318,7 +320,7 @@ class EditWhereCondition extends Component {
       >
         <Form>
           {/* 0 简单关系 */}
-          {
+          {/* {
             +bothTypeCode === 0 ? (
               <Fragment>
                 <FormItem 
@@ -331,12 +333,12 @@ class EditWhereCondition extends Component {
                       checkedChildren="是"
                       unCheckedChildren="否"
                       disabled="false"
-                      // onChange={this.onSwitchChange}
+                      onChange={this.onSwitchChange}
                     />
                   )}
                 </FormItem>
 
-                {/* {
+                {
                   getFieldValue('switch') ? (
                     <FormItem {...formItemLayout} label="关联实体">
                       {getFieldDecorator('entity', {
@@ -349,15 +351,15 @@ class EditWhereCondition extends Component {
                       )}
                     </FormItem>
                   ) : null
-                } */}
+                }
              
               </Fragment>
             ) : null
-          }
+          } */}
         
           <FormItem {...formItemLayout} label="数据源">
             {getFieldDecorator('dataStorageId', {
-              initialValue: editSelectDetail.dataStorageName,
+              initialValue: dataSheetDetail.dataStorageId,
               rules: [{required: true, message: '请选择数据源'}],
             })(
               <Select 
@@ -388,7 +390,7 @@ class EditWhereCondition extends Component {
               : null}
           >
             {getFieldDecorator('dataTableName', {
-              initialValue: editSelectDetail.dataTableName,
+              initialValue: dataSheetDetail.dataTableName,
               rules: [{required: true, message: '请选择数据表'}],
             })(
               <Select 
@@ -409,7 +411,7 @@ class EditWhereCondition extends Component {
           </FormItem>
           <FormItem {...formItemLayout} label="where条件">
             {getFieldDecorator('whereCondition', {
-              // initialValue: editSelectDetail.dataTableName,
+              initialValue: dataSheetDetail.whereCondition,
               rules: [
                 '@transformTrim',
                 '@required',
@@ -432,7 +434,7 @@ class EditWhereCondition extends Component {
                 校验
             </Button>
           </FormItem>
-    
+          
           {/* 实体2 */}
           {
             +bothTypeCode === 2 ? (
@@ -449,7 +451,7 @@ class EditWhereCondition extends Component {
                 //             )}
               >
                 {getFieldDecorator('mappingKey', {
-                  initialValue: editSelectDetail.mappingKey,
+                  initialValue: dataSheetDetail.mappingKeys && dataSheetDetail.mappingKeys.length === 1 ? [dataSheetDetail.mappingKeys[0].field_name] : undefined,
                   rules: [{required: true, message: '请选择主标签绑定的字段'}],
                 })(
                   <Select 
@@ -476,7 +478,7 @@ class EditWhereCondition extends Component {
               <Fragment>
                 <FormItem {...formItemLayout} label={<OmitTooltip text={entity1Name} maxWidth={80} className="rel-entity-name" />}>
                   {getFieldDecorator('entity1Key', {
-                    initialValue: +this.chooseEntity === entity1Id ? this.chooseEntityMaJorKey : undefined,
+                    initialValue: dataSheetDetail.mappingKeys && dataSheetDetail.mappingKeys.length === 2 ? dataSheetDetail.mappingKeys[0].field_name : undefined,
                     rules: [{required: true, message: '请选择主标签绑定的字段'}],
                   })(
                     <Select 
@@ -496,7 +498,7 @@ class EditWhereCondition extends Component {
                 </FormItem>
                 <FormItem {...formItemLayout} label={<OmitTooltip text={entity2Name} maxWidth={80} className="rel-entity-name" />}>
                   {getFieldDecorator('entity2Key', {
-                    initialValue: +this.chooseEntity === entity2Id ? this.chooseEntityMaJorKey : undefined,
+                    initialValue: dataSheetDetail.mappingKeys && dataSheetDetail.mappingKeys.length === 2 ? dataSheetDetail.mappingKeys[1].field_name : undefined,
                     rules: [{required: true, message: '请选择主标签绑定的字段'}],
                   })(
                     <Select 

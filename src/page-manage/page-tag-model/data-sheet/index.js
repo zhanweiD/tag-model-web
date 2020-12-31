@@ -224,7 +224,7 @@ export default class DataSheet extends Component {
   @action.bound openWhereCondition(data) {
     store.editSelectDetail = data
     store.tableName = data.dataTableName
-    console.log(data)
+    store.storageId = data.dataStorageId
     const {typeCode, objDetail} = this.bigStore
     if (+typeCode === 4) {
       store.bothTypeCode = 2 // 实体
@@ -239,6 +239,7 @@ export default class DataSheet extends Component {
       store.modelEditModal = true
     }
     store.getDataSource()
+    store.getDataSheetDetail()
   }
 
   @action.bound openTagConfig(data) {
@@ -248,9 +249,9 @@ export default class DataSheet extends Component {
 
   @action.bound openDrawerDatasheet(data) {
     store.editSelectedItem = data // 对象id
-    // store.tableName = toJS(data.dataTableName)
+    store.tableName = toJS(data.dataTableName)
     store.storageId = toJS(data.dataStorageId)
-    // store.storageName = toJS(data.dataStorageName)
+    store.storageName = toJS(data.dataStorageName)
     // store.majorKeyField = toJS(data.mappingKey)
     this.drawerDatasheetVisible = true
   }

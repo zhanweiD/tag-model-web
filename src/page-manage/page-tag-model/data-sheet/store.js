@@ -339,6 +339,120 @@ class Store extends ListContentStore(io.getList) {
       })
     }
   }
+
+  /*
+   * @description 保存更新实体关联字段
+   */
+  @action async updateEntityField(cb) {
+    this.confirmLoading = true
+
+    // const dataDbInfo = this.dataSourceList.filter(d => d.storageId === this.storageId)[0]
+
+    // const majorKeyInfo = this.fieldList.filter(d => d.field === this.majorKeyField)[0]
+
+    // const selectFields = this.fieldList.filter(d => d.field !== this.majorKeyField)
+    // const filedObjReqList = selectFields.map(d => ({
+    //   dataDbName: dataDbInfo.storageName,
+    //   dataStorageId: dataDbInfo.storageId,
+    //   dataDbType: dataDbInfo.storageType,
+    //   dataTableName: this.tableName,
+    //   dataFieldName: d.field,
+    //   dataFieldType: d.type,
+    //   mappingKey: majorKeyInfo.field,
+    //   mappingKeyType: majorKeyInfo.type,
+    //   dataFieldDescr: d.descr,
+    // }))
+
+    try {
+      const res = await io.updateEntityField({
+        objId: +this.objId,
+        projectId: this.projectId,
+        // filedObjReqList,
+        whereCondition: this.whereCondition,
+        dataTableName: this.dataSheetDetail.dataTableName,
+        dataStorageId: this.dataSheetDetail.dataStorageId,
+      })
+      runInAction(() => {
+        if (res && cb) {
+          if (cb)cb()
+          successTip('操作成功')
+        } else {
+          failureTip('操作失败')
+        }
+      })
+    } catch (e) {
+      errorTip(e.message)
+    } finally {
+      this.confirmLoading = false
+    }
+  }
+
+  /*
+   * @description 保存更新关系关联字段
+   */
+  @action async updateRelField(fieldParams, cb) {
+    this.confirmLoading = true
+
+    // const dataDbInfo = this.dataSourceList.filter(d => d.storageId === this.storageId)[0]
+
+
+    // const mappingKeys1 = toJS(this.fieldList1)
+    //   .filter(d => d.field === this.entity1Key)
+    //   .map(d => ({
+    //     obj_id: `${d.objId}`,
+    //     field_name: d.field,
+    //     field_type: d.type,
+    //   }))
+
+    // const mappingKeys2 = toJS(this.fieldList2)
+    //   .filter(d => d.field === this.entity2Key)
+    //   .map(d => ({
+    //     obj_id: `${d.objId}`,
+    //     field_name: d.field,
+    //     field_type: d.type,
+    //   }))
+    // const mappingKeys = mappingKeys1.concat(mappingKeys2)
+    // const fieldList = toJS(this.fieldList1).concat(toJS(this.fieldList2))
+    // const uniqFieldList = _.unionBy(fieldList, 'field')
+    // const selectFields = uniqFieldList.filter(d => (d.field !== this.entity1Key) && (d.field !== this.entity2Key))
+
+    // const filedObjAssReqList = selectFields.map(d => ({
+    //   dataDbName: dataDbInfo.storageName,
+    //   dataStorageId: dataDbInfo.storageId,
+    //   dataDbType: dataDbInfo.storageType,
+    //   dataTableName: this.tableName,
+    //   dataFieldName: d.field,
+    //   dataFieldType: d.type,
+    //   dataFieldDescr: d.descr,
+    //   mappingKeys: JSON.stringify(mappingKeys),
+    //   ...fieldParams,
+    // }))
+
+    try {
+      const res = await io.updateRelField({
+        objId: this.objId,
+        projectId: this.projectId,
+        // filedObjAssReqList,
+        whereCondition: this.whereCondition,
+        dataTableName: this.dataSheetDetail.dataTableName,
+        dataStorageId: this.dataSheetDetail.dataStorageId,
+      })
+      runInAction(() => {
+        if (res && cb) {
+          if (cb)cb()
+          successTip('操作成功')
+        } else {
+          failureTip('操作失败')
+        }
+      })
+    } catch (e) {
+      errorTip(e.message)
+    } finally {
+      runInAction(() => {
+        this.confirmLoading = false
+      })
+    }
+  }
 }
 
 export default new Store()
