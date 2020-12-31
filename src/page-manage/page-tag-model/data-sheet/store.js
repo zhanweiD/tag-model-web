@@ -209,7 +209,9 @@ class Store extends ListContentStore(io.getList) {
    * @description where条件校验
    */
   @observable whereSuccess = false
+  @observable checkLoading = false
   @action async checkWhere() {
+    this.checkLoading = true
     try {
       const res = await io.checkWhere({
         // storageType: this.typeCode,
@@ -227,6 +229,8 @@ class Store extends ListContentStore(io.getList) {
       })
     } catch (e) {
       errorTip(e.message)
+    } finally {
+      this.checkLoading = false
     }
   }
 

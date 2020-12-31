@@ -285,6 +285,7 @@ class EditWhereCondition extends Component {
       confirmLoading,
       dataSourceList,
       dataTableLoading,
+      checkLoading,
       dataSheetList,
       dataSheetDetail,
       fieldList,
@@ -296,7 +297,6 @@ class EditWhereCondition extends Component {
       whereSuccess,
       editSelectDetail,
     } = this.store
-    console.log(dataSheetDetail)
     const {objDetail} = this.bigStore
 
     const entity1Id = objDetail.objRspList && objDetail.objRspList[0].id
@@ -429,6 +429,7 @@ class EditWhereCondition extends Component {
             <Button
               type={whereCondition ? 'primary' : 'ghost'}
               disabled={!whereCondition}
+              loading={checkLoading}
               onClick={() => this.store.checkWhere()}
             >
                 校验
