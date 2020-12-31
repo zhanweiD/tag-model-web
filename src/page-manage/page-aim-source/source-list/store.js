@@ -80,8 +80,8 @@ class Store extends ListContentStore(io.getList) {
         projectId: this.projectId,
       })
       runInAction(() => {
-        this.defaultStorage = res
-        if (res.storageType) {
+        this.defaultStorage = res || {}
+        if (this.defaultStorage.storageType) {
           this.oneForm.setFieldsValue({dataStorageType: res.storageType})
           this.selecStorageType(res.storageType)
         }

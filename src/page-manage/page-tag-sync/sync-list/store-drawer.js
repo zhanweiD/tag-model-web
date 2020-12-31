@@ -69,8 +69,8 @@ class Store {
         projectId: this.projectId,
       })
       runInAction(() => {
-        this.defaultStorage = res
-        if (res.storageType) {
+        this.defaultStorage = res || {}
+        if (this.defaultStorage.storageType) {
           this.oneForm.setFieldsValue({dataDbType: {label: res.storageTypeName, key: res.storageType}})
           this.selecStorageType({key: res.storageType, label: res.storageName})
         }
