@@ -74,7 +74,7 @@ class TagDetail extends Component {
       value: <Time timestamp={info.createTime} />,
     }, {
       title: '绑定方式',
-      value: info.configType === 1 ? '衍生标签' : '基础标签',
+      value: '主标签',
     }]
 
     return (
@@ -88,7 +88,8 @@ class TagDetail extends Component {
         </Spin>
         <div className="bgf m16 box-border" style={{minHeight: 'calc(100vh - 266px)'}}> 
           {info.isEnum ? <TagAnalyze tagId={tagId} authorStatus={info.authorStatus} /> : null}
-          <TagTrend tagId={tagId} projectId={store.projectId} />
+          {info.isMajor ? null : <TagTrend tagId={tagId} projectId={store.projectId} />}
+          {/* <TagTrend tagId={tagId} projectId={store.projectId} /> */}
         </div>
       </div>
       

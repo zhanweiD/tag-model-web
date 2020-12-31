@@ -12,14 +12,15 @@ export default class ObjectViewDrawer extends Component {
       dataIndex: 'name',
     }, {
       title: '标签标识',
-      dataIndex: 'isMajor',
-      render: text => (
-        <div>
-          {
-            text === 1 ? '主键' : '标签'
-          }
-        </div>
-      ),
+      dataIndex: 'enName',
+      // dataIndex: 'isMajor',
+      // render: text => (
+      //   <div>
+      //     {
+      //       text === 1 ? '主键' : '标签'
+      //     }
+      //   </div>
+      // ),
     },
   ]
 

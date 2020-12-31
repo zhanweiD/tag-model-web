@@ -85,7 +85,7 @@ class TagDetail extends Component {
       value: <Time timestamp={tagBaseInfo.createTime} />,
     }, {
       title: '绑定方式',
-      value: tagBaseInfo.configType === 1 ? '衍生标签' : '基础标签',
+      value: '主标签',
     },
     ]
 
@@ -117,13 +117,17 @@ class TagDetail extends Component {
         <div className="ml16 mr16">
           <OverviewCardWrap cards={cards} />
           <div className="box-border project-tag-detail"> 
-            <Tabs defaultActiveKey="1" className="comp-tab">
-              <TabPane tab="标签分析" key="1">
-                <div style={{minHeight: 'calc(100vh - 398px)'}}>
-                  {tagBaseInfo.isEnum ? <TagAnalyze tagId={tagId} authorStatus={tagBaseInfo.authorStatus} /> : null}
-                  <TagTrend tagId={tagId} />
-                </div>
-              </TabPane>
+            <Tabs defaultActiveKey={tagBaseInfo.isMajor ? '2' : '1'} className="comp-tab">
+              {
+                tagBaseInfo.isMajor ? null : (
+                  <TabPane tab="标签分析" key="1">
+                    <div style={{minHeight: 'calc(100vh - 398px)'}}>
+                      {tagBaseInfo.isEnum ? <TagAnalyze tagId={tagId} authorStatus={tagBaseInfo.authorStatus} /> : null}
+                      <TagTrend tagId={tagId} />
+                    </div>
+                  </TabPane>
+                )
+              }
               <TabPane tab="血缘分析" key="2">
                 <div style={{height: 'calc(100vh - 398px)'}}>
                   <TagrRelate tagId={tagId} />

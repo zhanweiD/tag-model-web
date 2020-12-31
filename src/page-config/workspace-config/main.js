@@ -283,7 +283,7 @@ const WorkspaceConfig = ({projectId}) => {
           </Authority>
         </div>
         <div className="mt24">
-          <div style={{color: 'rgba(0,0,0,0.45)'}}>目的源：</div>
+          {/* <div style={{color: 'rgba(0,0,0,0.45)'}}>目的源：</div> */}
           <Button type="primary" className="mt8" onClick={showAddModal}>添加目的源</Button>
           <Table
             loading={isLoading}

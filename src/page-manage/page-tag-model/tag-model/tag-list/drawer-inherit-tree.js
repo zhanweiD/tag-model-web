@@ -8,6 +8,7 @@ import {Tree, Switch} from 'antd'
 
 import {NoBorderInput, Loading, OmitTooltip} from '../../../../component'
 import {IconChakan} from '../../../../icon-comp'
+import tagIcon from '../../../../icon/new-tag.svg'
 
 const {TreeNode} = Tree
 
@@ -39,7 +40,8 @@ export default class CateTree extends Component {
         key={item.aId}
         title={<OmitTooltip maxWidth={120} text={item.name} />}
         selectable={false}
-        objectData={toJS(item)}  
+        objectData={toJS(item)} 
+        // icon={item.type ? null : <img src={tagIcon} alt="icon" style={{width: '14px'}} />} 
         // disableCheckbox      
         // disableCheckbox={!item.available || item.isUsed}
         disableCheckbox={isCheck}

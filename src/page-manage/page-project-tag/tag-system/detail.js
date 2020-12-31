@@ -70,7 +70,7 @@ export default class Detail extends Component {
       value: <Time timestamp={tagDetail.createTime} />,
     }, {
       title: '绑定方式',
-      value: tagDetail.configType === 1 ? '衍生标签' : '基础标签',
+      value: '主标签',
     }]
 
     // 不同状态的相应map
@@ -111,7 +111,10 @@ export default class Detail extends Component {
               </div>
               <div className="box-border mt16 min-h">
                 {tagDetail.isEnum ? <TagAnalyze tagId={selectedKey} authorStatus={authorStatus} /> : null}
-                <TagTrend key={selectedKey} tagId={selectedKey} />
+                {
+                  tagDetail.isMajor ? null : <TagTrend key={selectedKey} tagId={selectedKey} />
+                }
+                {/* <TagTrend key={selectedKey} tagId={selectedKey} /> */}
               </div>
             </Spin>
           ) : <div className="box-border" style={{paddingTop: '15%', minHeight: 'calc(100vh - 181px)'}}><NoData {...noDataConfig} /></div>
