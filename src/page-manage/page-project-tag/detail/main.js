@@ -65,6 +65,29 @@ class TagDetail extends Component {
     //   value: tagBaseInfo.fieldName,
     // }
     ]
+    const baseInfo1 = [{
+      title: '对象',
+      value: tagBaseInfo.objName,
+    }, {
+      title: '标签标识',
+      value: tagBaseInfo.enName,
+    }, {
+      title: '数据类型',
+      value: tagBaseInfo.valueTypeName,
+    }, {
+      title: '是否枚举',
+      value: tagBaseInfo.isEnum ? '是' : '否',
+    }, {
+      title: '创建者',
+      value: tagBaseInfo.creator,
+    }, {
+      title: '创建时间',
+      value: <Time timestamp={tagBaseInfo.createTime} />,
+    }, {
+      title: '绑定方式',
+      value: tagBaseInfo.configType === 1 ? '衍生标签' : '基础标签',
+    },
+    ]
 
     const cards = [
       {
@@ -88,7 +111,7 @@ class TagDetail extends Component {
           <DetailHeader
             name={tagBaseInfo.name}
             descr={tagBaseInfo.descr}
-            baseInfo={baseInfo}
+            baseInfo={tagBaseInfo.isMajor ? baseInfo1 : baseInfo}
           />
         </Spin>
         <div className="ml16 mr16">

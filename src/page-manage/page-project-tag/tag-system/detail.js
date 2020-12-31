@@ -53,6 +53,25 @@ export default class Detail extends Component {
       title: '所属项目',
       value: tagDetail.projectName,
     }]
+    const baseInfo1 = [{
+      title: '对象',
+      value: tagDetail.objName,
+    }, {
+      title: '标签标识',
+      value: tagDetail.enName,
+    }, {
+      title: '数据类型',
+      value: tagDetail.valueTypeName,
+    }, {
+      title: '创建者',
+      value: tagDetail.creator,
+    }, {
+      title: '创建时间',
+      value: <Time timestamp={tagDetail.createTime} />,
+    }, {
+      title: '绑定方式',
+      value: tagDetail.configType === 1 ? '衍生标签' : '基础标签',
+    }]
 
     // 不同状态的相应map
     const tagMap = {
@@ -75,6 +94,7 @@ export default class Detail extends Component {
     const noDataConfig = {
       text: '暂无数据',
     }
+    console.log(tagDetail.isMajor)
     return (
       <div className="detail-content">
         {
@@ -84,7 +104,7 @@ export default class Detail extends Component {
                 <DetailHeader
                   name={tagDetail.name}
                   descr={tagDetail.descr}
-                  baseInfo={baseInfo}
+                  baseInfo={tagDetail.isMajor ? baseInfo1 : baseInfo}
                   tag={commonTag ? tagMap[authorStatus] : null}
                   // actions={actions}
                 />

@@ -54,6 +54,28 @@ class TagDetail extends Component {
       title: '所属项目',
       value: info.projectName,
     }]
+    const baseInfo1 = [{
+      title: '对象',
+      value: info.objName,
+    }, {
+      title: '标签标识',
+      value: info.enName,
+    }, {
+      title: '数据类型',
+      value: info.valueTypeName,
+    }, {
+      title: '是否枚举',
+      value: info.isEnum ? '是' : '否',
+    }, {
+      title: '创建者',
+      value: info.creator,
+    }, {
+      title: '创建时间',
+      value: <Time timestamp={info.createTime} />,
+    }, {
+      title: '绑定方式',
+      value: info.configType === 1 ? '衍生标签' : '基础标签',
+    }]
 
     return (
       <div>
@@ -61,7 +83,7 @@ class TagDetail extends Component {
           <DetailHeader
             name={info.name}
             descr={info.descr}
-            baseInfo={baseInfo}
+            baseInfo={info.isMajor ? baseInfo1 : baseInfo}
           />
         </Spin>
         <div className="bgf m16 box-border" style={{minHeight: 'calc(100vh - 266px)'}}> 
