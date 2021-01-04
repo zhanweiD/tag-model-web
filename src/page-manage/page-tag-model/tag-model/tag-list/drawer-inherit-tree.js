@@ -41,7 +41,7 @@ export default class CateTree extends Component {
         title={<OmitTooltip maxWidth={120} text={item.name} />}
         selectable={false}
         objectData={toJS(item)} 
-        // icon={item.type ? null : <img src={tagIcon} alt="icon" style={{width: '14px'}} />} 
+        icon={item.type ? null : <img src={tagIcon} alt="icon" style={{width: '14px'}} />} 
         // disableCheckbox      
         // disableCheckbox={!item.available || item.isUsed}
         disableCheckbox={isCheck}
@@ -104,6 +104,7 @@ export default class CateTree extends Component {
           />
         </div>
         <div 
+          className="inherit-tree"
           style={{
             border: '1px solid #d9d9d9', 
             marginRight: '16px', 
@@ -126,6 +127,7 @@ export default class CateTree extends Component {
                 <Tree
                   checkable
                   defaultExpandAll
+                  showIcon
                   onCheck={this.onCheck}
                   checkedKeys={checkedKeys}
                 >

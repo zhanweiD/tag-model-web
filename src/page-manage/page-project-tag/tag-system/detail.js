@@ -94,7 +94,6 @@ export default class Detail extends Component {
     const noDataConfig = {
       text: '暂无数据',
     }
-    console.log(tagDetail.isMajor)
     return (
       <div className="detail-content">
         {
