@@ -137,7 +137,7 @@ export default class ConfigDrawerOne extends Component {
       component: 'textArea',
       rules: [
         '@transformTrim',
-        '@required',
+        // '@required',
         '@max128',
         {validator: this.handleEnumValueValidator},
       ],
