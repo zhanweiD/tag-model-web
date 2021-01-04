@@ -75,13 +75,15 @@ export default class ConfigDrawerTwo extends Component {
       tableLoading,
       currentStep,
     } = this.store
-
     const listConfig = {
       tableLoading,
       bordered: true,
       columns: this.columns,
       initGetDataByParent: true, // 初始请求 在父层组件处理。列表组件componentWillMount内不再进行请求
       store: this.store, // 必填属性
+      paginationConfig: {
+        hideOnSinglePage: true, // 只有一页时隐藏
+      }, 
     }
     return (
       <div className="config-two" style={{display: currentStep ? 'block' : 'none'}}>
