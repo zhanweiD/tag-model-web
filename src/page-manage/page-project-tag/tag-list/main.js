@@ -91,7 +91,7 @@ export default class TagList extends Component {
       key: 'projectName',
       title: '所属项目',
       dataIndex: 'projectName',
-      render: text => <OmitTooltip maxWidth={200} text={text} />,
+      render: (text, record) => <span>{record.projectName ? record.projectName : window.frameInfo.sessioninfo.accountInfoVO.accountName}</span>,
     }, 
     {
       key: 'status',
