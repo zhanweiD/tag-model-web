@@ -11,7 +11,7 @@ import {
   ListContent, NoData, OmitTooltip, Authority,
 } from '../../../component'
 import {getDataTypeName} from '../../../common/util'
-import ModalApply from './modal-apply'
+// import ModalApply from './modal-apply'
 import ModalBack from './modal-back'
 import Search from './search'
 
@@ -106,13 +106,13 @@ export default class TagList extends Component {
       fixed: 'right',
       render: (text, record) => (
         <div className="FBH FBAC">
-          <Fragment> 
+          {/* <Fragment> 
             {
               ((record.projectId === store.useProjectId || record.projectId === -1) || (record.status && !record.endTime)) ? <span className="mr8 disabled">权限申请</span> : (
                 <a className="mr8" href onClick={() => this.openApplyModal(record)}>权限申请</a>
               )
             }       
-          </Fragment>
+          </Fragment> */}
           <Fragment>
             {
               (record.projectId === store.useProjectId || record.projectId === -1) ? <span className="disabled">交回权限</span> : (
@@ -133,7 +133,7 @@ export default class TagList extends Component {
   }
 
   @action.bound openBackModal(data) {
-    store.projectId = data.projectId
+    store.backProjectId.push(store.useProjectId)
     store.tagId = data.id
     store.modalBackVisible = true
   }
@@ -208,7 +208,7 @@ export default class TagList extends Component {
               <Search store={store} />
               <div className="search-list box-border"> 
                 <ListContent {...listConfig} />
-                <ModalApply store={store} />
+                {/* <ModalApply store={store} /> */}
                 <ModalBack store={store} />
               </div>
             </Fragment>

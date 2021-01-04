@@ -36,6 +36,7 @@ export default class TagBack extends Component {
 
   @action.bound handleCancel() {
     this.store.modalBackVisible = false
+    this.store.backProjectId.clear()
   }
 
   render() {
@@ -71,7 +72,7 @@ export default class TagBack extends Component {
           <div>
             <p style={{fontSize: '10px', fontWeight: 'bold'}}>确定交回该标签的使用权限吗？</p>
           </div>
-          <div style={{fontSize: '10px', gridColumnStart: '2', gridColumnEnd: '3'}}>
+          <div style={{fontSize: '10px', gridColumnStart: '2', gridColumnEnd: '3'}} className="mb16">
             <p>交回权限后将导致该项目无法使用该标签，请谨慎操作。</p>
           </div>
         </div>
