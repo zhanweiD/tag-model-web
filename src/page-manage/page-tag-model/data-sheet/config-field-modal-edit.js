@@ -124,7 +124,7 @@ class ModalTagEdit extends Component {
                   rules: [
                     {transform: value => value && value.trim()},
                     {max: 128, message: '不能超过128个字符'},
-                    {required: true, message: '枚举显示值不可为空'},
+                    // {required: true, message: '枚举显示值不可为空'},
                     {validator: this.handleEnumValueValidator},
                   ],
                   initialValue: tagDetail.enumValue || undefined,

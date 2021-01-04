@@ -100,7 +100,7 @@ export default class DrawerTagConfig extends Component {
       component: 'textArea',
       rules: [
         '@transformTrim',
-        '@required',
+        // '@required',
         '@max128',
         {validator: this.handleEnumValueValidator},
       ],
