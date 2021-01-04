@@ -18,6 +18,7 @@ class Store extends ListContentStore(io.getList) {
   @observable ownProjectId = '' // 所属项目id
   @observable objectId = '' // 对象id
   @observable hotWord = undefined // 关键词
+  @observable backProjectId = []
 
   
   @observable ownProjectList = []
@@ -81,11 +82,10 @@ class Store extends ListContentStore(io.getList) {
   }
 
   @action async backAppltTag(cb) {
-    console.log(cb)
     this.confirmLoading = true
     try {
       const res = await io.backAppltTag({
-        projectId: this.useProjectId,
+        projectIds: this.backProjectId,
         tagId: this.tagId,
       })
       runInAction(() => {
@@ -103,6 +103,29 @@ class Store extends ListContentStore(io.getList) {
       })
     }
   }
+  // @action async backAppltTag(cb) {
+  //   console.log(cb)
+  //   this.confirmLoading = true
+  //   try {
+  //     const res = await io.backAppltTag({
+  //       projectId: this.useProjectId,
+  //       tagId: this.tagId,
+  //     })
+  //     runInAction(() => {
+  //       if (res) {
+  //         successTip('操作成功')
+  //         if (cb) cb()
+  //         this.getList()
+  //       } 
+  //     })
+  //   } catch (e) {
+  //     errorTip(e.message)
+  //   } finally {
+  //     runInAction(() => {
+  //       this.confirmLoading = false
+  //     })
+  //   }
+  // }
 
   @action async getProjectDetail() {
     try {
