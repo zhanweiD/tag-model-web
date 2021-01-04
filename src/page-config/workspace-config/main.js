@@ -282,7 +282,7 @@ const WorkspaceConfig = ({projectId}) => {
             <Button type="primary" onClick={editClick}>编辑</Button>
           </Authority>
         </div>
-        <div className="mt24">
+        <div>
           {/* <div style={{color: 'rgba(0,0,0,0.45)'}}>目的源：</div> */}
           <Button type="primary" className="mt8" onClick={showAddModal}>添加目的源</Button>
           <Table
