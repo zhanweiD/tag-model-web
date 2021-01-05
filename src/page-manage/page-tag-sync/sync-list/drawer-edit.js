@@ -52,12 +52,14 @@ export default class DrawerEditSync extends Component {
           addArr.push(tagData[i])
         }
       })  
-      store.tableData = store.tableData.concat(addArr)  
+      store.tableData = store.tableData.concat(addArr) 
+      store.tableList = store.tableData.map(d => d.id) 
     } 
   }
 
   @action.bound removeList(item) {
     store.tableData = store.tableData.filter(d => +d.id !== +item.id)
+    store.tableList = store.tableData.map(d => d.id)
     this.listRemoveItem = item
   }
 

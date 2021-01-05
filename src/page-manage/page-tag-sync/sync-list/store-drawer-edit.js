@@ -16,6 +16,7 @@ class Store {
   @observable treeLoading = false
   // 标签列表
   @observable tableData = []
+  @observable tableList = []
   @observable majorTagList = []
 
   @observable searchKey = undefined
@@ -35,6 +36,7 @@ class Store {
 
   @action async getTagTree(params) {
     this.treeLoading = true
+    
     try {
       const res = await io.getTagTree({
         projectId: this.projectId,
@@ -55,6 +57,8 @@ class Store {
             columnName: d.enName,
           }))
         }
+        this.tableList = this.tableData.map(d => d.id)
+        this.checkedKeys = this.majorTagList.map(d => d.id)
       })
     } catch (e) {
       errorTip(e.message)
