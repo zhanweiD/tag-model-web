@@ -109,7 +109,7 @@ export default class SyncTagTree extends Component {
       this.allChecked = false
       this.indeterminate = true
     }
-
+    
     rightToTable(toJS(this.store.checkedTagData))
   }
 
@@ -138,6 +138,7 @@ export default class SyncTagTree extends Component {
 
 
   renderTreeNodes = data => data.map(item => {
+    
     // 0 标签 1 类目 2 对象
     if (item.children) {
       return (
@@ -163,7 +164,7 @@ export default class SyncTagTree extends Component {
       )
     }
 
-    if (item.isMajor || item.isUsed) {
+    if (item.isMajor) {
       return (
         <TreeNode
           key={item.id}
@@ -176,22 +177,24 @@ export default class SyncTagTree extends Component {
       )
     }
 
+    // this.store.tableList = this.store.tableList.replace(this.store.checkedKeys)
     return (
       <TreeNode
         key={item.id}
         title={<OmitTooltip maxWidth={120} text={item.name} />}
         selectable={false}
         tagData={item}
-        disableCheckbox={this.store.disabledKeys.includes(item.id)}
+        // disableCheckbox={this.store.disabledKeys.includes(item.id)}
+        disableCheckbox={this.store.tableList.includes(item.id)}
         icon={<img src={tagIcon} alt="icon" style={{width: '14px'}} />}
       />
     )
   })
 
   render() {
-    const {treeData, treeLoading, majorTagList, checkedTagData, checkedKeys} = this.store
+    const {treeData, treeLoading, majorTagList, checkedTagData, checkedKeys, tableList} = this.store
 
-    const keys = checkedKeys.length ? toJS(checkedKeys) : majorTagList.map(d => d.id)
+    // const keys = checkedKeys.length ? toJS(checkedKeys) : majorTagList.map(d => d.id)
 
     return (
       <div className="FBH">
@@ -221,7 +224,8 @@ export default class SyncTagTree extends Component {
                     checkStrictly={false}
                     defaultExpandAll
                     onCheck={this.onCheck}
-                    checkedKeys={keys.map(String)}
+                    // checkedKeys={keys.map(String)}
+                    checkedKeys={checkedKeys.map(String)}
                     showIcon
                   >
                     {this.renderTreeNodes(toJS(treeData))}

@@ -172,7 +172,7 @@ export default class SyncTagList extends Component {
 
   remove = d => {
     const {remove} = this.props
-
+    this.store.checkedKeys = this.store.checkedKeys.filter(e => e !== String(d.id))
     if (d.id === this.state.editKey) {
       this.setState({
         editKey: '',
@@ -199,7 +199,6 @@ export default class SyncTagList extends Component {
 
   getFilterData() {
     const {tableData} = this.store
-
     if (this.searchKey) {
       return tableData.filter(d => d.name.indexOf(this.searchKey) !== -1)
     } 
@@ -245,7 +244,6 @@ export default class SyncTagList extends Component {
     const {form} = this.props
     const {tableData} = this.store 
     const allColumnName = tableData.map(d => d.columnName)
-
     const editableColumns = this.columns.map(col => {
       if (!col.editable) {
         return col
