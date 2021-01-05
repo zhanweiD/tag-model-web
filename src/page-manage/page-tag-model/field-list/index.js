@@ -104,7 +104,7 @@ export default class FieldList extends Component {
     }, {
       key: 'action',
       title: '操作',
-      width: 130,
+      width: 160,
       dataIndex: 'action',
       fixed: 'right',
       render: (text, record) => (
@@ -116,6 +116,13 @@ export default class FieldList extends Component {
               record.status === 2 
                 ? <span className="disabled">生成标签</span> 
                 : <a href onClick={() => this.openModal(record)}>生成标签</a>
+            }
+
+            {
+              record.status === 1 ? <a href className="ml16" onClick={() => store.revokeConfig(record.tagId)}>取消配置</a> : null
+            }
+            {
+              record.status === 2 ? <a disabled href className="ml16">取消配置</a> : null
             }
           </Authority>
         </div>

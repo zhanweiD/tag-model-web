@@ -47,6 +47,23 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
+  /*
+   * @description 取消配置
+   */
+  @action async revokeConfig(id) {
+    try {
+      const res = await io.revokeConfig({
+        projectId: this.projectId,
+        id,
+      })
+      runInAction(() => {
+        this.getList()
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
   /**
    * @description 数据源列表
    */

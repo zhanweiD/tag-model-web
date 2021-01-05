@@ -11,6 +11,8 @@ const api = {
   checkName: post(`${baseApi}/tag/name_check`), // 重名校验
   checkKeyWord: get(`${objectApi}/list_keyword`),
   getTagTypeList: get(`${baseApi}/tag/tag_type`), // 根据字段类型获取标签类型
+
+  revokeConfig: post(`${baseApi}/tag/revoke_config`), // 取消配置
 } 
 
 ioContext.create('objectConfigField', api) 
