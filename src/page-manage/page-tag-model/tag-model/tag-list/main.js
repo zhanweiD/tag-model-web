@@ -42,15 +42,17 @@ class TagList extends Component {
     title: '标签名称',
     dataIndex: 'name',
     render: (text, record) => <Link target="_blank" to={`/manage/tag-maintain/${record.id}/${store.projectId}`}><OmitTooltip maxWidth={120} text={text} /></Link>,
+  }, 
+  {
+    key: 'enName',
+    title: '标签标识',
+    dataIndex: 'enName',
+    render: text => <OmitTooltip maxWidth={200} text={text} />,
   }, {
     key: 'configType',
     title: '绑定方式',
     dataIndex: 'configType',
     render: v => <span>{tagConfigMethodTableMap[+v]}</span>,
-  }, {
-    key: 'objName',
-    title: '对象',
-    dataIndex: 'objName',
   }, {
     key: 'creator',
     title: '创建方',
