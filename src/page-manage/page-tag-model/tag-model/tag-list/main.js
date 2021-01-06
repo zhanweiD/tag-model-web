@@ -51,6 +51,7 @@ class TagList extends Component {
     key: 'objName',
     title: '对象',
     dataIndex: 'objName',
+    render: v => <OmitTooltip maxWidth={250} text={v} />,
   }, {
     key: 'creator',
     title: '创建方',
@@ -410,7 +411,7 @@ class TagList extends Component {
     const listConfig = {
       rowSelection,
       columns: this.columns,
-      // scroll: {x: 1300},
+      scroll: {x: 800},
       initParams: {projectId, objId: store.objId},
       searchParams: seach({objectSelectList: toJS(objectSelectList)}),
       buttons: [

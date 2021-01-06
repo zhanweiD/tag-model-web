@@ -6,7 +6,7 @@ import {action, toJS} from 'mobx'
 import {observer, Provider} from 'mobx-react'
 import {Button, Popconfirm} from 'antd'
 import {Link} from 'react-router-dom'
-import {ListContent, projectProvider, Authority} from '../../../component'
+import {ListContent, projectProvider, Authority, OmitTooltip} from '../../../component'
 import {Time} from '../../../common/util'
 import seach from './search'
 import DrawerAddSync from './drawer'
@@ -34,15 +34,12 @@ class SyncList extends Component {
     dataIndex: 'name',
     fixed: 'left',
     render: (text, record) => (
-      // <Authority
-      //   authCode="tag_model:transfer_detail[r]"
-      // >
-      <Link target="_blank" to={`/manage/tag-sync/${record.id}/${store.projectId}`}>{text}</Link>
-      // </Authority>
+      <Link target="_blank" to={`/manage/tag-sync/${record.id}/${store.projectId}`}><OmitTooltip maxWidth={200} text={text} /></Link>
     ),
   }, {
     title: '对象',
     dataIndex: 'objName',
+    render: v => <OmitTooltip maxWidth={200} text={v} />,
   }, {
     title: '目的数据源',
     dataIndex: 'storageName',
@@ -56,6 +53,7 @@ class SyncList extends Component {
   }, {
     title: '最近提交时间',
     dataIndex: 'lastSubmitTime',
+    width: 180,
     render: text => <Time timestamp={text} />,
   }, {
     title: '周期调度',
@@ -597,7 +595,7 @@ class SyncList extends Component {
     const listConfig = {
       columns: this.columns,
       initParams: {projectId},
-      scroll: {x: 1300},
+      scroll: {x: 1400},
       searchParams: seach({
         objList: toJS(objList),
       }),
@@ -605,7 +603,7 @@ class SyncList extends Component {
         authCode="tag_model:create_transfer[c]" 
       >
         <Button type="primary" onClick={() => this.addSync()}>新建同步计划</Button>
-      </Authority>],
+                </Authority>],
       store, // 必填属性
     }
 

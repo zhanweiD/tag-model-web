@@ -38,19 +38,17 @@ export default class DataSheet extends Component {
       title: '数据表名称',
       key: 'dataTableName',
       dataIndex: 'dataTableName',
-      width: 250,
       fixed: 'left',
       render: (text, record) => (
         <div>
-          <a href onClick={() => this.openDrawerDatasheet(record)}>{text}</a>
+          <a href onClick={() => this.openDrawerDatasheet(record)}><OmitTooltip maxWidth={250} text={text} /></a>
         </div>
       ),
     }, {
       title: '数据源',
       key: 'dataStorageName',
       dataIndex: 'dataStorageName',
-      width: 300,
-      // render: text => <OmitTooltip maxWidth={250} text={text} />,
+      render: v => <OmitTooltip maxWidth={250} text={v} />,
     }, {
       title: '数据源类型',
       key: 'storageTypeName',
@@ -93,7 +91,7 @@ export default class DataSheet extends Component {
           {
             this.bigStore.objDetail && this.bigStore.objDetail.type !== 0 ? (
               <Authority authCode="tag_model:config_table_tag[c]">
-                <a href className="ml16" onClick={() => this.openTagConfig(record)}>生成标签</a>
+                <a href className="ml16" onClick={() => this.openTagConfig(record)}>配置标签</a>
               </Authority>
             ) : null
           }
@@ -109,19 +107,17 @@ export default class DataSheet extends Component {
       title: '数据表名称',
       key: 'dataTableName',
       dataIndex: 'dataTableName',
-      width: 250,
       fixed: 'left',
       render: (text, record) => (
         <div>
-          <a href onClick={() => this.openDrawerDatasheet(record)}>{text}</a>
+          <a href onClick={() => this.openDrawerDatasheet(record)}><OmitTooltip maxWidth={250} text={text} /></a>
         </div>
       ),
     }, {
       title: '数据源',
       key: 'dataStorageName',
       dataIndex: 'dataStorageName',
-      width: 300,
-      // render: text => <OmitTooltip maxWidth={250} text={text} />,
+      render: v => <OmitTooltip maxWidth={250} text={v} />,
     }, {
       title: '数据源类型',
       key: 'storageTypeName',
@@ -150,7 +146,7 @@ export default class DataSheet extends Component {
           {
             this.bigStore.objDetail && this.bigStore.objDetail.type !== 0 ? (
               <Authority authCode="tag_model:config_table_tag[c]">
-                <a href className="ml16" onClick={() => this.openTagConfig(record)}>生成标签</a>
+                <a href className="ml16" onClick={() => this.openTagConfig(record)}>配置标签</a>
               </Authority>
             ) : null
           }
@@ -294,7 +290,7 @@ export default class DataSheet extends Component {
     const listConfig = {
       columns: relationType ? this.columns : this.columns1,
       // columns: this.columns,
-      scroll: {x: 1300},
+      scroll: {x: 1000},
       initParams: {objId, projectId},
       buttons: [buttons],
       paginationConfig: {
