@@ -6,7 +6,7 @@ import {Component} from 'react'
 import {toJS, action} from 'mobx'
 import {observer} from 'mobx-react'
 import {Badge} from 'antd'
-import {ListContent, projectProvider} from '../../component'
+import {ListContent, projectProvider, OmitTooltip} from '../../component'
 import seach from './search'
 
 import store from './store'
@@ -21,6 +21,8 @@ class SyncResult extends Component {
   columns = [{
     title: '标签名称',
     dataIndex: 'tagName',
+    fixed: 'left',
+    render: v => <OmitTooltip maxWidth={250} text={v} />,
   }, {
     title: '标签标识',
     dataIndex: 'enName',
@@ -30,6 +32,7 @@ class SyncResult extends Component {
   }, {
     title: '对象名称',
     dataIndex: 'objName',
+    render: v => <OmitTooltip maxWidth={250} text={v} />,
   }, {
     title: '目的数据源',
     dataIndex: 'storageName',
@@ -39,6 +42,7 @@ class SyncResult extends Component {
   }, {
     title: '同步计划',
     dataIndex: 'tagTransferSchemeName',
+    render: v => <OmitTooltip maxWidth={250} text={v} />,
   },
   //  {
   //   title: '最近一次更新时间',
@@ -73,6 +77,7 @@ class SyncResult extends Component {
     const {objList, storageList, projectId} = store
     const listConfig = {
       columns: this.columns,
+      scroll: {x: 1000},
       initParams: {projectId},
       searchParams: seach({objList: toJS(objList), storageList: toJS(storageList)}),
       store, // 必填属性

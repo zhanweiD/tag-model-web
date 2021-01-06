@@ -27,48 +27,55 @@ export default class DataTable extends Component {
   columns = [{
     title: '数据表',
     dataIndex: 'tableName',
-    width: 300,
     fixed: 'left',
+    render: v => <OmitTooltip maxWidth={300} text={v} />,
   }, {
     title: '数据源',
     dataIndex: 'storageName',
     className: 'wb',
-    width: 300,
+    render: v => <OmitTooltip maxWidth={300} text={v} />,
   }, {
     title: '数据源类型',
     dataIndex: 'storageType',
+    width: 120,
   }, {
     title: '添加项目',
     dataIndex: 'projectName',
+    width: 120,
   }, {
     title: '标签数/字段数',
     dataIndex: 'tagCount',
+    width: 120,
     render: (text, record) => `${text}/${record.fieldCount}`,
   }, {
     title: '添加时间',
     dataIndex: 'ctime',
+    width: 180,
     render: text => <Time timestamp={text} />,
   }]
   
   simpleColumns = [{
     title: '数据表',
     dataIndex: 'tableName',
-    width: 300,
+    render: v => <OmitTooltip maxWidth={300} text={v} />,
     fixed: 'left',
   }, {
     title: '数据源',
     dataIndex: 'storageName',
     className: 'wb',
-    width: 300,
+    render: v => <OmitTooltip maxWidth={300} text={v} />,
   }, {
     title: '数据源类型',
     dataIndex: 'storageType',
+    width: 120,
   }, {
     title: '添加项目',
     dataIndex: 'projectName',
+    width: 120,
   }, {
     title: '添加时间',
     dataIndex: 'ctime',
+    width: 180,
     render: text => <Time timestamp={text} />,
   }]
 
@@ -83,7 +90,6 @@ export default class DataTable extends Component {
 
   @action.bound openModal() {
     const {joinModeDetail} = store
-    console.log(joinModeDetail)
     store.getDataSource()
     store.mode = joinModeDetail.mode
 
@@ -183,7 +189,7 @@ export default class DataTable extends Component {
       columns: +objType ? this.columns : this.simpleColumns,
       // initParams: {objId: +objId, projectId: +projectId},
       initParams: {objId: +objId},
-      scroll: {x: 1300},
+      scroll: {x: 900},
       buttons: [<div className="pr24 far" style={{display: 'float'}}>
         {/* <Search
           placeholder="请输入数据表名称关键字"
@@ -214,7 +220,7 @@ export default class DataTable extends Component {
             suffix={<SearchOutlined />}
           />
         </div>
-                </div>],
+      </div>],
       store,
     }
     return (

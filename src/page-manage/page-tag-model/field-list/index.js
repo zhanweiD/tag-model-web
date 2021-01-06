@@ -4,7 +4,7 @@
 import {Component} from 'react'
 import {action, toJS} from 'mobx'
 import {observer, inject} from 'mobx-react'
-import {ListContent, QuestionTooltip, Authority} from '../../../component'
+import {ListContent, QuestionTooltip, Authority, OmitTooltip} from '../../../component'
 import {tagStatusMap, configStatusMap} from '../util'
 import DrawerTagConfig from './drawer'
 import seach from './search'
@@ -67,6 +67,7 @@ export default class FieldList extends Component {
       key: 'dataFieldName',
       title: '字段名称',
       dataIndex: 'dataFieldName',
+      render: v => <OmitTooltip maxWidth={300} text={v} />,
       fixed: 'left',
     }, {
       key: 'dataDbName',
@@ -80,7 +81,7 @@ export default class FieldList extends Component {
       key: 'dataTableName',
       title: '数据表名称',
       dataIndex: 'dataTableName',
-      width: 300,
+      render: v => <OmitTooltip maxWidth={300} text={v} />,
     }, {
       key: 'isConfigured',
       title: '配置状态',
@@ -134,6 +135,7 @@ export default class FieldList extends Component {
       key: 'dataFieldName',
       title: '字段名称',
       dataIndex: 'dataFieldName',
+      render: v => <OmitTooltip maxWidth={300} text={v} />,
       fixed: 'left',
     }, {
       key: 'dataDbName',
@@ -147,7 +149,7 @@ export default class FieldList extends Component {
       key: 'dataTableName',
       title: '数据表名称',
       dataIndex: 'dataTableName',
-      width: 300,
+      render: v => <OmitTooltip maxWidth={300} text={v} />,
     }, {
       key: 'isConfigured',
       title: '配置状态',
@@ -225,7 +227,7 @@ export default class FieldList extends Component {
       columns: objType === 0 ? this.columns1 : this.columns,
       searchParams: seach(searchParams),
       initParams: {objId, projectId},
-      scroll: {x: 1300},
+      scroll: {x: 900},
       // paginationConfig: {
       //   hideOnSinglePage: true, // 只有一页时隐藏
       // }, 

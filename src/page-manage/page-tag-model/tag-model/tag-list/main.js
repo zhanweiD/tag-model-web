@@ -54,6 +54,11 @@ class TagList extends Component {
     dataIndex: 'configType',
     render: v => <span>{tagConfigMethodTableMap[+v]}</span>,
   }, {
+    key: 'objName',
+    title: '对象',
+    dataIndex: 'objName',
+    render: v => <OmitTooltip maxWidth={250} text={v} />,
+  }, {
     key: 'creator',
     title: '创建方',
     dataIndex: 'creator',
@@ -412,7 +417,7 @@ class TagList extends Component {
     const listConfig = {
       rowSelection,
       columns: this.columns,
-      // scroll: {x: 1300},
+      scroll: {x: 800},
       initParams: {projectId, objId: store.objId},
       searchParams: seach({objectSelectList: toJS(objectSelectList)}),
       buttons: [
