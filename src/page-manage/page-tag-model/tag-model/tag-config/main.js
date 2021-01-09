@@ -306,7 +306,9 @@ export default class DrawerTagConfig extends Component {
                   beforeMapping={v => {
                     const mappingItem = v[0]
                     if (mappingItem.tagValueType !== mappingItem.tagType) {   
-                      message.error(`${mappingItem.tagName}(标签)与${mappingItem.dataFieldName}(字段)数据类型不匹配， 绑定失败`)
+                      const mapDataFieldName = mappingItem.dataFieldName
+                      const mapTagName = mappingItem.tagName
+                      message.error(`${mapTagName}(标签)与${mapDataFieldName}(字段)数据类型不匹配， 绑定失败`)
                       return new Promise(function (resolve, reject) {
                         reject([])
                       })
@@ -317,9 +319,10 @@ export default class DrawerTagConfig extends Component {
                   }}
                   beforeNameMapping={v => {
                     const successResult = v.filter(d => (d.tagValueType === d.tagType) || d.status === 2 || d.isUsed)
-                      
+                    const successLength = successResult.length
                     const errorResult = v.filter(d => (d.tagValueType !== d.tagType) && !d.isUsed && d.status !== 2)
-                    message.info(`${successResult.length}个标签映射成功，${errorResult.length}个标签映射失败`)
+                    const errorLength = errorResult.length
+                    message.info(`${successLength}个标签映射成功，${errorLength}个标签映射失败`)
           
                     return new Promise(function (resolve, reject) {
                       resolve(successResult)

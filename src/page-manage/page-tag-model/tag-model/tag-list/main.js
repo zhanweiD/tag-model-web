@@ -391,6 +391,7 @@ class TagList extends Component {
       batchConfigVisible,
       publishRowKeys,
     } = store
+    const publishRowKeysLength = publishRowKeys.length
     // console.log(list)
     const rowSelection = {
       selectedRowKeys: publishRowKeys.slice(),
@@ -423,8 +424,8 @@ class TagList extends Component {
         <Authority
           authCode="tag_model:publish_tag[u]"
         >
-          <Button className="mr8" onClick={() => store.batchPublish()} disabled={!publishRowKeys.length}>
-            {`批量发布(${publishRowKeys.length})`}
+          <Button className="mr8" onClick={() => store.batchPublish()} disabled={!publishRowKeysLength}>
+            {`批量发布(${publishRowKeysLength})`}
           </Button>
         </Authority>,
         <Authority

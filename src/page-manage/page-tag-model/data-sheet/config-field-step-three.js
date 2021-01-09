@@ -10,6 +10,12 @@ export default class StepThree extends React.Component {
     const {store} = this.props
     const {successResult} = store
 
+    const successResultTableName = successResult.dataTableName
+    const successResultStorageName = successResult.dataStorageName
+    const successResultStorageTypeName = successResult.storageTypeName
+    const successResultField = successResult.configuredField
+    const successResultAssociatedField = successResult.associatedField
+
     return (
       <div className="FBV FBJC FBAC" style={{height: '100%', marginTop: '96px'}}>
         <div className="mb24">
@@ -28,16 +34,16 @@ export default class StepThree extends React.Component {
         >
           <Spin spinning={store.loadings.result}>
             <div>
-              {`数据表名称： ${successResult.dataTableName || '-'}`}
+              {`数据表名称： ${successResultTableName || '-'}`}
             </div>
             <div>
-              {`数据源： ${successResult.dataStorageName || '-'}`}
+              {`数据源： ${successResultStorageName || '-'}`}
             </div>
             <div>
-              {`数据源类型： ${successResult.storageTypeName || '-'}`}
+              {`数据源类型： ${successResultStorageTypeName || '-'}`}
             </div>
             <div>
-              {`已配置/关联： ${successResult.configuredField || '-'} / ${successResult.associatedField || '-'}`}
+              {`已配置/关联： ${successResultField || '-'} / ${successResultAssociatedField || '-'}`}
             </div>
           </Spin>
         </div>

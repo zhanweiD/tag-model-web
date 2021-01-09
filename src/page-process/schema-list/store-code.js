@@ -198,8 +198,9 @@ export default class Store {
             this.logBoxHeight = 200
             this.setHeight()
           }
+          const runLogDataLog = data.log
           this.isRuned = true
-          this.runLog = `TQL语法校验...\nwaiting...\n \n错误信息：\n${data.log}`
+          this.runLog = `TQL语法校验...\nwaiting...\n \n错误信息：\n${runLogDataLog}`
           this.runStatusMessage.status = 'error'
           this.runStatusMessage.message = 'TQL语法校验失败'
           this.runLoading = false
@@ -238,16 +239,17 @@ export default class Store {
       const $dom2 = $(`#content2${this.taskId}`)
       let LogScrollFlag = false
       let LogScrollFlag2 = false
+      const dataLogContent = dataLog.logContent
 
       runInAction(() => {
-        if (dataLog.logContent) {
+        if (dataLogContent) {
           // readType 日志读取策略 0:覆盖1:追加
           if (dataLog.readType && dataLog.currentLine > this.logIndex) {
-            const newLog = this.runLog + dataLog.logContent
+            const newLog = this.runLog + dataLogContent
  
             this.runLog = newLog
           } else {
-            const newLog = `正在提交...\nwaiting...\n${dataLog.logContent}`
+            const newLog = `正在提交...\nwaiting...\n${dataLogContent}`
 
             this.runLog = newLog
           }

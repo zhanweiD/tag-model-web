@@ -111,12 +111,13 @@ export default class ConfigDrawerOne extends Component {
       },
     }
 
+    const allListLength = allList.length
     return (
       <div className="config-table">
         <Radio.Group value={tabValue} onChange={v => tabChange(v.target.value)}>
-          <Radio.Button value={1}>{`全部(${allList.length})`}</Radio.Button>
+          <Radio.Button value={1}>{`全部(${allListLength})`}</Radio.Button>
           <Radio.Button value={2}>{`已配置(${configNum})`}</Radio.Button>
-          <Radio.Button value={0}>{`待配置(${allList.length - configNum})`}</Radio.Button>
+          <Radio.Button value={0}>{`待配置(${allListLength - configNum})`}</Radio.Button>
         </Radio.Group>
 
         <Card 

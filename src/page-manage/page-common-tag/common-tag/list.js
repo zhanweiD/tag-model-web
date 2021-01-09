@@ -219,13 +219,14 @@ export default class Market extends Component {
       }),
     }
   
+    const rowKeysLength = store.rowKeys.length
     const listConfig = {
       columns: isProject ? this.columns : this.columnsP,
       buttons: useProjectId ? [
         <Authority authCode="tag_model:apply_tag[c]">
-          <Button type="primary" disabled={!store.rowKeys.length} onClick={this.batchApply}>
+          <Button type="primary" disabled={!rowKeysLength} onClick={this.batchApply}>
             {
-              `批量申请(${store.rowKeys.length})`
+              `批量申请(${rowKeysLength})`
             }
 
           </Button>

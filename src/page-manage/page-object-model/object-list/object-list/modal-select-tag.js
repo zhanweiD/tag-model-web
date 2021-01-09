@@ -90,7 +90,7 @@ export default class ModalSelectTag extends Component {
 
   render() {
     const {modalSelectTagVisible: visible, tagListModal, confirmLoading} = this.store
-
+    const selectedRowKeysLength = this.selectedRowKeys.length
     const modalConfig = {
       visible,
       width: 800,
@@ -104,7 +104,7 @@ export default class ModalSelectTag extends Component {
         <Button 
           type="primary" 
           onClick={e => this.handleOk(e)} 
-          disabled={!this.selectedRowKeys.length}
+          disabled={!selectedRowKeysLength}
           loading={confirmLoading}
         >
           确定
@@ -134,7 +134,7 @@ export default class ModalSelectTag extends Component {
     return (
       <Modal {...modalConfig}>
         {/* wait */}
-        <Alert message={`已选择 ${this.selectedRowKeys.length} 项`} type="info" className="mb16" />
+        <Alert message={`已选择 ${selectedRowKeysLength} 项`} type="info" className="mb16" />
         <Table {...listConfig} />
       </Modal>
     )

@@ -21,7 +21,12 @@ export default function getApiTrendOpt(data) {
     
     tooltip: {
       trigger: 'axis',
-      formatter: params => `日期: ${params[0].axisValue} <br/>空值数: ${params[0].value}`,   
+      formatter: params => {
+        const paramsAxisValue = params[0].axisValue
+        const paramsValue = params[0].value
+        return `日期: ${paramsAxisValue} <br/>空值数: ${paramsValue}`
+      },
+      // formatter: params => `日期: ${params[0].axisValue} <br/>空值数: ${params[0].value}`,   
       // formatter: params => `日期: ${moment(+params[0].axisValue).format('YYYY-MM-DD')} <br/>空值数: ${params[0].value}`,   
     },
 

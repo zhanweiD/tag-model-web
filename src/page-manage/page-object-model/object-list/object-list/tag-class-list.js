@@ -147,6 +147,8 @@ export default class TagList extends Component {
       isCommon: true,
     }
 
+    const selectedRowKeysLength = this.selectedRowKeys.length
+
     return (
       // <div className="pt32">
       <div>
@@ -162,7 +164,7 @@ export default class TagList extends Component {
             <Fragment>
               <div className="FBH FBJB mb16">
                 <Authority authCode="tag_model:move_tag[u]" isCommon>                
-                  <Button onClick={() => this.moveTo()} disabled={!this.selectedRowKeys.length} type="primary">批量移动至</Button>
+                  <Button onClick={() => this.moveTo()} disabled={!selectedRowKeysLength} type="primary">批量移动至</Button>
                 </Authority>
                 <Input
                   onChange={e => this.onSearch(e.target.value)}

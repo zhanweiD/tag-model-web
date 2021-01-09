@@ -59,7 +59,9 @@ export const lineOpt = data => {
     tooltip: {
       trigger: 'axis',
       formatter: params => {
-        return `日期: ${params[0].axisValue}<br />总调用次数: ${params[0].data}`
+        const paramAxisValue = params[0].axisValue
+        const paramsData = params[0].data
+        return `日期: ${paramAxisValue}<br />总调用次数: ${paramsData}`
       },   
     },
     xAxis: {

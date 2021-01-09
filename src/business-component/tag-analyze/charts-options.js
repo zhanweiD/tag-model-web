@@ -54,7 +54,9 @@ export function getTagTrendOpt(data, legend = []) {
     tooltip: {
       trigger: 'axis',
       formatter: params => {
-        const domArr = [`日期: ${moment(+params[0].axisValue).format('YYYY-MM-DD')} <br/>总调用次数: ${data[+params[0].dataIndex].totalCount}<br/>`]
+        const paramAxisValue = +params[0].axisValue
+        const paramsDataIndex = data[+params[0].dataIndex].totalCount
+        const domArr = [`日期: ${moment(paramAxisValue).format('YYYY-MM-DD')} <br/>总调用次数: ${paramsDataIndex}<br/>`]
         if (legend.length) {
           params.map((
             item, idx
@@ -131,7 +133,12 @@ export function getApiTrendOpt(data) {
     
     tooltip: {
       trigger: 'axis',
-      formatter: params => `日期: ${moment(+params[0].axisValue).format('YYYY-MM-DD')} <br/>空值数: ${params[0].value}`,   
+      formatter: params => {
+        const axisValue = +params[0].axisValue
+        const paramsValue = +params[0].value
+        return `日期: ${moment(axisValue).format('YYYY-MM-DD')} <br/>空值数: ${paramsValue}`
+      },
+      // formatter: params => `日期: ${moment(+params[0].axisValue).format('YYYY-MM-DD')} <br/>空值数: ${params[0].value}`,   
     },
 
     xAxis: {
