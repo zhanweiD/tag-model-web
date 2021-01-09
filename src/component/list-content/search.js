@@ -10,7 +10,6 @@ import '@ant-design/compatible/assets/index.css'
 import {Button, Row, Col} from 'antd'
 import ControlComponent, {mergeRules} from '../form-component-config'
 
-
 const FormItem = Form.Item
 
 const formItemLayout = {
