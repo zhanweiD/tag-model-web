@@ -171,9 +171,10 @@ class ModalObject extends Component {
 
     const data = editType === 'edit' ? detail : {objCatId: detail.aId, objCatName: detail.name}
 
+    const typeCodeMap3 = typeCodeMap[typeCode]
     // 抽屉配置
     const drawerConfig = {
-      title: editType === 'edit' ? `编辑${typeCodeMap[typeCode]}` : `添加${typeCodeMap[typeCode]}`,
+      title: editType === 'edit' ? `编辑${typeCodeMap3}` : `添加${typeCodeMap3}`,
       visible,
       closable: true,
       width: 560,

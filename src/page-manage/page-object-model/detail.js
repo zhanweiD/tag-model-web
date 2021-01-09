@@ -154,12 +154,13 @@ export default class ObjectDetail extends Component {
     }
     const {tag} = tagMap[objDetail.status === undefined ? 'noData' : objDetail.status]
     const {button} = tagMap[objDetail.status === undefined ? 'noData' : objDetail.status]
-
+    const typeCodeMap1 = typeCodeMap[typeCode]
+    const typeCodeMap2 = typeCodeMap[`${typeCode}～`]
     // 对象指标信息卡
     const cards = [
       {
-        title: `${typeCodeMap[`${typeCode}～`]}总数`,
-        tooltipText: `跟该${typeCodeMap[typeCode]}相关的${typeCodeMap[`${typeCode}～`]}总数`,
+        title: `${typeCodeMap2}总数`,
+        tooltipText: `跟该${typeCodeMap1}相关的${typeCodeMap2}总数`,
         values: [objCard.objectCount],
       }, {
         title: '相关项目数',

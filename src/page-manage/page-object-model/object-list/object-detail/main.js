@@ -98,10 +98,11 @@ class ObjectDetail extends Component {
     const {tag} = tagMap[objDetail.status === undefined ? 'noData' : objDetail.status]
 
     // 对象指标信息卡
+    const typeCodeMap4 = typeCodeMap[`${typeCode}～`]
     const cards = [
       {
-        title: `${typeCodeMap[`${typeCode}～`]}总数`,
-        tooltipText: `已经发布的关联${typeCodeMap[`${typeCode}～`]}总数`,
+        title: `${typeCodeMap4}总数`,
+        tooltipText: `已经发布的关联${typeCodeMap4}总数`,
         values: [objCard.objectCount],
       }, {
         title: '使用项目数',
