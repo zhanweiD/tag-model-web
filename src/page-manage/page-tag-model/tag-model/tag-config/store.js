@@ -1,11 +1,15 @@
-import {observable, action, runInAction} from 'mobx'
+import intl from 'react-intl-universal'
+import { observable, action, runInAction } from 'mobx'
 import io from './io'
-import {successTip, errorTip, failureTip, changeToOptions} from '../../../../common/util'
+import {
+  successTip,
+  errorTip,
+  failureTip,
+  changeToOptions,
+} from '../../../../common/util'
 
 class DrawerStore {
-  constructor({
-    projectId,
-  } = {}) {
+  constructor({ projectId } = {}) {
     this.projectId = projectId
   }
 
@@ -59,7 +63,7 @@ class DrawerStore {
         id: this.objId,
         projectId: this.projectId,
       }
-      
+
       let res = []
 
       if (this.configType === 1) {
@@ -79,6 +83,7 @@ class DrawerStore {
       id: this.objId,
       projectId: this.projectId,
     }
+
     try {
       let res = []
       if (this.configType === 1) {
@@ -86,7 +91,7 @@ class DrawerStore {
       } else {
         res = await io.getFieldData(params)
       }
-     
+
       this.target = res || []
     } catch (e) {
       errorTip(e.message)
@@ -109,7 +114,7 @@ class DrawerStore {
       } else {
         res = await io.getTagData(params)
       }
-      
+
       this.source = res || []
     } catch (e) {
       errorTip(e.message)
@@ -124,18 +129,30 @@ class DrawerStore {
         projectId: this.projectId,
       }
 
-      let res 
+      let res
 
       if (this.configType === 1) {
         res = await io.saveDeriveMappingResult(params)
       } else {
         res = await io.saveMappingResult(params)
       }
-     
+
       if (res === true) {
-        successTip('操作成功')
+        successTip(
+          intl
+            .get(
+              'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+            )
+            .d('操作成功')
+        )
       } else {
-        failureTip('操作失败')
+        failureTip(
+          intl
+            .get(
+              'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+            )
+            .d('操作失败')
+        )
       }
     } catch (e) {
       errorTip(e.message)

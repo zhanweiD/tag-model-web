@@ -1,8 +1,7 @@
-import {
-  action, runInAction, observable, toJS,
-} from 'mobx'
-import {observer} from 'mobx-react'
-import {errorTip, successTip} from '../../../common/util'
+import intl from 'react-intl-universal'
+import { action, runInAction, observable, toJS } from 'mobx'
+import { observer } from 'mobx-react'
+import { errorTip, successTip } from '../../../common/util'
 import io from './io'
 
 const listToTree = data => {
@@ -43,7 +42,7 @@ class Store {
   defaultKey = data => {
     for (const item of data) {
       if (item.children) {
-        this.defaultKey(item.children) 
+        this.defaultKey(item.children)
       } else if (item.type === 0) {
         return this.selectTags.push(item)
       }
@@ -63,7 +62,7 @@ class Store {
       } else {
         res = await io.getTreeDataPro({
           searchKey: this.searchKey,
-          projectId: this.projectId, 
+          projectId: this.projectId,
         })
       }
       runInAction(() => {
@@ -100,6 +99,7 @@ class Store {
         useProjectId: this.projectId,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.tagDetail = res
         this.useProjectId = this.tagDetail.projectId
@@ -120,12 +120,19 @@ class Store {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
         if (res) {
-          successTip('操作成功')
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
           if (cb) cb()
           this.getTagBaseDetail()
-        } 
+        }
       })
     } catch (e) {
       errorTip(e.message)
@@ -141,6 +148,7 @@ class Store {
       const res = await io.getProjectDetail({
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.projectName = res.name || ''
       })

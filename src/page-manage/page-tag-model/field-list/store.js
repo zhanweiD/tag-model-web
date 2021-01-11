@@ -1,10 +1,13 @@
+import intl from 'react-intl-universal'
+import { observable, action, runInAction } from 'mobx'
 import {
-  observable, action, runInAction,
-} from 'mobx'
-import {
-  successTip, failureTip, errorTip, changeToOptions, listToTree,
+  successTip,
+  failureTip,
+  errorTip,
+  changeToOptions,
+  listToTree,
 } from '../../../common/util'
-import {ListContentStore} from '../../../component/list-content'
+import { ListContentStore } from '../../../component/list-content'
 import io from './io'
 
 class Store extends ListContentStore(io.getList) {
@@ -12,9 +15,9 @@ class Store extends ListContentStore(io.getList) {
   objId
   typeCode
   objType
-  
+
   @observable dataSourceList = [] // 数据源下拉数据
-  @observable dataSheetList = []// 数据表下拉数据
+  @observable dataSheetList = [] // 数据表下拉数据
   @observable tableName
 
   @observable modalInfo = {
@@ -39,8 +42,14 @@ class Store extends ListContentStore(io.getList) {
       })
 
       runInAction(() => {
-        successTip('操作成功')
-        if (cb)cb()
+        successTip(
+          intl
+            .get(
+              'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+            )
+            .d('操作成功')
+        )
+        if (cb) cb()
       })
     } catch (e) {
       errorTip(e.message)
@@ -56,6 +65,7 @@ class Store extends ListContentStore(io.getList) {
         projectId: this.projectId,
         id,
       })
+
       runInAction(() => {
         this.getList()
       })
@@ -73,6 +83,7 @@ class Store extends ListContentStore(io.getList) {
         objId: this.objId,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.dataSourceList = changeToOptions(res)('storageName', 'storageId')
       })
@@ -91,6 +102,7 @@ class Store extends ListContentStore(io.getList) {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
         this.dataSheetList = changeToOptions(res)('tableName', 'tableName')
       })
@@ -108,6 +120,7 @@ class Store extends ListContentStore(io.getList) {
         id: this.objId,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.tagTreeData = listToTree(res)
       })
@@ -126,9 +139,16 @@ class Store extends ListContentStore(io.getList) {
         checkList,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         if (res) {
-          successTip('操作成功')
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
           this.modalInfo.visible = false
           // 刷新字段列表
           this.getList({
@@ -136,7 +156,13 @@ class Store extends ListContentStore(io.getList) {
             currentPage: 1,
           })
         } else {
-          failureTip('操作失败')
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+              )
+              .d('操作失败')
+          )
         }
         this.confirmLoading = false
         if (res && cb) cb()
@@ -156,9 +182,16 @@ class Store extends ListContentStore(io.getList) {
         objId: this.objId,
         ...params,
       })
+
       runInAction(() => {
         if (res.success) {
-          cb('名称已存在')
+          cb(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.source-list.store.o07pkyecrw'
+              )
+              .d('名称已存在')
+          )
         } else {
           cb()
         }
@@ -174,6 +207,7 @@ class Store extends ListContentStore(io.getList) {
       const res = await io.checkKeyWord({
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.nameKeyWord = res
       })
@@ -182,7 +216,6 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-
   @observable tagTypeList = []
   @action async getTagTypeList(data) {
     try {
@@ -190,6 +223,7 @@ class Store extends ListContentStore(io.getList) {
         fieldType: data.dataFieldType,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.tagTypeList = res
       })

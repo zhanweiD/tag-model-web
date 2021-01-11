@@ -1,4 +1,5 @@
-import {Component} from 'react'
+import intl from 'react-intl-universal'
+import { Component } from 'react'
 import PropTypes from 'prop-types'
 
 export default class Tag extends Component {
@@ -10,7 +11,7 @@ export default class Tag extends Component {
 
   static defaultProps = {
     status: 'default', // 默认灰色
-    text: '未使用', // 默认未使用
+    text: intl.get('ide.src.component.tag.tag.ogvpoe5m3bg').d('未使用'), // 默认未使用
     className: '',
   }
 
@@ -22,11 +23,7 @@ export default class Tag extends Component {
    * error    失败
    */
   render() {
-    const {status, text, className} = this.props
-    return (
-      <div className={`tag ${status} ${className}`}>
-        {text}
-      </div>
-    )
+    const { status, text, className } = this.props
+    return <div className={`tag ${status} ${className}`}>{text}</div>
   }
 }

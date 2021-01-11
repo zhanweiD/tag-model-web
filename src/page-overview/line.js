@@ -1,28 +1,38 @@
-import {useState} from 'react'
-import {TimeRange} from '../component'
+import intl from 'react-intl-universal'
+import { useState } from 'react'
+import { TimeRange } from '../component'
 
 const RuleCondition = ({}) => {
   const [renderData, changeRenderData] = useState()
-
 
   if (true) {
     changeRenderData(1234)
   }
   return (
     <div className="bgf p16 mt16 box-border">
-      <h3 className="chart-title">标签使用统计</h3>
+      <h3 className="chart-title">
+        {intl.get('ide.src.page-overview.line.0lgkec2vqirn').d('标签使用统计')}
+      </h3>
       <div className="time-range-wrap">
         <TimeRange
           custom
           defaultRangeInx={0}
-          rangeMap={[{
-            value: 7,
-            label: '最近7天',
-          }, {
-            value: 30,
-            label: '最近30天',
-          }]}
-        // exportTimeRange={(gte, lte) => getData(gte, lte)}
+          rangeMap={[
+            {
+              value: 7,
+              label: intl
+                .get('ide.src.component.time-range.time-range.4ppflvb5etj')
+                .d('最近7天'),
+            },
+            {
+              value: 30,
+              label: intl
+                .get('ide.src.component.time-range.time-range.7gd32bh9fxx')
+                .d('最近30天'),
+            },
+          ]}
+
+          // exportTimeRange={(gte, lte) => getData(gte, lte)}
         />
       </div>
       {/* <div style={{height: '300px'}} ref={lineRef} /> */}
@@ -45,7 +55,7 @@ const RuleCondition = ({}) => {
     //         <Popconfirm
     //           placement="topLeft"
     //           title="确认删除？"
-    //           onConfirm={() => delCon()} 
+    //           onConfirm={() => delCon()}
     //           okText="确认"
     //           cancelText="取消"
     //         >
@@ -55,7 +65,7 @@ const RuleCondition = ({}) => {
     //     } */}
     //   </div>
     //   {/* {
-    //     showLine ? <div className="wrap-rule-condition-line" style={{top: height / 2}} /> : null 
+    //     showLine ? <div className="wrap-rule-condition-line" style={{top: height / 2}} /> : null
     //   } */}
     // </div>
   )

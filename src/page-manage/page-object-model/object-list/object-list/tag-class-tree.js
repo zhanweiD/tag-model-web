@@ -1,23 +1,23 @@
+import intl from 'react-intl-universal'
 /* 对象管理-树部分 */
-import {Component} from 'react'
-import {action} from 'mobx'
-import {observer} from 'mobx-react'
-import {Modal} from 'antd'
-import {DtTree} from '@dtwave/uikit'
-import {Loading} from '../../../../component'
-import {codeInProduct} from '../../../../common/util'
+import { Component } from 'react'
+import { action } from 'mobx'
+import { observer } from 'mobx-react'
+import { Modal } from 'antd'
+import { DtTree } from '@dtwave/uikit'
+import { Loading } from '../../../../component'
+import { codeInProduct } from '../../../../common/util'
 
-import {getIconNodeSrc} from '../util'
+import { getIconNodeSrc } from '../util'
 
 import Action from './tag-tree-action'
 import ModalCategory from './modal-category'
 
-const {DtTreeBox, DtTreeNode} = DtTree
-const {confirm} = Modal
-
+const { DtTreeBox, DtTreeNode } = DtTree
+const { confirm } = Modal
 
 @observer
-export default class ObjectTree extends Component {
+class ObjectTree extends Component {
   constructor(props) {
     super(props)
     this.store = props.store
@@ -31,16 +31,29 @@ export default class ObjectTree extends Component {
 
   // 标签类目
   categoryMenus = (canEdit, canDelete) => [
-    {key: 'add', value: '新建子类目', onClick: (type, data) => this.openModal(type, data)},
     {
-      key: 'edit',
-      value: '编辑',
-      disabled: !canEdit,
+      key: 'add',
+      value: intl
+        .get(
+          'ide.src.page-manage.page-object-model.object-list.object-list.tag-class-tree.2cqbroy9rpb'
+        )
+        .d('新建子类目'),
       onClick: (type, data) => this.openModal(type, data),
     },
     {
+      key: 'edit',
+      value: intl
+        .get('ide.src.component.label-item.label-item.slnqvyqvv7')
+        .d('编辑'),
+      disabled: !canEdit,
+      onClick: (type, data) => this.openModal(type, data),
+    },
+
+    {
       key: 'delete',
-      value: '删除',
+      value: intl
+        .get('ide.src.page-manage.page-aim-source.source-list.main.sv51d9olqdi')
+        .d('删除'),
       disabled: !canDelete,
       onClick: (type, data) => this.deleteNode(type, data),
     },
@@ -49,10 +62,21 @@ export default class ObjectTree extends Component {
   // 标签类目 - 叶子类目
   leafCategoryMenus = (editStatus, deleteStatus) => [
     {
-      key: 'edit', value: '编辑', disabled: !editStatus, onClick: (type, data) => this.openModal(type, data),
+      key: 'edit',
+      value: intl
+        .get('ide.src.component.label-item.label-item.slnqvyqvv7')
+        .d('编辑'),
+      disabled: !editStatus,
+      onClick: (type, data) => this.openModal(type, data),
     },
+
     {
-      key: 'delete', value: '删除', disabled: !deleteStatus, onClick: (type, data) => this.deleteNode(type, data),
+      key: 'delete',
+      value: intl
+        .get('ide.src.page-manage.page-aim-source.source-list.main.sv51d9olqdi')
+        .d('删除'),
+      disabled: !deleteStatus,
+      onClick: (type, data) => this.deleteNode(type, data),
     },
   ]
 
@@ -63,20 +87,25 @@ export default class ObjectTree extends Component {
   }
 
   getCateDetail = () => {
-    const {currentSelectKeys, tagList} = this.store
+    const { currentSelectKeys, tagList } = this.store
     this.store.keyword = undefined
     this.store.getTagCateDetail()
-    this.store.getTagList({
-      cateId: currentSelectKeys,
-      currentPage: tagList.currentPage,
-      pageSize: tagList.pageSize,
-    }, 'list')
+    this.store.getTagList(
+      {
+        cateId: currentSelectKeys,
+        currentPage: tagList.currentPage,
+        pageSize: tagList.pageSize,
+      },
+      'list'
+    )
   }
 
   @action.bound openModal(type, data) {
     this.store.categoryModal = {
       visible: true,
-      title: '标签类目',
+      title: intl
+        .get('ide.src.page-manage.page-object-model.detail.9o263cdwzol')
+        .d('标签类目'),
       editType: type,
       detail: data,
     }
@@ -88,7 +117,11 @@ export default class ObjectTree extends Component {
   @action.bound deleteNode(key, data) {
     const t = this
     confirm({
-      title: '确认删除标签类目？',
+      title: intl
+        .get(
+          'ide.src.page-manage.page-object-model.object-list.object-list.tag-class-tree.gmj7k8sckal'
+        )
+        .d('确认删除标签类目？'),
       // content,
       onOk() {
         t.store.delNode(data.id)
@@ -107,12 +140,11 @@ export default class ObjectTree extends Component {
     if (this.store.currentSelectKeys === selectedKeys[0]) return
 
     // 2. 选中展开当前节点
-    [this.store.currentSelectKeys] = selectedKeys
+    ;[this.store.currentSelectKeys] = selectedKeys
 
     // 3. 获取类目详情 (基本信息&标签列表)
     this.getCateDetail()
   }
-
 
   // 递归遍历树节点
   processNodeData = data => {
@@ -131,9 +163,7 @@ export default class ObjectTree extends Component {
         actionList={this.setActionList(node)}
         nodeData={node}
       >
-        {
-          this.processNodeData(node.children)
-        }
+        {this.processNodeData(node.children)}
       </DtTreeNode>
     ))
   }
@@ -154,15 +184,13 @@ export default class ObjectTree extends Component {
   }
 
   render() {
-    const {
-      treeLoading, treeData, expandAll, currentSelectKeys,
-    } = this.store
+    const { treeLoading, treeData, expandAll, currentSelectKeys } = this.store
 
     const treeBoxConfig = {
       titleHeight: 34,
       title: <Action store={this.store} key={this.store.typeCode} />,
       defaultWidth: 200,
-      style: {minWidth: '200px'},
+      style: { minWidth: '200px' },
     }
 
     const expandKey = Number(currentSelectKeys)
@@ -177,22 +205,22 @@ export default class ObjectTree extends Component {
       defaultExpandedKeys: this.store.searchExpandedKeys.slice(),
       showDetail: true,
     }
+
     return (
       <div className="object-tree tree-border">
         <DtTreeBox {...treeBoxConfig}>
-          {treeLoading
-            ? <Loading mode="block" height={100} />
-            : (
-              <DtTree {...treeConfig}>
-                {
-                  this.processNodeData(treeData)
-                }
-              </DtTree>
-            )
-          }
+          {treeLoading ? (
+            <Loading mode="block" height={100} />
+          ) : (
+            <DtTree {...treeConfig}>{this.processNodeData(treeData)}</DtTree>
+          )}
         </DtTreeBox>
-        <ModalCategory store={this.store} editNodeSuccess={this.getCateDetail} />
+        <ModalCategory
+          store={this.store}
+          editNodeSuccess={this.getCateDetail}
+        />
       </div>
     )
   }
 }
+export default ObjectTree

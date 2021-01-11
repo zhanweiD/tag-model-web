@@ -1,10 +1,7 @@
-import {
-  observable, action, runInAction,
-} from 'mobx'
-import {
-  successTip, errorTip,
-} from '../../../common/util'
-import {ListContentStore} from '../../../component/list-content'
+import intl from 'react-intl-universal'
+import { observable, action, runInAction } from 'mobx'
+import { successTip, errorTip } from '../../../common/util'
+import { ListContentStore } from '../../../component/list-content'
 import io from './io'
 
 class Store extends ListContentStore(io.getList) {
@@ -12,15 +9,13 @@ class Store extends ListContentStore(io.getList) {
   @observable useProjectId
   @observable projectName
 
-
-  // @observable expand = false 
+  // @observable expand = false
   @observable permissionType = '' // 使用权限状态
   @observable ownProjectId = '' // 所属项目id
   @observable objectId = '' // 对象id
   @observable hotWord = undefined // 关键词
   @observable backProjectId = []
 
-  
   @observable ownProjectList = []
   @observable objectList = []
   @observable selectItem = {}
@@ -37,6 +32,7 @@ class Store extends ListContentStore(io.getList) {
       const res = await io.getOwnProject({
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.ownProjectList = res
       })
@@ -50,6 +46,7 @@ class Store extends ListContentStore(io.getList) {
       const res = await io.getObject({
         projectId: this.useProjectId,
       })
+
       runInAction(() => {
         this.objectList = res
       })
@@ -65,12 +62,19 @@ class Store extends ListContentStore(io.getList) {
         projectId: this.useProjectId,
         ...params,
       })
+
       runInAction(() => {
         if (res) {
-          successTip('操作成功')
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
           if (cb) cb()
           this.getList()
-        } 
+        }
       })
     } catch (e) {
       errorTip(e.message)
@@ -88,12 +92,19 @@ class Store extends ListContentStore(io.getList) {
         projectIds: this.backProjectId,
         tagId: this.tagId,
       })
+
       runInAction(() => {
         if (res) {
-          successTip('操作成功')
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
           if (cb) cb()
           this.getList()
-        } 
+        }
       })
     } catch (e) {
       errorTip(e.message)
@@ -116,7 +127,7 @@ class Store extends ListContentStore(io.getList) {
   //         successTip('操作成功')
   //         if (cb) cb()
   //         this.getList()
-  //       } 
+  //       }
   //     })
   //   } catch (e) {
   //     errorTip(e.message)
@@ -133,6 +144,7 @@ class Store extends ListContentStore(io.getList) {
         id: this.useProjectId,
         projectId: this.useProjectId,
       })
+
       runInAction(() => {
         this.projectName = res.name
       })
@@ -151,6 +163,7 @@ class Store extends ListContentStore(io.getList) {
       const res = await io.getAuthCode({
         projectId: this.useProjectId,
       })
+
       runInAction(() => {
         this.functionCodes = res
       })

@@ -1,13 +1,14 @@
-import {Component} from 'react'
-import {Tabs, Button} from 'antd'
-import {action} from 'mobx'
-import {observer, inject} from 'mobx-react'
+import intl from 'react-intl-universal'
+import { Component } from 'react'
+import { Tabs, Button } from 'antd'
+import { action } from 'mobx'
+import { observer, inject } from 'mobx-react'
 import ConfigTable from './config-table'
 import ConfigForm from './config-form'
 
 @inject('store')
 @observer
-export default class ConfigDrawerOne extends Component {
+class ConfigDrawerOne extends Component {
   constructor(props) {
     super(props)
     this.store = props.store
@@ -26,27 +27,37 @@ export default class ConfigDrawerOne extends Component {
   }
 
   render() {
-    const {currentStep, isConfig, disNext} = this.store
+    const { currentStep, isConfig, disNext } = this.store
     return (
-      <div className="config-one" style={{display: currentStep ? 'none' : 'block'}}>
+      <div
+        className="config-one"
+        style={{ display: currentStep ? 'none' : 'block' }}
+      >
         <div className="config-fb">
-          <ConfigTable /> 
+          <ConfigTable />
           <ConfigForm />
         </div>
         <div className="bottom-button">
-          <Button style={{marginRight: 8}} onClick={() => this.closeDrawer()}>
-            取消
+          <Button style={{ marginRight: 8 }} onClick={() => this.closeDrawer()}>
+            {intl
+              .get('ide.src.page-config.workspace-config.modal.xp905zufzth')
+              .d('取消')}
           </Button>
           <Button
             type="primary"
-            style={{marginRight: 8}}
+            style={{ marginRight: 8 }}
             disabled={disNext}
             onClick={this.nextStep}
           >
-            下一步
+            {intl
+              .get(
+                'ide.src.page-manage.page-tag-model.data-sheet.config-field.kpiieqt46x'
+              )
+              .d('下一步')}
           </Button>
         </div>
       </div>
     )
   }
 }
+export default ConfigDrawerOne

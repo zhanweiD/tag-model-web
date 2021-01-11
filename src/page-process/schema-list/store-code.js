@@ -1,7 +1,6 @@
-import {
-  action, runInAction, observable,
-} from 'mobx'
-import {ErrorEater} from '@dtwave/uikit'
+import intl from 'react-intl-universal'
+import { action, runInAction, observable } from 'mobx'
+import { ErrorEater } from '@dtwave/uikit'
 // import {errorTip} from '../../common/util'
 import io from './io-code'
 
@@ -45,7 +44,14 @@ export default class Store {
   @observable isRuned = false
 
   // 运行结果 日志的arry
-  @observable tableData = [{title: '运行日志', resultId: 'running_log'}]
+  @observable tableData = [
+    {
+      title: intl
+        .get('ide.src.page-process.schema-list.store-code.fu5tdj8j9k7')
+        .d('运行日志'),
+      resultId: 'running_log',
+    },
+  ]
 
   // 运行结果的tab key
   @observable resultActiveKey = 'running_log'
@@ -113,7 +119,9 @@ export default class Store {
   changeResultHeight = height => {
     this.tableData.map(item => {
       if (this[`resultTableHeight${item.taskInstance}${item.resultId}`]) {
-        this[`resultTableHeight${item.taskInstance}${item.resultId}`].setHeight(height - 30)
+        this[`resultTableHeight${item.taskInstance}${item.resultId}`].setHeight(
+          height - 30
+        )
       }
       return undefined
     })
@@ -156,7 +164,9 @@ export default class Store {
   }
 
   @action deleteResult = targetKey => {
-    this.tableData = this.tableData.filter(item => `${item.taskInstance}${item.resultId}` !== targetKey)
+    this.tableData = this.tableData.filter(
+      item => `${item.taskInstance}${item.resultId}` !== targetKey
+    )
     if (this.resultActiveKey === targetKey) {
       this.resultActiveKey = 'running_log'
     }
@@ -180,7 +190,9 @@ export default class Store {
 
       runInAction(() => {
         if (data.type === 1) {
-          this.runLog = 'TQL语法校验...\nwaiting...TQL语法校验成功\n 正在提交...\nwaiting...\n'
+          this.runLog = intl
+            .get('ide.src.page-process.schema-list.store-code.01j1molbbzsq')
+            .d('TQL语法校验...waiting...TQL语法校验成功 正在提交...waiting...')
           this.fieldInfo = data.fieldInfo
           this.taskInstanceId = data.instanceId
           this.usedTagIds = data.usedTagIds
@@ -200,9 +212,15 @@ export default class Store {
           }
           const runLogDataLog = data.log
           this.isRuned = true
-          this.runLog = `TQL语法校验...\nwaiting...\n \n错误信息：\n${runLogDataLog}`
+          this.runLog = intl
+            .get('ide.src.page-process.schema-list.store-code.8c5olwf9ps', {
+              runLogDataLog: runLogDataLog,
+            })
+            .d('TQL语法校验... waiting...   错误信息： {runLogDataLog}')
           this.runStatusMessage.status = 'error'
-          this.runStatusMessage.message = 'TQL语法校验失败'
+          this.runStatusMessage.message = intl
+            .get('ide.src.page-process.schema-list.store-code.ai5tux36a8a')
+            .d('TQL语法校验失败')
           this.runLoading = false
         }
       })
@@ -211,17 +229,21 @@ export default class Store {
       runInAction(() => {
         this.runLoading = false
       })
-      ErrorEater({
-        code: 0,
-        message: e.message,
-      }, '运行TQL失败')
+      ErrorEater(
+        {
+          code: 0,
+          message: e.message,
+        },
+        intl
+          .get('ide.src.page-process.schema-list.store-code.i82x77jygo')
+          .d('运行TQL失败')
+      )
     }
   }
 
-
   /**
-  * @description 查询任务实例运行日志
-  */
+   * @description 查询任务实例运行日志
+   */
 
   @action getLog = async taskInstanceId => {
     try {
@@ -230,6 +252,7 @@ export default class Store {
         projectId: this.projectId,
         nodeLogCurrentLine: this.logIndex,
       })
+
       // 判断是否下拉日志
       const $dom = $(`#content${this.taskId}`)
       // $dom如果不存在的话，估计是改标签被关闭了
@@ -246,18 +269,24 @@ export default class Store {
           // readType 日志读取策略 0:覆盖1:追加
           if (dataLog.readType && dataLog.currentLine > this.logIndex) {
             const newLog = this.runLog + dataLogContent
- 
+
             this.runLog = newLog
           } else {
-            const newLog = `正在提交...\nwaiting...\n${dataLogContent}`
+            const newLog = intl
+              .get('ide.src.page-process.schema-list.store-code.oi6szzzykkl', {
+                dataLogContent: dataLogContent,
+              })
+              .d('正在提交... waiting... {dataLogContent}')
 
             this.runLog = newLog
           }
           this.logIndex = dataLog.currentLine
         }
         if (dataLog.resultList.length > this.currentResultIndex) {
-          const uniqResultList = _.uniqBy(this.tableData.concat(dataLog.resultList),
-            item => `${item.resultId}$$${item.taskInstance}`)
+          const uniqResultList = _.uniqBy(
+            this.tableData.concat(dataLog.resultList),
+            item => `${item.resultId}$$${item.taskInstance}`
+          )
           this.tableData = uniqResultList
           this.currentResultIndex = dataLog.resultList.length
         }
@@ -275,12 +304,19 @@ export default class Store {
           this.runStatusMessage.status = status
 
           if (dataLog.resultList.length) {
-            this.runStatusMessage.message = '作业运行成功(Finished)\n\n\n'
-          } else if ((dataLog.status < 0 && dataLog.status !== -4) || dataLog.status === 0) {
+            this.runStatusMessage.message = intl
+              .get('ide.src.page-process.schema-list.store-code.exs5cfzhap5')
+              .d('作业运行成功(Finished)')
+          } else if (
+            (dataLog.status < 0 && dataLog.status !== -4) ||
+            dataLog.status === 0
+          ) {
             // 当任务终止时，但是dataLog.status 不在这几个状态中 就显示 系统异常！
             this.runStatusMessage.message = `${dataLog.statusMessage}\n\n\n`
           } else {
-            this.runStatusMessage.message = '系统异常！\n\n\n'
+            this.runStatusMessage.message = intl
+              .get('ide.src.page-process.schema-list.store-code.16poztxmzku')
+              .d('系统异常！')
           }
         } else {
           // 运行未终止
@@ -288,26 +324,40 @@ export default class Store {
             this.getLog(taskInstanceId)
           }, 3000) // 这里变成3s 这是个临时方案，为了帮后端解决获取状态不对的bug，千万千万要督促后端去改。
         }
-        if ($dom[0].clientHeight + $dom[0].scrollTop >= $dom[0].scrollHeight - 20) {
+        if (
+          $dom[0].clientHeight + $dom[0].scrollTop >=
+          $dom[0].scrollHeight - 20
+        ) {
           LogScrollFlag = true
         }
-        if ($dom2.length > 0 && $dom2[0].clientHeight + $dom2[0].scrollTop >= $dom2[0].scrollHeight - 20) {
+        if (
+          $dom2.length > 0 &&
+          $dom2[0].clientHeight + $dom2[0].scrollTop >=
+            $dom2[0].scrollHeight - 20
+        ) {
           LogScrollFlag2 = true
         }
       })
       if (LogScrollFlag) {
-        $dom.animate({scrollTop: $dom[0].scrollHeight}, 'fast')
+        $dom.animate({ scrollTop: $dom[0].scrollHeight }, 'fast')
       }
       if (LogScrollFlag2) {
-        $dom2.animate({scrollTop: $dom2[0].scrollHeight}, 'fast')
+        $dom2.animate({ scrollTop: $dom2[0].scrollHeight }, 'fast')
       }
     } catch (e) {
       runInAction(() => {
         this.runLoading = false
         this.runStatusMessage.status = 'error'
-        this.runStatusMessage.message = '网络不稳定，日志获取失败！'
+        this.runStatusMessage.message = intl
+          .get('ide.src.page-process.schema-list.store-code.r39owm6ho4d')
+          .d('网络不稳定，日志获取失败！')
       })
-      ErrorEater(e, '获取日志')
+      ErrorEater(
+        e,
+        intl
+          .get('ide.src.page-process.schema-list.store-code.s8lcs6yvn6b')
+          .d('获取日志')
+      )
     }
   }
 
@@ -319,6 +369,7 @@ export default class Store {
         taskInstance: this.taskInstanceId,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         console.log(res)
       })

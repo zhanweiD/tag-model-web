@@ -1,10 +1,12 @@
+import intl from 'react-intl-universal'
+import { observable, action, runInAction } from 'mobx'
 import {
-  observable, action, runInAction,
-} from 'mobx'
-import {
-  successTip, errorTip, changeToOptions, trimFormValues,
+  successTip,
+  errorTip,
+  changeToOptions,
+  trimFormValues,
 } from '../../../common/util'
-import {ListContentStore} from '../../../component/list-content'
+import { ListContentStore } from '../../../component/list-content'
 import io from './io'
 
 class Store extends ListContentStore(io.getList) {
@@ -19,6 +21,7 @@ class Store extends ListContentStore(io.getList) {
       const res = await io.getProject({
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.projectList = changeToOptions(res)('projectName', 'projectId')
       })
@@ -34,6 +37,7 @@ class Store extends ListContentStore(io.getList) {
         id,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.detail = res
       })
@@ -55,7 +59,11 @@ class Store extends ListContentStore(io.getList) {
       })
       runInAction(() => {
         this.confirmLoading = false
-        successTip('撤销成功')
+        successTip(
+          intl
+            .get('ide.src.page-common.approval.my-requests.store.ma910ajt74g')
+            .d('撤销成功')
+        )
         this.getList()
         if (cb) cb()
       })

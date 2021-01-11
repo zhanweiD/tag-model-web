@@ -1,19 +1,19 @@
+import intl from 'react-intl-universal'
 /**
  * @description 通用列表组件
  * @author mahua
  */
-import {Component} from 'react'
+import { Component } from 'react'
 import PropTypes from 'prop-types'
-import {action} from 'mobx'
-import {observer} from 'mobx-react'
-import {Table, Pagination} from 'antd'
+import { action } from 'mobx'
+import { observer } from 'mobx-react'
+import { Table, Pagination } from 'antd'
 import SearchContent from './search'
 
 import './list.styl'
 
-
 @observer
-export default class ListContent extends Component {
+class ListContent extends Component {
   constructor(props) {
     super(props)
     this.store = props.store
@@ -22,7 +22,7 @@ export default class ListContent extends Component {
   static SearchContent = SearchContent
 
   static propTypes = {
-    columns: PropTypes.instanceOf(Array), 
+    columns: PropTypes.instanceOf(Array),
     initParams: PropTypes.instanceOf(Object), // 默认参数
     // 搜索相关
     buttons: PropTypes.instanceOf(Array), // 表前按钮
@@ -34,7 +34,7 @@ export default class ListContent extends Component {
     hasPaging: PropTypes.bool,
     store: PropTypes.instanceOf(Object).isRequired,
   }
-  
+
   static defaultProps = {
     columns: [],
     initParams: {},
@@ -48,14 +48,14 @@ export default class ListContent extends Component {
 
   componentWillMount() {
     // 初始请求 在父层组件处理。列表组件componentWillMount内不再进行请求
-    const {initGetDataByParent} = this.props
+    const { initGetDataByParent } = this.props
     /*
      *initParams: 列表配置参数值
      */
-    const {initParams} = this.props
-    
+    const { initParams } = this.props
+
     this.store.initParams = initParams
-    if (initGetDataByParent) return 
+    if (initGetDataByParent) return
     this.store.getList()
   }
 
@@ -74,9 +74,7 @@ export default class ListContent extends Component {
   }
 
   @action remoteSearch = (value = {}) => {
-    const {
-      onSearch, beforeSearch, paginationConfig,
-    } = this.props
+    const { onSearch, beforeSearch, paginationConfig } = this.props
     let newVal = value
 
     // 列表请求前 参数处理
@@ -85,10 +83,10 @@ export default class ListContent extends Component {
     }
 
     if (onSearch) {
-      onSearch() 
+      onSearch()
     } else {
       this.store.searchParams = newVal
-      
+
       this.store.getList({
         pageSize: paginationConfig.pageSize || 10, // 默认pageSize 10
         currentPage: 1, // 搜索重置列表
@@ -98,9 +96,9 @@ export default class ListContent extends Component {
   }
 
   getSearchBox() {
-    const {searchParams} = this.props
-    
-    if ((!searchParams || searchParams.length === 0)) {
+    const { searchParams } = this.props
+
+    if (!searchParams || searchParams.length === 0) {
       // 如果没有，则返回
       return null
     }
@@ -117,33 +115,33 @@ export default class ListContent extends Component {
   }
 
   renderBtn() {
-    const {buttons} = this.props
-    if ((!buttons || buttons.length === 0)) {
+    const { buttons } = this.props
+    if (!buttons || buttons.length === 0) {
       // 如果没有，则返回
       return null
     }
-    
+
     return <div className="button-box">{buttons.map(item => item)}</div>
   }
 
   render() {
+    const { searchParams, paginationConfig, hasPaging, ...rest } = this.props
     const {
-      searchParams, paginationConfig, hasPaging, ...rest
-    } = this.props
-    const {
-      tableLoading, list = [], pagination, handlePageChange, handleTableChange,
+      tableLoading,
+      list = [],
+      pagination,
+      handlePageChange,
+      handleTableChange,
     } = this.store
 
-    const {totalCount} = pagination
+    const { totalCount } = pagination
 
     return (
-      <div className="comp-list-content">  
-        {
-          this.getSearchBox(searchParams)
-        }
-        {
-          this.renderBtn()
-        }
+      <div className="comp-list-content">
+        {this.getSearchBox(searchParams)}
+
+        {this.renderBtn()}
+
         <Table
           // @see {@link antd/table}
           pagination={false}
@@ -154,25 +152,30 @@ export default class ListContent extends Component {
           {...rest}
           className="table"
         />
-        {
-          hasPaging && list.length ? (
-            <div className="pagination">
-              <Pagination 
-                // @see {@link antd/Pagination}
-                // showQuickJumper, 
-                showSizeChanger={false}
-                {...paginationConfig}
-                pageSize={pagination.pageSize}
-                current={pagination.currentPage}
-                total={pagination.totalCount}
-                onChange={handlePageChange}
-                showTotal={() => `合计${totalCount}条记录`}
-              />
-            </div>
-          ) : null
-        }
-        
+
+        {hasPaging && list.length ? (
+          <div className="pagination">
+            <Pagination
+              // @see {@link antd/Pagination}
+              // showQuickJumper,
+              showSizeChanger={false}
+              {...paginationConfig}
+              pageSize={pagination.pageSize}
+              current={pagination.currentPage}
+              total={pagination.totalCount}
+              onChange={handlePageChange}
+              showTotal={() =>
+                intl
+                  .get('ide.src.component.list-content.list.yx24kr1o9ij', {
+                    totalCount: totalCount,
+                  })
+                  .d('合计{totalCount}条记录')
+              }
+            />
+          </div>
+        ) : null}
       </div>
     )
   }
 }
+export default ListContent

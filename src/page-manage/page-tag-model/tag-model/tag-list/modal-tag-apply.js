@@ -1,26 +1,29 @@
-import {Component} from 'react'
-import {action} from 'mobx'
-import {observer} from 'mobx-react'
-import {Modal} from 'antd'
-import {ModalForm} from '../../../../component'
+import intl from 'react-intl-universal'
+import { Component } from 'react'
+import { action } from 'mobx'
+import { observer } from 'mobx-react'
+import { Modal } from 'antd'
+import { ModalForm } from '../../../../component'
 
 @observer
-export default class ModalTagAppl extends Component {
+class ModalTagAppl extends Component {
   constructor(props) {
     super(props)
     this.store = props.store
   }
 
-  selectContent= () => [{
-    label: '申请理由',
-    key: 'applyDescr',
-    component: 'textArea',
-    rules: [
-      '@transformTrim',
-      '@required',
-      '@max128',
-    ],
-  }]
+  selectContent = () => [
+    {
+      label: intl
+        .get(
+          'ide.src.page-common.approval.common.comp-approval-modal.qskkf95ea1k'
+        )
+        .d('申请理由'),
+      key: 'applyDescr',
+      component: 'textArea',
+      rules: ['@transformTrim', '@required', '@max128'],
+    },
+  ]
 
   @action handleCancel = () => {
     this.store.tagApplyVisible = false
@@ -28,30 +31,29 @@ export default class ModalTagAppl extends Component {
 
   submit = () => {
     const t = this
-    const {store} = t
+    const { store } = t
 
     this.form.validateFields((err, values) => {
       if (!err) {
-        const {applyInfo} = store
+        const { applyInfo } = store
 
         const params = {
           type: applyInfo.type,
           id: applyInfo.id,
           ...values,
         }
+
         store.tagApply(params)
       }
     })
   }
 
   render() {
-    const {
-      tagApplyVisible: visible, 
-      applyInfo, 
-      confirmLoading,
-    } = this.store
+    const { tagApplyVisible: visible, applyInfo, confirmLoading } = this.store
     const modalConfig = {
-      title: `${+applyInfo.type === 1 ? '上架' : '下架'}申请`,
+      title: intl
+        .get('ide.src.page-manage.page-common-tag.common-tag.list.0ho0lb3mlo86')
+        .d('申请'),
       visible,
       onCancel: this.handleCancel,
       onOk: this.submit,
@@ -60,10 +62,12 @@ export default class ModalTagAppl extends Component {
       destroyOnClose: true,
       confirmLoading,
     }
-    
+
     const formConfig = {
       selectContent: visible && this.selectContent(),
-      wrappedComponentRef: form => { this.form = form ? form.props.form : form },
+      wrappedComponentRef: form => {
+        this.form = form ? form.props.form : form
+      },
     }
 
     return (
@@ -73,3 +77,4 @@ export default class ModalTagAppl extends Component {
     )
   }
 }
+export default ModalTagAppl

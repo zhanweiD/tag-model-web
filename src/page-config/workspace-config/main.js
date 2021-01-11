@@ -1,19 +1,19 @@
+import intl from 'react-intl-universal'
 
 /**
  * @description 系统环境配置
  */
 
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 // import {FormOutlined} from '@ant-design/icons'
-import {Button, Popconfirm, Modal, Table, Badge} from 'antd'
-import {ExclamationCircleOutlined} from '@ant-design/icons'
+import { Button, Popconfirm, Modal, Table, Badge } from 'antd'
+import { ExclamationCircleOutlined } from '@ant-design/icons'
 import _ from 'lodash'
-import {projectProvider, Authority} from '../../component'
+import { projectProvider, Authority } from '../../component'
 import ConfigModal from './modal'
 import SourceModal from './source-modal'
 import io from './io'
-import {successTip, errorTip, Time} from '../../common/util'
-
+import { successTip, errorTip, Time } from '../../common/util'
 
 const useFetch = (ioFunc, params, afterFetch = () => {}) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -37,14 +37,14 @@ const useFetch = (ioFunc, params, afterFetch = () => {}) => {
         setIsLoading(false)
       }
     }
-    
+
     fetchData()
   }, [refetchIndex])
 
   return [data, isLoading, refetch]
 }
 
-const useSingleFetch = (ioFunc, params, afterFetch = () => { }) => {
+const useSingleFetch = (ioFunc, params, afterFetch = () => {}) => {
   const fetchData = async () => {
     try {
       const res = await ioFunc(params)
@@ -57,8 +57,7 @@ const useSingleFetch = (ioFunc, params, afterFetch = () => { }) => {
   fetchData()
 }
 
-
-const WorkspaceConfig = ({projectId}) => {
+const WorkspaceConfig = ({ projectId }) => {
   const [config, changeConfig] = useState({})
   const [visible, changeVisible] = useState(false)
   const [workspace, changeWorkspace] = useState([])
@@ -74,6 +73,7 @@ const WorkspaceConfig = ({projectId}) => {
       const res = await io.getWorkspace({
         projectId,
       })
+
       changeConfig(res)
     } catch (error) {
       errorTip(error.message)
@@ -86,6 +86,7 @@ const WorkspaceConfig = ({projectId}) => {
       const res = await io.getWorkspaceList({
         projectId,
       })
+
       let workspaceList = []
       if (res) {
         workspaceList = res || []
@@ -103,9 +104,13 @@ const WorkspaceConfig = ({projectId}) => {
         ...params,
         projectId,
       })
-  
+
       if (res) {
-        successTip('初始化成功')
+        successTip(
+          intl
+            .get('ide.src.component.project-provider.store.2qjw8hay0zb')
+            .d('初始化成功')
+        )
         changeVisible(false)
         getWorkspace()
       }
@@ -122,10 +127,14 @@ const WorkspaceConfig = ({projectId}) => {
         id: config.id,
         projectId,
       })
-  
+
       if (res) {
         getWorkspace()
-        successTip('修改成功')
+        successTip(
+          intl
+            .get('ide.src.page-config.workspace-config.main.j2n3mkaqsw')
+            .d('修改成功')
+        )
         changeVisible(false)
         changeIsAdd(true)
       }
@@ -142,7 +151,8 @@ const WorkspaceConfig = ({projectId}) => {
     io.listStorage,
     {
       projectId,
-    }, datas => {
+    },
+    datas => {
       console.log(datas)
     }
   )
@@ -169,47 +179,91 @@ const WorkspaceConfig = ({projectId}) => {
 
   const columns = [
     {
-      title: '数据源名称',
+      title: intl
+        .get('ide.src.page-config.workspace-config.main.nwdqfz5kwj')
+        .d('数据源名称'),
       dataIndex: 'storageName',
-    }, {
-      title: '数据源类型',
+    },
+    {
+      title: intl
+        .get('ide.src.page-config.workspace-config.main.1b0l5lpgghm')
+        .d('数据源类型'),
       dataIndex: 'storageType',
       render: text => {
         const target = _.find(dataType, e => e.type === text)
         if (target) {
           return target.name
-        } 
+        }
         return ''
       },
-    }, {
-      title: '描述',
+    },
+    {
+      title: intl
+        .get('ide.src.component.modal-stroage-detail.main.lyqo7nv5t9h')
+        .d('描述'),
       dataIndex: 'descr',
-    }, {
-      title: '添加时间',
+    },
+    {
+      title: intl
+        .get('ide.src.page-config.workspace-config.main.dd9xgr2e3he')
+        .d('添加时间'),
       dataIndex: 'createTime',
       key: 'createTime',
       render: text => <Time timestamp={text} />,
-    }, {
-      title: '使用状态',
+    },
+    {
+      title: intl
+        .get('ide.src.page-config.workspace-config.main.4eyw4o6e3dr')
+        .d('使用状态'),
       dataIndex: 'isUsed',
-      render: text => (text ? <Badge color="#108ee9" text="使用中" /> : <Badge color="#d9d9d9" text="未使用" />),
-    }, {
-      title: '操作',
-      render: (text, record) => (record.isUsed  
-        ? <span className="disabled">移除</span> 
-        : (
-          <Popconfirm placement="topRight" title="你确定要移除该数据源吗？" onConfirm={() => removeStorage(record.storageId)}>
-            <a>移除</a>
+      render: text =>
+        text ? (
+          <Badge
+            color="#108ee9"
+            text={intl
+              .get('ide.src.page-config.workspace-config.main.ztbqzsc34bb')
+              .d('使用中')}
+          />
+        ) : (
+          <Badge
+            color="#d9d9d9"
+            text={intl.get('ide.src.component.tag.tag.ogvpoe5m3bg').d('未使用')}
+          />
+        ),
+    },
+    {
+      title: intl
+        .get('ide.src.page-common.approval.approved.main.1tcpwa6mu1')
+        .d('操作'),
+      render: (text, record) =>
+        record.isUsed ? (
+          <span className="disabled">
+            {intl
+              .get('ide.src.page-config.workspace-config.main.i53j7u2d9hs')
+              .d('移除')}
+          </span>
+        ) : (
+          <Popconfirm
+            placement="topRight"
+            title={intl
+              .get('ide.src.page-config.workspace-config.main.8rob11wp0c')
+              .d('你确定要移除该数据源吗？')}
+            onConfirm={() => removeStorage(record.storageId)}
+          >
+            <a>
+              {intl
+                .get('ide.src.page-config.workspace-config.main.i53j7u2d9hs')
+                .d('移除')}
+            </a>
           </Popconfirm>
-        )
-      ),
+        ),
     },
   ]
 
   const showAddModal = () => {
     setSourceVisible(true)
   }
-  
+
   const selectDataType = type => {
     getDataSource(type)
   }
@@ -225,7 +279,7 @@ const WorkspaceConfig = ({projectId}) => {
 
     changedataSource(result)
   }
- 
+
   // 获取数据源类型
   async function getDataTypeSource() {
     const res = await io.getDataTypeSource({
@@ -243,25 +297,36 @@ const WorkspaceConfig = ({projectId}) => {
 
   const addStorage = params => {
     useSingleFetch(
-      io.addStorage, 
+      io.addStorage,
       {
         projectId,
         ...params,
-      }, res => {
+      },
+      res => {
         setSourceVisible(false)
         refetch()
-        successTip('添加成功')
+        successTip(
+          intl
+            .get('ide.src.page-config.workspace-config.main.91qopphasx')
+            .d('添加成功')
+        )
       }
     )
   }
 
   const removeStorage = storageId => {
     useSingleFetch(
-      io.removeStorage, {
+      io.removeStorage,
+      {
         projectId,
         storageId,
-      }, res => {
-        successTip('移除成功')
+      },
+      res => {
+        successTip(
+          intl
+            .get('ide.src.page-config.workspace-config.main.e6ux8lx1pde')
+            .d('移除成功')
+        )
         refetch()
       }
     )
@@ -269,22 +334,38 @@ const WorkspaceConfig = ({projectId}) => {
 
   return (
     <div>
-      <div className="content-header">环境配置</div> 
+      <div className="content-header">
+        {intl
+          .get('ide.src.component.project-provider.back-config.jxcvund1fi')
+          .d('环境配置')}
+      </div>
       <div className="header-page p24 config-work">
         <div className="FBH FBJB">
           <div className="env-config-item">
-            <div className="env-config-label">环境：</div>
+            <div className="env-config-label">
+              {intl
+                .get('ide.src.page-config.workspace-config.main.vx86ea6qotd')
+                .d('环境：')}
+            </div>
             <div className="env-config-value">
               <span className="mr16">{config.workspaceName}</span>
             </div>
           </div>
           <Authority authCode="tag_config:environment_config[u]">
-            <Button type="primary" onClick={editClick}>编辑</Button>
+            <Button type="primary" onClick={editClick}>
+              {intl
+                .get('ide.src.component.label-item.label-item.slnqvyqvv7')
+                .d('编辑')}
+            </Button>
           </Authority>
         </div>
         <div>
           {/* <div style={{color: 'rgba(0,0,0,0.45)'}}>目的源：</div> */}
-          <Button type="primary" className="mt8" onClick={showAddModal}>添加目的源</Button>
+          <Button type="primary" className="mt8" onClick={showAddModal}>
+            {intl
+              .get('ide.src.page-config.workspace-config.main.bfslcmhzzgi')
+              .d('添加目的源')}
+          </Button>
           <Table
             loading={isLoading}
             className="mt8"
@@ -294,7 +375,7 @@ const WorkspaceConfig = ({projectId}) => {
           />
         </div>
       </div>
-      <ConfigModal 
+      <ConfigModal
         visible={visible}
         isAdd={isAdd}
         config={config}
@@ -304,7 +385,8 @@ const WorkspaceConfig = ({projectId}) => {
         onUpdate={onUpdate}
         projectId={projectId}
       />
-      <SourceModal 
+
+      <SourceModal
         visible={sourceVisible}
         dataType={dataType}
         dataSource={dataSource}

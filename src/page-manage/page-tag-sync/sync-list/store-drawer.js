@@ -1,7 +1,6 @@
-import {
-  action, runInAction, observable,
-} from 'mobx'
-import {errorTip, changeToOptions, listToTree} from '../../../common/util'
+import intl from 'react-intl-universal'
+import { action, runInAction, observable } from 'mobx'
+import { errorTip, changeToOptions, listToTree } from '../../../common/util'
 import io from './io'
 
 class Store {
@@ -68,11 +67,17 @@ class Store {
       const res = await io.getDefaultStorage({
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.defaultStorage = res || {}
         if (this.defaultStorage.storageType) {
-          this.oneForm.setFieldsValue({dataDbType: {label: res.storageTypeName, key: res.storageType}})
-          this.selecStorageType({key: res.storageType, label: res.storageName})
+          this.oneForm.setFieldsValue({
+            dataDbType: { label: res.storageTypeName, key: res.storageType },
+          })
+          this.selecStorageType({
+            key: res.storageType,
+            label: res.storageName,
+          })
         }
       })
     } catch (e) {
@@ -89,6 +94,7 @@ class Store {
       const res = await io.getStorageType({
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.storageTypeList = changeToOptions(res || [])('name', 'type')
       })
@@ -105,13 +111,22 @@ class Store {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
         this.storageList = res || []
         const defaultId = res[0] ? res[0] : {}
         this.oneForm.setFieldsValue({
-          dataStorageId: {key: this.defaultStorage.storageId || defaultId.storageId, label: this.defaultStorage.storageName || defaultId.storageName},
+          dataStorageId: {
+            key: this.defaultStorage.storageId || defaultId.storageId,
+            label: this.defaultStorage.storageName || defaultId.storageName,
+          },
         })
-        if (cb) cb({key: this.defaultStorage.storageId || defaultId.storageId, label: this.defaultStorage.storageName || defaultId.storageName})
+
+        if (cb)
+          cb({
+            key: this.defaultStorage.storageId || defaultId.storageId,
+            label: this.defaultStorage.storageName || defaultId.storageName,
+          })
       })
     } catch (e) {
       errorTip(e.message)
@@ -121,7 +136,7 @@ class Store {
   @observable storageDetailLoading = false
   @observable storageDetail = {}
   @observable storageVisible = false
-  
+
   // 数据源详情
   @action async getStorageDetail(params) {
     this.storageDetailLoading = true
@@ -132,6 +147,7 @@ class Store {
         ...params,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.storageDetail = res
       })
@@ -149,7 +165,7 @@ class Store {
   @observable originTreeData = []
   @observable treeLoading = false
   // 标签列表
-  @observable tableData = []  
+  @observable tableData = []
   @observable majorTagList = []
 
   @action async getTagTree(params) {
@@ -161,7 +177,7 @@ class Store {
         objId: this.objId,
         ...params,
       })
-    
+
       runInAction(() => {
         this.originTreeData = res
         this.treeData = listToTree(res)
@@ -183,15 +199,22 @@ class Store {
       })
     }
   }
-  
+
   @action async checkName(params, cb) {
     try {
       const res = await io.checkName({
         projectId: this.projectId,
         ...params,
       })
+
       if (res.isExist) {
-        cb('名称已存在')
+        cb(
+          intl
+            .get(
+              'ide.src.page-manage.page-aim-source.source-list.store.o07pkyecrw'
+            )
+            .d('名称已存在')
+        )
       } else {
         cb()
       }
@@ -206,8 +229,15 @@ class Store {
         projectId: this.projectId,
         ...params,
       })
+
       if (res.isExist) {
-        cb('表名已存在')
+        cb(
+          intl
+            .get(
+              'ide.src.page-manage.page-tag-sync.sync-list.store-drawer.e5ts5izctvj'
+            )
+            .d('表名已存在')
+        )
       } else {
         cb()
       }
@@ -216,10 +246,9 @@ class Store {
     }
   }
 
-
   @observable confirmLoading = false
-   // 新增同步计划
-   @action async addSync(params, cb) {
+  // 新增同步计划
+  @action async addSync(params, cb) {
     this.confirmLoading = true
 
     try {
@@ -227,6 +256,7 @@ class Store {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
         // if (cb) {
         //   cb()

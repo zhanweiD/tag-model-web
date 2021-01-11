@@ -1,16 +1,13 @@
-import {
-  observable, action, runInAction, toJS,
-} from 'mobx'
-import {
-  successTip, failureTip, errorTip, listToTree,
-} from '../../common/util'
+import intl from 'react-intl-universal'
+import { observable, action, runInAction, toJS } from 'mobx'
+import { successTip, failureTip, errorTip, listToTree } from '../../common/util'
 import io from './io'
 
 class Store {
   @observable typeCode // 实体 vs 关系
   @observable objId // 当前选中对象id
-  @observable projectId // 项目id 
-  @observable tabId // 当前详情tabID 
+  @observable projectId // 项目id
+  @observable tabId // 当前详情tabID
 
   @observable objType // 实体 vs 简单关系 vs 复杂关系
 
@@ -20,7 +17,7 @@ class Store {
   @observable expandAll = false
   @observable treeData = [] // 类目树数据
   @observable searchExpandedKeys = [] // 关键字搜索展开的树节点
-  @observable currentSelectKeys = undefined// 默认展开的树节点
+  @observable currentSelectKeys = undefined // 默认展开的树节点
   // @observable isSelectObj = false
   // 选择对象
   @observable selectObjVisible = false
@@ -36,7 +33,7 @@ class Store {
   @observable tagClassVisible = false
   @observable tagClassObjId // 标签类目选中的对象id
   @observable cateDetail = {} // 类目详情
-  @observable defaultCate = {}// 默认类目
+  @observable defaultCate = {} // 默认类目
   @observable categoryData = [] // 所有类目
   @observable keyword = undefined // 标签列表搜索关键字
   @observable categoryModal = {
@@ -45,6 +42,7 @@ class Store {
     editType: 'add',
     detail: {},
   }
+
   // 选择标签弹窗 - 标签列表
   @observable tagListModal = {
     list: [],
@@ -66,7 +64,6 @@ class Store {
     selectKeys: [],
     visible: false,
   }
-
 
   @action destory() {
     this.searchKey = undefined
@@ -129,8 +126,8 @@ class Store {
   // }
 
   /*
-  * @description 添加标签类目
-  */
+   * @description 添加标签类目
+   */
   @action async addNode(params, cb) {
     this.confirmLoading = true
     try {
@@ -142,11 +139,23 @@ class Store {
       runInAction(() => {
         this.confirmLoading = false
         if (res.success) {
-          successTip('操作成功')
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
           // 刷新类目树
           this.getTagCateTree(cb)
         } else {
-          failureTip('操作失败')
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+              )
+              .d('操作失败')
+          )
         }
       })
     } catch (e) {
@@ -156,10 +165,10 @@ class Store {
       errorTip(e.message)
     }
   }
-  
+
   /*
-    * @description 编辑标签类目
-    */
+   * @description 编辑标签类目
+   */
   @action async editNode(params, cb) {
     this.confirmLoading = true
     try {
@@ -170,7 +179,13 @@ class Store {
 
       runInAction(() => {
         this.confirmLoading = false
-        successTip('操作成功')
+        successTip(
+          intl
+            .get(
+              'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+            )
+            .d('操作成功')
+        )
         // 刷新类目树
         this.getTagCateTree()
         if (cb) cb()
@@ -192,7 +207,7 @@ class Store {
     } else {
       this.tagList.loading = true
     }
-    
+
     try {
       const res = await io.getTagList(params)
       runInAction(() => {
@@ -203,6 +218,7 @@ class Store {
           pageSize: res.pages || 10,
           total: res.totalCount,
         }
+
         if (type === 'modal') {
           this.tagListModal = data
         } else {
@@ -249,8 +265,9 @@ class Store {
   @action defaultKey = data => {
     for (const item of data) {
       if (item.children) {
-        this.defaultKey(item.children) 
-      } else if (item.parentId) { // 判断条件不定，使用场景有限
+        this.defaultKey(item.children)
+      } else if (item.parentId) {
+        // 判断条件不定，使用场景有限
         return this.firstChildrens.push(item)
       }
     }
@@ -270,6 +287,7 @@ class Store {
         searchKey: this.searchKey,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.treeLoading = false
         this.searchExpandedKeys.clear()
@@ -323,6 +341,7 @@ class Store {
         ...params,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         // this.selectObjLoading = false
         let data = res
@@ -356,6 +375,7 @@ class Store {
       const res = await io.getObjSelectedList({
         projectId: this.projectId,
       })
+
       runInAction(() => {
         let data = res
         if (data.length) {
@@ -387,6 +407,7 @@ class Store {
         objIds,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         let data = res
         if (data.length) {
@@ -417,12 +438,25 @@ class Store {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
         if (res.success) {
-          successTip('操作成功')
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
           this.selectObjVisible = false
         } else {
-          failureTip('操作失败')
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+              )
+              .d('操作失败')
+          )
         }
         if (cb) cb()
       })
@@ -444,6 +478,7 @@ class Store {
         id: this.objId,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.objDetail = res
         if (cb) cb(res)
@@ -462,11 +497,24 @@ class Store {
         id: this.objDetail.id,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         if (res.success) {
-          successTip('操作成功')
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
         } else {
-          failureTip('操作失败')
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+              )
+              .d('操作失败')
+          )
         }
         if (cb) cb()
       })
@@ -484,6 +532,7 @@ class Store {
         id: this.objId,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.objCard = res
       })
@@ -502,6 +551,7 @@ class Store {
         id: this.objId,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.objView = res
         if (cb) cb()
@@ -559,18 +609,19 @@ class Store {
         id: this.objId,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.relList = res
         if (cb) cb(res)
       })
     } catch (e) {
       errorTip(e.message)
-    } 
+    }
   }
 
   getLinksObj = (links, obj) => {
-    if (!links.length) return {links: [], obj}
-    if (obj.length === 1) return {links: [], obj}
+    if (!links.length) return { links: [], obj }
+    if (obj.length === 1) return { links: [], obj }
 
     const relObj = obj.filter(d => d.objTypeCode === 3)[0]
     const relObjTag = relObj.tag.map(d => d.id)
@@ -584,7 +635,7 @@ class Store {
     }
 
     const resObj = obj
-    
+
     if (relObjInx === 0) {
       resObj.push(resObj.shift())
     }
@@ -614,6 +665,7 @@ class Store {
       const res = await io.getAuthCode({
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.functionCodes = res
       })

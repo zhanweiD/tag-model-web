@@ -1,13 +1,15 @@
+import intl from 'react-intl-universal'
+import { action, observable, runInAction, toJS } from 'mobx'
 import {
-  action, observable, runInAction, toJS,
-} from 'mobx'
-import {successTip, errorTip, failureTip, changeToOptions} from '../../../../common/util'
+  successTip,
+  errorTip,
+  failureTip,
+  changeToOptions,
+} from '../../../../common/util'
 import io from './io'
 
 class DrawerStore {
-  constructor({
-    projectId,
-  } = {}) {
+  constructor({ projectId } = {}) {
     this.projectId = projectId
   }
 
@@ -20,7 +22,7 @@ class DrawerStore {
 
   @observable checkedPulish = true
   @observable pubTagList = []
-  
+
   // 选择标签 - 搜索相关
   @observable objId = undefined // 选择的对象id
   // @observable objList = [] // 对象下拉列表数据
@@ -49,11 +51,24 @@ class DrawerStore {
         status: 2,
         tagIdList: data,
       })
+
       runInAction(() => {
         if (res.success) {
-          successTip('发布成功')
+          successTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-tag-model.tag-model.tag-config-batch.store.a6ttkst1gyn'
+              )
+              .d('发布成功')
+          )
         } else {
-          failureTip('发布失败')
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-tag-model.tag-model.tag-config-batch.store.40aw73ubna9'
+              )
+              .d('发布失败')
+          )
         }
       })
     } catch (e) {
@@ -73,13 +88,14 @@ class DrawerStore {
 
       runInAction(() => {
         this.configTagList = res
-        this.selectedRowKeys = res.filter(d => d.deployStatus === 2 || d.configStatus === 1).map(d => d.id)
+        this.selectedRowKeys = res
+          .filter(d => d.deployStatus === 2 || d.configStatus === 1)
+          .map(d => d.id)
       })
     } catch (e) {
       errorTip(e.message)
     }
   }
-
 
   @observable tableList = []
 
@@ -121,7 +137,7 @@ class DrawerStore {
         id: this.objId,
         projectId: this.projectId,
       }
-      
+
       let res = []
 
       if (+this.boundMethodId === 1) {
@@ -142,6 +158,7 @@ class DrawerStore {
       id: this.objId,
       projectId: this.projectId,
     }
+
     try {
       let res = []
       if (+this.boundMethodId === 1) {
@@ -149,7 +166,7 @@ class DrawerStore {
       } else {
         res = await io.getFieldData(params)
       }
-     
+
       this.target = res || []
     } catch (e) {
       errorTip(e.message)
@@ -171,7 +188,7 @@ class DrawerStore {
       } else {
         res = await io.getTagData(params)
       }
-      
+
       this.source = res || []
     } catch (e) {
       errorTip(e.message)
@@ -186,7 +203,7 @@ class DrawerStore {
         projectId: this.projectId,
       }
 
-      let res 
+      let res
 
       if (+this.boundMethodId === 1) {
         res = await io.saveDeriveMappingResult(params)
@@ -195,7 +212,9 @@ class DrawerStore {
       }
 
       if (this.checkedPulish) {
-        const tagIdList = this.pubTagList.filter(item => item.status !== 2).map(item => item.tagId)
+        const tagIdList = this.pubTagList
+          .filter(item => item.status !== 2)
+          .map(item => item.tagId)
         if (tagIdList.length) {
           await this.updateTagStatus(tagIdList)
         }
@@ -203,11 +222,23 @@ class DrawerStore {
       runInAction(() => {
         if (cb) cb()
       })
-     
+
       if (res === true) {
-        successTip('操作成功')
+        successTip(
+          intl
+            .get(
+              'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+            )
+            .d('操作成功')
+        )
       } else {
-        failureTip('操作失败')
+        failureTip(
+          intl
+            .get(
+              'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+            )
+            .d('操作失败')
+        )
       }
     } catch (e) {
       errorTip(e.message)

@@ -1,5 +1,11 @@
+import intl from 'react-intl-universal'
 import io from './io'
-import {successTip, errorTip, failureTip, changeToOptions} from '../../../common/util'
+import {
+  successTip,
+  errorTip,
+  failureTip,
+  changeToOptions,
+} from '../../../common/util'
 
 class DrawerStore {
   result = []
@@ -8,7 +14,6 @@ class DrawerStore {
 
   sourceId
   projectId
-
 
   objList = [] // 下拉对象数据
 
@@ -19,6 +24,7 @@ class DrawerStore {
         id: this.sourceId,
         projectId: this.projectId,
       })
+
       this.objList = changeToOptions(res)('objName', 'objId') || []
     } catch (e) {
       errorTip(e.message)
@@ -31,9 +37,9 @@ class DrawerStore {
         id: this.sourceId,
         projectId: this.projectId,
       }
-      
+
       const res = await io.getResultData(params)
-     
+
       this.result = res || []
     } catch (e) {
       errorTip(e.message)
@@ -45,9 +51,10 @@ class DrawerStore {
       id: this.sourceId,
       projectId: this.projectId,
     }
+
     try {
       const res = await io.getFieldData(params)
-    
+
       this.source = res || []
     } catch (e) {
       errorTip(e.message)
@@ -62,7 +69,7 @@ class DrawerStore {
       }
 
       const res = await io.getTagData(params)
-      
+
       this.target = res || []
     } catch (e) {
       errorTip(e.message)
@@ -75,14 +82,33 @@ class DrawerStore {
         projectId: this.projectId,
         ...params,
       })
+
       if (res === true) {
-        successTip('操作成功')
+        successTip(
+          intl
+            .get(
+              'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+            )
+            .d('操作成功')
+        )
       } else {
-        failureTip('操作失败')
+        failureTip(
+          intl
+            .get(
+              'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+            )
+            .d('操作失败')
+        )
       }
     } catch (e) {
       errorTip(e.message)
-      failureTip('操作失败')
+      failureTip(
+        intl
+          .get(
+            'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+          )
+          .d('操作失败')
+      )
     }
   }
 }

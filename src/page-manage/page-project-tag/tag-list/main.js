@@ -1,16 +1,15 @@
+import intl from 'react-intl-universal'
 /**
  * @description  标签仓库(项目标签)-标签列表
  */
-import {Component, Fragment} from 'react'
-import {observer} from 'mobx-react'
-import {action} from 'mobx'
-import {Link} from 'react-router-dom'
-import {Spin} from 'antd'
-import {CompassOutlined} from '@ant-design/icons'
-import {
-  ListContent, NoData, OmitTooltip, Authority,
-} from '../../../component'
-import {getDataTypeName} from '../../../common/util'
+import { Component, Fragment } from 'react'
+import { observer } from 'mobx-react'
+import { action } from 'mobx'
+import { Link } from 'react-router-dom'
+import { Spin } from 'antd'
+import { CompassOutlined } from '@ant-design/icons'
+import { ListContent, NoData, OmitTooltip, Authority } from '../../../component'
+import { getDataTypeName } from '../../../common/util'
 // import ModalApply from './modal-apply'
 import ModalBack from './modal-back'
 import Search from './search'
@@ -18,13 +17,19 @@ import Search from './search'
 import store from './store'
 
 const statusMap = {
-  0: '有效',
-  1: '有效',
-  2: '失效',
+  0: intl
+    .get('ide.src.page-manage.page-project-tag.tag-list.main.ugupxw8o22n')
+    .d('有效'),
+  1: intl
+    .get('ide.src.page-manage.page-project-tag.tag-list.main.ugupxw8o22n')
+    .d('有效'),
+  2: intl
+    .get('ide.src.page-manage.page-project-tag.tag-list.main.ydeyj2zacxj')
+    .d('失效'),
 }
 
 @observer
-export default class TagList extends Component {
+class TagList extends Component {
   constructor(props) {
     super(props)
     store.useProjectId = props.projectId
@@ -68,63 +73,121 @@ export default class TagList extends Component {
   columns = [
     {
       key: 'name',
-      title: '标签名称',
+      title: intl
+        .get(
+          'ide.src.page-manage.page-aim-source.source-detail.main.63kvhqd3cw8'
+        )
+        .d('标签名称'),
       dataIndex: 'name',
       fixed: 'left',
-      render: (text, record) => <Link target="_blank" to={`/manage/project-tag/${record.id}/${store.useProjectId}`}>{text}</Link>,
-    }, {
-      key: 'enName',
-      title: '标签标识',
-      dataIndex: 'enName',
-      render: text => <OmitTooltip maxWidth={200} text={text} />,
-    }, {
-      key: 'valueType',
-      title: '数据类型',
-      dataIndex: 'valueType',
-      render: text => getDataTypeName(text),
-    }, {
-      key: 'objName',
-      title: '对象名称',
-      dataIndex: 'objName',
-      render: text => <OmitTooltip maxWidth={200} text={text} />,
-    }, {
-      key: 'projectName',
-      title: '所属项目',
-      dataIndex: 'projectName',
-      render: (text, record) => <span>{record.projectName ? record.projectName : '租户'}</span>,
-    }, 
-    {
-      key: 'status',
-      title: '使用权限状态',
-      dataIndex: 'status',
-      render: text => statusMap[+text] || '失效',
+      render: (text, record) => (
+        <Link
+          target="_blank"
+          to={`/manage/project-tag/${record.id}/${store.useProjectId}`}
+        >
+          {text}
+        </Link>
+      ),
     },
     {
+      key: 'enName',
+      title: intl
+        .get('ide.src.business-component.tag-relate.dag-box.xs30zaqk60p')
+        .d('标签标识'),
+      dataIndex: 'enName',
+      render: text => <OmitTooltip maxWidth={200} text={text} />,
+    },
+    {
+      key: 'valueType',
+      title: intl
+        .get('ide.src.business-component.tag-relate.dag-box.zfaw0a4v7jh')
+        .d('数据类型'),
+      dataIndex: 'valueType',
+      render: text => getDataTypeName(text),
+    },
+    {
+      key: 'objName',
+      title: intl
+        .get(
+          'ide.src.page-manage.page-object-model.object-list.object-list.main.9c8ou0oxjir'
+        )
+        .d('对象名称'),
+      dataIndex: 'objName',
+      render: text => <OmitTooltip maxWidth={200} text={text} />,
+    },
+    {
+      key: 'projectName',
+      title: intl
+        .get('ide.src.component.comp.search.h5l3m6s8dn7')
+        .d('所属项目'),
+      dataIndex: 'projectName',
+      render: (text, record) => (
+        <span>
+          {record.projectName
+            ? record.projectName
+            : intl
+                .get(
+                  'ide.src.page-manage.page-common-tag.common-tag.list.bty454nguz'
+                )
+                .d('租户')}
+        </span>
+      ),
+    },
+
+    {
+      key: 'status',
+      title: intl
+        .get('ide.src.page-manage.page-project-tag.tag-list.main.wfk6dc3r7hn')
+        .d('使用权限状态'),
+      dataIndex: 'status',
+      render: text =>
+        statusMap[+text] ||
+        intl
+          .get('ide.src.page-manage.page-project-tag.tag-list.main.ydeyj2zacxj')
+          .d('失效'),
+    },
+
+    {
       key: 'action',
-      title: '操作',
+      title: intl
+        .get('ide.src.page-common.approval.approved.main.1tcpwa6mu1')
+        .d('操作'),
       width: 200,
       fixed: 'right',
       render: (text, record) => (
         <div className="FBH FBAC">
           {/* <Fragment> 
-            {
-              ((record.projectId === store.useProjectId || record.projectId === -1) || (record.status && !record.endTime)) ? <span className="mr8 disabled">权限申请</span> : (
-                <a className="mr8" href onClick={() => this.openApplyModal(record)}>权限申请</a>
-              )
-            }       
-          </Fragment> */}
+         {
+           ((record.projectId === store.useProjectId || record.projectId === -1) || (record.status && !record.endTime)) ? <span className="mr8 disabled">权限申请</span> : (
+             <a className="mr8" href onClick={() => this.openApplyModal(record)}>权限申请</a>
+           )
+         }       
+        </Fragment> */}
           <Fragment>
-            {
-              (record.projectId === store.useProjectId || record.projectId === -1) ? <span className="disabled">交回权限</span> : (
-                <a href onClick={() => this.openBackModal(record)}>交回权限</a>
-              )
-            }        
+            {record.projectId === store.useProjectId ||
+            record.projectId === -1 ? (
+              <span className="disabled">
+                {intl
+                  .get(
+                    'ide.src.page-manage.page-project-tag.tag-list.main.68om79cer04'
+                  )
+                  .d('交回权限')}
+              </span>
+            ) : (
+              <a href onClick={() => this.openBackModal(record)}>
+                {intl
+                  .get(
+                    'ide.src.page-manage.page-project-tag.tag-list.main.68om79cer04'
+                  )
+                  .d('交回权限')}
+              </a>
+            )}
           </Fragment>
         </div>
       ),
     },
   ]
-  
+
   @action.bound openApplyModal(data) {
     console.log(data)
     store.selectItem = data
@@ -148,9 +211,9 @@ export default class TagList extends Component {
     } = store
 
     if (
-      typeof hotWord === 'undefined'
-      && ownProjectId === ''
-      && objectId === ''
+      typeof hotWord === 'undefined' &&
+      ownProjectId === '' &&
+      objectId === ''
     ) {
       return false
     }
@@ -159,35 +222,42 @@ export default class TagList extends Component {
 
   // 跳转到标签管理
   goTagManager = () => {
-    window.location.href = `${window.__keeper.pathHrefPrefix || '/'}/manage/tag-maintain`
+    window.location.href = `${window.__keeper.pathHrefPrefix ||
+      '/'}/manage/tag-maintain`
   }
 
   render() {
-    const {
-      useProjectId, list, functionCodes, tableLoading,
-    } = store
+    const { useProjectId, list, functionCodes, tableLoading } = store
 
     const listConfig = {
       columns: this.columns,
-      initParams: {useProjectId},
+      initParams: { useProjectId },
       rowKey: 'id',
       initGetDataByParent: true, // 初始请求 在父层组件处理。列表组件componentWillMount内不再进行请求
       store, // 必填属性
     }
 
     const noDataConfig = {
-      btnText: '去新建标签',
+      btnText: intl
+        .get('ide.src.page-manage.page-project-tag.tag-list.main.zyie3afhm2')
+        .d('去新建标签'),
       onClick: this.goTagManager,
-      text: '没有任何标签，去标签维护新建标签吧!',
+      text: intl
+        .get('ide.src.page-manage.page-project-tag.tag-list.main.fg2cu199qz9')
+        .d('没有任何标签，去标签维护新建标签吧!'),
       code: 'tag_model:create_tag[c]',
-      noAuthText: '没有任何标签',
+      noAuthText: intl
+        .get(
+          'ide.src.page-manage.page-object-model.object-list.object-list.tag-class-list.vzvrj7cdfdm'
+        )
+        .d('没有任何标签'),
       // myFunctionCodes: functionCodes,
       isLoading: tableLoading,
     }
 
     if (tableLoading) {
       return (
-        <div style={{width: '100%', height: '100%', textAlign: 'center'}}>
+        <div style={{ width: '100%', height: '100%', textAlign: 'center' }}>
           <Spin spinning />
         </div>
       )
@@ -195,26 +265,28 @@ export default class TagList extends Component {
 
     return (
       <div>
-        {
-          !list.length && !this.isSearch() ? (
-            <div className="header-page" style={{paddingTop: '15%', minHeight: 'calc(100vh - 181px)'}}>
-              <NoData
-                // isLoading={tableLoading}
-                {...noDataConfig}
-              />
+        {!list.length && !this.isSearch() ? (
+          <div
+            className="header-page"
+            style={{ paddingTop: '15%', minHeight: 'calc(100vh - 181px)' }}
+          >
+            <NoData
+              // isLoading={tableLoading}
+              {...noDataConfig}
+            />
+          </div>
+        ) : (
+          <Fragment>
+            <Search store={store} />
+            <div className="search-list box-border">
+              <ListContent {...listConfig} />
+              {/* <ModalApply store={store} /> */}
+              <ModalBack store={store} />
             </div>
-          ) : (
-            <Fragment>
-              <Search store={store} />
-              <div className="search-list box-border"> 
-                <ListContent {...listConfig} />
-                {/* <ModalApply store={store} /> */}
-                <ModalBack store={store} />
-              </div>
-            </Fragment>
-          ) 
-        }  
+          </Fragment>
+        )}
       </div>
     )
   }
 }
+export default TagList

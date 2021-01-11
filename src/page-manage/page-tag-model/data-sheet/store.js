@@ -1,10 +1,7 @@
-import {
-  observable, action, runInAction, toJS,
-} from 'mobx'
-import {
-  successTip, failureTip, errorTip,
-} from '../../../common/util'
-import {ListContentStore} from '../../../component/list-content'
+import intl from 'react-intl-universal'
+import { observable, action, runInAction, toJS } from 'mobx'
+import { successTip, failureTip, errorTip } from '../../../common/util'
+import { ListContentStore } from '../../../component/list-content'
 import io from './io'
 
 class Store extends ListContentStore(io.getList) {
@@ -29,7 +26,7 @@ class Store extends ListContentStore(io.getList) {
   @observable whereCondition = undefined
   @observable entity1Key = undefined
   @observable entity2Key = undefined
-  
+
   @observable dataSheetDetail = [] // 数据表详情
   @observable dataSourceList = [] // 数据源下拉列表数据
   @observable dataSheetList = [] // 数据表下拉列表数据
@@ -72,10 +69,22 @@ class Store extends ListContentStore(io.getList) {
 
       runInAction(() => {
         if (res) {
-          successTip('操作成功')
-          if (cb)cb()
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
+          if (cb) cb()
         } else {
-          failureTip('操作失败')
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+              )
+              .d('操作失败')
+          )
         }
       })
     } catch (e) {
@@ -91,6 +100,7 @@ class Store extends ListContentStore(io.getList) {
       const res = await io.getDataSource({
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.dataSourceList = res ? [res] : []
         if (res) {
@@ -114,11 +124,14 @@ class Store extends ListContentStore(io.getList) {
         storageId: this.storageId,
         projectId: this.projectId,
       })
+
       runInAction(() => {
-        const data = res && res.map(d => ({
-          tableName: d.dataTableName,
-          isUsed: d.isUsed,
-        }))
+        const data =
+          res &&
+          res.map(d => ({
+            tableName: d.dataTableName,
+            isUsed: d.isUsed,
+          }))
 
         this.dataSheetList.replace(data)
       })
@@ -138,6 +151,7 @@ class Store extends ListContentStore(io.getList) {
         projectId: this.projectId,
         storageId: this.storageId,
       })
+
       runInAction(() => {
         this.dataSheetList = res || []
       })
@@ -158,6 +172,7 @@ class Store extends ListContentStore(io.getList) {
         storageId: this.storageId,
         tableName: this.tableName,
       })
+
       runInAction(() => {
         this.dataSheetDetail = res || []
       })
@@ -177,6 +192,7 @@ class Store extends ListContentStore(io.getList) {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
         this.fieldList = res || []
         if (cb) cb(res)
@@ -197,6 +213,7 @@ class Store extends ListContentStore(io.getList) {
         tableName: this.tableName,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         if (cb) cb(res)
       })
@@ -219,10 +236,17 @@ class Store extends ListContentStore(io.getList) {
         tableName: this.tableName,
         whereCondition: this.whereCondition,
       })
+
       runInAction(() => {
         this.whereSuccess = res.success
         if (res.success) {
-          successTip('校验成功')
+          successTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-tag-model.data-sheet.store.g1i21g89xn'
+              )
+              .d('校验成功')
+          )
         } else {
           failureTip(res.message)
         }
@@ -240,11 +264,17 @@ class Store extends ListContentStore(io.getList) {
   @action async saveEntityField(cb) {
     this.confirmLoading = true
 
-    const dataDbInfo = this.dataSourceList.filter(d => d.storageId === this.storageId)[0]
+    const dataDbInfo = this.dataSourceList.filter(
+      d => d.storageId === this.storageId
+    )[0]
 
-    const majorKeyInfo = this.fieldList.filter(d => d.field === this.majorKeyField)[0]
+    const majorKeyInfo = this.fieldList.filter(
+      d => d.field === this.majorKeyField
+    )[0]
 
-    const selectFields = this.fieldList.filter(d => d.field !== this.majorKeyField)
+    const selectFields = this.fieldList.filter(
+      d => d.field !== this.majorKeyField
+    )
     const filedObjReqList = selectFields.map(d => ({
       dataDbName: dataDbInfo.storageName,
       dataStorageId: dataDbInfo.storageId,
@@ -264,12 +294,25 @@ class Store extends ListContentStore(io.getList) {
         filedObjReqList,
         whereCondition: this.whereCondition,
       })
+
       runInAction(() => {
         if (res && cb) {
-          if (cb)cb()
-          successTip('操作成功')
+          if (cb) cb()
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
         } else {
-          failureTip('操作失败')
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+              )
+              .d('操作失败')
+          )
         }
       })
     } catch (e) {
@@ -285,8 +328,9 @@ class Store extends ListContentStore(io.getList) {
   @action async saveRelField(fieldParams, cb) {
     this.confirmLoading = true
 
-    const dataDbInfo = this.dataSourceList.filter(d => d.storageId === this.storageId)[0]
-
+    const dataDbInfo = this.dataSourceList.filter(
+      d => d.storageId === this.storageId
+    )[0]
 
     const mappingKeys1 = toJS(this.fieldList1)
       .filter(d => d.field === this.entity1Key)
@@ -303,10 +347,13 @@ class Store extends ListContentStore(io.getList) {
         field_name: d.field,
         field_type: d.type,
       }))
+
     const mappingKeys = mappingKeys1.concat(mappingKeys2)
     const fieldList = toJS(this.fieldList1).concat(toJS(this.fieldList2))
     const uniqFieldList = _.unionBy(fieldList, 'field')
-    const selectFields = uniqFieldList.filter(d => (d.field !== this.entity1Key) && (d.field !== this.entity2Key))
+    const selectFields = uniqFieldList.filter(
+      d => d.field !== this.entity1Key && d.field !== this.entity2Key
+    )
 
     const filedObjAssReqList = selectFields.map(d => ({
       dataDbName: dataDbInfo.storageName,
@@ -327,12 +374,25 @@ class Store extends ListContentStore(io.getList) {
         filedObjAssReqList,
         whereCondition: this.whereCondition,
       })
+
       runInAction(() => {
         if (res && cb) {
-          if (cb)cb()
-          successTip('操作成功')
+          if (cb) cb()
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
         } else {
-          failureTip('操作失败')
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+              )
+              .d('操作失败')
+          )
         }
       })
     } catch (e) {
@@ -376,12 +436,25 @@ class Store extends ListContentStore(io.getList) {
         dataTableName: this.dataSheetDetail.dataTableName,
         dataStorageId: this.dataSheetDetail.dataStorageId,
       })
+
       runInAction(() => {
         if (res && cb) {
-          if (cb)cb()
-          successTip('操作成功')
+          if (cb) cb()
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
         } else {
-          failureTip('操作失败')
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+              )
+              .d('操作失败')
+          )
         }
       })
     } catch (e) {
@@ -398,7 +471,6 @@ class Store extends ListContentStore(io.getList) {
     this.confirmLoading = true
 
     // const dataDbInfo = this.dataSourceList.filter(d => d.storageId === this.storageId)[0]
-
 
     // const mappingKeys1 = toJS(this.fieldList1)
     //   .filter(d => d.field === this.entity1Key)
@@ -441,12 +513,25 @@ class Store extends ListContentStore(io.getList) {
         dataTableName: this.dataSheetDetail.dataTableName,
         dataStorageId: this.dataSheetDetail.dataStorageId,
       })
+
       runInAction(() => {
         if (res && cb) {
-          if (cb)cb()
-          successTip('操作成功')
+          if (cb) cb()
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
         } else {
-          failureTip('操作失败')
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+              )
+              .d('操作失败')
+          )
         }
       })
     } catch (e) {

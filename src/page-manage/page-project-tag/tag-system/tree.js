@@ -1,22 +1,22 @@
+import intl from 'react-intl-universal'
 /**
  * @description 标签体系-标签树
  */
-import {Component} from 'react'
-import {observer} from 'mobx-react'
-import {DtTree} from '@dtwave/uikit'
-import {action, toJS} from 'mobx'
-import {Loading} from '../../../component'
+import { Component } from 'react'
+import { observer } from 'mobx-react'
+import { DtTree } from '@dtwave/uikit'
+import { action, toJS } from 'mobx'
+import { Loading } from '../../../component'
 import Action from './tree-action'
 import tagIcon from '../../../icon/new-tag.svg'
 import treeUnfold from '../../../icon/tree-unfold.svg'
 import treeFold from '../../../icon/tree-fold.svg'
 
-
-const {DtTreeNode, DtTreeBox} = DtTree
+const { DtTreeNode, DtTreeBox } = DtTree
 const getIconNodeSrc = e => (e ? treeUnfold : treeFold)
 
 @observer
-export default class Tree extends Component {
+class Tree extends Component {
   constructor(props) {
     super(props)
     this.store = props.store
@@ -44,9 +44,7 @@ export default class Tree extends Component {
         iconNodeSrc={e => (node.type === 0 ? tagIcon : getIconNodeSrc(e))}
         nodeData={node}
       >
-        {
-          this.processNodeData(node.children)
-        }
+        {this.processNodeData(node.children)}
       </DtTreeNode>
     ))
   }
@@ -69,12 +67,16 @@ export default class Tree extends Component {
       titleHeight: 34,
       title: <Action store={this.store} />,
       defaultWidth: 200,
-      style: {minWidth: '200px'},
+      style: { minWidth: '200px' },
     }
 
     const noDataConfig = {
-      text: '暂无数据',
-      noAuthText: '暂无数据',
+      text: intl
+        .get('ide.src.business-component.tag-trend.tag-trend.o18ga4b3ils')
+        .d('暂无数据'),
+      noAuthText: intl
+        .get('ide.src.business-component.tag-trend.tag-trend.o18ga4b3ils')
+        .d('暂无数据'),
     }
 
     // const expandKey = Number(currentSelectKeys)
@@ -89,43 +91,40 @@ export default class Tree extends Component {
       // defaultExpandedKeys: store.searchExpandedKeys.slice(),
       showDetail: true,
     }
+
     return (
-      <div className="tree"> 
+      <div className="tree">
         <DtTreeBox {...treeBoxConfig}>
-          {treeLoading
-            ? <Loading mode="block" height={100} />
-            : (
-              <DtTree {...treeConfig}>
-                {
-                  this.processNodeData(treeData)
-                }
-              </DtTree>
-            )
-          }
+          {treeLoading ? (
+            <Loading mode="block" height={100} />
+          ) : (
+            <DtTree {...treeConfig}>{this.processNodeData(treeData)}</DtTree>
+          )}
         </DtTreeBox>
         {/* {
-          treeData.length ? (
-            <DtTreeBox {...treeBoxConfig}>
-              {treeLoading
-                ? <Loading mode="block" height={100} />
-                : (
-                  <DtTree {...treeConfig}>
-                    {
-                      this.processNodeData(treeData)
-                    }
-                  </DtTree>
-                )
-              }
-            </DtTreeBox>
-          ) : (
-            <div style={{height: '100%'}}>
-              <NoData
-                {...noDataConfig}
-              />
-            </div>
-          )
-        } */}
+           treeData.length ? (
+             <DtTreeBox {...treeBoxConfig}>
+               {treeLoading
+                 ? <Loading mode="block" height={100} />
+                 : (
+                   <DtTree {...treeConfig}>
+                     {
+                       this.processNodeData(treeData)
+                     }
+                   </DtTree>
+                 )
+               }
+             </DtTreeBox>
+           ) : (
+             <div style={{height: '100%'}}>
+               <NoData
+                 {...noDataConfig}
+               />
+             </div>
+           )
+          } */}
       </div>
     )
   }
 }
+export default Tree
