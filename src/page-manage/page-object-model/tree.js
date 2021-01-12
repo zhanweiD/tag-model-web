@@ -1,17 +1,18 @@
+import intl from 'react-intl-universal'
 /**
  * @description 对象管理 - 树组件
  */
-import {Component} from 'react'
-import {action} from 'mobx'
-import {observer, inject} from 'mobx-react'
-import {Modal} from 'antd'
-import {DtTree} from '@dtwave/uikit'
-import {Loading} from '../../component'
+import { Component } from 'react'
+import { action } from 'mobx'
+import { observer, inject } from 'mobx-react'
+import { Modal } from 'antd'
+import { DtTree } from '@dtwave/uikit'
+import { Loading } from '../../component'
 import Action from './tree-action'
 import ModalCategory from './tree-modal-category'
 import ModalObject from './tree-drawer-object'
 import ModalMove from './tree-modal-move'
-import {codeInProduct} from '../../common/util'
+import { codeInProduct } from '../../common/util'
 import {
   getIconNodeSrc,
   deleteTipsMap,
@@ -23,12 +24,12 @@ import {
 
 import store from './store-tree'
 
-const {DtTreeNode, DtTreeBox} = DtTree
-const {confirm} = Modal
+const { DtTreeNode, DtTreeBox } = DtTree
+const { confirm } = Modal
 
 @inject('bigStore')
 @observer
-export default class Tree extends Component {
+class Tree extends Component {
   constructor(props) {
     super(props)
     // 便于获取store请求时的参数
@@ -39,38 +40,72 @@ export default class Tree extends Component {
 
   // 对象类目 - 对应的菜单列表
   categoryMenus = (canEdit, canDelete) => [
-    {key: 'add', value: '新建对象', onClick: (key, data) => this.openModal(key, data, TARGET_OBJECT)},
-    {key: 'view', value: '查看对象类目', onClick: (key, data) => this.openModal(key, data, TARGET_CATEGORY)},
     {
-      key: 'edit', 
-      value: '编辑',
-      disabled: !canEdit,
+      key: 'add',
+      value: intl
+        .get('ide.src.page-manage.page-object-model.tree.f9v0w313nhg')
+        .d('新建对象'),
+      onClick: (key, data) => this.openModal(key, data, TARGET_OBJECT),
+    },
+    {
+      key: 'view',
+      value: intl
+        .get('ide.src.page-manage.page-object-model.tree.nvv28b0yoc')
+        .d('查看对象类目'),
       onClick: (key, data) => this.openModal(key, data, TARGET_CATEGORY),
     },
     {
+      key: 'edit',
+      value: intl
+        .get('ide.src.component.label-item.label-item.slnqvyqvv7')
+        .d('编辑'),
+      disabled: !canEdit,
+      onClick: (key, data) => this.openModal(key, data, TARGET_CATEGORY),
+    },
+
+    {
       key: 'delete',
-      value: '删除',
-      disabled: !canDelete, 
+      value: intl
+        .get('ide.src.page-manage.page-aim-source.source-list.main.sv51d9olqdi')
+        .d('删除'),
+      disabled: !canDelete,
       onClick: (key, data) => this.deleteNode(key, data, TARGET_CATEGORY),
     },
   ]
 
   // 对象 - 对应的菜单列表
   objectMenus = (canEdit, canDelete) => {
-    const menu = [{
-      key: 'edit', 
-      value: '编辑',
-      disabled: !canEdit,
-      onClick: (key, data) => this.openModal(key, data, TARGET_OBJECT),
-    }, {
-      key: 'delete', 
-      value: '删除',
-      disabled: !canDelete,
-      onClick: (key, data) => this.deleteNode(key, data, TARGET_OBJECT),
-    }]
+    const menu = [
+      {
+        key: 'edit',
+        value: intl
+          .get('ide.src.component.label-item.label-item.slnqvyqvv7')
+          .d('编辑'),
+        disabled: !canEdit,
+        onClick: (key, data) => this.openModal(key, data, TARGET_OBJECT),
+      },
+      {
+        key: 'delete',
+        value: intl
+          .get(
+            'ide.src.page-manage.page-aim-source.source-list.main.sv51d9olqdi'
+          )
+          .d('删除'),
+        disabled: !canDelete,
+        onClick: (key, data) => this.deleteNode(key, data, TARGET_OBJECT),
+      },
+    ]
 
     if (codeInProduct('tag_model:move_obj[u]', true)) {
-      menu.push({key: 'move', value: '移动至', onClick: (key, data) => this.openMoveModal(key, data, TARGET_OBJECT)})
+      menu.push({
+        key: 'move',
+        value: intl
+          .get(
+            'ide.src.page-manage.page-object-model.object-list.object-list.modal-move.0e0hc9fvvfzc'
+          )
+          .d('移动至'),
+        onClick: (key, data) => this.openMoveModal(key, data, TARGET_OBJECT),
+      })
     }
 
     return menu
@@ -88,7 +123,7 @@ export default class Tree extends Component {
   }
 
   componentWillReceiveProps(next) {
-    const {updateTreeKey, addObjectUpdateKey} = this.props
+    const { updateTreeKey, addObjectUpdateKey } = this.props
     if (!_.isEqual(updateTreeKey, next.updateTreeKey)) {
       store.typeCode = this.bigStore.typeCode
       store.objId = this.bigStore.objId
@@ -134,7 +169,7 @@ export default class Tree extends Component {
   }
 
   /**
-   * @description 打开（对象）移动至弹窗 
+   * @description 打开（对象）移动至弹窗
    */
   @action.bound openMoveModal(key, data) {
     store.moveModal = {
@@ -148,8 +183,8 @@ export default class Tree extends Component {
    */
   @action.bound deleteNode(key, data, type) {
     const t = this
-    const {history} = t.props
-    const {title, content} = deleteTipsMap[type]
+    const { history } = t.props
+    const { title, content } = deleteTipsMap[type]
 
     confirm({
       title,
@@ -187,14 +222,16 @@ export default class Tree extends Component {
 
     // 2. 展开节点
     // info.node.onExpand()
-    [store.currentSelectKeys] = selectedKeys;
-    [store.objId] = selectedKeys;
-    [this.bigStore.objId] = selectedKeys
+    ;[store.currentSelectKeys] = selectedKeys
+    ;[store.objId] = selectedKeys
+    ;[this.bigStore.objId] = selectedKeys
     // 3. 跳转到指定路由
-    const {history} = this.props
+    const { history } = this.props
     // 刷新对象详情
     this.bigStore.updateDetailKey = Math.random()
-    history.push(`/manage/object-model/${store.typeCode}/${selectedKeys[0]}/${this.bigStore.tabId}`)
+    history.push(
+      `/manage/object-model/${store.typeCode}/${selectedKeys[0]}/${this.bigStore.tabId}`
+    )
   }
 
   /**
@@ -207,12 +244,26 @@ export default class Tree extends Component {
     // }
 
     // 对象管理类目权限code 对象类目（添加、编辑、删除） ```asset_tag_obj_cat_add_edit_del``` --管理员
-    if (+node.type === 3 && !codeInProduct('tag_model:obj_cate_detail[r]', true)) {
-      return [{key: 'view', value: '查看对象类目', onClick: (key, data) => this.openModal(key, data, TARGET_CATEGORY)}] // 只有查看详情权限
+    if (
+      +node.type === 3 &&
+      !codeInProduct('tag_model:obj_cate_detail[r]', true)
+    ) {
+      return [
+        {
+          key: 'view',
+          value: intl
+            .get('ide.src.page-manage.page-object-model.tree.nvv28b0yoc')
+            .d('查看对象类目'),
+          onClick: (key, data) => this.openModal(key, data, TARGET_CATEGORY),
+        },
+      ] // 只有查看详情权限
     }
     // 对象管理对象权限code对象（添加、编辑、删除、发布、取消发布）```asset_tag_obj_add_edit_del_publish``` --管理员
-    if (+node.type === 2 && !codeInProduct('tag_model:update_obj_cate[cud]', true)) {
-      return [] 
+    if (
+      +node.type === 2 &&
+      !codeInProduct('tag_model:update_obj_cate[cud]', true)
+    ) {
+      return []
     }
 
     if (+node.type === 3) {
@@ -223,7 +274,7 @@ export default class Tree extends Component {
       return this.objectMenus(node.canEdit, node.canDelete)
     }
   }
-  
+
   /**
    * @description 递归遍历树节点
    */
@@ -242,9 +293,7 @@ export default class Tree extends Component {
         actionList={this.setActionList(node)}
         nodeData={node}
       >
-        {
-          this.processNodeData(node.children)
-        }
+        {this.processNodeData(node.children)}
       </DtTreeNode>
     ))
   }
@@ -254,15 +303,19 @@ export default class Tree extends Component {
   }
 
   render() {
-    const {
-      treeLoading, treeData, expandAll, currentSelectKeys,
-    } = store
+    const { treeLoading, treeData, expandAll, currentSelectKeys } = store
 
     const treeBoxConfig = {
       titleHeight: 34,
-      title: <Action store={store} key={store.typeCode} getTreeData={this.getTreeData} />,
+      title: (
+        <Action
+          store={store}
+          key={store.typeCode}
+          getTreeData={this.getTreeData}
+        />
+      ),
       defaultWidth: 200,
-      style: {minWidth: '200px'},
+      style: { minWidth: '200px' },
     }
 
     const expandKey = Number(currentSelectKeys)
@@ -277,20 +330,15 @@ export default class Tree extends Component {
       defaultExpandedKeys: store.searchExpandedKeys.slice(),
       showDetail: true,
     }
-  
+
     return (
       <div className="object-tree">
         <DtTreeBox {...treeBoxConfig}>
-          {treeLoading
-            ? <Loading mode="block" height={100} />
-            : (
-              <DtTree {...treeConfig}>
-                {
-                  this.processNodeData(treeData)
-                }
-              </DtTree>
-            )
-          }
+          {treeLoading ? (
+            <Loading mode="block" height={100} />
+          ) : (
+            <DtTree {...treeConfig}>{this.processNodeData(treeData)}</DtTree>
+          )}
         </DtTreeBox>
         <ModalCategory store={store} />
         <ModalObject store={store} />
@@ -299,3 +347,4 @@ export default class Tree extends Component {
     )
   }
 }
+export default Tree

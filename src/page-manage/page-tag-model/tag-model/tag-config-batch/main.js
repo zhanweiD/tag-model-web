@@ -1,22 +1,21 @@
+import intl from 'react-intl-universal'
 /**
  * @description 标签模型 - 批量绑定
  */
-import {Component} from 'react'
-import {observer, inject} from 'mobx-react'
-import {action} from 'mobx'
-import {
-  Drawer, Steps,
-} from 'antd'
+import { Component } from 'react'
+import { observer, inject } from 'mobx-react'
+import { action } from 'mobx'
+import { Drawer, Steps } from 'antd'
 import StepOne from './step-one'
 import StepTwo from './step-two'
 
 import Store from './store'
 
-const {Step} = Steps
+const { Step } = Steps
 
 @inject('bigStore')
 @observer
-export default class BatchConfig extends Component {
+class BatchConfig extends Component {
   constructor(props) {
     super(props)
     this.bigStore = props.bigStore
@@ -25,15 +24,16 @@ export default class BatchConfig extends Component {
   }
 
   componentWillMount() {
-    const {projectId, objId} = this.props
+    const { projectId, objId } = this.props
     this.store = new Store({
       projectId,
     })
+
     this.store.objId = +objId
   }
 
   componentWillReceiveProps(next) {
-    const {visible, objId} = this.props
+    const { visible, objId } = this.props
     if (visible !== next.visible && next.visible) {
       if (next.objectSelectList.length) {
         // this.store.objId = next.objectSelectList[0].value
@@ -46,7 +46,7 @@ export default class BatchConfig extends Component {
     // }
     // console.log(this.store.objId)
   }
-  
+
   @action.bound closeDrawer() {
     this.store.currentStep = 0
     this.store.confirmLoading = false
@@ -68,11 +68,15 @@ export default class BatchConfig extends Component {
   }
 
   render() {
-    const {currentStep} = this.store
-    const {visible, objectSelectList} = this.props
+    const { currentStep } = this.store
+    const { visible, objectSelectList } = this.props
 
     const drawerConfig = {
-      title: '标签配置',
+      title: intl
+        .get(
+          'ide.src.page-manage.page-tag-model.data-sheet.config-field.7i73j0om993'
+        )
+        .d('标签配置'),
       visible,
       closable: true,
       width: 1120,
@@ -82,23 +86,34 @@ export default class BatchConfig extends Component {
     }
 
     return (
-      <Drawer
-        {...drawerConfig}
-      >
+      <Drawer {...drawerConfig}>
         <div className="tag-config-batch">
           <Steps size="small" current={currentStep} className="tag-config-step">
-            <Step title="选择标签" />
-            <Step title="绑定字段" />
+            <Step
+              title={intl
+                .get(
+                  'ide.src.page-manage.page-object-model.object-list.object-list.modal-select-tag.njsm9f1qxjq'
+                )
+                .d('选择标签')}
+            />
+            <Step
+              title={intl
+                .get(
+                  'ide.src.page-manage.page-project-tag.detail.storage-list.8biidsm1yn4'
+                )
+                .d('绑定字段')}
+            />
           </Steps>
-          <StepOne 
+          <StepOne
             store={this.store}
-            show={currentStep === 0} 
+            show={currentStep === 0}
             closeDrawer={this.closeDrawer}
             objectSelectList={objectSelectList}
           />
-          <StepTwo 
+
+          <StepTwo
             store={this.store}
-            show={currentStep === 1} 
+            show={currentStep === 1}
             closeDrawer={this.closeDrawer}
             onUpdate={this.onUpdate}
           />
@@ -107,3 +122,4 @@ export default class BatchConfig extends Component {
     )
   }
 }
+export default BatchConfig

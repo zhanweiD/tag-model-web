@@ -1,15 +1,16 @@
-import {Component, Fragment} from 'react'
+import intl from 'react-intl-universal'
+import { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import {Drawer, Steps, Button} from 'antd'
-import {observer, inject} from 'mobx-react'
-import {action, observable, toJS} from 'mobx'
+import { Drawer, Steps, Button } from 'antd'
+import { observer, inject } from 'mobx-react'
+import { action, observable, toJS } from 'mobx'
 import StepOne from './config-field-step-one'
 import StepTwo from './config-field-step-two'
 import StepThree from './config-field-step-three'
 
 import store from './store-tag'
 
-const {Step} = Steps
+const { Step } = Steps
 
 // Store的实例
 // const store = {}
@@ -18,7 +19,7 @@ const {Step} = Steps
 
 @inject('dataSheetStore')
 @observer
-export default class ConfigField extends Component {
+class ConfigField extends Component {
   static propTypes = {
     visible: PropTypes.bool.isRequired, // 是否显示
     // treeId: PropTypes.number.isRequired, // 树节点id
@@ -33,7 +34,7 @@ export default class ConfigField extends Component {
 
   constructor(props) {
     super(props)
-    const {projectId, objId, editSelectedItem} = props.dataSheetStore
+    const { projectId, objId, editSelectedItem } = props.dataSheetStore
     store.projectId = projectId
     store.objId = objId
     store.tableName = editSelectedItem.dataTableName
@@ -57,17 +58,31 @@ export default class ConfigField extends Component {
   }
 
   render() {
-    const {visible} = this.props
+    const { visible } = this.props
 
     const steps = [
       {
-        title: '选择字段',
+        title: intl
+          .get(
+            'ide.src.page-manage.page-tag-model.data-sheet.config-field.zobzgmm5y'
+          )
+          .d('选择字段'),
       },
+
       {
-        title: '填写配置信息',
+        title: intl
+          .get(
+            'ide.src.page-manage.page-tag-model.data-sheet.config-field.ctsk0hmfag'
+          )
+          .d('填写配置信息'),
       },
+
       {
-        title: '创建成功',
+        title: intl
+          .get(
+            'ide.src.page-manage.page-tag-model.data-sheet.config-field-step-three.7358fgalxex'
+          )
+          .d('创建成功'),
       },
     ]
 
@@ -75,7 +90,11 @@ export default class ConfigField extends Component {
 
     return (
       <Drawer
-        title="标签配置"
+        title={intl
+          .get(
+            'ide.src.page-manage.page-tag-model.data-sheet.config-field.7i73j0om993'
+          )
+          .d('标签配置')}
         visible={visible}
         // width="73%"
         width={1120}
@@ -84,16 +103,17 @@ export default class ConfigField extends Component {
         destroyOnClose
       >
         {/* 步骤条 */}
-        <Steps current={this.currentStep} style={{padding: '0 100px', marginBottom: '32px'}}>
-          {
-            steps.map(item => (
-              <Step key={item.title} title={item.title} />
-            ))
-          }
+        <Steps
+          current={this.currentStep}
+          style={{ padding: '0 100px', marginBottom: '32px' }}
+        >
+          {steps.map(item => (
+            <Step key={item.title} title={item.title} />
+          ))}
         </Steps>
 
         {/* 内容区域 */}
-        <div style={{paddingBottom: '28px'}}>
+        <div style={{ paddingBottom: '28px' }}>
           <Content store={store} />
         </div>
 
@@ -113,54 +133,64 @@ export default class ConfigField extends Component {
           {/* 第一步 */}
           {this.currentStep === 0 && (
             <Fragment>
-              <Button 
-                className="mr8"
-                onClick={this.onClose}
-              >
-                取消
+              <Button className="mr8" onClick={this.onClose}>
+                {intl
+                  .get('ide.src.page-config.workspace-config.modal.xp905zufzth')
+                  .d('取消')}
               </Button>
-              <Button 
-                type="primary" 
+              <Button
+                type="primary"
                 disabled={!store.secondTableList.length}
                 onClick={this.toStepTwo}
               >
-                下一步
+                {intl
+                  .get(
+                    'ide.src.page-manage.page-tag-model.data-sheet.config-field.kpiieqt46x'
+                  )
+                  .d('下一步')}
               </Button>
             </Fragment>
           )}
+
           {/* 第二步 */}
           {this.currentStep === 1 && (
             <Fragment>
-              <Button 
-                className="mr8"
-                onClick={this.backToStepOne}
-              >
-                上一步
+              <Button className="mr8" onClick={this.backToStepOne}>
+                {intl
+                  .get(
+                    'ide.src.page-manage.page-tag-model.data-sheet.config-field.m6ae9pj50gh'
+                  )
+                  .d('上一步')}
               </Button>
-              <Button 
-                type="primary" 
+              <Button
+                type="primary"
                 disabled={
                   // 错误条数为0
-                  store.secondTableList.filter(item => !item.isTrue).length 
+                  store.secondTableList.filter(item => !item.isTrue).length ||
                   // 或者标签个数也为0（可能全被删了）
-                  || !store.secondTableList.length
+                  !store.secondTableList.length
                 }
                 onClick={this.confirmStepTwo}
                 loading={store.loadings.tagSaving}
               >
-                确定
+                {intl
+                  .get('ide.src.page-config.workspace-config.modal.wrk0nanr55b')
+                  .d('确定')}
               </Button>
             </Fragment>
           )}
+
           {/* 第三步 */}
           {this.currentStep === 2 && (
-            <Button 
+            <Button
               type="primary"
               onClick={() => {
                 this.onClose()
               }}
             >
-              确定
+              {intl
+                .get('ide.src.page-config.workspace-config.modal.wrk0nanr55b')
+                .d('确定')}
             </Button>
           )}
         </div>
@@ -170,7 +200,7 @@ export default class ConfigField extends Component {
 
   // 关闭
   onClose = () => {
-    const {onClose} = this.props
+    const { onClose } = this.props
     onClose()
   }
 
@@ -189,19 +219,23 @@ export default class ConfigField extends Component {
 
   // 从第二步“确定”，决定是不是要进入第三步
   @action.bound confirmStepTwo() {
-    const {onSuccess = () => {}} = this.props
+    const { onSuccess = () => {} } = this.props
 
-    store.saveTags(() => {
-      // 加载结果数据
-      store.getStorageDetail()
-      
-      // 保存成功的额外回调
-      onSuccess()
+    store.saveTags(
+      () => {
+        // 加载结果数据
+        store.getStorageDetail()
 
-      this.currentStep = 2
-    }, () => {
-      // 保存失败的话，可能是这期间某些接口不能创建了，重新调用校验接口来更新数据
-      store.checkTagList()
-    })
+        // 保存成功的额外回调
+        onSuccess()
+
+        this.currentStep = 2
+      },
+      () => {
+        // 保存失败的话，可能是这期间某些接口不能创建了，重新调用校验接口来更新数据
+        store.checkTagList()
+      }
+    )
   }
 }
+export default ConfigField

@@ -1,6 +1,7 @@
-import {Component} from 'react'
+import intl from 'react-intl-universal'
+import { Component } from 'react'
 import PropTypes from 'prop-types'
-import {Button} from 'antd'
+import { Button } from 'antd'
 import nodata from '../../icon/noData.svg'
 
 export default class NoData extends Component {
@@ -28,11 +29,14 @@ export default class NoData extends Component {
 
   constructor(props) {
     super(props)
-    const {code} = props
+    const { code } = props
     if (code) {
-      const {userProductFunctionCode = [], projectFunctionCode = []} = window.frameInfo || {}
-      const functionCodes = props.isCommon ? userProductFunctionCode : projectFunctionCode
-      
+      const { userProductFunctionCode = [], projectFunctionCode = [] } =
+        window.frameInfo || {}
+      const functionCodes = props.isCommon
+        ? userProductFunctionCode
+        : projectFunctionCode
+
       this.auth = functionCodes.includes(code)
       // console.log(this.auth, code)
       // this.auth = true
@@ -40,14 +44,14 @@ export default class NoData extends Component {
   }
 
   onClick = () => {
-    const {onClick} = this.props
+    const { onClick } = this.props
 
     // 点击回调函数
     if (onClick) onClick()
   }
 
   renderText() {
-    const {text, noAuthText} = this.props
+    const { text, noAuthText } = this.props
 
     // 渲染没权限对应文案
     if (typeof this.auth === 'boolean' && !this.auth) {
@@ -56,28 +60,27 @@ export default class NoData extends Component {
 
     // 渲染说明文字
     if (text) {
-      return (
-        <div className="text">
-          {text}
-        </div>
-      )
+      return <div className="text">{text}</div>
     }
 
     return null
   }
 
-
   renderBtn() {
-    const {btnText, code, btnDisabled} = this.props
-    
+    const { btnText, code, btnDisabled } = this.props
+
     // 渲染按钮
     if (btnText) {
       //  按钮存在情况 判断按钮权限
-      if (code) { 
+      if (code) {
         return this.getBtnAutn()
-      } 
+      }
 
-      return <Button type="primary" disabled={btnDisabled} onClick={this.onClick}>{btnText}</Button>
+      return (
+        <Button type="primary" disabled={btnDisabled} onClick={this.onClick}>
+          {btnText}
+        </Button>
+      )
     }
 
     // 无按钮
@@ -86,11 +89,15 @@ export default class NoData extends Component {
 
   // 获取按钮权限
   getBtnAutn = () => {
-    const {btnText, btnDisabled} = this.props
+    const { btnText, btnDisabled } = this.props
 
     // 拥有权限
     if (this.auth) {
-      return <Button type="primary" disabled={btnDisabled} onClick={this.onClick}>{btnText}</Button>
+      return (
+        <Button type="primary" disabled={btnDisabled} onClick={this.onClick}>
+          {btnText}
+        </Button>
+      )
     }
 
     // 没有权限
@@ -98,7 +105,7 @@ export default class NoData extends Component {
   }
 
   render() {
-    const {isLoading, size = 'big', style} = this.props
+    const { isLoading, size = 'big', style } = this.props
 
     const imgWidth = size === 'small' ? '200px' : '300px'
 
@@ -106,14 +113,19 @@ export default class NoData extends Component {
       <div className={`nodata ${isLoading ? 'no-show' : ''}`} style={style}>
         <div>
           <div className="mb16">
-            <img width={imgWidth} src={nodata} alt="暂无数据" />
+            <img
+              width={imgWidth}
+              src={nodata}
+              alt={intl
+                .get(
+                  'ide.src.business-component.tag-trend.tag-trend.o18ga4b3ils'
+                )
+                .d('暂无数据')}
+            />
           </div>
-          {
-            this.renderText()
-          }
-          {
-            this.renderBtn()
-          }
+          {this.renderText()}
+
+          {this.renderBtn()}
         </div>
       </div>
     )

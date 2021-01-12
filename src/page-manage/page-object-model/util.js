@@ -1,14 +1,24 @@
+import intl from 'react-intl-universal'
 import treeUnfold from '../../icon/tree-unfold.svg'
 import treeFold from '../../icon/tree-fold.svg'
 
 export const deleteTipsMap = {
   category: {
-    title: '删除对象类目',
-    content: '对象类目被删除后不可恢复，确定删除？',
+    title: intl
+      .get('ide.src.page-manage.page-object-model.object-list.util.w573kvk96qc')
+      .d('删除对象类目'),
+    content: intl
+      .get('ide.src.page-manage.page-object-model.object-list.util.7kua0nnpxl')
+      .d('对象类目被删除后不可恢复，确定删除？'),
   },
+
   obj: {
-    title: '删除对象',
-    content: '对象被删除后不可恢复，确定删除？',
+    title: intl
+      .get('ide.src.page-manage.page-object-model.object-list.util.mjrcnsa6e5i')
+      .d('删除对象'),
+    content: intl
+      .get('ide.src.page-manage.page-object-model.object-list.util.4y6nlm9ng53')
+      .d('对象被删除后不可恢复，确定删除？'),
   },
 }
 
@@ -42,22 +52,19 @@ export const modalDefaultConfig = {
 export const getIconNodeSrc = e => (e ? treeUnfold : treeFold)
 
 // 对象类目带有对象数量提示
-export const TreeNodeTitle = ({node}) => (
-  <span>
-    {
-      node.parentId ? node.name : `${node.name} (${node.count || 0})`
-    }
-  </span>
+export const TreeNodeTitle = ({ node }) => (
+  <span>{node.parentId ? node.name : `${node.name} (${node.count || 0})`}</span>
 )
 
-export const judgeEditType = (data, editType) => (editType === 'edit' ? data : undefined)
+export const judgeEditType = (data, editType) =>
+  editType === 'edit' ? data : undefined
 //* --------------- 对象详情 ---------------*//
 // 根据 实体/对象 类型code() 映射对应文字
 export const typeCodeMap = {
-  4: '实体',
-  3: '关系',
-  '4～': '关系',
-  '3～': '实体',
+  4: intl.get('ide.src.common.dict.yy6bfwytt9').d('实体'),
+  3: intl.get('ide.src.common.dict.g3kh6ck2ho6').d('关系'),
+  '4～': intl.get('ide.src.common.dict.g3kh6ck2ho6').d('关系'),
+  '3～': intl.get('ide.src.common.dict.yy6bfwytt9').d('实体'),
 }
 
 // 对象发布状态值映射
@@ -68,7 +75,11 @@ export const objStatusMap = {
 
 // 对象类型映射
 export const objTypeMap = {
-  0: '简单关系',
-  1: '复杂关系',
-  2: '实体',
+  0: intl
+    .get('ide.src.page-manage.page-object-model.object-list.util.b78dpbz8x4u')
+    .d('简单关系'),
+  1: intl
+    .get('ide.src.page-manage.page-object-model.object-list.util.gc2qgcsh5xa')
+    .d('复杂关系'),
+  2: intl.get('ide.src.common.dict.yy6bfwytt9').d('实体'),
 }

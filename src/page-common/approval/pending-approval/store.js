@@ -1,10 +1,7 @@
-import {
-  observable, action, runInAction,
-} from 'mobx'
-import {
-  successTip, errorTip, changeToOptions,
-} from '../../../common/util'
-import {ListContentStore} from '../../../component/list-content'
+import intl from 'react-intl-universal'
+import { observable, action, runInAction } from 'mobx'
+import { successTip, errorTip, changeToOptions } from '../../../common/util'
+import { ListContentStore } from '../../../component/list-content'
 import io from './io'
 
 class Store extends ListContentStore(io.getList) {
@@ -21,6 +18,7 @@ class Store extends ListContentStore(io.getList) {
       const res = await io.getApplicant({
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.applicant = changeToOptions(res)('applyUserName', 'applyUserId')
       })
@@ -34,6 +32,7 @@ class Store extends ListContentStore(io.getList) {
       const res = await io.getProject({
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.projectList = changeToOptions(res)('projectName', 'projectId')
       })
@@ -50,6 +49,7 @@ class Store extends ListContentStore(io.getList) {
         id,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.detail = res
       })
@@ -69,11 +69,19 @@ class Store extends ListContentStore(io.getList) {
         projectId: this.nowProjectId,
         ...params,
       })
+
       runInAction(() => {
-        successTip('操作成功')
+        successTip(
+          intl
+            .get(
+              'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+            )
+            .d('操作成功')
+        )
         this.getList({
           currentPage: 1,
         })
+
         if (cb) cb()
       })
     } catch (e) {

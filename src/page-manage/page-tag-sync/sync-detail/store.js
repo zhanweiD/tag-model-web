@@ -1,8 +1,7 @@
-import {
-  action, runInAction, observable,
-} from 'mobx'
-import {CycleSelect} from '@dtwave/uikit'
-import {errorTip} from '../../../common/util'
+import intl from 'react-intl-universal'
+import { action, runInAction, observable } from 'mobx'
+import { CycleSelect } from '@dtwave/uikit'
+import { errorTip } from '../../../common/util'
 // import {ListContentStore} from '../../../component/list-content'
 import io from './io'
 
@@ -48,14 +47,18 @@ class Store {
         id: this.syncId,
         projectId: this.projectId,
       })
-      
+
       runInAction(() => {
         this.configInfo = res
 
         if (res.scheduleType === 1) {
           const expression = CycleSelect.cronSrialize(res.scheduleExpression)
 
-          this.configInfo.period = '每天'
+          this.configInfo.period = intl
+            .get(
+              'ide.src.page-manage.page-tag-sync.sync-detail.store.8ix9ytimdyp'
+            )
+            .d('每天')
           this.configInfo.periodTime = expression.time
         }
       })

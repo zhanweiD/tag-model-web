@@ -1,18 +1,22 @@
+import intl from 'react-intl-universal'
 /**
  * @description 树组件 - 搜索框
  */
-import {Component} from 'react'
-import {action} from 'mobx'
-import {observer} from 'mobx-react'
-import {Dropdown, Menu} from 'antd'
-import {NoBorderInput, Authority} from '../../../../component'
-import {codeInProduct} from '../../../../common/util'
+import { Component } from 'react'
+import { action } from 'mobx'
+import { observer } from 'mobx-react'
+import { Dropdown, Menu } from 'antd'
+import { NoBorderInput, Authority } from '../../../../component'
+import { codeInProduct } from '../../../../common/util'
 import {
-  IconRefresh, IconTreeAdd, IconUnExtend, IconExtend,
+  IconRefresh,
+  IconTreeAdd,
+  IconUnExtend,
+  IconExtend,
 } from '../../../../icon-comp'
 
 @observer
-export default class Action extends Component {
+class Action extends Component {
   constructor(props) {
     super(props)
     this.store = props.store
@@ -50,7 +54,11 @@ export default class Action extends Component {
   @action.bound addTree() {
     this.store.categoryModal = {
       visible: true,
-      title: '一级类目',
+      title: intl
+        .get(
+          'ide.src.page-manage.page-object-model.object-list.object-list.tag-tree-action.yljseiudwm9'
+        )
+        .d('一级类目'),
       editType: 'add',
       detail: {
         level: 0,
@@ -62,12 +70,21 @@ export default class Action extends Component {
     const menu = (
       <Menu>
         <Menu.Item>
-          <div onClick={this.addTree} onKeyDown={() => {}} style={{margin: '-5px -12px', padding: '5px 12px'}}>
-            新建一级类目
+          <div
+            onClick={this.addTree}
+            onKeyDown={() => {}}
+            style={{ margin: '-5px -12px', padding: '5px 12px' }}
+          >
+            {intl
+              .get(
+                'ide.src.page-manage.page-object-model.object-list.object-list.tag-tree-action.lc5yqvdlpt'
+              )
+              .d('新建一级类目')}
           </div>
         </Menu.Item>
       </Menu>
     )
+
     return codeInProduct('tag_model:update_tag_cate[cud]', true) ? (
       <Dropdown overlay={menu}>
         <IconTreeAdd size="14" className="mr8 hand" />
@@ -78,22 +95,26 @@ export default class Action extends Component {
   render() {
     return (
       <div className="object-tree-action">
-        <NoBorderInput 
-          placeholder="请输入名称搜索" 
+        <NoBorderInput
+          placeholder={intl
+            .get('ide.src.component.noborder-input.noborder-input.xxeqxv2wh5')
+            .d('请输入名称搜索')}
           onChange={this.searchTree}
           onPressEnter={this.searchTree}
         />
 
-        <div className="FBH pr6 pl6" style={{maxWidth: 70}}>
+        <div className="FBH pr6 pl6" style={{ maxWidth: 70 }}>
           <IconRefresh size="14" className="mr8" onClick={this.refreshTree} />
           <Authority authCode="tag_model:update_tag_cate[cud]" isCommon>
-            {
-              this.dropdownDom()
-            }
+            {this.dropdownDom()}
           </Authority>
-         
-          { this.store.expandAll ? (
-            <IconUnExtend size="14" className="hand" onClick={this.expandTree} /> 
+
+          {this.store.expandAll ? (
+            <IconUnExtend
+              size="14"
+              className="hand"
+              onClick={this.expandTree}
+            />
           ) : (
             <IconExtend size="14" className="hand" onClick={this.expandTree} />
           )}
@@ -102,3 +123,4 @@ export default class Action extends Component {
     )
   }
 }
+export default Action

@@ -1,8 +1,7 @@
-import {
-  action, runInAction, observable,
-} from 'mobx'
-import {successTip, errorTip, changeToOptions} from '../../../common/util'
-import {ListContentStore} from '../../../component/list-content'
+import intl from 'react-intl-universal'
+import { action, runInAction, observable } from 'mobx'
+import { successTip, errorTip, changeToOptions } from '../../../common/util'
+import { ListContentStore } from '../../../component/list-content'
 import io from './io'
 
 class Store extends ListContentStore(io.getList) {
@@ -38,7 +37,6 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-
   @observable objList = [] // 下拉对象数据
 
   // 下拉对象列表
@@ -48,6 +46,7 @@ class Store extends ListContentStore(io.getList) {
         id: this.sourceId,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.objList = changeToOptions(res)('objName', 'objId')
       })
@@ -66,6 +65,7 @@ class Store extends ListContentStore(io.getList) {
         ...params,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.tagList = changeToOptions(res)('tagName', 'tagId')
       })
@@ -82,10 +82,17 @@ class Store extends ListContentStore(io.getList) {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
-        if (cb)cb()
-        successTip('映射成功')
-        this.getList({currentPage: 1})
+        if (cb) cb()
+        successTip(
+          intl
+            .get(
+              'ide.src.page-manage.page-aim-source.source-detail.store.1kfmsl0hvys'
+            )
+            .d('映射成功')
+        )
+        this.getList({ currentPage: 1 })
       })
     } catch (e) {
       errorTip(e.message)
@@ -103,9 +110,16 @@ class Store extends ListContentStore(io.getList) {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
-        successTip('取消映射成功')
-        this.getList({currentPage: 1})
+        successTip(
+          intl
+            .get(
+              'ide.src.page-manage.page-aim-source.source-detail.store.w8sdt1vhiqg'
+            )
+            .d('取消映射成功')
+        )
+        this.getList({ currentPage: 1 })
       })
     } catch (e) {
       errorTip(e.message)

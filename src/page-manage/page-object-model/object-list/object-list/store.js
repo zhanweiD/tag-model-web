@@ -1,20 +1,23 @@
+import intl from 'react-intl-universal'
+import { observable, action, runInAction } from 'mobx'
 import {
-  observable, action, runInAction,
-} from 'mobx'
-import {
-  successTip, errorTip, failureTip, listToTree, changeToOptions,
+  successTip,
+  errorTip,
+  failureTip,
+  listToTree,
+  changeToOptions,
 } from '../../../../common/util'
-import {ListContentStore} from '../../../../component/list-content'
+import { ListContentStore } from '../../../../component/list-content'
 
 import io from './io'
 
 class Store {
-// class Store extends ListContentStore(io.getList) {
+  // class Store extends ListContentStore(io.getList) {
   @observable modalSelectTagVisible = false // 选择标签弹窗控制标识
   @observable projectId // 对象模型or标签模型
   // 标签类目
   @observable tagClassVisible = false
-  @observable tagClassObjId // 标签类目选中的对象id  
+  @observable tagClassObjId // 标签类目选中的对象id
 
   @observable cateDetail = {} // 类目详情
 
@@ -33,7 +36,7 @@ class Store {
   @observable treeData = [] // 类目树数据
   @observable searchExpandedKeys = [] // 关键字搜索展开的树节点
   @observable currentSelectKeys = undefined
-  @observable defaultCate = {}// 默认类目
+  @observable defaultCate = {} // 默认类目
   @observable categoryData = [] // 所有类目
   @observable keyword = undefined // 标签列表搜索关键字
 
@@ -59,7 +62,6 @@ class Store {
     visible: false,
   }
 
-
   @action findParentId(id, data, expandedKeys) {
     data.forEach(item => {
       if (item.parentId !== 0 && item.id === id) {
@@ -74,6 +76,7 @@ class Store {
       const res = await io.getTagCateDetail({
         id: this.currentSelectKeys,
       })
+
       runInAction(() => {
         this.cateDetail = res
       })
@@ -90,6 +93,7 @@ class Store {
         id: this.tagClassObjId,
         searchKey: this.searchKey,
       })
+
       runInAction(() => {
         this.treeLoading = false
         this.searchExpandedKeys.clear()
@@ -109,7 +113,7 @@ class Store {
 
         if (!this.currentSelectKeys) {
           // 默认类目
-          [this.defaultCate] = res.filter(d => d.aId === -1)
+          ;[this.defaultCate] = res.filter(d => d.aId === -1)
           this.currentSelectKeys = this.defaultCate.id
         }
         this.categoryData = res.filter(d => d.isLeaf !== 1) // 叶子类目
@@ -140,11 +144,23 @@ class Store {
       runInAction(() => {
         this.confirmLoading = false
         if (res.success) {
-          successTip('操作成功')
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
           // 刷新类目树
           this.getTagCateTree(cb)
         } else {
-          failureTip('操作失败')
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+              )
+              .d('操作失败')
+          )
         }
       })
     } catch (e) {
@@ -168,7 +184,13 @@ class Store {
 
       runInAction(() => {
         this.confirmLoading = false
-        successTip('操作成功')
+        successTip(
+          intl
+            .get(
+              'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+            )
+            .d('操作成功')
+        )
         // 刷新类目树
         this.getTagCateTree()
         if (cb) cb()
@@ -183,13 +205,19 @@ class Store {
 
   /*
    * @description 删除标签类目
-   * @param {*} params 
-   * @param {*} cb 
+   * @param {*} params
+   * @param {*} cb
    */
   @action async delNode(deleteIds, cb) {
     try {
-      await io.delTagCate({deleteIds: [deleteIds]})
-      successTip('操作成功')
+      await io.delTagCate({ deleteIds: [deleteIds] })
+      successTip(
+        intl
+          .get(
+            'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+          )
+          .d('操作成功')
+      )
       // 刷新类目树
       this.getTagCateTree()
       if (cb) cb()
@@ -207,9 +235,16 @@ class Store {
         objId: this.tagClassObjId,
         ...params,
       })
+
       runInAction(() => {
         if (res.success) {
-          cb('名称已存在')
+          cb(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.source-list.store.o07pkyecrw'
+              )
+              .d('名称已存在')
+          )
         } else {
           cb()
         }
@@ -228,12 +263,13 @@ class Store {
     } else {
       this.tagList.loading = true
     }
-    
+
     try {
       const res = await io.getTagList({
         ...params,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         const data = {
           loading: false,
@@ -242,6 +278,7 @@ class Store {
           pageSize: res.pageSize || 10,
           total: res.totalCount,
         }
+
         if (type === 'modal') {
           this.tagListModal = data
         } else {
@@ -272,11 +309,23 @@ class Store {
       runInAction(() => {
         this.confirmLoading = false
         if (res.success) {
-          successTip('操作成功')
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
           this.getTagCateTree()
           if (cb) cb()
         } else {
-          failureTip('操作失败')
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+              )
+              .d('操作失败')
+          )
         }
       })
     } catch (e) {

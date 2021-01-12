@@ -1,16 +1,17 @@
+import intl from 'react-intl-universal'
 /**
  * @description 运行参数
  */
-import {Component} from 'react'
-import {observer, inject} from 'mobx-react'
-import {action, observable, toJS} from 'mobx'
+import { Component } from 'react'
+import { observer, inject } from 'mobx-react'
+import { action, observable, toJS } from 'mobx'
 import cls from 'classnames'
-import {MinusCircleOutlined, PlusOutlined} from '@ant-design/icons'
-import {Form} from '@ant-design/compatible'
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
+import { Form } from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
-import {Button, Input} from 'antd'
+import { Button, Input } from 'antd'
 
-import {QuestionTooltip} from '../../component'
+import { QuestionTooltip } from '../../component'
 import ParamItemInput from './param-item'
 
 const FormItem = Form.Item
@@ -18,11 +19,11 @@ const FormItem = Form.Item
 @Form.create()
 @inject('rootStore')
 @observer
-export default class DrawerTwoParams extends Component {
+class DrawerTwoParams extends Component {
   constructor(props) {
     super(props)
 
-    const {drawerStore, codeStore} = props.rootStore
+    const { drawerStore, codeStore } = props.rootStore
 
     this.drawerStore = drawerStore
 
@@ -32,9 +33,12 @@ export default class DrawerTwoParams extends Component {
   @observable renderList = []
 
   @action componentDidMount() {
-    const {schemeDetail} = this.drawerStore
+    const { schemeDetail } = this.drawerStore
 
-    if (schemeDetail.parameterMappingKeys && typeof schemeDetail.parameterMappingKeys === 'object') {
+    if (
+      schemeDetail.parameterMappingKeys &&
+      typeof schemeDetail.parameterMappingKeys === 'object'
+    ) {
       const keys = Object.keys(schemeDetail.parameterMappingKeys)
 
       this.renderList = keys.map((d, i) => ({
@@ -56,7 +60,7 @@ export default class DrawerTwoParams extends Component {
   }
 
   @action.bound paramsChange(v) {
-    const {runStatusMessage} = this.store
+    const { runStatusMessage } = this.store
     if (runStatusMessage.status === 'success') {
       this.store.runStatusMessage.status = 'error'
     }
@@ -68,44 +72,67 @@ export default class DrawerTwoParams extends Component {
 
   // 运行参数相关
   paramItem = (id, initialValue) => {
-    const {form} = this.props
-    const {getFieldDecorator} = form
+    const { form } = this.props
+    const { getFieldDecorator } = form
 
     const paramItemLayout = {
       labelCol: {
-        xs: {span: 0},
-        sm: {span: 0},
+        xs: { span: 0 },
+        sm: { span: 0 },
       },
+
       wrapperCol: {
-        xs: {span: 24},
-        sm: {span: 24},
+        xs: { span: 24 },
+        sm: { span: 24 },
       },
     }
 
     return (
       <div className="FBH param-item-box" key={`${id}_FormItem`}>
-        <FormItem
-          {...paramItemLayout}
-        >
+        <FormItem {...paramItemLayout}>
           {getFieldDecorator(id, {
-            rules: [{
-              validator: (rule, param, callback) => {
-                if (!param) {
-                  callback('请输入运行参数')
-                } else if ((param.value && param.key) || (!param.value && !param.key)) {
-                  callback()
-                } else if (!param.key) {
-                  callback('key值不能为空')
-                } else {
-                  callback('value值不能为空')
-                }
+            rules: [
+              {
+                validator: (rule, param, callback) => {
+                  if (!param) {
+                    callback(
+                      intl
+                        .get(
+                          'ide.src.page-process.schema-list.drawer-two-params.stibscob8ig'
+                        )
+                        .d('请输入运行参数')
+                    )
+                  } else if (
+                    (param.value && param.key) ||
+                    (!param.value && !param.key)
+                  ) {
+                    callback()
+                  } else if (!param.key) {
+                    callback(
+                      intl
+                        .get(
+                          'ide.src.page-process.schema-list.drawer-two-params.fywkc30achr'
+                        )
+                        .d('key值不能为空')
+                    )
+                  } else {
+                    callback(
+                      intl
+                        .get(
+                          'ide.src.page-process.schema-list.drawer-two-params.t8gjart2g4'
+                        )
+                        .d('value值不能为空')
+                    )
+                  }
+                },
               },
-            }],
-            initialValue,  
+            ],
+
+            initialValue,
           })(
-            <ParamItemInput 
-              disabled={this.props.disabled} 
-              form={form} 
+            <ParamItemInput
+              disabled={this.props.disabled}
+              form={form}
               paramsChange={this.paramsChange}
             />
           )}
@@ -122,29 +149,47 @@ export default class DrawerTwoParams extends Component {
   }
 
   render() {
-    const {wrappedComponentRef} = this.props
+    const { wrappedComponentRef } = this.props
 
     return (
       <div className="params-box">
         <div className="params-box-title">
-          运行参数 
-          <QuestionTooltip tip="用于配置运行时代码中的变量和替换该变量的值" />
+          {intl
+            .get(
+              'ide.src.page-process.schema-list.drawer-two-params.u1by3isdvm'
+            )
+            .d('运行参数')}
+
+          <QuestionTooltip
+            tip={intl
+              .get(
+                'ide.src.page-process.schema-list.drawer-two-params.rg3dw7tac3p'
+              )
+              .d('用于配置运行时代码中的变量和替换该变量的值')}
+          />
         </div>
-        <div style={{height: 'calc(100% - 38px)', overflow: 'auto'}}>
+        <div style={{ height: 'calc(100% - 38px)', overflow: 'auto' }}>
           <Form wrappedComponentRef={wrappedComponentRef}>
-            {
-              this.renderList.map(d => this.paramItem(d.id, toJS(d.init)))
-            }
-            <div className="fac mt16" style={{width: '230px'}}> 
-              <Button type="dashed" onClick={this.addParam} style={{width: '196px'}}>
+            {this.renderList.map(d => this.paramItem(d.id, toJS(d.init)))}
+
+            <div className="fac mt16" style={{ width: '230px' }}>
+              <Button
+                type="dashed"
+                onClick={this.addParam}
+                style={{ width: '196px' }}
+              >
                 <PlusOutlined />
-                添加参数
+                {intl
+                  .get(
+                    'ide.src.page-process.schema-list.drawer-two-params.qb5zu3caf2s'
+                  )
+                  .d('添加参数')}
               </Button>
             </div>
-          
           </Form>
         </div>
       </div>
     )
   }
 }
+export default DrawerTwoParams
