@@ -1,5 +1,11 @@
-import {observable, action, runInAction, toJS} from 'mobx'
-import {errorTip, successTip, failureTip, changeToOptions} from '../../../../common/util'
+import intl from 'react-intl-universal'
+import { observable, action, runInAction, toJS } from 'mobx'
+import {
+  errorTip,
+  successTip,
+  failureTip,
+  changeToOptions,
+} from '../../../../common/util'
 import io from './io'
 
 class Store {
@@ -52,6 +58,7 @@ class Store {
       const res = await io.getObjectSelectList({
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.objectSelectList = changeToOptions(res)('name', 'id')
       })
@@ -68,6 +75,7 @@ class Store {
       const res = await io.getDataSource({
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.dataSourceList = res ? [res] : []
         if (res) {
@@ -91,11 +99,14 @@ class Store {
         storageId: this.storageId,
         projectId: this.projectId,
       })
+
       runInAction(() => {
-        const data = res && res.map(d => ({
-          tableName: d.dataTableName,
-          isUsed: d.isUsed,
-        }))
+        const data =
+          res &&
+          res.map(d => ({
+            tableName: d.dataTableName,
+            isUsed: d.isUsed,
+          }))
 
         this.dataSheetList.replace(data)
       })
@@ -114,6 +125,7 @@ class Store {
         projectId: this.projectId,
         storageId: this.storageId,
       })
+
       runInAction(() => {
         this.dataSheetList = res || []
       })
@@ -133,6 +145,7 @@ class Store {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
         this.fieldList = res || []
         if (cb) cb(res)
@@ -153,6 +166,7 @@ class Store {
         tableName: this.tableName,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         if (cb) cb(res)
       })
@@ -167,11 +181,17 @@ class Store {
   @action async saveEntityField(cb) {
     this.confirmLoading = true
 
-    const dataDbInfo = this.dataSourceList.filter(d => d.storageId === this.storageId)[0]
+    const dataDbInfo = this.dataSourceList.filter(
+      d => d.storageId === this.storageId
+    )[0]
 
-    const majorKeyInfo = this.fieldList.filter(d => d.field === this.majorKeyField)[0]
+    const majorKeyInfo = this.fieldList.filter(
+      d => d.field === this.majorKeyField
+    )[0]
 
-    const selectFields = this.fieldList.filter(d => d.field !== this.majorKeyField)
+    const selectFields = this.fieldList.filter(
+      d => d.field !== this.majorKeyField
+    )
 
     const filedObjReqList = selectFields.map(d => ({
       dataDbName: dataDbInfo.storageName,
@@ -190,12 +210,25 @@ class Store {
         projectId: this.projectId,
         filedObjReqList,
       })
+
       runInAction(() => {
         if (res && cb) {
-          if (cb)cb()
-          successTip('操作成功')
+          if (cb) cb()
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
         } else {
-          failureTip('操作失败')
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+              )
+              .d('操作失败')
+          )
         }
       })
     } catch (e) {
@@ -213,8 +246,9 @@ class Store {
   @action async saveRelField(fieldParams, cb) {
     this.confirmLoading = true
 
-    const dataDbInfo = this.dataSourceList.filter(d => d.storageId === this.storageId)[0]
-
+    const dataDbInfo = this.dataSourceList.filter(
+      d => d.storageId === this.storageId
+    )[0]
 
     const mappingKeys1 = toJS(this.fieldList1)
       .filter(d => d.field === this.entity1Key)
@@ -231,10 +265,13 @@ class Store {
         field_name: d.field,
         field_type: d.type,
       }))
+
     const mappingKeys = mappingKeys1.concat(mappingKeys2)
     const fieldList = toJS(this.fieldList1).concat(toJS(this.fieldList2))
     const uniqFieldList = _.unionBy(fieldList, 'field')
-    const selectFields = uniqFieldList.filter(d => (d.field !== this.entity1Key) && (d.field !== this.entity2Key))
+    const selectFields = uniqFieldList.filter(
+      d => d.field !== this.entity1Key && d.field !== this.entity2Key
+    )
 
     const filedObjAssReqList = selectFields.map(d => ({
       dataDbName: dataDbInfo.storageName,
@@ -252,14 +289,26 @@ class Store {
         objId: this.objId,
         projectId: this.projectId,
         filedObjAssReqList,
-        
       })
+
       runInAction(() => {
         if (res && cb) {
-          if (cb)cb()
-          successTip('操作成功')
+          if (cb) cb()
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
         } else {
-          failureTip('操作失败')
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+              )
+              .d('操作失败')
+          )
         }
       })
     } catch (e) {
@@ -280,6 +329,7 @@ class Store {
       const res = await io.getObjDetail({
         id: this.objId,
       })
+
       runInAction(() => {
         this.loading = false
         this.objDetail = res
@@ -294,6 +344,7 @@ class Store {
       const res = await io.getObjCard({
         id: this.objId,
       })
+
       runInAction(() => {
         this.objCard = res
       })
@@ -309,6 +360,7 @@ class Store {
       const res = await io.getObjView({
         id: this.objId,
       })
+
       runInAction(() => {
         this.objView = res
         if (cb) cb()
@@ -328,7 +380,7 @@ class Store {
 
   @observable modelLoading = false
   @observable businessModel = []
-  
+
   @action async getBusinessModel(cb, params) {
     this.modelLoading = true
     try {
@@ -361,18 +413,19 @@ class Store {
       const res = await io.getBMRelation({
         id: this.objId,
       })
+
       runInAction(() => {
         this.relList = res
         if (cb) cb(res)
       })
     } catch (e) {
       errorTip(e.message)
-    } 
+    }
   }
 
   getLinksObj = (links, obj) => {
-    if (!links.length) return {links: [], obj}
-    if (obj.length === 1) return {links: [], obj}
+    if (!links.length) return { links: [], obj }
+    if (obj.length === 1) return { links: [], obj }
 
     const relObj = obj.filter(d => d.objTypeCode === 3)[0]
     const relObjTag = relObj.tag.map(d => d.id)
@@ -386,7 +439,7 @@ class Store {
     }
 
     const resObj = obj
-    
+
     if (relObjInx === 0) {
       resObj.push(resObj.shift())
     }

@@ -1,13 +1,12 @@
+import intl from 'react-intl-universal'
 /**
  * @description 对象配置 - 数据表
  */
-import {Component} from 'react'
-import {action, observable, toJS} from 'mobx'
-import {observer, inject, Provider} from 'mobx-react'
-import {
-  Popconfirm, Button,
-} from 'antd'
-import {ListContent, Authority, OmitTooltip} from '../../../component'
+import { Component } from 'react'
+import { action, observable, toJS } from 'mobx'
+import { observer, inject, Provider } from 'mobx-react'
+import { Popconfirm, Button } from 'antd'
+import { ListContent, Authority, OmitTooltip } from '../../../component'
 
 import ConfigField from './config-field'
 import ModalAddTable from './modal-add-table'
@@ -19,10 +18,10 @@ import './index.styl'
 
 @inject('bigStore')
 @observer
-export default class DataSheet extends Component {
+class DataSheet extends Component {
   constructor(props) {
     super(props)
-    const {bigStore} = props
+    const { bigStore } = props
     this.bigStore = bigStore
     store.projectId = bigStore.projectId
     store.objId = bigStore.objId
@@ -35,67 +34,127 @@ export default class DataSheet extends Component {
 
   columns = [
     {
-      title: '数据表名称',
+      title: intl
+        .get('ide.src.page-manage.page-tag-model.data-sheet.index.3fht0cqc4ht')
+        .d('数据表名称'),
       key: 'dataTableName',
       dataIndex: 'dataTableName',
       fixed: 'left',
       render: (text, record) => (
         <div>
-          <a href onClick={() => this.openDrawerDatasheet(record)}><OmitTooltip maxWidth={250} text={text} /></a>
+          <a href onClick={() => this.openDrawerDatasheet(record)}>
+            <OmitTooltip maxWidth={250} text={text} />
+          </a>
         </div>
       ),
-    }, {
-      title: '数据源',
+    },
+
+    {
+      title: intl
+        .get('ide.src.business-component.tag-relate.dag-box.9mzk7452ggp')
+        .d('数据源'),
       key: 'dataStorageName',
       dataIndex: 'dataStorageName',
       render: v => <OmitTooltip maxWidth={250} text={v} />,
-    }, {
-      title: '数据源类型',
+    },
+    {
+      title: intl
+        .get('ide.src.page-config.workspace-config.main.1b0l5lpgghm')
+        .d('数据源类型'),
       key: 'storageTypeName',
       dataIndex: 'storageTypeName',
       width: 150,
-    }, {
-      title: '已配置/字段数',
+    },
+    {
+      title: intl
+        .get('ide.src.page-manage.page-tag-model.data-sheet.index.ezv6dabtsu')
+        .d('已配置/字段数'),
       key: 'configuredField',
       dataIndex: 'configuredField',
       width: 150,
       render: (text, record) => (
         <div>{`${text}/${record.associatedField}`}</div>
       ),
-    }, {
-      title: '已有标签被使用',
+    },
+
+    {
+      title: intl
+        .get('ide.src.page-manage.page-tag-model.data-sheet.index.t92gg012q38')
+        .d('已有标签被使用'),
       key: 'isUsed',
       dataIndex: 'isUsed',
       width: 120,
-      render: text => <div>{text ? '是' : '否'}</div>,
-    }, {
+      render: text => (
+        <div>
+          {text
+            ? intl.get('ide.src.component.form-component.03xp8ux32s3a').d('是')
+            : intl.get('ide.src.component.form-component.h7p1pcijouf').d('否')}
+        </div>
+      ),
+    },
+    {
       key: 'action',
-      title: '操作',
+      title: intl
+        .get('ide.src.page-common.approval.approved.main.1tcpwa6mu1')
+        .d('操作'),
       dataIndex: 'action',
       width: 250,
       fixed: 'right',
       render: (text, record) => (
         <div>
           <Authority authCode="tag_model:update_table[cud]">
-            {
-              (record.isUsed || record.status === 1 || record.configuredField) ? <span className="disabled">移除</span> : (
-                <Popconfirm placement="topRight" title="你确定要移除该数据表吗？" onConfirm={() => this.removeList(record)}>
-                  <a href>移除</a>
-                </Popconfirm>
-              )
-            }
+            {record.isUsed || record.status === 1 || record.configuredField ? (
+              <span className="disabled">
+                {intl
+                  .get('ide.src.page-config.workspace-config.main.i53j7u2d9hs')
+                  .d('移除')}
+              </span>
+            ) : (
+              <Popconfirm
+                placement="topRight"
+                title={intl
+                  .get(
+                    'ide.src.page-manage.page-tag-model.data-sheet.index.ljiw9occ1j'
+                  )
+                  .d('你确定要移除该数据表吗？')}
+                onConfirm={() => this.removeList(record)}
+              >
+                <a href>
+                  {intl
+                    .get(
+                      'ide.src.page-config.workspace-config.main.i53j7u2d9hs'
+                    )
+                    .d('移除')}
+                </a>
+              </Popconfirm>
+            )}
           </Authority>
           {/* <Authority authCode="tag_model:config_table_tag[c]"> */}
-          <a href className="ml16" onClick={() => this.openWhereCondition(record)}>编辑</a>
+          <a
+            href
+            className="ml16"
+            onClick={() => this.openWhereCondition(record)}
+          >
+            {intl
+              .get('ide.src.component.label-item.label-item.slnqvyqvv7')
+              .d('编辑')}
+          </a>
           {/* </Authority> */}
-          {
-            this.bigStore.objDetail && this.bigStore.objDetail.type !== 0 ? (
-              <Authority authCode="tag_model:config_table_tag[c]">
-                <a href className="ml16" onClick={() => this.openTagConfig(record)}>配置标签</a>
-              </Authority>
-            ) : null
-          }
-        
+          {this.bigStore.objDetail && this.bigStore.objDetail.type !== 0 ? (
+            <Authority authCode="tag_model:config_table_tag[c]">
+              <a
+                href
+                className="ml16"
+                onClick={() => this.openTagConfig(record)}
+              >
+                {intl
+                  .get(
+                    'ide.src.page-manage.page-tag-model.data-sheet.index.ovoicz21id'
+                  )
+                  .d('配置标签')}
+              </a>
+            </Authority>
+          ) : null}
         </div>
       ),
     },
@@ -104,52 +163,100 @@ export default class DataSheet extends Component {
   // 简单关系
   columns1 = [
     {
-      title: '数据表名称',
+      title: intl
+        .get('ide.src.page-manage.page-tag-model.data-sheet.index.3fht0cqc4ht')
+        .d('数据表名称'),
       key: 'dataTableName',
       dataIndex: 'dataTableName',
       fixed: 'left',
       render: (text, record) => (
         <div>
-          <a href onClick={() => this.openDrawerDatasheet(record)}><OmitTooltip maxWidth={250} text={text} /></a>
+          <a href onClick={() => this.openDrawerDatasheet(record)}>
+            <OmitTooltip maxWidth={250} text={text} />
+          </a>
         </div>
       ),
-    }, {
-      title: '数据源',
+    },
+
+    {
+      title: intl
+        .get('ide.src.business-component.tag-relate.dag-box.9mzk7452ggp')
+        .d('数据源'),
       key: 'dataStorageName',
       dataIndex: 'dataStorageName',
       render: v => <OmitTooltip maxWidth={250} text={v} />,
-    }, {
-      title: '数据源类型',
+    },
+    {
+      title: intl
+        .get('ide.src.page-config.workspace-config.main.1b0l5lpgghm')
+        .d('数据源类型'),
       key: 'storageTypeName',
       dataIndex: 'storageTypeName',
       width: 150,
-    }, {
+    },
+    {
       key: 'action',
-      title: '操作',
+      title: intl
+        .get('ide.src.page-common.approval.approved.main.1tcpwa6mu1')
+        .d('操作'),
       dataIndex: 'action',
       width: 150,
       fixed: 'right',
       render: (text, record) => (
         <div>
           <Authority authCode="tag_model:update_table[cud]">
-            {
-              (record.isUsed || record.status === 1 || record.configuredField) ? <span className="disabled">移除</span> : (
-                <Popconfirm placement="topRight" title="你确定要移除该数据表吗？" onConfirm={() => this.removeList(record)}>
-                  <a href>移除</a>
-                </Popconfirm>
-              )
-            }
+            {record.isUsed || record.status === 1 || record.configuredField ? (
+              <span className="disabled">
+                {intl
+                  .get('ide.src.page-config.workspace-config.main.i53j7u2d9hs')
+                  .d('移除')}
+              </span>
+            ) : (
+              <Popconfirm
+                placement="topRight"
+                title={intl
+                  .get(
+                    'ide.src.page-manage.page-tag-model.data-sheet.index.ljiw9occ1j'
+                  )
+                  .d('你确定要移除该数据表吗？')}
+                onConfirm={() => this.removeList(record)}
+              >
+                <a href>
+                  {intl
+                    .get(
+                      'ide.src.page-config.workspace-config.main.i53j7u2d9hs'
+                    )
+                    .d('移除')}
+                </a>
+              </Popconfirm>
+            )}
           </Authority>
           {/* <Authority authCode="tag_model:config_table_tag[c]"> */}
-          <a href className="ml16" onClick={() => this.openWhereCondition(record)}>编辑</a>
+          <a
+            href
+            className="ml16"
+            onClick={() => this.openWhereCondition(record)}
+          >
+            {intl
+              .get('ide.src.component.label-item.label-item.slnqvyqvv7')
+              .d('编辑')}
+          </a>
           {/* </Authority> */}
-          {
-            this.bigStore.objDetail && this.bigStore.objDetail.type !== 0 ? (
-              <Authority authCode="tag_model:config_table_tag[c]">
-                <a href className="ml16" onClick={() => this.openTagConfig(record)}>配置标签</a>
-              </Authority>
-            ) : null
-          }
+          {this.bigStore.objDetail && this.bigStore.objDetail.type !== 0 ? (
+            <Authority authCode="tag_model:config_table_tag[c]">
+              <a
+                href
+                className="ml16"
+                onClick={() => this.openTagConfig(record)}
+              >
+                {intl
+                  .get(
+                    'ide.src.page-manage.page-tag-model.data-sheet.index.ovoicz21id'
+                  )
+                  .d('配置标签')}
+              </a>
+            </Authority>
+          ) : null}
         </div>
       ),
     },
@@ -160,12 +267,12 @@ export default class DataSheet extends Component {
   }
 
   componentWillReceiveProps(next) {
-    const {objId} = this.props
+    const { objId } = this.props
     if (+objId !== +next.objId) {
       store.objId = +next.objId
       // 重置列表默认参数
       store.initParams.objId = +next.objId
-      
+
       store.getList({
         currentPage: 1,
         objId: +next.objId,
@@ -189,6 +296,7 @@ export default class DataSheet extends Component {
       storageId: data.dataStorageId,
       tableName: data.dataTableName,
     }
+
     store.removeList(params, () => {
       t.bigStore.getObjDetail()
       t.bigStore.getObjCard()
@@ -199,7 +307,7 @@ export default class DataSheet extends Component {
   }
 
   @action.bound openModal() {
-    const {typeCode, objDetail} = this.bigStore
+    const { typeCode, objDetail } = this.bigStore
 
     if (+typeCode === 4) {
       store.bothTypeCode = 2 // 实体
@@ -210,7 +318,7 @@ export default class DataSheet extends Component {
         store.modalVisible = true
       }) // 复杂关系 vs 简单关系
     } else {
-      store.bothTypeCode = objDetail.type 
+      store.bothTypeCode = objDetail.type
       store.modalVisible = true
     }
 
@@ -221,7 +329,7 @@ export default class DataSheet extends Component {
     store.editSelectDetail = data
     store.tableName = data.dataTableName
     store.storageId = data.dataStorageId
-    const {typeCode, objDetail} = this.bigStore
+    const { typeCode, objDetail } = this.bigStore
     if (+typeCode === 4) {
       store.bothTypeCode = 2 // 实体
       store.modelEditModal = true
@@ -231,7 +339,7 @@ export default class DataSheet extends Component {
         store.modelEditModal = true
       }) // 复杂关系 vs 简单关系
     } else {
-      store.bothTypeCode = objDetail.type 
+      store.bothTypeCode = objDetail.type
       store.modelEditModal = true
     }
     store.getDataSource()
@@ -278,11 +386,12 @@ export default class DataSheet extends Component {
     // typeCode = 3 关系对象；typeCode = 4 实体对象；
     const buttons = (
       <Authority authCode="tag_model:update_table[cud]">
-        <Button 
-          type="primary" 
-          onClick={() => this.openModal()}
-        >
-      添加数据表
+        <Button type="primary" onClick={() => this.openModal()}>
+          {intl
+            .get(
+              'ide.src.page-manage.page-tag-model.data-sheet.index.76fxoibbzic'
+            )
+            .d('添加数据表')}
         </Button>
       </Authority>
     )
@@ -290,12 +399,12 @@ export default class DataSheet extends Component {
     const listConfig = {
       columns: relationType ? this.columns : this.columns1,
       // columns: this.columns,
-      scroll: {x: 1000},
-      initParams: {objId, projectId},
+      scroll: { x: 1000 },
+      initParams: { objId, projectId },
       buttons: [buttons],
       paginationConfig: {
         hideOnSinglePage: true, // 只有一页时隐藏
-      }, 
+      },
       store, // 必填属性
     }
 
@@ -312,24 +421,21 @@ export default class DataSheet extends Component {
           <ListContent {...listConfig} />
           <ModalAddTable store={store} />
           <EditWhereCondition store={store} />
-          {
-            this.tagConfigVisible && (
-              <ConfigField 
-                visible={this.tagConfigVisible} 
-                onClose={this.closeTagConfig}
-                onSuccess={this.tagConfigSuccess}
-              />
-            )
-          }
-          {
-            this.drawerDatasheetVisible && (
-              <DrawerDatasheet 
-                store={store}
-                visible={this.drawerDatasheetVisible}
-                onClose={this.closedrawerDatasheet}
-              />
-            )
-          } 
+          {this.tagConfigVisible && (
+            <ConfigField
+              visible={this.tagConfigVisible}
+              onClose={this.closeTagConfig}
+              onSuccess={this.tagConfigSuccess}
+            />
+          )}
+
+          {this.drawerDatasheetVisible && (
+            <DrawerDatasheet
+              store={store}
+              visible={this.drawerDatasheetVisible}
+              onClose={this.closedrawerDatasheet}
+            />
+          )}
         </div>
       </Provider>
     )
@@ -346,3 +452,4 @@ export default class DataSheet extends Component {
 //     <DataSheet projectId={projectId} {...props} />
 //   )
 // }
+export default DataSheet

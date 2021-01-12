@@ -1,17 +1,24 @@
-import {Component, Fragment} from 'react'
-import {observer} from 'mobx-react'
-import {toJS, observable} from 'mobx'
-import {Drawer, Table, Button} from 'antd'
-
+import intl from 'react-intl-universal'
+import { Component, Fragment } from 'react'
+import { observer } from 'mobx-react'
+import { toJS, observable } from 'mobx'
+import { Drawer, Table, Button } from 'antd'
 
 @observer
-export default class ObjectViewDrawer extends Component {
+class ObjectViewDrawer extends Component {
   columns = [
     {
-      title: '标签名称',
+      title: intl
+        .get(
+          'ide.src.page-manage.page-aim-source.source-detail.main.63kvhqd3cw8'
+        )
+        .d('标签名称'),
       dataIndex: 'name',
-    }, {
-      title: '标签标识',
+    },
+    {
+      title: intl
+        .get('ide.src.business-component.tag-relate.dag-box.xs30zaqk60p')
+        .d('标签标识'),
       dataIndex: 'enName',
       // dataIndex: 'isMajor',
       // render: text => (
@@ -25,7 +32,7 @@ export default class ObjectViewDrawer extends Component {
   ]
 
   render() {
-    const {datas, visible, closeDrawer} = this.props
+    const { datas, visible, closeDrawer } = this.props
 
     return (
       <Drawer
@@ -38,23 +45,28 @@ export default class ObjectViewDrawer extends Component {
         <div>
           <div className="FBH">
             <div className="black45">
-              对象类型：
+              {intl
+                .get(
+                  'ide.src.page-manage.page-tag-model.object-view-drawer.yf5ke0yct0s'
+                )
+                .d('对象类型：')}
             </div>
             <div className="black65">
-              {
-                datas.objTypeCode === 4 ? '实体' : '关系'
-              }
+              {datas.objTypeCode === 4
+                ? intl.get('ide.src.common.dict.yy6bfwytt9').d('实体')
+                : intl.get('ide.src.common.dict.g3kh6ck2ho6').d('关系')}
             </div>
           </div>
           <div className="black45 mt8 mb8">
-            标签列表
+            {intl.get('ide.src.common.navList.5ywghq8b76s').d('标签列表')}
           </div>
-          <Table 
+          <Table
             columns={this.columns}
             dataSource={datas.tag}
             pagination={false}
             rowClassName={(rowData, index) => `ant-table-row-${index % 2}`}
           />
+
           <div
             style={{
               position: 'absolute',
@@ -68,7 +80,9 @@ export default class ObjectViewDrawer extends Component {
             }}
           >
             <Button onClick={closeDrawer} type="primary">
-              关闭
+              {intl
+                .get('ide.src.component.modal-stroage-detail.main.ph80bkiru5h')
+                .d('关闭')}
             </Button>
           </div>
         </div>
@@ -76,3 +90,4 @@ export default class ObjectViewDrawer extends Component {
     )
   }
 }
+export default ObjectViewDrawer

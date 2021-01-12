@@ -1,6 +1,7 @@
-import {action, runInAction, observable} from 'mobx'
-import {successTip, errorTip} from '../../common/util'
-import {ListContentStore} from '../../component/list-content'
+import intl from 'react-intl-universal'
+import { action, runInAction, observable } from 'mobx'
+import { successTip, errorTip } from '../../common/util'
+import { ListContentStore } from '../../component/list-content'
 import io from './io'
 
 // class Store extends ListContentStore(io.getRunRecord) {
@@ -59,18 +60,30 @@ class Store {
 
       runInAction(() => {
         if (res) {
-          successTip('操作成功')
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
           this.getList({
             id: this.processeId,
           })
         } else {
-          errorTip('操作失败')
+          errorTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+              )
+              .d('操作失败')
+          )
         }
       })
     } catch (e) {
       errorTip(e.message)
     }
   }
-} 
+}
 
 export default new Store()

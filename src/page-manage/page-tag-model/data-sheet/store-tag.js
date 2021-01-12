@@ -1,6 +1,7 @@
-import {observable, action, toJS, runInAction} from 'mobx'
+import intl from 'react-intl-universal'
+import { observable, action, toJS, runInAction } from 'mobx'
 import io from './io-tag'
-import {errorTip, successTip, listToTree} from '../../../common/util'
+import { errorTip, successTip, listToTree } from '../../../common/util'
 
 class Store {
   objId
@@ -44,7 +45,6 @@ class Store {
   //   this.tableName = tableName // 数据表名
   // }
 
-
   // 请求初始时的字段列表
   @action async getInitialList() {
     try {
@@ -68,10 +68,11 @@ class Store {
   // 请求类目列表
   @action async getCateList() {
     try {
-      const res = await io.getCateList({
-        id: this.objId,
-        projectId: this.projectId,
-      }) || []
+      const res =
+        (await io.getCateList({
+          id: this.objId,
+          projectId: this.projectId,
+        })) || []
 
       // id -> name的映射
       const cateMap = {}
@@ -80,7 +81,7 @@ class Store {
 
       // 加上value\label属性，用于antd的级联组件
       res.forEach(node => {
-        const {id, name} = node
+        const { id, name } = node
         node.value = id
         node.label = name
 
@@ -125,9 +126,21 @@ class Store {
 
       // 如果content是false，也是保存失败
       if (res === false) {
-        throw new Error('创建失败')
+        throw new Error(
+          intl
+            .get(
+              'ide.src.page-manage.page-tag-model.data-sheet.store-tag.6tb3qd7rd8n'
+            )
+            .d('创建失败')
+        )
       } else {
-        successTip('创建成功')
+        successTip(
+          intl
+            .get(
+              'ide.src.page-manage.page-tag-model.data-sheet.config-field-step-three.7358fgalxex'
+            )
+            .d('创建成功')
+        )
         if (successCallback) successCallback()
       }
     } catch (e) {
@@ -157,7 +170,7 @@ class Store {
       })
 
       typeof successCallback === 'function' && successCallback()
-      
+
       this.secondTableList = res || []
     } catch (e) {
       errorTip(e.message)
@@ -196,7 +209,7 @@ class Store {
 
     // 移除被取消选中的标签
     this.secondTableList = this.secondTableList.filter(tag => {
-      const {dataFieldName} = tag
+      const { dataFieldName } = tag
       return !!selectedRowsMap[dataFieldName]
     })
 
@@ -206,11 +219,11 @@ class Store {
 
     // 加入新增的标签
     selectedRows.forEach((field, index) => {
-      const {dataFieldName} = field
+      const { dataFieldName } = field
       // 没有就添加
       if (!secondTableListMap[dataFieldName]) {
         this.secondTableList.splice(index, 0, field)
-      } 
+      }
     })
 
     // 把第二步选中数组也清空掉
@@ -227,9 +240,16 @@ class Store {
         objId: this.objId,
         ...params,
       })
+
       runInAction(() => {
         if (res.success) {
-          cb('名称已存在')
+          cb(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.source-list.store.o07pkyecrw'
+              )
+              .d('名称已存在')
+          )
         } else {
           cb()
         }
@@ -245,6 +265,7 @@ class Store {
       const res = await io.checkKeyWord({
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.nameKeyWord = res
       })
@@ -260,6 +281,7 @@ class Store {
         fieldType: params,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.tagTypeList = res
       })

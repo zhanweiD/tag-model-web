@@ -1,10 +1,11 @@
+import intl from 'react-intl-universal'
 /**
  * @description 编辑同步计划
  */
-import {Component} from 'react'
-import {observer, inject} from 'mobx-react'
-import {action, observable} from 'mobx'
-import {Drawer, Button} from 'antd'
+import { Component } from 'react'
+import { observer, inject } from 'mobx-react'
+import { action, observable } from 'mobx'
+import { Drawer, Button } from 'antd'
 import List from './drawer-edit-list'
 import Tree from './drawer-edit-tree'
 
@@ -12,26 +13,27 @@ import store from './store-drawer-edit'
 
 @inject('bigStore')
 @observer
-export default class DrawerEditSync extends Component {
+class DrawerEditSync extends Component {
   constructor(props) {
     super(props)
     this.bigStore = props.bigStore
     store.projectId = props.projectId
   }
-  
+
   @observable listRemoveItem
   @observable listRemoveAll // 全部清空列表数据
 
   componentWillReceiveProps(next) {
-    const {visible} = this.props
+    const { visible } = this.props
 
     if (visible !== next.visible && next.visible) {
-      const {selectItem} = this.bigStore
+      const { selectItem } = this.bigStore
       const params = {
         objId: selectItem.objId,
-        storageId: selectItem.objId, 
+        storageId: selectItem.objId,
         schemeId: selectItem.id,
       }
+
       store.objId = selectItem.objId
       store.storageId = selectItem.storageId
       store.schemeId = selectItem.id
@@ -51,10 +53,10 @@ export default class DrawerEditSync extends Component {
         if (!keys.includes(d)) {
           addArr.push(tagData[i])
         }
-      })  
-      store.tableData = store.tableData.concat(addArr) 
-      store.tableList = store.tableData.map(d => d.id) 
-    } 
+      })
+      store.tableData = store.tableData.concat(addArr)
+      store.tableList = store.tableData.map(d => d.id)
+    }
   }
 
   @action.bound removeList(item) {
@@ -64,35 +66,41 @@ export default class DrawerEditSync extends Component {
   }
 
   @action.bound removeListAll(d) {
-    const {majorTagList} = this.store
+    const { majorTagList } = this.store
     this.listRemoveAll = d
     store.tableData.replace(majorTagList)
   }
 
   @action.bound handleSubmit() {
-    const {selectItem} = this.bigStore
-    const {tableData} = store
+    const { selectItem } = this.bigStore
+    const { tableData } = store
     const t = this
 
-    const mainTagMappingKeys = tableData.filter(d => d.isMajor).map(s => ({
-      tagId: s.aId,
-      columnName: s.columnName || s.enName, 
-      columnType: s.columnType,
-    }))
+    const mainTagMappingKeys = tableData
+      .filter(d => d.isMajor)
+      .map(s => ({
+        tagId: s.aId,
+        columnName: s.columnName || s.enName,
+        columnType: s.columnType,
+      }))
 
-    const source = tableData.filter(d => !d.isMajor).map(s => ({
-      tagId: s.aId,
-      columnName: s.columnName || s.enName, 
-      columnType: s.columnType,
-    }))
+    const source = tableData
+      .filter(d => !d.isMajor)
+      .map(s => ({
+        tagId: s.aId,
+        columnName: s.columnName || s.enName,
+        columnType: s.columnType,
+      }))
+
     const params = {
       id: selectItem.id,
       mainTagMappingKeys,
       source,
     }
+
     store.editSync(params, () => {
       t.bigStore.visibleEdit = false
-      t.bigStore.getList({currentPage: 1})
+      t.bigStore.getList({ currentPage: 1 })
     })
   }
 
@@ -102,11 +110,15 @@ export default class DrawerEditSync extends Component {
   }
 
   render() {
-    const {visible} = this.props
-    const {confirmLoading} = store
+    const { visible } = this.props
+    const { confirmLoading } = store
 
     const drawerConfig = {
-      title: '编辑同步计划',
+      title: intl
+        .get(
+          'ide.src.page-manage.page-tag-sync.sync-list.drawer-edit.dwo7hiv1p6'
+        )
+        .d('编辑同步计划'),
       visible,
       closable: true,
       width: 1120,
@@ -130,25 +142,30 @@ export default class DrawerEditSync extends Component {
     }
 
     return (
-      <Drawer
-        {...drawerConfig}
-      >
+      <Drawer {...drawerConfig}>
         <div className="edit-sync">
           <Tree {...treeConfig} />
           <List {...listConfig} />
         </div>
         <div className="bottom-button">
-          <Button style={{marginRight: 8}} onClick={() => this.closeDrawer()}>关闭</Button>
+          <Button style={{ marginRight: 8 }} onClick={() => this.closeDrawer()}>
+            {intl
+              .get('ide.src.component.modal-stroage-detail.main.ph80bkiru5h')
+              .d('关闭')}
+          </Button>
           <Button
             type="primary"
-            style={{marginRight: 8}}
+            style={{ marginRight: 8 }}
             onClick={this.handleSubmit}
             loading={confirmLoading}
           >
-            确定
+            {intl
+              .get('ide.src.page-config.workspace-config.modal.wrk0nanr55b')
+              .d('确定')}
           </Button>
         </div>
       </Drawer>
     )
   }
 }
+export default DrawerEditSync

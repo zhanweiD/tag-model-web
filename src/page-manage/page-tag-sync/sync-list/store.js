@@ -1,8 +1,12 @@
+import intl from 'react-intl-universal'
+import { action, runInAction, observable } from 'mobx'
 import {
-  action, runInAction, observable,
-} from 'mobx'
-import {successTip, failureTip, errorTip, changeToOptions} from '../../../common/util'
-import {ListContentStore} from '../../../component/list-content'
+  successTip,
+  failureTip,
+  errorTip,
+  changeToOptions,
+} from '../../../common/util'
+import { ListContentStore } from '../../../component/list-content'
 import io from './io'
 
 class Store extends ListContentStore(io.getList) {
@@ -25,6 +29,7 @@ class Store extends ListContentStore(io.getList) {
       const res = await io.getObjList({
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.objList = changeToOptions(res)('name', 'objId')
       })
@@ -40,9 +45,16 @@ class Store extends ListContentStore(io.getList) {
         projectId: this.projectId,
         deleteId: id,
       })
+
       runInAction(() => {
-        successTip('删除成功')
-        this.getList({currentPage: 1})
+        successTip(
+          intl
+            .get(
+              'ide.src.page-manage.page-aim-source.source-list.store.hz4myn73qbp'
+            )
+            .d('删除成功')
+        )
+        this.getList({ currentPage: 1 })
       })
     } catch (e) {
       errorTip(e.message)
@@ -57,18 +69,31 @@ class Store extends ListContentStore(io.getList) {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
         if (res) {
-          successTip('启动成功')
+          successTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-tag-sync.sync-list.store.rgn76ck5bt'
+              )
+              .d('启动成功')
+          )
           this.getList()
         } else {
-          failureTip('启动失败')
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-tag-sync.sync-list.store.g33kpym7a9s'
+              )
+              .d('启动失败')
+          )
         }
         this.visibleStart = false
       })
     } catch (e) {
       errorTip(e.message)
-    } 
+    }
   }
 
   // 暂停
@@ -78,12 +103,25 @@ class Store extends ListContentStore(io.getList) {
         id,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         if (res) {
-          successTip('暂停成功')
+          successTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-tag-sync.sync-list.store.9nh3b00j4hp'
+              )
+              .d('暂停成功')
+          )
           this.getList()
         } else {
-          failureTip('暂停失败')
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-tag-sync.sync-list.store.9k59qn8o8ye'
+              )
+              .d('暂停失败')
+          )
         }
         this.getList()
       })
@@ -99,12 +137,25 @@ class Store extends ListContentStore(io.getList) {
         id,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         if (res) {
-          successTip('操作成功')
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
           this.getList()
         } else {
-          failureTip('操作失败')
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+              )
+              .d('操作失败')
+          )
         }
         this.getList()
       })
@@ -122,6 +173,7 @@ class Store extends ListContentStore(io.getList) {
         id,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.submitLog = res
       })

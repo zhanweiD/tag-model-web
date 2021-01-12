@@ -1,9 +1,10 @@
+import intl from 'react-intl-universal'
 /**
  * @description 总览
  */
-import {useEffect} from 'react'
-import {Route, Switch} from 'react-router-dom'
-import OnerFrame from '@dtwave/oner-frame' 
+import { useEffect } from 'react'
+import { Route, Switch } from 'react-router-dom'
+import OnerFrame from '@dtwave/oner-frame'
 
 import Overview from './overview'
 
@@ -16,14 +17,20 @@ export default () => {
     ctx.useProject(false)
     ctx.useQuickEntrance([
       {
-        tip: '审批管理',
+        tip: intl.get('ide.src.common.navList.0ujwqvq35vi').d('审批管理'),
         icon: 'approver',
         url: '/tag-model/index.html#/common/approval',
-      }, {
-        tip: '后台配置',
+      },
+      {
+        tip: intl
+          .get(
+            'ide.src.component.project-provider.project-provider.odc0bazjvxn'
+          )
+          .d('后台配置'),
         icon: 'setting',
         url: '/tag-model/index.html#/config/environment',
-      }])
+      },
+    ])
   }, [])
   return (
     <Switch>

@@ -1,11 +1,14 @@
-import {
-  observable, action, runInAction, toJS,
-} from 'mobx'
+import intl from 'react-intl-universal'
+import { observable, action, runInAction, toJS } from 'mobx'
 import _ from 'lodash'
 import {
-  successTip, failureTip, errorTip, changeToOptions, listToTree,
+  successTip,
+  failureTip,
+  errorTip,
+  changeToOptions,
+  listToTree,
 } from '../../../../common/util'
-import {ListContentStore} from '../../../../component/list-content'
+import { ListContentStore } from '../../../../component/list-content'
 import io from './io'
 
 class Store extends ListContentStore(io.getList) {
@@ -31,7 +34,7 @@ class Store extends ListContentStore(io.getList) {
   @observable isEnum = false // 是否枚举
   @observable ownObject = undefined // 所属对象
 
-  @observable editDetail = {} // 编辑标签事的详情数据 
+  @observable editDetail = {} // 编辑标签事的详情数据
   @observable detailLoading = false // 请求标签详情时loading
 
   // 标签配置
@@ -87,6 +90,7 @@ class Store extends ListContentStore(io.getList) {
     this.getTagCateSelectList({
       id: this.objId,
     })
+
     this.drawerTagVisible = true
   }
 
@@ -118,7 +122,6 @@ class Store extends ListContentStore(io.getList) {
     this.getList()
   }
 
-
   // 批量创建标签
   @action.bound openBatchConfig() {
     this.batchConfigVisible = true
@@ -128,7 +131,6 @@ class Store extends ListContentStore(io.getList) {
     this.batchConfigVisible = false
   }
 
-
   // 更新标签配置
   @action.bound updateBatchConfig() {
     this.closeBatchConfig()
@@ -137,7 +139,7 @@ class Store extends ListContentStore(io.getList) {
 
   /*
    * @description 上下架申请
-   * @param {*} params 
+   * @param {*} params
    */
   @action async tagApply(params) {
     this.confirmLoading = true
@@ -147,13 +149,26 @@ class Store extends ListContentStore(io.getList) {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
         if (res.success) {
-          successTip('操作成功')
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
           this.closeModal()
           this.getList()
         } else {
-          failureTip('操作失败')
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+              )
+              .d('操作失败')
+          )
         }
       })
     } catch (e) {
@@ -165,7 +180,7 @@ class Store extends ListContentStore(io.getList) {
 
   /*
    * @description 修改标签发布状态
-   * @param {*} params 
+   * @param {*} params
    */
   @action async updateTagStatus(params) {
     try {
@@ -173,13 +188,26 @@ class Store extends ListContentStore(io.getList) {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
         if (res.success) {
-          successTip('操作成功')
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
           this.bigStore.getObjCard()
           this.getList()
         } else {
-          failureTip('操作失败')
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+              )
+              .d('操作失败')
+          )
         }
       })
     } catch (e) {
@@ -195,14 +223,27 @@ class Store extends ListContentStore(io.getList) {
         status: 2,
         tagIdList: toJS(this.publishRowKeys),
       })
+
       runInAction(() => {
         if (res.success) {
-          successTip('操作成功')
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
           this.bigStore.getObjCard()
           this.getList()
           this.publishRowKeys.clear()
         } else {
-          failureTip('操作失败')
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+              )
+              .d('操作失败')
+          )
         }
       })
     } catch (e) {
@@ -220,14 +261,27 @@ class Store extends ListContentStore(io.getList) {
         useProjectIds: this.useProjectId,
         ...params,
       })
+
       runInAction(() => {
         if (res) {
-          successTip('操作成功')
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
           this.bigStore.getObjCard()
           if (cb) cb()
           this.getList()
         } else {
-          failureTip('操作失败')
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+              )
+              .d('操作失败')
+          )
         }
       })
     } catch (e) {
@@ -246,13 +300,20 @@ class Store extends ListContentStore(io.getList) {
         projectIds: this.backProjectId,
         tagId: this.tagId,
       })
+
       runInAction(() => {
         if (res) {
-          successTip('操作成功')
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
           this.bigStore.getObjCard()
           if (cb) cb()
           this.getList()
-        } 
+        }
       })
     } catch (e) {
       errorTip(e.message)
@@ -273,6 +334,7 @@ class Store extends ListContentStore(io.getList) {
         projectId: this.projectId,
         id: this.tagId,
       })
+
       runInAction(() => {
         this.applyProjectList = res || []
       })
@@ -282,7 +344,7 @@ class Store extends ListContentStore(io.getList) {
       this.applyProjectLoading = false
     }
   }
-  
+
   /*
    * @description 获取所属对象下拉数据
    */
@@ -291,6 +353,7 @@ class Store extends ListContentStore(io.getList) {
       const res = await io.getObjectSelectList({
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.objectSelectList = changeToOptions(res)('name', 'id')
       })
@@ -308,6 +371,7 @@ class Store extends ListContentStore(io.getList) {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
         this.tagCateSelectList = listToTree(res)
       })
@@ -327,6 +391,7 @@ class Store extends ListContentStore(io.getList) {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
         this.drawerTagInfo = res
         this.isEnum = res.isEnum
@@ -351,12 +416,25 @@ class Store extends ListContentStore(io.getList) {
         objId: this.objId,
         ...params,
       })
+
       runInAction(() => {
         if (res.success) {
-          successTip('操作成功')
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
           if (cb) cb()
         } else {
-          failureTip('操作失败')
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+              )
+              .d('操作失败')
+          )
         }
       })
     } catch (e) {
@@ -377,12 +455,25 @@ class Store extends ListContentStore(io.getList) {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
         if (res.success) {
-          successTip('操作成功')
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
           if (cb) cb()
         } else {
-          failureTip('操作失败')
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+              )
+              .d('操作失败')
+          )
         }
       })
     } catch (e) {
@@ -401,12 +492,25 @@ class Store extends ListContentStore(io.getList) {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
         if (res) {
-          successTip('操作成功')
-          this.getList({currentPage: 1})
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
+          this.getList({ currentPage: 1 })
         } else {
-          failureTip('操作失败')
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+              )
+              .d('操作失败')
+          )
         }
       })
     } catch (e) {
@@ -420,12 +524,25 @@ class Store extends ListContentStore(io.getList) {
         ...params,
         objId: this.objId,
       })
+
       runInAction(() => {
         if (res) {
-          successTip('操作成功')
-          this.getList({currentPage: 1})
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
+          this.getList({ currentPage: 1 })
         } else {
-          failureTip('操作失败')
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+              )
+              .d('操作失败')
+          )
         }
       })
     } catch (e) {
@@ -443,9 +560,16 @@ class Store extends ListContentStore(io.getList) {
         objId: this.ownObject,
         ...params,
       })
+
       runInAction(() => {
         if (res.success) {
-          cb('名称已存在')
+          cb(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.source-list.store.o07pkyecrw'
+              )
+              .d('名称已存在')
+          )
         } else {
           cb()
         }
@@ -461,6 +585,7 @@ class Store extends ListContentStore(io.getList) {
       const res = await io.checkKeyWord({
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.nameKeyWord = res
       })
@@ -475,12 +600,25 @@ class Store extends ListContentStore(io.getList) {
         ...params,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         if (res) {
-          successTip('操作成功')
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
           this.getList()
         } else {
-          failureTip('操作失败')
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+              )
+              .d('操作失败')
+          )
         }
       })
     } catch (e) {
@@ -498,6 +636,7 @@ class Store extends ListContentStore(io.getList) {
       const res = await io.getAuthCode({
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.functionCodes = res
       })
@@ -527,7 +666,7 @@ class Store extends ListContentStore(io.getList) {
       })
 
       const availableRes = _.filter(res, item => item.available === true)
-      
+
       this.tagTreeListAll = listToTree(res)
       this.tagTreeListAvailable = listToTree(availableRes)
       this.tagTreeList = listToTree(availableRes)
@@ -537,7 +676,10 @@ class Store extends ListContentStore(io.getList) {
         }
       })
 
-      this.checkedKeys = _.map(_.filter(res, e => e.checked), 'aId').map(String)
+      this.checkedKeys = _.map(
+        _.filter(res, e => e.checked),
+        'aId'
+      ).map(String)
       if (!this.treeSearchKey && this.checkedKeys.length > 0) {
         // 说明有选择的
         this.getTagsList()
@@ -583,8 +725,14 @@ class Store extends ListContentStore(io.getList) {
         objId: +this.objId,
         tagIds: this.checkedKeys.map(Number),
       })
-      
-      successTip('操作成功')
+
+      successTip(
+        intl
+          .get(
+            'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+          )
+          .d('操作成功')
+      )
       cb()
     } catch (e) {
       errorTip(e.message)

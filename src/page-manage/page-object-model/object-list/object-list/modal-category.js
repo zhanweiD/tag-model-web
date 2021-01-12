@@ -1,13 +1,14 @@
-import {Component} from 'react'
-import {action} from 'mobx'
-import {observer} from 'mobx-react'
-import {Modal} from 'antd'
-import {ModalForm} from '../../../../component'
-import {modalDefaultConfig, judgeEditType} from '../util'
-import {debounce} from '../../../../common/util'
+import intl from 'react-intl-universal'
+import { Component } from 'react'
+import { action } from 'mobx'
+import { observer } from 'mobx-react'
+import { Modal } from 'antd'
+import { ModalForm } from '../../../../component'
+import { modalDefaultConfig, judgeEditType } from '../util'
+import { debounce } from '../../../../common/util'
 
 @observer
-export default class ModalCategory extends Component {
+class ModalCategory extends Component {
   constructor(props) {
     super(props)
     this.store = props.store
@@ -18,41 +19,57 @@ export default class ModalCategory extends Component {
    */
   renderEditModal() {
     const {
-      categoryModal: {
-        detail,
-        title,
-        editType,
-        visible,
-      }, 
+      categoryModal: { detail, title, editType, visible },
+
       confirmLoading,
     } = this.store
 
-    const content = [{
-      label: '类目名称',
-      key: 'name',
-      initialValue: judgeEditType(detail.name, editType),
-      component: 'input',
-      rules: [
-        '@namePattern',
-        '@nameUnderline',
-        '@nameShuQi',
-        '@transformTrim',
-        '@required',
-        '@max32',
-        {validator: this.checkName}, // here warning
-      ],
-    }, {
-      label: '描述',
-      key: 'descr',
-      initialValue: judgeEditType(detail.descr, editType),
-      component: 'textArea',
-      rules: [
-        '@max128',
-      ],
-    }]
+    const content = [
+      {
+        label: intl
+          .get(
+            'ide.src.page-manage.page-object-model.object-list.object-list.modal-category.aps4bfdj6ls'
+          )
+          .d('类目名称'),
+        key: 'name',
+        initialValue: judgeEditType(detail.name, editType),
+        component: 'input',
+        rules: [
+          '@namePattern',
+          '@nameUnderline',
+          '@nameShuQi',
+          '@transformTrim',
+          '@required',
+          '@max32',
+          { validator: this.checkName }, // here warning
+        ],
+      },
+      {
+        label: intl
+          .get('ide.src.component.modal-stroage-detail.main.lyqo7nv5t9h')
+          .d('描述'),
+        key: 'descr',
+        initialValue: judgeEditType(detail.descr, editType),
+        component: 'textArea',
+        rules: ['@max128'],
+      },
+    ]
 
     const modalConfig = {
-      title: editType === 'edit' ? `编辑${title}` : `添加${title}`,
+      title:
+        editType === 'edit'
+          ? intl
+              .get(
+                'ide.src.page-manage.page-object-model.object-list.object-list.modal-category.n5fnnbqmunm',
+                { title: title }
+              )
+              .d('编辑{title}')
+          : intl
+              .get(
+                'ide.src.page-manage.page-object-model.object-list.object-list.modal-category.n8jyftw6qej',
+                { title: title }
+              )
+              .d('添加{title}'),
       visible,
       onCancel: this.handleCancel,
       onOk: this.submit,
@@ -62,7 +79,9 @@ export default class ModalCategory extends Component {
 
     const formConfig = {
       selectContent: visible && content,
-      wrappedComponentRef: form => { this.form = form ? form.props.form : form },
+      wrappedComponentRef: form => {
+        this.form = form ? form.props.form : form
+      },
     }
 
     return (
@@ -73,7 +92,9 @@ export default class ModalCategory extends Component {
   }
 
   @action checkName = (rule, value, callback) => {
-    const {categoryModal: {detail, editType}} = this.store
+    const {
+      categoryModal: { detail, editType },
+    } = this.store
 
     const params = {
       name: value,
@@ -94,13 +115,10 @@ export default class ModalCategory extends Component {
 
   submit = () => {
     const t = this
-    const {store} = t
-    
+    const { store } = t
+
     const {
-      categoryModal: {
-        editType, 
-        detail,
-      },
+      categoryModal: { editType, detail },
     } = store
 
     this.form.validateFields((err, values) => {
@@ -110,15 +128,19 @@ export default class ModalCategory extends Component {
           parentId: detail.aId,
           ...values,
         }
-        // 编辑 
+
+        // 编辑
         if (editType === 'edit') {
-          store.editNode({
-            id: detail.id,
-            ...values,
-          }, () => {
-            t.handleCancel()
-            t.props.editNodeSuccess()
-          })
+          store.editNode(
+            {
+              id: detail.id,
+              ...values,
+            },
+            () => {
+              t.handleCancel()
+              t.props.editNodeSuccess()
+            }
+          )
         } else {
           // 新增
           store.addNode(params, () => {
@@ -133,3 +155,4 @@ export default class ModalCategory extends Component {
     return this.renderEditModal()
   }
 }
+export default ModalCategory

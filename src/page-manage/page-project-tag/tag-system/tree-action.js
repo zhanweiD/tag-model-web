@@ -1,16 +1,15 @@
+import intl from 'react-intl-universal'
 /**
  * @description 树组件 - 搜索框
  */
-import {Component} from 'react'
-import {action} from 'mobx'
-import {observer} from 'mobx-react'
-import {NoBorderInput} from '../../../component'
-import {
-  IconRefresh, IconUnExtend, IconExtend,
-} from '../../../icon-comp'
+import { Component } from 'react'
+import { action } from 'mobx'
+import { observer } from 'mobx-react'
+import { NoBorderInput } from '../../../component'
+import { IconRefresh, IconUnExtend, IconExtend } from '../../../icon-comp'
 
 @observer
-export default class Action extends Component {
+class Action extends Component {
   constructor(props) {
     super(props)
     this.store = props.store
@@ -39,16 +38,24 @@ export default class Action extends Component {
   render() {
     return (
       <div className="object-tree-action">
-        <NoBorderInput 
-          placeholder="请输入关键字" 
+        <NoBorderInput
+          placeholder={intl
+            .get(
+              'ide.src.page-manage.page-project-tag.tag-system.tree-action.sseq75z4s6'
+            )
+            .d('请输入关键字')}
           onChange={this.searchTree}
           onPressEnter={this.searchTree}
         />
 
-        <div className="FBH pr6 pl6" style={{maxWidth: 70}}>
+        <div className="FBH pr6 pl6" style={{ maxWidth: 70 }}>
           <IconRefresh size="14" className="mr8" onClick={this.refreshTree} />
-          { this.store.expandAll ? (
-            <IconUnExtend size="14" className="hand" onClick={this.expandTree} /> 
+          {this.store.expandAll ? (
+            <IconUnExtend
+              size="14"
+              className="hand"
+              onClick={this.expandTree}
+            />
           ) : (
             <IconExtend size="14" className="hand" onClick={this.expandTree} />
           )}
@@ -57,3 +64,4 @@ export default class Action extends Component {
     )
   }
 }
+export default Action

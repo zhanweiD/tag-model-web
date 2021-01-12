@@ -1,6 +1,6 @@
+import { Component, Fragment } from 'react'
 import { action } from 'mobx'
 import intl from 'react-intl-universal'
-import { Component, Fragment } from 'react'
 import { observer } from 'mobx-react'
 import ModalBack from './modal-back'
 import { ListContent } from '../../../../component'

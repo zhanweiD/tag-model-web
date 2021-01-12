@@ -1,8 +1,7 @@
-import {
-  action, runInAction, observable,
-} from 'mobx'
-import {successTip, errorTip, changeToOptions} from '../../../common/util'
-import {ListContentStore} from '../../../component/list-content'
+import intl from 'react-intl-universal'
+import { action, runInAction, observable } from 'mobx'
+import { successTip, errorTip, changeToOptions } from '../../../common/util'
+import { ListContentStore } from '../../../component/list-content'
 import io from './io'
 
 class Store extends ListContentStore(io.getList) {
@@ -34,7 +33,6 @@ class Store extends ListContentStore(io.getList) {
     this.getList()
   }
 
-
   @observable objList = [] // 下拉对象数据
 
   // 下拉对象列表
@@ -43,6 +41,7 @@ class Store extends ListContentStore(io.getList) {
       const res = await io.getObjList({
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.objList = changeToOptions(res)('name', 'objId')
       })
@@ -60,6 +59,7 @@ class Store extends ListContentStore(io.getList) {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
         this.objRelList = res
       })
@@ -79,10 +79,11 @@ class Store extends ListContentStore(io.getList) {
       const res = await io.getDefaultStorage({
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.defaultStorage = res || {}
         if (this.defaultStorage.storageType) {
-          this.oneForm.setFieldsValue({dataStorageType: res.storageType})
+          this.oneForm.setFieldsValue({ dataStorageType: res.storageType })
           this.selecStorageType(res.storageType)
         }
       })
@@ -100,11 +101,12 @@ class Store extends ListContentStore(io.getList) {
       const res = await io.getStorageType({
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.storageTypeList = changeToOptions(res)('name', 'type')
       })
     } catch (e) {
-      errorTip(e.message)       
+      errorTip(e.message)
     }
   }
 
@@ -116,6 +118,7 @@ class Store extends ListContentStore(io.getList) {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
         this.storageList = res
         const defaultId = res[0] ? res[0].dataStorageId : undefined
@@ -134,6 +137,7 @@ class Store extends ListContentStore(io.getList) {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
         this.storageTable = res
       })
@@ -150,6 +154,7 @@ class Store extends ListContentStore(io.getList) {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
         this.fieldList = res
       })
@@ -172,6 +177,7 @@ class Store extends ListContentStore(io.getList) {
         ...params,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.storageDetail = res
       })
@@ -191,10 +197,19 @@ class Store extends ListContentStore(io.getList) {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
-        successTip('新建成功')
-        if (cb) { cb() }
-        this.getList({currentPage: 1})
+        successTip(
+          intl
+            .get(
+              'ide.src.page-manage.page-aim-source.source-list.store.gzikr4o96re'
+            )
+            .d('新建成功')
+        )
+        if (cb) {
+          cb()
+        }
+        this.getList({ currentPage: 1 })
       })
     } catch (e) {
       errorTip(e.message)
@@ -205,16 +220,22 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-
   @action async delList(id) {
     try {
       await io.delList({
         id,
         projectId: this.projectId,
       })
+
       runInAction(() => {
-        successTip('删除成功')
-        this.getList({currentPage: 1})
+        successTip(
+          intl
+            .get(
+              'ide.src.page-manage.page-aim-source.source-list.store.hz4myn73qbp'
+            )
+            .d('删除成功')
+        )
+        this.getList({ currentPage: 1 })
       })
     } catch (e) {
       errorTip(e.message)
@@ -227,8 +248,15 @@ class Store extends ListContentStore(io.getList) {
         projectId: this.projectId,
         ...params,
       })
+
       if (res.isExit) {
-        cb('名称已存在')
+        cb(
+          intl
+            .get(
+              'ide.src.page-manage.page-aim-source.source-list.store.o07pkyecrw'
+            )
+            .d('名称已存在')
+        )
       } else {
         cb()
       }

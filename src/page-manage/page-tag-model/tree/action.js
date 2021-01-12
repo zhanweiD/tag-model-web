@@ -1,17 +1,21 @@
+import intl from 'react-intl-universal'
 /**
  * @description 树组件 - 搜索框
  */
-import {Component} from 'react'
-import {action} from 'mobx'
-import {observer} from 'mobx-react'
-import {Dropdown, Menu} from 'antd'
-import {NoBorderInput, Authority} from '../../../component'
+import { Component } from 'react'
+import { action } from 'mobx'
+import { observer } from 'mobx-react'
+import { Dropdown, Menu } from 'antd'
+import { NoBorderInput, Authority } from '../../../component'
 import {
-  IconRefresh, IconTreeAdd, IconUnExtend, IconExtend,
+  IconRefresh,
+  IconTreeAdd,
+  IconUnExtend,
+  IconExtend,
 } from '../../../icon-comp'
 
 @observer
-export default class Action extends Component {
+class Action extends Component {
   constructor(props) {
     super(props)
     this.store = props.store
@@ -54,13 +58,17 @@ export default class Action extends Component {
     const menu = (
       <Menu>
         <Menu.Item>
-          <div onClick={this.addObj} onKeyDown={() => {}} style={{margin: '-5px -12px', padding: '5px 12px'}}>
-            对象配置
+          <div
+            onClick={this.addObj}
+            onKeyDown={() => {}}
+            style={{ margin: '-5px -12px', padding: '5px 12px' }}
+          >
+            {intl.get('ide.src.common.navList.1u4wc7wzm02').d('对象配置')}
           </div>
         </Menu.Item>
       </Menu>
     )
-    
+
     return (
       <Dropdown overlay={menu}>
         <IconTreeAdd size="14" className="mr8 hand" />
@@ -71,22 +79,28 @@ export default class Action extends Component {
   render() {
     return (
       <div className="object-tree-action">
-        <NoBorderInput 
-          placeholder="请输入对象名称搜索" 
+        <NoBorderInput
+          placeholder={intl
+            .get(
+              'ide.src.page-manage.page-object-model.tree-action.w44lfomptlh'
+            )
+            .d('请输入对象名称搜索')}
           onChange={this.searchTree}
           onPressEnter={this.searchTree}
         />
 
-        <div className="FBH pr6 pl6" style={{maxWidth: 70}}>
+        <div className="FBH pr6 pl6" style={{ maxWidth: 70 }}>
           <IconRefresh size="14" className="mr8" onClick={this.refreshTree} />
           <Authority authCode="tag_model:select_obj[cud]">
-            {
-              this.dropdownDom()
-            }
+            {this.dropdownDom()}
           </Authority>
-         
-          { this.store.expandAll ? (
-            <IconUnExtend size="14" className="hand" onClick={this.expandTree} /> 
+
+          {this.store.expandAll ? (
+            <IconUnExtend
+              size="14"
+              className="hand"
+              onClick={this.expandTree}
+            />
           ) : (
             <IconExtend size="14" className="hand" onClick={this.expandTree} />
           )}
@@ -95,3 +109,4 @@ export default class Action extends Component {
     )
   }
 }
+export default Action

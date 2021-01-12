@@ -1,10 +1,13 @@
+import intl from 'react-intl-universal'
+import { observable, action, runInAction, toJS } from 'mobx'
 import {
-  observable, action, runInAction, toJS,
-} from 'mobx'
-import {
-  successTip, failureTip, errorTip, changeToOptions, listToTree,
+  successTip,
+  failureTip,
+  errorTip,
+  changeToOptions,
+  listToTree,
 } from '../../../../common/util'
-import {ListContentStore} from '../../../../component/list-content'
+import { ListContentStore } from '../../../../component/list-content'
 import io from './io'
 
 class Store extends ListContentStore(io.getTagList) {
@@ -21,10 +24,9 @@ class Store extends ListContentStore(io.getTagList) {
   @observable isEnum = false // 是否枚举
   @observable editCateId = undefined
   @observable ownObject = undefined // 所属对象
-  @observable getForm 
+  @observable getForm
 
   @observable detailLoading = false // 请求标签详情时loading
-
 
   // 标签配置
   @observable drawerTagConfigVisible = false
@@ -35,12 +37,13 @@ class Store extends ListContentStore(io.getTagList) {
   @action.bound openDrawer(type, data) {
     this.drawerTagType = type
     // this.drawerTagInfo = data || {}
-    
+
     if (type === 'edit') {
       // 获取对象详情
       this.getTagDetail({
         id: data.id,
       })
+
       // 根据所属对象id 查询所属类目下拉框数据
       // this.getTagCateSelectList({
       //   id: data.objId,
@@ -50,6 +53,7 @@ class Store extends ListContentStore(io.getTagList) {
     this.getTagCateSelectList({
       id: this.objId,
     })
+
     this.drawerTagVisible = true
   }
 
@@ -81,14 +85,12 @@ class Store extends ListContentStore(io.getTagList) {
     this.getList()
   }
 
-
   // 更新标签配置
   @action.bound updateBatchConfig() {
     this.closeBatchConfig()
     this.getList()
   }
 
-  
   /*
    * @description 获取所属对象下拉数据
    */
@@ -115,12 +117,25 @@ class Store extends ListContentStore(io.getTagList) {
         objId: this.objId,
         ...params,
       })
+
       runInAction(() => {
         if (res) {
-          successTip('操作成功')
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
           if (cb) cb()
         } else {
-          failureTip('操作失败')
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+              )
+              .d('操作失败')
+          )
         }
       })
     } catch (e) {
@@ -139,6 +154,7 @@ class Store extends ListContentStore(io.getTagList) {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
         this.tagCateSelectList = listToTree(res)
       })
@@ -158,11 +174,12 @@ class Store extends ListContentStore(io.getTagList) {
         // projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
         this.drawerTagInfo = res
         this.editCateId = res.cateId
         this.isEnum = res.isEnum
-        this.ownObject = res.objId  
+        this.ownObject = res.objId
       })
     } catch (e) {
       errorTip(e.message)
@@ -182,12 +199,25 @@ class Store extends ListContentStore(io.getTagList) {
         // objId: this.objId,
         ...params,
       })
+
       runInAction(() => {
         if (res) {
-          successTip('操作成功')
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
           if (cb) cb()
         } else {
-          failureTip('操作失败')
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+              )
+              .d('操作失败')
+          )
         }
       })
     } catch (e) {
@@ -206,12 +236,25 @@ class Store extends ListContentStore(io.getTagList) {
         // projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
         if (res) {
-          successTip('操作成功')
-          this.getList({currentPage: 1})
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
+          this.getList({ currentPage: 1 })
         } else {
-          failureTip('操作失败')
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+              )
+              .d('操作失败')
+          )
         }
       })
     } catch (e) {
@@ -229,9 +272,16 @@ class Store extends ListContentStore(io.getTagList) {
         objId: this.objId,
         ...params,
       })
+
       runInAction(() => {
         if (res.success) {
-          cb('名称已存在')
+          cb(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.source-list.store.o07pkyecrw'
+              )
+              .d('名称已存在')
+          )
         } else {
           cb()
         }
@@ -247,6 +297,7 @@ class Store extends ListContentStore(io.getTagList) {
       const res = await io.checkKeyWord({
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.nameKeyWord = res
       })
@@ -261,12 +312,25 @@ class Store extends ListContentStore(io.getTagList) {
         ...params,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         if (res) {
-          successTip('操作成功')
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
           this.getList()
         } else {
-          failureTip('操作失败')
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+              )
+              .d('操作失败')
+          )
         }
       })
     } catch (e) {
@@ -284,6 +348,7 @@ class Store extends ListContentStore(io.getTagList) {
       const res = await io.getAuthCode({
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.functionCodes = res
       })
@@ -292,6 +357,5 @@ class Store extends ListContentStore(io.getTagList) {
     }
   }
 }
-
 
 export default new Store()

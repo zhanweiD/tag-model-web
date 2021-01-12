@@ -1,7 +1,6 @@
-import {
-  observable, action, runInAction, 
-} from 'mobx'
-import {successTip, errorTip, listToTree, failureTip} from '../../common/util'
+import intl from 'react-intl-universal'
+import { observable, action, runInAction } from 'mobx'
+import { successTip, errorTip, listToTree, failureTip } from '../../common/util'
 import io from './io'
 
 class Store {
@@ -64,7 +63,7 @@ class Store {
     } else {
       this.tagList.loading = true
     }
-    
+
     try {
       const res = await io.getTagList(params)
       runInAction(() => {
@@ -75,6 +74,7 @@ class Store {
           pageSize: res.pages || 10,
           total: res.totalCount,
         }
+
         if (type === 'modal') {
           this.tagListModal = data
         } else {
@@ -94,7 +94,7 @@ class Store {
       })
     }
   }
-  
+
   @action findParentId(id, data, expandedKeys) {
     data.forEach(item => {
       if (item.parentId !== 0 && item.id === id) {
@@ -103,8 +103,8 @@ class Store {
       }
     })
   }
-    // 项目列表
-    @action async getProjects(cb) {
+  // 项目列表
+  @action async getProjects(cb) {
     try {
       const res = await io.getProjects({})
       this.isProject = res.length > 0
@@ -117,162 +117,191 @@ class Store {
   }
 
   @action async getTagCateTree(cb) {
-      this.treeLoading = true
+    this.treeLoading = true
 
-      try {
-        const res = await io.getTagCateTree({
-          id: this.tagClassObjId,
-          searchKey: this.searchKey,
-        })
-        runInAction(() => {
-          this.treeLoading = false
-          this.searchExpandedKeys.clear()
+    try {
+      const res = await io.getTagCateTree({
+        id: this.tagClassObjId,
+        searchKey: this.searchKey,
+      })
 
-          let data = res
+      runInAction(() => {
+        this.treeLoading = false
+        this.searchExpandedKeys.clear()
 
-          // 判断是否进行搜索
-          if (this.searchKey) {
-            data = res.map(item => {
-              // 关键字搜索定位
-              if (this.searchKey && item.name.includes(this.searchKey)) {
-                this.findParentId(item.id, res, this.searchExpandedKeys)
-              }
-              return item
-            })
-          }
+        let data = res
 
-          if (!this.currentSelectKeys) {
-            // 默认类目
-            [this.defaultCate] = res.filter(d => d.aId === -1)
-            this.currentSelectKeys = this.defaultCate.id
-          }
-          this.categoryData = res.filter(d => d.isLeaf !== 1) // 叶子类目
+        // 判断是否进行搜索
+        if (this.searchKey) {
+          data = res.map(item => {
+            // 关键字搜索定位
+            if (this.searchKey && item.name.includes(this.searchKey)) {
+              this.findParentId(item.id, res, this.searchExpandedKeys)
+            }
+            return item
+          })
+        }
 
-          this.treeData = listToTree(data)
-        })
+        if (!this.currentSelectKeys) {
+          // 默认类目
+          ;[this.defaultCate] = res.filter(d => d.aId === -1)
+          this.currentSelectKeys = this.defaultCate.id
+        }
+        this.categoryData = res.filter(d => d.isLeaf !== 1) // 叶子类目
 
-        if (cb) cb()
-      } catch (e) {
-        runInAction(() => {
-          this.treeLoading = false
-        })
-        errorTip(e.message)
-      }
+        this.treeData = listToTree(data)
+      })
+
+      if (cb) cb()
+    } catch (e) {
+      runInAction(() => {
+        this.treeLoading = false
+      })
+      errorTip(e.message)
     }
+  }
 
-    @observable modalMove = {
-      selectKeys: [],
-      visible: false,
-    }
-  
-    /*
-     * @description 添加标签类目
-     */
-    @action async addNode(params, cb) {
-      this.confirmLoading = true
-      try {
-        const res = await io.addTagCate({
-          objId: this.tagClassObjId,
-          ...params,
-        })
+  @observable modalMove = {
+    selectKeys: [],
+    visible: false,
+  }
 
-        runInAction(() => {
-          this.confirmLoading = false
-          if (res.success) {
-            successTip('操作成功')
-            // 刷新类目树
-            this.getTagCateTree(cb)
-          } else {
-            failureTip('操作失败')
-          }
-        })
-      } catch (e) {
-        runInAction(() => {
-          this.confirmLoading = false
-        })
-        errorTip(e.message)
-      }
-    }
-  
-    /*
-     * @description 编辑标签类目
-     */
-    @action async editNode(params, cb) {
-      this.confirmLoading = true
-      try {
-        await io.editTagCate({
-          objId: this.tagClassObjId,
-          ...params,
-        })
-  
-        runInAction(() => {
-          this.confirmLoading = false
-          successTip('操作成功')
+  /*
+   * @description 添加标签类目
+   */
+  @action async addNode(params, cb) {
+    this.confirmLoading = true
+    try {
+      const res = await io.addTagCate({
+        objId: this.tagClassObjId,
+        ...params,
+      })
+
+      runInAction(() => {
+        this.confirmLoading = false
+        if (res.success) {
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
           // 刷新类目树
-          this.getTagCateTree()
-          if (cb) cb()
-        })
-      } catch (e) {
-        runInAction(() => {
-          this.confirmLoading = false
-        })
-        errorTip(e.message)
-      }
+          this.getTagCateTree(cb)
+        } else {
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+              )
+              .d('操作失败')
+          )
+        }
+      })
+    } catch (e) {
+      runInAction(() => {
+        this.confirmLoading = false
+      })
+      errorTip(e.message)
     }
-    /*
-     * @description 重名校验
-     */
-    @action async checkName(params, cb) {
-      try {
-        const res = await io.checkTagCateName({
-          objId: this.tagClassObjId,
-          ...params,
-        })
-        runInAction(() => {
-          if (res.success) {
-            cb('名称已存在')
-          } else {
-            cb()
-          }
-        })
-      } catch (e) {
-        errorTip(e.message)
-      }
-    }
+  }
 
-    @action async getTagCateDetail() {
-      try {
-        const res = await io.getTagCateDetail({
-          id: this.currentSelectKeys,
-        })
-        runInAction(() => {
-          this.cateDetail = res
-        })
-      } catch (e) {
-        errorTip(e.message)
-      }
+  /*
+   * @description 编辑标签类目
+   */
+  @action async editNode(params, cb) {
+    this.confirmLoading = true
+    try {
+      await io.editTagCate({
+        objId: this.tagClassObjId,
+        ...params,
+      })
+
+      runInAction(() => {
+        this.confirmLoading = false
+        successTip(
+          intl
+            .get(
+              'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+            )
+            .d('操作成功')
+        )
+        // 刷新类目树
+        this.getTagCateTree()
+        if (cb) cb()
+      })
+    } catch (e) {
+      runInAction(() => {
+        this.confirmLoading = false
+      })
+      errorTip(e.message)
     }
+  }
+  /*
+   * @description 重名校验
+   */
+  @action async checkName(params, cb) {
+    try {
+      const res = await io.checkTagCateName({
+        objId: this.tagClassObjId,
+        ...params,
+      })
+
+      runInAction(() => {
+        if (res.success) {
+          cb(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.source-list.store.o07pkyecrw'
+              )
+              .d('名称已存在')
+          )
+        } else {
+          cb()
+        }
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  @action async getTagCateDetail() {
+    try {
+      const res = await io.getTagCateDetail({
+        id: this.currentSelectKeys,
+      })
+
+      runInAction(() => {
+        this.cateDetail = res
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
 
   @action async getObjDetail() {
-      this.loading = true
-      try {
-        const res = await io.getObjDetail({
-          id: this.objId,
-        })
-        runInAction(() => {
-          this.loading = false
-          this.objDetail = res
-        })
-      } catch (e) {
-        errorTip(e.message)
-      }
+    this.loading = true
+    try {
+      const res = await io.getObjDetail({
+        id: this.objId,
+      })
+
+      runInAction(() => {
+        this.loading = false
+        this.objDetail = res
+      })
+    } catch (e) {
+      errorTip(e.message)
     }
+  }
 
   @action async getObjCard() {
     try {
       const res = await io.getObjCard({
         id: this.objId,
       })
+
       runInAction(() => {
         this.objCard = res
       })
@@ -288,6 +317,7 @@ class Store {
       const res = await io.getObjView({
         id: this.objId,
       })
+
       runInAction(() => {
         this.objView = res
         if (cb) cb()
@@ -308,8 +338,15 @@ class Store {
         id: this.objId,
         status,
       })
+
       runInAction(() => {
-        successTip('操作成功')
+        successTip(
+          intl
+            .get(
+              'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+            )
+            .d('操作成功')
+        )
         this.releaseLoading = false
         if (cb) cb()
       })
@@ -322,14 +359,13 @@ class Store {
     }
   }
 
-
   /*
    * @description 业务视图
    */
 
   @observable modelLoading = false
   @observable businessModel = []
-  
+
   @action async getBusinessModel(cb, params) {
     this.modelLoading = true
     try {
@@ -362,18 +398,19 @@ class Store {
       const res = await io.getBMRelation({
         id: this.objId,
       })
+
       runInAction(() => {
         this.relList = res
         if (cb) cb(res)
       })
     } catch (e) {
       errorTip(e.message)
-    } 
+    }
   }
 
   getLinksObj = (links, obj) => {
-    if (!links.length) return {links: [], obj}
-    if (obj.length === 1) return {links: [], obj}
+    if (!links.length) return { links: [], obj }
+    if (obj.length === 1) return { links: [], obj }
 
     const relObj = obj.filter(d => d.objTypeCode === 3)[0]
     const relObjTag = relObj.tag.map(d => d.id)
@@ -387,7 +424,7 @@ class Store {
     }
 
     const resObj = obj
-    
+
     if (relObjInx === 0) {
       resObj.push(resObj.shift())
     }
