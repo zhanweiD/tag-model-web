@@ -1,14 +1,15 @@
-import {Component, Fragment} from 'react'
-import {observer} from 'mobx-react'
-import {action} from 'mobx'
-import {ListContent} from '../../../../component'
-import {Time} from '../../../../common/util'
+import { action } from 'mobx'
+import intl from 'react-intl-universal'
+import { Component, Fragment } from 'react'
+import { observer } from 'mobx-react'
 import ModalBack from './modal-back'
+import { ListContent } from '../../../../component'
+import { Time } from '../../../../common/util'
 
 import store from './store-project'
 
 @observer
-export default class ProjectList extends Component {
+class ProjectList extends Component {
   constructor(props) {
     super(props)
     store.tagId = props.tagId
@@ -16,25 +17,41 @@ export default class ProjectList extends Component {
   }
   columns = [
     {
-      title: '项目名称',
+      title: intl
+        .get(
+          'ide.src.page-manage.page-object-model.object-list.object-detail.use-project.v1drer78dg'
+        )
+        .d('项目名称'),
       key: 'name',
       dataIndex: 'name',
-    }, {
-      title: '项目描述',
+    },
+    {
+      title: intl
+        .get(
+          'ide.src.page-manage.page-object-model.object-list.object-detail.use-project.n7rzujk1s3n'
+        )
+        .d('项目描述'),
       key: 'descr',
       dataIndex: 'descr',
-      render: text => (text || '-'),
-    }, {
-      title: '申请时间',
+      render: text => text || '-',
+    },
+    {
+      title: intl.get('ide.src.component.comp.search.bld1br247f').d('申请时间'),
       key: 'ctime',
       dataIndex: 'ctime',
       render: text => <Time timestamp={text} />,
-    }, {
-      title: '加工方案引用数',
+    },
+    {
+      title: intl
+        .get('ide.src.page-manage.page-project-tag.detail.main.40y9kbpr4qg')
+        .d('加工方案引用数'),
       key: 'derivativeCount',
       dataIndex: 'derivativeCount',
-    }, {
-      title: '标签应用数',
+    },
+    {
+      title: intl
+        .get('ide.src.page-manage.page-project-tag.detail.main.nh79sa2cn9')
+        .d('标签应用数'),
       key: 'tagAppCount',
       dataIndex: 'tagAppCount',
     }, {
@@ -61,11 +78,11 @@ export default class ProjectList extends Component {
   }
 
   render() {
-    const {tagId, projectId} = this.props
-    
+    const { tagId, projectId } = this.props
+
     const listConfig = {
       columns: this.columns,
-      initParams: {tagId, projectId},
+      initParams: { tagId, projectId },
       store, // 必填属性
     }
 
@@ -77,3 +94,4 @@ export default class ProjectList extends Component {
     )
   }
 }
+export default ProjectList
