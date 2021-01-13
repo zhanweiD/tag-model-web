@@ -1,16 +1,16 @@
 import intl from 'react-intl-universal'
-import { Component } from 'react'
-import { action, toJS } from 'mobx'
-import { observer } from 'mobx-react'
-import { Drawer, Button, Spin } from 'antd'
-import { ModalForm } from '../../../../component'
+import {Component} from 'react'
+import {action, toJS} from 'mobx'
+import {observer} from 'mobx-react'
+import {Drawer, Button, Spin} from 'antd'
+import {ModalForm} from '../../../../component'
 import {
   changeToOptions,
   enNameReg,
   isJsonFormat,
   debounce,
 } from '../../../../common/util'
-import { tagConfigMethodMap, nameTypeMap } from '../util'
+import {tagConfigMethodMap, nameTypeMap} from '../util'
 
 @observer
 class DrawerCreate extends Component {
@@ -102,7 +102,7 @@ class DrawerCreate extends Component {
           '@transformTrim',
           '@required',
           '@max32',
-          { validator: this.checkName },
+          {validator: this.checkName},
         ],
 
         control: {
@@ -122,7 +122,7 @@ class DrawerCreate extends Component {
           '@required',
           '@max32',
           // {pattern: enNameReg, message: '不超过32个字，只能包含英文、数字或下划线，必须以英文开头'},
-          { validator: this.checkName },
+          {validator: this.checkName},
         ],
 
         control: {
@@ -166,33 +166,33 @@ class DrawerCreate extends Component {
         },
       },
 
-      {
-        label: intl
-          .get(
-            'ide.src.page-manage.page-object-model.object-list.object-detail.drawer-create.7g6e5biv0hp'
-          )
-          .d('枚举显示值'),
-        key: 'enumValue',
-        hide: !isEnum,
-        initialValue: drawerTagInfo.enumValue,
-        component: 'textArea',
-        rules: [
-          '@transformTrim',
-          // '@required',
-          '@max128',
-          { validator: this.handleEnumValueValidator },
-        ],
+      // {
+      //   label: intl
+      //     .get(
+      //       'ide.src.page-manage.page-object-model.object-list.object-detail.drawer-create.7g6e5biv0hp'
+      //     )
+      //     .d('枚举显示值'),
+      //   key: 'enumValue',
+      //   hide: !isEnum,
+      //   initialValue: drawerTagInfo.enumValue,
+      //   component: 'textArea',
+      //   rules: [
+      //     '@transformTrim',
+      //     // '@required',
+      //     '@max128',
+      //     { validator: this.handleEnumValueValidator },
+      //   ],
 
-        control: {
-          placeholder: intl
-            .get(
-              'ide.src.page-manage.page-object-model.object-list.object-detail.drawer-create.w3weeojwq6'
-            )
-            .d(
-              '若标签值为枚举型，可将枚举代码值显示为易理解的值，例如：{"0":"女","1":"男"}'
-            ),
-        },
-      },
+      //   control: {
+      //     placeholder: intl
+      //       .get(
+      //         'ide.src.page-manage.page-object-model.object-list.object-detail.drawer-create.w3weeojwq6'
+      //       )
+      //       .d(
+      //         '若标签值为枚举型，可将枚举代码值显示为易理解的值，例如：{"0":"女","1":"男"}'
+      //       ),
+      //   },
+      // },
 
       {
         label: intl
@@ -272,7 +272,7 @@ class DrawerCreate extends Component {
 
   submit = () => {
     const t = this
-    const { store } = t
+    const {store} = t
 
     this.form.validateFields((err, values) => {
       if (!err) {
@@ -293,7 +293,7 @@ class DrawerCreate extends Component {
         } else {
           store.createTag(params, () => {
             t.handleCancel()
-            store.getList({ currentPage: 1 })
+            store.getList({currentPage: 1})
           })
         }
       }
@@ -340,15 +340,15 @@ class DrawerCreate extends Component {
       title:
         drawerTagType === 'edit'
           ? intl
-              .get(
-                'ide.src.page-manage.page-object-model.object-list.object-detail.drawer-create.3cw1uc8uafd'
-              )
-              .d('编辑标签')
+            .get(
+              'ide.src.page-manage.page-object-model.object-list.object-detail.drawer-create.3cw1uc8uafd'
+            )
+            .d('编辑标签')
           : intl
-              .get(
-                'ide.src.page-manage.page-object-model.object-list.object-detail.drawer-create.s5rfkq7s99'
-              )
-              .d('新建标签'),
+            .get(
+              'ide.src.page-manage.page-object-model.object-list.object-detail.drawer-create.s5rfkq7s99'
+            )
+            .d('新建标签'),
       maskClosable: false,
       destroyOnClose: true,
       visible: drawerTagVisible,
@@ -361,7 +361,7 @@ class DrawerCreate extends Component {
       wrappedComponentRef: form => {
         this.form = form ? form.props.form : form
       },
-      style: { paddingBottom: '50px' },
+      style: {paddingBottom: '50px'},
     }
 
     return (
@@ -372,7 +372,7 @@ class DrawerCreate extends Component {
 
         <div className="bottom-button">
           <Button
-            style={{ marginRight: 8 }}
+            style={{marginRight: 8}}
             onClick={() => this.store.closeDrawer()}
           >
             {intl

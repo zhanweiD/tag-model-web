@@ -2,16 +2,16 @@ import intl from 'react-intl-universal'
 /**
  * @description 对象配置 - 字段列表
  */
-import { Component } from 'react'
-import { action, toJS } from 'mobx'
-import { observer, inject } from 'mobx-react'
+import {Component} from 'react'
+import {action, toJS} from 'mobx'
+import {observer, inject} from 'mobx-react'
 import {
   ListContent,
   QuestionTooltip,
   Authority,
   OmitTooltip,
 } from '../../../component'
-import { tagStatusMap, configStatusMap } from '../util'
+import {tagStatusMap, configStatusMap} from '../util'
 import DrawerTagConfig from './drawer'
 import seach from './search'
 
@@ -39,7 +39,7 @@ class FieldList extends Component {
   }
 
   componentWillReceiveProps(next) {
-    const { objId } = this.props
+    const {objId} = this.props
 
     if (+objId !== +next.objId) {
       store.objId = next.objId
@@ -154,13 +154,13 @@ class FieldList extends Component {
       render: (text, record) => (
         <div className="FBH FBAC">
           <Authority authCode="tag_model:config_field_tag[c]">
-            {record.status === 2 ? (
+            {record.status ? (
               <span className="disabled">
                 {intl
                   .get(
                     'ide.src.page-manage.page-tag-model.field-list.index.axernry5crc'
                   )
-                  .d('生成标签')}
+                  .d('配置标签')}
               </span>
             ) : (
               <a href onClick={() => this.openModal(record)}>
@@ -168,7 +168,7 @@ class FieldList extends Component {
                   .get(
                     'ide.src.page-manage.page-tag-model.field-list.index.axernry5crc'
                   )
-                  .d('生成标签')}
+                  .d('配置标签')}
               </a>
             )}
 
@@ -297,6 +297,8 @@ class FieldList extends Component {
 
   @action openModal(data) {
     store.modalInfo.visible = true
+    store.isNewTag = true
+    store.tagDetail = {}
     store.isEnum = data.isEnum
     store.modalInfo.detail = data
     store.getTagTree()
@@ -337,8 +339,8 @@ class FieldList extends Component {
     const listConfig = {
       columns: objType === 0 ? this.columns1 : this.columns,
       searchParams: seach(searchParams),
-      initParams: { objId, projectId },
-      scroll: { x: 900 },
+      initParams: {objId, projectId},
+      scroll: {x: 900},
       // paginationConfig: {
       //   hideOnSinglePage: true, // 只有一页时隐藏
       // },

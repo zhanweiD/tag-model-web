@@ -1,11 +1,11 @@
 import intl from 'react-intl-universal'
-import { Component } from 'react'
-import { observer, inject } from 'mobx-react'
-import { observable, action, toJS, computed } from 'mobx'
+import {Component} from 'react'
+import {observer, inject} from 'mobx-react'
+import {observable, action, toJS, computed} from 'mobx'
 import _ from 'lodash'
-import { Table, Input, Tooltip, Popconfirm } from 'antd'
-import { SearchOutlined } from '@ant-design/icons'
-import { getDataTypeName } from '../../../../common/util'
+import {Table, Input, Tooltip, Popconfirm} from 'antd'
+import {SearchOutlined} from '@ant-design/icons'
+import {getDataTypeName} from '../../../../common/util'
 
 @inject('bigStore')
 @observer
@@ -39,19 +39,18 @@ class CateTree extends Component {
         .get('ide.src.page-manage.page-common-tag.detail.main.ilm7zazygy')
         .d('是否枚举'),
       dataIndex: 'isEnum',
-      render: text =>
-        text === 1
-          ? intl.get('ide.src.component.form-component.03xp8ux32s3a').d('是')
-          : intl.get('ide.src.component.form-component.h7p1pcijouf').d('否'),
+      render: text => (text === 1
+        ? intl.get('ide.src.component.form-component.03xp8ux32s3a').d('是')
+        : intl.get('ide.src.component.form-component.h7p1pcijouf').d('否')),
     },
-    {
-      title: intl
-        .get(
-          'ide.src.page-manage.page-object-model.object-list.object-detail.drawer-create.7g6e5biv0hp'
-        )
-        .d('枚举显示值'),
-      dataIndex: 'enumValue',
-    },
+    // {
+    //   title: intl
+    //     .get(
+    //       'ide.src.page-manage.page-object-model.object-list.object-detail.drawer-create.7g6e5biv0hp'
+    //     )
+    //     .d('枚举显示值'),
+    //   dataIndex: 'enumValue',
+    // },
     {
       title: intl
         .get(
@@ -107,7 +106,7 @@ class CateTree extends Component {
   @observable inputValue
 
   @action removeTag(id) {
-    const { bigStore } = this.props
+    const {bigStore} = this.props
     bigStore.checkedKeys = bigStore.checkedKeys.filter(e => e !== String(id))
     bigStore.tagDetaiList = bigStore.tagDetaiList.filter(e => e.id !== id)
     bigStore.selectTagList = bigStore.selectTagList.filter(e => e !== id)
@@ -119,7 +118,7 @@ class CateTree extends Component {
 
   @computed get filterData() {
     const {
-      bigStore: { tagDetaiList },
+      bigStore: {tagDetaiList},
     } = this.props
 
     return this.inputValue
@@ -129,7 +128,7 @@ class CateTree extends Component {
 
   render() {
     const {
-      bigStore: { tagDetaiList, tagDetailTableLoading },
+      bigStore: {tagDetaiList, tagDetailTableLoading},
     } = this.props
 
     return (
@@ -146,7 +145,7 @@ class CateTree extends Component {
               'ide.src.page-manage.page-tag-model.tag-model.tag-list.drawer-inherit-list.6rzqd8p64g7'
             )
             .d('请输入标签关键字')}
-          style={{ width: 300 }}
+          style={{width: 300}}
           suffix={<SearchOutlined />}
         />
 

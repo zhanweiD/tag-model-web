@@ -1,10 +1,10 @@
 import intl from 'react-intl-universal'
-import { Component, Fragment } from 'react'
-import { Radio, Tag, Button } from 'antd'
-import { action, toJS } from 'mobx'
-import { inject, observer } from 'mobx-react'
+import {Component, Fragment} from 'react'
+import {Radio, Tag, Button} from 'antd'
+import {action, toJS} from 'mobx'
+import {inject, observer} from 'mobx-react'
 
-import { ModalForm } from '../../component'
+import {ModalForm} from '../../component'
 import {
   debounce,
   changeToOptions,
@@ -79,18 +79,18 @@ class ConfigDrawerOne extends Component {
         initialValue: tagBaseInfo.name,
         rules: isNewTag
           ? [
-              '@transformTrim',
-              '@required',
-              '@max32',
-              { validator: this.checkName },
-            ]
+            '@transformTrim',
+            '@required',
+            '@max32',
+            {validator: this.checkName},
+          ]
           : ['@requiredSelect'],
 
         control: isNewTag
           ? null
           : {
-              options: tagList,
-            },
+            options: tagList,
+          },
 
         onChange: isNewTag ? null : this.tagChange,
         disabled: release || isConfig,
@@ -105,12 +105,12 @@ class ConfigDrawerOne extends Component {
         rules: !isNewTag
           ? null
           : [
-              '@enNamePattern',
-              '@transformTrim',
-              '@required',
-              '@max32',
-              { validator: this.checkName },
-            ],
+            '@enNamePattern',
+            '@transformTrim',
+            '@required',
+            '@max32',
+            {validator: this.checkName},
+          ],
 
         disabled: release || isConfig || !isNewTag,
         component: 'input',
@@ -174,35 +174,35 @@ class ConfigDrawerOne extends Component {
         },
       },
 
-      {
-        label: intl
-          .get(
-            'ide.src.page-manage.page-object-model.object-list.object-detail.drawer-create.7g6e5biv0hp'
-          )
-          .d('枚举显示值'),
-        key: 'enumValue',
-        hide: !isEnum, // 待验证
-        disabled: release || isConfig || !isNewTag,
-        autoSize: { minRows: 3, maxRows: 5 },
-        initialValue: tagBaseInfo.enumValue,
-        component: 'textArea',
-        rules: [
-          '@transformTrim',
-          // '@required',
-          '@max128',
-          { validator: this.handleEnumValueValidator },
-        ],
+      // {
+      //   label: intl
+      //     .get(
+      //       'ide.src.page-manage.page-object-model.object-list.object-detail.drawer-create.7g6e5biv0hp'
+      //     )
+      //     .d('枚举显示值'),
+      //   key: 'enumValue',
+      //   hide: !isEnum, // 待验证
+      //   disabled: release || isConfig || !isNewTag,
+      //   autoSize: { minRows: 3, maxRows: 5 },
+      //   initialValue: tagBaseInfo.enumValue,
+      //   component: 'textArea',
+      //   rules: [
+      //     '@transformTrim',
+      //     // '@required',
+      //     '@max128',
+      //     { validator: this.handleEnumValueValidator },
+      //   ],
 
-        control: {
-          placeholder: intl
-            .get(
-              'ide.src.page-manage.page-object-model.object-list.object-detail.drawer-create.w3weeojwq6'
-            )
-            .d(
-              '若标签值为枚举型，可将枚举代码值显示为易理解的值，例如：{"0":"女","1":"男"}'
-            ),
-        },
-      },
+      //   control: {
+      //     placeholder: intl
+      //       .get(
+      //         'ide.src.page-manage.page-object-model.object-list.object-detail.drawer-create.w3weeojwq6'
+      //       )
+      //       .d(
+      //         '若标签值为枚举型，可将枚举代码值显示为易理解的值，例如：{"0":"女","1":"男"}'
+      //       ),
+      //   },
+      // },
 
       {
         label: intl
@@ -251,7 +251,7 @@ class ConfigDrawerOne extends Component {
         rules: ['@max128'],
 
         disabled: release || isConfig || !isNewTag,
-        autoSize: { minRows: 3, maxRows: 5 },
+        autoSize: {minRows: 3, maxRows: 5},
         placeholder: intl
           .get('ide.src.page-process.schema-list.config-form.7j9uobg1hij')
           .d('标签表示的业务逻辑，例如“该用户的手机号”，不超过100个字'),
@@ -323,7 +323,7 @@ class ConfigDrawerOne extends Component {
   }
 
   @action submit = () => {
-    const { isConfig, recordObj, isNewTag } = this.store
+    const {isConfig, recordObj, isNewTag} = this.store
     if (isConfig) {
       // 取消配置
       this.store.delTagRelation()
@@ -359,8 +359,8 @@ class ConfigDrawerOne extends Component {
   }
 
   render() {
-    const { release, isConfig, recordObj, confirmLoading } = this.store
-    const { fieldName, tagId, status } = recordObj
+    const {release, isConfig, recordObj, confirmLoading} = this.store
+    const {fieldName, tagId, status} = recordObj
     const formConfig = {
       selectContent: this.selectContent(),
       disabled: true,
@@ -379,15 +379,15 @@ class ConfigDrawerOne extends Component {
                 <Tag color={release ? 'processing' : 'default'}>
                   {status === 2
                     ? intl
-                        .get(
-                          'ide.src.page-manage.page-object-model.detail.mayalaiwna'
-                        )
-                        .d('已发布')
+                      .get(
+                        'ide.src.page-manage.page-object-model.detail.mayalaiwna'
+                      )
+                      .d('已发布')
                     : intl
-                        .get(
-                          'ide.src.page-manage.page-tag-model.data-sheet.config-field-step-one.kpitwb1mdsn'
-                        )
-                        .d('未发布')}
+                      .get(
+                        'ide.src.page-manage.page-tag-model.data-sheet.config-field-step-one.kpitwb1mdsn'
+                      )
+                      .d('未发布')}
                 </Tag>
               </div>
               <div>
@@ -399,15 +399,15 @@ class ConfigDrawerOne extends Component {
                 >
                   {isConfig
                     ? intl
-                        .get(
-                          'ide.src.page-manage.page-tag-model.field-list.index.aghycqeyy64'
-                        )
-                        .d('取消配置')
+                      .get(
+                        'ide.src.page-manage.page-tag-model.field-list.index.aghycqeyy64'
+                      )
+                      .d('取消配置')
                     : intl
-                        .get(
-                          'ide.src.page-process.schema-list.config-form.joncuwqju4'
-                        )
-                        .d('配置')}
+                      .get(
+                        'ide.src.page-process.schema-list.config-form.joncuwqju4'
+                      )
+                      .d('配置')}
                 </Button>
               </div>
             </div>

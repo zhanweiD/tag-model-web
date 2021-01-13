@@ -1,5 +1,5 @@
 import intl from 'react-intl-universal'
-import { observable, action, runInAction } from 'mobx'
+import {observable, action, runInAction, toJS} from 'mobx'
 import {
   successTip,
   failureTip,
@@ -7,7 +7,7 @@ import {
   changeToOptions,
   listToTree,
 } from '../../../common/util'
-import { ListContentStore } from '../../../component/list-content'
+import {ListContentStore} from '../../../component/list-content'
 import io from './io'
 
 class Store extends ListContentStore(io.getList) {
@@ -15,10 +15,14 @@ class Store extends ListContentStore(io.getList) {
   objId
   typeCode
   objType
+  tagId
 
   @observable dataSourceList = [] // 数据源下拉数据
   @observable dataSheetList = [] // 数据表下拉数据
   @observable tableName
+  @observable isNewTag = true 
+  @observable tagList = []
+  @observable tagDetail = {}
 
   @observable modalInfo = {
     visible: false,
@@ -29,6 +33,40 @@ class Store extends ListContentStore(io.getList) {
   @observable confirmLoading = false
 
   @observable tagTreeData = []
+
+  // 获取衍生标签详情
+  @action async getTagBaseDetail(cb) {
+    try {
+      const res = await io.getTagBaseDetail({
+        id: this.tagId,
+        projectId: this.projectId,
+      })
+
+      runInAction(() => {
+        this.tagDetail = res
+        this.isEnum = res.isEnum
+        if (cb) cb()
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  // 获取未配置衍生标签列表
+  @action async getTagList() {
+    try {
+      const res = await io.getTagList({
+        projectId: this.projectId,
+        objId: +this.objId,
+      })
+
+      runInAction(() => {
+        this.tagList = changeToOptions(toJS(res || []))('name', 'id')
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
 
   /**
    * @description 移除字段列表
@@ -137,6 +175,46 @@ class Store extends ListContentStore(io.getList) {
       this.confirmLoading = true
       const res = await io.createBatchTag({
         checkList,
+        projectId: this.projectId,
+      })
+
+      runInAction(() => {
+        if (res) {
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
+          this.modalInfo.visible = false
+          // 刷新字段列表
+          this.getList({
+            objId: this.objId,
+            currentPage: 1,
+          })
+        } else {
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+              )
+              .d('操作失败')
+          )
+        }
+        this.confirmLoading = false
+        if (res && cb) cb()
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  @action async tagConfig(reqList, cb) {
+    try {
+      this.confirmLoading = true
+      const res = await io.tagConfig({
+        reqList,
         projectId: this.projectId,
       })
 

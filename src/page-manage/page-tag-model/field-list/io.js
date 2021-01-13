@@ -1,5 +1,5 @@
 import ioContext from '../../../common/io-context'
-import {baseApi, get, post, objectApi} from '../../../common/util'
+import {baseApi, get, post, objectApi, tagModalApi} from '../../../common/util'
 
 const api = {
   getList: get(`${baseApi}/tagConfig/getRelFieldList`), // 字段列表 - 查看关联字段(已关联字段列表)
@@ -13,6 +13,9 @@ const api = {
   getTagTypeList: get(`${baseApi}/tag/tag_type`), // 根据字段类型获取标签类型
 
   revokeConfig: post(`${baseApi}/tag/revoke_config`), // 取消配置
+  getTagList: get(`${baseApi}/tag/list_base_tag`), // 衍生标签列表
+  getTagBaseDetail: get(`${tagModalApi}/tag_detail`), // 标签详情
+  tagConfig: post(`${baseApi}/tag/add_tag_field_rel`), // 配置标签
 } 
 
 ioContext.create('objectConfigField', api) 

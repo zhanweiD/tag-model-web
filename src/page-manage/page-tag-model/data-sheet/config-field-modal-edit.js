@@ -1,10 +1,10 @@
 import intl from 'react-intl-universal'
-import { observer } from 'mobx-react'
-import { Component } from 'react'
+import {observer} from 'mobx-react'
+import {Component} from 'react'
 import PropTypes from 'prop-types'
-import { Form } from '@ant-design/compatible'
+import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
-import { Modal, Input, Spin, Select, Switch, Cascader } from 'antd'
+import {Modal, Input, Spin, Select, Switch, Cascader} from 'antd'
 import {
   isJsonFormat,
   enNameReg,
@@ -15,7 +15,7 @@ import {
 import store from './store-tag'
 
 const FormItem = Form.Item
-const { Option } = Select
+const {Option} = Select
 const nameTypeMap = {
   name: 1,
   enName: 2,
@@ -43,7 +43,7 @@ class ModalTagEdit extends Component {
 
   render() {
     const {
-      form: { getFieldDecorator },
+      form: {getFieldDecorator},
       tagDetail,
       visible,
       onCancel,
@@ -51,12 +51,12 @@ class ModalTagEdit extends Component {
       title,
     } = this.props
 
-    const { isEnum, confirmLoading } = this.state
+    const {isEnum, confirmLoading} = this.state
 
     const modalProps = {
       title:
-        title ||
-        intl
+        title
+        || intl
           .get(
             'ide.src.page-manage.page-object-model.object-list.object-detail.drawer-create.3cw1uc8uafd'
           )
@@ -71,8 +71,8 @@ class ModalTagEdit extends Component {
     }
 
     const formItemLayout = {
-      labelCol: { span: 4 },
-      wrapperCol: { span: 20 },
+      labelCol: {span: 4},
+      wrapperCol: {span: 20},
       colon: false,
     }
 
@@ -104,7 +104,7 @@ class ModalTagEdit extends Component {
                       .d('名称不可为空'),
                   },
                   ...getNamePattern(),
-                  { validator: this.checkName },
+                  {validator: this.checkName},
                 ],
               })(
                 <Input
@@ -130,7 +130,7 @@ class ModalTagEdit extends Component {
               {getFieldDecorator('enName', {
                 initialValue: tagDetail.enName || undefined,
                 rules: [
-                  { transform: value => value && value.trim() },
+                  {transform: value => value && value.trim()},
                   {
                     required: true,
                     message: intl
@@ -141,7 +141,7 @@ class ModalTagEdit extends Component {
                   },
                   ...getEnNamePattern(),
                   // {pattern: enNameReg, message: '不超过32个字，只能包含英文、数字或下划线，必须以英文开头'},
-                  { validator: this.checkName },
+                  {validator: this.checkName},
                 ],
               })(
                 <Input
@@ -225,7 +225,7 @@ class ModalTagEdit extends Component {
             </FormItem>
 
             {/* {(tagDetail.isEnum || isEnum) && ( */}
-            {isEnum && (
+            {/* {isEnum && (
               <FormItem
                 {...formItemLayout}
                 label={intl
@@ -265,7 +265,7 @@ class ModalTagEdit extends Component {
                   />
                 )}
               </FormItem>
-            )}
+            )} */}
 
             <FormItem
               {...formItemLayout}
@@ -300,7 +300,7 @@ class ModalTagEdit extends Component {
             >
               {getFieldDecorator('descr', {
                 rules: [
-                  { transform: value => value && value.trim() },
+                  {transform: value => value && value.trim()},
                   {
                     max: 128,
                     message: intl
@@ -335,7 +335,7 @@ class ModalTagEdit extends Component {
 
   // 确定
   handleOk = () => {
-    const { form, onOk } = this.props
+    const {form, onOk} = this.props
 
     form.validateFields((errs, values) => {
       if (!errs) {
@@ -343,7 +343,7 @@ class ModalTagEdit extends Component {
           confirmLoading: true,
         })
 
-        const valuesCopy = { ...values }
+        const valuesCopy = {...values}
 
         // 如果不是枚举值，清空这个字段
         if (!valuesCopy.isEnum) {

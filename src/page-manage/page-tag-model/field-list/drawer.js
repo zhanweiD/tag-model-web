@@ -1,9 +1,9 @@
 import intl from 'react-intl-universal'
-import { Component } from 'react'
-import { action } from 'mobx'
-import { observer } from 'mobx-react'
-import { Drawer, Button } from 'antd'
-import { ModalForm } from '../../../component'
+import {Component} from 'react'
+import {action} from 'mobx'
+import {observer} from 'mobx-react'
+import {Drawer, Button} from 'antd'
+import {ModalForm} from '../../../component'
 import {
   changeToOptions,
   enNameReg,
@@ -26,17 +26,49 @@ class DrawerTagConfig extends Component {
 
   selectContent = () => {
     const {
-      modalInfo: { detail },
+      modalInfo: {detail},
       isEnum,
       tagTreeData,
       tagTypeList,
+      isNewTag,
+      tagList,
+      tagDetail,
     } = this.store
 
     // 默认类目
     const defaultCate = tagTreeData.filter(d => d.aId === -1)
     const defaultCateV = defaultCate.length ? [defaultCate[0].id] : undefined
-
+    let detailCate = null
+    if (tagDetail.pathIds) {
+      detailCate = tagDetail.pathIds.slice(2)
+    } else if (detail.pathIds) {
+      detailCate = detail.pathIds.slice(2)
+    } else {
+      detailCate = defaultCateV
+    }
     return [
+      {
+        label: intl
+          .get(
+            'ide.src.page-manage.page-object-model.object-list.object-detail.drawer-create.s5rfkq7s99'
+          )
+          .d('新建标签'),
+        key: 'newTag',
+        initialValue: isNewTag,
+        valuePropName: 'checked',
+        // disabled: detail.isConfigured,
+        control: {
+          checkedText: intl
+            .get('ide.src.component.form-component.03xp8ux32s3a')
+            .d('是'),
+          unCheckedText: intl
+            .get('ide.src.component.form-component.h7p1pcijouf')
+            .d('否'),
+          onChange: v => this.newTag(v),
+        },
+
+        component: 'switch',
+      },
       {
         label: intl
           .get(
@@ -44,17 +76,39 @@ class DrawerTagConfig extends Component {
           )
           .d('标签名称'),
         key: 'name',
-        initialValue: detail.name,
-        component: 'input',
-        rules: [
-          '@namePattern',
-          '@nameUnderline',
-          '@nameShuQi',
-          '@transformTrim',
-          '@required',
-          '@max32',
-          { validator: this.checkName },
-        ],
+        initialValue: tagDetail.name || detail.name,
+        // disabled: !isNewTag,
+        // component: 'input',
+        // rules: [
+        //   '@namePattern',
+        //   '@nameUnderline',
+        //   '@nameShuQi',
+        //   '@transformTrim',
+        //   '@required',
+        //   '@max32',
+        //   {validator: this.checkName},
+        // ],
+        rules: isNewTag
+          ? [
+            '@namePattern',
+            '@nameUnderline',
+            '@nameShuQi',
+            '@transformTrim',
+            '@required',
+            '@max32',
+            {validator: this.checkName},
+          ]
+          : ['@requiredSelect'],
+
+        control: isNewTag
+          ? null
+          : {
+            options: tagList,
+          },
+
+        onChange: isNewTag ? null : this.tagChange,
+        // disabled: release || isConfig,
+        component: isNewTag ? 'input' : 'select',
       },
 
       {
@@ -62,16 +116,19 @@ class DrawerTagConfig extends Component {
           .get('ide.src.business-component.tag-relate.dag-box.xs30zaqk60p')
           .d('标签标识'),
         key: 'enName',
-        initialValue: detail.enName,
+        initialValue: tagDetail.enName || detail.enName,
+        disabled: !isNewTag,
         component: 'input',
-        rules: [
-          '@enNamePattern',
-          '@transformTrim',
-          '@required',
-          '@max32',
-          // {pattern: enNameReg, message: '不超过32个字，只能包含英文、数字或下划线，必须以英文开头'},
-          { validator: this.checkName },
-        ],
+        rules: isNewTag
+          ? [
+            '@enNamePattern',
+            '@transformTrim',
+            '@required',
+            '@max32',
+            {validator: this.checkName},
+          ] : [
+            '@required',
+          ],
       },
 
       {
@@ -79,10 +136,10 @@ class DrawerTagConfig extends Component {
           .get('ide.src.business-component.tag-relate.dag-box.zfaw0a4v7jh')
           .d('数据类型'),
         key: 'valueType',
-        initialValue: detail.valueType,
+        initialValue: tagDetail.valueType || detail.valueType,
         component: 'select',
         rules: ['@requiredSelect'],
-
+        disabled: !isNewTag,
         control: {
           options: [
             {
@@ -115,6 +172,7 @@ class DrawerTagConfig extends Component {
           .d('是否枚举'),
         key: 'isEnum',
         initialValue: isEnum,
+        disabled: !isNewTag,
         valuePropName: 'checked',
         component: 'switch',
         control: {
@@ -128,33 +186,33 @@ class DrawerTagConfig extends Component {
         },
       },
 
-      {
-        label: intl
-          .get(
-            'ide.src.page-manage.page-object-model.object-list.object-detail.drawer-create.7g6e5biv0hp'
-          )
-          .d('枚举显示值'),
-        key: 'enumValue',
-        hide: !isEnum,
-        initialValue: detail.enumValue,
-        component: 'textArea',
-        rules: [
-          '@transformTrim',
-          // '@required',
-          '@max128',
-          { validator: this.handleEnumValueValidator },
-        ],
+      // {
+      //   label: intl
+      //     .get(
+      //       'ide.src.page-manage.page-object-model.object-list.object-detail.drawer-create.7g6e5biv0hp'
+      //     )
+      //     .d('枚举显示值'),
+      //   key: 'enumValue',
+      //   hide: !isEnum,
+      //   initialValue: detail.enumValue,
+      //   component: 'textArea',
+      //   rules: [
+      //     '@transformTrim',
+      //     // '@required',
+      //     '@max128',
+      //     {validator: this.handleEnumValueValidator},
+      //   ],
 
-        control: {
-          placeholder: intl
-            .get(
-              'ide.src.page-manage.page-object-model.object-list.object-detail.drawer-create.w3weeojwq6'
-            )
-            .d(
-              '若标签值为枚举型，可将枚举代码值显示为易理解的值，例如：{"0":"女","1":"男"}'
-            ),
-        },
-      },
+      //   control: {
+      //     placeholder: intl
+      //       .get(
+      //         'ide.src.page-manage.page-object-model.object-list.object-detail.drawer-create.w3weeojwq6'
+      //       )
+      //       .d(
+      //         '若标签值为枚举型，可将枚举代码值显示为易理解的值，例如：{"0":"女","1":"男"}'
+      //       ),
+      //   },
+      // },
 
       {
         label: intl
@@ -163,13 +221,13 @@ class DrawerTagConfig extends Component {
           )
           .d('所属类目'),
         key: 'pathIds',
-        initialValue:
-          detail.pathIds && detail.pathIds.length
-            ? detail.pathIds.slice(2)
-            : defaultCateV,
+        initialValue: detailCate,
+        // detail.pathIds && detail.pathIds.length
+        //   ? detail.pathIds.slice(2)
+        //   : defaultCateV,
         component: 'cascader',
         rules: ['@requiredSelect'],
-
+        disabled: !isNewTag,
         control: {
           options: tagTreeData,
           fieldNames: {
@@ -187,6 +245,7 @@ class DrawerTagConfig extends Component {
           .d('业务逻辑'),
         key: 'descr',
         initialValue: detail.descr,
+        disabled: !isNewTag,
         component: 'textArea',
         rules: ['@max128'],
       },
@@ -211,6 +270,21 @@ class DrawerTagConfig extends Component {
     }
   }
 
+  // 是否新建标签
+  @action newTag = v => {
+    this.store.tagDetail = {}
+    this.store.tagId = null
+    this.form.resetFields()
+    this.store.isNewTag = v
+    // this.store.isEnum = false
+    if (!v) this.store.getTagList() // 获取衍生标签
+  }
+
+  @action.bound tagChange(e) {
+    this.store.tagId = e
+    this.store.getTagBaseDetail(this.form.resetFields)
+  }
+
   @action.bound changeIsEnum(e) {
     this.store.isEnum = e
   }
@@ -218,48 +292,74 @@ class DrawerTagConfig extends Component {
   @action handleCancel = () => {
     this.store.modalInfo.visible = false
     this.store.tagTypeList.clear()
+    this.store.tagDetail = {}
   }
 
   submit = () => {
     const t = this
-    const { store } = t
+    const {store} = t
 
     this.form.validateFields((err, values) => {
       if (!err) {
         const {
-          modalInfo: { detail },
+          modalInfo: {detail},
+          isNewTag,
+          tagDetail,
         } = store
 
-        const params = [
-          {
-            projectId: detail.projectId,
-            objId: detail.objId,
-            dataStorageId: detail.dataStorageId,
-            dataDbName: detail.dataDbName,
-            dataDbType: detail.dataDbType,
-            storageTypeName: detail.storageTypeName,
-            dataTableName: detail.dataTableName,
-            dataFieldName: detail.dataFieldName,
-            dataFieldType: detail.dataFieldType,
-            isConfigured: detail.isConfigured,
-            isMajorKey: detail.isMajorKey,
-            isUsed: detail.isUsed,
-            tagId: detail.tagId,
-            isEnum: values.isEnum ? 1 : 0,
-            enumValue: values.enumValue,
-            valueType: values.valueType,
-            name: values.name,
-            enName: values.enName,
-            descr: values.descr,
-            pathIds: values.pathIds,
-            parentId:
-              values.pathIds && values.pathIds.length
-                ? values.pathIds[values.pathIds.length - 1]
-                : detail.parentId,
-          },
-        ]
+        if (isNewTag) {
+          const params = [
+            {
+              projectId: detail.projectId,
+              objId: detail.objId,
+              dataStorageId: detail.dataStorageId,
+              dataDbName: detail.dataDbName,
+              dataDbType: detail.dataDbType,
+              storageTypeName: detail.storageTypeName,
+              dataTableName: detail.dataTableName,
+              dataFieldName: detail.dataFieldName,
+              dataFieldType: detail.dataFieldType,
+              isConfigured: detail.isConfigured,
+              isMajorKey: detail.isMajorKey,
+              isUsed: detail.isUsed,
+              tagId: detail.tagId,
+              isEnum: values.isEnum ? 1 : 0,
+              enumValue: values.enumValue,
+              valueType: values.valueType,
+              name: values.name,
+              enName: values.enName,
+              descr: values.descr,
+              pathIds: values.pathIds,
+              parentId:
+                values.pathIds && values.pathIds.length
+                  ? values.pathIds[values.pathIds.length - 1]
+                  : detail.parentId,
+            },
+          ]
+          store.createBatchTag(params)
+        } else {
+          const params1 = [
+            {
+              // tagType,
+              tagId: tagDetail.id,
+              tagName: values.name,
+              tagEnName: values.enName,
+              tagValueType: values.valueType,
+              tagValueTypeName: tagDetail.ValueTypeName,
+              isUsed: detail.isUsed,
 
-        store.createBatchTag(params)
+              dataStorageId: detail.dataStorageId,
+              dataDbName: detail.dataDbName,
+              dataDbType: detail.dataDbType,
+              storageTypeName: detail.storageTypeName,
+              dataTableName: detail.dataTableName,
+              dataFieldName: detail.dataFieldName,
+              dataFieldType: detail.dataFieldType,
+              // tagDerivativeSchemeId: schemeId,
+            },
+          ]
+          store.tagConfig(params1)
+        }
       }
     })
   }
@@ -269,7 +369,7 @@ class DrawerTagConfig extends Component {
    */
   checkName = (rule, value, callback) => {
     const {
-      modalInfo: { detail },
+      modalInfo: {detail},
     } = this.store
 
     const params = {
@@ -296,7 +396,7 @@ class DrawerTagConfig extends Component {
   }
 
   render() {
-    const { modalInfo, confirmLoading } = this.store
+    const {modalInfo, confirmLoading} = this.store
 
     const drawerConfig = {
       width: 560,
@@ -334,7 +434,7 @@ class DrawerTagConfig extends Component {
             textAlign: 'right',
           }}
         >
-          <Button style={{ marginRight: 8 }} onClick={this.handleCancel}>
+          <Button style={{marginRight: 8}} onClick={this.handleCancel}>
             {intl
               .get('ide.src.page-config.workspace-config.modal.xp905zufzth')
               .d('取消')}

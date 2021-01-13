@@ -444,7 +444,7 @@ module.exports = {
   'ide.src.page-manage.page-tag-model.data-sheet.modal-add-table.azd6tsw45f': '从关联实体的数据表中选择',
   'ide.src.page-manage.page-tag-model.data-sheet.store-tag.6tb3qd7rd8n': '创建失败',
   'ide.src.page-manage.page-tag-model.data-sheet.store.g1i21g89xn': '校验成功',
-  'ide.src.page-manage.page-tag-model.field-list.index.axernry5crc': '生成标签',
+  'ide.src.page-manage.page-tag-model.field-list.index.axernry5crc': '配置标签',
   'ide.src.page-manage.page-tag-model.field-list.index.aghycqeyy64': '取消配置',
   'ide.src.page-manage.page-tag-model.main.rqocnq83yup': '项目下未配置对象，请在当前页面配置对象！',
   'ide.src.page-manage.page-tag-model.main.g8k2rewcjve': '没有任何对象',

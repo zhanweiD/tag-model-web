@@ -1,12 +1,12 @@
 import intl from 'react-intl-universal'
 import React from 'react'
-import { observer } from 'mobx-react'
-import { action, observable, toJS } from 'mobx'
-import { Table, Badge, Divider, Alert, Spin, Button, Checkbox } from 'antd'
-import { QuestionTooltip, OmitTooltip } from '../../../component'
+import {observer} from 'mobx-react'
+import {action, observable, toJS} from 'mobx'
+import {Table, Badge, Divider, Alert, Spin, Button, Checkbox} from 'antd'
+import {QuestionTooltip, OmitTooltip} from '../../../component'
 import ModalTagEdit from './config-field-modal-edit'
 import ModalCateSelect from './config-field-modal-cate'
-import { getDataTypeName } from '../../../common/util'
+import {getDataTypeName} from '../../../common/util'
 
 // 标签配置 - 填写配置信息
 @observer
@@ -18,21 +18,21 @@ class StepTwo extends React.Component {
   @observable editingTagIndex = -1 // 被选中编辑的标签的索引
 
   componentDidMount() {
-    const { store } = this.props
+    const {store} = this.props
     // 加载所属类目列表 TODO: 类目需要随时更新吗
     store.getCateList()
   }
 
   @action.bound checked(e) {
-    const { store } = this.props
+    const {store} = this.props
     store.checkedPulish = e.target.checked
   }
 
   render() {
-    const { store } = this.props
-    const { secondTableList, secondSelectedRows } = store
+    const {store} = this.props
+    const {secondTableList, secondSelectedRows} = store
 
-    const { tagModalVisible, cateModalVisible, editingTagIndex } = this
+    const {tagModalVisible, cateModalVisible, editingTagIndex} = this
 
     // 被选中编辑的标签对象
     const editingTag = secondTableList[editingTagIndex] || {}
@@ -81,23 +81,22 @@ class StepTwo extends React.Component {
           .d('是否枚举'),
         key: 'isEnum',
         dataIndex: 'isEnum',
-        render: v =>
-          +v === 1
-            ? intl.get('ide.src.component.form-component.03xp8ux32s3a').d('是')
-            : intl.get('ide.src.component.form-component.h7p1pcijouf').d('否'),
+        render: v => (+v === 1
+          ? intl.get('ide.src.component.form-component.03xp8ux32s3a').d('是')
+          : intl.get('ide.src.component.form-component.h7p1pcijouf').d('否')),
       },
 
-      {
-        title: intl
-          .get(
-            'ide.src.page-manage.page-object-model.object-list.object-detail.drawer-create.7g6e5biv0hp'
-          )
-          .d('枚举显示值'),
-        key: 'enumValue',
-        dataIndex: 'enumValue',
-        render: name =>
-          name ? <OmitTooltip text={name} maxWidth={70} /> : '-',
-      },
+      // {
+      //   title: intl
+      //     .get(
+      //       'ide.src.page-manage.page-object-model.object-list.object-detail.drawer-create.7g6e5biv0hp'
+      //     )
+      //     .d('枚举显示值'),
+      //   key: 'enumValue',
+      //   dataIndex: 'enumValue',
+      //   render: name =>
+      //     name ? <OmitTooltip text={name} maxWidth={70} /> : '-',
+      // },
 
       {
         title: intl
@@ -129,8 +128,7 @@ class StepTwo extends React.Component {
           .d('业务逻辑'),
         key: 'descr',
         dataIndex: 'descr',
-        render: descr =>
-          descr ? <OmitTooltip text={descr} maxWidth={60} /> : '-',
+        render: descr => (descr ? <OmitTooltip text={descr} maxWidth={60} /> : '-'),
       },
 
       {
@@ -153,12 +151,11 @@ class StepTwo extends React.Component {
         key: 'result',
         width: 190,
         dataIndex: 'result',
-        render: (v, record) =>
-          +record.isTrue === 1 ? (
-            <Badge color="#52C41A" text={v} />
-          ) : (
-            <Badge color="#F5222D" text={v} />
-          ),
+        render: (v, record) => (+record.isTrue === 1 ? (
+          <Badge color="#52C41A" text={v} />
+        ) : (
+          <Badge color="#F5222D" text={v} />
+        )),
       },
 
       {
@@ -193,7 +190,7 @@ class StepTwo extends React.Component {
             type="info"
             showIcon
             closable
-            message={
+            message={(
               <span className="fs12">
                 {intl
                   .get(
@@ -201,27 +198,27 @@ class StepTwo extends React.Component {
                   )
                   .d('选择结果：可新建标签')}
 
-                <span style={{ color: '#1890FF' }}>{blueCount}</span>
+                <span style={{color: '#1890FF'}}>{blueCount}</span>
                 {intl
                   .get(
                     'ide.src.page-manage.page-tag-model.data-sheet.config-field-step-two.okzo733f94e'
                   )
                   .d('个，新建失败')}
 
-                <span style={{ color: '#F5222D' }}>{redCount}</span>
+                <span style={{color: '#F5222D'}}>{redCount}</span>
                 {intl
                   .get(
                     'ide.src.page-manage.page-tag-model.data-sheet.config-field-step-two.m6s9662nehb'
                   )
                   .d('个')}
               </span>
-            }
+            )}
           />
 
           {/* 标题和按钮 */}
           <div className="mb16 ml2 mt24">
             <div>
-              <p className="fs16 mb12" style={{ color: 'rgba(0,0,0,0.85)' }}>
+              <p className="fs16 mb12" style={{color: 'rgba(0,0,0,0.85)'}}>
                 {intl.get('ide.src.common.navList.5ywghq8b76s').d('标签列表')}
               </p>
               <Button
@@ -303,14 +300,14 @@ class StepTwo extends React.Component {
 
   // 选择行
   @action.bound onRowSelect(selectedRowKeys, selectedRows) {
-    const { store } = this.props
+    const {store} = this.props
 
     store.secondSelectedRows = selectedRows
   }
 
   // 移除某个标签（某行）
   @action.bound removeItem(index, record) {
-    const { store } = this.props
+    const {store} = this.props
 
     // 删除元素
     store.secondTableList.splice(index, 1)
@@ -324,7 +321,7 @@ class StepTwo extends React.Component {
 
   // 展开编辑弹框
   @action.bound showEditModal(index, record) {
-    const { store } = this.props
+    const {store} = this.props
     store.getTagTypeList(record.dataFieldType)
     store.tagId = record.tagId
     this.tagModalVisible = true
@@ -351,7 +348,7 @@ class StepTwo extends React.Component {
 
   // 编辑标签确定事件
   @action.bound handleTagEditConfirm(values, cb) {
-    const { store } = this.props
+    const {store} = this.props
     const index = this.editingTagIndex
 
     // 先不直接修改原列表数据，创建个副本拿去请求校验接口
@@ -362,23 +359,22 @@ class StepTwo extends React.Component {
 
     // 将undefined的值改成空字符串
     Object.keys(values).forEach(key => {
-      valuesCopy[key] =
-        values[key] === undefined
-          ? ''
-          : typeof values[key] === 'string'
+      valuesCopy[key] = values[key] === undefined
+        ? ''
+        : typeof values[key] === 'string'
           ? values[key].trim()
           : values[key]
       valuesCopy.valueTypeName = this.isValueTypeName(values.valueType)
     })
 
     // 要更新parentId字段（对应当前所属类目的id）
-    const { pathIds } = valuesCopy
+    const {pathIds} = valuesCopy
     valuesCopy.pathIds = pathIds || [] // 貌似不能传空字符串
     valuesCopy.parentId = pathIds[pathIds.length - 1] || store.defaultCateId // 没有就取默认类目id
 
     // 替换掉编辑后的标签
     // （这里已知标签编辑弹框的表单fieldName和标签对象的字段一一对应，所以可以直接覆盖）
-    tagListCopy[index] = { ...tagListCopy[index], ...valuesCopy }
+    tagListCopy[index] = {...tagListCopy[index], ...valuesCopy}
 
     // 确认时校验数据
     store.checkTagList(
@@ -408,10 +404,10 @@ class StepTwo extends React.Component {
 
   // 类目选择弹框确定事件
   @action.bound handleCateConfirm(values, cb) {
-    const { store } = this.props
+    const {store} = this.props
 
     store.secondSelectedRows.forEach(item => {
-      const { pathIds } = values
+      const {pathIds} = values
       item.pathIds = pathIds
       // 还要更新parentId
       item.parentId = pathIds[pathIds.length - 1] || store.defaultCateId
