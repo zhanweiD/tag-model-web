@@ -63,8 +63,8 @@ class ProjectList extends Component {
         <div className="FBH FBAC">
           <Fragment>
             {
-              record.id === +store.projectId ? <span className="disabled">交回权限</span> : (
-                <a href onClick={() => this.openBackModal(record)}>交回权限</a>)
+              record.id === +store.projectId ? <span className="disabled">回收权限</span> : (
+                <a href onClick={() => this.openBackModal(record)}>回收权限</a>)
             }        
           </Fragment>
         </div>
