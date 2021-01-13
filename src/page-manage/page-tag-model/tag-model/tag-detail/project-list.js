@@ -25,6 +25,7 @@ class ProjectList extends Component {
       key: 'name',
       dataIndex: 'name',
     },
+
     {
       title: intl
         .get(
@@ -35,12 +36,14 @@ class ProjectList extends Component {
       dataIndex: 'descr',
       render: text => text || '-',
     },
+
     {
       title: intl.get('ide.src.component.comp.search.bld1br247f').d('申请时间'),
       key: 'ctime',
       dataIndex: 'ctime',
       render: text => <Time timestamp={text} />,
     },
+
     {
       title: intl
         .get('ide.src.page-manage.page-project-tag.detail.main.40y9kbpr4qg')
@@ -48,24 +51,41 @@ class ProjectList extends Component {
       key: 'derivativeCount',
       dataIndex: 'derivativeCount',
     },
+
     {
       title: intl
         .get('ide.src.page-manage.page-project-tag.detail.main.nh79sa2cn9')
         .d('标签应用数'),
       key: 'tagAppCount',
       dataIndex: 'tagAppCount',
-    }, {
+    },
+    {
       key: 'action',
-      title: '操作',
+      title: intl
+        .get('ide.src.page-common.approval.approved.main.1tcpwa6mu1')
+        .d('操作'),
       width: 200,
       fixed: 'right',
       render: (text, record) => (
         <div className="FBH FBAC">
           <Fragment>
-            {
-              record.id === +store.projectId ? <span className="disabled">回收权限</span> : (
-                <a href onClick={() => this.openBackModal(record)}>回收权限</a>)
-            }        
+            {record.id === +store.projectId ? (
+              <span className="disabled">
+                {intl
+                  .get(
+                    'ide.src.page-manage.page-tag-model.tag-model.tag-list.modal-back.oh88gcracm'
+                  )
+                  .d('回收权限')}
+              </span>
+            ) : (
+              <a href onClick={() => this.openBackModal(record)}>
+                {intl
+                  .get(
+                    'ide.src.page-manage.page-tag-model.tag-model.tag-list.modal-back.oh88gcracm'
+                  )
+                  .d('回收权限')}
+              </a>
+            )}
           </Fragment>
         </div>
       ),
@@ -87,11 +107,12 @@ class ProjectList extends Component {
     }
 
     return (
-      <div> 
-        <ListContent {...listConfig} /> 
+      <div>
+        <ListContent {...listConfig} />
         <ModalBack store={store} />
       </div>
     )
   }
 }
+
 export default ProjectList

@@ -259,10 +259,10 @@ export function getPieOpt(chartsCount, data) {
         return intl
           .get(
             'ide.src.business-component.tag-analyze.charts-options.28atjkrczpj',
-            {'info[0]': info[0], 'info[1]': info[1], 'info[2]': info[2]}
+            {infoName: info[0], infoPro: info[1], infoCount: info[2]}
           )
           .d(
-            '标签名称: {info[0]}<br />标签占比: {info[1]}<br />标签数量: {info[2]}'
+            '标签名称: {infoName}<br />标签占比: {infoPro}<br />标签数量: {infoCount}'
           )
       },
     },
