@@ -1,6 +1,8 @@
+import { Component, Fragment } from 'react'
+import { action } from 'mobx'
 import intl from 'react-intl-universal'
-import { Component } from 'react'
 import { observer } from 'mobx-react'
+import ModalBack from './modal-back'
 import { ListContent } from '../../../../component'
 import { Time } from '../../../../common/util'
 
@@ -8,6 +10,11 @@ import store from './store-project'
 
 @observer
 class ProjectList extends Component {
+  constructor(props) {
+    super(props)
+    store.tagId = props.tagId
+    store.projectId = props.projectId
+  }
   columns = [
     {
       title: intl
@@ -47,8 +54,28 @@ class ProjectList extends Component {
         .d('标签应用数'),
       key: 'tagAppCount',
       dataIndex: 'tagAppCount',
+    }, {
+      key: 'action',
+      title: '操作',
+      width: 200,
+      fixed: 'right',
+      render: (text, record) => (
+        <div className="FBH FBAC">
+          <Fragment>
+            {
+              record.id === +store.projectId ? <span className="disabled">回收权限</span> : (
+                <a href onClick={() => this.openBackModal(record)}>回收权限</a>)
+            }        
+          </Fragment>
+        </div>
+      ),
     },
   ]
+
+  @action.bound openBackModal(data) {
+    store.backProjectId.push(data.id)
+    store.modalBackVisible = true
+  }
 
   render() {
     const { tagId, projectId } = this.props
@@ -60,8 +87,9 @@ class ProjectList extends Component {
     }
 
     return (
-      <div>
-        <ListContent {...listConfig} />
+      <div> 
+        <ListContent {...listConfig} /> 
+        <ModalBack store={store} />
       </div>
     )
   }
