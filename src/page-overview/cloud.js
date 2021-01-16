@@ -4,10 +4,10 @@ import intl from 'react-intl-universal'
  */
 import * as d3 from 'd3'
 import cloud from 'd3-cloud'
-import { Component } from 'react'
-import { observer } from 'mobx-react'
-import { Spin } from 'antd'
-import { NoData } from '../component'
+import {Component} from 'react'
+import {observer} from 'mobx-react'
+import {Spin} from 'antd'
+import {NoData} from '../component'
 
 @observer
 class Cloud extends Component {
@@ -29,21 +29,20 @@ class Cloud extends Component {
       .style('transition', 'all .3s linear')
     this.box.selectAll('*').remove()
 
-    const scaleSize =
-      data.length > 20
-        ? d3
-            .scaleLinear()
-            .domain([0, max])
-            .range([14, 20])
-        : d3
-            .scaleLinear()
-            .domain([0, max])
-            .range([14, 35])
+    const scaleSize = data.length > 20
+      ? d3
+        .scaleLinear()
+        .domain([0, max])
+        .range([14, 20])
+      : d3
+        .scaleLinear()
+        .domain([0, max])
+        .range([14, 35])
 
     this.fill = d3.scaleOrdinal(d3.schemeCategory10)
     this.layout = cloud()
       .size([parseFloat(this.box.style('width')), 450])
-      .words(data.map(d => ({ text: d.objName, size: scaleSize(d.relCount) })))
+      .words(data.map(d => ({text: d.objName, size: scaleSize(d.relCount)})))
       .padding(2)
       .spiral('archimedean')
       .rotate(0)
@@ -78,7 +77,7 @@ class Cloud extends Component {
   }
 
   render() {
-    const { cloudData = [], entityCount, relCount, loading } = this.store
+    const {cloudData = [], entityCount, relCount, loading} = this.store
 
     return (
       <div className="object-cloud">
@@ -102,7 +101,7 @@ class Cloud extends Component {
         <Spin spinning={loading}>
           <div className="object-cloud-content">
             {!cloudData.length ? (
-              <div className="no-Data" style={{ height: '442px' }}>
+              <div className="no-Data" style={{height: '442px'}}>
                 <NoData
                   text={intl
                     .get(

@@ -1,11 +1,11 @@
 import intl from 'react-intl-universal'
-import { Component } from 'react'
-import { action } from 'mobx'
-import { observer } from 'mobx-react'
-import { Button, message, Checkbox } from 'antd'
-import { ErrorEater } from '@dtwave/uikit'
+import {Component} from 'react'
+import {action} from 'mobx'
+import {observer} from 'mobx-react'
+import {Button, message, Checkbox} from 'antd'
+import {ErrorEater} from '@dtwave/uikit'
 import Mapping from '@dtwave/oner-mapping'
-import { Loading } from '../../../../component'
+import {Loading} from '../../../../component'
 
 @observer
 class StepTwo extends Component {
@@ -23,7 +23,7 @@ class StepTwo extends Component {
   id = ''
 
   componentWillReceiveProps(nextProps) {
-    const { show } = this.props
+    const {show} = this.props
     if (nextProps.show && show !== nextProps.show) {
       if (+this.store.boundMethodId === 1) {
         this.store.getSchemeList()
@@ -83,7 +83,7 @@ class StepTwo extends Component {
 
           setTimeout(() => {
             this.block = false
-            const { onUpdate } = this.props
+            const {onUpdate} = this.props
             if (onUpdate) {
               onUpdate()
             }
@@ -94,14 +94,14 @@ class StepTwo extends Component {
   }
 
   @action.bound checked(e) {
-    const { store } = this.props
+    const {store} = this.props
     store.checkedPulish = e.target.checked
   }
 
   render() {
-    const { show } = this.props
+    const {show} = this.props
 
-    const { loading, submitting } = this.state
+    const {loading, submitting} = this.state
 
     const {
       source,
@@ -113,12 +113,12 @@ class StepTwo extends Component {
     } = this.store
 
     return (
-      <div style={{ display: show ? 'block' : 'none' }}>
+      <div style={{display: show ? 'block' : 'none'}}>
         {loading ? (
           <Loading mode="block" height={200} />
         ) : (
           <div>
-            <div style={{ textAlign: 'right' }}>
+            <div style={{textAlign: 'right'}}>
               <Checkbox
                 checked={this.store.checkedPulish}
                 onChange={this.checked}
@@ -138,8 +138,7 @@ class StepTwo extends Component {
               source={source}
               target={target}
               sourceRowKey={record => record.tagId || record.id}
-              targetRowKey={record =>
-                `${record.dataStorageId}${record.dataTableName}${record.dataFieldName}`
+              targetRowKey={record => `${record.dataStorageId}${record.dataTableName}${record.dataFieldName}`
               }
               sourceSearchKey={record => record.name || record.tagName}
               targetSearchKey={record => record.dataFieldName}
@@ -168,15 +167,15 @@ class StepTwo extends Component {
                   title:
                     boundMethodId === 1
                       ? intl
-                          .get(
-                            'ide.src.page-manage.page-tag-model.tag-model.tag-config-batch.step-two.xcpjx1nr71n'
-                          )
-                          .d('加工方案')
+                        .get(
+                          'ide.src.page-manage.page-tag-model.tag-model.tag-config-batch.step-two.xcpjx1nr71n'
+                        )
+                        .d('加工方案')
                       : intl
-                          .get(
-                            'ide.src.page-manage.page-aim-source.source-list.main.bh6e3tzii5'
-                          )
-                          .d('数据表'),
+                        .get(
+                          'ide.src.page-manage.page-aim-source.source-list.main.bh6e3tzii5'
+                        )
+                        .d('数据表'),
                   dataIndex:
                     boundMethodId === 1 ? 'schemeName' : 'dataTableName',
                   width: 90,
@@ -292,15 +291,15 @@ class StepTwo extends Component {
                   title:
                     boundMethodId === 1
                       ? intl
-                          .get(
-                            'ide.src.page-manage.page-tag-model.tag-model.tag-config-batch.step-two.xcpjx1nr71n'
-                          )
-                          .d('加工方案')
+                        .get(
+                          'ide.src.page-manage.page-tag-model.tag-model.tag-config-batch.step-two.xcpjx1nr71n'
+                        )
+                        .d('加工方案')
                       : intl
-                          .get(
-                            'ide.src.page-manage.page-aim-source.source-list.main.bh6e3tzii5'
-                          )
-                          .d('数据表'),
+                        .get(
+                          'ide.src.page-manage.page-aim-source.source-list.main.bh6e3tzii5'
+                        )
+                        .d('数据表'),
                   dataIndex:
                     boundMethodId === 1 ? 'schemeName' : 'dataTableName',
                   width: 130,
@@ -378,21 +377,19 @@ class StepTwo extends Component {
                 .d('请输入名称搜索')}
               sourceDisableKey={record => record.status === 2}
               targetDisableKey={record => record.status === 2}
-              disableKey={record =>
-                record.used === 1 || record.isUsed === 1 || record.status === 2
+              disableKey={record => record.used === 1 || record.isUsed === 1 || record.status === 2
               }
-              disableMsg={record =>
-                record.status === 2
-                  ? intl
-                      .get(
-                        'ide.src.page-manage.page-tag-model.tag-model.tag-config-batch.step-two.9clicvdx2d'
-                      )
-                      .d('标签已发布无法删除映射')
-                  : intl
-                      .get(
-                        'ide.src.page-manage.page-tag-model.tag-model.tag-config-batch.step-two.ob4m2pmgtto'
-                      )
-                      .d('使用中无法删除映射')
+              disableMsg={record => (record.status === 2
+                ? intl
+                  .get(
+                    'ide.src.page-manage.page-tag-model.tag-model.tag-config-batch.step-two.9clicvdx2d'
+                  )
+                  .d('标签已发布无法删除映射')
+                : intl
+                  .get(
+                    'ide.src.page-manage.page-tag-model.tag-model.tag-config-batch.step-two.ob4m2pmgtto'
+                  )
+                  .d('使用中无法删除映射'))
               }
               // hasSearchSelect
               // searchSelectList={boundMethodId === 1 ? schemeList : tableList}
@@ -410,45 +407,43 @@ class StepTwo extends Component {
                       .get(
                         'ide.src.page-manage.page-tag-model.tag-model.tag-config-batch.step-two.txgvm1r43o',
                         {
-                          mappingItemTagName: mappingItemTagName,
-                          mappingItemDataFieldName: mappingItemDataFieldName,
+                          mappingItemTagName,
+                          mappingItemDataFieldName,
                         }
                       )
                       .d(
                         '{mappingItemTagName}(标签)与{mappingItemDataFieldName}(字段)数据类型不匹配， 绑定失败'
                       )
                   )
-                  return new Promise(function(resolve, reject) {
+                  return new Promise(function (resolve, reject) {
                     reject([])
                   })
                 }
-                return new Promise(function(resolve, reject) {
+                return new Promise(function (resolve, reject) {
                   resolve([])
                 })
               }}
               beforeNameMapping={v => {
                 const successResult = v.filter(
-                  d =>
-                    d.tagValueType === d.tagType || d.status === 2 || d.isUsed
+                  d => d.tagValueType === d.tagType || d.status === 2 || d.isUsed
                 )
                 const successLength = successResult.length
                 const errorResult = v.filter(
-                  d =>
-                    d.tagValueType !== d.tagType && !d.isUsed && d.status !== 2
+                  d => d.tagValueType !== d.tagType && !d.isUsed && d.status !== 2
                 )
                 const errorLength = errorResult.length
                 message.info(
                   intl
                     .get(
                       'ide.src.page-manage.page-tag-model.tag-model.tag-config-batch.step-two.1ecch5wk3kx',
-                      { successLength: successLength, errorLength: errorLength }
+                      {successLength, errorLength}
                     )
                     .d(
                       '{successLength}个标签映射成功，{errorLength}个标签映射失败'
                     )
                 )
 
-                return new Promise(function(resolve, reject) {
+                return new Promise(function (resolve, reject) {
                   resolve(successResult)
                 })
               }}
@@ -480,7 +475,7 @@ class StepTwo extends Component {
               type="primary"
               onClick={this.submit}
               loading={submitting}
-              style={{ float: 'right' }}
+              style={{float: 'right'}}
             >
               {intl
                 .get('ide.src.page-config.workspace-config.modal.osxrfhrriz')
