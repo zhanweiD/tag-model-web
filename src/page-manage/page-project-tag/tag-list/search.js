@@ -2,13 +2,13 @@ import intl from 'react-intl-universal'
 /**
  * @description 标签仓库 - 搜索
  */
-import { Component } from 'react'
-import { observer } from 'mobx-react'
-import { Input, Select } from 'antd'
-import { SearchOutlined } from '@ant-design/icons'
-import { action } from 'mobx'
+import {Component} from 'react'
+import {observer} from 'mobx-react'
+import {Input, Select} from 'antd'
+import {SearchOutlined} from '@ant-design/icons'
+import {action} from 'mobx'
 
-const { Option } = Select
+const {Option} = Select
 
 // const permissionTypeMap = [{
 //   name: '有效',
@@ -126,7 +126,7 @@ class Search extends Component {
               <Select
                 value={ownProjectId}
                 className="mr16"
-                style={{ width: 240 }}
+                style={{width: 240}}
                 onChange={this.ownProjectSelect}
                 showSearch
                 optionFilterProp="children"
@@ -136,7 +136,7 @@ class Search extends Component {
                     .get('ide.src.component.comp.search.e0mn12fihkg')
                     .d('全部')}
                 </Option>
-                {ownProjectList.map(({ projectId, projectName }) => (
+                {ownProjectList.map(({projectId, projectName}) => (
                   <Option key={projectId} value={projectId}>
                     {projectName}
                   </Option>
@@ -152,7 +152,7 @@ class Search extends Component {
               <Select
                 value={objectId}
                 className="mr16"
-                style={{ width: 240 }}
+                style={{width: 240}}
                 onChange={this.ownObjectSelect}
                 showSearch
                 optionFilterProp="children"
@@ -162,7 +162,7 @@ class Search extends Component {
                     .get('ide.src.component.comp.search.e0mn12fihkg')
                     .d('全部')}
                 </Option>
-                {objectList.map(({ objId, objName }) => (
+                {objectList.map(({objId, objName}) => (
                   <Option key={objId} value={objId}>
                     {objName}
                   </Option>

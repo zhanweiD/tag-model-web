@@ -114,13 +114,13 @@ class Store {
 
       runInAction(() => {
         this.storageList = res || []
-        const defaultId = res[0] ? res[0] : {}
-        this.oneForm.setFieldsValue({
-          dataStorageId: {
-            key: this.defaultStorage.storageId || defaultId.storageId,
-            label: this.defaultStorage.storageName || defaultId.storageName,
-          },
-        })
+        // const defaultId = res[0] ? res[0] : {}
+        // this.oneForm.setFieldsValue({
+        //   dataStorageId: {
+        //     key: this.defaultStorage.storageId || defaultId.storageId,
+        //     label: this.defaultStorage.storageName || defaultId.storageName,
+        //   },
+        // })
 
         if (cb)
           cb({

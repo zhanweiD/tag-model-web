@@ -121,8 +121,8 @@ class Store extends ListContentStore(io.getList) {
 
       runInAction(() => {
         this.storageList = res
-        const defaultId = res[0] ? res[0].dataStorageId : undefined
-        if (cb) cb(this.defaultStorage.storageId || defaultId)
+        // const defaultId = res[0] ? res[0].dataStorageId : undefined
+        if (cb) cb(this.defaultStorage.storageId)
       })
     } catch (e) {
       errorTip(e.message)
