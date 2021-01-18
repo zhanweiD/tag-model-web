@@ -129,6 +129,7 @@ class TagList extends Component {
       width: 180,
       render: (text, record) => (
         <div className="FBH FBAC">
+          {/* createType 0 自建 1 租户创建 */}
           {/* 标签状态: 待绑定 未使用  操作: 绑定/编辑/删除 */}
 
           {record.status === 0 && record.isVisual === 0 && (
@@ -252,11 +253,15 @@ class TagList extends Component {
               {/* <a href onClick={() => store.openDrawer('edit', record)}>编辑</a> */}
               {record.createType === 0 && (
                 <Authority authCode="tag_model:create_tag[c]">
-                  <span className="disabled mr16">
+                  <a
+                    href
+                    onClick={() => store.openDrawer('edit', record)}
+                    className="mr16"
+                  >
                     {intl
                       .get('ide.src.component.label-item.label-item.slnqvyqvv7')
                       .d('编辑')}
-                  </span>
+                  </a>
 
                   <Popconfirm
                     placement="topRight"
