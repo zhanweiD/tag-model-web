@@ -2,26 +2,25 @@ import intl from 'react-intl-universal'
 /**
  * @description 添加同步计划 - 基础信息配置
  */
-import { Component } from 'react'
-import { observer } from 'mobx-react'
-import { action } from 'mobx'
-import { Form } from '@ant-design/compatible'
+import {Component} from 'react'
+import {observer} from 'mobx-react'
+import {action} from 'mobx'
+import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
-import { Input, Select, Button, Switch, Spin } from 'antd'
-import { ModalStotageDetail } from '../../../component'
+import {Input, Select, Button, Switch} from 'antd'
+import {ModalStotageDetail} from '../../../component'
 import {
-  debounce,
   getNamePattern,
   getEnNamePattern,
 } from '../../../common/util'
 
 const FormItem = Form.Item
-const Option = { Select }
-const { TextArea } = Input
+const Option = {Select}
+const {TextArea} = Input
 
 const formItemLayout = {
-  labelCol: { span: 7 },
-  wrapperCol: { span: 12 },
+  labelCol: {span: 7},
+  wrapperCol: {span: 12},
   colon: false,
 }
 
@@ -34,7 +33,6 @@ class StepOne extends Component {
   }
 
   componentWillMount() {
-    // this.store.getObjList()
     this.store.getStorageType()
   }
 
@@ -45,40 +43,15 @@ class StepOne extends Component {
   }
 
   @action.bound selectObj(obj) {
-    const {
-      form: { resetFields },
-    } = this.props
-
     this.store.objId = obj.key
-    // this.store.storageId = undefined
-
-    // resetFields(['dataStorageId'])
-
-    // if (this.store.storageType) {
-    //   this.store.getStorageList({
-    //     storageType: this.store.storageType,
-    //     objId: obj.key,
-    //   })
-    // }
   }
 
   @action.bound selecStorageType(v) {
-    const {
-      form: { resetFields, getFieldValue },
-    } = this.props
     this.store.storageType = v.key
 
     this.store.storageId = undefined
-
     this.store.storageList.clear()
-    resetFields(['dataStorageId'])
-
-    // if (getFieldValue('objId')) {
-    //   this.store.getStorageList({
-    //     storageType: obj.key,
-    //     objId: this.store.objId,
-    //   })
-    // }
+ 
     this.store.getStorageList(
       {
         storageType: v.key,
@@ -94,26 +67,28 @@ class StepOne extends Component {
     //   dataStorageId: obj,
     // })
     this.store.storageId = obj.key
-    this.store.storageName = this.getStoragName(obj.key)
-    if (obj.key) this.store.getObjList()
-    // this.store.getObjList()
+    this.store.storageName = obj.label
+    // this.store.storageName = this.getStoragName(obj.key)
+    // if (obj.key) this.store.getObjList()
+    this.store.getObjList()
   }
 
   getStoragName = storageId => {
-    const { storageList } = this.store
+    const {storageList} = this.store
     const obj = storageList.filter(d => d.storageId === storageId)[0] || {}
     return obj.storageName
   }
 
-  @action handleSubmit = e => {
+  @action handleSubmit = () => {
     const {
-      form: { validateFieldsAndScroll },
+      form: {validateFieldsAndScroll},
     } = this.props
 
     const t = this
 
     validateFieldsAndScroll((err, values) => {
       if (err) {
+        console.log(values)
         return
       }
       console.log(values)
@@ -147,7 +122,6 @@ class StepOne extends Component {
 
   // 重名校验
   changeTableName = (rule, value, callback) => {
-    // console.log(this.store.storageId)
     const params = {
       storageId: this.store.storageId,
       tableName: `tbjh_${value}`,
@@ -169,14 +143,13 @@ class StepOne extends Component {
 
   render() {
     const {
-      form: { getFieldDecorator, getFieldValue },
+      form: {getFieldDecorator, getFieldValue},
 
       show,
       closeDrawer,
     } = this.props
 
     const {
-      objList,
       syncObjList,
       storageTypeList,
       storageList,
@@ -184,13 +157,10 @@ class StepOne extends Component {
       storageDetail,
       storageVisible,
       defaultStorage,
-      getDefaultLogin,
     } = this.store
-    // if (defaultStorage.storageType) {
-    //   this.selecStorageType({key: defaultStorage.storageType})
-    // }
+    
     return (
-      <div style={{ display: show ? 'block' : 'none' }}>
+      <div style={{display: show ? 'block' : 'none'}}>
         <Form>
           <FormItem
             {...formItemLayout}
@@ -202,7 +172,7 @@ class StepOne extends Component {
           >
             {getFieldDecorator('name', {
               rules: [
-                { transform: value => value && value.trim() },
+                {transform: value => value && value.trim()},
                 {
                   required: true,
                   message: intl
@@ -232,7 +202,6 @@ class StepOne extends Component {
             )}
           </FormItem>
 
-          {/* <h3 className="mb24 fs14" style={{marginLeft: '200px'}}>目的源信息</h3> */}
           <FormItem
             {...formItemLayout}
             label={intl
@@ -250,7 +219,6 @@ class StepOne extends Component {
                     .d('请选择数据源类型'),
                 },
               ],
-              initialValue: defaultStorage.storageType,
             })(
               <Select
                 showSearch
@@ -261,7 +229,7 @@ class StepOne extends Component {
                     'ide.src.page-config.workspace-config.source-modal.sexnlhau4v'
                   )
                   .d('请选择数据源类型')}
-                style={{ width: '100%' }}
+                style={{width: '100%'}}
                 onSelect={v => this.selecStorageType(v)}
                 optionFilterProp="children"
                 getPopupContainer={triggerNode => triggerNode.parentElement}
@@ -274,70 +242,64 @@ class StepOne extends Component {
               </Select>
             )}
           </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={intl
-              .get(
-                'ide.src.page-manage.page-tag-sync.sync-list.step-one.6zd732vlszu'
-              )
-              .d('目的源')}
-            extra={
-              <span style={{ color: 'rgba(0,0,0,.65)' }}>
-                {intl
-                  .get(
-                    'ide.src.page-manage.page-tag-sync.sync-list.step-one.o28pul7s3u'
-                  )
-                  .d('若无可用的数据源，请先去')}
+          <div className="select-storage">
 
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href="/tag-model/index.html#/config/environment"
-                >
+            <FormItem
+              {...formItemLayout}
+              label={intl
+                .get(
+                  'ide.src.page-manage.page-tag-sync.sync-list.step-one.6zd732vlszu'
+                )
+                .d('目的源')}
+              extra={(
+                <span style={{color: 'rgba(0,0,0,.65)'}}>
                   {intl
                     .get(
-                      'ide.src.page-manage.page-tag-sync.sync-list.step-one.h3ozye9vojw'
+                      'ide.src.page-manage.page-tag-sync.sync-list.step-one.o28pul7s3u'
                     )
-                    .d('后台配置-基础配置')}
-                </a>
-                {intl
-                  .get(
-                    'ide.src.page-manage.page-tag-sync.sync-list.step-one.u8mq35frfym'
-                  )
-                  .d('中添加目的数据源')}
-              </span>
-            }
+                    .d('若无可用的数据源，请先去')}
 
-            // initialValue={storageList[0] ? storageList[0].storageId : undefined}
-          >
-            {getFieldDecorator('dataStorageId', {
-              rules: [
-                {
-                  required: true,
-                  message: intl
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="/tag-model/index.html#/config/environment"
+                  >
+                    {intl
+                      .get(
+                        'ide.src.page-manage.page-tag-sync.sync-list.step-one.h3ozye9vojw'
+                      )
+                      .d('后台配置-基础配置')}
+                  </a>
+                  {intl
                     .get(
-                      'ide.src.page-manage.page-tag-sync.sync-list.step-one.1zqrsmr1kc3'
+                      'ide.src.page-manage.page-tag-sync.sync-list.step-one.u8mq35frfym'
                     )
-                    .d('请选择目的源'),
-                },
-              ],
-            })(
-              <div className="select-storage">
+                    .d('中添加目的数据源')}
+                </span>
+              )}
+            >
+              {getFieldDecorator('dataStorageId', {
+                rules: [
+                  {
+                    required: true,
+                    message: intl
+                      .get(
+                        'ide.src.page-manage.page-tag-sync.sync-list.step-one.1zqrsmr1kc3'
+                      )
+                      .d('请选择目的源'),
+                  },
+                ],
+              })(
                 <Select
                   showSearch
                   labelInValue
                   disabled={defaultStorage.storageId}
-                  value={
-                    this.store.storageId
-                      ? { key: this.store.storageId }
-                      : undefined
-                  }
                   placeholder={intl
                     .get(
                       'ide.src.page-manage.page-tag-sync.sync-list.step-one.1zqrsmr1kc3'
                     )
                     .d('请选择目的源')}
-                  style={{ width: '100%' }}
+                  style={{width: '100%'}}
                   onSelect={v => this.selecStorage(v)}
                   optionFilterProp="children"
                   getPopupContainer={triggerNode => triggerNode.parentElement}
@@ -352,22 +314,23 @@ class StepOne extends Component {
                     </Option>
                   ))}
                 </Select>
-                {getFieldValue('dataStorageId') ? (
-                  <a
-                    href
-                    className="view-storage"
-                    onClick={() => this.viewStorage()}
-                  >
-                    {intl
-                      .get(
-                        'ide.src.component.modal-stroage-detail.main.v6urtgjoxwd'
-                      )
-                      .d('查看数据源')}
-                  </a>
-                ) : null}
-              </div>
-            )}
-          </FormItem>
+              )}
+            </FormItem>
+            {getFieldValue('dataStorageId') ? (
+              <a
+                href
+                className="view-storage"
+                onClick={() => this.viewStorage()}
+              >
+                {intl
+                  .get(
+                    'ide.src.component.modal-stroage-detail.main.v6urtgjoxwd'
+                  )
+                  .d('查看数据源')}
+              </a>
+            ) : null}
+          </div>
+
           <FormItem
             {...formItemLayout}
             label={intl
@@ -396,7 +359,7 @@ class StepOne extends Component {
                     'ide.src.page-manage.page-tag-sync.sync-list.step-one.aeuprk6e6c'
                   )
                   .d('请选择所属对象')}
-                style={{ width: '100%' }}
+                style={{width: '100%'}}
                 onSelect={v => this.selectObj(v)}
                 optionFilterProp="children"
               >
@@ -446,7 +409,7 @@ class StepOne extends Component {
             >
               {getFieldDecorator('tableName', {
                 rules: [
-                  { transform: value => value && value.trim() },
+                  {transform: value => value && value.trim()},
                   ...getEnNamePattern(),
                   {
                     required: true,
@@ -456,7 +419,7 @@ class StepOne extends Component {
                       )
                       .d('表名不能为空'),
                   },
-                  { validator: this.changeTableName },
+                  {validator: this.changeTableName},
                 ],
               })(
                 <div className="FBH">
@@ -486,7 +449,7 @@ class StepOne extends Component {
           >
             {getFieldDecorator('descr', {
               rules: [
-                { transform: value => value && value.trim() },
+                {transform: value => value && value.trim()},
                 {
                   max: 128,
                   whitespace: true,
@@ -508,14 +471,14 @@ class StepOne extends Component {
         </Form>
 
         <div className="bottom-button">
-          <Button style={{ marginRight: 8 }} onClick={() => closeDrawer()}>
+          <Button style={{marginRight: 8}} onClick={() => closeDrawer()}>
             {intl
               .get('ide.src.component.modal-stroage-detail.main.ph80bkiru5h')
               .d('关闭')}
           </Button>
           <Button
             type="primary"
-            style={{ marginRight: 8 }}
+            style={{marginRight: 8}}
             onClick={this.handleSubmit}
           >
             {intl

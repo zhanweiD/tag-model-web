@@ -29,7 +29,7 @@ class Cloud extends Component {
       .style('transition', 'all .3s linear')
     this.box.selectAll('*').remove()
 
-    const scaleSize = data.length > 20
+    const scaleSize = data.length > 20 // 按比例设置字体大小
       ? d3
         .scaleLinear()
         .domain([0, max])
@@ -39,15 +39,15 @@ class Cloud extends Component {
         .domain([0, max])
         .range([14, 35])
 
-    this.fill = d3.scaleOrdinal(d3.schemeCategory10)
-    this.layout = cloud()
-      .size([parseFloat(this.box.style('width')), 450])
-      .words(data.map(d => ({text: d.objName, size: scaleSize(d.relCount)})))
-      .padding(2)
-      .spiral('archimedean')
-      .rotate(0)
-      .font('Impact')
-      .fontSize(d => d.size)
+    this.fill = d3.scaleOrdinal(d3.schemeCategory10) // 颜色比例尺
+    this.layout = cloud() // 云图画布
+      .size([parseFloat(this.box.style('width')), 450]) // 大小
+      .words(data.map(d => ({text: d.objName, size: scaleSize(d.relCount)}))) // {单词，字号} words数组
+      .padding(2) // 间距
+      .spiral('archimedean') // 单词按螺线放置，防止重叠(生成xy偏移量，后需设置translate)
+      .rotate(0) // 旋转0
+      .font('Impact') 
+      .fontSize(d => d.size) // 读取设置字号
       .on('end', d => this.draw(d))
 
     this.layout.start()
@@ -64,14 +64,14 @@ class Cloud extends Component {
         'transform',
         `translate(${this.layout.size()[0] / 2},${this.layout.size()[1] / 2})`
       )
-      .selectAll('text')
+      .selectAll('text') // 根据数据自动添加对应text
       .data(data)
       .enter()
       .append('text')
       .style('font-size', d => `${d.size}px`)
       .style('font-family', 'Impact')
       .style('fill', (d, i) => this.fill(i))
-      .attr('text-anchor', 'middle')
+      .attr('text-anchor', 'middle') // 文本字符串的中间位置即当前文本的初始位置
       .attr('transform', d => `translate(${[d.x, d.y]})rotate(${d.rotate})`)
       .text(d => d.text)
   }

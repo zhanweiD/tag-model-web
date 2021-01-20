@@ -1,6 +1,6 @@
 import intl from 'react-intl-universal'
-import { action, runInAction, observable } from 'mobx'
-import { errorTip, changeToOptions, listToTree } from '../../../common/util'
+import {action, runInAction, observable} from 'mobx'
+import {errorTip, changeToOptions, listToTree} from '../../../common/util'
 import io from './io'
 
 class Store {
@@ -72,7 +72,7 @@ class Store {
         this.defaultStorage = res || {}
         if (this.defaultStorage.storageType) {
           this.oneForm.setFieldsValue({
-            dataDbType: { label: res.storageTypeName, key: res.storageType },
+            dataDbType: {label: res.storageTypeName, key: res.storageType},
           })
           this.selecStorageType({
             key: res.storageType,
@@ -114,19 +114,22 @@ class Store {
 
       runInAction(() => {
         this.storageList = res || []
-        // const defaultId = res[0] ? res[0] : {}
-        // this.oneForm.setFieldsValue({
-        //   dataStorageId: {
-        //     key: this.defaultStorage.storageId || defaultId.storageId,
-        //     label: this.defaultStorage.storageName || defaultId.storageName,
-        //   },
-        // })
 
-        if (cb)
-          cb({
-            key: this.defaultStorage.storageId || defaultId.storageId,
-            label: this.defaultStorage.storageName || defaultId.storageName,
+        if (this.defaultStorage.storageId) {
+          this.oneForm.setFieldsValue({
+            dataStorageId: {
+              key: this.defaultStorage.storageId,
+              label: this.defaultStorage.storageName,
+            },
           })
+        }
+
+        if (cb) {
+          cb({
+            key: this.defaultStorage.storageId,
+            label: this.defaultStorage.storageName,
+          }) 
+        }
       })
     } catch (e) {
       errorTip(e.message)
