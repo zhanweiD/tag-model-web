@@ -2,12 +2,12 @@ import intl from 'react-intl-universal'
 /**
  * @description 公共标签 - 标签详情
  */
-import { Component, useEffect } from 'react'
-import { observer } from 'mobx-react'
-import { Spin } from 'antd'
+import {Component, useEffect} from 'react'
+import {observer} from 'mobx-react'
+import {Spin} from 'antd'
 import OnerFrame from '@dtwave/oner-frame'
-import { DetailHeader } from '../../../component'
-import { Time } from '../../../common/util'
+import {DetailHeader} from '../../../component'
+import {Time} from '../../../common/util'
 import TagAnalyze from '../../../business-component/tag-analyze'
 import TagTrend from '../../../business-component/tag-trend'
 
@@ -17,7 +17,7 @@ import store from './store'
 class TagDetail extends Component {
   constructor(props) {
     super(props)
-    const { match } = props
+    const {match} = props
     store.tagId = match.params.id // 标签id
     store.projectId = match.params.projectId // 项目id
   }
@@ -27,7 +27,7 @@ class TagDetail extends Component {
   }
 
   render() {
-    const { detailLoading, info, tagId } = store
+    const {detailLoading, info, tagId} = store
 
     const baseInfo = [
       {
@@ -79,15 +79,15 @@ class TagDetail extends Component {
         value:
           info.configType === 1
             ? intl
-                .get(
-                  'ide.src.page-manage.page-common-tag.detail.main.mfs279f7xcc'
-                )
-                .d('衍生标签')
+              .get(
+                'ide.src.page-manage.page-common-tag.detail.main.mfs279f7xcc'
+              )
+              .d('衍生标签')
             : intl
-                .get(
-                  'ide.src.page-manage.page-common-tag.detail.main.vwwmvcib39m'
-                )
-                .d('基础标签'),
+              .get(
+                'ide.src.page-manage.page-common-tag.detail.main.vwwmvcib39m'
+              )
+              .d('基础标签'),
       },
       {
         title: intl
@@ -161,7 +161,7 @@ class TagDetail extends Component {
         </Spin>
         <div
           className="bgf m16 box-border"
-          style={{ minHeight: 'calc(100vh - 266px)' }}
+          style={{minHeight: 'calc(100vh - 266px)'}}
         >
           {info.isEnum ? (
             <TagAnalyze tagId={tagId} authorStatus={info.authorStatus} />
@@ -185,7 +185,7 @@ export default props => {
     // store.getProjects(isProject => {
     //   isProject ? ctx.useProject(true, null, {visible: false}) : ctx.useProject(isProject)
     // })
-    ctx.useProject(true, null, { visible: false })
+    ctx.useProject(true, null, {visible: false})
   }, [])
 
   return <TagDetail {...props} projectId={projectId} />
