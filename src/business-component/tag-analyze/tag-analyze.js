@@ -2,15 +2,15 @@ import intl from 'react-intl-universal'
 /**
  * @description 值域分布趋势
  */
-import { Component } from 'react'
-import { action, toJS } from 'mobx'
-import { observer } from 'mobx-react'
-import { Badge, Button, Divider, Progress } from 'antd'
+import {Component} from 'react'
+import {action, toJS} from 'mobx'
+import {observer} from 'mobx-react'
+import {Badge, Button, Divider, Progress} from 'antd'
 
 import store from './store'
 import './tag-analyze.styl'
 
-import { getPieOpt } from './charts-options'
+import {getPieOpt} from './charts-options'
 
 const colors = [
   'rgba(0,197,122, 0.6)',
@@ -75,11 +75,13 @@ class TagAnalyze extends Component {
   }
 
   render() {
-    const { tagId, authorStatus } = this.props
-    const { status, nullRatio, recordTime, name } = store.valueTrend
+    const {tagId, authorStatus} = this.props
+    const {status, nullRatio, recordTime, name} = store.valueTrend
+    const valueRatio = (1 - nullRatio) * 100 || 0
+    
     return (
       <div className="pb16 pt16 pl24 pr24 pr">
-        <h3 className="chart-title">
+        <h3>
           {intl
             .get(
               'ide.src.business-component.tag-analyze.tag-analyze.r4bflvdfh3f'
@@ -94,10 +96,9 @@ class TagAnalyze extends Component {
             right: '16px',
             display: authorStatus !== 2 ? 'none' : 'block',
           }}
-          onClick={() =>
-            store.getValueUpdate(pieData => {
-              this.drawSaveTrend(pieData)
-            })
+          onClick={() => store.getValueUpdate(pieData => {
+            this.drawSaveTrend(pieData)
+          })
           }
         >
           {intl
@@ -111,9 +112,9 @@ class TagAnalyze extends Component {
             {intl
               .get(
                 'ide.src.business-component.tag-analyze.tag-analyze.4hcdsnvdk6d',
-                { name: name }
+                {valueRatio, name},
               )
-              .d('%的实体拥有{name}这个标签')}
+              .d('{valueRatio}%的实体拥有{name}这个标签')}
           </span>
           <Badge
             status={
@@ -123,14 +124,14 @@ class TagAnalyze extends Component {
           <span className="mr16">{recordTime}</span>
         </p>
         <div className="chartPie-ad">
-          <div ref="chartsPie" style={{ height: '390px', width: '100%' }} />
+          <div ref="chartsPie" style={{height: '390px', width: '100%'}} />
           <div className="pie-tips FBH ablt">
             <ul className="mr8">
               {store.chartPieValues.map((item, index) => (
                 <li className="FBH FBAC mb4">
                   <span
                     className="circle mb2 wh8"
-                    style={{ backgroundColor: colors[index] }}
+                    style={{backgroundColor: colors[index]}}
                   />
                   <span className="interval">{item.key}</span>
                 </li>
@@ -138,7 +139,7 @@ class TagAnalyze extends Component {
             </ul>
             <ul className="mr8">
               {store.chartPieValues.map(item => (
-                <li className="FBH FBAC mb4" style={{ width: '150px' }}>
+                <li className="FBH FBAC mb4" style={{width: '150px'}}>
                   <Progress
                     className="interval"
                     showInfo

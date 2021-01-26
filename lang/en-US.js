@@ -8,7 +8,7 @@ module.exports = {
   'ide.src.business-component.tag-analyze.store.pd114xvd4s': '正在更新',
   'ide.src.business-component.tag-analyze.tag-analyze.r4bflvdfh3f': '值域分布',
   'ide.src.business-component.tag-analyze.tag-analyze.3lashi9hb7l': '更新',
-  'ide.src.business-component.tag-analyze.tag-analyze.4hcdsnvdk6d': '%的实体拥有{name}这个标签',
+  'ide.src.business-component.tag-analyze.tag-analyze.4hcdsnvdk6d': '{valueRatio}%的实体拥有{name}这个标签',
   'ide.src.business-component.tag-relate.dag-box.bhzleo4vj5g': '字段',
   'ide.src.business-component.tag-relate.dag-box.co39wa8uxw5': '字段名称',
   'ide.src.business-component.tag-relate.dag-box.xr0hezmhuj': '字段类型',
