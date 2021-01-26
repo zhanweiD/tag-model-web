@@ -2,13 +2,13 @@ import intl from 'react-intl-universal'
 /**
  * @description 标签仓库-标签体系-标签详情
  */
-import { Component } from 'react'
-import { Button, Spin } from 'antd'
-import { action } from 'mobx'
-import { inject, observer } from 'mobx-react'
+import {Component} from 'react'
+import {Button, Spin} from 'antd'
+import {action} from 'mobx'
+import {inject, observer} from 'mobx-react'
 
-import { DetailHeader, Tag, NoData, Authority } from '../../../component'
-import { Time } from '../../../common/util'
+import {DetailHeader, Tag, NoData, Authority} from '../../../component'
+import {Time} from '../../../common/util'
 import TagAnalyze from '../../../business-component/tag-analyze'
 import TagTrend from '../../../business-component/tag-trend'
 import TagApply from './modal-apply'
@@ -35,8 +35,8 @@ class Detail extends Component {
       projectId,
       useProjectId,
     } = this.store
-    const { authorStatus } = tagDetail
-    const { commonTag } = this.props
+    const {authorStatus} = tagDetail
+    const {commonTag} = this.props
 
     const baseInfo = [
       {
@@ -80,15 +80,15 @@ class Detail extends Component {
         value:
           tagDetail.configType === 1
             ? intl
-                .get(
-                  'ide.src.page-manage.page-common-tag.detail.main.mfs279f7xcc'
-                )
-                .d('衍生标签')
+              .get(
+                'ide.src.page-manage.page-common-tag.detail.main.mfs279f7xcc'
+              )
+              .d('衍生标签')
             : intl
-                .get(
-                  'ide.src.page-manage.page-common-tag.detail.main.vwwmvcib39m'
-                )
-                .d('基础标签'),
+              .get(
+                'ide.src.page-manage.page-common-tag.detail.main.vwwmvcib39m'
+              )
+              .d('基础标签'),
       },
       {
         title: intl
@@ -167,24 +167,6 @@ class Detail extends Component {
       ),
     }
 
-    const actions = [
-      <Authority authCode="tag_model:apply_tag[c]">
-        <Button
-          // className="mr8"
-          type="primary"
-          // style={{display: !authorStatus && projectId !== useProjectId ? 'block' : 'none'}}
-          style={{ display: !authorStatus ? 'block' : 'none' }}
-          onClick={this.viewRule}
-        >
-          {intl
-            .get(
-              'ide.src.page-manage.page-project-tag.tag-system.detail.qtu77t9ha8'
-            )
-            .d('申请权限')}
-        </Button>
-      </Authority>,
-    ]
-
     const noDataConfig = {
       text: intl
         .get('ide.src.business-component.tag-trend.tag-trend.o18ga4b3ils')
@@ -218,7 +200,7 @@ class Detail extends Component {
         ) : (
           <div
             className="box-border"
-            style={{ paddingTop: '15%', minHeight: 'calc(100vh - 181px)' }}
+            style={{paddingTop: '15%', minHeight: 'calc(100vh - 181px)'}}
           >
             <NoData {...noDataConfig} />
           </div>

@@ -2,11 +2,11 @@ import intl from 'react-intl-universal'
 /**
  * @description 对象管理 - 对象详情信息
  */
-import { Component, Fragment } from 'react'
-import { inject, observer } from 'mobx-react'
-import { Spin, Button } from 'antd'
-import { action } from 'mobx'
-import { Time } from '../../common/util'
+import {Component, Fragment} from 'react'
+import {inject, observer} from 'mobx-react'
+import {Spin, Button} from 'antd'
+import {action} from 'mobx'
+import {Time} from '../../common/util'
 import {
   DetailHeader,
   Tag,
@@ -14,7 +14,7 @@ import {
   TabRoute,
   Authority,
 } from '../../component'
-import { typeCodeMap, objStatusMap, objTypeMap } from './util'
+import {typeCodeMap, objStatusMap, objTypeMap} from './util'
 // import ObjectView from './object-view'
 import ObjectView from '../page-tag-model/object-view-router'
 import BusinessModel from './business-model'
@@ -36,10 +36,10 @@ class ObjectDetail extends Component {
   }
 
   componentWillReceiveProps(next) {
-    const { updateDetailKey, objId } = this.props
+    const {updateDetailKey, objId} = this.props
     if (
-      !_.isEqual(updateDetailKey, next.updateDetailKey) ||
-      !_.isEqual(+objId, +next.objId)
+      !_.isEqual(updateDetailKey, next.updateDetailKey)
+      || !_.isEqual(+objId, +next.objId)
     ) {
       this.store.objId = next.objId
       this.getInitData()
@@ -184,16 +184,18 @@ class ObjectDetail extends Component {
                   .d('取消发布')}
               </Button>
             </Authority>
-            <Button
-              loading={releaseLoading}
-              // className="mr8"
-              type="primary"
-              onClick={() => this.tagClass()}
-            >
-              {intl
-                .get('ide.src.page-manage.page-object-model.detail.9o263cdwzol')
-                .d('标签类目')}
-            </Button>
+            <Authority authCode="tag_model:select_tag_cate[r]">
+              <Button
+                loading={releaseLoading}
+                // className="mr8"
+                type="primary"
+                onClick={() => this.tagClass()}
+              >
+                {intl
+                  .get('ide.src.page-manage.page-object-model.detail.9o263cdwzol')
+                  .d('标签类目')}
+              </Button>
+            </Authority>
           </Fragment>
         ),
       },
@@ -208,24 +210,26 @@ class ObjectDetail extends Component {
           />
         ),
         button: (
-          <Button
-            loading={releaseLoading}
-            // className="mr8"
-            type="primary"
-            onClick={() => this.tagClass()}
-          >
-            {intl
-              .get('ide.src.page-manage.page-object-model.detail.9o263cdwzol')
-              .d('标签类目')}
-          </Button>
+          <Authority authCode="tag_model:select_tag_cate[r]" isCommon>
+            <Button
+              loading={releaseLoading}
+              // className="mr8"
+              type="primary"
+              onClick={() => this.tagClass()}
+            >
+              {intl
+                .get('ide.src.page-manage.page-object-model.detail.9o263cdwzol')
+                .d('标签类目')}
+            </Button>
+          </Authority>
         ),
       },
     }
 
-    const { tag } = tagMap[
+    const {tag} = tagMap[
       objDetail.status === undefined ? 'noData' : objDetail.status
     ]
-    const { button } = tagMap[
+    const {button} = tagMap[
       objDetail.status === undefined ? 'noData' : objDetail.status
     ]
     const typeCodeMap1 = typeCodeMap[typeCode]
@@ -235,13 +239,13 @@ class ObjectDetail extends Component {
       {
         title: intl
           .get('ide.src.page-manage.page-object-model.detail.aksa7mk6v55', {
-            typeCodeMap2: typeCodeMap2,
+            typeCodeMap2,
           })
           .d('{typeCodeMap2}总数'),
         tooltipText: intl
           .get('ide.src.page-manage.page-object-model.detail.jhbpjoxq84', {
-            typeCodeMap1: typeCodeMap1,
-            typeCodeMap2: typeCodeMap2,
+            typeCodeMap1,
+            typeCodeMap2,
           })
           .d('跟该{typeCodeMap1}相关的{typeCodeMap2}总数'),
         values: [objCard.objectCount],
@@ -301,65 +305,65 @@ class ObjectDetail extends Component {
       tabs:
         objDetail.type === 0
           ? [
-              {
-                name: intl
-                  .get(
-                    'ide.src.page-manage.page-object-model.detail.rnj5knhzw8'
-                  )
-                  .d('对象视图'),
-                value: 'view',
-              },
-              // {name: '业务视图', value: 1},
-              {
-                name: intl
-                  .get(
-                    'ide.src.page-manage.page-common-tag.common-tag.modal.0snlii7b6ll'
-                  )
-                  .d('使用项目'),
-                value: 'pro',
-              },
-              {
-                name: intl
-                  .get(
-                    'ide.src.page-manage.page-aim-source.source-list.main.bh6e3tzii5'
-                  )
-                  .d('数据表'),
-                value: 'table',
-              },
-            ]
+            {
+              name: intl
+                .get(
+                  'ide.src.page-manage.page-object-model.detail.rnj5knhzw8'
+                )
+                .d('对象视图'),
+              value: 'view',
+            },
+            // {name: '业务视图', value: 1},
+            {
+              name: intl
+                .get(
+                  'ide.src.page-manage.page-common-tag.common-tag.modal.0snlii7b6ll'
+                )
+                .d('使用项目'),
+              value: 'pro',
+            },
+            {
+              name: intl
+                .get(
+                  'ide.src.page-manage.page-aim-source.source-list.main.bh6e3tzii5'
+                )
+                .d('数据表'),
+              value: 'table',
+            },
+          ]
           : [
-              {
-                name: intl
-                  .get(
-                    'ide.src.page-manage.page-object-model.detail.rnj5knhzw8'
-                  )
-                  .d('对象视图'),
-                value: 'view',
-              },
-              // {name: '业务视图', value: 1},
-              {
-                name: intl
-                  .get(
-                    'ide.src.page-manage.page-common-tag.common-tag.modal.0snlii7b6ll'
-                  )
-                  .d('使用项目'),
-                value: 'pro',
-              },
-              {
-                name: intl
-                  .get(
-                    'ide.src.page-manage.page-aim-source.source-list.main.bh6e3tzii5'
-                  )
-                  .d('数据表'),
-                value: 'table',
-              },
-              {
-                name: intl
-                  .get('ide.src.common.navList.5ywghq8b76s')
-                  .d('标签列表'),
-                value: 'list',
-              },
-            ],
+            {
+              name: intl
+                .get(
+                  'ide.src.page-manage.page-object-model.detail.rnj5knhzw8'
+                )
+                .d('对象视图'),
+              value: 'view',
+            },
+            // {name: '业务视图', value: 1},
+            {
+              name: intl
+                .get(
+                  'ide.src.page-manage.page-common-tag.common-tag.modal.0snlii7b6ll'
+                )
+                .d('使用项目'),
+              value: 'pro',
+            },
+            {
+              name: intl
+                .get(
+                  'ide.src.page-manage.page-aim-source.source-list.main.bh6e3tzii5'
+                )
+                .d('数据表'),
+              value: 'table',
+            },
+            {
+              name: intl
+                .get('ide.src.common.navList.5ywghq8b76s')
+                .d('标签列表'),
+              value: 'list',
+            },
+          ],
 
       objType: objDetail.type,
       basePath: `/manage/object-model/${typeCode}/${objId}`,
@@ -371,8 +375,7 @@ class ObjectDetail extends Component {
       changeUrl: true,
     }
 
-    const Content =
-      objDetail.type === 0 ? objCompMap1[tabKey] : objCompMap[tabKey]
+    const Content = objDetail.type === 0 ? objCompMap1[tabKey] : objCompMap[tabKey]
     // const Content = [ObjectView, BusinessModel, UseProject, DataTable, TagList][+this.store.tabId]
     const tagClassConfig = {
       visible: tagClassVisible,

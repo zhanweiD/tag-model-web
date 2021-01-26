@@ -2,20 +2,20 @@ import intl from 'react-intl-universal'
 /**
  * @description 标签申请
  */
-import { Component } from 'react'
-import { observer } from 'mobx-react'
-import { action, toJS } from 'mobx'
-import { Form } from '@ant-design/compatible'
+import {Component} from 'react'
+import {observer} from 'mobx-react'
+import {action, toJS} from 'mobx'
+import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
-import { Modal, Input, Radio, DatePicker, Space } from 'antd'
+import {Modal, Input, Radio, DatePicker, Space} from 'antd'
 
 const FormItem = Form.Item
-const { TextArea } = Input
-const { RangePicker } = DatePicker
+const {TextArea} = Input
+const {RangePicker} = DatePicker
 
 const formItemLayout = {
-  labelCol: { span: 4 },
-  wrapperCol: { span: 19 },
+  labelCol: {span: 4},
+  wrapperCol: {span: 19},
   colon: false,
 }
 
@@ -30,9 +30,9 @@ class TagApply extends Component {
   // 表单提交
   @action handleOk() {
     const t = this
-    const { store } = t
+    const {store} = t
     const {
-      form: { validateFieldsAndScroll },
+      form: {validateFieldsAndScroll},
     } = t.props
 
     validateFieldsAndScroll((err, values) => {
@@ -70,7 +70,7 @@ class TagApply extends Component {
   // 表单重置
   @action handleReset() {
     const {
-      form: { resetFields },
+      form: {resetFields},
     } = this.props
     this.store.tagIds.clear()
     resetFields()
@@ -78,7 +78,7 @@ class TagApply extends Component {
 
   render() {
     const {
-      form: { getFieldDecorator, getFieldValue },
+      form: {getFieldDecorator, getFieldValue},
     } = this.props
     const {
       confirmLoading,
@@ -111,8 +111,7 @@ class TagApply extends Component {
       onCancel: () => this.handleCancel(),
     }
 
-    const { projectName } =
-      ownProjectList.filter(d => d.projectId === useProjectId)[0] || {}
+    const {projectName} = ownProjectList.filter(d => d.projectId === useProjectId)[0] || {}
 
     return (
       <Modal {...modalConfig}>

@@ -2,14 +2,14 @@ import intl from 'react-intl-universal'
 /**
  * @description  标签仓库(项目标签)-标签列表
  */
-import { Component, Fragment } from 'react'
-import { observer } from 'mobx-react'
-import { action } from 'mobx'
-import { Link } from 'react-router-dom'
-import { Spin } from 'antd'
-import { CompassOutlined } from '@ant-design/icons'
-import { ListContent, NoData, OmitTooltip, Authority } from '../../../component'
-import { getDataTypeName } from '../../../common/util'
+import {Component, Fragment} from 'react'
+import {observer} from 'mobx-react'
+import {action} from 'mobx'
+import {Link} from 'react-router-dom'
+import {Spin} from 'antd'
+import {CompassOutlined} from '@ant-design/icons'
+import {ListContent, NoData, OmitTooltip, Authority} from '../../../component'
+import {getDataTypeName} from '../../../common/util'
 // import ModalApply from './modal-apply'
 import ModalBack from './modal-back'
 import Search from './search'
@@ -126,10 +126,10 @@ class TagList extends Component {
           {record.projectName
             ? record.projectName
             : intl
-                .get(
-                  'ide.src.page-manage.page-common-tag.common-tag.list.bty454nguz'
-                )
-                .d('租户')}
+              .get(
+                'ide.src.page-manage.page-common-tag.common-tag.list.bty454nguz'
+              )
+              .d('租户')}
         </span>
       ),
     },
@@ -140,9 +140,8 @@ class TagList extends Component {
         .get('ide.src.page-manage.page-project-tag.tag-list.main.wfk6dc3r7hn')
         .d('使用权限状态'),
       dataIndex: 'status',
-      render: text =>
-        statusMap[+text] ||
-        intl
+      render: text => statusMap[+text]
+        || intl
           .get('ide.src.page-manage.page-project-tag.tag-list.main.ydeyj2zacxj')
           .d('失效'),
     },
@@ -163,9 +162,8 @@ class TagList extends Component {
            )
          }       
         </Fragment> */}
-          <Fragment>
-            {record.projectId === store.useProjectId ||
-            record.projectId === -1 ? (
+          <Authority authCode="tag_model:apply_project_tag[c]">
+            {record.projectId === store.useProjectId || record.projectId === -1 ? (
               <span className="disabled">
                 {intl
                   .get(
@@ -182,7 +180,7 @@ class TagList extends Component {
                   .d('交回权限')}
               </a>
             )}
-          </Fragment>
+          </Authority>
         </div>
       ),
     },
@@ -211,9 +209,9 @@ class TagList extends Component {
     } = store
 
     if (
-      typeof hotWord === 'undefined' &&
-      ownProjectId === '' &&
-      objectId === ''
+      typeof hotWord === 'undefined'
+      && ownProjectId === ''
+      && objectId === ''
     ) {
       return false
     }
@@ -222,16 +220,16 @@ class TagList extends Component {
 
   // 跳转到标签管理
   goTagManager = () => {
-    window.location.href = `${window.__keeper.pathHrefPrefix ||
-      '/'}/manage/tag-maintain`
+    window.location.href = `${window.__keeper.pathHrefPrefix
+      || '/'}/manage/tag-maintain`
   }
 
   render() {
-    const { useProjectId, list, functionCodes, tableLoading } = store
+    const {useProjectId, list, functionCodes, tableLoading} = store
 
     const listConfig = {
       columns: this.columns,
-      initParams: { useProjectId },
+      initParams: {useProjectId},
       rowKey: 'id',
       initGetDataByParent: true, // 初始请求 在父层组件处理。列表组件componentWillMount内不再进行请求
       store, // 必填属性
@@ -257,7 +255,7 @@ class TagList extends Component {
 
     if (tableLoading) {
       return (
-        <div style={{ width: '100%', height: '100%', textAlign: 'center' }}>
+        <div style={{width: '100%', height: '100%', textAlign: 'center'}}>
           <Spin spinning />
         </div>
       )
@@ -268,7 +266,7 @@ class TagList extends Component {
         {!list.length && !this.isSearch() ? (
           <div
             className="header-page"
-            style={{ paddingTop: '15%', minHeight: 'calc(100vh - 181px)' }}
+            style={{paddingTop: '15%', minHeight: 'calc(100vh - 181px)'}}
           >
             <NoData
               // isLoading={tableLoading}

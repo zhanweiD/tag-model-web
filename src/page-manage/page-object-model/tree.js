@@ -2,17 +2,17 @@ import intl from 'react-intl-universal'
 /**
  * @description 对象管理 - 树组件
  */
-import { Component } from 'react'
-import { action } from 'mobx'
-import { observer, inject } from 'mobx-react'
-import { Modal } from 'antd'
-import { DtTree } from '@dtwave/uikit'
-import { Loading } from '../../component'
+import {Component} from 'react'
+import {action} from 'mobx'
+import {observer, inject} from 'mobx-react'
+import {Modal} from 'antd'
+import {DtTree} from '@dtwave/uikit'
+import {Loading} from '../../component'
 import Action from './tree-action'
 import ModalCategory from './tree-modal-category'
 import ModalObject from './tree-drawer-object'
 import ModalMove from './tree-modal-move'
-import { codeInProduct } from '../../common/util'
+import {codeInProduct} from '../../common/util'
 import {
   getIconNodeSrc,
   deleteTipsMap,
@@ -24,8 +24,8 @@ import {
 
 import store from './store-tree'
 
-const { DtTreeNode, DtTreeBox } = DtTree
-const { confirm } = Modal
+const {DtTreeNode, DtTreeBox} = DtTree
+const {confirm} = Modal
 
 @inject('bigStore')
 @observer
@@ -123,7 +123,7 @@ class Tree extends Component {
   }
 
   componentWillReceiveProps(next) {
-    const { updateTreeKey, addObjectUpdateKey } = this.props
+    const {updateTreeKey, addObjectUpdateKey} = this.props
     if (!_.isEqual(updateTreeKey, next.updateTreeKey)) {
       store.typeCode = this.bigStore.typeCode
       store.objId = this.bigStore.objId
@@ -183,8 +183,8 @@ class Tree extends Component {
    */
   @action.bound deleteNode(key, data, type) {
     const t = this
-    const { history } = t.props
-    const { title, content } = deleteTipsMap[type]
+    const {history} = t.props
+    const {title, content} = deleteTipsMap[type]
 
     confirm({
       title,
@@ -222,11 +222,11 @@ class Tree extends Component {
 
     // 2. 展开节点
     // info.node.onExpand()
-    ;[store.currentSelectKeys] = selectedKeys
-    ;[store.objId] = selectedKeys
-    ;[this.bigStore.objId] = selectedKeys
+    ;[store.currentSelectKeys] = selectedKeys;
+    [store.objId] = selectedKeys;
+    [this.bigStore.objId] = selectedKeys
     // 3. 跳转到指定路由
-    const { history } = this.props
+    const {history} = this.props
     // 刷新对象详情
     this.bigStore.updateDetailKey = Math.random()
     history.push(
@@ -245,8 +245,8 @@ class Tree extends Component {
 
     // 对象管理类目权限code 对象类目（添加、编辑、删除） ```asset_tag_obj_cat_add_edit_del``` --管理员
     if (
-      +node.type === 3 &&
-      !codeInProduct('tag_model:obj_cate_detail[r]', true)
+      +node.type === 3
+      && !codeInProduct('tag_model:obj_cate_detail[r]', true)
     ) {
       return [
         {
@@ -260,8 +260,8 @@ class Tree extends Component {
     }
     // 对象管理对象权限code对象（添加、编辑、删除、发布、取消发布）```asset_tag_obj_add_edit_del_publish``` --管理员
     if (
-      +node.type === 2 &&
-      !codeInProduct('tag_model:update_obj_cate[cud]', true)
+      +node.type === 2
+      && !codeInProduct('tag_model:update_obj_cate[cud]', true)
     ) {
       return []
     }
@@ -303,7 +303,7 @@ class Tree extends Component {
   }
 
   render() {
-    const { treeLoading, treeData, expandAll, currentSelectKeys } = store
+    const {treeLoading, treeData, expandAll, currentSelectKeys} = store
 
     const treeBoxConfig = {
       titleHeight: 34,
@@ -315,7 +315,7 @@ class Tree extends Component {
         />
       ),
       defaultWidth: 200,
-      style: { minWidth: '200px' },
+      style: {minWidth: '200px'},
     }
 
     const expandKey = Number(currentSelectKeys)

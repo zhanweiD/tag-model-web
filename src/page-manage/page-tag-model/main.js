@@ -2,11 +2,11 @@ import intl from 'react-intl-universal'
 /**
  * @description  对象配置（标签模型）
  */
-import { Component } from 'react'
-import { action } from 'mobx'
-import { observer, Provider } from 'mobx-react'
-import { TabRoute, projectProvider, NoData } from '../../component'
-import { changeToOptions } from '../../common/util'
+import {Component} from 'react'
+import {action} from 'mobx'
+import {observer, Provider} from 'mobx-react'
+import {TabRoute, projectProvider, NoData} from '../../component'
+import {changeToOptions} from '../../common/util'
 import Tree from './tree'
 import ObjectDetail from './object-detail'
 
@@ -17,7 +17,7 @@ import './main.styl'
 class ObjectConfig extends Component {
   constructor(props) {
     super(props)
-    const { match } = props
+    const {match} = props
 
     store.projectId = props.projectId
 
@@ -25,13 +25,6 @@ class ObjectConfig extends Component {
     store.objId = match.params.objId
     store.tabId = match.params.tabId || 'view' // 当前详情tabID；默认数据视图
   }
-
-  // componentWillMount() {
-  //   if (store.projectId) {
-  //     // 权限code
-  //     store.getAuthCode()
-  //   }
-  // }
 
   @action changeTab = code => {
     store.typeCode = code
@@ -48,8 +41,8 @@ class ObjectConfig extends Component {
   }
 
   render() {
-    const { history } = this.props
-    const { typeCode, objId, treeLoading, selectObjUpdateKey } = store
+    const {history} = this.props
+    const {typeCode, objId, treeLoading, selectObjUpdateKey} = store
 
     const tabConfig = {
       tabs: changeToOptions(window.njkData.dict.typeCodes)('value', 'key'),
@@ -87,7 +80,7 @@ class ObjectConfig extends Component {
             {objId ? (
               <ObjectDetail objId={objId} history={history} />
             ) : (
-              <div className="bgf m16" style={{ width: '100%' }}>
+              <div className="bgf m16" style={{width: '100%'}}>
                 <NoData {...noObjDataConfig} />
               </div>
             )}

@@ -2,11 +2,11 @@ import intl from 'react-intl-universal'
 /**
  * @description 标签模型 - 标签维护
  */
-import { Component, Fragment } from 'react'
-import { action, toJS } from 'mobx'
-import { observer, inject, Provider } from 'mobx-react'
-import { Popconfirm, Button } from 'antd'
-import { Link } from 'react-router-dom'
+import {Component, Fragment} from 'react'
+import {action, toJS} from 'mobx'
+import {observer, inject, Provider} from 'mobx-react'
+import {Popconfirm, Button} from 'antd'
+import {Link} from 'react-router-dom'
 
 import {
   ListContent,
@@ -88,10 +88,10 @@ class TagList extends Component {
         <span>
           {record.createType === 1
             ? intl
-                .get(
-                  'ide.src.page-manage.page-common-tag.common-tag.list.bty454nguz'
-                )
-                .d('租户')
+              .get(
+                'ide.src.page-manage.page-common-tag.common-tag.list.bty454nguz'
+              )
+              .d('租户')
             : record.projectName}
         </span>
       ),
@@ -213,11 +213,10 @@ class TagList extends Component {
                       'ide.src.page-manage.page-tag-model.tag-model.tag-list.main.9cobnm296j6'
                     )
                     .d('确认发布？')}
-                  onConfirm={() =>
-                    store.updateTagStatus({
-                      status: 2,
-                      tagIdList: [record.id],
-                    })
+                  onConfirm={() => store.updateTagStatus({
+                    status: 2,
+                    tagIdList: [record.id],
+                  })
                   }
                 >
                   <a className="mr16" href>
@@ -311,11 +310,10 @@ class TagList extends Component {
                       'ide.src.page-manage.page-tag-model.tag-model.tag-list.main.8qsv9py158c'
                     )
                     .d('确认取消发布？')}
-                  onConfirm={() =>
-                    store.updateTagStatus({
-                      status: 1,
-                      tagIdList: [record.id],
-                    })
+                  onConfirm={() => store.updateTagStatus({
+                    status: 1,
+                    tagIdList: [record.id],
+                  })
                   }
                 >
                   <a href>
@@ -389,11 +387,10 @@ class TagList extends Component {
                     'ide.src.page-manage.page-tag-model.tag-model.tag-list.main.9cobnm296j6'
                   )
                   .d('确认发布？')}
-                onConfirm={() =>
-                  store.updateTagStatus({
-                    status: 2,
-                    tagIdList: [record.id],
-                  })
+                onConfirm={() => store.updateTagStatus({
+                  status: 2,
+                  tagIdList: [record.id],
+                })
                 }
               >
                 <a href>
@@ -417,11 +414,10 @@ class TagList extends Component {
                     'ide.src.page-manage.page-tag-model.tag-model.tag-list.main.8qsv9py158c'
                   )
                   .d('确认取消发布？')}
-                onConfirm={() =>
-                  store.updateTagStatus({
-                    status: 1,
-                    tagIdList: [record.id],
-                  })
+                onConfirm={() => store.updateTagStatus({
+                  status: 1,
+                  tagIdList: [record.id],
+                })
                 }
               >
                 <a href>
@@ -548,14 +544,14 @@ class TagList extends Component {
   }
 
   componentWillReceiveProps(next) {
-    const { updateDetailKey, objId } = this.props
+    const {updateDetailKey, objId} = this.props
     if (
-      !_.isEqual(updateDetailKey, next.updateDetailKey) ||
-      !_.isEqual(+objId, +next.objId)
+      !_.isEqual(updateDetailKey, next.updateDetailKey)
+      || !_.isEqual(+objId, +next.objId)
     ) {
       store.objId = +next.objId
-      store.initParams = { projectId: store.projectId, objId: store.objId }
-      store.getList({ objId: next.objId, currentPage: 1 })
+      store.initParams = {projectId: store.projectId, objId: store.objId}
+      store.getList({objId: next.objId, currentPage: 1})
     }
   }
 
@@ -579,7 +575,7 @@ class TagList extends Component {
 
   // 是否有进行搜索操作
   isSearch = () => {
-    const { searchParams } = store
+    const {searchParams} = store
 
     if (JSON.stringify(searchParams) === '{}') {
       return false
@@ -644,9 +640,9 @@ class TagList extends Component {
     const listConfig = {
       rowSelection,
       columns: this.columns,
-      scroll: { x: 800 },
-      initParams: { projectId, objId: store.objId },
-      searchParams: seach({ objectSelectList: toJS(objectSelectList) }),
+      scroll: {x: 800},
+      initParams: {projectId, objId: store.objId},
+      searchParams: seach({objectSelectList: toJS(objectSelectList)}),
       buttons: [
         <Authority authCode="tag_model:create_tag[c]">
           <Button
@@ -670,7 +666,7 @@ class TagList extends Component {
             {intl
               .get(
                 'ide.src.page-manage.page-tag-model.tag-model.tag-list.main.cen2ew5ntnr',
-                { publishRowKeysLength: publishRowKeysLength }
+                {publishRowKeysLength}
               )
               .d('批量发布({publishRowKeysLength})')}
           </Button>

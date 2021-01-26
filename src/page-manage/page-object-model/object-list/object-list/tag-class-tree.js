@@ -1,20 +1,20 @@
 import intl from 'react-intl-universal'
 /* 对象管理-树部分 */
-import { Component } from 'react'
-import { action } from 'mobx'
-import { observer } from 'mobx-react'
-import { Modal } from 'antd'
-import { DtTree } from '@dtwave/uikit'
-import { Loading } from '../../../../component'
-import { codeInProduct } from '../../../../common/util'
+import {Component} from 'react'
+import {action} from 'mobx'
+import {observer} from 'mobx-react'
+import {Modal} from 'antd'
+import {DtTree} from '@dtwave/uikit'
+import {Loading} from '../../../../component'
+import {codeInProduct} from '../../../../common/util'
 
-import { getIconNodeSrc } from '../util'
+import {getIconNodeSrc} from '../util'
 
 import Action from './tag-tree-action'
 import ModalCategory from './modal-category'
 
-const { DtTreeBox, DtTreeNode } = DtTree
-const { confirm } = Modal
+const {DtTreeBox, DtTreeNode} = DtTree
+const {confirm} = Modal
 
 @observer
 class ObjectTree extends Component {
@@ -87,7 +87,7 @@ class ObjectTree extends Component {
   }
 
   getCateDetail = () => {
-    const { currentSelectKeys, tagList } = this.store
+    const {currentSelectKeys, tagList} = this.store
     this.store.keyword = undefined
     this.store.getTagCateDetail()
     this.store.getTagList(
@@ -184,13 +184,13 @@ class ObjectTree extends Component {
   }
 
   render() {
-    const { treeLoading, treeData, expandAll, currentSelectKeys } = this.store
+    const {treeLoading, treeData, expandAll, currentSelectKeys} = this.store
 
     const treeBoxConfig = {
       titleHeight: 34,
       title: <Action store={this.store} key={this.store.typeCode} />,
       defaultWidth: 200,
-      style: { minWidth: '200px' },
+      style: {minWidth: '200px'},
     }
 
     const expandKey = Number(currentSelectKeys)

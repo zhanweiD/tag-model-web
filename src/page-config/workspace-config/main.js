@@ -4,16 +4,14 @@ import intl from 'react-intl-universal'
  * @description 系统环境配置
  */
 
-import { useEffect, useState } from 'react'
-// import {FormOutlined} from '@ant-design/icons'
-import { Button, Popconfirm, Modal, Table, Badge } from 'antd'
-import { ExclamationCircleOutlined } from '@ant-design/icons'
+import {useEffect, useState} from 'react'
+import {Button, Popconfirm, Modal, Table, Badge} from 'antd'
 import _ from 'lodash'
-import { projectProvider, Authority } from '../../component'
+import {projectProvider, Authority} from '../../component'
 import ConfigModal from './modal'
 import SourceModal from './source-modal'
 import io from './io'
-import { successTip, errorTip, Time } from '../../common/util'
+import {successTip, errorTip, Time} from '../../common/util'
 
 const useFetch = (ioFunc, params, afterFetch = () => {}) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -57,7 +55,7 @@ const useSingleFetch = (ioFunc, params, afterFetch = () => {}) => {
   fetchData()
 }
 
-const WorkspaceConfig = ({ projectId }) => {
+const WorkspaceConfig = ({projectId}) => {
   const [config, changeConfig] = useState({})
   const [visible, changeVisible] = useState(false)
   const [workspace, changeWorkspace] = useState([])
@@ -216,33 +214,34 @@ const WorkspaceConfig = ({ projectId }) => {
         .get('ide.src.page-config.workspace-config.main.4eyw4o6e3dr')
         .d('使用状态'),
       dataIndex: 'isUsed',
-      render: text =>
-        text ? (
-          <Badge
-            color="#108ee9"
-            text={intl
-              .get('ide.src.page-config.workspace-config.main.ztbqzsc34bb')
-              .d('使用中')}
-          />
-        ) : (
-          <Badge
-            color="#d9d9d9"
-            text={intl.get('ide.src.component.tag.tag.ogvpoe5m3bg').d('未使用')}
-          />
-        ),
+      render: text => (text ? (
+        <Badge
+          color="#108ee9"
+          text={intl
+            .get('ide.src.page-config.workspace-config.main.ztbqzsc34bb')
+            .d('使用中')}
+        />
+      ) : (
+        <Badge
+          color="#d9d9d9"
+          text={intl.get('ide.src.component.tag.tag.ogvpoe5m3bg').d('未使用')}
+        />
+      )),
     },
     {
       title: intl
         .get('ide.src.page-common.approval.approved.main.1tcpwa6mu1')
         .d('操作'),
-      render: (text, record) =>
-        record.isUsed ? (
+      render: (text, record) => (record.isUsed ? (
+        <Authority authCode="tag_config:environment_config[u]">
           <span className="disabled">
             {intl
               .get('ide.src.page-config.workspace-config.main.i53j7u2d9hs')
               .d('移除')}
           </span>
-        ) : (
+        </Authority>
+      ) : (
+        <Authority authCode="tag_config:environment_config[u]">
           <Popconfirm
             placement="topRight"
             title={intl
@@ -256,7 +255,8 @@ const WorkspaceConfig = ({ projectId }) => {
                 .d('移除')}
             </a>
           </Popconfirm>
-        ),
+        </Authority>
+      )),
     },
   ]
 
@@ -361,11 +361,13 @@ const WorkspaceConfig = ({ projectId }) => {
         </div>
         <div>
           {/* <div style={{color: 'rgba(0,0,0,0.45)'}}>目的源：</div> */}
-          <Button type="primary" className="mt8" onClick={showAddModal}>
-            {intl
-              .get('ide.src.page-config.workspace-config.main.bfslcmhzzgi')
-              .d('添加目的源')}
-          </Button>
+          <Authority authCode="tag_config:environment_config[u]">
+            <Button type="primary" className="mt8" onClick={showAddModal}>
+              {intl
+                .get('ide.src.page-config.workspace-config.main.bfslcmhzzgi')
+                .d('添加目的源')}
+            </Button>
+          </Authority>
           <Table
             loading={isLoading}
             className="mt8"

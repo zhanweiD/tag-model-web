@@ -107,13 +107,6 @@ class Search extends Component {
             size="small"
             onSearch={this.onSearch}
           />
-
-          {/* <Input
-             onSearch={this.onSearch}
-             size="small"
-             placeholder="请输入搜索关键词"
-             suffix={<SearchOutlined />}
-            /> */}
         </div>
         <div className="advanced-search">
           <div className="FBH mb16">
@@ -168,22 +161,6 @@ class Search extends Component {
                   </Option>
                 ))}
               </Select>
-              {/* <span className="mr8">使用权限状态</span>
-                <Select value={permissionType} style={{width: 240}} onChange={this.permissionTypeSelect}>
-                 <Option value="">全部</Option>
-                 {
-                   permissionTypeMap.map(
-                     ({name, value}) => (
-                       <Option 
-                         key={value} 
-                         value={value}
-                       >
-                         {name}
-                       </Option>
-                     )
-                   )
-                 }
-                </Select> */}
             </div>
           </div>
         </div>

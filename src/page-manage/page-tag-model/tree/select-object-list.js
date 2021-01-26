@@ -2,17 +2,17 @@ import intl from 'react-intl-universal'
 /**
  * @description 对象配置 - 选择对象 - 已配置标签列表
  */
-import { Component } from 'react'
-import { observer, inject } from 'mobx-react'
-import { observable, action } from 'mobx'
-import { Table, Input, Popconfirm, Tooltip } from 'antd'
-import { SearchOutlined } from '@ant-design/icons'
+import {Component} from 'react'
+import {observer, inject} from 'mobx-react'
+import {observable, action} from 'mobx'
+import {Table, Input, Popconfirm, Tooltip} from 'antd'
+import {SearchOutlined} from '@ant-design/icons'
 
-import { OmitTooltip } from '../../../component'
-import { Time } from '../../../common/util'
+import {OmitTooltip} from '../../../component'
+import {Time} from '../../../common/util'
 // import {usedStatusMap} from '../util'
 
-const { Search } = Input
+const {Search} = Input
 
 @inject('bigStore')
 @observer
@@ -150,20 +150,20 @@ class ObjectList extends Component {
   ]
 
   @action.bound onChange(e) {
-    const { onSearch } = this.props
-    const { value } = e.target
+    const {onSearch} = this.props
+    const {value} = e.target
 
     this.searchKey = value
     onSearch(value)
   }
 
   @action.bound remove(data) {
-    const { remove } = this.props
+    const {remove} = this.props
     remove(data)
   }
 
   getFilterData() {
-    const { filteredData, searchData } = this.props
+    const {filteredData, searchData} = this.props
 
     if (this.searchKey) {
       return searchData.slice()
@@ -180,7 +180,7 @@ class ObjectList extends Component {
   //  }
 
   render() {
-    const { selectedObjLoading: loading } = this.store
+    const {selectedObjLoading: loading} = this.store
     const listConfig = {
       loading,
       dataSource: this.getFilterData(),
@@ -210,7 +210,7 @@ class ObjectList extends Component {
               'ide.src.page-manage.page-tag-model.tree.select-object-list.fbkn1gnmxqb'
             )
             .d('请输入对象关键字')}
-          style={{ width: 300 }}
+          style={{width: 300}}
           suffix={<SearchOutlined />}
         />
 

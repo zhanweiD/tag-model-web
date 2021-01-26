@@ -2,21 +2,21 @@ import intl from 'react-intl-universal'
 /**
  * @description 标签申请
  */
-import { Component } from 'react'
-import { observer } from 'mobx-react'
-import { action, toJS } from 'mobx'
-import { Form } from '@ant-design/compatible'
+import {Component} from 'react'
+import {observer} from 'mobx-react'
+import {action, toJS} from 'mobx'
+import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
-import { Modal, Input, Radio, DatePicker, Space } from 'antd'
-import { ExclamationCircleOutlined } from '@ant-design/icons'
+import {Modal, Input, Radio, DatePicker, Space} from 'antd'
+import {ExclamationCircleOutlined} from '@ant-design/icons'
 
 const FormItem = Form.Item
-const { TextArea } = Input
-const { RangePicker } = DatePicker
+const {TextArea} = Input
+const {RangePicker} = DatePicker
 
 const formItemLayout = {
-  labelCol: { span: 4 },
-  wrapperCol: { span: 19 },
+  labelCol: {span: 4},
+  wrapperCol: {span: 19},
   colon: false,
 }
 
@@ -31,7 +31,7 @@ class TagBack extends Component {
   // 表单提交
   @action handleOk() {
     const t = this
-    const { store } = t
+    const {store} = t
     store.backAppltTag(t.handleCancel)
   }
 
@@ -41,7 +41,7 @@ class TagBack extends Component {
   }
 
   render() {
-    const { confirmLoading, modalBackVisible } = this.store
+    const {confirmLoading, modalBackVisible} = this.store
 
     const modalConfig = {
       width: 525,
@@ -67,11 +67,11 @@ class TagBack extends Component {
         >
           <div>
             <ExclamationCircleOutlined
-              style={{ color: '#DAA520', fontSize: '25px' }}
+              style={{color: '#DAA520', fontSize: '25px'}}
             />
           </div>
           <div>
-            <p style={{ fontSize: '10px', fontWeight: 'bold' }}>
+            <p style={{fontSize: '10px', fontWeight: 'bold'}}>
               {intl
                 .get(
                   'ide.src.page-manage.page-project-tag.tag-list.modal-back.ruudwdz5she'

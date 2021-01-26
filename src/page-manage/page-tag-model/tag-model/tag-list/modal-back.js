@@ -2,21 +2,21 @@ import intl from 'react-intl-universal'
 /**
  * @description 标签回收
  */
-import { Component } from 'react'
-import { observer } from 'mobx-react'
-import { action, toJS } from 'mobx'
-import { Form } from '@ant-design/compatible'
+import {Component} from 'react'
+import {observer} from 'mobx-react'
+import {action, toJS} from 'mobx'
+import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
-import { Modal, Input, Radio, DatePicker, Spin, Select, Button } from 'antd'
+import {Modal, Input, Radio, DatePicker, Spin, Select, Button} from 'antd'
 
 const FormItem = Form.Item
-const { TextArea } = Input
+const {TextArea} = Input
 // const {RangePicker} = DatePicker
-const { Option } = Select
+const {Option} = Select
 
 const formItemLayout = {
-  labelCol: { span: 4 },
-  wrapperCol: { span: 19 },
+  labelCol: {span: 4},
+  wrapperCol: {span: 19},
   colon: false,
 }
 
@@ -31,9 +31,9 @@ class TagApply extends Component {
   // 表单提交
   @action handleOk = e => {
     const t = this
-    const { store } = t
+    const {store} = t
     const {
-      form: { validateFieldsAndScroll },
+      form: {validateFieldsAndScroll},
     } = t.props
 
     validateFieldsAndScroll((err, values) => {
@@ -53,7 +53,7 @@ class TagApply extends Component {
   // 表单重置
   @action handleReset = () => {
     const {
-      form: { resetFields },
+      form: {resetFields},
     } = this.props
     resetFields()
   }
@@ -64,7 +64,7 @@ class TagApply extends Component {
 
   render() {
     const {
-      form: { getFieldDecorator, getFieldValue },
+      form: {getFieldDecorator, getFieldValue},
     } = this.props
     const {
       confirmLoading,
@@ -162,21 +162,21 @@ class TagApply extends Component {
                 placeholder={
                   applyedProjectList.length
                     ? intl
-                        .get(
-                          'ide.src.page-manage.page-tag-model.tag-model.tag-list.modal-back.72y75x63q2g'
-                        )
-                        .d('请选择回收项目')
+                      .get(
+                        'ide.src.page-manage.page-tag-model.tag-model.tag-list.modal-back.72y75x63q2g'
+                      )
+                      .d('请选择回收项目')
                     : intl
-                        .get(
-                          'ide.src.page-manage.page-tag-model.tag-model.tag-list.modal-back.95o5szgswfe'
-                        )
-                        .d('当前标签未授权给任何项目')
+                      .get(
+                        'ide.src.page-manage.page-tag-model.tag-model.tag-list.modal-back.95o5szgswfe'
+                      )
+                      .d('当前标签未授权给任何项目')
                 }
                 showSearch
                 optionFilterProp="children"
                 notFoundContent={
                   applyProjectLoading ? (
-                    <div style={{ textAlign: 'center' }}>
+                    <div style={{textAlign: 'center'}}>
                       <Spin />
                     </div>
                   ) : null

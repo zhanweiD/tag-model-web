@@ -2,15 +2,15 @@ import intl from 'react-intl-universal'
 /**
  * @description 审批详情-弹窗
  */
-import { Component } from 'react'
-import { Form } from '@ant-design/compatible'
+import {Component} from 'react'
+import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
-import { Modal, Input, Spin } from 'antd'
-import { Time } from '../../../common/util'
-import { Tag } from '../../../component'
+import {Modal, Input, Spin} from 'antd'
+import {Time} from '../../../common/util'
+import {Tag} from '../../../component'
 
 const FormItem = Form.Item
-const { TextArea } = Input
+const {TextArea} = Input
 
 const foreverMap = {
   0: intl
@@ -20,27 +20,6 @@ const foreverMap = {
     .get('ide.src.page-common.approval.common.comp-approval-modal.5ltr1685i6c')
     .d('永久'),
 }
-
-// const applyInfo = [{
-//   label: '权限归属',
-//   key: 'projectName',
-// }, {
-//   label: '申请内容',
-//   key: 'content',
-// }, {
-//   label: '申请时长',
-//   key: 'forever',
-//   map: foreverMap,
-// }, {
-//   label: '申请人',
-//   key: 'applyUserName',
-// }, {
-//   label: '申请时间',
-//   key: 'ctime',
-// }, {
-//   label: '申请理由',
-//   key: 'applyDescr',
-// }]
 
 const approvalInfo = [
   {
@@ -128,9 +107,12 @@ const statusMap = {
   },
 }
 
-const LableItem = ({ data, label, keyName, map }) => (
+const LableItem = ({data, label, keyName, map}) => (
   <div className="mb8">
-    <span className="approval-detail-label">{label}：</span>
+    <span className="approval-detail-label">
+      {label}
+：
+    </span>
     {keyName === 'mtime' || keyName === 'ctime' ? (
       <Time timestamp={data[keyName]} />
     ) : (
@@ -139,9 +121,12 @@ const LableItem = ({ data, label, keyName, map }) => (
   </div>
 )
 
-const NormalLableItem = ({ label, value }) => (
+const NormalLableItem = ({label, value}) => (
   <div className="mb8">
-    <span className="approval-detail-label">{label}：</span>
+    <span className="approval-detail-label">
+      {label}
+：
+    </span>
     <span>{value}</span>
   </div>
 )
@@ -150,7 +135,7 @@ const NormalLableItem = ({ label, value }) => (
 class ModalDetail extends Component {
   submit = () => {
     const {
-      form: { validateFields },
+      form: {validateFields},
       handleSubmit,
     } = this.props
     validateFields((err, params) => {
@@ -165,7 +150,7 @@ class ModalDetail extends Component {
    * @description 渲染申请信息
    */
   renderApplyInfo() {
-    const { data } = this.props
+    const {data} = this.props
 
     return (
       <div className="approval-detail">
@@ -233,12 +218,11 @@ class ModalDetail extends Component {
    * @description 渲染审批信息
    */
   renderApprovalInfo() {
-    const { fromPage, data } = this.props
+    const {fromPage, data} = this.props
 
     // 待我审批与我的申请（未审批）页面；不渲染审批信息
     // if (fromPage === 'willApproval' || fromPage === 'application') return null
-    if (fromPage === 'willApproval' || data.status === 3 || data.status === 0)
-      return null
+    if (fromPage === 'willApproval' || data.status === 3 || data.status === 0) { return null }
 
     return (
       <div className="approval-detail">
@@ -252,7 +236,7 @@ class ModalDetail extends Component {
           </span>
           <Tag {...statusMap[data.status]} />
         </div>
-        {approvalInfo.map(({ label, key }) => (
+        {approvalInfo.map(({label, key}) => (
           <LableItem data={data} label={label} keyName={key} />
         ))}
       </div>
@@ -263,7 +247,7 @@ class ModalDetail extends Component {
    * @description 渲染撤销信息
    */
   renderBackoutInfo() {
-    const { fromPage, data } = this.props
+    const {fromPage, data} = this.props
 
     if (data.status !== 3) return null
 
@@ -279,7 +263,7 @@ class ModalDetail extends Component {
           </span>
           <Tag {...statusMap[data.status]} />
         </div>
-        {backoutInfo.map(({ label, key }) => (
+        {backoutInfo.map(({label, key}) => (
           <LableItem data={data} label={label} keyName={key} />
         ))}
       </div>
@@ -291,7 +275,7 @@ class ModalDetail extends Component {
    */
   renderApprovalDescr() {
     const {
-      form: { getFieldDecorator },
+      form: {getFieldDecorator},
       fromPage,
     } = this.props
 
@@ -310,7 +294,7 @@ class ModalDetail extends Component {
           <FormItem>
             {getFieldDecorator('approvalDescr', {
               rules: [
-                { transform: value => value && value.trim() },
+                {transform: value => value && value.trim()},
                 {
                   required: true,
                   whitespace: true,

@@ -2,19 +2,19 @@ import intl from 'react-intl-universal'
 /**
  * @description 标签申请
  */
-import { Component } from 'react'
-import { observer } from 'mobx-react'
-import { action, toJS } from 'mobx'
-import { Form } from '@ant-design/compatible'
+import {Component} from 'react'
+import {observer} from 'mobx-react'
+import {action, toJS} from 'mobx'
+import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
-import { Modal, Input, Radio } from 'antd'
+import {Modal, Input, Radio} from 'antd'
 
 const FormItem = Form.Item
-const { TextArea } = Input
+const {TextArea} = Input
 
 const formItemLayout = {
-  labelCol: { span: 4 },
-  wrapperCol: { span: 19 },
+  labelCol: {span: 4},
+  wrapperCol: {span: 19},
   colon: false,
 }
 
@@ -29,9 +29,9 @@ class TagApply extends Component {
   // 表单提交
   @action handleOk() {
     const t = this
-    const { store } = t
+    const {store} = t
     const {
-      form: { validateFieldsAndScroll },
+      form: {validateFieldsAndScroll},
     } = t.props
 
     validateFieldsAndScroll((err, values) => {
@@ -66,16 +66,16 @@ class TagApply extends Component {
   @action handleCancel() {
     this.store.modalApplyVisible = false
     const {
-      form: { resetFields },
+      form: {resetFields},
     } = this.props
     resetFields()
   }
 
   render() {
     const {
-      form: { getFieldDecorator },
+      form: {getFieldDecorator},
     } = this.props
-    const { confirmLoading, modalApplyVisible, projectName } = this.store
+    const {confirmLoading, modalApplyVisible, projectName} = this.store
 
     const modalConfig = {
       width: 525,

@@ -2,19 +2,20 @@ import intl from 'react-intl-universal'
 /**
  * @description  对象配置 - 对象详情
  */
-import { Component } from 'react'
-import { observer, inject } from 'mobx-react'
-import { Spin, Modal, Button } from 'antd'
-import { action, toJS } from 'mobx'
-import { Time } from '../../common/util'
+import {Component} from 'react'
+import {observer, inject} from 'mobx-react'
+import {Spin, Modal, Button} from 'antd'
+import {action, toJS} from 'mobx'
+import {Time} from '../../common/util'
 import {
   TabRoute,
   DetailHeader,
   OverviewCardWrap,
   Tag,
   Authority,
+  AuthBox,
 } from '../../component'
-import { objDetailTabMap, objRelTabMap, objTypeMap } from './util'
+import {objDetailTabMap, objRelTabMap, objTypeMap} from './util'
 
 import TagClass from '../page-object-model/object-list/object-list/tag-class'
 // import ObjectView from './object-view'
@@ -22,9 +23,9 @@ import ObjectView from './object-view-router'
 import DataSheet from './data-sheet'
 import FieldList from './field-list'
 // import BusinessModel from './business-model'
-import { TagModel } from './tag-model'
+import {TagModel} from './tag-model'
 
-const { confirm } = Modal
+const {confirm} = Modal
 
 @inject('bigStore')
 @observer
@@ -39,7 +40,7 @@ class ObjectDetail extends Component {
   }
 
   componentWillReceiveProps(next) {
-    const { objId } = this.props
+    const {objId} = this.props
     if (!_.isEqual(+objId, +next.objId)) {
       this.getData()
     }
@@ -55,7 +56,7 @@ class ObjectDetail extends Component {
    */
   @action.bound remove() {
     const t = this
-    const { history } = this.props
+    const {history} = this.props
     confirm({
       title: intl
         .get('ide.src.page-manage.page-tag-model.object-detail.i7bh5qx9s1')
@@ -163,12 +164,6 @@ class ObjectDetail extends Component {
           .d('已发布即已发布的标签数，项目内创建且发布的标签数'),
         values: [objCard.publicTagCount],
       },
-
-      // {
-      //   title: '已公开/已发布',
-      //   tooltipText: '已发布即已发布的标签数，项目内创建且发布的标签数;已公开，即公开标签数，项目内对外公开的标签数',
-      //   values: [objCard.publishTagCount, objCard.publicTagCount],
-      // },
       {
         title: intl
           .get('ide.src.page-manage.page-tag-model.object-detail.rcrvimlwund')
@@ -178,12 +173,6 @@ class ObjectDetail extends Component {
           .d('项目内从其他项目申请或授权过来的标签数（有使用权限）'),
         values: [objCard.referencedTagCount],
       },
-
-      // {
-      //   title: '业务场景数',
-      //   tooltipText: '项目内创建的业务场景数',
-      //   values: [objCard.occasionCount],
-      // }
     ]
 
     // 不同状态的相应map
@@ -229,7 +218,7 @@ class ObjectDetail extends Component {
       changeUrl: true,
     }
 
-    const { tag } = tagMap[
+    const {tag} = tagMap[
       objDetail.isUsed === undefined ? 'noData' : objDetail.isUsed
     ]
 
@@ -249,8 +238,7 @@ class ObjectDetail extends Component {
       // business: BusinessModel,
     }
 
-    const Content =
-      objDetail.type === 0 ? objCompMap1[tabId] : objCompMap[tabId]
+    const Content = objDetail.type === 0 ? objCompMap1[tabId] : objCompMap[tabId]
 
     const tagClassConfig = {
       visible: tagClassVisible,
@@ -289,18 +277,20 @@ class ObjectDetail extends Component {
                       .d('移除')}
                   </Button>
                 </Authority>,
-                <Button
+                <AuthBox authCode="tag_model:select_tag_cate[r]">
+                  <Button
                   // loading={releaseLoading}
-                  className="mr8"
-                  type="primary"
-                  onClick={() => this.tagClass()}
-                >
-                  {intl
-                    .get(
-                      'ide.src.page-manage.page-object-model.detail.9o263cdwzol'
-                    )
-                    .d('标签类目')}
-                </Button>,
+                    className="mr8"
+                    type="primary"
+                    onClick={() => this.tagClass()}
+                  >
+                    {intl
+                      .get(
+                        'ide.src.page-manage.page-object-model.detail.9o263cdwzol'
+                      )
+                      .d('标签类目')}
+                  </Button>
+                </AuthBox>,
               ]}
             />
           </div>

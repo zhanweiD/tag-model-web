@@ -1,22 +1,22 @@
 import intl from 'react-intl-universal'
-import { Component } from 'react'
-import { Input, Button, Modal } from 'antd'
-import { action } from 'mobx'
-import { observer, inject } from 'mobx-react'
-import { SearchOutlined } from '@ant-design/icons'
-import { Time } from '../../../../common/util'
-import { ListContent, Authority, OmitTooltip } from '../../../../component'
+import {Component} from 'react'
+import {Input, Button, Modal} from 'antd'
+import {action} from 'mobx'
+import {observer, inject} from 'mobx-react'
+import {SearchOutlined} from '@ant-design/icons'
+import {Time} from '../../../../common/util'
+import {ListContent, Authority, OmitTooltip} from '../../../../component'
 import ModalRelateTable from './modal-relate-table'
 import store from './store-table'
 
-const { Search } = Input
+const {Search} = Input
 
 @inject('bigStore')
 @observer
 class DataTable extends Component {
   constructor(props) {
     super(props)
-    const { bigStore } = props
+    const {bigStore} = props
     this.bigStore = bigStore
     store.projectId = undefined
     // store.projectId = bigStore.projectId
@@ -122,19 +122,19 @@ class DataTable extends Component {
   ]
 
   componentWillReceiveProps(next) {
-    const { updateDetailKey, objId } = this.props
+    const {updateDetailKey, objId} = this.props
     if (
-      !_.isEqual(updateDetailKey, next.updateDetailKey) ||
-      !_.isEqual(+objId, +next.objId)
+      !_.isEqual(updateDetailKey, next.updateDetailKey)
+      || !_.isEqual(+objId, +next.objId)
     ) {
       store.objId = +next.objId
-      store.getList({ objId: next.objId })
+      store.getList({objId: next.objId})
       store.getObjectSelectList()
     }
   }
 
   @action.bound openModal() {
-    const { joinModeDetail } = store
+    const {joinModeDetail} = store
     store.getDataSource()
     store.mode = joinModeDetail.mode
 
@@ -157,15 +157,15 @@ class DataTable extends Component {
 
       if (+store.typeCode === 4) {
         // 实体
-        store.getFieldList({ objId: store.objId })
-        const { mappingKeys } = joinModeDetail
+        store.getFieldList({objId: store.objId})
+        const {mappingKeys} = joinModeDetail
         let fieldName
         if (mappingKeys && mappingKeys.length && mappingKeys.length > 0) {
           fieldName = mappingKeys[0].field_name
         }
         store.dataField = fieldName
       } else {
-        const { mappingKeys } = joinModeDetail
+        const {mappingKeys} = joinModeDetail
         let fieldName1
         let fieldName2
         if (mappingKeys && mappingKeys.length && mappingKeys.length > 0) {
@@ -173,7 +173,7 @@ class DataTable extends Component {
           // 有两个
           fieldName1 = key1.field_name
           fieldName2 = key2.field_name
-          store.getFieldList({ objId: key1.obj_id }, fieldList => {
+          store.getFieldList({objId: key1.obj_id}, fieldList => {
             store.fieldList1 = fieldList.map(d => {
               if (d.field === fieldName2) {
                 return {
@@ -184,7 +184,7 @@ class DataTable extends Component {
               return d
             })
           })
-          store.getFieldList({ objId: key2.obj_id }, fieldList => {
+          store.getFieldList({objId: key2.obj_id}, fieldList => {
             store.fieldList2 = fieldList.map(d => {
               if (d.field === fieldName1) {
                 return {
@@ -229,44 +229,43 @@ class DataTable extends Component {
   }
 
   render() {
-    const { objId, type, objType } = this.props
+    const {objId, type, objType} = this.props
     const listConfig = {
       columns: +objType ? this.columns : this.simpleColumns,
       // initParams: {objId: +objId, projectId: +projectId},
-      initParams: { objId: +objId },
-      scroll: { x: 900 },
+      initParams: {objId: +objId},
+      scroll: {x: 900},
       buttons: [
-        <div className="pr24 far" style={{ display: 'float' }}>
+        <div className="pr24 far" style={{display: 'float'}}>
           {/* <Search
            placeholder="请输入数据表名称关键字"
            onChange={e => this.onChange(e)}
            style={{width: 200}}
            size="small"
           /> */}
-          {/* <Authority authCode="tag_model:update_table[cud]"> */}
-          <div style={{ float: 'left', marginBottom: '8px' }}>
-            <Button
-              style={{ marginRight: 'auto' }}
-              type="primary"
-              className="mr8"
-              onClick={() =>
-                store.getObjJoinMode({ objId: +objId }, () => {
+          <Authority authCode="tag_model:obj_model:table_join_mode[u]">
+            <div style={{float: 'left', marginBottom: '8px'}}>
+              <Button
+                style={{marginRight: 'auto'}}
+                type="primary"
+                className="mr8"
+                onClick={() => store.getObjJoinMode({objId: +objId}, () => {
                   this.openModal()
                 })
-              }
-            >
-              {intl
-                .get(
-                  'ide.src.page-manage.page-object-model.object-list.object-detail.data-table.krv1lhnv6t'
-                )
-                .d('多表关联模式设置')}
-            </Button>
-          </div>
-          {/* </Authority> */}
-          <div style={{ float: 'right', marginBottom: '8px' }}>
+                }
+              >
+                {intl
+                  .get(
+                    'ide.src.page-manage.page-object-model.object-list.object-detail.data-table.krv1lhnv6t'
+                  )
+                  .d('多表关联模式设置')}
+              </Button>
+            </div>
+          </Authority>
+          <div style={{float: 'right', marginBottom: '8px'}}>
             <Input
               onChange={e => this.onChange(e)}
-              style={{ width: 200 }}
+              style={{width: 200}}
               size="small"
               placeholder={intl
                 .get(

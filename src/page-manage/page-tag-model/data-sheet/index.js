@@ -2,11 +2,11 @@ import intl from 'react-intl-universal'
 /**
  * @description 对象配置 - 数据表
  */
-import { Component } from 'react'
-import { action, observable, toJS } from 'mobx'
-import { observer, inject, Provider } from 'mobx-react'
-import { Popconfirm, Button } from 'antd'
-import { ListContent, Authority, OmitTooltip } from '../../../component'
+import {Component} from 'react'
+import {action, observable, toJS} from 'mobx'
+import {observer, inject, Provider} from 'mobx-react'
+import {Popconfirm, Button} from 'antd'
+import {ListContent, Authority, OmitTooltip} from '../../../component'
 
 import ConfigField from './config-field'
 import ModalAddTable from './modal-add-table'
@@ -21,7 +21,7 @@ import './index.styl'
 class DataSheet extends Component {
   constructor(props) {
     super(props)
-    const { bigStore } = props
+    const {bigStore} = props
     this.bigStore = bigStore
     store.projectId = bigStore.projectId
     store.objId = bigStore.objId
@@ -129,17 +129,17 @@ class DataSheet extends Component {
               </Popconfirm>
             )}
           </Authority>
-          {/* <Authority authCode="tag_model:config_table_tag[c]"> */}
-          <a
-            href
-            className="ml16"
-            onClick={() => this.openWhereCondition(record)}
-          >
-            {intl
-              .get('ide.src.component.label-item.label-item.slnqvyqvv7')
-              .d('编辑')}
-          </a>
-          {/* </Authority> */}
+          <Authority authCode="tag_model:config_table_tag[c]">
+            <a
+              href
+              className="ml16"
+              onClick={() => this.openWhereCondition(record)}
+            >
+              {intl
+                .get('ide.src.component.label-item.label-item.slnqvyqvv7')
+                .d('编辑')}
+            </a>
+          </Authority>
           {this.bigStore.objDetail && this.bigStore.objDetail.type !== 0 ? (
             <Authority authCode="tag_model:config_table_tag[c]">
               <a
@@ -231,17 +231,17 @@ class DataSheet extends Component {
               </Popconfirm>
             )}
           </Authority>
-          {/* <Authority authCode="tag_model:config_table_tag[c]"> */}
-          <a
-            href
-            className="ml16"
-            onClick={() => this.openWhereCondition(record)}
-          >
-            {intl
-              .get('ide.src.component.label-item.label-item.slnqvyqvv7')
-              .d('编辑')}
-          </a>
-          {/* </Authority> */}
+          <Authority authCode="tag_model:config_table_tag[c]">
+            <a
+              href
+              className="ml16"
+              onClick={() => this.openWhereCondition(record)}
+            >
+              {intl
+                .get('ide.src.component.label-item.label-item.slnqvyqvv7')
+                .d('编辑')}
+            </a>
+          </Authority>
           {this.bigStore.objDetail && this.bigStore.objDetail.type !== 0 ? (
             <Authority authCode="tag_model:config_table_tag[c]">
               <a
@@ -267,7 +267,7 @@ class DataSheet extends Component {
   }
 
   componentWillReceiveProps(next) {
-    const { objId } = this.props
+    const {objId} = this.props
     if (+objId !== +next.objId) {
       store.objId = +next.objId
       // 重置列表默认参数
@@ -307,7 +307,7 @@ class DataSheet extends Component {
   }
 
   @action.bound openModal() {
-    const { typeCode, objDetail } = this.bigStore
+    const {typeCode, objDetail} = this.bigStore
 
     if (+typeCode === 4) {
       store.bothTypeCode = 2 // 实体
@@ -329,7 +329,7 @@ class DataSheet extends Component {
     store.editSelectDetail = data
     store.tableName = data.dataTableName
     store.storageId = data.dataStorageId
-    const { typeCode, objDetail } = this.bigStore
+    const {typeCode, objDetail} = this.bigStore
     if (+typeCode === 4) {
       store.bothTypeCode = 2 // 实体
       store.modelEditModal = true
@@ -399,8 +399,8 @@ class DataSheet extends Component {
     const listConfig = {
       columns: relationType ? this.columns : this.columns1,
       // columns: this.columns,
-      scroll: { x: 1000 },
-      initParams: { objId, projectId },
+      scroll: {x: 1000},
+      initParams: {objId, projectId},
       buttons: [buttons],
       paginationConfig: {
         hideOnSinglePage: true, // 只有一页时隐藏

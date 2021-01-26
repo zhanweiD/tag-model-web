@@ -2,14 +2,14 @@ import intl from 'react-intl-universal'
 /**
  * @description 标签集市 - 搜索
  */
-import { Component, Fragment } from 'react'
-import { observer } from 'mobx-react'
-import { Input, Select } from 'antd'
-import { SearchOutlined } from '@ant-design/icons'
+import {Component, Fragment} from 'react'
+import {observer} from 'mobx-react'
+import {Input, Select} from 'antd'
+import {SearchOutlined} from '@ant-design/icons'
 
-import { action } from 'mobx'
+import {action} from 'mobx'
 
-const { Option } = Select
+const {Option} = Select
 
 // -1 未申请 0 申请中 1 有权限
 const typeMap = [
@@ -85,7 +85,7 @@ class Search extends Component {
       <div className="market-search">
         <div
           className="search-box"
-          style={{ marginBottom: isProject ? '24px' : '16px' }}
+          style={{marginBottom: isProject ? '24px' : '16px'}}
         >
           <Input.Search
             placeholder={intl
@@ -111,7 +111,7 @@ class Search extends Component {
         </div>
         <div
           className="advanced-search"
-          style={{ display: isProject ? 'block' : 'none' }}
+          style={{display: isProject ? 'block' : 'none'}}
         >
           <div className="FBH mb16">
             <div>
@@ -122,7 +122,7 @@ class Search extends Component {
               </span>
               <Select
                 value={ownProjectId}
-                style={{ width: 240 }}
+                style={{width: 240}}
                 onChange={this.ownProjectSelect}
                 showSearch
                 optionFilterProp="children"
@@ -132,7 +132,7 @@ class Search extends Component {
                     .get('ide.src.component.comp.search.e0mn12fihkg')
                     .d('全部')}
                 </Option>
-                {ownProjectList.map(({ projectId, projectName }) => (
+                {ownProjectList.map(({projectId, projectName}) => (
                   <Option key={projectId} value={projectId}>
                     {projectName}
                   </Option>
@@ -148,7 +148,7 @@ class Search extends Component {
               <Select
                 value={objectId}
                 className="mr24"
-                style={{ width: 240 }}
+                style={{width: 240}}
                 onChange={this.ownObjectSelect}
                 showSearch
                 optionFilterProp="children"
@@ -158,7 +158,7 @@ class Search extends Component {
                     .get('ide.src.component.comp.search.e0mn12fihkg')
                     .d('全部')}
                 </Option>
-                {objectList.map(({ objId, objName }) => (
+                {objectList.map(({objId, objName}) => (
                   <Option key={objId} value={objId}>
                     {objName}
                   </Option>
@@ -177,7 +177,7 @@ class Search extends Component {
                   <Select
                     value={projectPermission}
                     className="mr8"
-                    style={{ width: 240 }}
+                    style={{width: 240}}
                     onChange={this.permissionSelect}
                     showSearch
                     optionFilterProp="children"
@@ -187,7 +187,7 @@ class Search extends Component {
                         .get('ide.src.component.comp.search.e0mn12fihkg')
                         .d('全部')}
                     </Option>
-                    {typeMap.map(({ name, value }) => (
+                    {typeMap.map(({name, value}) => (
                       <Option key={value} value={value}>
                         {name}
                       </Option>

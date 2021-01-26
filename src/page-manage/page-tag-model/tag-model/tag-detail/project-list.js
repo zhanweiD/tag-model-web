@@ -1,10 +1,10 @@
-import { Component, Fragment } from 'react'
-import { action } from 'mobx'
+import {Component, Fragment} from 'react'
+import {action} from 'mobx'
 import intl from 'react-intl-universal'
-import { observer } from 'mobx-react'
+import {observer} from 'mobx-react'
 import ModalBack from './modal-back'
-import { ListContent } from '../../../../component'
-import { Time } from '../../../../common/util'
+import {ListContent, AuthBox} from '../../../../component'
+import {Time} from '../../../../common/util'
 
 import store from './store-project'
 
@@ -68,7 +68,7 @@ class ProjectList extends Component {
       fixed: 'right',
       render: (text, record) => (
         <div className="FBH FBAC">
-          <Fragment>
+          <AuthBox authCode="tag_model:apply_project_tag[c]">
             {record.id === +store.projectId ? (
               <span className="disabled">
                 {intl
@@ -86,7 +86,7 @@ class ProjectList extends Component {
                   .d('回收权限')}
               </a>
             )}
-          </Fragment>
+          </AuthBox>
         </div>
       ),
     },
@@ -98,11 +98,11 @@ class ProjectList extends Component {
   }
 
   render() {
-    const { tagId, projectId } = this.props
+    const {tagId, projectId} = this.props
 
     const listConfig = {
       columns: this.columns,
-      initParams: { tagId, projectId },
+      initParams: {tagId, projectId},
       store, // 必填属性
     }
 
