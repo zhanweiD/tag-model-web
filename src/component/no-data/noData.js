@@ -1,7 +1,7 @@
 import intl from 'react-intl-universal'
-import { Component } from 'react'
+import {Component} from 'react'
 import PropTypes from 'prop-types'
-import { Button } from 'antd'
+import {Button} from 'antd'
 import nodata from '../../icon/noData.svg'
 
 export default class NoData extends Component {
@@ -29,10 +29,9 @@ export default class NoData extends Component {
 
   constructor(props) {
     super(props)
-    const { code } = props
+    const {code} = props
     if (code) {
-      const { userProductFunctionCode = [], projectFunctionCode = [] } =
-        window.frameInfo || {}
+      const {userProductFunctionCode = [], projectFunctionCode = []} = window.frameInfo || {}
       const functionCodes = props.isCommon
         ? userProductFunctionCode
         : projectFunctionCode
@@ -44,14 +43,14 @@ export default class NoData extends Component {
   }
 
   onClick = () => {
-    const { onClick } = this.props
+    const {onClick} = this.props
 
     // 点击回调函数
     if (onClick) onClick()
   }
 
   renderText() {
-    const { text, noAuthText } = this.props
+    const {text, noAuthText} = this.props
 
     // 渲染没权限对应文案
     if (typeof this.auth === 'boolean' && !this.auth) {
@@ -67,7 +66,7 @@ export default class NoData extends Component {
   }
 
   renderBtn() {
-    const { btnText, code, btnDisabled } = this.props
+    const {btnText, code, btnDisabled} = this.props
 
     // 渲染按钮
     if (btnText) {
@@ -89,7 +88,7 @@ export default class NoData extends Component {
 
   // 获取按钮权限
   getBtnAutn = () => {
-    const { btnText, btnDisabled } = this.props
+    const {btnText, btnDisabled} = this.props
 
     // 拥有权限
     if (this.auth) {
@@ -105,7 +104,7 @@ export default class NoData extends Component {
   }
 
   render() {
-    const { isLoading, size = 'big', style } = this.props
+    const {isLoading, size = 'big', style} = this.props
 
     const imgWidth = size === 'small' ? '200px' : '300px'
 

@@ -1,9 +1,9 @@
 import intl from 'react-intl-universal'
-import { Component } from 'react'
-import { action, observable } from 'mobx'
-import { observer } from 'mobx-react'
-import { Modal, Table, Alert, Button } from 'antd'
-import { OmitTooltip } from '../../../../component'
+import {Component} from 'react'
+import {action, observable} from 'mobx'
+import {observer} from 'mobx-react'
+import {Modal, Table, Alert, Button} from 'antd'
+import {OmitTooltip} from '../../../../component'
 
 const columns = [
   {
@@ -37,10 +37,10 @@ const columns = [
       <span>
         {record.createType === 1
           ? intl
-              .get(
-                'ide.src.page-manage.page-common-tag.common-tag.list.bty454nguz'
-              )
-              .d('租户')
+            .get(
+              'ide.src.page-manage.page-common-tag.common-tag.list.bty454nguz'
+            )
+            .d('租户')
           : record.projectName}
       </span>
     ),
@@ -86,8 +86,8 @@ class ModalSelectTag extends Component {
 
   @action.bound handleOk() {
     const t = this
-    const { store } = this
-    const { tagList, currentSelectKeys } = store
+    const {store} = this
+    const {tagList, currentSelectKeys} = store
 
     store.moveTag(
       {
@@ -177,7 +177,7 @@ class ModalSelectTag extends Component {
         total: tagListModal.total,
       },
 
-      style: { maxHeight: '400px', overflowY: 'auto' },
+      style: {maxHeight: '400px', overflowY: 'auto'},
       onChange: this.changeTable,
     }
 
@@ -188,7 +188,7 @@ class ModalSelectTag extends Component {
           message={intl
             .get(
               'ide.src.page-manage.page-object-model.object-list.object-list.modal-select-tag.rvng2hxqg6f',
-              { selectedRowKeysLength: selectedRowKeysLength }
+              {selectedRowKeysLength}
             )
             .d('已选择 {selectedRowKeysLength} 项')}
           type="info"

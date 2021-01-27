@@ -243,7 +243,7 @@ class DataTable extends Component {
            style={{width: 200}}
            size="small"
           /> */}
-          <Authority authCode="tag_model:obj_model:table_join_mode[u]">
+          <Authority authCode="tag_model:obj_model:table_join_mode[u]" isCommon>
             <div style={{float: 'left', marginBottom: '8px'}}>
               <Button
                 style={{marginRight: 'auto'}}

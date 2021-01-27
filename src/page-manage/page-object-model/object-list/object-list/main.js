@@ -2,15 +2,14 @@ import intl from 'react-intl-universal'
 /**
  * @description 对象管理 - 对象列表
  */
-import { Component, useEffect } from 'react'
-import { observer } from 'mobx-react'
-import { action } from 'mobx'
-import { Link } from 'react-router-dom'
-import OnerFrame from '@dtwave/oner-frame'
-import { ListContent, Authority } from '../../../../component'
+import {Component, useEffect} from 'react'
+import {observer} from 'mobx-react'
+import {action} from 'mobx'
+import {Link} from 'react-router-dom'
+import {ListContent, Authority} from '../../../../component'
 import seach from './search'
 import TagClass from './tag-class'
-import { objTypeList, objTypeMap } from '../util'
+import {objTypeList, objTypeMap} from '../util'
 
 import store from './store'
 
@@ -110,11 +109,11 @@ class ObjectList extends Component {
   }
 
   render() {
-    const { tagClassObjId, tagClassVisible, objCateList } = store
+    const {tagClassObjId, tagClassVisible, objCateList} = store
 
     const listConfig = {
       columns: this.columns,
-      searchParams: seach({ objTypeList, objCateList }),
+      searchParams: seach({objTypeList, objCateList}),
       store, // 必填属性
     }
 

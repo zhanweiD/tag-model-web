@@ -1,5 +1,5 @@
 import intl from 'react-intl-universal'
-import { Component } from 'react'
+import {Component} from 'react'
 import PropTypes from 'prop-types'
 
 class LabelItem extends Component {
@@ -14,18 +14,19 @@ class LabelItem extends Component {
   }
 
   render() {
-    const { labelPadding, labelWidth, label, value, action } = this.props
+    const {labelPadding, labelWidth, label, value, action} = this.props
     let style = {}
     if (labelPadding) {
-      style = { 'padding-right': `${labelPadding}px` }
+      style = {'padding-right': `${labelPadding}px`}
     } else {
-      style = { width: `${labelWidth}px` }
+      style = {width: `${labelWidth}px`}
     }
 
     return (
       <div className="label-item">
         <div className="label-item-label" style={style}>
-          {label}:
+          {label}
+:
         </div>
         <div className="label-item-value">{value || '-'}</div>
         {action && (

@@ -1,11 +1,11 @@
 import intl from 'react-intl-universal'
-import { Component } from 'react'
-import { action } from 'mobx'
-import { observer, inject } from 'mobx-react'
-import { Modal } from 'antd'
-import { ModalForm } from '../../component'
-import { changeToOptions } from '../../common/util'
-import { modalDefaultConfig } from './util'
+import {Component} from 'react'
+import {action} from 'mobx'
+import {observer, inject} from 'mobx-react'
+import {Modal} from 'antd'
+import {ModalForm} from '../../component'
+import {changeToOptions} from '../../common/util'
+import {modalDefaultConfig} from './util'
 
 @inject('bigStore')
 @observer
@@ -23,9 +23,9 @@ class ModalMove extends Component {
 
   submit = () => {
     const t = this
-    const { store } = t
+    const {store} = t
     const {
-      moveModal: { detail },
+      moveModal: {detail},
     } = store
 
     this.form.validateFields((err, values) => {
@@ -50,7 +50,7 @@ class ModalMove extends Component {
 
   render() {
     const {
-      moveModal: { visible, detail },
+      moveModal: {visible, detail},
 
       confirmLoading,
     } = this.store

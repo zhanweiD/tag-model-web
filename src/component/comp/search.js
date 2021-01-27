@@ -1,7 +1,7 @@
 import intl from 'react-intl-universal'
-import { APPLY_TYPE, APPROVAL_STATUS } from '../common/comp-approval-status'
+import {APPLY_TYPE, APPROVAL_STATUS} from '../common/comp-approval-status'
 
-const serach = ({ projectList = [], applicant = [] }) => [
+const serach = ({projectList = [], applicant = []}) => [
   {
     label: intl.get('ide.src.component.comp.search.w8q224fq9jt').d('申请类型'),
     key: 'type',
@@ -21,13 +21,13 @@ const serach = ({ projectList = [], applicant = [] }) => [
       options: projectList.length
         ? projectList
         : [
-            {
-              name: intl
-                .get('ide.src.component.comp.search.e0mn12fihkg')
-                .d('全部'),
-              value: '',
-            },
-          ],
+          {
+            name: intl
+              .get('ide.src.component.comp.search.e0mn12fihkg')
+              .d('全部'),
+            value: '',
+          },
+        ],
     },
 
     component: 'select',
@@ -46,13 +46,13 @@ const serach = ({ projectList = [], applicant = [] }) => [
       options: applicant.length
         ? applicant
         : [
-            {
-              name: intl
-                .get('ide.src.component.comp.search.e0mn12fihkg')
-                .d('全部'),
-              value: '',
-            },
-          ],
+          {
+            name: intl
+              .get('ide.src.component.comp.search.e0mn12fihkg')
+              .d('全部'),
+            value: '',
+          },
+        ],
     },
 
     component: 'select',

@@ -2,12 +2,12 @@ import intl from 'react-intl-universal'
 /**
  * @description 公共标签
  */
-import { Component } from 'react'
-import { Tabs } from 'antd'
+import {Component} from 'react'
+import {Tabs} from 'antd'
 import TagList from './list'
 import TagSystem from '../../page-project-tag/tag-system'
 
-const { TabPane } = Tabs
+const {TabPane} = Tabs
 
 class CommonTag extends Component {
   render() {

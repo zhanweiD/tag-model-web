@@ -1,7 +1,6 @@
 import intl from 'react-intl-universal'
-import { Component, Fragment } from 'react'
-import { action, toJS, observe } from 'mobx'
-import { observer, inject } from 'mobx-react'
+import {Component, Fragment} from 'react'
+import {observer, inject} from 'mobx-react'
 import ModalForm from '../modal-form'
 
 @inject('store')
@@ -15,14 +14,14 @@ class BackConfig extends Component {
 
   formItemLayout = () => {
     return {
-      labelCol: { span: 2 },
-      wrapperCol: { span: 18 },
+      labelCol: {span: 2},
+      wrapperCol: {span: 18},
       colon: false,
     }
   }
 
   selectContent = () => {
-    const { dataTypeSource = [], environment } = this.store
+    const {dataTypeSource = [], environment} = this.store
     return [
       {
         label: intl

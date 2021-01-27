@@ -1,13 +1,13 @@
 import intl from 'react-intl-universal'
-import { observable, action, runInAction, toJS } from 'mobx'
-import { successTip, errorTip, changeToOptions } from '../../common/util'
+import {observable, action, runInAction, toJS} from 'mobx'
+import {successTip, errorTip, changeToOptions} from '../../common/util'
 import io from './io'
 
 class Store {
   @observable projectId = 0 // 项目ID
   @observable dataSource = [
-    { name: '1', value: '1' },
-    { name: '2', value: '2' },
+    {name: '1', value: '1'},
+    {name: '2', value: '2'},
   ] // 环境列表
   @observable visible = false // 控制配置弹窗
   @observable confirmLoading = false // 确认按钮loading

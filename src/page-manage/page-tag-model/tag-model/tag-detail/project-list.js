@@ -3,7 +3,7 @@ import {action} from 'mobx'
 import intl from 'react-intl-universal'
 import {observer} from 'mobx-react'
 import ModalBack from './modal-back'
-import {ListContent, AuthBox} from '../../../../component'
+import {ListContent, Authority} from '../../../../component'
 import {Time} from '../../../../common/util'
 
 import store from './store-project'
@@ -68,7 +68,7 @@ class ProjectList extends Component {
       fixed: 'right',
       render: (text, record) => (
         <div className="FBH FBAC">
-          <AuthBox authCode="tag_model:apply_project_tag[c]">
+          <Authority authCode="tag_model:apply_project_tag[c]">
             {record.id === +store.projectId ? (
               <span className="disabled">
                 {intl
@@ -86,7 +86,7 @@ class ProjectList extends Component {
                   .d('回收权限')}
               </a>
             )}
-          </AuthBox>
+          </Authority>
         </div>
       ),
     },

@@ -2,15 +2,15 @@ import intl from 'react-intl-universal'
 /**
  * @description 标签加工列表
  */
-import { Component, Fragment } from 'react'
-import { action } from 'mobx'
-import { observer, Provider } from 'mobx-react'
-import { DownOutlined } from '@ant-design/icons'
-import { Popconfirm, Dropdown, Menu, Button } from 'antd'
-import { Link } from 'react-router-dom'
+import {Component, Fragment} from 'react'
+import {action} from 'mobx'
+import {observer, Provider} from 'mobx-react'
+import {DownOutlined} from '@ant-design/icons'
+import {Popconfirm, Dropdown, Menu, Button} from 'antd'
+import {Link} from 'react-router-dom'
 
-import { Time } from '../../common/util'
-import { ListContent, Authority, projectProvider } from '../../component'
+import {Time} from '../../common/util'
+import {ListContent, Authority, projectProvider} from '../../component'
 import seach from './search'
 import DrawerConfig from './drawer'
 import ConfigDrawer from './config-drawer'
@@ -33,7 +33,7 @@ class SchemaList extends Component {
 
     this.rootStore = new Store()
 
-    const { listStore, drawerStore, configStore } = this.rootStore
+    const {listStore, drawerStore, configStore} = this.rootStore
 
     this.drawerStore = drawerStore
     this.configStore = configStore
@@ -50,10 +50,9 @@ class SchemaList extends Component {
       <Menu.Item>
         <a
           href
-          onClick={() =>
-            this.getSubmitLog({
-              id: data.id,
-            })
+          onClick={() => this.getSubmitLog({
+            id: data.id,
+          })
           }
         >
           {intl
@@ -113,14 +112,14 @@ class SchemaList extends Component {
         .get('ide.src.page-process.schema-list.main.q0jida1yspd')
         .d('方案状态'),
       dataIndex: 'status',
-      render: v => getSchemeStatus({ status: v }),
+      render: v => getSchemeStatus({status: v}),
     },
     {
       title: intl
         .get('ide.src.page-manage.page-tag-sync.sync-list.main.5y9seazaxhc')
         .d('最近运行状态'),
       dataIndex: 'lastStatus',
-      render: v => (v === null ? '-' : getSchemeRunStatus({ status: v })),
+      render: v => (v === null ? '-' : getSchemeRunStatus({status: v})),
     },
     {
       title: intl
@@ -208,51 +207,51 @@ class SchemaList extends Component {
           )}
 
           {/* 方案状态: 提交成功 调度类型:手动执行 运行状态: 运行中   操作: 禁止执行 */}
-          {record.status === 1 &&
-            record.scheduleType === 2 &&
-            record.lastStatus === 0 && (
-              <Fragment>
-                <Authority authCode="tag_derivative:run_tql[x]">
-                  <span className="disabled mr16">
+          {record.status === 1
+            && record.scheduleType === 2
+            && record.lastStatus === 0 && (
+            <Fragment>
+              <Authority authCode="tag_derivative:run_tql[x]">
+                <span className="disabled mr16">
+                  {intl
+                    .get(
+                      'ide.src.page-manage.page-tag-sync.sync-list.main.ico2ygdkj9'
+                    )
+                    .d('执行')}
+                </span>
+              </Authority>
+              {/* <span className="table-action-line" /> */}
+            </Fragment>
+          )}
+
+          {/* 方案状态: 提交成功 调度类型:手动执行   操作: 执行 */}
+          {record.status === 1
+            && record.scheduleType === 2
+            && record.lastStatus !== 0 && (
+            <Fragment>
+              <Authority authCode="tag_derivative:run_tql[x]">
+                <Popconfirm
+                  placement="topRight"
+                  title={intl
+                    .get(
+                      'ide.src.page-manage.page-tag-sync.sync-list.main.xovkki7ebu'
+                    )
+                    .d('你确定要执行吗？')}
+                  onConfirm={() => this.operation(record)}
+                >
+                  <a className="mr16" href>
                     {intl
                       .get(
                         'ide.src.page-manage.page-tag-sync.sync-list.main.ico2ygdkj9'
                       )
                       .d('执行')}
-                  </span>
-                </Authority>
-                {/* <span className="table-action-line" /> */}
-              </Fragment>
-            )}
+                  </a>
+                </Popconfirm>
+              </Authority>
 
-          {/* 方案状态: 提交成功 调度类型:手动执行   操作: 执行 */}
-          {record.status === 1 &&
-            record.scheduleType === 2 &&
-            record.lastStatus !== 0 && (
-              <Fragment>
-                <Authority authCode="tag_derivative:run_tql[x]">
-                  <Popconfirm
-                    placement="topRight"
-                    title={intl
-                      .get(
-                        'ide.src.page-manage.page-tag-sync.sync-list.main.xovkki7ebu'
-                      )
-                      .d('你确定要执行吗？')}
-                    onConfirm={() => this.operation(record)}
-                  >
-                    <a className="mr16" href>
-                      {intl
-                        .get(
-                          'ide.src.page-manage.page-tag-sync.sync-list.main.ico2ygdkj9'
-                        )
-                        .d('执行')}
-                    </a>
-                  </Popconfirm>
-                </Authority>
-
-                {/* <span className="table-action-line" /> */}
-              </Fragment>
-            )}
+              {/* <span className="table-action-line" /> */}
+            </Fragment>
+          )}
 
           {/* 方案状态: 提交成功 调度类型:周期执行 运行状态 运行成功 操作: 删除 */}
           {/* 标签数只要为0 方案均可删除 */}
@@ -442,12 +441,12 @@ class SchemaList extends Component {
   }
 
   render() {
-    const { objList, functionCodes } = this.store
+    const {objList, functionCodes} = this.store
     const listConfig = {
       columns: this.columns,
-      initParams: { projectId: this.projectId },
-      searchParams: seach({ objList }),
-      scroll: { x: 1300 },
+      initParams: {projectId: this.projectId},
+      searchParams: seach({objList}),
+      scroll: {x: 1300},
       buttons: [
         <Authority authCode="tag_derivative:create_tql[c]">
           <Button

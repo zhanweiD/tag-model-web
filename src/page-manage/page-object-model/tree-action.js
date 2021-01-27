@@ -2,12 +2,12 @@ import intl from 'react-intl-universal'
 /**
  * @description 树组件 - 搜索框
  */
-import { Component } from 'react'
-import { action } from 'mobx'
-import { observer } from 'mobx-react'
-import { Dropdown, Menu } from 'antd'
-import { NoBorderInput, Authority } from '../../component'
-import { codeInProduct } from '../../common/util'
+import {Component} from 'react'
+import {action} from 'mobx'
+import {observer} from 'mobx-react'
+import {Dropdown, Menu} from 'antd'
+import {NoBorderInput, Authority} from '../../component'
+import {codeInProduct} from '../../common/util'
 import {
   IconRefresh,
   IconTreeAdd,
@@ -67,7 +67,7 @@ class Action extends Component {
           <div
             onClick={this.addTree}
             onKeyDown={() => {}}
-            style={{ margin: '-5px -12px', padding: '5px 12px' }}
+            style={{margin: '-5px -12px', padding: '5px 12px'}}
           >
             {intl
               .get(
@@ -99,7 +99,7 @@ class Action extends Component {
           onPressEnter={this.searchTree}
         />
 
-        <div className="FBH pr6 pl6" style={{ maxWidth: 70 }}>
+        <div className="FBH pr6 pl6" style={{maxWidth: 70}}>
           <IconRefresh size="14" className="mr8" onClick={this.refreshTree} />
           <Authority authCode="tag_model:update_obj_cate[cud]" isCommon>
             {this.dropdownDom()}

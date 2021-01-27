@@ -2,8 +2,8 @@
  * @description 封装modol中常用form
  */
 import {Component, Fragment} from 'react'
-import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
+import {Form} from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
 import PropTypes from 'prop-types'
 import QuestionTooltip from '../question-tooltip'
 import ControlComponent, {mergeRules} from '../form-component-config'

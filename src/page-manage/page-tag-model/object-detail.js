@@ -13,7 +13,6 @@ import {
   OverviewCardWrap,
   Tag,
   Authority,
-  AuthBox,
 } from '../../component'
 import {objDetailTabMap, objRelTabMap, objTypeMap} from './util'
 
@@ -277,7 +276,7 @@ class ObjectDetail extends Component {
                       .d('移除')}
                   </Button>
                 </Authority>,
-                <AuthBox authCode="tag_model:select_tag_cate[r]">
+                <Authority authCode="tag_model:select_tag_cate[r]">
                   <Button
                   // loading={releaseLoading}
                     className="mr8"
@@ -290,7 +289,7 @@ class ObjectDetail extends Component {
                       )
                       .d('标签类目')}
                   </Button>
-                </AuthBox>,
+                </Authority>,
               ]}
             />
           </div>

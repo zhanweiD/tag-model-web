@@ -4,30 +4,30 @@ import intl from 'react-intl-universal'
  * @author  mahua
  */
 
-import { Component } from 'react'
+import {Component} from 'react'
 import PropTypes from 'prop-types'
-import { Form } from '@ant-design/compatible'
+import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
-import { Button, Row, Col } from 'antd'
-import ControlComponent, { mergeRules } from '../form-component-config'
+import {Button, Row, Col} from 'antd'
+import ControlComponent, {mergeRules} from '../form-component-config'
 
 const FormItem = Form.Item
 
 const formItemLayout = {
   labelCol: {
-    sm: { span: 6 },
-    md: { span: 7 },
-    lg: { span: 9 },
-    xl: { span: 6 },
-    xxl: { span: 5 },
+    sm: {span: 6},
+    md: {span: 7},
+    lg: {span: 9},
+    xl: {span: 6},
+    xxl: {span: 5},
   },
 
   wrapperCol: {
-    sm: { span: 18 },
-    md: { span: 17 }, // >=768
-    lg: { span: 15 }, // >=992
-    xl: { span: 18 }, // >=1200
-    xxl: { span: 19 }, // >=1600
+    sm: {span: 18},
+    md: {span: 17}, // >=768
+    lg: {span: 15}, // >=992
+    xl: {span: 18}, // >=1200
+    xxl: {span: 19}, // >=1600
   },
   colon: false,
 }
@@ -57,8 +57,8 @@ class SearchContent extends Component {
     control,
     ...rest
   }) => {
-    const { form } = this.props
-    const { getFieldDecorator } = form
+    const {form} = this.props
+    const {getFieldDecorator} = form
 
     return (
       <Col span={8}>
@@ -86,7 +86,7 @@ class SearchContent extends Component {
    */
   handleReset = e => {
     e.preventDefault()
-    const { form, onReset } = this.props
+    const {form, onReset} = this.props
     form.resetFields()
     const values = form.getFieldsValue()
     onReset(values)
@@ -101,7 +101,7 @@ class SearchContent extends Component {
     if (value.preventDefault) value.preventDefault()
     if (e) e.preventDefault()
 
-    const { form, onSearch } = this.props
+    const {form, onSearch} = this.props
 
     form.validateFields((err, values) => {
       if (err) return
@@ -110,7 +110,7 @@ class SearchContent extends Component {
   }
 
   render() {
-    const { params: searchParams } = this.props
+    const {params: searchParams} = this.props
 
     if (!searchParams || !searchParams.length) {
       // 如果没有，则返回内容

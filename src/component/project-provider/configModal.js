@@ -1,12 +1,12 @@
 import intl from 'react-intl-universal'
-import { Component } from 'react'
-import { Modal } from 'antd'
+import {Component} from 'react'
+import {Modal} from 'antd'
 import ModalForm from '../modal-form'
 // import {errorTip} from '../../common/util'
 
 export default class ConfigModal extends Component {
   selectContent = () => {
-    const { workspace = [], projectId } = this.props
+    const {workspace = [], projectId} = this.props
     return [
       {
         label: intl

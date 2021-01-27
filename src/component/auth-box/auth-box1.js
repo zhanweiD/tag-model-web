@@ -1,7 +1,7 @@
 import intl from 'react-intl-universal'
-import { Component, Fragment } from 'react'
+import {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
-import { Button } from 'antd'
+import {Button} from 'antd'
 
 // const functionCodes = window.productFunctionCode || []
 
@@ -17,7 +17,7 @@ class AuthBox extends Component {
   }
 
   getAuth = () => {
-    const { code, myFunctionCodes } = this.props
+    const {code, myFunctionCodes} = this.props
     const functionCodes = window.productFunctionCode || []
 
     if (!code) {
@@ -43,7 +43,7 @@ class AuthBox extends Component {
       return null
     }
 
-    const { children, isButton, ...rest } = this.props
+    const {children, isButton, ...rest} = this.props
 
     if (isButton) {
       return <Button {...rest}>{children}</Button>

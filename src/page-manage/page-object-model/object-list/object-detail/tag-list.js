@@ -3,21 +3,15 @@ import {Component, Fragment} from 'react'
 import {Input, Popconfirm, Button} from 'antd'
 import {action, toJS} from 'mobx'
 import {inject} from 'mobx-react'
-import {Link} from 'react-router-dom'
 import {SearchOutlined} from '@ant-design/icons'
-import {Time} from '../../../../common/util'
 import {
   ListContent,
-  projectProvider,
-  OmitTooltip,
   Authority,
-  NoData,
 } from '../../../../component'
 import {tagStatusBadgeMap} from '../../../page-tag-model/tag-model/util'
 import DrawerCreate from './drawer-create'
 import store from './store-tag-list'
 
-const {Search} = Input
 
 @inject('bigStore')
 class TagList extends Component {
@@ -93,12 +87,6 @@ class TagList extends Component {
       dataIndex: 'status',
       render: v => tagStatusBadgeMap(+v),
     },
-
-    // {
-    //   title: '描述',
-    //   dataIndex: 'descr',
-    //   render: text => (text || '-'),
-    // },
     {
       key: 'action',
       title: intl
@@ -112,6 +100,7 @@ class TagList extends Component {
             <Fragment>
               <Authority
                 authCode="tag_model:update_tag_cate[cud]"
+                isCommon
               >
                 <a
                   href
@@ -149,6 +138,7 @@ class TagList extends Component {
               {/* <a href onClick={() => store.openDrawer('edit', record)}>编辑</a> */}
               <Authority
                 authCode="tag_model:update_tag_cate[cud]"
+                isCommon
               >
                 <span className="disabled mr16">
                   {intl
@@ -183,6 +173,7 @@ class TagList extends Component {
             <Fragment>
               <Authority
                 authCode="tag_model:update_tag_cate[cud]"
+                isCommon
               >
                 {/* <a href onClick={() => store.openDrawer('edit', record)} className="mr16">编辑</a> */}
                 <span className="disabled mr16">
@@ -290,21 +281,15 @@ class TagList extends Component {
   }
 
   render() {
-    // const {} = store
-    const {objId} = store
     const listConfig = {
       columns: this.columns,
       initParams: {objId: +store.objId},
       buttons: [
         <div className="pr24 far" style={{display: 'float'}}>
-          {/* <Search
-           placeholder="请输入标签名称关键字"
-           onChange={e => this.onChange(e)}
-           style={{width: 200}}
-          /> */}
           <div style={{float: 'left', marginBottom: '8px'}}>
             <Authority
               authCode="tag_model:update_tag_cate[cud]"
+              isCommon
             >
               <Button
                 type="primary"

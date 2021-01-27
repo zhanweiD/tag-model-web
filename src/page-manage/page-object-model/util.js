@@ -52,12 +52,11 @@ export const modalDefaultConfig = {
 export const getIconNodeSrc = e => (e ? treeUnfold : treeFold)
 
 // 对象类目带有对象数量提示
-export const TreeNodeTitle = ({ node }) => (
+export const TreeNodeTitle = ({node}) => (
   <span>{node.parentId ? node.name : `${node.name} (${node.count || 0})`}</span>
 )
 
-export const judgeEditType = (data, editType) =>
-  editType === 'edit' ? data : undefined
+export const judgeEditType = (data, editType) => (editType === 'edit' ? data : undefined)
 //* --------------- 对象详情 ---------------*//
 // 根据 实体/对象 类型code() 映射对应文字
 export const typeCodeMap = {

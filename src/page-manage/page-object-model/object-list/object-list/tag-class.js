@@ -2,12 +2,12 @@ import intl from 'react-intl-universal'
 /**
  * @description 对象列表 - 标签类目
  */
-import { Component } from 'react'
-import { Drawer, Button } from 'antd'
-import { action } from 'mobx'
-import { observer } from 'mobx-react'
-import { DetailHeader, Authority } from '../../../../component'
-import { Time } from '../../../../common/util'
+import {Component} from 'react'
+import {Drawer, Button} from 'antd'
+import {action} from 'mobx'
+import {observer} from 'mobx-react'
+import {DetailHeader, Authority} from '../../../../component'
+import {Time} from '../../../../common/util'
 
 import Tree from './tag-class-tree'
 import List from './tag-class-list'
@@ -25,7 +25,7 @@ class TagClass extends Component {
   }
 
   componentDidUpdate(prevprops) {
-    const { props } = this
+    const {props} = this
     if (props.objId !== prevprops.objId) {
       this.store.tagClassObjId = +props.objId
     }
@@ -33,7 +33,7 @@ class TagClass extends Component {
 
   // 关闭抽屉
   closeDrawer = () => {
-    const { onClose } = this.props
+    const {onClose} = this.props
     this.destory()
     onClose()
   }
@@ -77,8 +77,8 @@ class TagClass extends Component {
   }
 
   render() {
-    const { visible } = this.props
-    const { cateDetail } = this.store
+    const {visible} = this.props
+    const {cateDetail} = this.store
 
     const baseInfo = [
       {
@@ -119,33 +119,33 @@ class TagClass extends Component {
 
     return (
       <Drawer {...drawerConfig}>
-        <div className="FBH" style={{ height: 'calc(100vh - 56px - 96px)' }}>
+        <div className="FBH" style={{height: 'calc(100vh - 56px - 96px)'}}>
           <Tree store={this.store} />
           <div className="FB1 ml24 object-cate">
             <DetailHeader
               name={cateDetail.name}
               descr={cateDetail.descr}
               actions={[
-                cateDetail.name !==
-                intl
+                cateDetail.name
+                !== intl
                   .get(
                     'ide.src.page-manage.page-object-model.object-list.object-list.tag-class.1203puv1emsd'
                   )
                   .d('默认类目') ? (
-                  <Authority authCode="tag_model:move_tag[u]" isCommon>
-                    <Button
-                      type="primary"
-                      className="mr4"
-                      onClick={this.openSelectTag}
-                    >
-                      {intl
-                        .get(
-                          'ide.src.page-manage.page-object-model.object-list.object-list.modal-select-tag.njsm9f1qxjq'
-                        )
-                        .d('选择标签')}
-                    </Button>
-                  </Authority>
-                ) : null,
+                    <Authority authCode="tag_model:move_tag[u]" isCommon>
+                      <Button
+                        type="primary"
+                        className="mr4"
+                        onClick={this.openSelectTag}
+                      >
+                        {intl
+                          .get(
+                            'ide.src.page-manage.page-object-model.object-list.object-list.modal-select-tag.njsm9f1qxjq'
+                          )
+                          .d('选择标签')}
+                      </Button>
+                    </Authority>
+                  ) : null,
               ]}
               baseInfo={baseInfo}
             />

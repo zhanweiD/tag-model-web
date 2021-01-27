@@ -1,5 +1,5 @@
 import intl from 'react-intl-universal'
-import { Component } from 'react'
+import {Component} from 'react'
 
 const empty = require('../../icon/status-empty.svg')
 const success = require('../../icon/status-success.svg')
@@ -41,7 +41,7 @@ class StatusImg extends Component {
     return (
       <div
         className="status-img FBV FBJC FBAC"
-        style={{ minHeight: `${minHeight}px` }}
+        style={{minHeight: `${minHeight}px`}}
       >
         <div className="FBV FBJC FBAC">
           <img

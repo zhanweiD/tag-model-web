@@ -1,5 +1,5 @@
 import intl from 'react-intl-universal'
-import { Component } from 'react'
+import {Component} from 'react'
 import PropTypes from 'prop-types'
 
 export default class Tag extends Component {
@@ -23,7 +23,7 @@ export default class Tag extends Component {
    * error    失败
    */
   render() {
-    const { status, text, className } = this.props
+    const {status, text, className} = this.props
     return <div className={`tag ${status} ${className}`}>{text}</div>
   }
 }

@@ -1,11 +1,11 @@
 import intl from 'react-intl-universal'
-import { Component } from 'react'
-import { Modal, Button, Spin } from 'antd'
+import {Component} from 'react'
+import {Modal, Button, Spin} from 'antd'
 import ModalDetail from '../modal-detail'
 
 export default class ModalStotageDetail extends Component {
   render() {
-    const { visible, detail, loading = false, handleCancel } = this.props
+    const {visible, detail, loading = false, handleCancel} = this.props
 
     const content = [
       {

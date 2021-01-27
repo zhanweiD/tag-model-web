@@ -2,13 +2,13 @@ import intl from 'react-intl-universal'
 /**
  * @description 公共标签（标签集市）
  */
-import { Component, Fragment } from 'react'
-import { observer } from 'mobx-react'
-import { action, toJS } from 'mobx'
-import { Button } from 'antd'
-import { Link } from 'react-router-dom'
-import { ListContent, Tag, Authority, OmitTooltip } from '../../../component'
-import { getDataTypeName } from '../../../common/util'
+import {Component, Fragment} from 'react'
+import {observer} from 'mobx-react'
+import {action, toJS} from 'mobx'
+import {Button} from 'antd'
+import {Link} from 'react-router-dom'
+import {ListContent, Tag, Authority, OmitTooltip} from '../../../component'
+import {getDataTypeName} from '../../../common/util'
 import Search from './search'
 import Modal from './modal'
 
@@ -146,10 +146,10 @@ class Market extends Component {
           {record.projectName
             ? record.projectName
             : intl
-                .get(
-                  'ide.src.page-manage.page-common-tag.common-tag.list.bty454nguz'
-                )
-                .d('租户')}
+              .get(
+                'ide.src.page-manage.page-common-tag.common-tag.list.bty454nguz'
+              )
+              .d('租户')}
         </span>
       ),
     },
@@ -166,8 +166,8 @@ class Market extends Component {
             {(() => {
               if (store.useProjectId) {
                 if (
-                  (record.status === 1 || record.status === 2) &&
-                  !record.endTime
+                  (record.status === 1 || record.status === 2)
+                  && !record.endTime
                 ) {
                   // 状态 0：可以申请 1 审批中 2 不可以申请 3 可以申请当前有权限
                   return (
@@ -322,7 +322,7 @@ class Market extends Component {
   // }
 
   render() {
-    const { useProjectId, isProject } = store
+    const {useProjectId, isProject} = store
 
     const rowSelection = {
       selectedRowKeys: store.rowKeys.slice(),
@@ -337,27 +337,27 @@ class Market extends Component {
       columns: isProject ? this.columns : this.columnsP,
       buttons: useProjectId
         ? [
-            <Authority authCode="tag_model:apply_tag[c]">
-              <Button
-                type="primary"
-                disabled={!rowKeysLength}
-                onClick={this.batchApply}
-              >
-                {intl
-                  .get(
-                    'ide.src.page-manage.page-common-tag.common-tag.list.hkbkoz3q5y',
-                    { rowKeysLength: rowKeysLength }
-                  )
-                  .d('批量申请({rowKeysLength})')}
-              </Button>
-            </Authority>,
-            // ,
-            // <span className="ml8">
-            //   已选择
-            //   <span style={{color: '#0078FF'}} className="mr4 ml4">{store.rowKeys.length}</span>
-            //   项
-            // </span>,
-          ]
+          <Authority authCode="tag_model:apply_tag[c]">
+            <Button
+              type="primary"
+              disabled={!rowKeysLength}
+              onClick={this.batchApply}
+            >
+              {intl
+                .get(
+                  'ide.src.page-manage.page-common-tag.common-tag.list.hkbkoz3q5y',
+                  {rowKeysLength}
+                )
+                .d('批量申请({rowKeysLength})')}
+            </Button>
+          </Authority>,
+          // ,
+          // <span className="ml8">
+          //   已选择
+          //   <span style={{color: '#0078FF'}} className="mr4 ml4">{store.rowKeys.length}</span>
+          //   项
+          // </span>,
+        ]
         : null,
       rowSelection: useProjectId ? rowSelection : null,
       rowKey: 'id',

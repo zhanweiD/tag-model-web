@@ -1,11 +1,11 @@
 import intl from 'react-intl-universal'
-import { Component } from 'react'
-import { action } from 'mobx'
-import { observer } from 'mobx-react'
-import { Modal } from 'antd'
-import { ModalForm } from '../../../../component'
-import { modalDefaultConfig, judgeEditType } from '../util'
-import { debounce } from '../../../../common/util'
+import {Component} from 'react'
+import {action} from 'mobx'
+import {observer} from 'mobx-react'
+import {Modal} from 'antd'
+import {ModalForm} from '../../../../component'
+import {modalDefaultConfig, judgeEditType} from '../util'
+import {debounce} from '../../../../common/util'
 
 @observer
 class ModalCategory extends Component {
@@ -19,7 +19,7 @@ class ModalCategory extends Component {
    */
   renderEditModal() {
     const {
-      categoryModal: { detail, title, editType, visible },
+      categoryModal: {detail, title, editType, visible},
 
       confirmLoading,
     } = this.store
@@ -41,7 +41,7 @@ class ModalCategory extends Component {
           '@transformTrim',
           '@required',
           '@max32',
-          { validator: this.checkName }, // here warning
+          {validator: this.checkName}, // here warning
         ],
       },
       {
@@ -59,17 +59,17 @@ class ModalCategory extends Component {
       title:
         editType === 'edit'
           ? intl
-              .get(
-                'ide.src.page-manage.page-object-model.object-list.object-list.modal-category.n5fnnbqmunm',
-                { title: title }
-              )
-              .d('编辑{title}')
+            .get(
+              'ide.src.page-manage.page-object-model.object-list.object-list.modal-category.n5fnnbqmunm',
+              {title}
+            )
+            .d('编辑{title}')
           : intl
-              .get(
-                'ide.src.page-manage.page-object-model.object-list.object-list.modal-category.n8jyftw6qej',
-                { title: title }
-              )
-              .d('添加{title}'),
+            .get(
+              'ide.src.page-manage.page-object-model.object-list.object-list.modal-category.n8jyftw6qej',
+              {title}
+            )
+            .d('添加{title}'),
       visible,
       onCancel: this.handleCancel,
       onOk: this.submit,
@@ -93,7 +93,7 @@ class ModalCategory extends Component {
 
   @action checkName = (rule, value, callback) => {
     const {
-      categoryModal: { detail, editType },
+      categoryModal: {detail, editType},
     } = this.store
 
     const params = {
@@ -115,10 +115,10 @@ class ModalCategory extends Component {
 
   submit = () => {
     const t = this
-    const { store } = t
+    const {store} = t
 
     const {
-      categoryModal: { editType, detail },
+      categoryModal: {editType, detail},
     } = store
 
     this.form.validateFields((err, values) => {

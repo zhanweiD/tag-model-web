@@ -1,5 +1,5 @@
 import intl from 'react-intl-universal'
-import { observable, action, runInAction } from 'mobx'
+import {observable, action, runInAction} from 'mobx'
 import {
   successTip,
   errorTip,
@@ -7,7 +7,7 @@ import {
   listToTree,
   changeToOptions,
 } from '../../../../common/util'
-import { ListContentStore } from '../../../../component/list-content'
+import {ListContentStore} from '../../../../component/list-content'
 
 import io from './io'
 
@@ -113,7 +113,7 @@ class Store {
 
         if (!this.currentSelectKeys) {
           // 默认类目
-          ;[this.defaultCate] = res.filter(d => d.aId === -1)
+          [this.defaultCate] = res.filter(d => d.aId === -1)
           this.currentSelectKeys = this.defaultCate.id
         }
         this.categoryData = res.filter(d => d.isLeaf !== 1) // 叶子类目
@@ -210,7 +210,7 @@ class Store {
    */
   @action async delNode(deleteIds, cb) {
     try {
-      await io.delTagCate({ deleteIds: [deleteIds] })
+      await io.delTagCate({deleteIds: [deleteIds]})
       successTip(
         intl
           .get(

@@ -1,12 +1,12 @@
 import intl from 'react-intl-universal'
-import { Component } from 'react'
+import {Component} from 'react'
 import PropTypes from 'prop-types'
-import { observable, action } from 'mobx'
-import { observer } from 'mobx-react'
-import { DatePicker, Select } from 'antd'
+import {observable, action} from 'mobx'
+import {observer} from 'mobx-react'
+import {DatePicker, Select} from 'antd'
 import './main.styl'
 
-const { Option } = Select
+const {Option} = Select
 
 @observer
 class TimeRange extends Component {
@@ -21,14 +21,14 @@ class TimeRange extends Component {
     .format(this.props.dataFormat)
   @observable lte = this.props.includeToday
     ? moment()
-        .subtract(0, 'day')
-        .format(this.props.dataFormat)
+      .subtract(0, 'day')
+      .format(this.props.dataFormat)
     : moment()
-        .subtract(1, 'day')
-        .format(this.props.dataFormat)
+      .subtract(1, 'day')
+      .format(this.props.dataFormat)
 
   render() {
-    const { rangeMap, custom, dataFormat } = this.props
+    const {rangeMap, custom, dataFormat} = this.props
     const theDateGlt = moment(this.gte, dataFormat)
     const theDateLte = moment(this.lte, dataFormat)
     return (
@@ -40,7 +40,7 @@ class TimeRange extends Component {
         </label>
         <Select
           className="pr8"
-          style={{ width: 110 }}
+          style={{width: 110}}
           defaultValue={this.theDateRange}
           onChange={v => this.changeTimeRange(v)}
         >
@@ -60,7 +60,7 @@ class TimeRange extends Component {
         </Select>
         <DatePicker
           className="mr8"
-          style={{ width: 115 }}
+          style={{width: 115}}
           allowClear={false}
           value={theDateGlt}
           // getCalendarContainer={() => document.getElementById('bar-container')}
@@ -72,7 +72,7 @@ class TimeRange extends Component {
 
         <DatePicker
           className="ml8"
-          style={{ width: 115 }}
+          style={{width: 115}}
           allowClear={false}
           value={theDateLte}
           // getCalendarContainer={() => document.getElementById('bar-container')}
@@ -117,8 +117,8 @@ class TimeRange extends Component {
       return false
     }
     return (
-      startValue.valueOf() > endValue.valueOf() ||
-      startValue.isAfter(moment(Date.now()).add(0, 'days'))
+      startValue.valueOf() > endValue.valueOf()
+      || startValue.isAfter(moment(Date.now()).add(0, 'days'))
     )
   }
 
@@ -128,13 +128,13 @@ class TimeRange extends Component {
     }
 
     return (
-      endValue.valueOf() < startValue.valueOf() ||
-      endValue.isAfter(moment(Date.now()).add(0, 'days'))
+      endValue.valueOf() < startValue.valueOf()
+      || endValue.isAfter(moment(Date.now()).add(0, 'days'))
     )
   }
 
   @action changeTimeRange(number) {
-    const { dataFormat } = this.props
+    const {dataFormat} = this.props
     const isCustom = number === 'custom'
     if (!isCustom) {
       this.theDateRange = number

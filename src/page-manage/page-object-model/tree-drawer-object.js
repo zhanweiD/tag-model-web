@@ -1,25 +1,25 @@
 import intl from 'react-intl-universal'
-import { Component, Fragment } from 'react'
-import { observer, inject } from 'mobx-react'
-import { action, toJS } from 'mobx'
-import { Form } from '@ant-design/compatible'
+import {Component, Fragment} from 'react'
+import {observer, inject} from 'mobx-react'
+import {action, toJS} from 'mobx'
+import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
-import { Button, Drawer, Input, Select, Radio, TreeSelect } from 'antd'
+import {Button, Drawer, Input, Select, Radio, TreeSelect} from 'antd'
 import {
   enNameReg,
   getNamePattern,
   getEnNamePattern,
   debounce,
 } from '../../common/util'
-import { targetTypeMap, nameTypeMap, typeCodeMap } from './util'
+import {targetTypeMap, nameTypeMap, typeCodeMap} from './util'
 
 const FormItem = Form.Item
-const Option = { Select }
-const { TextArea } = Input
+const Option = {Select}
+const {TextArea} = Input
 
 const formItemLayout = {
-  labelCol: { span: 4 },
-  wrapperCol: { span: 20 },
+  labelCol: {span: 4},
+  wrapperCol: {span: 20},
   colon: false,
 }
 
@@ -72,7 +72,7 @@ class ModalObject extends Component {
    */
   @action checkName = (rule, value, callback) => {
     const {
-      objModal: { detail, editType },
+      objModal: {detail, editType},
 
       nameKeyWord,
     } = this.store
@@ -123,16 +123,16 @@ class ModalObject extends Component {
 
   submit = () => {
     const t = this
-    const { store } = t
+    const {store} = t
 
     const {
-      objModal: { editType, detail, type },
+      objModal: {editType, detail, type},
 
       typeCode,
     } = store
 
     const {
-      form: { validateFields },
+      form: {validateFields},
     } = this.props
     validateFields((err, values) => {
       if (!err) {
@@ -143,7 +143,7 @@ class ModalObject extends Component {
 
         // 编辑
         if (editType === 'edit') {
-          const params = { id: detail.id, ...param }
+          const params = {id: detail.id, ...param}
           store.editNode(params, type, () => {
             t.handleCancel()
             // 编辑节点为当前选中节点
@@ -165,21 +165,20 @@ class ModalObject extends Component {
 
   render() {
     const {
-      form: { getFieldDecorator },
+      form: {getFieldDecorator},
 
       store: {
-        objModal: { detail, visible, editType },
+        objModal: {detail, visible, editType},
 
         confirmLoading,
       },
     } = this.props
 
-    const { typeCode, relToEntityData } = this.store
+    const {typeCode, relToEntityData} = this.store
 
-    const data =
-      editType === 'edit'
-        ? detail
-        : { objCatId: detail.aId, objCatName: detail.name }
+    const data = editType === 'edit'
+      ? detail
+      : {objCatId: detail.aId, objCatName: detail.name}
 
     const typeCodeMap3 = typeCodeMap[typeCode]
     // 抽屉配置
@@ -187,17 +186,17 @@ class ModalObject extends Component {
       title:
         editType === 'edit'
           ? intl
-              .get(
-                'ide.src.page-manage.page-object-model.tree-drawer-object.yeikxw04gaf',
-                { typeCodeMap3: typeCodeMap3 }
-              )
-              .d('编辑{typeCodeMap3}')
+            .get(
+              'ide.src.page-manage.page-object-model.tree-drawer-object.yeikxw04gaf',
+              {typeCodeMap3}
+            )
+            .d('编辑{typeCodeMap3}')
           : intl
-              .get(
-                'ide.src.page-manage.page-object-model.tree-drawer-object.9mjhaej02y4',
-                { typeCodeMap3: typeCodeMap3 }
-              )
-              .d('添加{typeCodeMap3}'),
+            .get(
+              'ide.src.page-manage.page-object-model.tree-drawer-object.9mjhaej02y4',
+              {typeCodeMap3}
+            )
+            .d('添加{typeCodeMap3}'),
       visible,
       closable: true,
       width: 560,
@@ -209,7 +208,7 @@ class ModalObject extends Component {
 
     return (
       <Drawer {...drawerConfig}>
-        <Form style={{ paddingBottom: '50px' }}>
+        <Form style={{paddingBottom: '50px'}}>
           <h4 className="mb24">
             {intl
               .get(
@@ -228,7 +227,7 @@ class ModalObject extends Component {
             {getFieldDecorator('name', {
               initialValue: data.name,
               rules: [
-                { transform: value => value && value.trim() },
+                {transform: value => value && value.trim()},
                 {
                   required: true,
                   message: intl
@@ -266,7 +265,7 @@ class ModalObject extends Component {
             {getFieldDecorator('enName', {
               initialValue: data.enName,
               rules: [
-                { transform: value => value && value.trim() },
+                {transform: value => value && value.trim()},
                 {
                   required: true,
                   message: intl
@@ -345,7 +344,7 @@ class ModalObject extends Component {
             {getFieldDecorator('descr', {
               initialValue: data.descr,
               rules: [
-                { transform: value => value && value.trim() },
+                {transform: value => value && value.trim()},
                 {
                   max: 128,
                   whitespace: true,
@@ -460,7 +459,7 @@ class ModalObject extends Component {
                 {getFieldDecorator('tagName', {
                   initialValue: data.tagName,
                   rules: [
-                    { transform: value => value && value.trim() },
+                    {transform: value => value && value.trim()},
                     {
                       required: true,
                       message: intl
@@ -500,7 +499,7 @@ class ModalObject extends Component {
                 {getFieldDecorator('tagEnName', {
                   initialValue: data.tagEnName,
                   rules: [
-                    { transform: value => value && value.trim() },
+                    {transform: value => value && value.trim()},
                     {
                       required: true,
                       message: intl
@@ -579,7 +578,7 @@ class ModalObject extends Component {
                 {getFieldDecorator('tagDescr', {
                   initialValue: data.tagDescr,
                   rules: [
-                    { transform: value => value && value.trim() },
+                    {transform: value => value && value.trim()},
                     {
                       max: 128,
                       whitespace: true,
@@ -619,7 +618,7 @@ class ModalObject extends Component {
                       )
                       .d('请选择关联实体'),
                   },
-                  { validator: this.checkEntityNum },
+                  {validator: this.checkEntityNum},
                 ],
               })(
                 // antd 3.x TreeSelect 无节点情况bug
@@ -631,7 +630,7 @@ class ModalObject extends Component {
                         'ide.src.page-manage.page-object-model.tree-drawer-object.9eeb8rl00lg'
                       )
                       .d('请选择关联实体')}
-                    dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                    dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
                     allowClear
                     multiple
                     treeDefaultExpandAll
@@ -646,7 +645,7 @@ class ModalObject extends Component {
                         'ide.src.page-manage.page-object-model.tree-drawer-object.9eeb8rl00lg'
                       )
                       .d('请选择关联实体')}
-                    dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                    dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
                     size="small"
                   />
                 )
@@ -655,14 +654,14 @@ class ModalObject extends Component {
           )}
         </Form>
         <div className="bottom-button">
-          <Button style={{ marginRight: 8 }} onClick={this.handleCancel}>
+          <Button style={{marginRight: 8}} onClick={this.handleCancel}>
             {intl
               .get('ide.src.page-config.workspace-config.modal.xp905zufzth')
               .d('取消')}
           </Button>
           <Button
             type="primary"
-            style={{ marginRight: 8 }}
+            style={{marginRight: 8}}
             onClick={this.submit}
             loading={confirmLoading}
           >

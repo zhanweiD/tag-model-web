@@ -1,11 +1,11 @@
 import intl from 'react-intl-universal'
-import { Component } from 'react'
-import { action } from 'mobx'
-import { observer } from 'mobx-react'
-import { Modal } from 'antd'
-import { ModalForm } from '../../../../component'
-import { changeToOptions } from '../../../../common/util'
-import { modalDefaultConfig } from '../util'
+import {Component} from 'react'
+import {action} from 'mobx'
+import {observer} from 'mobx-react'
+import {Modal} from 'antd'
+import {ModalForm} from '../../../../component'
+import {changeToOptions} from '../../../../common/util'
+import {modalDefaultConfig} from '../util'
 
 @observer
 class ModalMove extends Component {
@@ -21,9 +21,9 @@ class ModalMove extends Component {
 
   submit = () => {
     const t = this
-    const { store } = t
+    const {store} = t
     const {
-      modalMove: { selectKeys },
+      modalMove: {selectKeys},
     } = store
 
     t.form.validateFields((err, values) => {

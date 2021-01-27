@@ -1,8 +1,8 @@
 import intl from 'react-intl-universal'
-import { Component, Fragment } from 'react'
+import {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-import { RightOutlined } from '@ant-design/icons'
+import {RightOutlined} from '@ant-design/icons'
 
 export default class Card extends Component {
   static propTypes = {
@@ -35,17 +35,16 @@ export default class Card extends Component {
 
   // 渲染卡片基本信息 eg：创建者、创建时间
   getInfoDom() {
-    const { preCls, labelList, infoLineCount } = this.props
+    const {preCls, labelList, infoLineCount} = this.props
 
-    if (!labelList || !Array.isArray(labelList) || !labelList.length)
-      return null
+    if (!labelList || !Array.isArray(labelList) || !labelList.length) { return null }
 
     const arr = []
     const len = labelList.length
 
     const domItem = list => (
       <div className={`${preCls}-info`}>
-        {list.map(({ label = '', value = '' }) => (
+        {list.map(({label = '', value = ''}) => (
           <span
             className={`${preCls}-info-item card-omit`}
             title={`${label}${label ? '：' : null}${value}`}
@@ -83,22 +82,21 @@ export default class Card extends Component {
 
   // 渲染卡片操作组
   getAction(actions = []) {
-    const { preCls } = this.props
+    const {preCls} = this.props
 
-    const actionList =
-      actions && Array.isArray(actions) && actions.length ? (
-        <ul className={`${preCls}-actions`}>
-          {actions.reverse().map((action, index) => (
-            <Fragment>
-              {/* eslint-disable-next-line react/no-array-index-key */}
-              <li key={`action-${index}`}>
-                {action}
-                {index ? <span className={`${preCls}-actions-line`} /> : null}
-              </li>
-            </Fragment>
-          ))}
-        </ul>
-      ) : null
+    const actionList = actions && Array.isArray(actions) && actions.length ? (
+      <ul className={`${preCls}-actions`}>
+        {actions.reverse().map((action, index) => (
+          <Fragment>
+            {/* eslint-disable-next-line react/no-array-index-key */}
+            <li key={`action-${index}`}>
+              {action}
+              {index ? <span className={`${preCls}-actions-line`} /> : null}
+            </li>
+          </Fragment>
+        ))}
+      </ul>
+    ) : null
 
     return actionList
   }
@@ -164,22 +162,21 @@ export default class Card extends Component {
     ) : null
 
     // 渲染卡片指标信息
-    const CountDom =
-      countList && Array.isArray(countList) && countList.length ? (
-        <div className={`${preCls}-topic`}>
-          {countList.map(({ label = '', value = '' }, index) => (
-            <Fragment>
-              <div>
-                <span className="card-omit">{label}</span>
-                <div className={`${preCls}-topic-count`}>{value}</div>
-              </div>
-              {index !== countList.length - 1 ? (
-                <div className={`${preCls}-topic-line`} />
-              ) : null}
-            </Fragment>
-          ))}
-        </div>
-      ) : null
+    const CountDom = countList && Array.isArray(countList) && countList.length ? (
+      <div className={`${preCls}-topic`}>
+        {countList.map(({label = '', value = ''}, index) => (
+          <Fragment>
+            <div>
+              <span className="card-omit">{label}</span>
+              <div className={`${preCls}-topic-count`}>{value}</div>
+            </div>
+            {index !== countList.length - 1 ? (
+              <div className={`${preCls}-topic-line`} />
+            ) : null}
+          </Fragment>
+        ))}
+      </div>
+    ) : null
 
     // 渲染卡片操作组
     const actionDom = this.getAction(actions)

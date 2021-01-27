@@ -2,12 +2,12 @@ import intl from 'react-intl-universal'
 /**
  * @description 对象管理
  */
-import { Component, useEffect } from 'react'
-import { action } from 'mobx'
-import { observer, Provider } from 'mobx-react'
+import {Component, useEffect} from 'react'
+import {action} from 'mobx'
+import {observer, Provider} from 'mobx-react'
 import OnerFrame from '@dtwave/oner-frame'
-import { TabRoute, NoData, StatusImg } from '../../component'
-import { changeToOptions, codeInProduct } from '../../common/util'
+import {TabRoute, NoData, StatusImg} from '../../component'
+import {changeToOptions, codeInProduct} from '../../common/util'
 import Tree from './tree'
 import ObjectDetail from './detail'
 
@@ -17,7 +17,7 @@ import store from './store'
 class ObjectModel extends Component {
   constructor(props) {
     super(props)
-    const { match } = props
+    const {match} = props
 
     store.typeCode = match.params.typeCode || '4'
     store.objId = match.params.objId
@@ -38,7 +38,7 @@ class ObjectModel extends Component {
   }
 
   render() {
-    const { history } = this.props
+    const {history} = this.props
     const {
       typeCode,
       objId,
@@ -85,7 +85,7 @@ class ObjectModel extends Component {
                 history={history}
               />
             ) : (
-              <div className="m16 bgf" style={{ width: '100%' }}>
+              <div className="m16 bgf" style={{width: '100%'}}>
                 <NoData {...noDataConfig} />
               </div>
             )}
@@ -102,7 +102,7 @@ export default props => {
     // store.getProjects(isProject => {
     //   ctx.useProject(isProject, null, {visible: false})
     // })
-    ctx.useProject(ctx.useProjectId(), null, { visible: false })
+    ctx.useProject(ctx.useProjectId(), null, {visible: false})
     ctx.useQuickEntrance([
       {
         tip: intl.get('ide.src.common.navList.0ujwqvq35vi').d('审批管理'),

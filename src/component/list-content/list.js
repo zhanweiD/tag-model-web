@@ -3,11 +3,11 @@ import intl from 'react-intl-universal'
  * @description 通用列表组件
  * @author mahua
  */
-import { Component } from 'react'
+import {Component} from 'react'
 import PropTypes from 'prop-types'
-import { action } from 'mobx'
-import { observer } from 'mobx-react'
-import { Table, Pagination } from 'antd'
+import {action} from 'mobx'
+import {observer} from 'mobx-react'
+import {Table, Pagination} from 'antd'
 import SearchContent from './search'
 
 import './list.styl'
@@ -48,11 +48,11 @@ class ListContent extends Component {
 
   componentWillMount() {
     // 初始请求 在父层组件处理。列表组件componentWillMount内不再进行请求
-    const { initGetDataByParent } = this.props
+    const {initGetDataByParent} = this.props
     /*
      *initParams: 列表配置参数值
      */
-    const { initParams } = this.props
+    const {initParams} = this.props
 
     this.store.initParams = initParams
     if (initGetDataByParent) return
@@ -74,7 +74,7 @@ class ListContent extends Component {
   }
 
   @action remoteSearch = (value = {}) => {
-    const { onSearch, beforeSearch, paginationConfig } = this.props
+    const {onSearch, beforeSearch, paginationConfig} = this.props
     let newVal = value
 
     // 列表请求前 参数处理
@@ -96,7 +96,7 @@ class ListContent extends Component {
   }
 
   getSearchBox() {
-    const { searchParams } = this.props
+    const {searchParams} = this.props
 
     if (!searchParams || searchParams.length === 0) {
       // 如果没有，则返回
@@ -115,7 +115,7 @@ class ListContent extends Component {
   }
 
   renderBtn() {
-    const { buttons } = this.props
+    const {buttons} = this.props
     if (!buttons || buttons.length === 0) {
       // 如果没有，则返回
       return null
@@ -125,7 +125,7 @@ class ListContent extends Component {
   }
 
   render() {
-    const { searchParams, paginationConfig, hasPaging, ...rest } = this.props
+    const {searchParams, paginationConfig, hasPaging, ...rest} = this.props
     const {
       tableLoading,
       list = [],
@@ -134,7 +134,7 @@ class ListContent extends Component {
       handleTableChange,
     } = this.store
 
-    const { totalCount } = pagination
+    const {totalCount} = pagination
 
     return (
       <div className="comp-list-content">
@@ -164,12 +164,11 @@ class ListContent extends Component {
               current={pagination.currentPage}
               total={pagination.totalCount}
               onChange={handlePageChange}
-              showTotal={() =>
-                intl
-                  .get('ide.src.component.list-content.list.yx24kr1o9ij', {
-                    totalCount: totalCount,
-                  })
-                  .d('合计{totalCount}条记录')
+              showTotal={() => intl
+                .get('ide.src.component.list-content.list.yx24kr1o9ij', {
+                  totalCount,
+                })
+                .d('合计{totalCount}条记录')
               }
             />
           </div>

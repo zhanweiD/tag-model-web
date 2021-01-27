@@ -4,12 +4,12 @@ import intl from 'react-intl-universal'
  * @description 项目组件
  */
 
-import { useEffect, useState, Fragment } from 'react'
+import {useEffect, useState, Fragment} from 'react'
 import OnerFrame from '@dtwave/oner-frame'
-import { message } from 'antd'
+import {message} from 'antd'
 import NoData from '../no-data'
 import io from './io'
-import { changeToOptions } from '../../common/util'
+import {changeToOptions} from '../../common/util'
 import ConfigModal from './configModal'
 import Loading from '../loading'
 
@@ -35,8 +35,7 @@ export default PageComponent => {
           <a
             target="_blank"
             className="a-href-color"
-            onClick={() =>
-              window.open('/project/index.html#/project', '_blank')
+            onClick={() => window.open('/project/index.html#/project', '_blank')
             }
           >
             {intl
@@ -214,7 +213,7 @@ export default PageComponent => {
           </div>
           <div
             className="header-page"
-            style={{ minHeight: 'calc(100vh - 137px)', paddingTop: '15%' }}
+            style={{minHeight: 'calc(100vh - 137px)', paddingTop: '15%'}}
           >
             {props.match && props.match.path === '/config/environment' ? (
               <NoData {...noDataConfigC} />
@@ -244,7 +243,7 @@ export default PageComponent => {
           </div>
           <div
             className="header-page"
-            style={{ minHeight: 'calc(100vh - 137px)', paddingTop: '15%' }}
+            style={{minHeight: 'calc(100vh - 137px)', paddingTop: '15%'}}
           >
             <NoData {...noDataConfig1} />
           </div>
@@ -252,7 +251,7 @@ export default PageComponent => {
       )
     }
     return (
-      <div style={{ height: '100%' }}>
+      <div style={{height: '100%'}}>
         <PageComponent key={projectId} projectId={projectId} {...props} />
       </div>
     )

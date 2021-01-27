@@ -1,6 +1,6 @@
 import intl from 'react-intl-universal'
 
-const serach = ({ objTypeList, objCateList }) => [
+const serach = ({objTypeList, objCateList}) => [
   {
     label: intl
       .get('ide.src.page-manage.page-object-model.detail.qksgujny9q')

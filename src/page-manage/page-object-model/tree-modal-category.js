@@ -1,11 +1,11 @@
 import intl from 'react-intl-universal'
-import { Component } from 'react'
-import { action } from 'mobx'
-import { observer } from 'mobx-react'
-import { Modal, Button } from 'antd'
-import { Time, debounce } from '../../common/util'
-import { ModalForm, ModalDetail } from '../../component'
-import { targetTypeMap, nameTypeMap, modalDefaultConfig } from './util'
+import {Component} from 'react'
+import {action} from 'mobx'
+import {observer} from 'mobx-react'
+import {Modal, Button} from 'antd'
+import {Time, debounce} from '../../common/util'
+import {ModalForm, ModalDetail} from '../../component'
+import {targetTypeMap, nameTypeMap, modalDefaultConfig} from './util'
 
 @observer
 class ModalCategory extends Component {
@@ -16,7 +16,7 @@ class ModalCategory extends Component {
 
   renderContent() {
     const {
-      categoryModal: { editType },
+      categoryModal: {editType},
     } = this.store
     // 查看详情
     if (editType === 'view') {
@@ -31,7 +31,7 @@ class ModalCategory extends Component {
    */
   renderEditModal() {
     const {
-      categoryModal: { detail, editType, visible },
+      categoryModal: {detail, editType, visible},
 
       confirmLoading,
     } = this.store
@@ -53,7 +53,7 @@ class ModalCategory extends Component {
           '@transformTrim',
           '@required',
           '@max32',
-          { validator: this.checkName },
+          {validator: this.checkName},
         ],
       },
 
@@ -72,15 +72,15 @@ class ModalCategory extends Component {
       title:
         editType === 'edit'
           ? intl
-              .get(
-                'ide.src.page-manage.page-object-model.tree-modal-category.ccndgjgllw'
-              )
-              .d('编辑对象类目')
+            .get(
+              'ide.src.page-manage.page-object-model.tree-modal-category.ccndgjgllw'
+            )
+            .d('编辑对象类目')
           : intl
-              .get(
-                'ide.src.page-manage.page-object-model.tree-action.znat69vvyk8'
-              )
-              .d('新建对象类目'),
+            .get(
+              'ide.src.page-manage.page-object-model.tree-action.znat69vvyk8'
+            )
+            .d('新建对象类目'),
       visible,
       onCancel: this.handleCancel,
       onOk: this.submit,
@@ -106,8 +106,8 @@ class ModalCategory extends Component {
    * @description 渲染详情弹窗
    */
   renderDetail() {
-    const { categoryModal } = this.store
-    const { detail } = categoryModal
+    const {categoryModal} = this.store
+    const {detail} = categoryModal
 
     const modalConfig = {
       title: intl
@@ -168,7 +168,7 @@ class ModalCategory extends Component {
 
   @action checkName = (rule, value, callback) => {
     const {
-      categoryModal: { detail },
+      categoryModal: {detail},
     } = this.store
 
     const params = {
@@ -192,16 +192,16 @@ class ModalCategory extends Component {
 
   submit = () => {
     const t = this
-    const { store } = t
+    const {store} = t
     const {
-      categoryModal: { editType, detail, type },
+      categoryModal: {editType, detail, type},
     } = store
 
     this.form.validateFields((err, values) => {
       if (!err) {
         // 编辑
         if (editType === 'edit') {
-          const params = { id: detail.id, ...values }
+          const params = {id: detail.id, ...values}
           store.editNode(params, type, () => {
             t.handleCancel()
           })

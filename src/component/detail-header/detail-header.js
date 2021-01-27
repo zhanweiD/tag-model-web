@@ -1,5 +1,5 @@
 import intl from 'react-intl-universal'
-import { Component } from 'react'
+import {Component} from 'react'
 import PropTypes from 'prop-types'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
 import cls from 'classnames'
@@ -42,12 +42,12 @@ export default class Main extends Component {
 
     const btnStyle = btnMinWidth
       ? {
-          minWidth: `${btnMinWidth}px`,
-        }
+        minWidth: `${btnMinWidth}px`,
+      }
       : null
 
     return (
-      <div className={cls({ 'box-border': hasBorder })}>
+      <div className={cls({'box-border': hasBorder})}>
         <div className="detail-header">
           <div className="detail-header-h">
             <div className="detail-name">
@@ -59,7 +59,7 @@ export default class Main extends Component {
             </div>
           </div>
           <div className="detail-descr mt8">
-            <span style={{ color: 'rgba(0,0,0, .45)' }}>
+            <span style={{color: 'rgba(0,0,0, .45)'}}>
               {intl
                 .get(
                   'ide.src.component.detail-header.detail-header.u39g9giydpt'
@@ -67,7 +67,7 @@ export default class Main extends Component {
                 .d('描述：')}
             </span>
             <span
-              style={{ color: descr ? 'rgba(0,0,0,.65)' : 'rgba(0,0,0,.25)' }}
+              style={{color: descr ? 'rgba(0,0,0,.65)' : 'rgba(0,0,0,.25)'}}
             >
               {descr || '-'}
             </span>

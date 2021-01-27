@@ -3,8 +3,8 @@ import intl from 'react-intl-universal'
  * 类目树 store
  */
 
-import { observable, action, runInAction, toJS } from 'mobx'
-import { successTip, failureTip, errorTip, listToTree } from '../../common/util'
+import {observable, action, runInAction, toJS} from 'mobx'
+import {successTip, failureTip, errorTip, listToTree} from '../../common/util'
 
 import io from './io'
 
@@ -220,9 +220,9 @@ class Store {
   @action async delNode(deleteIds, type, cb) {
     try {
       if (type === 'obj') {
-        await io.delObject({ deleteIds: [deleteIds] })
+        await io.delObject({deleteIds: [deleteIds]})
       } else {
-        await io.delObjCate({ deleteIds: [deleteIds] })
+        await io.delObjCate({deleteIds: [deleteIds]})
       }
       successTip(
         intl
@@ -242,7 +242,7 @@ class Store {
    */
   @action async getCateDetail(id) {
     try {
-      const res = await io.getCateDetail({ id })
+      const res = await io.getCateDetail({id})
       this.categoryModal.detail = res
     } catch (e) {
       errorTip(e.message)
@@ -254,7 +254,7 @@ class Store {
    */
   @action async getObjDetail(id) {
     try {
-      const res = await io.getObjDetail({ id })
+      const res = await io.getObjDetail({id})
       this.objModal.detail = res
     } catch (e) {
       errorTip(e.message)

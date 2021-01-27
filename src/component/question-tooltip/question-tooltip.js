@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { QuestionCircleOutlined } from '@ant-design/icons';
-import { Tooltip } from 'antd';
+import {QuestionCircleOutlined} from '@ant-design/icons'
+import {Tooltip} from 'antd'
 
 export default class QuestionTooltip extends React.Component {
   static defaultProps = {
@@ -20,6 +20,6 @@ export default class QuestionTooltip extends React.Component {
       <Tooltip placement={placement} title={tip}>
         <QuestionCircleOutlined className="ml4 mt4" />
       </Tooltip>
-    );
+    )
   }
 }

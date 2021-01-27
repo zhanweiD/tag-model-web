@@ -360,7 +360,6 @@ const WorkspaceConfig = ({projectId}) => {
           </Authority>
         </div>
         <div>
-          {/* <div style={{color: 'rgba(0,0,0,0.45)'}}>目的源：</div> */}
           <Authority authCode="tag_config:environment_config[u]">
             <Button type="primary" className="mt8" onClick={showAddModal}>
               {intl
