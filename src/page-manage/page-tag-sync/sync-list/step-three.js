@@ -1,8 +1,8 @@
 import intl from 'react-intl-universal'
-import { Component } from 'react'
-import { observer, inject } from 'mobx-react'
-import { action } from 'mobx'
-import { Button, Tag, Popconfirm } from 'antd'
+import {Component} from 'react'
+import {observer, inject} from 'mobx-react'
+import {action} from 'mobx'
+import {Button, Tag, Popconfirm} from 'antd'
 import NemoBaseInfo from '@dtwave/nemo-base-info'
 
 @inject('bigStore')
@@ -15,8 +15,8 @@ class StepThree extends Component {
   }
 
   @action.bound submit() {
-    const { previewData, tableData } = this.store
-    const { closeDrawer } = this.props
+    const {previewData, tableData} = this.store
+    const {closeDrawer} = this.props
     const t = this
 
     const mainTagMappingKeys = tableData
@@ -52,13 +52,13 @@ class StepThree extends Component {
 
     this.store.addSync(params, () => {
       closeDrawer()
-      t.bigStore.getList({ currentPage: 1 })
+      t.bigStore.getList({currentPage: 1})
     })
   }
 
   render() {
-    const { show } = this.props
-    const { previewData, tableData, confirmLoading } = this.store
+    const {show} = this.props
+    const {previewData, tableData, confirmLoading} = this.store
 
     const {
       name,
@@ -70,7 +70,7 @@ class StepThree extends Component {
     } = previewData
 
     return (
-      <div style={{ display: show ? 'block' : 'none' }}>
+      <div style={{display: show ? 'block' : 'none'}}>
         <div className="preview-box">
           <div className="info-title ">
             {intl
@@ -120,49 +120,49 @@ class StepThree extends Component {
             dataSource={
               tableName
                 ? [
-                    {
-                      title: intl
-                        .get(
-                          'ide.src.page-config.workspace-config.main.1b0l5lpgghm'
-                        )
-                        .d('数据源类型'),
-                      value: dataDbType.label,
-                    },
-                    {
-                      title: intl
-                        .get(
-                          'ide.src.business-component.tag-relate.dag-box.9mzk7452ggp'
-                        )
-                        .d('数据源'),
-                      value: dataStorageId.label,
-                    },
-                    {
-                      title: intl
-                        .get(
-                          'ide.src.page-manage.page-tag-sync.sync-detail.config-info.85dk1zuhe9h'
-                        )
-                        .d('表'),
-                      value: `tbjh_${tableName || objId.key}`,
-                    },
-                  ]
+                  {
+                    title: intl
+                      .get(
+                        'ide.src.page-config.workspace-config.main.1b0l5lpgghm'
+                      )
+                      .d('数据源类型'),
+                    value: dataDbType.label,
+                  },
+                  {
+                    title: intl
+                      .get(
+                        'ide.src.business-component.tag-relate.dag-box.9mzk7452ggp'
+                      )
+                      .d('数据源'),
+                    value: dataStorageId.label,
+                  },
+                  {
+                    title: intl
+                      .get(
+                        'ide.src.page-manage.page-tag-sync.sync-detail.config-info.85dk1zuhe9h'
+                      )
+                      .d('表'),
+                    value: `tbjh_${tableName || objId.key}`,
+                  },
+                ]
                 : [
-                    {
-                      title: intl
-                        .get(
-                          'ide.src.page-config.workspace-config.main.1b0l5lpgghm'
-                        )
-                        .d('数据源类型'),
-                      value: dataDbType.label,
-                    },
-                    {
-                      title: intl
-                        .get(
-                          'ide.src.business-component.tag-relate.dag-box.9mzk7452ggp'
-                        )
-                        .d('数据源'),
-                      value: dataStorageId.label,
-                    },
-                  ]
+                  {
+                    title: intl
+                      .get(
+                        'ide.src.page-config.workspace-config.main.1b0l5lpgghm'
+                      )
+                      .d('数据源类型'),
+                    value: dataDbType.label,
+                  },
+                  {
+                    title: intl
+                      .get(
+                        'ide.src.business-component.tag-relate.dag-box.9mzk7452ggp'
+                      )
+                      .d('数据源'),
+                    value: dataStorageId.label,
+                  },
+                ]
             }
             className="mb24"
           />
@@ -192,7 +192,7 @@ class StepThree extends Component {
               .d('配置同步标签')}
           </div>
           <div className="FBH mb24">
-            <div style={{ color: ' rgba(0, 0, 0, 0.45)' }}>
+            <div style={{color: ' rgba(0, 0, 0, 0.45)'}}>
               <span>
                 {intl
                   .get(
@@ -205,7 +205,7 @@ class StepThree extends Component {
             <div>{previewData.tagTotalCount}</div>
           </div>
           <div className="FBH mb24">
-            <div style={{ color: ' rgba(0, 0, 0, 0.45)' }}>
+            <div style={{color: ' rgba(0, 0, 0, 0.45)', width: '60px'}}>
               {intl
                 .get(
                   'ide.src.page-manage.page-tag-sync.sync-detail.config-info.7n32w7krh6d'

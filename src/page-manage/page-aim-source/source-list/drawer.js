@@ -2,22 +2,22 @@ import intl from 'react-intl-universal'
 /**
  * @description 添加目的源
  */
-import { Component } from 'react'
-import { observer } from 'mobx-react'
-import { action, observable } from 'mobx'
-import { Form } from '@ant-design/compatible'
+import {Component} from 'react'
+import {observer} from 'mobx-react'
+import {action, observable} from 'mobx'
+import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
-import { Drawer, Input, Select, Button } from 'antd'
-import { ModalStotageDetail, OmitTooltip } from '../../../component'
-import { debounce, getNamePattern } from '../../../common/util'
+import {Drawer, Input, Select, Button} from 'antd'
+import {ModalStotageDetail, OmitTooltip} from '../../../component'
+import {debounce, getNamePattern} from '../../../common/util'
 
 const FormItem = Form.Item
-const Option = { Select }
-const { TextArea } = Input
+const Option = {Select}
+const {TextArea} = Input
 
 const formItemLayout = {
-  labelCol: { span: 5 },
-  wrapperCol: { span: 19 },
+  labelCol: {span: 5},
+  wrapperCol: {span: 19},
 }
 
 @Form.create()
@@ -41,7 +41,7 @@ class AddSource extends Component {
 
   @action.bound resetSelect() {
     const {
-      form: { resetFields },
+      form: {resetFields},
     } = this.props
 
     this.entity0Key = undefined
@@ -54,7 +54,7 @@ class AddSource extends Component {
 
   @action.bound selectObj(v) {
     const {
-      form: { getFieldValue, resetFields },
+      form: {getFieldValue, resetFields},
     } = this.props
 
     this.objId = v
@@ -73,12 +73,12 @@ class AddSource extends Component {
 
     // this.storageId = undefined
     // resetFields(['dataStorageId'])
-    this.resetSelect()
+    // this.resetSelect()
   }
 
   @action.bound selecStorageType(v) {
     const {
-      form: { getFieldValue, resetFields },
+      form: {getFieldValue, resetFields},
     } = this.props
 
     this.storageId = undefined
@@ -99,7 +99,7 @@ class AddSource extends Component {
 
   @action.bound selecStorage(v) {
     const {
-      form: { setFieldsValue },
+      form: {setFieldsValue},
     } = this.props
 
     this.storageId = v
@@ -116,7 +116,7 @@ class AddSource extends Component {
 
   @action.bound selectTable(v) {
     const {
-      form: { resetFields },
+      form: {resetFields},
     } = this.props
 
     this.entity0Key = undefined
@@ -156,7 +156,7 @@ class AddSource extends Component {
 
   @action.bound handleSubmit() {
     const {
-      form: { validateFieldsAndScroll },
+      form: {validateFieldsAndScroll},
     } = this.props
 
     const t = this
@@ -224,7 +224,7 @@ class AddSource extends Component {
 
   render() {
     const {
-      form: { getFieldDecorator },
+      form: {getFieldDecorator},
     } = this.props
     const {
       visible,
@@ -259,7 +259,7 @@ class AddSource extends Component {
 
     return (
       <Drawer {...drawerConfig}>
-        <Form style={{ paddingBottom: '50px' }} colon={false}>
+        <Form style={{paddingBottom: '50px'}} colon={false}>
           <FormItem
             {...formItemLayout}
             label={intl
@@ -270,7 +270,7 @@ class AddSource extends Component {
           >
             {getFieldDecorator('name', {
               rules: [
-                { transform: value => value && value.trim() },
+                {transform: value => value && value.trim()},
                 {
                   required: true,
                   message: intl
@@ -327,7 +327,7 @@ class AddSource extends Component {
                     'ide.src.page-config.workspace-config.source-modal.sexnlhau4v'
                   )
                   .d('请选择数据源类型')}
-                style={{ width: '100%' }}
+                style={{width: '100%'}}
                 onSelect={v => this.selecStorageType(v)}
               >
                 {storageTypeList.map(item => (
@@ -339,8 +339,8 @@ class AddSource extends Component {
             )}
           </FormItem>
           <FormItem
-            labelCol={{ span: 5 }}
-            wrapperCol={{ span: 16 }}
+            labelCol={{span: 5}}
+            wrapperCol={{span: 16}}
             label={intl
               .get('ide.src.business-component.tag-relate.dag-box.9mzk7452ggp')
               .d('数据源')}
@@ -374,7 +374,7 @@ class AddSource extends Component {
                       'ide.src.page-config.workspace-config.source-modal.0oev0nqwsxun'
                     )
                     .d('请选择数据源')}
-                  style={{ width: '100%' }}
+                  style={{width: '100%'}}
                   onSelect={v => this.selecStorage(v)}
                 >
                   {storageList.map(item => (
@@ -434,7 +434,7 @@ class AddSource extends Component {
                     'ide.src.page-manage.page-aim-source.source-list.drawer.6973zbnt1wk'
                   )
                   .d('请选择同步对象')}
-                style={{ width: '100%' }}
+                style={{width: '100%'}}
                 onSelect={v => this.selectObj(v)}
                 showSearch
                 optionFilterProp="children"
@@ -458,7 +458,7 @@ class AddSource extends Component {
           >
             {getFieldDecorator('descr', {
               rules: [
-                { transform: value => value && value.trim() },
+                {transform: value => value && value.trim()},
                 {
                   max: 128,
                   whitespace: true,
@@ -507,7 +507,7 @@ class AddSource extends Component {
                     'ide.src.page-manage.page-aim-source.source-list.drawer.ywu4do2altd'
                   )
                   .d('请选择目的表')}
-                style={{ width: '100%' }}
+                style={{width: '100%'}}
                 onSelect={v => this.selectTable(v)}
               >
                 {storageTable.map(item => (
@@ -520,56 +520,56 @@ class AddSource extends Component {
           </FormItem>
           {this.objId
             ? objRelList.map((d, i) => (
-                <FormItem
-                  {...formItemLayout}
-                  label={
-                    <OmitTooltip
-                      text={d.objName}
-                      maxWidth={100}
-                      className="rel-entity-name"
-                    />
-                  }
-                >
-                  {getFieldDecorator(`entity${i}Key`, {
-                    rules: [
-                      {
-                        required: true,
-                        message: intl
-                          .get(
-                            'ide.src.page-manage.page-aim-source.source-list.drawer.5ynyp00ian4'
-                          )
-                          .d('请选择主标签绑定的字段'),
-                      },
-                    ],
-                  })(
-                    <Select
-                      showSearch
-                      optionFilterProp="children"
-                      placeholder={intl
+              <FormItem
+                {...formItemLayout}
+                label={(
+                  <OmitTooltip
+                    text={d.objName}
+                    maxWidth={100}
+                    className="rel-entity-name"
+                  />
+                )}
+              >
+                {getFieldDecorator(`entity${i}Key`, {
+                  rules: [
+                    {
+                      required: true,
+                      message: intl
                         .get(
                           'ide.src.page-manage.page-aim-source.source-list.drawer.5ynyp00ian4'
                         )
-                        .d('请选择主标签绑定的字段')}
-                      style={{ width: '100%' }}
-                      onSelect={v => this.selectField(v, i, d.objId, d.tagId)}
-                    >
-                      {fieldList.map(d => (
-                        <Option
-                          key={d.fieldName}
-                          value={d.fieldName}
-                          disabled={d.disabled}
-                        >
-                          {d.fieldName}
-                        </Option>
-                      ))}
-                    </Select>
-                  )}
-                </FormItem>
-              ))
+                        .d('请选择主标签绑定的字段'),
+                    },
+                  ],
+                })(
+                  <Select
+                    showSearch
+                    optionFilterProp="children"
+                    placeholder={intl
+                      .get(
+                        'ide.src.page-manage.page-aim-source.source-list.drawer.5ynyp00ian4'
+                      )
+                      .d('请选择主标签绑定的字段')}
+                    style={{width: '100%'}}
+                    onSelect={v => this.selectField(v, i, d.objId, d.tagId)}
+                  >
+                    {fieldList.map(d => (
+                      <Option
+                        key={d.fieldName}
+                        value={d.fieldName}
+                        disabled={d.disabled}
+                      >
+                        {d.fieldName}
+                      </Option>
+                    ))}
+                  </Select>
+                )}
+              </FormItem>
+            ))
             : null}
         </Form>
         <div className="bottom-button">
-          <Button style={{ marginRight: 8 }} onClick={() => this.closeDrawer()}>
+          <Button style={{marginRight: 8}} onClick={() => this.closeDrawer()}>
             {intl
               .get('ide.src.page-config.workspace-config.modal.xp905zufzth')
               .d('取消')}

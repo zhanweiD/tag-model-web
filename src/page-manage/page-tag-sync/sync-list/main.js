@@ -2,18 +2,18 @@ import intl from 'react-intl-universal'
 /**
  * @description 标签同步
  */
-import { Component, Fragment } from 'react'
-import { action, toJS } from 'mobx'
-import { observer, Provider } from 'mobx-react'
-import { Button, Popconfirm } from 'antd'
-import { Link } from 'react-router-dom'
+import {Component, Fragment} from 'react'
+import {action, toJS} from 'mobx'
+import {observer, Provider} from 'mobx-react'
+import {Button, Popconfirm} from 'antd'
+import {Link} from 'react-router-dom'
 import {
   ListContent,
   projectProvider,
   Authority,
   OmitTooltip,
 } from '../../../component'
-import { Time } from '../../../common/util'
+import {Time} from '../../../common/util'
 import seach from './search'
 import DrawerAddSync from './drawer'
 import DrawerEditSync from './drawer-edit'
@@ -80,8 +80,7 @@ class SyncList extends Component {
         .get('ide.src.page-manage.page-tag-sync.sync-list.main.hjbky8f7hd')
         .d('使用中/标签数'),
       dataIndex: 'tagUsedCount',
-      render: (text, record) =>
-        `${record.tagUsedCount}/${record.tagTotalCount}`,
+      render: (text, record) => `${record.tagUsedCount}/${record.tagTotalCount}`,
     },
     {
       title: intl
@@ -97,32 +96,31 @@ class SyncList extends Component {
         .d('周期调度'),
       dataIndex: 'scheduleType',
       // render: v => (v === null ? '' : getScheduleType({status: v})),
-      render: v =>
-        v
-          ? intl
-              .get(
-                'ide.src.page-manage.page-tag-sync.sync-list.main.l5pr8jfpdt8'
-              )
-              .d('启动')
-          : intl
-              .get(
-                'ide.src.page-manage.page-tag-sync.sync-list.main.cbv22vdspwp'
-              )
-              .d('暂停'),
+      render: v => (v
+        ? intl
+          .get(
+            'ide.src.page-manage.page-tag-sync.sync-list.main.l5pr8jfpdt8'
+          )
+          .d('启动')
+        : intl
+          .get(
+            'ide.src.page-manage.page-tag-sync.sync-list.main.cbv22vdspwp'
+          )
+          .d('暂停')),
     },
     {
       title: intl
         .get('ide.src.page-manage.page-tag-sync.sync-list.main.k2rwrgspl4o')
         .d('计划状态'),
       dataIndex: 'status',
-      render: v => (v === null ? '' : getSyncStatus({ status: v })),
+      render: v => (v === null ? '' : getSyncStatus({status: v})),
     },
     {
       title: intl
         .get('ide.src.page-manage.page-tag-sync.sync-list.main.5y9seazaxhc')
         .d('最近运行状态'),
       dataIndex: 'lastStatus',
-      render: v => (v === null ? '' : getLastStatus({ status: v })),
+      render: v => (v === null ? '' : getLastStatus({status: v})),
     },
     {
       title: intl
@@ -185,9 +183,9 @@ class SyncList extends Component {
 
             /* 更新中 & 暂停 & 运行成功、运行失败 */
             if (
-              record.status === 6 &&
-              record.scheduleType === 0 &&
-              (record.lastStatus === 1 || record.lastStatus === 2)
+              record.status === 6
+              && record.scheduleType === 0
+              && (record.lastStatus === 1 || record.lastStatus === 2)
             ) {
               return (
                 <Fragment>
@@ -378,9 +376,9 @@ class SyncList extends Component {
 
             /* 提交成功 & 暂停 &  运行成功  & 运行失败 */
             if (
-              record.status === 1 &&
-              record.scheduleType === 0 &&
-              (record.lastStatus === 1 || record.lastStatus === 2)
+              record.status === 1
+              && record.scheduleType === 0
+              && (record.lastStatus === 1 || record.lastStatus === 2)
             ) {
               return (
                 <Fragment>
@@ -481,9 +479,9 @@ class SyncList extends Component {
 
             /* 更新失败 & 暂停 & 运行成功 */
             if (
-              record.status === 5 &&
-              record.scheduleType === 0 &&
-              record.lastStatus === 1
+              record.status === 5
+              && record.scheduleType === 0
+              && record.lastStatus === 1
             ) {
               return (
                 <Fragment>
@@ -585,9 +583,9 @@ class SyncList extends Component {
 
             /* 更新失败 & 暂停 & 运行失败 */
             if (
-              record.status === 5 &&
-              record.scheduleType === 0 &&
-              record.lastStatus === 2
+              record.status === 5
+              && record.scheduleType === 0
+              && record.lastStatus === 2
             ) {
               return (
                 <Fragment>
@@ -726,9 +724,9 @@ class SyncList extends Component {
 
             /* 更新成功 & 启动 & 运行成功、运行失败 */
             if (
-              record.status === 4 &&
-              record.scheduleType === 1 &&
-              (record.lastStatus === 1 || record.lastStatus === 2)
+              record.status === 4
+              && record.scheduleType === 1
+              && (record.lastStatus === 1 || record.lastStatus === 2)
             ) {
               return (
                 <Fragment>
@@ -812,9 +810,9 @@ class SyncList extends Component {
 
             /* 更新成功 & 暂停 &  运行成功、运行失败 */
             if (
-              record.status === 4 &&
-              record.scheduleType === 0 &&
-              (record.lastStatus === 1 || record.lastStatus === 2)
+              record.status === 4
+              && record.scheduleType === 0
+              && (record.lastStatus === 1 || record.lastStatus === 2)
             ) {
               return (
                 <Fragment>
@@ -1089,12 +1087,12 @@ class SyncList extends Component {
   }
 
   render() {
-    const { objList, projectId, visibleEdit } = store
+    const {objList, projectId, visibleEdit} = store
 
     const listConfig = {
       columns: this.columns,
-      initParams: { projectId },
-      scroll: { x: 1400 },
+      initParams: {projectId},
+      scroll: {x: 1400},
       searchParams: seach({
         objList: toJS(objList),
       }),
