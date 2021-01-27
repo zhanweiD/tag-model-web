@@ -1,5 +1,5 @@
 import intl from 'react-intl-universal'
-import { observable, action, runInAction, toJS } from 'mobx'
+import {observable, action, runInAction, toJS} from 'mobx'
 import {
   successTip,
   failureTip,
@@ -7,7 +7,7 @@ import {
   changeToOptions,
   listToTree,
 } from '../../../../common/util'
-import { ListContentStore } from '../../../../component/list-content'
+import {ListContentStore} from '../../../../component/list-content'
 import io from './io'
 
 class Store extends ListContentStore(io.getTagList) {
@@ -112,6 +112,7 @@ class Store extends ListContentStore(io.getTagList) {
    * @description 新建标签
    */
   @action async createTag(params, cb) {
+    this.confirmLoading = true
     try {
       const res = await io.createTag({
         objId: this.objId,
@@ -233,7 +234,6 @@ class Store extends ListContentStore(io.getTagList) {
   @action async deleteTag(params) {
     try {
       const res = await io.deleteTag({
-        // projectId: this.projectId,
         ...params,
       })
 
@@ -246,7 +246,7 @@ class Store extends ListContentStore(io.getTagList) {
               )
               .d('操作成功')
           )
-          this.getList({ currentPage: 1 })
+          this.getList({currentPage: 1})
         } else {
           failureTip(
             intl
@@ -268,7 +268,6 @@ class Store extends ListContentStore(io.getTagList) {
   @action async checkName(params, cb) {
     try {
       const res = await io.checkName({
-        // projectId: this.projectId,
         objId: this.objId,
         ...params,
       })

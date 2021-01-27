@@ -20,44 +20,12 @@ class DrawerCreate extends Component {
     this.store.objId = props.store.initParams.objId
   }
 
-  // @action.bound selectObject(id) {
-  //   this.store.ownObject = id
-  //   this.form.resetFields(['cateId', 'name', 'enName'])
-
-  //   this.store.drawerTagInfo.pathIds = []
-  //   this.store.drawerTagInfo.parentId = undefined
-  //   this.store.drawerTagInfo.name = undefined
-  //   this.store.drawerTagInfo.enName = undefined
-
-  //   this.store.getTagCateSelectList({
-  //     id,
-  //   })
-  // }
-
   selectContent = () => {
     const {
-      isEnum, // 是否枚举
-      ownObject, // 所属对象
       drawerTagInfo,
-      editCateId,
       tagCateSelectList,
-      objectSelectList,
     } = this.store
     return [
-      // {
-      //   label: '所属对象',
-      //   key: 'objId',
-      //   initialValue: this.store.objId,
-      //   component: 'select',
-      //   rules: [
-      //     '@requiredSelect',
-      //   ],
-      //   control: {
-      //     disabled: true,
-      //     options: objectSelectList,
-      //     // onSelect: v => this.selectObject(v),
-      //   },
-      // },
       {
         label: intl
           .get(
@@ -66,14 +34,11 @@ class DrawerCreate extends Component {
           .d('所属类目'),
         key: 'cateId',
         initialValue: drawerTagInfo.pathIds,
-        // initialValue: drawerTagInfo.cateId ? [drawerTagInfo.cateId] : undefined,
         component: 'cascader',
         rules: ['@requiredSelect'],
 
         control: {
           options: tagCateSelectList,
-          // valueName: 'id',
-          // selectCon: ['isLeaf', 2],
           fieldNames: {
             label: 'name',
             value: 'id',
@@ -102,7 +67,6 @@ class DrawerCreate extends Component {
 
         autoComplete: 'off',
         control: {
-          // disabled: this.store.drawerTagType === 'edit',
         },
       },
       {
@@ -117,13 +81,11 @@ class DrawerCreate extends Component {
           '@transformTrim',
           '@required',
           '@max32',
-          // {pattern: enNameReg, message: '不超过32个字，只能包含英文、数字或下划线，必须以英文开头'},
           {validator: this.checkName},
         ],
 
         autoComplete: 'off',
         control: {
-          // disabled: this.store.drawerTagType === 'edit',
         },
       },
       {
@@ -163,34 +125,6 @@ class DrawerCreate extends Component {
         },
       },
 
-      // {
-      //   label: intl
-      //     .get(
-      //       'ide.src.page-manage.page-object-model.object-list.object-detail.drawer-create.7g6e5biv0hp'
-      //     )
-      //     .d('枚举显示值'),
-      //   key: 'enumValue',
-      //   hide: !isEnum,
-      //   initialValue: drawerTagInfo.enumValue,
-      //   component: 'textArea',
-      //   rules: [
-      //     '@transformTrim',
-      //     // '@required',
-      //     '@max128',
-      //     {validator: this.handleEnumValueValidator},
-      //   ],
-
-      //   control: {
-      //     placeholder: intl
-      //       .get(
-      //         'ide.src.page-manage.page-object-model.object-list.object-detail.drawer-create.w3weeojwq6'
-      //       )
-      //       .d(
-      //         '若标签值为枚举型，可将枚举代码值显示为易理解的值，例如：{"0":"女","1":"男"}'
-      //       ),
-      //   },
-      // },
-
       {
         label: intl
           .get('ide.src.page-manage.page-common-tag.detail.main.2ziwjluj78c')
@@ -201,7 +135,6 @@ class DrawerCreate extends Component {
         rules: ['@requiredSelect'],
 
         control: {
-          // options: tagConfigMethodMap,
           options: [
             {
               name: intl
@@ -274,7 +207,6 @@ class DrawerCreate extends Component {
     this.store.drawerTagVisible = false
     this.store.isEnum = false
     this.store.tagCateSelectList.clear()
-    // this.store.resetModal()
   }
 
   submit = () => {
@@ -285,7 +217,6 @@ class DrawerCreate extends Component {
         const params = {
           ...values,
           cateId: values.cateId[values.cateId.length - 1],
-          // pathIds: values.cateId,
           isEnum: values.isEnum ? 1 : 0,
         }
 
@@ -327,12 +258,10 @@ class DrawerCreate extends Component {
       )
       return
     }
-    // console.log(this.store.drawerTagInfo.id)
 
     if (this.store.drawerTagInfo.id) {
       params.id = this.store.drawerTagInfo.id
     }
-    // debounce(() => this.store.checkName(params, callback), 500)
     this.store.checkName(params, callback)
   }
 
