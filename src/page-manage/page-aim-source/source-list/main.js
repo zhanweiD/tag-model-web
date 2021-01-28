@@ -2,18 +2,18 @@ import intl from 'react-intl-universal'
 /**
  * 目的源管理列表
  */
-import { Component } from 'react'
-import { action, toJS } from 'mobx'
-import { observer } from 'mobx-react'
-import { Button, Popconfirm } from 'antd'
-import { Link } from 'react-router-dom'
+import {Component} from 'react'
+import {action, toJS} from 'mobx'
+import {observer} from 'mobx-react'
+import {Button, Popconfirm} from 'antd'
+import {Link} from 'react-router-dom'
 import {
   ListContent,
   projectProvider,
   OmitTooltip,
   Authority,
 } from '../../../component'
-import { Time } from '../../../common/util'
+import {Time} from '../../../common/util'
 import seach from './search'
 import AddSource from './drawer'
 import DrawerTagConfig from '../tag-config'
@@ -78,18 +78,16 @@ class SourceList extends Component {
         .get('ide.src.page-manage.page-aim-source.source-list.main.314snpt0uf6')
         .d('已映射/字段数'),
       dataIndex: 'tagUsedCount',
-      render: (text, record) =>
-        `${record.tagUsedCount}/${record.fieldTotalCount}`,
+      render: (text, record) => `${record.tagUsedCount}/${record.fieldTotalCount}`,
     },
     {
       title: intl
         .get('ide.src.page-manage.page-aim-source.source-list.main.nfmxnys5ozt')
         .d('已被使用'),
       dataIndex: 'status',
-      render: text =>
-        text
-          ? intl.get('ide.src.component.form-component.03xp8ux32s3a').d('是')
-          : intl.get('ide.src.component.form-component.h7p1pcijouf').d('否'),
+      render: text => (text
+        ? intl.get('ide.src.component.form-component.03xp8ux32s3a').d('是')
+        : intl.get('ide.src.component.form-component.h7p1pcijouf').d('否')),
     },
     {
       title: intl
@@ -168,6 +166,7 @@ class SourceList extends Component {
 
   @action.bound addSource() {
     store.getStorageType()
+    store.getUnderObjList()
     store.getDefaultStorage()
     store.visible = true
   }
@@ -198,7 +197,7 @@ class SourceList extends Component {
         objList: toJS(objList),
       }),
 
-      initParams: { projectId },
+      initParams: {projectId},
       buttons: [
         <Authority authCode="tag_model:create_target_source[c]">
           <Button type="primary" onClick={() => this.addSource()}>

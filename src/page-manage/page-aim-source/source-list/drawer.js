@@ -53,10 +53,6 @@ class AddSource extends Component {
   }
 
   @action.bound selectObj(v) {
-    const {
-      form: {getFieldValue, resetFields},
-    } = this.props
-
     this.objId = v
 
     this.store.getRelObj({
@@ -103,6 +99,7 @@ class AddSource extends Component {
     } = this.props
 
     this.storageId = v
+    this.store.storageId = v
     this.resetSelect()
 
     setFieldsValue({
@@ -229,7 +226,7 @@ class AddSource extends Component {
     const {
       visible,
       confirmLoading,
-      objList,
+      underObjList,
       storageTypeList,
       storageList,
       storageTable,
@@ -439,8 +436,8 @@ class AddSource extends Component {
                 showSearch
                 optionFilterProp="children"
               >
-                {objList.map(item => (
-                  <Option key={item.value} value={item.value}>
+                {underObjList.map(item => (
+                  <Option disabled={item.isUsed} key={item.objId} value={item.objId}>
                     {item.name}
                   </Option>
                 ))}

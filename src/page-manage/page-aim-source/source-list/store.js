@@ -1,7 +1,7 @@
 import intl from 'react-intl-universal'
-import { action, runInAction, observable } from 'mobx'
-import { successTip, errorTip, changeToOptions } from '../../../common/util'
-import { ListContentStore } from '../../../component/list-content'
+import {action, runInAction, observable} from 'mobx'
+import {successTip, errorTip, changeToOptions} from '../../../common/util'
+import {ListContentStore} from '../../../component/list-content'
 import io from './io'
 
 class Store extends ListContentStore(io.getList) {
@@ -50,6 +50,24 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
+  @observable underObjList = [] // 新建对象下拉
+  @observable storageId = null // 新建对象下拉
+  // 下拉对象列表
+  @action async getUnderObjList() {
+    try {
+      const res = await io.getUnderObjList({
+        projectId: this.projectId,
+        storageId: this.storageId,
+      })
+
+      runInAction(() => {
+        this.underObjList = res || []
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
   @observable objRelList = [] // 关联的对象
 
   // 根据objId 查询关联对象（实体就是其自身）
@@ -82,8 +100,9 @@ class Store extends ListContentStore(io.getList) {
 
       runInAction(() => {
         this.defaultStorage = res || {}
+        this.storageId = this.defaultStorage.storageId
         if (this.defaultStorage.storageType) {
-          this.oneForm.setFieldsValue({ dataStorageType: res.storageType })
+          this.oneForm.setFieldsValue({dataStorageType: res.storageType})
           this.selecStorageType(res.storageType)
         }
       })
@@ -209,7 +228,7 @@ class Store extends ListContentStore(io.getList) {
         if (cb) {
           cb()
         }
-        this.getList({ currentPage: 1 })
+        this.getList({currentPage: 1})
       })
     } catch (e) {
       errorTip(e.message)
@@ -235,7 +254,7 @@ class Store extends ListContentStore(io.getList) {
             )
             .d('删除成功')
         )
-        this.getList({ currentPage: 1 })
+        this.getList({currentPage: 1})
       })
     } catch (e) {
       errorTip(e.message)

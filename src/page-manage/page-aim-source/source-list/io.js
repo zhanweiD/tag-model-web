@@ -1,10 +1,11 @@
 import ioContext from '../../../common/io-context'
-import {baseApi, targetSourceApi, get, post} from '../../../common/util'
+import {baseApi, targetSourceApi, syncApi, get, post} from '../../../common/util'
 
 const api = {
   getList: get(`${targetSourceApi}/list`), // 数据源列表
   delList: get(`${targetSourceApi}/del`), // 删除数据源列表
-  getObjList: get(`${targetSourceApi}/objs`), // 目的数据源-对象下拉列表
+  getObjList: get(`${targetSourceApi}/objs`), // 目的数据源-对象下拉列表(搜索)
+  getUnderObjList: get(`${syncApi}/scheme/underObjList`), // 下拉对象列表（新建）
   getStorageType: get(`${targetSourceApi}/dataStorageType`), // 下拉数据源类型列表
   // getStorageList: get(`${baseApi}/project/projectDataStorageListByStorageType`), // 下拉数据源列表 
   getStorageList: get(`${targetSourceApi}/dataStorageList`), // 下拉数据源列表
