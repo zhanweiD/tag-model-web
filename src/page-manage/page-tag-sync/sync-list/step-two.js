@@ -1,12 +1,13 @@
-import {Component} from 'react'
-import {observer} from 'mobx-react'
-import {Button} from 'antd'
-import {observable, action} from 'mobx'
+import intl from 'react-intl-universal'
+import { Component } from 'react'
+import { observer } from 'mobx-react'
+import { Button } from 'antd'
+import { observable, action } from 'mobx'
 import Tree from './step-two-tree'
 import List from './step-two-list'
 
 @observer
-export default class StepTwo extends Component {
+class StepTwo extends Component {
   constructor(props) {
     super(props)
     this.store = props.store
@@ -22,7 +23,7 @@ export default class StepTwo extends Component {
   @action.bound rightToTable(tagData) {
     const nextKeys = tagData.map(d => d.id)
     const keys = this.store.tableData.map(d => d.id)
-  
+
     if (!_.isEqual(nextKeys, keys)) {
       const addArr = []
 
@@ -30,9 +31,9 @@ export default class StepTwo extends Component {
         if (!keys.includes(d)) {
           addArr.push(tagData[i])
         }
-      })  
-      this.store.tableData = this.store.tableData.concat(addArr)  
-    } 
+      })
+      this.store.tableData = this.store.tableData.concat(addArr)
+    }
   }
 
   @action.bound removeList(item) {
@@ -41,15 +42,13 @@ export default class StepTwo extends Component {
   }
 
   @action.bound removeListAll(d) {
-    const {majorTagList} = this.store
+    const { majorTagList } = this.store
     this.listRemoveAll = d
     this.store.tableData.replace(majorTagList)
   }
 
   render() {
-    const {
-      show,
-    } = this.props
+    const { show } = this.props
 
     const treeConfig = {
       listRemoveAll: this.listRemoveAll,
@@ -63,23 +62,38 @@ export default class StepTwo extends Component {
       remove: this.removeList,
       store: this.store,
     }
+
     return (
-      <div style={{display: show ? 'block' : 'none'}}>
+      <div style={{ display: show ? 'block' : 'none' }}>
         <div className="config-sync-tag">
           <Tree {...treeConfig} />
           <List {...listConfig} />
         </div>
         <div className="bottom-button">
-          <Button style={{marginRight: 8}} onClick={() => this.store.lastStep()}>上一步</Button>
+          <Button
+            style={{ marginRight: 8 }}
+            onClick={() => this.store.lastStep()}
+          >
+            {intl
+              .get(
+                'ide.src.page-manage.page-tag-model.data-sheet.config-field.m6ae9pj50gh'
+              )
+              .d('上一步')}
+          </Button>
           <Button
             type="primary"
-            style={{marginRight: 8}}
+            style={{ marginRight: 8 }}
             onClick={this.nextStep}
           >
-            下一步
+            {intl
+              .get(
+                'ide.src.page-manage.page-tag-model.data-sheet.config-field.kpiieqt46x'
+              )
+              .d('下一步')}
           </Button>
         </div>
       </div>
     )
   }
 }
+export default StepTwo

@@ -1,7 +1,11 @@
-import TagModel from './tag-list'
-import TagModelDetail from './tag-detail'
+import {asyncComponent} from '../../common/util'
 
-export {
-  TagModel,
-  TagModelDetail,
-}
+export default asyncComponent(async () => {
+  try {
+    const module = await import('./main')
+    return module.default
+  } catch (error) {
+    console.log(error)
+  }
+  return null
+})

@@ -1,10 +1,12 @@
+import intl from 'react-intl-universal'
+import { action, runInAction, observable } from 'mobx'
 import {
-  action, runInAction, observable,
-} from 'mobx'
-import {
-  successTip, failureTip, errorTip, changeToOptions,
+  successTip,
+  failureTip,
+  errorTip,
+  changeToOptions,
 } from '../../common/util'
-import {ListContentStore} from '../../component/list-content'
+import { ListContentStore } from '../../component/list-content'
 import io from './io'
 
 export default class Store extends ListContentStore(io.getList) {
@@ -24,6 +26,7 @@ export default class Store extends ListContentStore(io.getList) {
       const res = await io.getObjList({
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.objList = changeToOptions(res)('name', 'objId')
       })
@@ -39,12 +42,25 @@ export default class Store extends ListContentStore(io.getList) {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
         if (res) {
-          successTip('提交成功')
+          successTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-tag-sync.sync-detail.main.yf96acx8evb'
+              )
+              .d('提交成功')
+          )
           this.getList()
         } else {
-          failureTip('提交失败')
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-tag-sync.sync-detail.main.2n0b3tsdnkb'
+              )
+              .d('提交失败')
+          )
         }
       })
     } catch (e) {
@@ -59,12 +75,25 @@ export default class Store extends ListContentStore(io.getList) {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
         if (res) {
-          successTip('操作成功')
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
           this.getList()
         } else {
-          failureTip('操作失败')
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+              )
+              .d('操作失败')
+          )
         }
       })
     } catch (e) {
@@ -79,21 +108,29 @@ export default class Store extends ListContentStore(io.getList) {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
         if (res.success) {
-          successTip('克隆成功')
+          successTip(
+            intl
+              .get('ide.src.page-process.schema-list.store-list.r31921noq6n')
+              .d('克隆成功')
+          )
           this.getList({
             currentPage: 1,
           })
         } else {
-          failureTip('克隆失败')
+          failureTip(
+            intl
+              .get('ide.src.page-process.schema-list.store-list.rj1y5n9ca7m')
+              .d('克隆失败')
+          )
         }
       })
     } catch (e) {
       errorTip(e.message)
     }
   }
-
 
   // 删除方案
   @action async deleteScheme(params) {
@@ -102,12 +139,23 @@ export default class Store extends ListContentStore(io.getList) {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
         if (res.success) {
-          successTip('删除成功')
-          this.getList({currentPage: 1})
+          successTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.source-list.store.hz4myn73qbp'
+              )
+              .d('删除成功')
+          )
+          this.getList({ currentPage: 1 })
         } else {
-          failureTip('删除失败')
+          failureTip(
+            intl
+              .get('ide.src.page-process.schema-list.store-list.v9ynk97t9b9')
+              .d('删除失败')
+          )
         }
       })
     } catch (e) {
@@ -127,6 +175,7 @@ export default class Store extends ListContentStore(io.getList) {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
         this.submitLog = res
       })
@@ -149,6 +198,7 @@ export default class Store extends ListContentStore(io.getList) {
       const res = await io.getAuthCode({
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.functionCodes = res
       })

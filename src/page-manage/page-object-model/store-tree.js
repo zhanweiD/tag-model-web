@@ -1,13 +1,10 @@
+import intl from 'react-intl-universal'
 /**
  * 类目树 store
  */
 
-import {
-  observable, action, runInAction, toJS,
-} from 'mobx'
-import {
-  successTip, failureTip, errorTip, listToTree,
-} from '../../common/util'
+import {observable, action, runInAction, toJS} from 'mobx'
+import {successTip, failureTip, errorTip, listToTree} from '../../common/util'
 
 import io from './io'
 
@@ -23,7 +20,7 @@ class Store {
   @observable categoryData = [] // 所有类目数据
   @observable searchExpandedKeys = [] // 关键字搜索展开的树节点
   @observable relToEntityData = [] // 添加关系对象时选择 关联的实体对象类目树数据
-  @observable currentSelectKeys = undefined// 默认展开的树节点
+  @observable currentSelectKeys = undefined // 默认展开的树节点
 
   // modal
   @observable confirmLoading = false
@@ -73,8 +70,9 @@ class Store {
   @action defaultKey = data => {
     for (const item of data) {
       if (item.children) {
-        this.defaultKey(item.children) 
-      } else if (item.parentId) { // 判断条件不定，使用场景有限
+        this.defaultKey(item.children)
+      } else if (item.parentId) {
+        // 判断条件不定，使用场景有限
         return this.firstChildrens.push(item)
       }
     }
@@ -92,6 +90,7 @@ class Store {
         type: this.typeCode,
         searchKey: this.searchKey,
       })
+
       runInAction(() => {
         this.treeLoading = false
         this.searchExpandedKeys.clear()
@@ -125,7 +124,7 @@ class Store {
           this.objId = undefined
           this.currentSelectKeys = undefined
         }
-               
+
         // 获取所有类目的数据；用于编辑对象时选择所属类目
         this.categoryData = res.filter(item => item.parentId === 0)
         if (cb) cb()
@@ -148,6 +147,7 @@ class Store {
         objTypeCode: this.typeCode,
         ...data,
       }
+
       if (type === 'obj') {
         await io.addObject(params)
       } else {
@@ -156,7 +156,13 @@ class Store {
 
       runInAction(() => {
         this.confirmLoading = false
-        successTip('操作成功')
+        successTip(
+          intl
+            .get(
+              'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+            )
+            .d('操作成功')
+        )
         // 刷新类目树
         this.getObjTree(cb)
       })
@@ -187,7 +193,13 @@ class Store {
 
       runInAction(() => {
         this.confirmLoading = false
-        successTip('操作成功')
+        successTip(
+          intl
+            .get(
+              'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+            )
+            .d('操作成功')
+        )
         // 刷新类目树
         this.getObjTree()
         if (cb) cb()
@@ -202,8 +214,8 @@ class Store {
 
   /**
    * @description 删除对象类目 & 删除对象
-   * @param {*} params 
-   * @param {*} cb 
+   * @param {*} params
+   * @param {*} cb
    */
   @action async delNode(deleteIds, type, cb) {
     try {
@@ -212,7 +224,13 @@ class Store {
       } else {
         await io.delObjCate({deleteIds: [deleteIds]})
       }
-      successTip('操作成功')
+      successTip(
+        intl
+          .get(
+            'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+          )
+          .d('操作成功')
+      )
       if (cb) cb()
     } catch (e) {
       errorTip(e.message)
@@ -250,13 +268,25 @@ class Store {
     try {
       const res = await io.moveObject(params)
       if (res.success) {
-        successTip('操作成功')
+        successTip(
+          intl
+            .get(
+              'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+            )
+            .d('操作成功')
+        )
         // 刷新类目树
         this.getObjTree()
       } else {
-        failureTip('操作失败')
+        failureTip(
+          intl
+            .get(
+              'ide.src.page-manage.page-aim-source.tag-config.store.82gceg0du65'
+            )
+            .d('操作失败')
+        )
       }
-      if (cb)cb()
+      if (cb) cb()
     } catch (e) {
       errorTip(e.message)
     }
@@ -283,9 +313,16 @@ class Store {
         objTypeCode: this.typeCode,
         ...params,
       })
+
       runInAction(() => {
         if (res.success) {
-          cb('名称已存在')
+          cb(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.source-list.store.o07pkyecrw'
+              )
+              .d('名称已存在')
+          )
         } else {
           cb()
         }

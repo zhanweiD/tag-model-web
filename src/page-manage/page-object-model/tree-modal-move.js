@@ -1,3 +1,4 @@
+import intl from 'react-intl-universal'
 import {Component} from 'react'
 import {action} from 'mobx'
 import {observer, inject} from 'mobx-react'
@@ -8,7 +9,7 @@ import {modalDefaultConfig} from './util'
 
 @inject('bigStore')
 @observer
-export default class ModalMove extends Component {
+class ModalMove extends Component {
   constructor(props) {
     super(props)
     this.store = props.store
@@ -24,9 +25,7 @@ export default class ModalMove extends Component {
     const t = this
     const {store} = t
     const {
-      moveModal: {
-        detail,
-      },
+      moveModal: {detail},
     } = store
 
     this.form.validateFields((err, values) => {
@@ -35,6 +34,7 @@ export default class ModalMove extends Component {
           ids: [detail.aId],
           ...values,
         }
+
         store.moveObject(params, () => {
           // 编辑节点为当前选中节点
           if (+detail.aId === +t.bigStore.objId) {
@@ -50,28 +50,35 @@ export default class ModalMove extends Component {
 
   render() {
     const {
-      moveModal: {
-        visible,
-        detail,
-      }, 
+      moveModal: {visible, detail},
+
       confirmLoading,
     } = this.store
 
-    const content = [{
-      label: '类目名称',
-      key: 'targetId',
-      initialValue: detail.parentId,
-      component: 'select',
-      rules: [
-        '@requiredSelect',
-      ],
-      control: {
-        options: changeToOptions(this.store.categoryData)('name', 'aId'),
+    const content = [
+      {
+        label: intl
+          .get(
+            'ide.src.page-manage.page-object-model.object-list.object-list.modal-category.aps4bfdj6ls'
+          )
+          .d('类目名称'),
+        key: 'targetId',
+        initialValue: detail.parentId,
+        component: 'select',
+        rules: ['@requiredSelect'],
+
+        control: {
+          options: changeToOptions(this.store.categoryData)('name', 'aId'),
+        },
       },
-    }]
+    ]
 
     const modalConfig = {
-      title: '移动至',
+      title: intl
+        .get(
+          'ide.src.page-manage.page-object-model.object-list.object-list.modal-move.0e0hc9fvvfzc'
+        )
+        .d('移动至'),
       visible,
       onCancel: this.handleCancel,
       onOk: this.submit,
@@ -81,7 +88,9 @@ export default class ModalMove extends Component {
 
     const formConfig = {
       selectContent: visible && content,
-      wrappedComponentRef: form => { this.form = form ? form.props.form : form },
+      wrappedComponentRef: form => {
+        this.form = form ? form.props.form : form
+      },
     }
 
     return (
@@ -91,3 +100,4 @@ export default class ModalMove extends Component {
     )
   }
 }
+export default ModalMove

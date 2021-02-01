@@ -1,18 +1,19 @@
+import intl from 'react-intl-universal'
 /* eslint-disable */
-import {Component} from 'react'
-import { message } from 'antd';
-import {ErrorEater} from '@dtwave/uikit'
+import { Component } from 'react'
+import { message } from 'antd'
+import { ErrorEater } from '@dtwave/uikit'
 
 //*--------------- 方法类 (返回方法) ---------------*//
 /**
  * @description 接口路径处理
  */
-const {pathPrefix} = window.__keeper
+const { pathPrefix } = window.__keeper
 
 // 接口前缀
 
 export const baseApi = pathPrefix // 标签中心
-export const overviewApi = `${pathPrefix}/overview`// 总览
+export const overviewApi = `${pathPrefix}/overview` // 总览
 export const projectApi = `${pathPrefix}/project` // 项目列表
 export const approvalApi = `${pathPrefix}/apply` // 审批管理
 
@@ -28,8 +29,10 @@ export const objectApi = `${pathPrefix}/object` // 对象管理
 export const derivativeApi = `${pathPrefix}/derivative` // 衍生标签
 export const tagWarehouseApi = `${pathPrefix}/map` // 标签仓库
 
-export const syncApi =  `${pathPrefix}/transfer` // 标签同步
-export const targetSourceApi =  `${pathPrefix}/targetSource` // 目的数据源
+export const syncApi = `${pathPrefix}/transfer` // 标签同步
+export const targetSourceApi = `${pathPrefix}/targetSource` // 目的数据源
+
+export const groupConfigApi = `/api/tagapp/current/relGroup` // 群体配置
 
 const createRequestFn = method => (url, config) => ({
   url,
@@ -43,30 +46,57 @@ export const get = createRequestFn('GET')
 // 生成post请求方法的配置对象
 export const post = createRequestFn('POST')
 
+// 获取cookie中的值
+export const getCookie = cname => {
+  const name = `${cname}=`
+  const ca = document.cookie.split(';')
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i]
+    while (c.charAt(0) === ' ') c = c.substring(1)
+    if (c.indexOf(name) !== -1) {
+      return c.substring(name.length, c.length)
+    }
+  }
+  return ''
+}
+
 /**
  * @description 转化成@antd Select-Options格式
- * @param0 list 
+ * @param0 list
  * @param1 labelName 返回数据label 字段名
  * @param2 valueName 返回数据value 字段名
  */
-export const changeToOptions = (list=[]) => (labelName, valueName) => list.map((obj={}) => ({ name: obj && obj[labelName], value: obj && obj[valueName] }))
-export const changeToOptionsWithDisabled = (list=[]) => (labelName, valueName, disabledKey) => list.map((obj={}) => ({ name: obj && obj[labelName], value: obj && obj[valueName], disabled: obj && Number(obj[disabledKey])}))
+export const changeToOptions = (list = []) => (labelName, valueName) =>
+  list.map((obj = {}) => ({
+    name: obj && obj[labelName],
+    value: obj && obj[valueName],
+  }))
+export const changeToOptionsWithDisabled = (list = []) => (
+  labelName,
+  valueName,
+  disabledKey
+) =>
+  list.map((obj = {}) => ({
+    name: obj && obj[labelName],
+    value: obj && obj[valueName],
+    disabled: obj && Number(obj[disabledKey]),
+  }))
 /**
  * @description 遍历数组根据"id"值查找对应的"name"
  * @param {*} list 数组
- * @param {*} id 
+ * @param {*} id
  * @param {*} idName 数组对象中对应键值对中的key命名；默认name
  * @param {*} labelName 数组对象中对应键值对中的value命名;默认value
  */
 export const keyToName = (list, id, idName = 'value', labelName = 'name') => {
-  if(!list.length) return null
-  const r = _.filter(list, (obj) => obj[idName] === id)[0] || {}
+  if (!list.length) return null
+  const r = _.filter(list, obj => obj[idName] === id)[0] || {}
   return r[labelName]
 }
 
 /**
  * @description 深拷贝
- * @param {*} obj 
+ * @param {*} obj
  */
 export const deepCopy = obj => {
   if (typeof obj !== 'object') return obj
@@ -86,7 +116,7 @@ export const deepCopy = obj => {
 
 /**
  * @description 一纬数组合并去重
- * @param {*} arr1, arr2 
+ * @param {*} arr1, arr2
  */
 export const combineArray = (arr1, arr2) => {
   let arr = arr1.concat(arr2)
@@ -105,7 +135,7 @@ export function successTip(content) {
  * @description 操作失败提示
  * @param content
  */
-export function failureTip (content) {
+export function failureTip(content) {
   message.error(content)
 }
 /**
@@ -113,11 +143,7 @@ export function failureTip (content) {
  * @param title
  */
 export function errorTip(title) {
-  ErrorEater(
-    'default',
-    title,
-    e => console.log(e),
-  )
+  ErrorEater('default', title, e => console.log(e))
 }
 
 /**
@@ -153,7 +179,6 @@ export function listToTree(data) {
     const children = newData.filter(sitem => sitem.parentId === item.id)
     if (children.length && !item.children) item.children = children
   })
-
   return newData.filter(item => item.parentId === 0)
 }
 
@@ -162,19 +187,18 @@ export const enNameReg = /^[a-zA-Z][a-zA-Z0-9_]{0,31}$/
 
 /**
  * @description 根据数据类型code 返回 数据类型name; 常用数据类型 整数型/小数型/文本型/日期型
- * @param {*} code 
+ * @param {*} code
  */
 
-
-export const getDataTypeName = (code) => {
+export const getDataTypeName = code => {
   const dataType = window.njkData.dict.dataType || []
   const filterItem = dataType.filter(d => +d.key === +code)[0] || {}
   return filterItem.value
 }
 
-
 export const codeInProduct = (code, isCommon) => {
-  const {userProductFunctionCode = [], projectFunctionCode = []} = window.frameInfo || {}
+  const { userProductFunctionCode = [], projectFunctionCode = [] } =
+    window.frameInfo || {}
   const functionCodes = isCommon ? userProductFunctionCode : projectFunctionCode
 
   return functionCodes.indexOf(code) > -1
@@ -183,24 +207,24 @@ export const codeInProduct = (code, isCommon) => {
 //*------------------------------ 组件类 (返回组件) ------------------------------*//
 /**
  * @description 异步加载组件
- * @param {*} getComponent 
+ * @param {*} getComponent
  */
 export function asyncComponent(getComponent) {
   return class AsyncComponent extends Component {
     static Component = null
-    state = {Component: AsyncComponent.Component}
+    state = { Component: AsyncComponent.Component }
 
     componentWillMount() {
       if (!this.state.Component) {
         getComponent().then(Component => {
           AsyncComponent.Component = Component
-          this.setState({Component})
+          this.setState({ Component })
         })
       }
     }
 
     render() {
-      const {Component} = this.state
+      const { Component } = this.state
       if (Component) {
         return <Component {...this.props} />
       }
@@ -211,12 +235,16 @@ export function asyncComponent(getComponent) {
 
 /**
  * @description 时间格式化
- * @param {*} timestamp 时间 
+ * @param {*} timestamp 时间
  */
-export function Time({timestamp, placeholder}) {
+export function Time({ timestamp, placeholder }) {
   return (
     <span>
-      {timestamp ? (moment(+timestamp).format('YYYY-MM-DD HH:mm:ss')) : (placeholder ? '--' : '')}
+      {timestamp
+        ? moment(+timestamp).format('YYYY-MM-DD HH:mm:ss')
+        : placeholder
+        ? '--'
+        : ''}
     </span>
   )
 }
@@ -229,29 +257,51 @@ export function Time({timestamp, placeholder}) {
  */
 
 export function getNamePattern(max = 32) {
-  return [{
-    transform: value => value && value.trim(),
-  }, {
-    max, 
-    message: `不能超过${max}个字符`,
-  }, {
-    pattern: /^[a-zA-Z0-9_()（）\u4e00-\u9fa5]+$/, message: '格式不正确，允许输入中文/英文/数字/下划线/()',
-  }, {
-    pattern: /^(?!_)/, message: '不允许下划线开头',
-  }, {
-    pattern: /^(?!数栖)/, message: '不允许数栖开头',
-  }];
+  return [
+    {
+      transform: value => value && value.trim(),
+    },
+    {
+      max,
+      message: intl
+        .get('ide.src.common.util.mpt4ptuae2s', { max: max })
+        .d('不能超过{max}个字符'),
+    },
+    {
+      pattern: /^[a-zA-Z0-9_()（）\u4e00-\u9fa5-]+$/,
+      message: intl
+        .get('ide.src.common.util.d4u4r0px524')
+        .d('格式不正确，允许输入中文/英文/数字/下划线/()'),
+    },
+    {
+      pattern: /^(?!_)/,
+      message: intl.get('ide.src.common.util.j8lka5wk2d').d('不允许下划线开头'),
+    },
+    {
+      pattern: /^(?!数栖)/,
+      message: intl.get('ide.src.common.util.bkf8048nej').d('不允许数栖开头'),
+    },
+  ]
 }
 
 export function getEnNamePattern(max = 32) {
-  return [{
-    transform: value => value && value.trim(),
-  }, {
-    max, 
-    message: `不能超过${max}个字符`,
-  }, {
-    pattern: /^[a-zA-Z][a-zA-Z0-9_]{0,}$/, message: '格式不正确，允许输入英文/数字/下划线，必须以英文开头',
-  }];
+  return [
+    {
+      transform: value => value && value.trim(),
+    },
+    {
+      max,
+      message: intl
+        .get('ide.src.common.util.mpt4ptuae2s', { max: max })
+        .d('不能超过{max}个字符'),
+    },
+    {
+      pattern: /^[a-zA-Z][a-zA-Z0-9_]{0,}$/,
+      message: intl
+        .get('ide.src.common.util.vbn5a21vyy')
+        .d('格式不正确，允许输入英文/数字/下划线，必须以英文开头'),
+    },
+  ]
 }
 
 export function calcSize(size, defaultUnit = 'B', isToFixed = true) {
@@ -260,17 +310,15 @@ export function calcSize(size, defaultUnit = 'B', isToFixed = true) {
     kb: 2 ** 10,
     mb: 2 ** 20,
     gb: 2 ** 30,
-    tb: 
-    2 ** 40,
+    tb: 2 ** 40,
   }
 }
 
-
-let timer = null 
+let timer = null
 /**
  * @description 重命名校验防抖
  * @author 凡书
- * @param fn 重命名校验函数 
+ * @param fn 重命名校验函数
  * @param delay 间隔时间
  */
 export function debounce(fn, delay = 200) {
@@ -281,17 +329,30 @@ export function debounce(fn, delay = 200) {
 /**
  * @description 字段类型对应标签类型
  * @author 凡书
- * @param obj 字段对象 
+ * @param obj 字段对象
  * @param fieldType 字段类型
  * @param valueType 标签类型
  */
-export function selectFieldType (obj) {
-  const {fieldType} = obj
-  if (fieldType === 'tinyint' || fieldType === 'int' || fieldType === 'smallint' || fieldType === 'bigint') {
+export function selectFieldType(obj) {
+  const { fieldType } = obj
+  if (
+    fieldType === 'tinyint' ||
+    fieldType === 'int' ||
+    fieldType === 'smallint' ||
+    fieldType === 'bigint'
+  ) {
     obj.valueType = 2
-  } else if (fieldType === 'float' || fieldType === 'double' || fieldType === 'decimal(10,2)') {
+  } else if (
+    fieldType === 'float' ||
+    fieldType === 'double' ||
+    fieldType === 'decimal(10,2)'
+  ) {
     obj.valueType = 3
-  } else if (fieldType === 'string' || fieldType === 'varchar' || fieldType === 'char') {
+  } else if (
+    fieldType === 'string' ||
+    fieldType === 'varchar' ||
+    fieldType === 'char'
+  ) {
     obj.valueType = 4
   } else if (fieldType === 'timestamp' || fieldType === 'date') {
     obj.valueType = 5

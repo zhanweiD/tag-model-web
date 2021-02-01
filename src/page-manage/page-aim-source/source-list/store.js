@@ -1,6 +1,5 @@
-import {
-  action, runInAction, observable,
-} from 'mobx'
+import intl from 'react-intl-universal'
+import {action, runInAction, observable} from 'mobx'
 import {successTip, errorTip, changeToOptions} from '../../../common/util'
 import {ListContentStore} from '../../../component/list-content'
 import io from './io'
@@ -34,7 +33,6 @@ class Store extends ListContentStore(io.getList) {
     this.getList()
   }
 
-
   @observable objList = [] // 下拉对象数据
 
   // 下拉对象列表
@@ -43,8 +41,27 @@ class Store extends ListContentStore(io.getList) {
       const res = await io.getObjList({
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.objList = changeToOptions(res)('name', 'objId')
+      })
+    } catch (e) {
+      errorTip(e.message)
+    }
+  }
+
+  @observable underObjList = [] // 新建对象下拉
+  @observable storageId = null // 新建对象下拉
+  // 下拉对象列表
+  @action async getUnderObjList() {
+    try {
+      const res = await io.getUnderObjList({
+        projectId: this.projectId,
+        storageId: this.storageId,
+      })
+
+      runInAction(() => {
+        this.underObjList = res || []
       })
     } catch (e) {
       errorTip(e.message)
@@ -60,11 +77,39 @@ class Store extends ListContentStore(io.getList) {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
         this.objRelList = res
       })
     } catch (e) {
       errorTip(e.message)
+    }
+  }
+
+  @observable defaultStorage = {}
+  @observable getDefaultLogin = true
+  @observable oneForm = {}
+  @observable selecStorageType
+  // 判断是否单一数据源
+  @action async getDefaultStorage() {
+    this.getDefaultLogin = true
+    try {
+      const res = await io.getDefaultStorage({
+        projectId: this.projectId,
+      })
+
+      runInAction(() => {
+        this.defaultStorage = res || {}
+        this.storageId = this.defaultStorage.storageId
+        if (this.defaultStorage.storageType) {
+          this.oneForm.setFieldsValue({dataStorageType: res.storageType})
+          this.selecStorageType(res.storageType)
+        }
+      })
+    } catch (e) {
+      errorTip(e.message)
+    } finally {
+      this.getDefaultLogin = false
     }
   }
 
@@ -75,24 +120,28 @@ class Store extends ListContentStore(io.getList) {
       const res = await io.getStorageType({
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.storageTypeList = changeToOptions(res)('name', 'type')
       })
     } catch (e) {
-      errorTip(e.message)       
+      errorTip(e.message)
     }
   }
 
   @observable storageList = []
   // 数据源列表
-  @action async getStorageList(params) {
+  @action async getStorageList(params, cb) {
     try {
       const res = await io.getStorageList({
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
         this.storageList = res
+        // const defaultId = res[0] ? res[0].dataStorageId : undefined
+        if (cb) cb(this.defaultStorage.storageId)
       })
     } catch (e) {
       errorTip(e.message)
@@ -107,6 +156,7 @@ class Store extends ListContentStore(io.getList) {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
         this.storageTable = res
       })
@@ -123,6 +173,7 @@ class Store extends ListContentStore(io.getList) {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
         this.fieldList = res
       })
@@ -145,6 +196,7 @@ class Store extends ListContentStore(io.getList) {
         ...params,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.storageDetail = res
       })
@@ -164,9 +216,18 @@ class Store extends ListContentStore(io.getList) {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
-        successTip('新建成功')
-        if (cb) { cb() }
+        successTip(
+          intl
+            .get(
+              'ide.src.page-manage.page-aim-source.source-list.store.gzikr4o96re'
+            )
+            .d('新建成功')
+        )
+        if (cb) {
+          cb()
+        }
         this.getList({currentPage: 1})
       })
     } catch (e) {
@@ -178,15 +239,21 @@ class Store extends ListContentStore(io.getList) {
     }
   }
 
-
   @action async delList(id) {
     try {
       await io.delList({
         id,
         projectId: this.projectId,
       })
+
       runInAction(() => {
-        successTip('删除成功')
+        successTip(
+          intl
+            .get(
+              'ide.src.page-manage.page-aim-source.source-list.store.hz4myn73qbp'
+            )
+            .d('删除成功')
+        )
         this.getList({currentPage: 1})
       })
     } catch (e) {
@@ -200,8 +267,15 @@ class Store extends ListContentStore(io.getList) {
         projectId: this.projectId,
         ...params,
       })
+
       if (res.isExit) {
-        cb('名称已存在')
+        cb(
+          intl
+            .get(
+              'ide.src.page-manage.page-aim-source.source-list.store.o07pkyecrw'
+            )
+            .d('名称已存在')
+        )
       } else {
         cb()
       }

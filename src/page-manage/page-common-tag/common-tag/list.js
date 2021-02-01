@@ -1,14 +1,13 @@
+import intl from 'react-intl-universal'
 /**
  * @description 公共标签（标签集市）
  */
 import {Component, Fragment} from 'react'
 import {observer} from 'mobx-react'
-import {action} from 'mobx'
+import {action, toJS} from 'mobx'
 import {Button} from 'antd'
 import {Link} from 'react-router-dom'
-import {
-  ListContent, Tag, Authority, OmitTooltip,
-} from '../../../component'
+import {ListContent, Tag, Authority, OmitTooltip} from '../../../component'
 import {getDataTypeName} from '../../../common/util'
 import Search from './search'
 import Modal from './modal'
@@ -16,7 +15,7 @@ import Modal from './modal'
 import store from './store'
 
 @observer
-export default class Market extends Component {
+class Market extends Component {
   constructor(props) {
     super(props)
     store.useProjectId = props.projectId
@@ -31,11 +30,11 @@ export default class Market extends Component {
         useProjectId: store.useProjectId,
         type: 2,
       })
-  
+
       store.initParams = {
         useProjectId: store.useProjectId,
         type: 2,
-      } 
+      }
     } else {
       store.getList()
     }
@@ -46,11 +45,11 @@ export default class Market extends Component {
     store.selectedRows.clear()
     store.rowKeys.clear()
     store.selectItem = {}
-    
+
     store.objectId = ''
     store.ownProjectId = ''
     store.projectPermission = 2
-   
+
     store.searchParams = {}
     store.pagination = {
       pageSize: 10,
@@ -61,73 +60,142 @@ export default class Market extends Component {
   columns = [
     {
       key: 'name',
-      title: '标签名称',
+      title: intl
+        .get(
+          'ide.src.page-manage.page-aim-source.source-detail.main.63kvhqd3cw8'
+        )
+        .d('标签名称'),
       dataIndex: 'name',
+      fixed: 'left',
       render: (text, record) => (
         <div className="FBH">
-          {/* <OmitTooltip maxWidth={120} text={text} /> */}
-          <Link target="_blank" to={`/manage/common-tag/${record.id}/${store.useProjectId}`}>{text}</Link>
+          <Link
+            target="_blank"
+            to={`/manage/common-tag/${record.id}/${store.useProjectId}`}
+          >
+            {text}
+          </Link>
           {(() => {
             if (record.status === 1) {
-              return <Tag status="process" className="ml8" text="审批中" />
+              return (
+                <Tag
+                  status="process"
+                  className="ml8"
+                  text={intl
+                    .get(
+                      'ide.src.page-common.approval.common.comp-approval-modal.nb8qntq7vug'
+                    )
+                    .d('审批中')}
+                />
+              )
             }
-            //    "status":0, //状态 0：可以申请 1 审批中 2 不可以申请
-            if (record.status === 2) {
-              return <Tag status="success" className="ml8" text="有权限" />
-            } 
+            //    "status":0, //状态 0：可以申请 1 审批中 2 不可以申请 3 可以申请当前有权限
+            if (record.status === 2 || record.status === 3) {
+              return (
+                <Tag
+                  status="success"
+                  className="ml8"
+                  text={intl
+                    .get(
+                      'ide.src.page-manage.page-common-tag.common-tag.list.imf5yhtwj8c'
+                    )
+                    .d('有权限')}
+                />
+              )
+            }
             return null
           })()}
         </div>
       ),
-    }, {
+    },
+
+    {
       key: 'enName',
-      title: '标签标识',
+      title: intl
+        .get('ide.src.business-component.tag-relate.dag-box.xs30zaqk60p')
+        .d('标签标识'),
       dataIndex: 'enName',
       render: text => <OmitTooltip maxWidth={200} text={text} />,
-    }, {
+    },
+    {
       key: 'objName',
-      title: '对象',
+      title: intl
+        .get(
+          'ide.src.page-manage.page-aim-source.source-detail.modal.hdb36gt6rzf'
+        )
+        .d('对象'),
       dataIndex: 'objName',
       render: text => <OmitTooltip maxWidth={200} text={text} />,
-    }, {
+    },
+    {
       key: 'valueType',
-      title: '数据类型',
+      title: intl
+        .get('ide.src.business-component.tag-relate.dag-box.zfaw0a4v7jh')
+        .d('数据类型'),
       dataIndex: 'valueType',
       render: text => getDataTypeName(text),
-    }, {
+    },
+    {
       key: 'projectName',
-      title: '所属项目', 
+      title: intl
+        .get('ide.src.component.comp.search.h5l3m6s8dn7')
+        .d('所属项目'),
       dataIndex: 'projectName',
-      render: text => <OmitTooltip maxWidth={200} text={text} />,
-    }, {
+      render: (text, record) => (
+        <span>
+          {record.projectName
+            ? record.projectName
+            : intl
+              .get(
+                'ide.src.page-manage.page-common-tag.common-tag.list.bty454nguz'
+              )
+              .d('租户')}
+        </span>
+      ),
+    },
+    {
       key: 'action',
-      title: '操作',
+      title: intl
+        .get('ide.src.page-common.approval.approved.main.1tcpwa6mu1')
+        .d('操作'),
       width: 150,
+      fixed: 'right',
       render: (text, record) => (
         <div className="FBH FBAC">
-          {/* eslint-disable-next-line no-underscore-dangle */}
-          {/* <a href={`${window.__keeper.pathHrefPrefix}/tag-model/${record.id}`}>查看详情</a>  */}
-          {/* <Authority authCode="tag_model:public_tag_detail[r]">
-            <Link target="_blank" to={`/manage/common-tag/${record.id}/${store.useProjectId}`}>标签详情</Link>
-          </Authority> */}
-          <Authority authCode="tag_model:apply_tag[c]">  
+          <Authority authCode="tag_model:apply_tag[c]">
             {(() => {
               if (store.useProjectId) {
-                if (record.status) { // 状态 0：可以申请 1 审批中 2 不可以申请
-                  return (                 
+                if (
+                  (record.status === 1 || record.status === 2)
+                  && !record.endTime
+                ) {
+                  // 状态 0：可以申请 1 审批中 2 不可以申请 3 可以申请当前有权限
+                  return (
                     <Fragment>
                       {/* <span className="table-action-line" />  */}
-                      <span className="disabled">申请</span>
-                    </Fragment>                
+                      <span className="disabled">
+                        {intl
+                          .get(
+                            'ide.src.page-manage.page-common-tag.common-tag.list.0ho0lb3mlo86'
+                          )
+                          .d('申请')}
+                      </span>
+                    </Fragment>
                   )
-                } 
+                }
                 return (
                   <Fragment>
                     {/* <span className="table-action-line" />  */}
-                    <a href onClick={() => this.openModal(record, 'one')}>申请</a>
+                    <a href onClick={() => this.openModal(record, 'one')}>
+                      {intl
+                        .get(
+                          'ide.src.page-manage.page-common-tag.common-tag.list.0ho0lb3mlo86'
+                        )
+                        .d('申请')}
+                    </a>
                   </Fragment>
                 )
-              } 
+              }
               return null
             })()}
           </Authority>
@@ -139,51 +207,95 @@ export default class Market extends Component {
   columnsP = [
     {
       key: 'name',
-      title: '标签名称',
+      title: intl
+        .get(
+          'ide.src.page-manage.page-aim-source.source-detail.main.63kvhqd3cw8'
+        )
+        .d('标签名称'),
       dataIndex: 'name',
       render: (text, record) => (
         <div className="FBH">
           {/* <OmitTooltip maxWidth={120} text={text} /> */}
-          <Link target="_blank" to={`/manage/common-tag/${record.id}/${store.useProjectId}`}>{text}</Link>
+          <Link
+            target="_blank"
+            to={`/manage/common-tag/${record.id}/${store.useProjectId}`}
+          >
+            {text}
+          </Link>
           {(() => {
             if (record.status === 1) {
-              return <Tag status="process" className="ml8" text="审批中" />
+              return (
+                <Tag
+                  status="process"
+                  className="ml8"
+                  text={intl
+                    .get(
+                      'ide.src.page-common.approval.common.comp-approval-modal.nb8qntq7vug'
+                    )
+                    .d('审批中')}
+                />
+              )
             }
-            //    "status":0, //状态 0：可以申请 1 审批中 2 不可以申请
-            if (record.status === 2) {
-              return <Tag status="success" className="ml8" text="有权限" />
-            } 
+            //    "status":0, //状态 0：可以申请 1 审批中 2 不可以申请 3 可以申请当前有权限
+            if (record.status === 2 || record.status === 3) {
+              return (
+                <Tag
+                  status="success"
+                  className="ml8"
+                  text={intl
+                    .get(
+                      'ide.src.page-manage.page-common-tag.common-tag.list.imf5yhtwj8c'
+                    )
+                    .d('有权限')}
+                />
+              )
+            }
             return null
           })()}
         </div>
       ),
-    }, {
+    },
+
+    {
       key: 'enName',
-      title: '标签标识',
+      title: intl
+        .get('ide.src.business-component.tag-relate.dag-box.xs30zaqk60p')
+        .d('标签标识'),
       dataIndex: 'enName',
       render: text => <OmitTooltip maxWidth={200} text={text} />,
-    }, {
+    },
+    {
       key: 'objName',
-      title: '对象',
+      title: intl
+        .get(
+          'ide.src.page-manage.page-aim-source.source-detail.modal.hdb36gt6rzf'
+        )
+        .d('对象'),
       dataIndex: 'objName',
       render: text => <OmitTooltip maxWidth={200} text={text} />,
-    }, {
+    },
+    {
       key: 'valueType',
-      title: '数据类型',
+      title: intl
+        .get('ide.src.business-component.tag-relate.dag-box.zfaw0a4v7jh')
+        .d('数据类型'),
       dataIndex: 'valueType',
       render: text => getDataTypeName(text),
-    }, {
+    },
+    {
       key: 'projectName',
-      title: '所属项目', 
+      title: intl
+        .get('ide.src.component.comp.search.h5l3m6s8dn7')
+        .d('所属项目'),
       dataIndex: 'projectName',
       render: text => <OmitTooltip maxWidth={200} text={text} />,
     },
   ]
 
   @action.bound openModal(data, type) {
-    store.modalType = type   
+    store.modalType = type
     store.selectItem = data
-    store.tagIds.replace([data.id]) 
+    store.tagIds.replace([data.id])
     store.modalVisible = true
   }
 
@@ -195,12 +307,12 @@ export default class Market extends Component {
     store.rowKeys = selectedRowKeys
   }
 
-  /**
+  /*
    * @description 批量申请
    */
   @action.bound batchApply() {
-    store.modalType = 'batch' 
-    store.tagIds.replace(store.rowKeys) 
+    store.modalType = 'batch'
+    store.tagIds.replace(store.rowKeys)
     store.modalVisible = true
   }
 
@@ -210,10 +322,7 @@ export default class Market extends Component {
   // }
 
   render() {
-    const {
-      useProjectId, 
-      isProject,
-    } = store
+    const {useProjectId, isProject} = store
 
     const rowSelection = {
       selectedRowKeys: store.rowKeys.slice(),
@@ -222,25 +331,34 @@ export default class Market extends Component {
         disabled: record.status, // 权限审批中的，不可进行申请、批量申请，且显示审批中
       }),
     }
-  
+
+    const rowKeysLength = store.rowKeys.length
     const listConfig = {
       columns: isProject ? this.columns : this.columnsP,
-      buttons: useProjectId ? [
-        <Authority authCode="tag_model:apply_tag[c]">
-          <Button type="primary" disabled={!store.rowKeys.length} onClick={this.batchApply}>
-            {
-              `批量申请(${store.rowKeys.length})`
-            }
-
-          </Button>
-        </Authority>,     
-      // ,
-        // <span className="ml8">
-        //   已选择 
-        //   <span style={{color: '#0078FF'}} className="mr4 ml4">{store.rowKeys.length}</span>
-        //   项
-        // </span>,
-      ] : null,
+      buttons: useProjectId
+        ? [
+          <Authority authCode="tag_model:apply_tag[c]">
+            <Button
+              type="primary"
+              disabled={!rowKeysLength}
+              onClick={this.batchApply}
+            >
+              {intl
+                .get(
+                  'ide.src.page-manage.page-common-tag.common-tag.list.hkbkoz3q5y',
+                  {rowKeysLength}
+                )
+                .d('批量申请({rowKeysLength})')}
+            </Button>
+          </Authority>,
+          // ,
+          // <span className="ml8">
+          //   已选择
+          //   <span style={{color: '#0078FF'}} className="mr4 ml4">{store.rowKeys.length}</span>
+          //   项
+          // </span>,
+        ]
+        : null,
       rowSelection: useProjectId ? rowSelection : null,
       rowKey: 'id',
       initGetDataByParent: true, // 初始请求 在父层组件处理。列表组件componentWillMount内不再进行请求
@@ -250,24 +368,24 @@ export default class Market extends Component {
     return (
       <div>
         <Search store={store} />
-        {
-          isProject ? (
-            <div className="search-list box-border">
-              <ListContent {...listConfig} />
-              <Modal store={store} />
-            </div>
-          ) : (
-            <div className="search-list-p box-border">
-              <ListContent {...listConfig} />
-              <Modal store={store} />
-            </div>
-          )
-        }
+        {isProject ? (
+          <div className="search-list box-border">
+            <ListContent {...listConfig} />
+            <Modal store={store} />
+          </div>
+        ) : (
+          <div className="search-list-p box-border">
+            <ListContent {...listConfig} />
+            <Modal store={store} />
+          </div>
+        )}
+
         {/* <div className="search-list box-border">
-          <ListContent {...listConfig} />
-          <Modal store={store} />
-        </div> */}
+           <ListContent {...listConfig} />
+           <Modal store={store} />
+          </div> */}
       </div>
     )
   }
 }
+export default Market

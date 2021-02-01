@@ -1,3 +1,4 @@
+import intl from 'react-intl-universal'
 import {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
@@ -36,33 +37,31 @@ export default class Card extends Component {
   getInfoDom() {
     const {preCls, labelList, infoLineCount} = this.props
 
-    if (!labelList || !Array.isArray(labelList) || !labelList.length) return null
+    if (!labelList || !Array.isArray(labelList) || !labelList.length) { return null }
 
     const arr = []
-    const len = labelList.length 
+    const len = labelList.length
 
     const domItem = list => (
       <div className={`${preCls}-info`}>
-        {
-          list.map(({label = '', value = ''}) => (
-            <span className={`${preCls}-info-item card-omit`} title={`${label}${label ? '：' : null}${value}`}>
-              {
-                label 
-                  ? `${label}：`
-                  : null
-              }
-              {value}
-            </span>
-          ))
-        }
+        {list.map(({label = '', value = ''}) => (
+          <span
+            className={`${preCls}-info-item card-omit`}
+            title={`${label}${label ? '：' : null}${value}`}
+          >
+            {label ? `${label}：` : null}
+
+            {value}
+          </span>
+        ))}
       </div>
     )
-    
+
     // 卡片基本信息项 少于或等于2项; 减少不必要的循环遍历
     if (len <= 2) {
       return domItem(labelList)
-    } 
-    
+    }
+
     // 卡片基本信息项 大于2项
     for (let i = 0; i < len; i += 1) {
       const int = parseInt(i / infoLineCount, 10) // 取整
@@ -70,7 +69,7 @@ export default class Card extends Component {
 
       if (remain === 0) {
         arr[int] = [labelList[i]]
-        
+
         // 尾项容错
         if (labelList[i + 1]) arr[int].push(labelList[i + 1])
       }
@@ -87,31 +86,28 @@ export default class Card extends Component {
 
     const actionList = actions && Array.isArray(actions) && actions.length ? (
       <ul className={`${preCls}-actions`}>
-        {
-          actions.reverse().map((action, index) => (
-            <Fragment>
-              {/* eslint-disable-next-line react/no-array-index-key */}
-              <li key={`action-${index}`}>
-                {action}
-                {
-                  index ? <span className={`${preCls}-actions-line`} /> : null
-                } 
-              </li>
-            </Fragment>
-          ))}
+        {actions.reverse().map((action, index) => (
+          <Fragment>
+            {/* eslint-disable-next-line react/no-array-index-key */}
+            <li key={`action-${index}`}>
+              {action}
+              {index ? <span className={`${preCls}-actions-line`} /> : null}
+            </li>
+          </Fragment>
+        ))}
       </ul>
     ) : null
 
     return actionList
   }
- 
+
   render() {
     const {
-      title = '', 
-      link = '', 
-      tag = [], 
-      descr = '', 
-      countList = [], 
+      title = '',
+      link = '',
+      tag = [],
+      descr = '',
+      countList = [],
       actions,
       className,
       preCls,
@@ -125,21 +121,28 @@ export default class Card extends Component {
     const headDom = (
       <div className={`${preCls}-head`}>
         {/* Title */}
-        {
-          link 
-            ? <a title={title} className={`${preCls}-head-title card-omit hover-style `} href={link}>{title}</a>
-            : <span title={title} className={`${preCls}-head-title card-omit hover-style `}>{title}</span>
-        }
+        {link ? (
+          <a
+            title={title}
+            className={`${preCls}-head-title card-omit hover-style `}
+            href={link}
+          >
+            {title}
+          </a>
+        ) : (
+          <span
+            title={title}
+            className={`${preCls}-head-title card-omit hover-style `}
+          >
+            {title}
+          </span>
+        )}
 
         {/* Tag */}
-        {
-          tag && tag.length ? tag.map(item => item) : null
-        }
+        {tag && tag.length ? tag.map(item => item) : null}
 
         {/* rightArrow */}
-        {
-          link ? <RightOutlined className="hover-style" /> : null
-        }    
+        {link ? <RightOutlined className="hover-style" /> : null}
       </div>
     )
 
@@ -149,7 +152,11 @@ export default class Card extends Component {
     // 渲染卡片描述信息
     const DescrDom = hasDescr ? (
       <div className={`${preCls}-descr card-omit`}>
-        <span>描述：</span>
+        <span>
+          {intl
+            .get('ide.src.component.detail-header.detail-header.u39g9giydpt')
+            .d('描述：')}
+        </span>
         <span title={descr}>{descr || '--'}</span>
       </div>
     ) : null
@@ -157,19 +164,17 @@ export default class Card extends Component {
     // 渲染卡片指标信息
     const CountDom = countList && Array.isArray(countList) && countList.length ? (
       <div className={`${preCls}-topic`}>
-        {
-          countList.map(({label = '', value = ''}, index) => (
-            <Fragment>
-              <div>
-                <span className="card-omit">{label}</span>
-                <div className={`${preCls}-topic-count`}>{value}</div>
-              </div>
-              {
-                index !== (countList.length - 1) ? <div className={`${preCls}-topic-line`} /> : null
-              }
-            </Fragment>            
-          ))
-        }
+        {countList.map(({label = '', value = ''}, index) => (
+          <Fragment>
+            <div>
+              <span className="card-omit">{label}</span>
+              <div className={`${preCls}-topic-count`}>{value}</div>
+            </div>
+            {index !== countList.length - 1 ? (
+              <div className={`${preCls}-topic-line`} />
+            ) : null}
+          </Fragment>
+        ))}
       </div>
     ) : null
 

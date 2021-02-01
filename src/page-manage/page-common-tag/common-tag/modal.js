@@ -1,62 +1,64 @@
+import intl from 'react-intl-universal'
 /**
  * @description 标签申请
  */
-import {Component} from 'react'
-import {observer} from 'mobx-react'
-import {action, toJS} from 'mobx'
-import {Form} from '@ant-design/compatible'
+import { Component } from 'react'
+import { observer } from 'mobx-react'
+import { action, toJS } from 'mobx'
+import { Form } from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
-import {Modal, Input, DatePicker, Select, Radio} from 'antd'
+import { Modal, Input, DatePicker, Select, Radio, Space } from 'antd'
 
 const FormItem = Form.Item
-const {TextArea} = Input
-const {Option} = Select
-const {RangePicker} = DatePicker
+const { TextArea } = Input
+const { Option } = Select
+const { RangePicker } = DatePicker
 
 const formItemLayout = {
-  labelCol: {span: 4},
-  wrapperCol: {span: 19},
+  labelCol: { span: 4 },
+  wrapperCol: { span: 19 },
   colon: false,
 }
 
 @Form.create()
 @observer
-export default class TagApply extends Component {
+class TagApply extends Component {
   constructor(props) {
-    super(props) 
+    super(props)
     this.store = props.store
   }
 
   // 表单提交
   @action handleOk() {
     const {
-      form: {
-        validateFieldsAndScroll,
-      }, 
+      form: { validateFieldsAndScroll },
     } = this.props
-    
+
     validateFieldsAndScroll((err, values) => {
       if (err) {
         return
       }
+
       const params = {
         useProjectId: values.useProjectId || this.store.useProjectId,
         applyDescr: values.applyDescr,
       }
+
       // 申请时长为永远
       if (values.forever) {
         params.startTime = moment().format('YYYY-MM-DD')
         params.endTime = null
       } else {
-        params.startTime = values.timeRange[0].format('YYYY-MM-DD')
+        params.startTime = moment().format('YYYY-MM-DD')
         params.endTime = values.timeRange[1].format('YYYY-MM-DD')
       }
 
       params.tagIds = toJS(this.store.tagIds)
-      
+
       this.store.applyTag(params, () => {
         this.handleCancel()
       })
+      this.store.modalVisible = false
     })
   }
 
@@ -70,115 +72,238 @@ export default class TagApply extends Component {
 
   // 表单重置
   @action handleReset() {
-    const {form: {resetFields}} = this.props
+    const {
+      form: { resetFields },
+    } = this.props
     this.store.tagIds.clear()
     resetFields()
   }
 
   render() {
-    const {form: {getFieldDecorator}} = this.props
     const {
-      confirmLoading, 
-      modalVisible, 
-      useProjectList, 
-      useProjectId, 
-      // useProjectName, 
+      form: { getFieldDecorator, getFieldValue },
+    } = this.props
+    const {
+      confirmLoading,
+      modalVisible,
+      useProjectList,
+      useProjectId,
+      // useProjectName,
       // modalType,
-      // selectItem,
+      selectedRows,
+      selectItem,
+      tagIds,
     } = this.store
+    // const defaultSelectDate = {
+    //   startDate: toJS(selectItem.endTime) ? moment(moment(toJS(selectItem.endTime)).format()) : moment(),
+    //   // endDate: moment(),
+    // }
+
+    const disabledDate = current => {
+      return current && current < moment().endOf('day')
+    }
+
+    const selectName = selectItem && selectItem.name
 
     const modalConfig = {
       width: 525,
       maskClosable: false,
       destroyOnClose: true,
-      title: '标签申请',
+      title: intl
+        .get('ide.src.page-manage.page-common-tag.common-tag.modal.cgf5yip49xe')
+        .d('标签申请'),
       confirmLoading,
       visible: modalVisible,
       onOk: e => this.handleOk(e),
       onCancel: () => this.handleCancel(),
     }
 
-    const {useProjectName} = useProjectList.filter(d => d.useProjectId === useProjectId)[0] || {}
+    const { useProjectName } =
+      useProjectList.filter(d => d.useProjectId === useProjectId)[0] || {}
     return (
-      <Modal
-        {...modalConfig}
-      >
+      <Modal {...modalConfig}>
         <Form className="FBV">
-          {/* {
-            useProjectId !== '' ? (
-              <FormItem {...formItemLayout} label="使用项目">
-                {useProjectName}
-              </FormItem>
-            ) : (
-              <FormItem {...formItemLayout} label="使用项目">
-                {
-                  getFieldDecorator('useProjectId', {
-                    rules: [
-                      {required: true, message: '请选择使用项目'},
-                    ],
-                
-                  })(<Select placeholder="请选择使用项目">
-                    {
-                      canUseProject.map(({useProjectId: id, useProjectName: name}) => (
-                        <Option 
-                          key={id} 
-                          value={id}
-                        >
-                          {name}
-                        </Option>
-                      ))
-                    }
-                     </Select>)
-                }
-              </FormItem>
-            )
-          } */}
-          <FormItem {...formItemLayout} label="使用项目">
+          {this.store.modalType === 'one' ? (
+            <FormItem
+              {...formItemLayout}
+              label={intl
+                .get(
+                  'ide.src.page-manage.page-common-tag.common-tag.modal.1ryjx988194'
+                )
+                .d('选择的标签')}
+            >
+              <span className="fs12">{selectName}</span>
+            </FormItem>
+          ) : (
+            <FormItem
+              {...formItemLayout}
+              label={intl
+                .get(
+                  'ide.src.page-manage.page-common-tag.common-tag.modal.1ryjx988194'
+                )
+                .d('选择的标签')}
+            >
+              {getFieldDecorator('dataStorageId', {
+                initialValue: tagIds,
+              })(
+                <Select mode="multiple" disabled size="small">
+                  {selectedRows.map(item => (
+                    <Option key={item.id} value={item.id}>
+                      {item.name}
+                    </Option>
+                  ))}
+                </Select>
+              )}
+            </FormItem>
+          )}
+
+          <FormItem
+            {...formItemLayout}
+            label={intl
+              .get(
+                'ide.src.page-manage.page-common-tag.common-tag.modal.0snlii7b6ll'
+              )
+              .d('使用项目')}
+          >
             <span className="fs12">{useProjectName}</span>
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label="申请时长"
+            label={intl
+              .get(
+                'ide.src.page-common.approval.common.comp-approval-modal.4nobznc4k2w'
+              )
+              .d('申请时长')}
           >
             {getFieldDecorator('forever', {
               rules: [
-                {required: true, message: '请选择申请时长'},
+                {
+                  required: true,
+                  message: intl
+                    .get(
+                      'ide.src.page-manage.page-common-tag.common-tag.modal.g9fsitnnhb'
+                    )
+                    .d('请选择申请时长'),
+                },
               ],
+
               initialValue: 1,
             })(
               <Radio.Group>
-                <Radio value={1}>永久</Radio>
-                {/* <Radio value={0}>自定义</Radio> */}
+                <Radio value={1}>
+                  {intl
+                    .get(
+                      'ide.src.page-common.approval.common.comp-approval-modal.5ltr1685i6c'
+                    )
+                    .d('永久')}
+                </Radio>
+                <Radio value={0}>
+                  {intl
+                    .get('ide.src.component.time-range.time-range.fun3s4qcz29')
+                    .d('自定义')}
+                </Radio>
               </Radio.Group>
             )}
           </FormItem>
-          {/* {!getFieldValue('forever') ? (
+          {!getFieldValue('forever') ? (
             <FormItem
               {...formItemLayout}
-              label="自定义时长"
+              label={intl
+                .get(
+                  'ide.src.page-manage.page-common-tag.common-tag.modal.2kpo3ify5lj'
+                )
+                .d('自定义时长')}
             >
               {getFieldDecorator('timeRange', {
+                // initialValue: [defaultSelectDate.startDate],
                 rules: [
-                  {type: 'array', required: true, message: '请选择自定义时长'},
+                  {
+                    required: true,
+                    message: intl
+                      .get(
+                        'ide.src.page-manage.page-common-tag.common-tag.modal.g9fsitnnhb'
+                      )
+                      .d('请选择申请时长'),
+                  },
+                  {
+                    type: 'array',
+                    required: true,
+                    message: intl
+                      .get(
+                        'ide.src.page-manage.page-common-tag.common-tag.modal.v8jpa624wk'
+                      )
+                      .d('请选择自定义时长'),
+                  },
+                  {
+                    // 自定义校验规则
+                    validator: (rule, value, callback) => {
+                      if (value.length === 2) {
+                        if (!value[0] || !value[1]) {
+                          callback(
+                            intl
+                              .get(
+                                'ide.src.page-manage.page-common-tag.common-tag.modal.533ni2z1rta'
+                              )
+                              .d('请选择申请时间')
+                          )
+                        } else {
+                          // callback不传参数表示校验通过
+                          callback()
+                        }
+                      } else {
+                        callback(
+                          intl
+                            .get(
+                              'ide.src.page-manage.page-common-tag.common-tag.modal.533ni2z1rta'
+                            )
+                            .d('请选择申请时间')
+                        )
+                      }
+                    },
+                  },
                 ],
               })(
-                <RangePicker />
+                <RangePicker
+                  disabled={[true, false]}
+                  disabledDate={disabledDate}
+                />
               )}
             </FormItem>
-          )
-            : null } */}
-         
+          ) : null}
+
           <FormItem
             {...formItemLayout}
-            label="申请理由"
+            label={intl
+              .get(
+                'ide.src.page-common.approval.common.comp-approval-modal.qskkf95ea1k'
+              )
+              .d('申请理由')}
           >
             {getFieldDecorator('applyDescr', {
               rules: [
-                {required: true, message: '请输入申请理由'},
-                {max: 128, message: '输入不能超过128个字符'},
+                {
+                  required: true,
+                  message: intl
+                    .get(
+                      'ide.src.page-manage.page-common-tag.common-tag.modal.6lbexqjjvlf'
+                    )
+                    .d('请输入申请理由'),
+                },
+                {
+                  max: 128,
+                  message: intl
+                    .get('ide.src.component.form-component.8ftxftczpk7')
+                    .d('输入不能超过128个字符'),
+                },
               ],
             })(
-              <TextArea placeholder="请输入申请理由" />
+              <TextArea
+                placeholder={intl
+                  .get(
+                    'ide.src.page-manage.page-common-tag.common-tag.modal.6lbexqjjvlf'
+                  )
+                  .d('请输入申请理由')}
+              />
             )}
           </FormItem>
         </Form>
@@ -186,3 +311,4 @@ export default class TagApply extends Component {
     )
   }
 }
+export default TagApply

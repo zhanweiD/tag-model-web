@@ -1,8 +1,7 @@
-import {
-  observable, action, runInAction,
-} from 'mobx'
-import {successTip, errorTip} from '../../../common/util'
-import {ListContentStore} from '../../../component/list-content'
+import intl from 'react-intl-universal'
+import { observable, action, runInAction } from 'mobx'
+import { successTip, errorTip } from '../../../common/util'
+import { ListContentStore } from '../../../component/list-content'
 import io from './io'
 
 class Store extends ListContentStore(io.getList) {
@@ -28,7 +27,6 @@ class Store extends ListContentStore(io.getList) {
 
   @observable selectedRows = []
   @observable rowKeys = []
-
 
   @action.bound initData() {
     this.projectPermission = 2
@@ -67,6 +65,7 @@ class Store extends ListContentStore(io.getList) {
     const params = {
       currentPage: 1,
     }
+
     this.getList(params)
   }
 
@@ -75,6 +74,7 @@ class Store extends ListContentStore(io.getList) {
       const res = await io.getUseProject({
         projectId: this.useProjectId,
       })
+
       runInAction(() => {
         this.useProjectList = res
       })
@@ -88,6 +88,7 @@ class Store extends ListContentStore(io.getList) {
       const res = await io.getOwnProject({
         projectId: this.useProjectId,
       })
+
       runInAction(() => {
         this.ownProjectList = res
       })
@@ -101,6 +102,7 @@ class Store extends ListContentStore(io.getList) {
       const res = await io.getObject({
         projectId: this.useProjectId,
       })
+
       runInAction(() => {
         this.objectList = res
       })
@@ -116,9 +118,16 @@ class Store extends ListContentStore(io.getList) {
         projectId: this.useProjectId,
         ...params,
       })
+
       runInAction(() => {
         if (res) {
-          successTip('操作成功')
+          successTip(
+            intl
+              .get(
+                'ide.src.page-common.approval.pending-approval.store.voydztk7y5m'
+              )
+              .d('操作成功')
+          )
           if (cb) cb()
           this.updateList()
           this.selectedRows.clear()

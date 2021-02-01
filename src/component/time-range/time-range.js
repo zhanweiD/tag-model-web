@@ -1,3 +1,4 @@
+import intl from 'react-intl-universal'
 import {Component} from 'react'
 import PropTypes from 'prop-types'
 import {observable, action} from 'mobx'
@@ -10,10 +11,21 @@ const {Option} = Select
 @observer
 class TimeRange extends Component {
   @observable disabledDatePicker = true
-  @observable theDateRange = this.props.rangeMap[this.props.defaultRangeInx].value
-  @observable theDateRange2 = this.props.includeToday ? this.props.rangeMap[this.props.defaultRangeInx].value - 1 : this.props.rangeMap[this.props.defaultRangeInx].value
-  @observable gte = moment().subtract(this.theDateRange2, 'day').format(this.props.dataFormat)
-  @observable lte = this.props.includeToday ? moment().subtract(0, 'day').format(this.props.dataFormat) : moment().subtract(1, 'day').format(this.props.dataFormat)
+  @observable theDateRange = this.props.rangeMap[this.props.defaultRangeInx]
+    .value
+  @observable theDateRange2 = this.props.includeToday
+    ? this.props.rangeMap[this.props.defaultRangeInx].value - 1
+    : this.props.rangeMap[this.props.defaultRangeInx].value
+  @observable gte = moment()
+    .subtract(this.theDateRange2, 'day')
+    .format(this.props.dataFormat)
+  @observable lte = this.props.includeToday
+    ? moment()
+      .subtract(0, 'day')
+      .format(this.props.dataFormat)
+    : moment()
+      .subtract(1, 'day')
+      .format(this.props.dataFormat)
 
   render() {
     const {rangeMap, custom, dataFormat} = this.props
@@ -21,12 +33,30 @@ class TimeRange extends Component {
     const theDateLte = moment(this.lte, dataFormat)
     return (
       <div className="time-range">
-        <label className="pr8">时间设置</label>
-        <Select className="pr8" style={{width: 110}} defaultValue={this.theDateRange} onChange={v => this.changeTimeRange(v)}>
-          {
-            rangeMap.map(item => <Option key={item.value} value={item.value}>{item.label}</Option>)
-          }
-          {custom && <Option value="custom">自定义</Option>}
+        <label className="pr8">
+          {intl
+            .get('ide.src.component.time-range.time-range.kxs7lnsi5kt')
+            .d('时间设置')}
+        </label>
+        <Select
+          className="pr8"
+          style={{width: 110}}
+          defaultValue={this.theDateRange}
+          onChange={v => this.changeTimeRange(v)}
+        >
+          {rangeMap.map(item => (
+            <Option key={item.value} value={item.value}>
+              {item.label}
+            </Option>
+          ))}
+
+          {custom && (
+            <Option value="custom">
+              {intl
+                .get('ide.src.component.time-range.time-range.fun3s4qcz29')
+                .d('自定义')}
+            </Option>
+          )}
         </Select>
         <DatePicker
           className="mr8"
@@ -38,7 +68,8 @@ class TimeRange extends Component {
           disabled={this.disabledDatePicker}
           onChange={field => this.onDateChange('gte', field.format(dataFormat))}
         />
-        至
+        {intl.get('ide.src.component.time-range.time-range.wkegjabbd2').d('至')}
+
         <DatePicker
           className="ml8"
           style={{width: 115}}
@@ -55,7 +86,7 @@ class TimeRange extends Component {
 
   @action onDateChange(type, value) {
     if (type) {
-      type === 'gte' ? this.gte = value : this.lte = value
+      type === 'gte' ? (this.gte = value) : (this.lte = value)
       this.theDateRange = null
     }
 
@@ -64,13 +95,17 @@ class TimeRange extends Component {
       const diff = moment(this.lte).diff(moment(value), 'days')
 
       if (diff > 90) {
-        this.lte = moment(value).add(90, 'd').format('YYYY-MM-DD')
+        this.lte = moment(value)
+          .add(90, 'd')
+          .format('YYYY-MM-DD')
       }
     } else if (type === 'lte') {
       const diff = moment(value).diff(moment(this.gte), 'days')
 
       if (diff > 90) {
-        this.gte = moment(value).subtract(90, 'd').format('YYYY-MM-DD')
+        this.gte = moment(value)
+          .subtract(90, 'd')
+          .format('YYYY-MM-DD')
       }
     }
 
@@ -81,7 +116,10 @@ class TimeRange extends Component {
     if (!startValue || !endValue) {
       return false
     }
-    return startValue.valueOf() > endValue.valueOf() || startValue.isAfter(moment(Date.now()).add(0, 'days'))
+    return (
+      startValue.valueOf() > endValue.valueOf()
+      || startValue.isAfter(moment(Date.now()).add(0, 'days'))
+    )
   }
 
   @action disabledEndDate(endValue, startValue) {
@@ -89,7 +127,10 @@ class TimeRange extends Component {
       return false
     }
 
-    return endValue.valueOf() < startValue.valueOf() || endValue.isAfter(moment(Date.now()).add(0, 'days'))
+    return (
+      endValue.valueOf() < startValue.valueOf()
+      || endValue.isAfter(moment(Date.now()).add(0, 'days'))
+    )
   }
 
   @action changeTimeRange(number) {
@@ -100,11 +141,19 @@ class TimeRange extends Component {
 
       // 控件日期算今天
       if (this.props.includeToday) {
-        this.gte = moment().subtract(this.theDateRange - 1, 'day').format(dataFormat)
-        this.lte = moment().subtract(0, 'day').format(dataFormat)
+        this.gte = moment()
+          .subtract(this.theDateRange - 1, 'day')
+          .format(dataFormat)
+        this.lte = moment()
+          .subtract(0, 'day')
+          .format(dataFormat)
       } else {
-        this.gte = moment().subtract(this.theDateRange, 'day').format(dataFormat)
-        this.lte = moment().subtract(1, 'day').format(dataFormat)
+        this.gte = moment()
+          .subtract(this.theDateRange, 'day')
+          .format(dataFormat)
+        this.lte = moment()
+          .subtract(1, 'day')
+          .format(dataFormat)
       }
       // this.gte = moment().subtract(this.theDateRange, 'day').format(dataFormat)
       // this.lte = moment().subtract(1, 'day').format(dataFormat)
@@ -126,13 +175,21 @@ Component.propTypes = {
 
 TimeRange.defaultProps = {
   custom: false,
-  rangeMap: [{
-    value: 7,
-    label: '最近7天',
-  }, {
-    value: 30,
-    label: '最近30天',
-  }],
+  rangeMap: [
+    {
+      value: 7,
+      label: intl
+        .get('ide.src.component.time-range.time-range.4ppflvb5etj')
+        .d('最近7天'),
+    },
+    {
+      value: 30,
+      label: intl
+        .get('ide.src.component.time-range.time-range.7gd32bh9fxx')
+        .d('最近30天'),
+    },
+  ],
+
   defaultRangeInx: 0,
   dataFormat: 'YYYY-MM-DD',
   exportTimeRange: () => {},

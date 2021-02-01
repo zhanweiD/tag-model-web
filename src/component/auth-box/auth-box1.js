@@ -1,3 +1,4 @@
+import intl from 'react-intl-universal'
 import {Component, Fragment} from 'react'
 import PropTypes from 'prop-types'
 import {Button} from 'antd'
@@ -20,7 +21,11 @@ class AuthBox extends Component {
     const functionCodes = window.productFunctionCode || []
 
     if (!code) {
-      console.error('需配置权限code')
+      console.error(
+        intl
+          .get('ide.src.component.auth-box.auth-box1.r5dx4pm4hk')
+          .d('需配置权限code')
+      )
       return false
     }
 
@@ -47,11 +52,7 @@ class AuthBox extends Component {
   }
 
   render() {
-    return (
-      <Fragment>
-        {this.renderContent()}
-      </Fragment>
-    )
+    return <Fragment>{this.renderContent()}</Fragment>
   }
 }
 

@@ -1,3 +1,4 @@
+import intl from 'react-intl-universal'
 import {Component, Fragment} from 'react'
 import {action, toJS} from 'mobx'
 import {inject, observer} from 'mobx-react'
@@ -6,9 +7,7 @@ import getApiTrendOpt from './charts-options'
 import store from './store'
 
 @observer
-export default class TagTrend extends Component {
-  // defStartTime = moment().subtract(7, 'day').format('YYYY-MM-DD')
-  // defEndTime = moment().subtract(1, 'day').format('YYYY-MM-DD')
+class TagTrend extends Component {
   chartLine = null
 
   constructor(props) {
@@ -42,22 +41,9 @@ export default class TagTrend extends Component {
 
   @action drawChart = data => {
     if (this.chartLine) {
-      this.chartLine.setOption(getApiTrendOpt(
-        data
-      ))
+      this.chartLine.setOption(getApiTrendOpt(data))
     }
   }
-
-  // @action getData(gte = this.defStartTime, lte = this.defEndTime) {
-  //   const params = {
-  //     startDate: gte,
-  //     endDate: lte,
-  //   }
-
-  //   store.getRatuoTrend(res => {
-  //     if (res.length) this.drawChart(res)
-  //   })
-  // }
 
   componentWillUnmount() {
     window.removeEventListener('resize', () => this.resize())
@@ -69,39 +55,40 @@ export default class TagTrend extends Component {
     const {tagId} = this.props
     const {lineData, projectId} = store
     const noDataConfig = {
-      text: '暂无数据',
+      text: intl
+        .get('ide.src.business-component.tag-trend.tag-trend.o18ga4b3ils')
+        .d('暂无数据'),
     }
+
     return (
-      <div className="pt16 pb16 pl24 pr24" style={{width: '100%', position: 'relative'}}>
-        <h3 className="chart-title">空值占比趋势</h3>
-        {/* <div className="time-range-wrap">
-          <TimeRange
-            custom
-            key={tagId}
-            defaultRangeInx={0}
-            rangeMap={[{
-              value: 7,
-              label: '最近7天',
-            }, {
-              value: 30,
-              label: '最近30天',
-            }]}
-            exportTimeRange={(gte, lte) => this.getData(gte, lte)}
-          />
-        </div> */}
-        {!lineData.length && <div style={{position: 'absolute', width: '100%', height: 'calc(100vh - 538px)'}}><NoData {...noDataConfig} /></div>}
-        {/* {
-          projectId ? (
-            !lineData.length && <div style={{position: 'absolute', width: '100%', height: 'calc(100vh - 430px)'}}><NoData {...noDataConfig} /></div>
-          ) : (
-            !lineData.length && <div style={{position: 'absolute', width: '100%', height: 'calc(100vh - 538px)'}}><NoData {...noDataConfig} /></div>
-          )
-        } */}
-        <div 
-          style={{width: '100%', height: '400px'}} 
-          ref={ref => this.lineRef = ref} 
+      <div
+        className="pt16 pb16 pl24 pr24"
+        style={{width: '100%', position: 'relative'}}
+      >
+        <h3>
+          {intl
+            .get('ide.src.business-component.tag-trend.tag-trend.40b08h2rq0b')
+            .d('空值占比趋势')}
+        </h3>
+        
+        {!lineData.length && (
+          <div
+            style={{
+              position: 'absolute',
+              width: '100%',
+              height: 'calc(100vh - 538px)',
+            }}
+          >
+            <NoData {...noDataConfig} />
+          </div>
+        )}
+        
+        <div
+          style={{width: '100%', height: '400px'}}
+          ref={ref => (this.lineRef = ref)}
         />
       </div>
     )
   }
 }
+export default TagTrend

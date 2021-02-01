@@ -1,11 +1,12 @@
+import intl from 'react-intl-universal'
 /**
  * 审批管理
  */
-import {Component, useEffect} from 'react'
-import {Menu} from 'antd'
+import { Component, useEffect } from 'react'
+import { Menu } from 'antd'
 
 import OnerFrame from '@dtwave/oner-frame'
-import {codeInProduct} from '../../common/util'
+import { codeInProduct } from '../../common/util'
 import MyRequests from './my-requests'
 import PendingApproval from './pending-approval'
 import Approved from './approved'
@@ -13,12 +14,12 @@ import Approved from './approved'
 const ContentMap = {
   'my-requests': MyRequests,
   'pending-approval': PendingApproval,
-  approved: Approved, 
+  approved: Approved,
 }
 
 class Approval extends Component {
   onMenuClick = e => {
-    const {history} = this.props
+    const { history } = this.props
     history.push(`/common/approval/${e.key}`)
   }
 
@@ -27,21 +28,21 @@ class Approval extends Component {
 
     if (codeInProduct('tag_common:apply[r]')) {
       menu.push({
-        name: '我的申请',
+        name: intl.get('ide.src.common.navList.k354hf8mkg').d('我的申请'),
         value: 'my-requests',
       })
-    } 
+    }
 
     if (codeInProduct('tag_common:approving[r]')) {
       menu.push({
-        name: '待我审批',
+        name: intl.get('ide.src.common.navList.qocqf1s16e').d('待我审批'),
         value: 'pending-approval',
       })
-    } 
+    }
 
     if (codeInProduct('tag_common:approved[r]')) {
       menu.push({
-        name: '我已审批',
+        name: intl.get('ide.src.common.navList.khg0gyovpy7').d('我已审批'),
         value: 'approved',
       })
     }
@@ -50,7 +51,7 @@ class Approval extends Component {
   }
 
   render() {
-    const {match, projectId} = this.props
+    const { match, projectId } = this.props
     const type = (match.params && match.params.type) || 'my-requests' // 默认页面 我的申请
     const Content = ContentMap[type]
 
@@ -64,9 +65,9 @@ class Approval extends Component {
           mode="inline"
           onClick={this.onMenuClick}
         >
-          {
-            myMenuMap.map(({name, value}) => <Menu.Item key={value}>{name}</Menu.Item>)
-          }
+          {myMenuMap.map(({ name, value }) => (
+            <Menu.Item key={value}>{name}</Menu.Item>
+          ))}
         </Menu>
         <div className="approval-content box-border">
           <Content {...this.props} />
@@ -78,13 +79,11 @@ class Approval extends Component {
 
 export default props => {
   const ctx = OnerFrame.useFrame()
-  const projectId = ctx.useProjectId()
+  // const projectId = ctx.useProjectId()
 
   useEffect(() => {
-    ctx.useProject(true, null, {visible: false})
+    ctx.useProject(true, null, { visible: false })
   }, [])
 
-  return (
-    <Approval {...props} projectId={projectId} />
-  )
+  return <Approval {...props} />
 }

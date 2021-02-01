@@ -1,7 +1,6 @@
-import {
-  action, observable, runInAction, toJS,
-} from 'mobx'
-import {errorTip, successTip} from '../../common/util'
+import intl from 'react-intl-universal'
+import { action, observable, runInAction, toJS } from 'mobx'
+import { errorTip, successTip } from '../../common/util'
 import io from './io'
 
 class Store {
@@ -17,8 +16,9 @@ class Store {
   @action async getValueTrend(cb) {
     try {
       const res = await io.getValueTrend({
-        id: this.tagId, 
+        id: this.tagId,
       })
+
       runInAction(() => {
         this.chartPieValues = res.pieTemplateDtoList || []
         this.valueTrend = res || {}
@@ -36,10 +36,15 @@ class Store {
         id: this.tagId,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         if (res) {
           this.getValueTrend(cb)
-          successTip('正在更新')
+          successTip(
+            intl
+              .get('ide.src.business-component.tag-analyze.store.pd114xvd4s')
+              .d('正在更新')
+          )
         }
       })
     } catch (e) {

@@ -1,8 +1,11 @@
+import intl from 'react-intl-universal'
+import { action, runInAction, observable, toJS } from 'mobx'
 import {
-  action, runInAction, observable, toJS,
-} from 'mobx'
-import {
-  successTip, failureTip, errorTip, changeToOptions, listToTree,
+  successTip,
+  failureTip,
+  errorTip,
+  changeToOptions,
+  listToTree,
 } from '../../common/util'
 import io from './io'
 
@@ -44,18 +47,19 @@ export default class Store {
     currentPage: 1,
     totalCount: 0,
   }
+
   @observable totalCount = 0
 
   @action resetData = () => {
     this.configList = [] // 已配置字段列表
     this.noConList = [] // 未配置字段列表
-    this.tabValue = 1 
+    this.tabValue = 1
     this.configNum = 0
   }
 
   // tab切换更新列表
   @action tabChange = v => {
-    const {allList, noConList, configList} = this
+    const { allList, noConList, configList } = this
     this.tabValue = v
     this.hiddenRel = false
     switch (v) {
@@ -72,9 +76,10 @@ export default class Store {
         this.totalCount = noConList.length
         break
     }
+
     this.recordObj = {}
   }
-  
+
   // 保存配置前字段列表信息， 只在初次打开抽屉使调用，只用于存储更新前信息
   @action async getNoConList() {
     this.noConfigList = []
@@ -99,6 +104,7 @@ export default class Store {
         fieldType: obj.fieldType,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.tagTypeList = res
       })
@@ -149,7 +155,9 @@ export default class Store {
       this.previews[i].btagName = this.noConfigList[i].tagName
       this.previews[i].btagFieldId = this.noConfigList[i].tagFieldId
     }
-    this.list = this.previews.filter(item => item.tagFieldId || item.btagFieldId)
+    this.list = this.previews.filter(
+      item => item.tagFieldId || item.btagFieldId
+    )
     this.totalCount = this.list.length
   }
 
@@ -163,13 +171,22 @@ export default class Store {
         objId: this.ownObject,
         configType: 1,
       })
+
       runInAction(() => {
         if (res) {
-          successTip('新建标签成功')
+          successTip(
+            intl
+              .get('ide.src.page-process.schema-list.store-config.tr7psnyk0yr')
+              .d('新建标签成功')
+          )
           this.tagId = res
           this.saveTagRelation()
         } else {
-          failureTip('新建标签失败')
+          failureTip(
+            intl
+              .get('ide.src.page-process.schema-list.store-config.tvemppc078h')
+              .d('新建标签失败')
+          )
         }
       })
     } catch (e) {
@@ -186,6 +203,7 @@ export default class Store {
         id: this.recordObj.tagId || this.tagId,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.tagBaseInfo = res
         this.isEnum = res.isEnum
@@ -203,6 +221,7 @@ export default class Store {
         id: this.ownObject,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.tagCateSelectList = listToTree(res)
         // this.tagCateSelectList = res
@@ -219,6 +238,7 @@ export default class Store {
         projectId: this.projectId,
         objId: this.ownObject,
       })
+
       runInAction(() => {
         this.tagList = changeToOptions(toJS(res || []))('name', 'id')
       })
@@ -237,13 +257,22 @@ export default class Store {
         dataFieldName: this.recordObj.fieldName,
         dataFieldType: this.recordObj.fieldType,
       })
+
       runInAction(() => {
         if (res) {
-          successTip('配置成功')
+          successTip(
+            intl
+              .get('ide.src.page-process.schema-list.store-config.8p8xj1lcz9w')
+              .d('配置成功')
+          )
           this.isConfig = true
           this.getList()
         } else {
-          errorTip('配置失败')
+          errorTip(
+            intl
+              .get('ide.src.page-process.schema-list.store-config.uqrdf84wn8n')
+              .d('配置失败')
+          )
         }
         this.confirmLoading = false
       })
@@ -260,9 +289,14 @@ export default class Store {
         id: this.recordObj.tagFieldId,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         if (res) {
-          successTip('取消成功')
+          successTip(
+            intl
+              .get('ide.src.page-process.schema-list.store-config.z20j59s61mb')
+              .d('取消成功')
+          )
           this.isConfig = false
           this.isNewTag = true
           this.getList()
@@ -283,9 +317,16 @@ export default class Store {
         objId: this.ownObject, // 所属对象
         ...params,
       })
+
       runInAction(() => {
         if (res.success) {
-          cb('名称已存在')
+          cb(
+            intl
+              .get(
+                'ide.src.page-manage.page-aim-source.source-list.store.o07pkyecrw'
+              )
+              .d('名称已存在')
+          )
         } else {
           cb()
         }
@@ -301,6 +342,7 @@ export default class Store {
       const res = await io.checkKeyWord({
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.nameKeyWord = res
       })

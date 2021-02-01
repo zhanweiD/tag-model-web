@@ -1,11 +1,8 @@
-import {
-  action, runInAction, observable,
-} from 'mobx'
-import {CycleSelect} from '@dtwave/uikit'
-import {cycleSelectMap} from '../util'
-import {
-  successTip, failureTip, errorTip, listToTree,
-} from '../../common/util'
+import intl from 'react-intl-universal'
+import { action, runInAction, observable, toJS } from 'mobx'
+import { CycleSelect } from '@dtwave/uikit'
+import { cycleSelectMap } from '../util'
+import { successTip, failureTip, errorTip, listToTree } from '../../common/util'
 import io from './io'
 
 export default class Store {
@@ -23,7 +20,7 @@ export default class Store {
 
   @observable paramsForm = null
   @observable drawerThreeForm = null
-  
+
   @observable schemeDetail = {}
 
   @action.bound closeDrawer() {
@@ -46,7 +43,14 @@ export default class Store {
     }
 
     this.codeStore.runLoading = false
-    this.codeStore.tableData = [{title: '运行日志', resultId: 'running_log'}]
+    this.codeStore.tableData = [
+      {
+        title: intl
+          .get('ide.src.page-process.schema-list.store-code.fu5tdj8j9k7')
+          .d('运行日志'),
+        resultId: 'running_log',
+      },
+    ]
   }
 
   // 上一步
@@ -60,7 +64,7 @@ export default class Store {
   }
 
   // ************************* 方案详情 start ************************* //
- 
+
   @action async getSchemeDetail(params, cb) {
     this.loading = true
     try {
@@ -68,8 +72,9 @@ export default class Store {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
-        const data = res      
+        const data = res
 
         if (res.scheduleType === 1) {
           // 转为cron表达式（调度时间）
@@ -81,7 +86,7 @@ export default class Store {
           data.periodTime = expression.time
         }
 
-        this.schemeDetail = {...this.schemeDetail, ...data}
+        this.schemeDetail = { ...this.schemeDetail, ...data }
         if (cb) cb(res)
       })
     } catch (e) {
@@ -100,8 +105,9 @@ export default class Store {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
-        this.schemeDetail = {...this.schemeDetail, ...res}
+        this.schemeDetail = { ...this.schemeDetail, ...res }
         if (cb) cb(res)
       })
     } catch (e) {
@@ -130,6 +136,7 @@ export default class Store {
       const res = await io.getObjList({
         projectId: this.projectId,
       })
+
       runInAction(() => {
         this.objList = res
       })
@@ -147,8 +154,9 @@ export default class Store {
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
-        if (cb)cb(res)
+        if (cb) cb(res)
       })
     } catch (e) {
       errorTip(e.message)
@@ -164,8 +172,15 @@ export default class Store {
         projectId: this.projectId,
         ...params,
       })
+
       if (res.isExit) {
-        cb('名称已存在')
+        cb(
+          intl
+            .get(
+              'ide.src.page-manage.page-aim-source.source-list.store.o07pkyecrw'
+            )
+            .d('名称已存在')
+        )
       } else {
         cb()
       }
@@ -181,6 +196,7 @@ export default class Store {
   @observable searchKey = undefined
   @observable expandAll = false
   @observable treeData = [] // 类目树数据
+  @observable promptData = {} // code自定义提示
   @observable searchExpandedKeys = [] // 关键字搜索展开的树节点
 
   @action findParentId(id, data, expandedKeys) {
@@ -188,6 +204,18 @@ export default class Store {
       if (item.parentId !== 0 && item.id === id) {
         expandedKeys.push(item.parentId)
         this.findParentId(item.parentId, data, this.searchExpandedKeys)
+      }
+    })
+  }
+
+  listToPrompt(data, objEnName) {
+    const newData = _.cloneDeep(data)
+    return newData.map(item => {
+      if (item.type === 0) {
+        return objEnName.push(item.enName)
+      }
+      if (item.children) {
+        this.listToPrompt(item.children, objEnName)
       }
     })
   }
@@ -202,6 +230,7 @@ export default class Store {
         projectId: this.projectId,
         searchKey: this.searchKey,
       })
+
       runInAction(() => {
         this.treeLoading = false
         this.searchExpandedKeys.clear()
@@ -220,8 +249,14 @@ export default class Store {
         }
 
         this.treeData = listToTree(data)
-
-        if (cb)cb()
+        const obj = {}
+        this.treeData.forEach(item => {
+          if (item.children) {
+            this.listToPrompt(item.children, (obj[item.enName] = []))
+          }
+        })
+        this.promptData = obj
+        if (cb) cb()
       })
     } catch (e) {
       errorTip(e.message)
@@ -241,6 +276,7 @@ export default class Store {
       const res = await io.getFunTree({
         projectId: this.projectId,
       })
+
       runInAction(() => {
         // this.treeData = listToTree(res)
         this.treeData = res.map(d => ({
@@ -261,7 +297,6 @@ export default class Store {
 
   // ************************* 函数树 & 标签树 end ************************* //
 
-
   /**
    * @description 方案保存
    */
@@ -274,11 +309,18 @@ export default class Store {
         ...params,
         projectId: this.projectId,
       })
+
       runInAction(() => {
         if (res) {
           // 处于第一步
           if (this.currentStep === 0) {
-            successTip('保存成功')
+            successTip(
+              intl
+                .get(
+                  'ide.src.page-process.schema-list.store-drawer.hqdi7wxgw36'
+                )
+                .d('保存成功')
+            )
             this.closeDrawer()
             this.listStore.getList({
               currentPage: 1,
@@ -288,7 +330,13 @@ export default class Store {
 
           // 处于第二步
           if (this.currentStep === 1) {
-            successTip('保存成功')
+            successTip(
+              intl
+                .get(
+                  'ide.src.page-process.schema-list.store-drawer.hqdi7wxgw36'
+                )
+                .d('保存成功')
+            )
             this.closeDrawer()
             this.listStore.getList({
               currentPage: 1,
@@ -298,7 +346,13 @@ export default class Store {
 
           // 处于第二步 点❌保存
           if (this.currentStep === 2 && type === 'close') {
-            successTip('保存成功')
+            successTip(
+              intl
+                .get(
+                  'ide.src.page-process.schema-list.store-drawer.hqdi7wxgw36'
+                )
+                .d('保存成功')
+            )
             this.closeDrawer()
             this.listStore.getList({
               currentPage: 1,
@@ -308,18 +362,29 @@ export default class Store {
 
           // 处于第三步 点击下一步保存
           if (this.currentStep === 2 && type === 'next') {
-            successTip('保存成功')
+            successTip(
+              intl
+                .get(
+                  'ide.src.page-process.schema-list.store-drawer.hqdi7wxgw36'
+                )
+                .d('保存成功')
+            )
             this.schemeDetail.id = res
             this.listStore.getList({
               currentPage: 1,
               pageSize: 10,
             })
+
             this.nextStep()
           }
 
-          if (cb)cb()
+          if (cb) cb()
         } else {
-          failureTip('保存失败')
+          failureTip(
+            intl
+              .get('ide.src.page-process.schema-list.store-drawer.ba6ox0mh9e')
+              .d('保存失败')
+          )
         }
       })
     } catch (e) {
@@ -340,17 +405,18 @@ export default class Store {
       mainTagMappingKeys,
       isPartitioned,
       partitionMappingKeys,
-      scheduleType, 
+      scheduleType,
       scheduleExpression,
     } = this.schemeDetail
 
-
-    const fieldInfoFilter = fieldInfo && fieldInfo.map(d => {
-      const data = {...d}
-      delete data.disabled
-      delete data.objId
-      return data
-    })
+    const fieldInfoFilter =
+      fieldInfo &&
+      fieldInfo.map(d => {
+        const data = { ...d }
+        delete data.disabled
+        delete data.objId
+        return data
+      })
 
     const params = {
       projectId: this.projectId,
@@ -363,7 +429,7 @@ export default class Store {
       mainTagMappingKeys,
       isPartitioned,
       partitionMappingKeys: partitionMappingKeys || undefined,
-      scheduleType, 
+      scheduleType,
       scheduleExpression: scheduleExpression || undefined,
     }
 
@@ -376,24 +442,37 @@ export default class Store {
 
   @observable submitLoading = false
 
-   // 提交方案
-   @action async submitScheme(params) {
+  // 提交方案
+  @action async submitScheme(params) {
     this.submitLoading = true
     try {
       const res = await io.submitScheme({
         projectId: this.projectId,
         ...params,
       })
+
       runInAction(() => {
         if (res === 1) {
-          successTip('提交成功')
+          successTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-tag-sync.sync-detail.main.yf96acx8evb'
+              )
+              .d('提交成功')
+          )
           this.closeDrawer()
           this.listStore.getList({
             currentPage: 1,
             pageSize: 10,
           })
         } else {
-          failureTip('提交失败')
+          failureTip(
+            intl
+              .get(
+                'ide.src.page-manage.page-tag-sync.sync-detail.main.2n0b3tsdnkb'
+              )
+              .d('提交失败')
+          )
           this.closeDrawer()
           this.listStore.getList({
             currentPage: 1,

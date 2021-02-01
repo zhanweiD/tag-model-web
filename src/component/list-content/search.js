@@ -1,3 +1,4 @@
+import intl from 'react-intl-universal'
 /**
  * @description 列表内搜索框
  * @author  mahua
@@ -10,7 +11,6 @@ import '@ant-design/compatible/assets/index.css'
 import {Button, Row, Col} from 'antd'
 import ControlComponent, {mergeRules} from '../form-component-config'
 
-
 const FormItem = Form.Item
 
 const formItemLayout = {
@@ -21,6 +21,7 @@ const formItemLayout = {
     xl: {span: 6},
     xxl: {span: 5},
   },
+
   wrapperCol: {
     sm: {span: 18},
     md: {span: 17}, // >=768
@@ -32,7 +33,7 @@ const formItemLayout = {
 }
 
 @Form.create()
-export default class SearchContent extends Component {
+class SearchContent extends Component {
   static propTypes = {
     params: PropTypes.instanceOf(Array),
     onSearch: PropTypes.func,
@@ -63,10 +64,17 @@ export default class SearchContent extends Component {
       <Col span={8}>
         <FormItem {...formItemLayout} key={key} label={label}>
           {getFieldDecorator(key, {
-            initialValue, 
+            initialValue,
             rules: mergeRules(rules, label),
             validateFirst: true,
-          })(<ControlComponent type={type || 'input'} label={label} {...control} {...rest} />)}
+          })(
+            <ControlComponent
+              type={type || 'input'}
+              label={label}
+              {...control}
+              {...rest}
+            />
+          )}
         </FormItem>
       </Col>
     )
@@ -74,7 +82,7 @@ export default class SearchContent extends Component {
 
   /**
    * 搜索框重置
-   * @param {object} 
+   * @param {object}
    */
   handleReset = e => {
     e.preventDefault()
@@ -86,8 +94,8 @@ export default class SearchContent extends Component {
 
   /**
    * 搜索
-   * @param {object} value 搜索内容  
-   * @param {object} e   
+   * @param {object} value 搜索内容
+   * @param {object} e
    */
   handleSubmit = (value, e) => {
     if (value.preventDefault) value.preventDefault()
@@ -110,18 +118,27 @@ export default class SearchContent extends Component {
     }
 
     return (
-      <Form className="dt-form-column comp-list-search" onSubmit={this.handleSubmit}>
+      <Form
+        className="dt-form-column comp-list-search"
+        onSubmit={this.handleSubmit}
+      >
         <Row>
           {searchParams.map(item => this.getWarperComponent(item))}
           <Col span={24 - (searchParams.length % 3) * 8} className="far mb16">
-            <Button htmlType="submit" type="primary">查询</Button>
+            <Button htmlType="submit" type="primary">
+              {intl
+                .get('ide.src.component.list-content.search.m7y9nbekdco')
+                .d('查询')}
+            </Button>
             <Button
               className="ml8"
               // htmlType="button"
               // ghost
               onClick={this.handleReset}
             >
-              重置
+              {intl
+                .get('ide.src.component.list-content.search.3yzvpuily5f')
+                .d('重置')}
             </Button>
           </Col>
         </Row>
@@ -129,3 +146,4 @@ export default class SearchContent extends Component {
     )
   }
 }
+export default SearchContent

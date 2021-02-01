@@ -88,9 +88,6 @@ const ListContentStore = apiFunc => class _Store {
         currentPage: currentPage || 1,
         ...params,
       }))
-      // const res = {
-      //   data: [],
-      // }
       runInAction(() => {
         const {
           data = [],
