@@ -324,6 +324,8 @@ class TagList extends Component {
                       .d('取消发布')}
                   </a>
                 </Popconfirm>
+              </Authority>
+              <Authority authCode="tag_model:apply_project_tag[c]">
                 <a href onClick={() => this.openModal(record)} className="ml16">
                   {intl
                     .get(
@@ -348,33 +350,37 @@ class TagList extends Component {
 
           {/* 标签状态: 已发布 已使用 */}
           {record.status === 2 && record.isUsed === 1 && record.isVisual === 0 && (
-            <Authority authCode="tag_model:publish_tag[u]">
-              <span className="disabled">
-                {intl
-                  .get(
-                    'ide.src.page-manage.page-object-model.detail.a24dcsgx9g8'
-                  )
-                  .d('取消发布')}
-              </span>
-              <a href onClick={() => this.openModal(record)} className="ml16">
-                {intl
-                  .get(
-                    'ide.src.page-manage.page-tag-model.tag-model.tag-list.main.akndhvsabkj'
-                  )
-                  .d('授权')}
-              </a>
-              <a
-                href
-                onClick={() => this.openBackModal(record)}
-                className="ml16"
-              >
-                {intl
-                  .get(
-                    'ide.src.page-manage.page-tag-model.tag-model.tag-list.main.sanswpjatfc'
-                  )
-                  .d('回收')}
-              </a>
-            </Authority>
+            <Fragment>
+              <Authority authCode="tag_model:publish_tag[u]">
+                <span className="disabled">
+                  {intl
+                    .get(
+                      'ide.src.page-manage.page-object-model.detail.a24dcsgx9g8'
+                    )
+                    .d('取消发布')}
+                </span>
+              </Authority>
+              <Authority authCode="tag_model:apply_project_tag[c]">
+                <a href onClick={() => this.openModal(record)} className="ml16">
+                  {intl
+                    .get(
+                      'ide.src.page-manage.page-tag-model.tag-model.tag-list.main.akndhvsabkj'
+                    )
+                    .d('授权')}
+                </a>
+                <a
+                  href
+                  onClick={() => this.openBackModal(record)}
+                  className="ml16"
+                >
+                  {intl
+                    .get(
+                      'ide.src.page-manage.page-tag-model.tag-model.tag-list.main.sanswpjatfc'
+                    )
+                    .d('回收')}
+                </a>
+              </Authority>
+            </Fragment>
           )}
 
           {/* 可视化加工标签 待发布 */}
@@ -406,78 +412,86 @@ class TagList extends Component {
 
           {/* 可视化加工标签 发布 */}
           {record.isVisual === 1 && record.status === 2 && record.isUsed === 0 && (
-            <Authority authCode="tag_model:publish_tag[u]">
-              <Popconfirm
-                placement="topRight"
-                title={intl
-                  .get(
-                    'ide.src.page-manage.page-tag-model.tag-model.tag-list.main.8qsv9py158c'
-                  )
-                  .d('确认取消发布？')}
-                onConfirm={() => store.updateTagStatus({
-                  status: 1,
-                  tagIdList: [record.id],
-                })
-                }
-              >
-                <a href>
+            <Fragment>
+              <Authority authCode="tag_model:publish_tag[u]">
+                <Popconfirm
+                  placement="topRight"
+                  title={intl
+                    .get(
+                      'ide.src.page-manage.page-tag-model.tag-model.tag-list.main.8qsv9py158c'
+                    )
+                    .d('确认取消发布？')}
+                  onConfirm={() => store.updateTagStatus({
+                    status: 1,
+                    tagIdList: [record.id],
+                  })
+                  }
+                >
+                  <a href>
+                    {intl
+                      .get(
+                        'ide.src.page-manage.page-object-model.detail.a24dcsgx9g8'
+                      )
+                      .d('取消发布')}
+                  </a>
+                </Popconfirm>
+              </Authority>
+              <Authority authCode="tag_model:apply_project_tag[c]">
+                <a href onClick={() => this.openModal(record)} className="ml16">
+                  {intl
+                    .get(
+                      'ide.src.page-manage.page-tag-model.tag-model.tag-list.main.akndhvsabkj'
+                    )
+                    .d('授权')}
+                </a>
+                <a
+                  href
+                  onClick={() => this.openBackModal(record)}
+                  className="ml16"
+                >
+                  {intl
+                    .get(
+                      'ide.src.page-manage.page-tag-model.tag-model.tag-list.main.sanswpjatfc'
+                    )
+                    .d('回收')}
+                </a>
+              </Authority>
+            </Fragment>
+          )}
+
+          {/* 可视化加工标签 发布 已使用 */}
+          {record.status === 2 && record.isUsed === 1 && record.isVisual === 1 && (
+            <Fragment>
+              <Authority authCode="tag_model:publish_tag[u]">
+                <span className="disabled">
                   {intl
                     .get(
                       'ide.src.page-manage.page-object-model.detail.a24dcsgx9g8'
                     )
                     .d('取消发布')}
+                </span>
+              </Authority>
+              <Authority authCode="tag_model:apply_project_tag[c]">
+                <a href onClick={() => this.openModal(record)} className="mr16">
+                  {intl
+                    .get(
+                      'ide.src.page-manage.page-tag-model.tag-model.tag-list.main.akndhvsabkj'
+                    )
+                    .d('授权')}
                 </a>
-              </Popconfirm>
-              <a href onClick={() => this.openModal(record)} className="ml16">
-                {intl
-                  .get(
-                    'ide.src.page-manage.page-tag-model.tag-model.tag-list.main.akndhvsabkj'
-                  )
-                  .d('授权')}
-              </a>
-              <a
-                href
-                onClick={() => this.openBackModal(record)}
-                className="ml16"
-              >
-                {intl
-                  .get(
-                    'ide.src.page-manage.page-tag-model.tag-model.tag-list.main.sanswpjatfc'
-                  )
-                  .d('回收')}
-              </a>
-            </Authority>
-          )}
-
-          {/* 可视化加工标签 发布 已使用 */}
-          {record.status === 2 && record.isUsed === 1 && record.isVisual === 1 && (
-            <Authority authCode="tag_model:publish_tag[u]">
-              <span className="disabled">
-                {intl
-                  .get(
-                    'ide.src.page-manage.page-object-model.detail.a24dcsgx9g8'
-                  )
-                  .d('取消发布')}
-              </span>
-              <a href onClick={() => this.openModal(record)} className="mr16">
-                {intl
-                  .get(
-                    'ide.src.page-manage.page-tag-model.tag-model.tag-list.main.akndhvsabkj'
-                  )
-                  .d('授权')}
-              </a>
-              <a
-                href
-                onClick={() => this.openBackModal(record)}
-                className="ml16"
-              >
-                {intl
-                  .get(
-                    'ide.src.page-manage.page-tag-model.tag-model.tag-list.main.sanswpjatfc'
-                  )
-                  .d('回收')}
-              </a>
-            </Authority>
+                <a
+                  href
+                  onClick={() => this.openBackModal(record)}
+                  className="ml16"
+                >
+                  {intl
+                    .get(
+                      'ide.src.page-manage.page-tag-model.tag-model.tag-list.main.sanswpjatfc'
+                    )
+                    .d('回收')}
+                </a>
+              </Authority>
+            </Fragment>
           )}
         </div>
       ),
@@ -680,13 +694,15 @@ class TagList extends Component {
               .d('批量绑定')}
           </Button>
         </Authority>,
-        <Button onClick={() => this.inheritTag()}>
-          {intl
-            .get(
-              'ide.src.page-manage.page-tag-model.tag-model.tag-list.main.l43rimqp13'
-            )
-            .d('继承标签')}
-        </Button>,
+        <Authority authCode="tag_model:create_tag[c]">
+          <Button onClick={() => this.inheritTag()}>
+            {intl
+              .get(
+                'ide.src.page-manage.page-tag-model.tag-model.tag-list.main.l43rimqp13'
+              )
+              .d('继承标签')}
+          </Button>
+        </Authority>,
       ],
 
       rowKey: 'id',

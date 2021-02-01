@@ -7,7 +7,6 @@ import {observer} from 'mobx-react'
 import {action} from 'mobx'
 import {Link} from 'react-router-dom'
 import {Spin} from 'antd'
-import {CompassOutlined} from '@ant-design/icons'
 import {ListContent, NoData, OmitTooltip, Authority} from '../../../component'
 import {getDataTypeName} from '../../../common/util'
 // import ModalApply from './modal-apply'
@@ -33,15 +32,7 @@ class TagList extends Component {
   constructor(props) {
     super(props)
     store.useProjectId = props.projectId
-    // console.log(store)
   }
-
-  // componentWillMount() {
-  //   // 获取所属对象下拉数据
-  //   if (store.useProjectId) {
-  //     store.getAuthCode()
-  //   }
-  // }
 
   componentDidMount() {
     if (store.useProjectId) {
@@ -155,13 +146,6 @@ class TagList extends Component {
       fixed: 'right',
       render: (text, record) => (
         <div className="FBH FBAC">
-          {/* <Fragment> 
-         {
-           ((record.projectId === store.useProjectId || record.projectId === -1) || (record.status && !record.endTime)) ? <span className="mr8 disabled">权限申请</span> : (
-             <a className="mr8" href onClick={() => this.openApplyModal(record)}>权限申请</a>
-           )
-         }       
-        </Fragment> */}
           <Authority authCode="tag_model:apply_project_tag[c]">
             {record.projectId === store.useProjectId || record.projectId === -1 ? (
               <span className="disabled">
