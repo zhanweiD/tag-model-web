@@ -1,11 +1,11 @@
 import intl from 'react-intl-universal'
-import { observable, action, runInAction, toJS } from 'mobx'
+import {observable, action, runInAction, toJS} from 'mobx'
 import {
   errorTip,
   successTip,
   failureTip,
   changeToOptions,
-} from '../../../../common/util'
+} from '../../../common/util'
 import io from './io'
 
 class Store {
@@ -101,9 +101,8 @@ class Store {
       })
 
       runInAction(() => {
-        const data =
-          res &&
-          res.map(d => ({
+        const data = res
+          && res.map(d => ({
             tableName: d.dataTableName,
             isUsed: d.isUsed,
           }))
@@ -424,8 +423,8 @@ class Store {
   }
 
   getLinksObj = (links, obj) => {
-    if (!links.length) return { links: [], obj }
-    if (obj.length === 1) return { links: [], obj }
+    if (!links.length) return {links: [], obj}
+    if (obj.length === 1) return {links: [], obj}
 
     const relObj = obj.filter(d => d.objTypeCode === 3)[0]
     const relObjTag = relObj.tag.map(d => d.id)

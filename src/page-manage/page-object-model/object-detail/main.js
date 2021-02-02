@@ -2,20 +2,19 @@ import intl from 'react-intl-universal'
 /**
  * @description 对象管理 - 对象详情信息
  */
-import { Component, useEffect } from 'react'
-import OnerFrame from '@dtwave/oner-frame'
-import { observer, Provider } from 'mobx-react'
-import { Spin } from 'antd'
-import { observable, action } from 'mobx'
+import {observer, Provider} from 'mobx-react'
+import {Spin} from 'antd'
+import {observable, action} from 'mobx'
+import {Component} from 'react'
 
-import { Time } from '../../../../common/util'
+import {Time} from '../../../common/util'
 import {
   Tag,
   TabRoute,
   DetailHeader,
   OverviewCardWrap,
-} from '../../../../component'
-import { typeCodeMap, objTypeMap } from '../util'
+} from '../../../component'
+import {typeCodeMap, objTypeMap} from '../util'
 import ObjectView from './object-view'
 import BusinessModel from './business-model'
 import UseProject from './use-project'
@@ -29,7 +28,7 @@ class ObjectDetail extends Component {
   constructor(props) {
     super(props)
     const {
-      match: { params },
+      match: {params},
     } = props
     store.projectId = undefined
     store.objId = params && params.objId
@@ -55,7 +54,7 @@ class ObjectDetail extends Component {
   }
 
   render() {
-    const { objDetail, objCard, loading, typeCode, objId, projectId } = store
+    const {objDetail, objCard, loading, typeCode, objId, projectId} = store
 
     // 详情信息
     const baseInfo = [
@@ -136,7 +135,7 @@ class ObjectDetail extends Component {
       },
     }
 
-    const { tag } = tagMap[
+    const {tag} = tagMap[
       objDetail.status === undefined ? 'noData' : objDetail.status
     ]
 
@@ -147,13 +146,13 @@ class ObjectDetail extends Component {
         title: intl
           .get(
             'ide.src.page-manage.page-object-model.object-list.object-detail.main.u1ln4g746r',
-            { typeCodeMap4: typeCodeMap4 }
+            {typeCodeMap4}
           )
           .d('{typeCodeMap4}总数'),
         tooltipText: intl
           .get(
             'ide.src.page-manage.page-object-model.object-list.object-detail.main.vdfr59d0o9s',
-            { typeCodeMap4: typeCodeMap4 }
+            {typeCodeMap4}
           )
           .d('已经发布的关联{typeCodeMap4}总数'),
         values: [objCard.objectCount],
@@ -209,75 +208,75 @@ class ObjectDetail extends Component {
     const tabConfig = {
       tabs: +objDetail.type
         ? [
-            {
-              name: intl
-                .get('ide.src.page-manage.page-object-model.detail.rnj5knhzw8')
-                .d('对象视图'),
-              value: 0,
-            },
-            {
-              name: intl
-                .get(
-                  'ide.src.page-manage.page-object-model.object-list.object-detail.main.e6qy2b1e2kq'
-                )
-                .d('业务视图'),
-              value: 1,
-            },
-            {
-              name: intl
-                .get(
-                  'ide.src.page-manage.page-common-tag.common-tag.modal.0snlii7b6ll'
-                )
-                .d('使用项目'),
-              value: 2,
-            },
-            {
-              name: intl
-                .get(
-                  'ide.src.page-manage.page-aim-source.source-list.main.bh6e3tzii5'
-                )
-                .d('数据表'),
-              value: 3,
-            },
-            {
-              name: intl
-                .get('ide.src.common.navList.5ywghq8b76s')
-                .d('标签列表'),
-              value: 4,
-            },
-          ]
+          {
+            name: intl
+              .get('ide.src.page-manage.page-object-model.detail.rnj5knhzw8')
+              .d('对象视图'),
+            value: 0,
+          },
+          {
+            name: intl
+              .get(
+                'ide.src.page-manage.page-object-model.object-list.object-detail.main.e6qy2b1e2kq'
+              )
+              .d('业务视图'),
+            value: 1,
+          },
+          {
+            name: intl
+              .get(
+                'ide.src.page-manage.page-common-tag.common-tag.modal.0snlii7b6ll'
+              )
+              .d('使用项目'),
+            value: 2,
+          },
+          {
+            name: intl
+              .get(
+                'ide.src.page-manage.page-aim-source.source-list.main.bh6e3tzii5'
+              )
+              .d('数据表'),
+            value: 3,
+          },
+          {
+            name: intl
+              .get('ide.src.common.navList.5ywghq8b76s')
+              .d('标签列表'),
+            value: 4,
+          },
+        ]
         : [
-            {
-              name: intl
-                .get('ide.src.page-manage.page-object-model.detail.rnj5knhzw8')
-                .d('对象视图'),
-              value: 0,
-            },
-            {
-              name: intl
-                .get(
-                  'ide.src.page-manage.page-object-model.object-list.object-detail.main.e6qy2b1e2kq'
-                )
-                .d('业务视图'),
-              value: 1,
-            },
-            {
-              name: intl
-                .get(
-                  'ide.src.page-manage.page-common-tag.common-tag.modal.0snlii7b6ll'
-                )
-                .d('使用项目'),
-              value: 2,
-            },
-            {
-              name: intl
-                .get(
-                  'ide.src.page-manage.page-aim-source.source-list.main.bh6e3tzii5'
-                )
-                .d('数据表'),
-              value: 3,
-            },
-          ],
+          {
+            name: intl
+              .get('ide.src.page-manage.page-object-model.detail.rnj5knhzw8')
+              .d('对象视图'),
+            value: 0,
+          },
+          {
+            name: intl
+              .get(
+                'ide.src.page-manage.page-object-model.object-list.object-detail.main.e6qy2b1e2kq'
+              )
+              .d('业务视图'),
+            value: 1,
+          },
+          {
+            name: intl
+              .get(
+                'ide.src.page-manage.page-common-tag.common-tag.modal.0snlii7b6ll'
+              )
+              .d('使用项目'),
+            value: 2,
+          },
+          {
+            name: intl
+              .get(
+                'ide.src.page-manage.page-aim-source.source-list.main.bh6e3tzii5'
+              )
+              .d('数据表'),
+            value: 3,
+          },
+        ],
 
       currentTab: this.tabId,
       changeTab: this.changeTab,
@@ -307,7 +306,7 @@ class ObjectDetail extends Component {
             <OverviewCardWrap cards={cards} />
             <div
               className="mt16 bgf box-border"
-              style={{ minHeight: 'calc(100vh - 348px)' }}
+              style={{minHeight: 'calc(100vh - 348px)'}}
             >
               <TabRoute {...tabConfig} />
               <Content

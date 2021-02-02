@@ -4,12 +4,10 @@ import {Input, Button, Modal} from 'antd'
 import {action} from 'mobx'
 import {observer, inject} from 'mobx-react'
 import {SearchOutlined} from '@ant-design/icons'
-import {Time} from '../../../../common/util'
-import {ListContent, Authority, OmitTooltip} from '../../../../component'
+import {Time} from '../../../common/util'
+import {ListContent, Authority, OmitTooltip} from '../../../component'
 import ModalRelateTable from './modal-relate-table'
 import store from './store-table'
-
-const {Search} = Input
 
 @inject('bigStore')
 @observer

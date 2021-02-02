@@ -3,7 +3,7 @@ import {Component} from 'react'
 import {action, observable} from 'mobx'
 import {observer} from 'mobx-react'
 import {Modal, Table, Alert, Button} from 'antd'
-import {OmitTooltip} from '../../../../component'
+import {OmitTooltip} from '../../../component'
 
 const columns = [
   {

@@ -1,6 +1,6 @@
 import intl from 'react-intl-universal'
-import { observable, action, runInAction } from 'mobx'
-import { successTip, errorTip, listToTree, failureTip } from '../../common/util'
+import {observable, action, runInAction} from 'mobx'
+import {successTip, errorTip, listToTree, failureTip} from '../../common/util'
 import io from './io'
 
 class Store {
@@ -144,7 +144,7 @@ class Store {
 
         if (!this.currentSelectKeys) {
           // 默认类目
-          ;[this.defaultCate] = res.filter(d => d.aId === -1)
+          [this.defaultCate] = res.filter(d => d.aId === -1)
           this.currentSelectKeys = this.defaultCate.id
         }
         this.categoryData = res.filter(d => d.isLeaf !== 1) // 叶子类目
@@ -409,8 +409,8 @@ class Store {
   }
 
   getLinksObj = (links, obj) => {
-    if (!links.length) return { links: [], obj }
-    if (obj.length === 1) return { links: [], obj }
+    if (!links.length) return {links: [], obj}
+    if (obj.length === 1) return {links: [], obj}
 
     const relObj = obj.filter(d => d.objTypeCode === 3)[0]
     const relObjTag = relObj.tag.map(d => d.id)

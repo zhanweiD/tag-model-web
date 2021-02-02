@@ -15,13 +15,11 @@ import {
   Authority,
 } from '../../component'
 import {typeCodeMap, objStatusMap, objTypeMap} from './util'
-// import ObjectView from './object-view'
 import ObjectView from '../page-tag-model/object-view-router'
-import BusinessModel from './business-model'
-import UseProject from './object-list/object-detail/use-project'
-import DataTable from './object-list/object-detail/data-table'
-import TagList from './object-list/object-detail/tag-list'
-import TagClass from './object-list/object-list/tag-class'
+import UseProject from './object-detail/use-project'
+import DataTable from './object-detail/data-table'
+import TagList from './object-detail/tag-list'
+import TagClass from './object-list/tag-class'
 
 @inject('bigStore')
 @observer

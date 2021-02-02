@@ -1,8 +1,13 @@
+import {asyncComponent} from '../../../common/util'
 
-import ObjectList from './object-list'
-import ObjectDetail from './object-detail'
+import './main.styl'
 
-export {
-  ObjectList,
-  ObjectDetail,
-}
+export default asyncComponent(async () => {
+  try {
+    const module = await import('./main')
+    return module.default
+  } catch (error) {
+    console.log(error)
+  }
+  return null
+})

@@ -82,3 +82,22 @@ export const objTypeMap = {
     .d('复杂关系'),
   2: intl.get('ide.src.common.dict.yy6bfwytt9').d('实体'),
 }
+
+export const objTypeList = [
+  {
+    name: intl
+      .get('ide.src.page-manage.page-object-model.object-list.util.b78dpbz8x4u')
+      .d('简单关系'),
+    value: 0,
+  },
+  {
+    name: intl
+      .get('ide.src.page-manage.page-object-model.object-list.util.gc2qgcsh5xa')
+      .d('复杂关系'),
+    value: 1,
+  },
+  {
+    name: intl.get('ide.src.common.dict.yy6bfwytt9').d('实体'),
+    value: 2,
+  },
+]

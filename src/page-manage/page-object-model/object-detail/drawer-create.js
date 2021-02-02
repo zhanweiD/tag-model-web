@@ -1,15 +1,13 @@
 import intl from 'react-intl-universal'
 import {Component} from 'react'
-import {action, toJS} from 'mobx'
-import {observer, inject} from 'mobx-react'
+import {action} from 'mobx'
+import {observer} from 'mobx-react'
 import {Drawer, Button, Spin} from 'antd'
-import {ModalForm} from '../../../../component'
+import {ModalForm} from '../../../component'
 import {
   changeToOptions,
-  enNameReg,
   isJsonFormat,
-  debounce,
-} from '../../../../common/util'
+} from '../../../common/util'
 import {nameTypeMap} from '../util'
 
 @observer

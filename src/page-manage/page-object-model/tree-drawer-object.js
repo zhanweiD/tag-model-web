@@ -6,10 +6,8 @@ import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
 import {Button, Drawer, Input, Select, Radio, TreeSelect} from 'antd'
 import {
-  enNameReg,
   getNamePattern,
   getEnNamePattern,
-  debounce,
 } from '../../common/util'
 import {targetTypeMap, nameTypeMap, typeCodeMap} from './util'
 
@@ -274,8 +272,6 @@ class ModalObject extends Component {
                     )
                     .d('对象标识不能为空'),
                 },
-                // {max: 32, message: '输入不能超过32个字符'},
-                // {pattern: enNameReg, message: '不超过32个字，只能包含英文、数字或下划线，必须以英文开头'},
                 ...getEnNamePattern(),
                 {
                   validator: this.checkName,
