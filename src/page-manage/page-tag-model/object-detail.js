@@ -260,7 +260,7 @@ class ObjectDetail extends Component {
                       .d('移除')}
                   </Button>
                 </Authority>,
-                <Authority authCode="tag_model:select_tag_cate[r]">
+                <Authority authCode="tag_model:select_tag_cate[r]" isCommon>
                   <Button
                   // loading={releaseLoading}
                     className="mr8"
