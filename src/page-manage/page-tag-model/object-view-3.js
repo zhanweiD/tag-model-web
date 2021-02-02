@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import {Component, Fragment} from 'react'
+import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {toJS, observable, action} from 'mobx'
 import * as _ from 'lodash'
@@ -156,6 +156,8 @@ export default class BusinessModel extends Component {
         target: `node-${item.target}`,
         endpoint: 'Blank',
         connector: ['Flowchart'],
+        paintStyle: {stroke: '#c9cbd2', strokeWidth: 1},
+        endpointStyle: {fill: '#c9cbd2'},
         anchor: ['Left', 'Right'],
         overlays: [
           ['Arrow', {width: 10, length: 10, location: 1}],

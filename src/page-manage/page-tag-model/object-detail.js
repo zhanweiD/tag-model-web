@@ -263,7 +263,6 @@ class ObjectDetail extends Component {
                 <Authority authCode="tag_model:select_tag_cate[r]" isCommon>
                   <Button
                   // loading={releaseLoading}
-                    className="mr8"
                     type="primary"
                     onClick={() => this.tagClass()}
                   >
