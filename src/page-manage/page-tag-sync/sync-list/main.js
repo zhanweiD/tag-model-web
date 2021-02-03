@@ -23,7 +23,6 @@ import ModalStart from './modal-start'
 import {
   getLastStatus,
   getSyncStatus,
-  // getScheduleType,
 } from '../util'
 
 import store from './store'
@@ -95,7 +94,6 @@ class SyncList extends Component {
         .get('ide.src.page-manage.page-tag-sync.sync-list.main.m121153o0vp')
         .d('周期调度'),
       dataIndex: 'scheduleType',
-      // render: v => (v === null ? '' : getScheduleType({status: v})),
       render: v => (v
         ? intl
           .get(
@@ -997,23 +995,38 @@ class SyncList extends Component {
                       .d('启动')}
                   </span>
                 </Authority>
-                {/* <span className="table-action-line" /> */}
                 <Authority authCode="tag_model:update_transfer[u]">
-                  <span className="disabled mr16">
-                    {intl
-                      .get('ide.src.component.label-item.label-item.slnqvyqvv7')
-                      .d('编辑')}
-                  </span>
-                  {/* <span className="table-action-line" /> */}
-                  <span className="disabled mr16">
+                  <a
+                    className="mr16"
+                    href
+                    onClick={() => this.editSync(record)}
+                  >
                     {intl
                       .get(
-                        'ide.src.page-manage.page-aim-source.source-list.main.sv51d9olqdi'
+                        'ide.src.component.label-item.label-item.slnqvyqvv7'
                       )
-                      .d('删除')}
-                  </span>
+                      .d('编辑')}
+                  </a>
                 </Authority>
-                {/* <span className="table-action-line" /> */}
+                <Authority authCode="tag_model:update_transfer[u]">
+                  <Popconfirm
+                    placement="topRight"
+                    title={intl
+                      .get(
+                        'ide.src.page-manage.page-tag-sync.sync-list.main.wpy3sz11tp'
+                      )
+                      .d('你确定要删除吗？')}
+                    onConfirm={() => this.delList(record.id)}
+                  >
+                    <a href>
+                      {intl
+                        .get(
+                          'ide.src.page-manage.page-aim-source.source-list.main.sv51d9olqdi'
+                        )
+                        .d('删除')}
+                    </a>
+                  </Popconfirm>
+                </Authority>
                 <Authority authCode="tag_model:transfer_submit_log[r]">
                   <span className="disabled">
                     {intl

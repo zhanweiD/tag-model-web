@@ -1,5 +1,6 @@
 import intl from 'react-intl-universal'
-const serach = ({ objList = [], storageList = [] }) => [
+
+const serach = ({objList = [], storageList = []}) => [
   {
     label: intl
       .get('ide.src.page-config.workspace-config.main.1b0l5lpgghm')
@@ -9,10 +10,10 @@ const serach = ({ objList = [], storageList = [] }) => [
     control: {
       defaultAll: true,
       options: [
-        { name: 'MySQL', value: 1 },
-        { name: 'Greenplum', value: 10 },
-        { name: 'PostgreSQL', value: 11 },
-        { name: 'Oracle', value: 2 },
+        {name: 'MySQL', value: 1},
+        {name: 'Greenplum', value: 10},
+        {name: 'PostgreSQL', value: 11},
+        {name: 'Oracle', value: 2},
       ],
     },
 
