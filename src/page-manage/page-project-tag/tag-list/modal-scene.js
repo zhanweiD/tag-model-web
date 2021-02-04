@@ -1,9 +1,9 @@
 import intl from 'react-intl-universal'
-import { Component } from 'react'
-import { action, toJS, observable } from 'mobx'
-import { observer } from 'mobx-react'
-import { Modal } from 'antd'
-import { ModalForm } from '../../../component'
+import {Component} from 'react'
+import {action, toJS, observable} from 'mobx'
+import {observer} from 'mobx-react'
+import {Modal} from 'antd'
+import {ModalForm} from '../../../component'
 
 @observer
 class ModalScene extends Component {
@@ -82,11 +82,11 @@ class ModalScene extends Component {
 
   submit = () => {
     const t = this
-    const { store } = t
+    const {store} = t
     this.form.validateFields((err, values) => {
       if (!err) {
         const catId = values.catId[values.catId.length - 1]
-        const { occasionId } = values
+        const {occasionId} = values
         let occTags
 
         if (store.sceneType === 'one') {
@@ -123,7 +123,7 @@ class ModalScene extends Component {
   }
 
   render() {
-    const { modalSceneVisible, confirmLoading, sceneCate } = this.store
+    const {modalSceneVisible, confirmLoading, sceneCate} = this.store
     const modalConfig = {
       title: intl
         .get(

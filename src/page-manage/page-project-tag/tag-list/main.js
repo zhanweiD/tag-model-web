@@ -171,7 +171,6 @@ class TagList extends Component {
   ]
 
   @action.bound openApplyModal(data) {
-    console.log(data)
     store.selectItem = data
     store.tagIds.replace([data.id])
     store.modalApplyVisible = true
@@ -209,7 +208,7 @@ class TagList extends Component {
   }
 
   render() {
-    const {useProjectId, list, functionCodes, tableLoading} = store
+    const {useProjectId, list, tableLoading} = store
 
     const listConfig = {
       columns: this.columns,
@@ -237,14 +236,14 @@ class TagList extends Component {
       isLoading: tableLoading,
     }
 
-    if (tableLoading) {
-      return (
-        <div style={{width: '100%', height: '100%', textAlign: 'center'}}>
-          <Spin spinning />
-        </div>
-      )
-    }
-
+    // 会导致list组件触发WillUnmount导致searchParams重置
+    // if (tableLoading) {
+    //   return (
+    //     <div style={{width: '100%', height: '100%', textAlign: 'center'}}>
+    //       <Spin spinning />
+    //     </div>
+    //   )
+    // }
     return (
       <div>
         {!list.length && !this.isSearch() ? (

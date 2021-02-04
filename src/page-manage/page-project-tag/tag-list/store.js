@@ -30,7 +30,7 @@ class Store extends ListContentStore(io.getList) {
   @action async getOwnProject() {
     try {
       const res = await io.getOwnProject({
-        projectId: this.projectId,
+        projectId: this.useProjectId,
       })
 
       runInAction(() => {

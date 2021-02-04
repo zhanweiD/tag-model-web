@@ -7,7 +7,7 @@ import {observer} from 'mobx-react'
 import {action, toJS} from 'mobx'
 import {Form} from '@ant-design/compatible'
 import '@ant-design/compatible/assets/index.css'
-import {Modal, Input, Radio, DatePicker, Space} from 'antd'
+import {Modal} from 'antd'
 import {ExclamationCircleOutlined} from '@ant-design/icons'
 
 @Form.create()
