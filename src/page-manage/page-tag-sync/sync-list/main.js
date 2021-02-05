@@ -1028,7 +1028,7 @@ class SyncList extends Component {
                   </Popconfirm>
                 </Authority>
                 <Authority authCode="tag_model:transfer_submit_log[r]">
-                  <span className="disabled">
+                  <span className="disabled ml16">
                     {intl
                       .get(
                         'ide.src.page-manage.page-tag-sync.sync-list.main.r93qum4tmg'
