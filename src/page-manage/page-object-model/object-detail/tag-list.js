@@ -1,14 +1,14 @@
 import intl from 'react-intl-universal'
 import {Component, Fragment} from 'react'
 import {Input, Popconfirm, Button} from 'antd'
-import {action, toJS} from 'mobx'
+import {action} from 'mobx'
 import {inject} from 'mobx-react'
 import {SearchOutlined} from '@ant-design/icons'
 import {
   ListContent,
   Authority,
-} from '../../../../component'
-import {tagStatusBadgeMap} from '../../../page-tag-model/tag-model/util'
+} from '../../../component'
+import {tagStatusBadgeMap} from '../../page-tag-model/tag-model/util'
 import DrawerCreate from './drawer-create'
 import store from './store-tag-list'
 

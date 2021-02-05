@@ -1,9 +1,7 @@
-import ioContext from '../../../../common/io-context'
+import ioContext from '../../../common/io-context'
 import {
   objectApi, tagClassApi, get, post,
-} from '../../../../common/util'
-
-// const isMock = true
+} from '../../../common/util'
 
 const api = {
   getList: post(`${objectApi}/obj_Page`), // 对象列表

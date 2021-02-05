@@ -1,13 +1,13 @@
 import intl from 'react-intl-universal'
-import {observable, action, runInAction, toJS} from 'mobx'
+import {observable, action, runInAction} from 'mobx'
 import {
   successTip,
   failureTip,
   errorTip,
   changeToOptions,
   listToTree,
-} from '../../../../common/util'
-import {ListContentStore} from '../../../../component/list-content'
+} from '../../../common/util'
+import {ListContentStore} from '../../../component/list-content'
 import io from './io'
 
 class Store extends ListContentStore(io.getTagList) {

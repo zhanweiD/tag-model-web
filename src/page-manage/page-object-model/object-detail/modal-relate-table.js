@@ -1,19 +1,19 @@
 import intl from 'react-intl-universal'
-import { Component, Fragment } from 'react'
-import { observer, inject } from 'mobx-react'
-import { action, observable, toJS } from 'mobx'
-import { Form } from '@ant-design/compatible'
+import {Component, Fragment} from 'react'
+import {observer, inject} from 'mobx-react'
+import {action, observable, toJS} from 'mobx'
+import {Form} from '@ant-design/compatible'
 import _ from 'lodash'
 import '@ant-design/compatible/assets/index.css'
-import { Modal, Select, Switch, Radio, Spin } from 'antd'
-import { OmitTooltip } from '../../../../component'
+import {Modal, Select, Radio, Spin} from 'antd'
+import {OmitTooltip} from '../../../component'
 
 const FormItem = Form.Item
-const { Option } = Select
+const {Option} = Select
 
 const formItemLayout = {
-  labelCol: { span: 5 },
-  wrapperCol: { span: 19 },
+  labelCol: {span: 5},
+  wrapperCol: {span: 19},
   colon: false,
 }
 
@@ -34,7 +34,7 @@ class ModalRelateTable extends Component {
 
   @action.bound initData() {
     const {
-      form: { resetFields },
+      form: {resetFields},
     } = this.props
     this.store.majorKeyField = undefined
     this.store.entity1Key = undefined
@@ -50,9 +50,9 @@ class ModalRelateTable extends Component {
 
   @action.bound onSwitchChange(checked) {
     const {
-      form: { resetFields },
+      form: {resetFields},
     } = this.props
-    const { objDetail } = this.bigStore
+    const {objDetail} = this.bigStore
 
     this.store.dataTableName = undefined
     resetFields(['dataTableName'])
@@ -69,9 +69,9 @@ class ModalRelateTable extends Component {
 
   // 单选按钮
   @action.bound onRadioChange(e) {
-    const { value } = e.target
+    const {value} = e.target
     const {
-      form: { resetFields },
+      form: {resetFields},
     } = this.props
     this.store.dataTableName = undefined
     this.store.dataStorageId = undefined
@@ -90,19 +90,19 @@ class ModalRelateTable extends Component {
   @action.bound selectDataSheet(tableName) {
     const t = this
     const {
-      form: { resetFields },
+      form: {resetFields},
     } = this.props
     if (tableName !== this.store.dataTableName) {
       this.store.dataTableName = tableName
 
-      const { objDetail } = this.bigStore
+      const {objDetail} = this.bigStore
 
       const entity1Id = objDetail.objRspList && objDetail.objRspList[0].id
       const entity2Id = objDetail.objRspList && objDetail.objRspList[1].id
 
       // 关系
       if (entity1Id && entity1Id) {
-        this.store.getFieldList({ objId: entity1Id }, fieldList => {
+        this.store.getFieldList({objId: entity1Id}, fieldList => {
           if (t.chooseEntity) {
             t.store.getMappingKey(t.chooseEntity, field => {
               t.chooseEntityMaJorKey = field
@@ -123,7 +123,7 @@ class ModalRelateTable extends Component {
           }
         })
 
-        this.store.getFieldList({ objId: entity2Id }, fieldList => {
+        this.store.getFieldList({objId: entity2Id}, fieldList => {
           if (t.chooseEntity) {
             t.store.getMappingKey(t.chooseEntity, field => {
               t.chooseEntityMaJorKey = field
@@ -150,7 +150,7 @@ class ModalRelateTable extends Component {
         // 实体
         resetFields(['mappingKey'])
         this.store.dataField = undefined
-        this.store.getFieldList({ objId: this.store.objId })
+        this.store.getFieldList({objId: this.store.objId})
       }
 
       this.initData()
@@ -204,7 +204,7 @@ class ModalRelateTable extends Component {
 
   @action handleSubmit = e => {
     const {
-      form: { validateFieldsAndScroll },
+      form: {validateFieldsAndScroll},
     } = this.props
     const t = this
     const {
@@ -264,15 +264,13 @@ class ModalRelateTable extends Component {
           ]
         } else {
           // 关系
-          const { objDetail } = this.bigStore
+          const {objDetail} = this.bigStore
           const entity1Id = objDetail.objRspList && objDetail.objRspList[0].id
-          const entity1Name =
-            objDetail.objRspList && objDetail.objRspList[0].name
+          const entity1Name = objDetail.objRspList && objDetail.objRspList[0].name
           const entity2Id = objDetail.objRspList && objDetail.objRspList[1].id
-          const entity2Name =
-            objDetail.objRspList && objDetail.objRspList[1].name
+          const entity2Name = objDetail.objRspList && objDetail.objRspList[1].name
 
-          const { entity1Key, entity2Key } = values
+          const {entity1Key, entity2Key} = values
           const targetField1 = _.find(
             fieldList1,
             item => item.field === entity1Key
@@ -321,7 +319,7 @@ class ModalRelateTable extends Component {
   }
 
   @action handleCancel = () => {
-    const { store } = this.props
+    const {store} = this.props
     this.chooseEntity = undefined
     this.chooseEntityMaJorKey = undefined
     store.closeModal()
@@ -334,7 +332,7 @@ class ModalRelateTable extends Component {
 
   @action handleReset = () => {
     const {
-      form: { resetFields },
+      form: {resetFields},
     } = this.props
     this.store.mode = undefined
     resetFields()
@@ -342,9 +340,9 @@ class ModalRelateTable extends Component {
 
   @action dataSourceSelect = e => {
     const {
-      form: { resetFields },
+      form: {resetFields},
     } = this.props
-    const { typeCode, mode } = this.store
+    const {typeCode, mode} = this.store
     if (mode === 1) {
       if (+typeCode === 4) {
         resetFields(['dataTableName', 'mappingKey'])
@@ -366,7 +364,7 @@ class ModalRelateTable extends Component {
 
   render() {
     const {
-      form: { getFieldDecorator, getFieldValue },
+      form: {getFieldDecorator, getFieldValue},
     } = this.props
 
     const {
@@ -390,7 +388,7 @@ class ModalRelateTable extends Component {
       dataField2,
     } = this.store
 
-    const { objDetail } = this.bigStore
+    const {objDetail} = this.bigStore
     const entity1Id = objDetail.objRspList && objDetail.objRspList[0].id
     const entity1Name = objDetail.objRspList && objDetail.objRspList[0].name
     const entity2Id = objDetail.objRspList && objDetail.objRspList[1].id
@@ -470,7 +468,7 @@ class ModalRelateTable extends Component {
                     loading={dataSourceLoading}
                     notFoundContent={
                       dataSourceLoading ? (
-                        <div style={{ textAlign: 'center' }}>
+                        <div style={{textAlign: 'center'}}>
                           <Spin />
                         </div>
                       ) : null
@@ -545,7 +543,7 @@ class ModalRelateTable extends Component {
                     showSearch
                     notFoundContent={
                       dataTableLoading ? (
-                        <div style={{ textAlign: 'center' }}>
+                        <div style={{textAlign: 'center'}}>
                           <Spin />
                         </div>
                       ) : null
@@ -569,7 +567,7 @@ class ModalRelateTable extends Component {
                 // <FormItem {...formItemLayout} label="主标签绑定的字段">
                 <FormItem
                   {...formItemLayout}
-                  label={
+                  label={(
                     <OmitTooltip
                       text={intl
                         .get(
@@ -578,7 +576,7 @@ class ModalRelateTable extends Component {
                         .d('主标签绑定的字段')}
                       className="rel-entity-name"
                     />
-                  }
+                  )}
                   //             label={(
                   //               <span>
                   //                 <span className="mr10">主标签绑定的</span>
@@ -623,7 +621,7 @@ class ModalRelateTable extends Component {
                   )}
                 </FormItem>
               ) : (
-                <h3 className="mb24 fs14" style={{ marginLeft: '12px' }}>
+                <h3 className="mb24 fs14" style={{marginLeft: '12px'}}>
                   {intl
                     .get(
                       'ide.src.page-manage.page-object-model.object-list.object-detail.modal-relate-table.m5inicr74ce'
@@ -640,13 +638,13 @@ class ModalRelateTable extends Component {
             <Fragment>
               <FormItem
                 {...formItemLayout}
-                label={
+                label={(
                   <OmitTooltip
                     text={entity1Name}
                     maxWidth={80}
                     className="rel-entity-name"
                   />
-                }
+                )}
               >
                 {getFieldDecorator('entity1Key', {
                   rules: [
@@ -655,7 +653,7 @@ class ModalRelateTable extends Component {
                       message: intl
                         .get(
                           'ide.src.page-manage.page-object-model.object-list.object-detail.modal-relate-table.qx9somxgnc',
-                          { entity1Name: entity1Name }
+                          {entity1Name}
                         )
                         .d('请选择{entity1Name}绑定的字段'),
                     },
@@ -666,7 +664,7 @@ class ModalRelateTable extends Component {
                     placeholder={intl
                       .get(
                         'ide.src.page-manage.page-object-model.object-list.object-detail.modal-relate-table.qx9somxgnc',
-                        { entity1Name: entity1Name }
+                        {entity1Name}
                       )
                       .d('请选择{entity1Name}绑定的字段')}
                     onSelect={v => this.selectEntityKey(v, 1, entity1Id)}
@@ -687,13 +685,13 @@ class ModalRelateTable extends Component {
               </FormItem>
               <FormItem
                 {...formItemLayout}
-                label={
+                label={(
                   <OmitTooltip
                     text={entity2Name}
                     maxWidth={80}
                     className="rel-entity-name"
                   />
-                }
+                )}
               >
                 {getFieldDecorator('entity2Key', {
                   rules: [
@@ -702,7 +700,7 @@ class ModalRelateTable extends Component {
                       message: intl
                         .get(
                           'ide.src.page-manage.page-object-model.object-list.object-detail.modal-relate-table.7bshmo5w6sa',
-                          { entity2Name: entity2Name }
+                          {entity2Name}
                         )
                         .d('请选择{entity2Name}绑定的字段'),
                     },
@@ -715,7 +713,7 @@ class ModalRelateTable extends Component {
                     placeholder={intl
                       .get(
                         'ide.src.page-manage.page-object-model.object-list.object-detail.modal-relate-table.7bshmo5w6sa',
-                        { entity2Name: entity2Name }
+                        {entity2Name}
                       )
                       .d('请选择{entity2Name}绑定的字段')}
                     onSelect={v => this.selectEntityKey(v, 2, entity2Id)}

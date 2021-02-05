@@ -1,14 +1,12 @@
 import intl from 'react-intl-universal'
-import { Component, Fragment } from 'react'
-import { action, observable } from 'mobx'
-import { observer } from 'mobx-react'
-import { Table, Input, Button } from 'antd'
-import { SearchOutlined } from '@ant-design/icons'
-import { codeInProduct } from '../../../../common/util'
-import { NoData, OmitTooltip, Authority } from '../../../../component'
+import {Component, Fragment} from 'react'
+import {action, observable} from 'mobx'
+import {observer} from 'mobx-react'
+import {Table, Input, Button} from 'antd'
+import {SearchOutlined} from '@ant-design/icons'
+import {codeInProduct} from '../../../common/util'
+import {NoData, OmitTooltip, Authority} from '../../../component'
 import ModalMove from './modal-move'
-
-const { Search } = Input
 
 @observer
 class TagList extends Component {
@@ -55,10 +53,10 @@ class TagList extends Component {
           {record.createType === 0
             ? record.projectName
             : intl
-                .get(
-                  'ide.src.page-manage.page-common-tag.common-tag.list.bty454nguz'
-                )
-                .d('租户')}
+              .get(
+                'ide.src.page-manage.page-common-tag.common-tag.list.bty454nguz'
+              )
+              .d('租户')}
         </span>
       ),
     },
@@ -90,7 +88,7 @@ class TagList extends Component {
   ]
 
   componentWillReceiveProps(next) {
-    const { cateId } = this.props
+    const {cateId} = this.props
 
     if (!_.isEqual(cateId, next.cateId)) {
       this.selectedRowKeys.clear()
@@ -98,7 +96,7 @@ class TagList extends Component {
   }
 
   onSearch = keyword => {
-    const { tagList } = this.store
+    const {tagList} = this.store
 
     this.store.keyword = keyword
 
@@ -126,9 +124,9 @@ class TagList extends Component {
 
   @action.bound moveSuccess() {
     const t = this
-    const { store } = t
-    const { tagList } = store
-    const { currentSelectKeys } = store
+    const {store} = t
+    const {tagList} = store
+    const {currentSelectKeys} = store
 
     t.selectedRowKeys.clear()
 
@@ -162,7 +160,7 @@ class TagList extends Component {
   }
 
   render() {
-    const { tagList, keyword } = this.store
+    const {tagList, keyword} = this.store
 
     const rowSelection = codeInProduct('tag_model:move_tag[u]', true) && {
       selectedRowKeys: this.selectedRowKeys,
@@ -250,7 +248,7 @@ class TagList extends Component {
                     'ide.src.page-manage.page-object-model.object-list.object-list.tag-class-list.mlfiqqzpa5'
                   )
                   .d('请输入关键字搜索')}
-                style={{ width: 200 }}
+                style={{width: 200}}
                 suffix={<SearchOutlined />}
               />
 

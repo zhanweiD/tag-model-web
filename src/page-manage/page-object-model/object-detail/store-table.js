@@ -1,12 +1,12 @@
 import intl from 'react-intl-universal'
-import { action, runInAction, observable, toJS } from 'mobx'
+import {action, runInAction, observable, toJS} from 'mobx'
 import {
   errorTip,
   successTip,
   failureTip,
   changeToOptions,
-} from '../../../../common/util'
-import { ListContentStore } from '../../../../component/list-content'
+} from '../../../common/util'
+import {ListContentStore} from '../../../component/list-content'
 import io from './io'
 
 class Store extends ListContentStore(io.getTableList) {
@@ -124,9 +124,8 @@ class Store extends ListContentStore(io.getTableList) {
       })
 
       runInAction(() => {
-        const data =
-          res &&
-          res.map(d => ({
+        const data = res
+          && res.map(d => ({
             tableName: d.dataTableName,
             isUsed: d.isUsed,
           }))

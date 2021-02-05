@@ -2,11 +2,11 @@ import intl from 'react-intl-universal'
 /**
  * @description 对象管理 - 对象列表
  */
-import {Component, useEffect} from 'react'
+import {Component} from 'react'
 import {observer} from 'mobx-react'
 import {action} from 'mobx'
 import {Link} from 'react-router-dom'
-import {ListContent, Authority} from '../../../../component'
+import {ListContent, Authority} from '../../../component'
 import seach from './search'
 import TagClass from './tag-class'
 import {objTypeList, objTypeMap} from '../util'

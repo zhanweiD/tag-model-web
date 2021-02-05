@@ -129,13 +129,6 @@ export default class ObjectView extends Component {
     // TODO: 关系是否有多个呢？
     const otherNode = _.filter(obj, item => String(item.id) !== String(objId))
 
-    // console.log(objId)
-    // console.log(mainNode)
-    // console.log(otherNode)
-    // console.log(toJS(this.store.businessModel))
-    // console.log(tagsMap)
-    // console.log('-----')
-
     this.mainNode = [mainNode]
     this.otherNode = otherNode
 
@@ -181,6 +174,8 @@ export default class ObjectView extends Component {
         target: `node-${item.target}`,
         endpoint: 'Blank',
         connector: ['Flowchart'],
+        paintStyle: {stroke: '#c9cbd2', strokeWidth: 1},
+        endpointStyle: {fill: '#c9cbd2'},
         anchor: ['Left', 'Right'],
         overlays: [
           ['Arrow', {width: 10, length: 10, location: 1}],

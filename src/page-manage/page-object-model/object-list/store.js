@@ -6,9 +6,7 @@ import {
   failureTip,
   listToTree,
   changeToOptions,
-} from '../../../../common/util'
-import {ListContentStore} from '../../../../component/list-content'
-
+} from '../../../common/util'
 import io from './io'
 
 class Store {

@@ -26,7 +26,7 @@ class Store extends ListContentStore(io.getList) {
 
   @observable storageList = [] // 下拉数据源数据
 
-  // 下拉对象列表
+  // 下拉数据源
   @action async getStorageList() {
     try {
       const res = await io.getStorageList({

@@ -5,7 +5,7 @@ import intl from 'react-intl-universal'
 import {Component} from 'react'
 import {observer, inject} from 'mobx-react'
 import {Spin, Modal, Button} from 'antd'
-import {action, toJS} from 'mobx'
+import {action} from 'mobx'
 import {Time} from '../../common/util'
 import {
   TabRoute,
@@ -16,12 +16,10 @@ import {
 } from '../../component'
 import {objDetailTabMap, objRelTabMap, objTypeMap} from './util'
 
-import TagClass from '../page-object-model/object-list/object-list/tag-class'
-// import ObjectView from './object-view'
+import TagClass from '../page-object-model/object-list/tag-class'
 import ObjectView from './object-view-router'
 import DataSheet from './data-sheet'
 import FieldList from './field-list'
-// import BusinessModel from './business-model'
 import {TagModel} from './tag-model'
 
 const {confirm} = Modal
@@ -97,7 +95,6 @@ class ObjectDetail extends Component {
       tabId,
       typeCode,
       objId,
-      tagClassObjId,
       tagClassVisible,
       projectId,
     } = this.store
@@ -108,11 +105,6 @@ class ObjectDetail extends Component {
           .d('对象标识'),
         value: objDetail.enName,
       },
-
-      // {
-      //   title: '创建者',
-      //   value: objDetail.creator,
-      // },
       {
         title: intl
           .get('ide.src.page-manage.page-object-model.detail.qksgujny9q')
@@ -125,7 +117,6 @@ class ObjectDetail extends Component {
           .d('对象类目'),
         value: objDetail.objCatName,
       },
-
       {
         title: intl
           .get(
@@ -134,11 +125,6 @@ class ObjectDetail extends Component {
           .d('创建时间'),
         value: <Time timestamp={objDetail.createTime} />,
       },
-
-      // {
-      //   title: '对象主键',
-      //   value: objDetail.objPk,
-      // }
     ]
 
     const cards = [
@@ -226,7 +212,6 @@ class ObjectDetail extends Component {
       table: DataSheet,
       field: FieldList,
       list: TagModel,
-      // business: BusinessModel,
     }
 
     const objCompMap1 = {
@@ -234,7 +219,6 @@ class ObjectDetail extends Component {
       table: DataSheet,
       field: ObjectView,
       list: ObjectView,
-      // business: BusinessModel,
     }
 
     const Content = objDetail.type === 0 ? objCompMap1[tabId] : objCompMap[tabId]
@@ -276,10 +260,9 @@ class ObjectDetail extends Component {
                       .d('移除')}
                   </Button>
                 </Authority>,
-                <Authority authCode="tag_model:select_tag_cate[r]">
+                <Authority authCode="tag_model:select_tag_cate[r]" isCommon>
                   <Button
                   // loading={releaseLoading}
-                    className="mr8"
                     type="primary"
                     onClick={() => this.tagClass()}
                   >

@@ -6,12 +6,12 @@ import io from './io'
 
 class Store extends ListContentStore(io.getList) {
   @observable projectId
-  @observable useProjectId
+  @observable useProjectId // header里的项目
   @observable projectName
 
   // @observable expand = false
   @observable permissionType = '' // 使用权限状态
-  @observable ownProjectId = '' // 所属项目id
+  @observable ownProjectId = '' // 所属项目id（筛选条件里的项目）
   @observable objectId = '' // 对象id
   @observable hotWord = undefined // 关键词
   @observable backProjectId = []
@@ -30,7 +30,7 @@ class Store extends ListContentStore(io.getList) {
   @action async getOwnProject() {
     try {
       const res = await io.getOwnProject({
-        projectId: this.projectId,
+        projectId: this.useProjectId,
       })
 
       runInAction(() => {

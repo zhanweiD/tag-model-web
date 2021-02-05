@@ -3,11 +3,11 @@ import intl from 'react-intl-universal'
 /**
  * @description 同步结果
  */
-import { Component } from 'react'
-import { toJS, action } from 'mobx'
-import { observer } from 'mobx-react'
-import { Badge } from 'antd'
-import { ListContent, projectProvider, OmitTooltip } from '../../component'
+import {Component} from 'react'
+import {toJS, action} from 'mobx'
+import {observer} from 'mobx-react'
+import {Badge} from 'antd'
+import {ListContent, projectProvider, OmitTooltip} from '../../component'
 import seach from './search'
 
 import store from './store'
@@ -81,23 +81,22 @@ class SyncResult extends Component {
         .get('ide.src.page-config.workspace-config.main.4eyw4o6e3dr')
         .d('使用状态'),
       dataIndex: 'tagUsed',
-      render: text =>
-        text ===
-        intl
+      render: text => (text
+        === intl
           .get('ide.src.page-config.workspace-config.main.ztbqzsc34bb')
           .d('使用中') ? (
           <Badge
-            color="#87d068"
-            text={intl
+              color="#87d068"
+              text={intl
               .get('ide.src.page-config.workspace-config.main.ztbqzsc34bb')
               .d('使用中')}
-          />
+            />
         ) : (
           <Badge
             color="#d9d9d9"
             text={intl.get('ide.src.component.tag.tag.ogvpoe5m3bg').d('未使用')}
           />
-        ),
+        )),
     },
   ]
 
@@ -120,11 +119,11 @@ class SyncResult extends Component {
   }
 
   render() {
-    const { objList, storageList, projectId } = store
+    const {objList, storageList, projectId} = store
     const listConfig = {
       columns: this.columns,
-      scroll: { x: 1000 },
-      initParams: { projectId },
+      scroll: {x: 1000},
+      initParams: {projectId},
       searchParams: seach({
         objList: toJS(objList),
         storageList: toJS(storageList),

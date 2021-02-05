@@ -129,7 +129,7 @@ class DataSheet extends Component {
               </Popconfirm>
             )}
           </Authority>
-          <Authority authCode="tag_model:config_table_tag[c]">
+          <Authority authCode="tag_model:update_table[cud]">
             <a
               href
               className="ml16"

@@ -3,8 +3,8 @@ import {Component} from 'react'
 import {action} from 'mobx'
 import {observer} from 'mobx-react'
 import {Modal} from 'antd'
-import {ModalForm} from '../../../../component'
-import {changeToOptions} from '../../../../common/util'
+import {ModalForm} from '../../../component'
+import {changeToOptions} from '../../../common/util'
 import {modalDefaultConfig} from '../util'
 
 @observer
