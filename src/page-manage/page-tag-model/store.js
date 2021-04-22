@@ -473,13 +473,17 @@ class Store {
    * @description 对象详情
    */
   @action async getObjDetail(cb) {
+    const {objId, projectId} = this
     try {
       const res = await io.getObjDetail({
-        id: this.objId,
-        projectId: this.projectId,
+        id: objId,
+        projectId,
       })
 
       runInAction(() => {
+        if (projectId !== this.projectId || objId !== this.objId) {
+          return
+        }
         this.objDetail = res
         if (cb) cb(res)
       })
@@ -527,13 +531,17 @@ class Store {
    * @description 对象配置指标卡
    */
   @action async getObjCard() {
+    const {objId, projectId} = this
     try {
       const res = await io.getObjCard({
-        id: this.objId,
-        projectId: this.projectId,
+        id: objId,
+        projectId,
       })
 
       runInAction(() => {
+        if (projectId !== this.projectId || objId !== this.objId) {
+          return
+        }
         this.objCard = res
       })
     } catch (e) {
@@ -572,20 +580,25 @@ class Store {
    * @description 业务视图
    */
   @action async getBusinessModel(cb, params) {
-    this.modelLoading = true
-    if (!this.objId) {
+    const {objId, projectId} = this
+    
+    if (!objId) {
       return
     }
+    this.modelLoading = true
+
     try {
       const res = await io.getBusinessModel({
-        id: this.objId,
-        projectId: this.projectId,
+        id: objId,
+        projectId,
         ...params,
       })
 
       runInAction(() => {
+        if (projectId !== this.projectId || objId !== this.objId) {
+          return
+        }
         const data = this.getLinksObj(res.links, res.obj)
-
         this.businessModel = data
         if (cb) cb()
       })
@@ -604,13 +617,17 @@ class Store {
    * @description 项目下与对象相关的关系对象列表
    */
   @action async getBMRelation(cb) {
+    const {objId, projectId} = this
     try {
       const res = await io.getBMRelation({
-        id: this.objId,
-        projectId: this.projectId,
+        id: objId,
+        projectId,
       })
 
       runInAction(() => {
+        if (projectId !== this.projectId || objId !== this.objId) {
+          return
+        }
         this.relList = res
         if (cb) cb(res)
       })
