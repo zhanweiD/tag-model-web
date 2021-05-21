@@ -40,6 +40,8 @@ class Store extends ListContentStore(io.getList) {
 
   // 删除
   @action async delList(id) {
+    // 由于删除时间比较长，增加一个loading状态
+    this.tableLoading = true
     try {
       await io.delList({
         projectId: this.projectId,
@@ -57,6 +59,7 @@ class Store extends ListContentStore(io.getList) {
         this.getList({ currentPage: 1 })
       })
     } catch (e) {
+      this.tableLoading = false
       errorTip(e.message)
     }
   }

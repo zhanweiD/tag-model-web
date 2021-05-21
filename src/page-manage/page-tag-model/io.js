@@ -7,11 +7,31 @@ const api = {
   //* ------------------------------ 对象类目树 ------------------------------*//
   getObjTree: get(`${projectSpaceApi}/object/pro_obj_tree`), // 对象类目树
   removeObj: post(`${projectSpaceApi}/object/remove_obj`), // 移除对象
-  getObjDetail: get(`${projectSpaceApi}/object/object_basic`), // 对象基础信息
-  getObjCard: get(`${projectSpaceApi}/object/object_card`), // 对象配置指标卡
+  // getObjDetail: get(`${projectSpaceApi}/object/object_basic`), // 对象基础信息
+  getObjDetail: {
+    url: `${projectSpaceApi}/object/object_basic`,
+    method: 'GET',
+    overrideSelfConcurrent: true,
+  },
+  // getObjCard: get(`${projectSpaceApi}/object/object_card`), // 对象配置指标卡
+  getObjCard: {
+    url: `${projectSpaceApi}/object/object_card`,
+    method: 'GET',
+    overrideSelfConcurrent: true,
+  },
   getObjView: get(`${projectSpaceApi}/object/object_view`), // 对象视图
-  getBusinessModel: get(`${projectSpaceApi}/object/business_model`), // 逻辑模型
-  getBMRelation: get(`${projectSpaceApi}/object/list_relation`), // 项目下与对象相关的关系对象列表
+  // getBusinessModel: get(`${projectSpaceApi}/object/business_model`), // 逻辑模型
+  getBusinessModel: {
+    url: `${projectSpaceApi}/object/business_model`,
+    method: 'GET',
+    overrideSelfConcurrent: true,
+  },
+  // getBMRelation: get(`${projectSpaceApi}/object/list_relation`), // 项目下与对象相关的关系对象列表
+  getBMRelation: {
+    url: `${projectSpaceApi}/object/list_relation`,
+    method: 'GET',
+    overrideSelfConcurrent: true,
+  },
   getObjCate: get(`${projectSpaceApi}/object/obj_cate_tree`), // 选择对象-对象类目树
   getObjSelectedList: get(`${projectSpaceApi}/object/list_obj`), // 选择对象- 已选对象列表
   getObjSelectedDetail: post(`${projectSpaceApi}/object/list_obj_info`), // 选择对象- 获取选择对象列表信息加入选择列表
